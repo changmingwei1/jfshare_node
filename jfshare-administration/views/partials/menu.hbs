@@ -1,0 +1,20 @@
+<div class="col-sm-2 col-lg-2 div-main-menu">
+    <div class="sidebar-nav">
+        <div class="nav-canvas">
+            <div class="nav-sm nav nav-stacked">
+
+            </div>
+            <ul class="nav nav-pills nav-stacked main-menu">
+
+                {{menu-tree}}
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#productcreate").mouseover(function(){
+        $("#productcreate").attr("href", "/product/create?t="+Date.parse(new Date()));
+    })
+</script>

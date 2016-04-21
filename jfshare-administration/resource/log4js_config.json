@@ -1,0 +1,63 @@
+{
+  "appenders":[
+    {"type":"console"},
+    {"type":"file","filename":"./logs/login.log","category":"login"},
+    {"type":"file","filename":"./logs/signup.log","category":"signup"},
+    {
+      "type": "dateFile",
+      "filename": "./logs/roleOpeartor.log",
+      "pattern": "_yyyy-MM-dd",
+      "alwaysIncludePattern": false,
+      "category": "roleLog"
+    },
+    {
+      "type": "dateFile",
+      "filename": "./logs/sourceOpeartor.log",
+      "pattern": "_yyyy-MM-dd",
+      "alwaysIncludePattern": false,
+      "category": "sourceLog"
+    },
+    {
+      "type": "dateFile",
+      "filename": "./logs/orderSynOpeartor.log",
+      "pattern": "_yyyy-MM-dd",
+      "alwaysIncludePattern": false,
+      "category": "orderSynOpeartorLog"
+    },
+    {
+      "type": "dateFile",
+      "filename": "./logs/userOpeartor.log",
+      "pattern": "_yyyy-MM-dd",
+      "alwaysIncludePattern": false,
+      "category": "userLog"
+    },
+    {
+      "type": "dateFile",
+      "filename": "./logs/productSetPromotion.log",
+      "pattern": "_yyyy-MM-dd",
+      "alwaysIncludePattern": false,
+      "category": "productSetPromotion"
+    },
+    {
+      "type": "dateFile",
+      "filename": "./logs/refundLogCsv.log",
+      "pattern": "_yyyy-MM-dd",
+      "alwaysIncludePattern": false,
+      "category": "refundLogForCsv"
+    }
+
+  ],
+  "levels":{
+    "login":"INFO",
+    "roleLog":"INFO",
+    "sourceLog":"INFO",
+    "orderSynOpeartorLog":"INFO",
+    "userLog":"INFO",
+    "productSetPromotion":"INFO",
+    "refundLogForCsv":"INFO"
+  },
+  "comment":"这里是一个注释 这一行没有起到什么作用 ，只是为了添加一定的注释，需要的注释可以写在这个里面，如果没有特别的配置则",
+  "rbac":"关于rbac方面的生成的日志文件在logs的rbacLog目录中，通过时间进行分割，日志会自动输出到console中",
+  "order":"有关于订单3同步的操作日志在orderOpeatorLog中，日志会自动输出到console中",
+  "refundLogForCsv":"有关于所有退款导出方面操作的日志都记录在这里面"
+}
