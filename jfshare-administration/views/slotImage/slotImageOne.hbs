@@ -1,0 +1,134 @@
+<!-- 把这个页面纳入  main 框架里面   -->
+{{!< main}}
+
+<style>
+    .slotImg1{
+        width : 796px;
+        height : 424px;
+    }
+    .slotImg2{
+        width : 200px;
+        height : 78px;
+    }
+
+    .jump_span_view{
+        display: block;
+    }
+
+    .jump_span_add{
+        display: none;
+    }
+
+    .jump_span_update{
+        display: none;
+    }
+
+    .jump_input_view{
+        display: none;
+    }
+
+    .submit_view{
+        display: none;
+    }
+
+    .slotImg_add{
+        display: none;
+    }
+
+    #fileQueue {
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+        height: 103px;
+        margin-bottom: 10px;
+        overflow: auto;
+        padding: 5px 10px;
+        width: 300px;"
+    }
+</style>
+
+<h2>{{typeStr}}</h2>
+
+
+<!--<div id="fileQueue"></div>-->
+
+<div id="uploadSlotImage">
+    <!--<span>选择本地图片</span>-->
+    <input type="file" name="fulAvatar" id="fulAvatar" />
+    <div id="fileQueue"></div>
+    <span id="imgSpan"></span>
+    <!--<a href="javascript:$('#fulAvatar').uploadifyUpload()" class="btn active" role="button">上传图片</a>-->
+</div>
+
+
+<div id="showImgDiv" class="slotImg_{{typeClass}}">
+<h5>图片预览</h5>
+<img id="showImg" class="slotImg{{type}}" src="http://120.24.153.102:3000/system/v1/jfs_image/{{data.slotImage.imgKey}}"/>
+</div>
+
+<br/>
+<br/>
+
+<form action="/slotImage/{{dotype}}" method="post">
+    <input type="hidden" id="slotImageType" name="slotImageType" value="{{type}}" />
+    <input type="hidden" id="slotImageDotype" name="slotImageDotype" value="{{dotype}}" />
+    <input type="hidden" id="slotImageId" name="slotImageId" value="{{data.slotImage.id}}" />
+    <input type="hidden" id="imgKey"  name="imgKey"value="{{data.slotImage.imgKey}}" />
+    <div class="form-group">
+        <label for="jump">跳转链接</label><span class="jump_span_{{typeClass}}">{{data.slotImage.jump}}</span>
+        <input type="text" class="form-control jump_input_{{typeClass}}" id="jump" name="jump" placeholder="跳转链接" value="{{data.slotImage.jump}}">
+    </div>
+    <button type="submit" class="btn btn-default submit_{{typeClass}}">提交</button>
+</form>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var wh = '';
+        var type = $("#slotImageType").val();
+        if(type == 1 ){
+            wh = "770f810f400f440";
+            $("#imgSpan").html("注：图片宽度应是796px，高度应是424px");
+        }else{
+            wh = "180f220f60f100";
+            $("#imgSpan").html("注：图片宽度应是200px，高度应是78px");
+        }
+
+
+        //上传图片插件
+        $("#fulAvatar").uploadify({
+            'swf': '/misc/uploadify.swf',
+            'formData': { 'wh':wh },
+            'uploader': _uploadServ,
+            'queueID': 'fileQueue',
+            'width'    : 100,
+            'fileSizeLimit' : '2MB',
+            'buttonText'  :  '选择或重选图片',
+            'fileTypeExts' : '*.gif; *.jpg; *.png; *.jpeg',
+            'fileTypeDesc' : 'only image, eq:gif jpg png.',
+            'auto': true,
+            'method': 'get',
+            'multi': false,
+            'onUploadSuccess' : function(file, data, response) {
+                var resObj = JSON.parse(data);
+                if(resObj.result) {
+                    //$("#uploadSlotImage").hide();
+                    $("#showImgDiv").show();
+                    $("#showImg").attr("src", _imgServ+resObj.title);
+                    //alert(resObj.title);
+                    $("#imgKey").val(resObj.title);
+                } else {
+                    alert('上传文件[ ' + file.name + ']失败，原因: ' + resObj.failDesc);
+                }
+                //$('#uploadModal').modal('hide');
+            },
+            'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+                alert('上传文件[ ' + file.name + ']失败，原因: ' + errorString);
+            }
+        });
+
+
+
+    });
+
+</script>

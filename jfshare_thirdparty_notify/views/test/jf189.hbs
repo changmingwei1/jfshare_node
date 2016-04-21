@@ -1,0 +1,40 @@
+<html>
+<title>模拟提交后端支付通知</title>
+  <form id="payResponseTestForm" method="post" target="_blank" action="/pay/notify/jf189">
+      <br/>AppCode : <input type="input" name="AppCode" value="cx_test">
+      <br/>RequestDate: <input type="input" name="RequestDate" value="20151225175122">
+      <br/>Sign: <input type="input" name="Sign" value="42323jlldsjlfjdkstest">
+      <br/>PayIntegral: <input type="input" name="PayIntegral" value="0">
+      <br/>Integral: <input type="input" name="Integral" value="0">
+      <br/>Voucher: <input type="input" name="Voucher" value="0">
+      <br/>PayMoney: <input type="input" name="PayMoney" value="0"> <span style="color: red">*</span>
+      <br/>CommodityName: <input type="input" name="CommodityName" value="测试后端支付通知-订单">
+      <br/>UserNameTX: <input type="input" name="UserNameTX" value="18511111111">
+      <br/>SPOrderID: <input type="input" name="SPOrderID" value="" size="35px;"> <span style="color: red">*</span> （支付平台流水号payId）
+      <br/>AttachPra: <input type="input" name="AttachPra" value="http://test/pay/notify/jf189">
+      <br/>OrderID: <input type="input" name="OrderID" value="21212121">
+      <br/>PayType: <input type="input" name="PayType" value="8">
+
+      <br/> <br/>
+    <input id="btnPayResponseTest" type="submit" value="测试返回支付结果" class="btnStyle" />
+</form>
+
+<form id="kuaidi" method="post" target="_blank" action="/kuaidi/subscribe">
+    <br/>AppCode : <input type="input" name="AppCode" value="cx_test">
+    <br/>RequestDate: <input type="input" name="RequestDate" value="20151225175122">
+    <br/>Sign: <input type="input" name="Sign" value="42323jlldsjlfjdkstest">
+    <br/>PayIntegral: <input type="input" name="PayIntegral" value="0">
+    <br/>Integral: <input type="input" name="Integral" value="0">
+    <br/>Voucher: <input type="input" name="Voucher" value="0">
+    <br/>PayMoney: <input type="input" name="PayMoney" value="0"> <span style="color: red">*</span>
+    <br/>CommodityName: <input type="input" name="CommodityName" value="测试后端支付通知-订单">
+    <br/>UserNameTX: <input type="input" name="UserNameTX" value="18511111111">
+    <br/>SPOrderID: <input type="input" name="SPOrderID" value="" size="35px;"> <span style="color: red">*</span> （支付平台流水号payId）
+    <br/>AttachPra: <input type="input" name="AttachPra" value="http://test/pay/notify/jf189">
+    <br/>OrderID: <input type="input" name="OrderID" value="21212121">
+    <br/>PayType: <input type="input" name="PayType" value="8">
+
+    <br/> <br/>
+    <input id="btnPayResponseTest" type="submit" value="物流订阅" class="btnStyle" />
+</form>
+</html>

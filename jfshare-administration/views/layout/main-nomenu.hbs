@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="jfshare" name="author">
+    <!--<meta http-equiv = "X-UA-Compatible" cotent = "IE=edge,chrome=1"/>-->
+    <!-- Title and other stuffs -->
+    <title>{{title}}</title>
+
+    <!-- charisma stylesheet -->
+    <link id="bs-css" href="/css/bootstrap-united.min.css" rel="stylesheet">
+
+    <link href="/css/charisma-app.css" rel="stylesheet">
+    <link href="/css/uploadify.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    {{>script}}
+
+</head>
+<body style="overflow:scroll;overflow-x:hidden">
+{{> header}}
+
+<div class="ch-container">
+    <div class="row">
+        <div class="col-sm-1 col-lg-1"></div>
+        <!-- left nenu  -->
+
+        <div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+
+            <!-- content detail -->
+            <div style="width:980px">
+                {{{body}}}
+            </div>
+
+        </div> <!-- content ends -->
+
+        <div class="col-sm-1 col-lg-1"></div>
+    </div>  <!--/#content.col-md-0-->
+
+    <hr>
+    {{> footer}}
+</div>  <!--/fluid-row-->
+</body>
+</html>

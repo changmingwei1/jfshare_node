@@ -1,0 +1,25 @@
+{
+  "name": "jfshare_manager",
+  "description": "管理中心",
+  "main": "",
+  "authors": [
+    "jfshare"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jquery": "~1.10.2",
+    "uploadify": "~3.2.1",
+    "fakeLoader": "fakeloader#*",
+    "spin.js": "spinjs#~2.3.2"
+  }
+}

@@ -1,0 +1,118 @@
+<!-- 把这个页面纳入  main 框架里面   -->
+{{!< main}}
+<h2>{{titleStr}}</h2>
+<div id="spin_show"></div>
+<div>
+    <form name="searchForm" id = "searchForm" role="form" class="form-inline" method="post" action="/product/reviewList">
+        <input type="hidden" id="productStatus" name="productStatus">
+        <div class="form-group">
+            <label for="productName">商品名称：</label>
+            <input type="text" class="form-control" id="productName" name="productName" placeholder="宝贝名称" value="">
+        </div>
+        <div class="form-group" style="margin-left: 20px;">
+            <label for="productId">商品id：</label>
+            <input type="text" class="form-control" id="productId" name="productId" placeholder="商品id" value="">
+        </div>
+        <div class="form-group" style="margin-left: 20px;">
+            <button type="button" id="search" class="form-control btn btn-primary">搜索</button>
+        </div>
+    </form>
+</div>
+
+<br/>
+
+<ul id="productTab" class="nav nav-tabs">
+    <li state="0"><a href="#productTable" data-toggle="tab">全部</a></li>
+    <li state="200"><a href="#productTable" data-toggle="tab">待审核</a></li>
+    <li state="300"><a href="#productTable" data-toggle="tab">审核通过</a></li>
+    <li state="102"><a href="#productTable" data-toggle="tab">审核未通过</a></li>
+    <li state="103"><a href="#productTable" data-toggle="tab">管理员下架</a></li>
+</ul>
+<div id="productTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="productTable">
+        <div class="row">
+            <div class="box col-md-12">
+                <div class="box-inner">
+                    <div class="box-content">
+                        <table class="table table-striped table-bordered bootstrap-datatable responsive">
+                            <thead>
+                            <tr>
+                                <th width="220px" style="text-align:center;vertical-align:middle;">宝贝</th>
+                                <th width="180px" style="text-align:center;vertical-align:middle;">类目</th>
+                                <th width="100px" style="text-align:center;vertical-align:middle;">商家</th>
+                                <th width="60px" style="text-align:center;vertical-align:middle;">状态</th>
+                                <th width="180px" style="text-align:center;vertical-align:middle;">日志</th>
+                                <th width="120px" style="text-align:center;vertical-align:middle;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="dataTbody">
+
+                            </tbody>
+                            </table>
+                            <div>
+                                <ul class="pagination" id="pagination"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3>
+                    录入审核未通过原因：
+                </h3>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="refuseProductId">
+                <textarea class="form-control" rows="3" id="refuseReason"></textarea>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-info btn-xs review-btn" href="javascript:;" id="unpassSubmit"><i class="glyphicon glyphicon-bookmark icon-white"></i>确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- template script -->
+<script id="review-table-template" type="text/x-handlebars-template">
+    \{{#each productSurveyList}}
+    <tr productId="\{{productId}}" state="\{{activeState}}" style="font-size: 12px;">
+        <td class="center" style="text-align:center;vertical-align:middle">
+            <img src="\{{showImage imgUrl}}"><br/>
+            <span style="">商品名称：\{{productName}}</span><br/>
+            <span style="">商品id：\{{productId}}</span>
+        </td>
+        <td class="center td-subjectPath" style="text-align:center;vertical-align:middle;" subjectId="\{{subjectId}}"></td>
+        <td class="center td-sellerInfo" style="text-align:center;vertical-align:middle;" sellerId="\{{sellerId}}"></td>
+        <td class="center" style="text-align:center;vertical-align:middle;">
+            <span class="label-success label label-default">\{{showStateDesc activeState}}</span>
+        </td>
+        <td class="center" style="text-align:center;vertical-align:middle;">
+            <div></div>
+            <a href="javascript:;" rel="popover" class="allOptRecords">[更多]</a>
+        </td>
+        <td class="center" style="text-align:center;vertical-align:middle;">
+            \{{showOptBtns activeState}}
+        </td>
+    </tr>
+    \{{/each}}
+</script>
+
+<script>
+    $(function () {
+        $("#search").bind("click", function(){
+            dataSearch(1);
+        });
+        $("#search").click();
+
+    });
+</script>
+
+<script src="/js/product/product.list.js"></script>
+<script src="/js/product/product.hbs.helper.js"></script>
+
