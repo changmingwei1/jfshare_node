@@ -1,5 +1,5 @@
 /**
- * Created by zhaoshenghai on 16/3/22.
+ * @author by YinBo on 16/4/24.
  */
 var express = require('express');
 var router = express.Router();
@@ -8,25 +8,62 @@ var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
 
 var Product = require('../lib/models/product');
+var Cart = require('../lib/models/cart');
 
+//获取购物车中商品的数量
+router.get('/count', function(req, res, next) {
+    logger.info("进入查询购物车中商品数量的接口...");
+    var result = {code: 200};
+    try {
+        var arg = req.query;
+        var userId = arg.userId || "2";
+        var token = arg.token || "鉴权信息1";
+        var ppInfo = arg.ppInfo || "鉴权信息2";
+        var source = arg.source || 2;
+
+        var param = {};
+        param.userId = userId;
+        param.token = token;
+        param.ppInfo = ppInfo;
+        param.source = source;
+        logger.info("get cart count request:" +  JSON.stringify(param));
+        Cart.countItem(param, function(err, count) {
+            if(err){
+                res.json(err);
+                return;
+            }
+            result.count = count;
+            res.json(result);
+            logger.info("get cart item count response:" + JSON.stringify(result));
+        })
+    } catch (ex) {
+        logger.error("get product count in cart error:" + ex);
+        result.code = 500;
+        result.desc = "获取购物车商品数量失败";
+        res.json(result);
+    }
+});
+
+//新增购物车项目
 router.post('/add', function(req, res, next) {
     var result = {code:200};
-
     try{
         var arg = req.body;
-        logger.info("add cart item request:" + JSON.stringify(arg));
         if(arg == null){
             result.code = 400;
             res.json(result);
             return;
         }
-
         var param = {};
-        param.userId = arg.userId || null;
-        param.productId = arg.productId || null;
-        param.skunum = arg.skunum || '';
-        param.count = arg.count || 0;
-        param.price = arg.price || null;
+        param.userId = arg.userId || "2";
+        param.productId = arg.productId || "1000";
+        param.skuNum = arg.skuNum || '1-1:100-101';
+        param.count = arg.count || 10;
+        param.price = arg.price || "5000";
+        param.token = arg.token || "鉴权信息1";
+        param.ppInfo = arg.ppInfo || "鉴权信息2";
+        param.storehouseId = arg.storehouseId || "101";
+        param.source = arg.source || 2;
 
         if(param.userId == null || param.productId == null ||
             param.count <= 0 || param.price == null){
@@ -35,8 +72,8 @@ router.post('/add', function(req, res, next) {
             res.json(result);
             return;
         }
-
-        Product.addCartItem(param, function(err, data) {
+        logger.info("请求参数：" + JSON.stringify(param));
+        Cart.addCartItem(param, function(err, data) {
             if(err){
                 res.json(err);
                 return;
@@ -52,11 +89,12 @@ router.post('/add', function(req, res, next) {
     }
 });
 
-router.post('/delete', function(req, res, next) {
+//删除购物车项目
+router.get('/delete', function(req, res, next) {
     var result = {code: 200};
 
     try {
-        var arg = req.body;
+        var arg = req.query;
         logger.info("delete cart item request:" + JSON.stringify(arg));
 
         if(arg == null || arg.userId == null || arg.product == null || arg.product.length <= 0) {
@@ -66,7 +104,7 @@ router.post('/delete', function(req, res, next) {
             return;
         }
 
-        Product.deleteCartItem(arg.userId, arg.product, function(err, data){
+        Cart.deleteCartItem(arg.userId, arg.product, function(err, data){
             if(err) {
                 res.json(err);
                 return;
@@ -157,37 +195,6 @@ router.get('/list', function(req, res, next) {
         logger.error("get cart product list error:" + ex);
         result.code = 500;
         result.desc = "获取购物车商品列表失败";
-        res.json(result);
-    }
-});
-
-router.get('/count', function(req, res, next) {
-    var result = {code: 200};
-
-    try {
-        var arg = req.query;
-        logger.info("get cart count request:" +  JSON.stringify(arg));
-
-        if(arg == null || arg.userid == null){
-            result.code = 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
-
-        Product.cartCountItem(arg.userid, function(err, count) {
-            if(err){
-                res.json(err);
-                return;
-            }
-            result.count = count;
-            res.json(result);
-            logger.info("get cart item count response:" + JSON.stringify(result));
-        })
-    } catch (ex) {
-        logger.error("get product count in cart error:" + ex);
-        result.code = 500;
-        result.desc = "获取购物车商品数量失败";
         res.json(result);
     }
 });

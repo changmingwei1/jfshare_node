@@ -185,7 +185,6 @@ router.get('/skuitem', function(req, res, next) {
     }
 });
 
-
 router.get('/child', function(req, res, next) {
 
     logger.info("进入获取子分类接口");

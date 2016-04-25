@@ -118,13 +118,17 @@ router.get('/productinfo', function(req, res, next) {
                  */
                 productInfo.skuTemplate = JSON.parse(product.skuTemplate);
                 productInfo.sellerId = product.sellerId;
-                productInfo.sellerName = product.sellerName;
+                productInfo.sellerName = "测试商家1";
                 //添加最高价和最低价
-                var minPrice = 0.01;
-                var maxPrice = 10000000;
+                var minCurPrice = 0.01;
+                var maxCurPrice = 10000000;
+                var minOrgPrice = 0.02;
+                var maxOrgPrice = 20000000;
                 result.productInfo = productInfo;
-                result.minPrice = minPrice;
-                result.maxPrice = maxPrice;
+                result.minCurPrice = minCurPrice;
+                result.maxCurPrice = maxCurPrice;
+                result.minOrgPrice = minOrgPrice;
+                result.maxOrgPrice = maxOrgPrice;
                 res.json(result);
                 logger.info("get product info response:" + JSON.stringify(result));
             }
@@ -265,8 +269,8 @@ router.post('/skuitem', function(req, res, next) {
     }
 });
 
-//获得子分类
-router.get('/child', function(req, res, next) {
+//获取类目列表
+router.get('/subjectList', function(req, res, next) {
 
     logger.info("进入获取子分类接口");
     var result = {code: 200};
@@ -275,7 +279,7 @@ router.get('/child', function(req, res, next) {
         var arg = req.query;
         logger.info("get child class arg:" + arg);
 
-        var subjectId =  arg.parentid || 0;
+        var subjectId =  arg.pid || 0;
 
         Product.getSubTree(subjectId, function (err, data) {
             if(err) {
@@ -286,8 +290,8 @@ router.get('/child', function(req, res, next) {
                 if(subjectNodes !== null && subjectNodes.length >0 ){
                     subjectNodes.forEach(function(node) {
                         classList.push({
-                            classId:node.id,
-                            className:node.name,
+                            subjectId:node.id,
+                            subjectName:node.name,
                             pid:node.pid,
                             isLeaf:node.isLeaf
                         });
@@ -306,46 +310,6 @@ router.get('/child', function(req, res, next) {
     }
 });
 
-//获取商品列表中已经添加了条件，包含分类，这个按理说可以去掉了
-router.get('/productlist', function(req, res, next) {
-    logger.info("进入获取分类商品列表接口");
-    var result = {code:200};
-
-    try{
-        var arg = req.query;
-        logger.info("get product list args:" + JSON.stringify(arg));
-
-        var percount = arg.percount || 20;
-        var curpage = arg.curpage || 1;
-        var classId = arg.classid;
-
-        Product.queryProductList({percount:percount, curpage:curpage, classId:classId}, function(data){
-            var resContent = {code:200};
-            var dataArr = [];
-
-            var code = data[0].result.code;
-            if(code == 1){
-                resContent.code = 500;
-                resContent.desc = "失败";
-                res.json(resContent);
-            } else {
-                var productSurveyList = data[0].productSurveyList;
-                productSurveyList.forEach(function(a){
-                    var imgUri = a.imgUrl.split(",")[0];
-                    dataArr.push({productId: a.productId, productName: a.productName, curPrice: a.curPrice/100, imgUrl: imgUri});
-                });
-                resContent.productList = dataArr;
-                res.json(resContent);
-                logger.info("get class product list response:" + JSON.stringify(result));
-            }
-        });
-    } catch(ex) {
-        logger.error("get product list is subject error:" + ex);
-        result.code = 500;
-        result.desc = "获取商品列表失败";
-        res.json(result);
-    }
-});
 
 
 module.exports = router;

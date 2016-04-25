@@ -200,6 +200,32 @@ Product.prototype.queryProductDetail = function (arg, callback) {
     });
 };
 
+//获取类目列表
+Product.prototype.getSubTree = function(subjectId, callback) {
+    //参数说明：现有的thrift文件参数为subjectId，但实际使用pid，暂时用这个
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTree", subjectId);
+
+    Lich.wicca.invokeClient(subjectServ, function(err, data) {
+        logger.info("调用subjectServ-getSubTree  result:" + JSON.stringify(data));
+        var res = {};
+        if(err){
+            logger.error("调用subjectServ-getSubTree查询子分类失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询子分类失败";
+            callback(res, null);
+        } else {
+            callback(null, data)
+        }
+    });
+};
+
+
+
+
+
+
+
+
 Product.prototype.getStock = function(productId, callback){
 
     // 获取client
@@ -235,23 +261,6 @@ Product.prototype.getStockForSku = function(paramters, callback) {
             callback(res, null);
         } else {
             callback(null, data[0]);
-        }
-    });
-};
-
-Product.prototype.getSubTree = function(subjectId, callback) {
-    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTree", subjectId);
-
-    Lich.wicca.invokeClient(subjectServ, function(err, data) {
-        logger.info("调用subjectServ-getSubTree  result:" + JSON.stringify(data));
-        var res = {};
-        if(err){
-            logger.error("调用subjectServ-getSubTree查询子分类失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "查询子分类失败";
-            callback(res, null);
-        } else {
-            callback(null, data)
         }
     });
 };

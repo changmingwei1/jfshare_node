@@ -39,7 +39,6 @@ app.use('/share/order', order);
 app.use('/share/cart', cart);
 app.use('/share/address', address);
 app.use('/share/captcha',captcha);
-app.use('/share/buyer',buyer);
 app.use('/share/active',active);
 app.use('/test', test);
 //app.use('/test', tests);
