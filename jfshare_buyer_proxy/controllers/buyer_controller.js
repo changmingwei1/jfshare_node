@@ -1,5 +1,5 @@
 /**
- * Created by YinBo on 2016/4/21.
+ * @author by YinBo on 2016/4/21.
  */
 var express = require('express');
 var router = express.Router();

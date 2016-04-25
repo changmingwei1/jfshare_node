@@ -1,5 +1,5 @@
 /**
- * @auther YinBo 2016/4/24
+ * @author YinBo 2016/4/24
  */
 var log4node = require('../../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
@@ -22,198 +22,121 @@ var common_types = require('../thrift/gen_code/common_types');
 function Cart(){}
 
 /************************************************现在的****************************************************/
-//获取鉴权信息
-Buyer.prototype.getAuthInfo = function(param,callback){
-    //参数
-    var authInfo = new buyer_types.AuthInfo({
-        token:param.token,
-        ppInfo:param.ppInfo
-    });
-    var buyer = new buyer_types.Buyer({
-        userId:param.userId
-    });
-    var loginLog = new buyer_types.LoginLog(param);
-
+//获取购物车商品数量
+Cart.prototype.countItem = function(param, callback){
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getAuthInfo',[authInfo,buyer,loginLog]);
-    Lich.wicca.invokeClient(buyerServ,function(err,data){
-        logger.info("getAuthInfo result: " + JSON.stringify(data));
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "countItem", [param.userId, 2]);
+    Lich.wicca.invokeClient(cartServ, function(err, data) {
+        logger.info("调用cartServ-countItem  result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
-            logger.error("can't getAuthInfo because: ======" + err);
+        if(err || data[0].result.code == "1"){
+            logger.error("调用cartServ-countItem失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "false to getAuthInfo";
-            callback(res,null);
-        } else {
-            callback(null,data);
-        }
-    });
-};
-
-//验证鉴权
-Buyer.prototype.validAuth = function(param, callback){
-    //参数
-    var authInfo = new buyer_types.AuthInfo({
-        token:param.token || "鉴权信息1",
-        ppInfo:param.ppInfo || "鉴权信息2"
-    });
-    var loginLog = new buyer_types.LoginLog(param);
-    //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'validAuth',[authInfo,loginLog]);
-    Lich.wicca.invokeClient(buyerServ,function(err,data){
-        logger.info("validAuth result: " + JSON.stringify(data));
-        var res = {};
-        if (err||data[0].code == "1") {
-            logger.error("can't validAuth because: ======" + err);
-            res.code = 500;
-            res.desc = "false to validAuth";
-            callback(res,null);
-        } else {
-            callback(null,data);
-        }
-    });
-};
-
-//手机号密码登录
-Buyer.prototype.login = function(param,callback){
-    //参数
-    var thrift_buyer = new buyer_types.Buyer({
-        mobile:param.mobile || "13558731842",
-        pwdEnc:param.pwdEnc || "Ab123456"
-    });
-    //需要的字段可以继续增加
-    var thrift_loginLog = new buyer_types.LoginLog(param);
-    //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'login',[thrift_buyer,thrift_loginLog]);
-    Lich.wicca.invokeClient(buyerServ, function(err, data){
-        logger.info("获取到登录信息:" + JSON.stringify(data));
-        var res = {};
-        if (err||data[0].result.code == "1") {
-            logger.error("不能登录，因为: ======" + err);
-            res.code = 500;
-            res.desc = "登录失败";
+            res.desc = "购物车商品数失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            logger.info("get cart item list:" + JSON.stringify(data[0]));
+            callback(null, data[0].value);
         }
     });
 };
 
-//注册
-Buyer.prototype.signin = function(data, callback) {
-    //if(valid.empty(data)) {
-    //    return callback({code:1, failDesc:'参数非法', result:false});
-    //}
-    var thrift_buyer = new buyer_types.Buyer(data);
+//添加购物车项目
+Cart.prototype.addCartItem = function(param, callback){
 
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "signin", [thrift_buyer]);
-    Lich.wicca.invokeClient(buyerServ, function (err, rdata) {
-        if (err) {
-            logger.error("buyerServ 连接买家服务失败 ======" + err);
-            return callback({code:1, failDesc:"系统异常", result:false});
-        }
-        logger.info("buyerServ.signin() 访问成功  result=" + JSON.stringify(rdata));
-        if (rdata[0]["code"] != 0) {
-            var failDescList = rdata[0].failDescList;
-            var failDesc = "系统异常";
-            if(failDescList.length>0) {
-                failDesc = failDescList[0].desc;
-            }
-            logger.error("buyerServ.signin() 访问失败  =====原因:"+failDesc);
-            return callback({code: 1, failDesc:failDesc, result:false});
-        }
-        return callback({result:true});
+    var item = new cart_types.Item({
+        productId:param.productId,
+        skuNum: param.skuNum,
+        count: param.count,
+        price: param.price
     });
-};
 
-//判断用户名是否存在,现有的thrift是判断的loginName;不过现在要求直接判断手机号mobile，先暂时判断loginName
-Buyer.prototype.buyerIsExist = function(loginName,callback){
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId,item,2]);
 
-    //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'buyerIsExist',loginName);
-    Lich.wicca.invokeClient(buyerServ, function(err, data){
-        logger.info("获取到的信息:" + JSON.stringify(data));
+    Lich.wicca.invokeClient(cartServ, function(err, data) {
+        logger.info("调用cartServ-addItem  result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
-            logger.error("啥，因为: ======" + err);
+        if(err || data[0].result.code == "1"){
+            logger.error("调用cartServ-addItem失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "失败描述...";
+            res.desc = "添加购物车失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            logger.info("add cart item:" + JSON.stringify(data[0]));
+            callback(null, data[0].checkList);
         }
     });
 };
 
-//获取个人信息
-Buyer.prototype.getBuyer = function(param,callback){
+//删除购物车
+Cart.prototype.deleteCartItem = function(param, callback){
+    var carKeys = param.carKeys;
+    var carKeyList = [];
+    for(var i = 0; i < carKeys.length; i++){
+        var item = new cart_types.CartKey(carKeys[i]);
+        carKeyList.push(item);
+    }
 
-    var buyer = new buyer_types.Buyer({userId:param.userId});
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [userId, carKeyList, 2]);
 
-    //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getBuyer',[buyer]);
-    Lich.wicca.invokeClient(buyerServ, function(err, data){
-        logger.info("get buyer result:" + JSON.stringify(data));
+    Lich.wicca.invokeClient(cartServ, function(err, data) {
+        logger.info("调用cartServ-deleteItem  result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
-            logger.error("can't get buyer because: ======" + err);
+        if(err || data[0].code == "1"){
+            logger.error("调用cartServ-deleteItem失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "false to get buyer";
+            res.desc = "添加购物车失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            logger.info("add cart item:" + JSON.stringify(data[0]));
+            callback(null, data[0].checkList);
         }
     });
 };
 
-//更新用户信息
-Buyer.prototype.updateBuyer = function(param,callback){
+Cart.prototype.cartListItem = function(userId, callback){
 
-    var buyer = new buyer_types.Buyer({
-        userId:param.userId,
-        userName:param.userName,
-        favImg:param.favImg,
-        birthday:param.birthday,
-        sex:param.sex
-    });
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [userId, 2]);
 
-    //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'updateBuyer',[buyer]);
-
-    Lich.wicca.invokeClient(buyerServ, function(err, data){
-        logger.info("updateBuyer result:" + JSON.stringify(data));
+    Lich.wicca.invokeClient(cartServ, function(err, data) {
+        logger.info("调用cartServ-listItem  result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].code == "1") {
-            logger.error("can't updateBuyer because: ======" + err);
+        if(err || data[0].code == "1"){
+            logger.error("调用cartServ-listItem失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "false to updateBuyer";
+            res.desc = "添加购物车失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            logger.info("get cart item list:" + JSON.stringify(data[0]));
+            callback(null, data[0].itemList);
         }
     });
 };
 
-//重置密码new
-Buyer.prototype.newResetBuyerPwd = function(param,callback){
-
-    var params = new buyer_types.Buyer({
-        userId:param.userId,
-        mobile:param.mobile
+Cart.prototype.cartUpdateItem = function(param, callback){
+    var cartKey = new cart_types.CartKey({productId:param.productId,skuNum:param.skunum});
+    var item = new cart_types.Item({
+        productId:param.productId,
+        skuNum:param.skunum,
+        count:param.count,
+        price:param.price || "0",
+        wi: param.wi || null
     });
-    //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'newResetBuyerPwd',[params,param.newPwd]);
 
-    Lich.wicca.invokeClient(buyerServ, function(err, data){
-        logger.info("updateBuyer result:" + JSON.stringify(data));
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "updateItem",
+        [param.userId, null, cartKey, item, 2]);
+
+    Lich.wicca.invokeClient(cartServ, function(err, data) {
+        logger.info("调用cartServ-updateItem result:" + JSON.stringify(data[0]));
         var res = {};
-        if (err||data[0].code == "1") {
-            logger.error("can't updateBuyer because: ======" + err);
+        if(err || data[0].result.code == "1"){
+            logger.error("调用cartServ-countItem失败  失败原因 ======" + err);
+            logger.error("错误信息:" + JSON.stringify(data[0].result));
             res.code = 500;
-            res.desc = "false to updateBuyer";
+            res.desc = "购物车商品数失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            callback(null, null);
         }
     });
 };
