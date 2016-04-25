@@ -16,13 +16,13 @@ var Freight = require('../lib/models/freight');
 
 
 
-//添加运费模板
+//添加商家运费模板
 router.post('/add', function(request, response, next) {
-    logger.info("进入添加运费模板流程");
+    logger.info("进入添加商家运费模板流程");
     var result = {code:200};
 
     try{
-        //var params = request.query;
+       //var params = request.query;
         var params = request.body;
         //参数校验
 
@@ -42,21 +42,7 @@ router.post('/add', function(request, response, next) {
             return;
         }
 
-        if(params.supportProvince == null || params.supportProvince == ""){
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-
-        if(params.rule == null || params.rule == ""){
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-        if(params.type == null || params.type == "" ||params.type <= 0){
+        if(params.templates == null || params.templates == ""){
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -65,17 +51,10 @@ router.post('/add', function(request, response, next) {
         }
 
 
-        logger.info("add freight params:" + JSON.stringify(params));
 
-        Freight.add(params,function(error,data){
-            if (error) {
-                response.json(error);
-            } else {
-                result.code =  data[0].result.code;
-                response.json(result);
-                logger.info("add freight info response:" + JSON.stringify(result));
-            }
-        });
+        logger.info("add sellerfreight params:" + JSON.stringify(params));
+
+        response.json(result);
     } catch (ex) {
 
 
@@ -93,19 +72,11 @@ router.post('/update', function(request, response, next) {
     var result = {code:200};
 
     try{
-        //var params = request.query;
+       // var params = request.query;
         var params = request.body;
         //参数校验
 
         if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-
-        if(params.id == null || params.id == "" ||params.id <= 0){
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -121,7 +92,7 @@ router.post('/update', function(request, response, next) {
             return;
         }
 
-        if(params.supportProvince == null || params.supportProvince == ""){
+        if(params.templates == null || params.templates == ""){
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -129,13 +100,7 @@ router.post('/update', function(request, response, next) {
             return;
         }
 
-        if(params.rule == null || params.rule == ""){
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-        if(params.type == null || params.type == "" ||params.type <= 0){
+        if(params.id == null || params.id == ""){
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -144,15 +109,7 @@ router.post('/update', function(request, response, next) {
         }
         logger.info("update freight params:" + JSON.stringify(params));
 
-        Freight.update(params,function(error,data){
-            if (error) {
-                response.json(error);
-            } else {
-                result.code =  data[0].result.code;
-                response.json(result);
-                logger.info("update freight info response:" + JSON.stringify(result));
-            }
-        });
+        response.json(result);
     } catch (ex) {
 
 
@@ -193,15 +150,7 @@ router.post('/del', function(request, response, next) {
 
         logger.info("del freight params:" + JSON.stringify(params));
 
-        Storehouse.delete(params,function(error,data){
-            if (error) {
-                response.json(error);
-            } else {
-                result.code =  data[0].result.code;
-                response.json(result);
-                logger.info("delete freight info response:" + JSON.stringify(result));
-            }
-        });
+        response.json(result);
     } catch (ex) {
         // logger.error("删除仓库失败:" + ex);
         // result.code = 500;
@@ -213,11 +162,11 @@ router.post('/del', function(request, response, next) {
 });
 //运费模板列表
 router.post('/list', function(request, response, next) {
-    logger.info("进入查询运费模板流程");
+    logger.info("进入查询运费模板列表流程");
     var result = {code:200};
 
     try{
-       // var params = request.query;
+        //var params = request.query;
         var params = request.body;
         //参数校验
 
@@ -232,37 +181,53 @@ router.post('/list', function(request, response, next) {
 
         logger.info("list freight params:" + JSON.stringify(params));
 
-        result.page ={total:3,pageCount:1};
 
 
-        var freight = {id:1,name:"运费模板A"};
+
+        var freight = {id:1,name:"运费模板A",type:1};
 
         var rules = {supportProvince:"460000,210000,220000,620000,330000,440000",//支持的省份 以“,”分割
 
-            type:1, /* 类型 1：按件数  2：按件数上不封顶  3：按重量  4：按重量上不封顶*/
+             /* 类型 1：按件数  2：按件数上不封顶  3：按重量  4：按重量上不封顶*/
 
             rule:"2件内10元，每增加1件，增加运费5元"//运费规则
         };
 
         var rules1 = {supportProvince:"460000,210000,220000,620000,330000,440000",//支持的省份 以“,”分割
 
-            type:4, /* 类型 1：按件数  2：按件数上不封顶  3：按重量  4：按重量上不封顶*/
+            /* 类型 1：按件数  2：按件数上不封顶  3：按重量  4：按重量上不封顶*/
 
-            rule:"2kg内10元，每增加1kg，增加运费5元"//运费规则
+            rule:"件内10元，每增加1件，增加运费5元"//运费规则
         };
-
+        var prodfreList = [];
         var templateList = [];
         templateList.push(rules);
         templateList.push(rules1);
-        templateList.push(rules);
         freight.templateList = templateList;
+        prodfreList.push(freight);
+        var templateList1 = [];
+        var freight1 = {id:1,name:"运费模板B",type:4};
 
-        var prodfreList = [];
-        prodfreList.push(freight);
-        freight.name = "运费模板B";
-        prodfreList.push(freight);
-        freight.name = "运费模板C";
-        prodfreList.push(freight);
+        var rules2 = {supportProvince:"460000,210000,220000,620000,330000,440000",//支持的省份 以“,”分割
+
+            /* 类型 1：按件数  2：按件数上不封顶  3：按重量  4：按重量上不封顶*/
+
+            rule:"2kg内10元，每0.5kg，增加运费5元"//运费规则
+        };
+
+        rules3 = {supportProvince:"460000,210000,220000,620000,330000,440000",//支持的省份 以“,”分割
+
+            /* 类型 1：按件数  2：按件数上不封顶  3：按重量  4：按重量上不封顶*/
+
+            rule:"件内10元，每增加1件，增加运费5元"//运费规则
+        };
+
+
+        templateList1.push(rules2);
+        templateList1.push(rules3);
+        freight.templateList = templateList1;
+        prodfreList.push(freight1);
+
 
         result.prodfreList = prodfreList;
         //Freight.list(params,function(error,storeList){
@@ -280,6 +245,8 @@ router.post('/list', function(request, response, next) {
         // result.code = 500;
         // result.desc = "查询仓库列表失败";
         /*********************上面是有效代码，服务有的话要打开上面的代码，删除下面的代码*********************/
+        result.code = 500;
+        logger.error("查询仓库列表失败:" + ex);
 
         response.json(result);
     }

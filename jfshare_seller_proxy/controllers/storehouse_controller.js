@@ -27,7 +27,7 @@ router.post('/add', function(request, respone, next) {
 
             result.code = 500;
             result.desc = "请求参数错误";
-            respone.json(result);
+            response.json(result);
             return;
         }
 

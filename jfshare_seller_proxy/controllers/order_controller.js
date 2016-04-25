@@ -12,117 +12,18 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 var Product = require('../lib/models/product');
 var Util = require('../lib/models/util');
 
-// 订单预览页-->页面不存在
-router.post('/preview', function(req, res, next) {
-    var result = {code:200};
-
-    try{
-        var productRes = [];
-
-        var arg = req.body;
-        logger.info("订单预览页面请求， arg:" + JSON.stringify(arg));
-        var userId = arg.userId;
-
-        var paramters = arg.product;
-        var length = paramters.length;
-
-        Product.getDefaultAddress(userId, function(err, data) {
-            if(err){
-                res.json(err);
-                return;
-            }
-            var addressInfo = data[0].addressInfo;
-            if(addressInfo != null) {
-                result.userName = addressInfo.receiverName;
-                result.mobileNo = addressInfo.mobile || "13013001340";
-                var addressDes = addressInfo.provinceName + addressInfo.cityName + addressInfo.countyName + addressInfo.address;
-                result.address = {addressId: addressInfo.id, addressInfo:addressDes};
-            }
-
-            var count = 0;
-            paramters.forEach(function (param) {
-                Product.queryHotSKU(param, function(err, productInfo) {
-                    if(err){
-                        //res.json(err);
-                        return;
-                    }
-                    var productItem = {
-                        productId:productInfo.product.productId,
-                        productName:productInfo.product.productName,
-                        curPrice: productInfo.product.productSku.curPrice,
-                        imgUrl: productInfo.product.imgKey.split(',')[0]
-                    };
-
-                    Product.getStockForSku(param, function(err, stockInfo) {
-                        if(err){
-                            //res.json(err);
-                            return;
-                        }
-                        var stock = stockInfo.stockInfo;
-                        productItem.activeStock = stock.total - stock.lockTotal;
-                        productRes.push(productItem);
-                        logger.info("productRes:" + JSON.stringify(productRes));
-
-                        if(count >= length - 1) {
-                            result.product = productRes;
-                            res.json(result);
-                            logger.info("order preview response:" + JSON.stringify(result));
-                        }
-                        count = count + 1;
-                    });
-                });
-            });
-        });
-    } catch(ex) {
-        logger.error("produce preview error:" + ex);
-        result.code = 500;
-        result.desc = "获取用户信息及商品信息失败";
-        res.json(result);
-    }
-});
-
-// 提交订单请求
-router.post('/submit', function(req, res, next) {
-    var result = {code:200};
-
-    try{
-        var arg = req.body;
-        logger.info("提交订单请求， arg:" + JSON.stringify(arg));
-
-        if(arg == null || arg.userId == null || arg.deliverInfo == null ||
-            arg.sellerDetailList == null ){
-            result.code = 400;
-            result.desc = "没有填写用户ＩＤ";
-            res.json(result);
-            return;
-        }
-
-        Product.orderConfirm(arg, function (err, orderIdList) {
-            if(err){
-                res.json(err);
-                return;
-            }
-            result.orderIdList = orderIdList;
-            res.json(result);
-        });
-    } catch(ex) {
-        logger.error("submit order error:" + ex);
-        result.code = 500;
-        result.desc = "提交订单失败";
-        res.json(result);
-    }
-});
 
 // 查询订单列表
-router.get('/list', function(req, res, next) {
+router.post('/list', function(req, res, next) {
     var result = {code: 200};
 
     try{
-        var arg = req.query;
+       // var arg = req.query;
+        var arg = req.body;
         logger.info("查询订单列表请求参数：" + JSON.stringify(arg));
         var params = {};
         //userid 改为了userId  2016.4.12
-        params.userId = arg.userId || null;
+        params.userId = arg.sellerId || null;
         params.orderStatus = Product.getOrderStateIdBuyerEnum(arg.orderstatus);
         params.percount = arg.percount || 20;
         params.curpage = arg.curpage || 1;
@@ -148,6 +49,7 @@ router.get('/list', function(req, res, next) {
                         orderId: order.orderId,
                         orderPrice: order.closingPrice,
                         //添加了应答的数据
+                        postage:order.postage,
                         username:order.username,
                         cancelName:order.cancelName,
                         sellerName:order.sellerName,
@@ -200,16 +102,19 @@ router.get('/list', function(req, res, next) {
 });
 
 // 查询订单详情
-router.get('/info', function(req, res, next) {
+router.post('/info', function(req, res, next) {
     var result = {code: 200};
     try{
-        var arg = req.query;
+        //var arg = req.query;
+
+        var arg = req.body;
+
         logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
 
         var params = {};
-        params.userId = arg.userid || null;
-        params.orderId = arg.orderid || null;
-        params.userType = arg.usertype || 1; // 1:买家 2：卖家 3：系统
+        params.userId = arg.sellerId || null;
+        params.orderId = arg.orderId || null;
+        params.userType =  2; // 1:买家 2：卖家 3：系统
         if(params.userId == null || params.orderId == null){
             result.code = 400;
             result.desc = "请求参数错误";
@@ -231,10 +136,55 @@ router.get('/info', function(req, res, next) {
             result.orderid = orderInfo.orderId;
             result.orderstatus = Product.getOrderStateBuyerEnum(orderInfo.orderState);
             if(orderInfo.deliverInfo !== null) {
-                result.address = orderInfo.deliverInfo.provinceName +
-                    orderInfo.deliverInfo.cityName +
-                    orderInfo.deliverInfo.countyName +
-                    orderInfo.deliverInfo.receiverAddress;
+                result.deliverInfo = orderInfo.deliverInfo;
+                result.deliverInfo.expressMsg = [
+                    {
+                        "time": "2016-02-22 13:37:26",
+                        "ftime": "2016-02-22 13:37:26",
+                        "context": "快件已签收,签收人是草签，签收网点是北京市朝阳安华桥"
+                    },
+                    {
+                        "time": "2016-02-22 07:51:50",
+                        "ftime": "2016-02-22 07:51:50",
+                        "context": "北京市朝阳安华桥的牛鹏超18518350628正在派件"
+                    },
+                    {
+                        "time": "2016-02-22 07:02:10",
+                        "ftime": "2016-02-22 07:02:10",
+                        "context": "快件到达北京市朝阳安华桥，上一站是北京集散，扫描员是张彪18519292322"
+                    },
+                    {
+                        "time": "2016-02-22 01:40:35",
+                        "ftime": "2016-02-22 01:40:35",
+                        "context": "快件由北京集散发往北京市朝阳安华桥"
+                    },
+                    {
+                        "time": "2016-02-20 22:42:14",
+                        "ftime": "2016-02-20 22:42:14",
+                        "context": "快件由温州分拨中心发往北京集散"
+                    },
+                    {
+                        "time": "2016-02-20 19:56:29",
+                        "ftime": "2016-02-20 19:56:29",
+                        "context": "快件由苍南(0577-59905999)发往温州分拨中心"
+                    },
+                    {
+                        "time": "2016-02-20 19:50:09",
+                        "ftime": "2016-02-20 19:50:09",
+                        "context": "快件由苍南(0577-59905999)发往北京(010-53703166转8039或8010)"
+                    },
+                    {
+                        "time": "2016-02-20 19:50:08",
+                        "ftime": "2016-02-20 19:50:08",
+                        "context": "苍南(0577-59905999)已进行装袋扫描"
+                    },
+                    {
+                        "time": "2016-02-20 19:46:22",
+                        "ftime": "2016-02-20 19:46:22",
+                        "context": "苍南(0577-59905999)的龙港公司已收件，扫描员是龙港公司"
+                    }
+                ];
+
             }
             result.createTime = orderInfo.deliverTime;
             result.comment = orderInfo.buyerComment;
@@ -248,7 +198,10 @@ router.get('/info', function(req, res, next) {
                         curPrice: orderInfo.productList[i].curPrice,
                         orgPrice: orderInfo.productList[i].orgPrice,
                         imgUrl:orderInfo.productList[i].imagesUrl,
-                        count:orderInfo.productList[i].count
+                        count:orderInfo.productList[i].count,
+                        postage:orderInfo.postage,
+                        exchangeScore:orderInfo.exchangeScore,
+                        closingPrice:orderInfo.closingPrice
                     });
                 }
                 result.productList = productList;
@@ -364,72 +317,6 @@ router.get('/paystate', function(req, res, next) {
     }
 });
 
-//获取物流信息
-router.get('/query', function(req, res, next) {
-    var result = {code: 200};
-    try{
-        var arg = req.query;
-        logger.info("请求的参数为:" + JSON.stringify(arg));
 
-        if(arg == null || arg.orderId == null){
-            result.code = 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
-
-        Product.expressQuery(arg.orderId, function(err, expressData) {
-
-            var traceItem = [];
-            if(err) {
-                res.json(err);
-                return;
-            }
-            if(expressData !== null) {
-                var expressInfo = expressData[0].expressInfo;
-                var expressTrace = expressData[0].expressTrace;
-
-                //物流信息
-                result.expressInfo = {
-                    id: expressInfo.id,
-                    name: expressInfo.name,
-                    queryUrl: expressInfo.queryUrl,
-                    status: expressInfo.status,
-                    comment: expressInfo.comment,
-                    createTime: expressInfo.createTime,
-                    createUserId: expressInfo.createUserId,
-                    lastUpdateTime: expressInfo.lastUpdateTime,
-                    lastUpdateUserId: expressInfo.lastUpdateUserId,
-                    kuaidiKey: expressInfo.kuaidiKey,
-                    nameRule: expressInfo.nameRule,
-                    grabState: expressInfo.grabState
-                };
-                //物流跟踪记录
-                var traceItemsList = expressTrace.traceItems;
-                traceItemsList.forEach(function(a){
-                    traceItem.push({time: a.time, context: a.context, ftime: a.ftime});
-                });
-                result.expressTrace = {
-                    state: expressTrace.state,
-                    nu: expressTrace.nu,
-                    status: expressTrace.status,
-                    orderId: expressTrace.orderId,
-                    traceItems: traceItem
-                };
-
-            } else{
-                result.code = 500;
-                result.desc = "获取物流信息失败";
-            }
-            res.json(result);
-            logger.info("物流信息为:" + JSON.stringify(result));
-        });
-    } catch(ex){
-        logger.error("获取失败，原因是:" + ex);
-        result.code = 500;
-        result.desc = "获取物流信息失败";
-        res.json(result);
-    }
-});
 
 module.exports = router;

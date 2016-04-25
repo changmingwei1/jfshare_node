@@ -161,30 +161,7 @@ Freight.prototype.list = function(params, callback){
      *
      * *****************/
 
-    /*********************一下是测试数据****************************/
-    var addressList = [];
-    var storehouse = new storehouse_types.Storehouse({
-        id:1,sellerId:5,name:"华北仓",
-        supportProvince:"220000,370000,220000,630000,330000,440000"
-    });
 
-    var storehouse1 = new storehouse_types.Storehouse({
-        id:2,sellerId:5,name:"华南仓",
-        supportProvince:"460000,210000,220000,620000,330000,440000"
-    });
-    var storehouse2 = new storehouse_types.Storehouse({
-        id:3,sellerId:5,name:"华中仓",
-        supportProvince:"210000,460000,130000,620000,330000,440000"
-    });
-    var storehouse3 = new storehouse_types.Storehouse({
-        id:4,sellerId:5,name:"华东仓",
-        supportProvince:"460000,610000,220000,230000,330000,440000"
-    });
-
-    addressList.push(storehouse);
-    addressList.push(storehouse1);
-    addressList.push(storehouse2);
-    addressList.push(storehouse3);
 
     callback(null,addressList);
     /*********************以上是测试数据****************************/

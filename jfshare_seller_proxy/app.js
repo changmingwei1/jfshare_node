@@ -11,8 +11,12 @@ var user = require('./controllers/user_controller');
 var product=require('./controllers/product_controller');
 var order  = require('./controllers/order_controller');
 var storehouse = require('./controllers/storehouse_controller');
-
+var subject = require('./controllers/subject_controller');
+var expressOrder = require('./controllers/express_controller');
+var freight = require('./controllers/freight_controller');
+var sellerfreight = require('./controllers/sellerfreight_controller');
 var app = express();
+
 
 
 app.use(logger('dev'));
@@ -20,11 +24,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/seller/sellerfreight',sellerfreight);
+app.use('/seller/freight',freight);
+app.use('/seller/subject',subject);
 app.use('/seller',user);
 app.use('/seller/product',product);
 app.use('/seller/order',order);
 app.use('/seller/storehouse',storehouse);
+app.use('/seller/expressorder',expressOrder);
 // error handlers
 
 // catch 404 and forward to error handler
