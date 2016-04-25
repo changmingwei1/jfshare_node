@@ -70,14 +70,14 @@ Cart.prototype.addCartItem = function(param, callback){
 
 //删除购物车
 Cart.prototype.deleteCartItem = function(param, callback){
-    var carKeys = param.carKeys;
-    var carKeyList = [];
-    for(var i = 0; i < carKeys.length; i++){
-        var item = new cart_types.CartKey(carKeys[i]);
-        carKeyList.push(item);
-    }
-
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [userId, carKeyList, 2]);
+    //var carKeys = param.carKeys;
+    //var carKeyList = [];
+    //for(var i = 0; i < carKeys.length; i++){
+    //    var item = new cart_types.CartKey(carKeys[i]);
+    //    carKeyList.push(item);
+    //}
+    var cartKey = new cart_types.CartKey({productId:param.productId,skuNum:param.skunum});
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [param.userId, cartKey, 2]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-deleteItem  result:" + JSON.stringify(data));
@@ -94,9 +94,10 @@ Cart.prototype.deleteCartItem = function(param, callback){
     });
 };
 
-Cart.prototype.cartListItem = function(userId, callback){
+//购物车列表
+Cart.prototype.cartListItem = function(param, callback){
 
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [userId, 2]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [param.userId, 2]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-listItem  result:" + JSON.stringify(data));
@@ -113,11 +114,12 @@ Cart.prototype.cartListItem = function(userId, callback){
     });
 };
 
+//修改购物车中商品的数量
 Cart.prototype.cartUpdateItem = function(param, callback){
     var cartKey = new cart_types.CartKey({productId:param.productId,skuNum:param.skunum});
     var item = new cart_types.Item({
         productId:param.productId,
-        skuNum:param.skunum,
+        skuNum:param.skuNum,
         count:param.count,
         price:param.price || "0",
         wi: param.wi || null

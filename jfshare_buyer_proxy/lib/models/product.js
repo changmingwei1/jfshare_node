@@ -63,7 +63,6 @@ Product.prototype.queryProductList = function(params, callback){
     });
 };
 
-
 // 查询商品
 Product.prototype.queryProduct = function(productId, baseTag, skuTemplateTag, skuTag, attributeTag, callback){
     var param = new product_types.ProductRetParam({
@@ -173,6 +172,7 @@ Product.prototype.queryProductDetail = function (arg, callback) {
     });
 };
 
+//查询库存
 Product.prototype.getStock = function(productId, callback){
 
     // 获取client
@@ -192,6 +192,7 @@ Product.prototype.getStock = function(productId, callback){
     });
 };
 
+//查询指定商品sku
 Product.prototype.getStockForSku = function(paramters, callback) {
     // 获取client
     var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, "getStockForSku", [paramters.productId, [paramters.skunum]]);
@@ -212,6 +213,7 @@ Product.prototype.getStockForSku = function(paramters, callback) {
     });
 };
 
+//获取类目列表
 Product.prototype.getSubTree = function(subjectId, callback) {
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTree", subjectId);
 
@@ -228,6 +230,17 @@ Product.prototype.getSubTree = function(subjectId, callback) {
         }
     });
 };
+
+
+
+
+
+
+
+
+
+
+
 
 
 Product.prototype.getDefaultAddress = function(userId,  callback) {

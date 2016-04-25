@@ -1,5 +1,5 @@
 /**
- * Created by zhaoshenghai on 16/3/22.
+ * @author by YinBo on 16/3/22.
  */
 var express = require('express');
 var router = express.Router();
@@ -8,29 +8,46 @@ var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
 
 var Product = require('../lib/models/product');
+var Address = require('../lib/models/address');
 
 // 新增收货地址
-router.post('/add', function(req, res, next) {
+router.get('/add', function(req, res, next) {
     var result = {code: 200};
 
     try{
-        var arg = req.body;
-        logger.info("新增收货地址请求， arg:" + JSON.stringify(arg));
-
+        var arg = req.query;
         if(arg == null) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
             return;
         }
-        if(arg.userId == null || arg.received == null || arg.mobileNo == null || arg.area == null || arg.address == null || arg.postCode == null){
-            result.code = 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
+        //if(arg.userId == null || arg.received == null || arg.mobileNo == null || arg.area == null || arg.address == null || arg.postCode == null){
+        //    result.code = 400;
+        //    result.desc = "请求参数错误";
+        //    res.json(result);
+        //    return;
+        //}
+        var params = {};
+        params.userId = arg.userId || 2;
+        params.receiverName = arg.receiverName || "大表哥";
+        params.mobile = arg.mobile || "13558731840";
+        params.address = arg.address || "北京市朝阳区安外北苑路与红军营南路交汇处西南角";
+        params.postCode = arg.postCode || "100000";
+        params.isDefault = arg.isDefault || 1;
+        params.area = {
+            provinceId:arg.provinceId || "110000",
+            provinceName:arg.provinceName || "北京市",
+            cityId:arg.cityId || "110100",
+            cityName:arg.cityName || "北京市",
+            countyId:arg.countyId || "110105",
+            countyName:arg.countyName || ""
+        };
+        params.token = arg.token || "鉴权信息1";
+        params.ppInfo = arg.ppInfo || "鉴权信息2";
 
-        Product.addAddress(arg, function(err, data) {
+        logger.info("新增收货地址请求， arg:" + JSON.stringify(params));
+        Address.addAddress(params, function(err, data) {
             if(err){
                 res.json(err);
                 return;
@@ -46,21 +63,20 @@ router.post('/add', function(req, res, next) {
     }
 });
 
+//删除收货地址
 router.get('/delete', function(req, res, next) {
     var result = {code: 200};
 
     try{
         var arg = req.query;
-        logger.info("删除收货地址请求， arg:" + JSON.stringify(arg));
 
-        if(arg.userid == null || arg.addrid == null){
-            result.code= 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
-
-        Product.delAddress(arg.userid, arg.addrid, function(err, data) {
+        var params = {};
+        params.userId = arg.userId || 2;
+        params.addrId = arg.addrId || 249;
+        params.token = arg.token || "鉴权信息1";
+        params.ppInfo = arg.ppInfo || "鉴权信息2";
+        logger.info("请求参数：" + JSON.stringify(params));
+        Address.delAddress(params, function(err, data) {
             if(err){
                 res.json(err);
                 return;
@@ -76,27 +92,40 @@ router.get('/delete', function(req, res, next) {
     }
 });
 
-router.post('/update', function (req, res, next) {
+//修改收货地址
+router.get('/update', function (req, res, next) {
     var result = {code: 200};
 
     try {
-        var arg = req.body;
-        logger.info("更新收货地址请求， arg:" + JSON.stringify(arg));
-
+        var arg = req.query;
         if(arg == null) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
             return;
         }
-        if(arg.userId == null || arg.addrId == null){
-            result.code = 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
+        var params = {};
+        params.userId = arg.userId || 2;
+        params.id = arg.id || 24;
+        params.receiverName = arg.receiverName || "大表哥";
+        params.mobile = arg.mobile || "13558731840";
+        params.address = arg.address || "北京市朝阳区安外北苑路与红军营南路交汇处西南角";
+        params.postCode = arg.postCode || "100000";
+        params.isDefault = arg.isDefault || 1;
+        params.area = {
+            provinceId:arg.provinceId || "110000",
+            provinceName:arg.provinceName || "北京市",
+            cityId:arg.cityId || "110100",
+            cityName:arg.cityName || "北京市",
+            countyId:arg.countyId || "110105",
+            countyName:arg.countyName || ""
+        };
+        params.token = arg.token || "鉴权信息1";
+        params.ppInfo = arg.ppInfo || "鉴权信息2";
 
-        Product.updateAddress(arg, function(err, data) {
+        logger.info("新增收货地址请求， arg:" + JSON.stringify(params));
+
+        Address.updateAddress(params, function(err, data) {
             if(err){
                 res.json(err);
                 return;
@@ -112,21 +141,18 @@ router.post('/update', function (req, res, next) {
     }
 });
 
+//查询收货地址列表
 router.get('/list', function(req, res, next) {
     var result = {code: 200};
 
     try{
         var arg = req.query;
-        logger.info("获取收货地址列表请求， arg:" + JSON.stringify(arg));
+        var params = {};
+        params.userId = arg.userId || 2;
+        params.token = arg.token || "鉴权信息1";
+        params.ppInfo = arg.ppInfo || "鉴权信息2";
 
-        if(arg.userid == null) {
-            result.code= 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
-
-        Product.queryAddress(arg.userid, function(err, addressInfoList) {
+        Address.queryAddress(params, function(err, addressInfoList) {
             if(err) {
                 res.json(err);
                 return;
@@ -164,7 +190,5 @@ router.get('/list', function(req, res, next) {
         res.json(result);
     }
 });
-
-
 
 module.exports = router;

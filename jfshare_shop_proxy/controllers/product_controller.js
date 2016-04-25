@@ -111,6 +111,7 @@ router.get('/productinfo', function(req, res, next) {
                 var product = data[0].product;
                 productInfo.productId = product.productId;
                 productInfo.productName = product.productName;
+                productInfo.viceName = product.viceName;
                 productInfo.imgKey = product.imgKey;
                 productInfo.productDesc = product.detailContent;
                 /**
