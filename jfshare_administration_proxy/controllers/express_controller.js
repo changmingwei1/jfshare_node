@@ -231,48 +231,6 @@ router.post('/expresslist', function(request, response, next) {
     }
 });
 
-//获取物流信息
-router.post('/query', function(request, response, next) {
-    logger.info("进入获取物流信息流程");
-    var result = {code:200};
-
-    try{
-        //var params = request.query;
-        var params = request.body;
-
-
-        if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if(params.orderId == null || params.orderId == ""){
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-        var expressInfo = [{"time":"2016-02-22 13:37:26","ftime":"2016-02-22 13:37:26","context":"快件已签收,签收人是草签，签收网点是北京市朝阳安华桥"},{"time":"2016-02-22 07:51:50","ftime":"2016-02-22 07:51:50","context":"北京市朝阳安华桥的牛鹏超18518350628正在派件"},{"time":"2016-02-22 07:02:10","ftime":"2016-02-22 07:02:10","context":"快件到达北京市朝阳安华桥，上一站是北京集散，扫描员是张彪18519292322"},{"time":"2016-02-22 01:40:35","ftime":"2016-02-22 01:40:35","context":"快件由北京集散发往北京市朝阳安华桥"},{"time":"2016-02-20 22:42:14","ftime":"2016-02-20 22:42:14","context":"快件由温州分拨中心发往北京集散"},{"time":"2016-02-20 19:56:29","ftime":"2016-02-20 19:56:29","context":"快件由苍南(0577-59905999)发往温州分拨中心"},{"time":"2016-02-20 19:50:09","ftime":"2016-02-20 19:50:09","context":"快件由苍南(0577-59905999)发往北京(010-53703166转8039或8010)"},{"time":"2016-02-20 19:50:08","ftime":"2016-02-20 19:50:08","context":"苍南(0577-59905999)已进行装袋扫描"},{"time":"2016-02-20 19:46:22","ftime":"2016-02-20 19:46:22","context":"苍南(0577-59905999)的龙港公司已收件，扫描员是龙港公司"}];
-
-        result.id = 100001;
-        result.name = "顺丰";
-        result.traceJson = expressInfo;
-        result.remark = "";
-
-        logger.info("query expressOrder params:" + JSON.stringify(params));
-
-        response.json(result);
-
-    } catch (ex) {
-
-
-        response.json(result);
-    }
-});
 //导入物流单
 router.post('/importList', function(request, response, next) {
     logger.info("进入获取物流信息流程");
