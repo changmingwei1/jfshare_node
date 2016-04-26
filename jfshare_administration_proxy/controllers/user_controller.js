@@ -26,25 +26,21 @@ router.post('/login', function(request, respone, next) {
             respone.json(result);
             return;
         }
+        if(arg == null || arg.pwdEnc == null ||arg.pwdEnc ==""){
+            result.code = 500;
+            result.desc = "请求参数错误";
+            respone.json(result);
+            return;
+        }
+        result.userId=5;
+        respone.json(result);
 
-        User.login(arg, function (err, data) {
-            if(err){
-
-                //respone.json(err);
-
-                result.userId = 5;
-                respone.json(result);
-                return;
-            }else{
-                respone.json(result);
-            }
-        });
     } catch (ex) {
         logger.error("login error:" + ex);
         result.code = 500;
         result.desc = "请求参数错误";
-
         respone.json(result);
+
     }
 });
 

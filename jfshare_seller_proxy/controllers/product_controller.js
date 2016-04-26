@@ -195,7 +195,7 @@ router.post('/creat', function(request, response, next) {
 });
 
 //获取商品信息，进行编辑
-router.get('/post', function(request, response, next) {
+router.post('/get', function(request, response, next) {
 
     logger.info("进入编辑商品接口");
     var result = {code: 200};
