@@ -9,11 +9,11 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 
 var Product = require('../lib/models/product');
 
-// 新增收货地址
-router.get('/add', function(req, res, next) {
+// 新增系统消息
+router.post('/add', function(req, res, next) {
     var result = {code: 200};
     try{
-        var arg = req.query;
+        var arg = req.body;
         var params = {};
         params.title = arg.title || "标题：五一大促";
         params.content = arg.content || "消息内容：锅碗瓢盆全都半价啦！";
@@ -22,7 +22,7 @@ router.get('/add', function(req, res, next) {
         params.type = arg.type || "推送类型：1主站、2用户端app、3商家后台、4商户端app";
         params.state = arg.state || "状态：1已过期、2进行中、3未开始三种";
 
-        logger.info("新增收货地址请求， params:" + JSON.stringify(params));
+        logger.info("新增系统消息请求， params:" + JSON.stringify(params));
 
 
         res.json(result);
@@ -35,28 +35,18 @@ router.get('/add', function(req, res, next) {
     }
 });
 
-router.get('/delete', function(req, res, next) {
+// 删除系统消息
+router.post('/delete', function(req, res, next) {
     var result = {code: 200};
 
     try{
-        var arg = req.query;
-        logger.info("删除收货地址请求， arg:" + JSON.stringify(arg));
+        var arg = req.body;
+        var messageId = arg.messageId || 1;
+        logger.info("删除收货地址请求， arg:" + JSON.stringify("messageId:" + messageId));
 
-        if(arg.userid == null || arg.addrid == null){
-            result.code= 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
+        res.json(result);
+        logger.info("delete address response:" + JSON.stringify(result));
 
-        Product.delAddress(arg.userid, arg.addrid, function(err, data) {
-            if(err){
-                res.json(err);
-                return;
-            }
-            res.json(result);
-            logger.info("delete address response:" + JSON.stringify(result));
-        });
     } catch (ex) {
         logger.error("delete address error:" + ex);
         result.code = 500;
@@ -65,87 +55,102 @@ router.get('/delete', function(req, res, next) {
     }
 });
 
+// 修改系统消息
 router.post('/update', function (req, res, next) {
     var result = {code: 200};
 
     try {
         var arg = req.body;
-        logger.info("更新收货地址请求， arg:" + JSON.stringify(arg));
+        var params = {};
+        params.title = arg.title || "标题：五一大促";
+        params.content = arg.content || "消息内容：锅碗瓢盆全都半价啦！";
+        params.beginTime = arg.beginTime || "2016-5-1 00:00:00";
+        params.endTime = arg.endTime || "2016-5-5 00:00:00";
+        params.type = arg.type || "推送类型：1主站、2用户端app、3商家后台、4商户端app";
+        params.state = arg.state || "状态：1已过期、2进行中、3未开始三种";
 
-        if(arg == null) {
-            result.code = 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
-        if(arg.userId == null || arg.addrId == null){
-            result.code = 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
+        logger.info("更新系统消息请求， params:" + JSON.stringify(params));
 
-        Product.updateAddress(arg, function(err, data) {
-            if(err){
-                res.json(err);
-                return;
-            }
-            res.json(result);
-            logger.info("update address response:" + JSON.stringify(result));
-        });
+
+        res.json(result);
+        logger.info("add address response:" + JSON.stringify(result));
     } catch (ex) {
         logger.error("update address error:" + ex);
         result.code = 500;
-        result.desc = "更新收货地址信息失败";
+        result.desc = "更新系统消息失败";
         res.json(result);
     }
 });
 
-router.get('/list', function(req, res, next) {
+//获取系统消息
+router.post('/get', function(req, res, next) {
     var result = {code: 200};
 
     try{
-        var arg = req.query;
-        logger.info("获取收货地址列表请求， arg:" + JSON.stringify(arg));
+        var arg = req.body;
+        var messageId = arg.messageId || 1;
+        logger.info("获取系统消息请求， arg:" + JSON.stringify("messageId:" + messageId));
 
-        if(arg.userid == null) {
-            result.code= 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
+        result.title = "标题：五一大促";
+        result.content = "消息内容：锅碗瓢盆全都半价啦！";
+        result.beginTime = "2016-5-1 00:00:00";
+        result.endTime = "2016-5-5 00:00:00";
+        result.type = "推送类型：1主站、2用户端app、3商家后台、4商户端app";
+        result.state = "状态：1已过期、2进行中、3未开始三种";
+        res.json(result);
+        logger.info("获取系统消息 response:" + JSON.stringify(result));
 
-        Product.queryAddress(arg.userid, function(err, addressInfoList) {
-            if(err) {
-                res.json(err);
-                return;
-            }
-            var addressList = [];
-            if(addressInfoList !== null && addressInfoList.length >0){
-                addressInfoList.forEach(function(address) {
-                    addressList.push({
-                        addrId: address.id,
-                        received: address.receiverName,
-                        mobileNo: address.mobile,
-                        area: {
-                            provinceId: address.provinceId,
-                            provinceName: address.provinceName,
-                            cityId: address.cityId,
-                            cityName: address.cityName,
-                            countyId: address.countyId,
-                            countyName: address.countyName
-                        },
-                        address: address.address,
-                        postcode: address.postCode,
-                        isDefault: address.isDefault
-                    });
-                });
-                result.addressList = addressList;
-            }
+    } catch (ex) {
+        logger.error("获取系统消息 error:" + ex);
+        result.code = 500;
+        result.desc = "获取系统消息失败";
+        res.json(result);
+    }
+});
 
-            res.json(result);
-            logger.info("get address list response:" + JSON.stringify(result));
-        });
+//系统消息列表
+router.post('/list', function(req, res, next) {
+    var result = {code: 200};
+
+    try{
+        var arg = req.body;
+        var params = {};
+        params.title = arg.title || "五一大促";
+        params.state = arg.state || 1;
+        params.perCount = arg.perCount || 20;
+        params.curPage = arg.curPage || 1;
+
+        logger.info("获取收货地址列表请求， arg:" + JSON.stringify(params));
+        var message1 = {};
+        message1.title = "一一大促";
+        message1.content = "锅碗瓢盆全都八折啦！";
+        message1.beginTime = "2016-1-1 00:00:00";
+        message1.endTime = "2016-1-5 00:00:00";
+        message1.type = 4;//商户端app
+        message1.state = 3;//未开始
+        var message2 = {};
+        message2.title = "四一大促";
+        message2.content = "锅碗瓢盆全都七折啦！";
+        message2.beginTime = "2016-4-1 00:00:00";
+        message2.endTime = "2016-4-5 00:00:00";
+        message2.type = 2;//用户端app
+        message2.state = 2;//进行中
+        var message3 = {};
+        message3.title = "五一大促";
+        message3.content = "锅碗瓢盆全都半价啦！";
+        message3.beginTime = "2016-5-1 00:00:00";
+        message3.endTime = "2016-5-5 00:00:00";
+        message3.type = 1;//主站
+        message3.state = 1;//已过期
+        var page = {total:3,pageCount:1};
+
+        result.page = page;
+        result.message1 = message1;
+        result.message2 = message2;
+        result.message3 = message3;
+        res.json(result);
+        logger.info("获取系统消息 response:" + JSON.stringify(result));
+
     } catch (ex) {
         logger.error("get address list error:" + ex);
         result.code = 500;

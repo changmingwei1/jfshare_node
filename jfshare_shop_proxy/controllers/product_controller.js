@@ -13,12 +13,12 @@ var Product = require('../lib/models/product');
 var detailStock = require('../lib/models/detail_stock');
 
 //查询商品列表
-router.get('/list', function(req, res, next) {
+router.post('/list', function(req, res, next) {
     logger.info("进入获取商品列表接口");
     var resContent = {code:200};
 
     try{
-        var arg = req.query;
+        var arg = req.body;
         logger.info("get product list args:" + JSON.stringify(arg));
 
         var percount = arg.percount || 20;

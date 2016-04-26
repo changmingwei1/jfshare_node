@@ -11,11 +11,11 @@ var Product = require('../lib/models/product');
 var Cart = require('../lib/models/cart');
 
 //获取购物车中商品的数量
-router.get('/count', function(req, res, next) {
+router.post('/count', function(req, res, next) {
     logger.info("进入查询购物车中商品数量的接口...");
     var result = {code: 200};
     try {
-        var arg = req.query;
+        var arg = req.body;
         var userId = arg.userId || "2";
         var token = arg.token || "鉴权信息1";
         var ppInfo = arg.ppInfo || "鉴权信息2";
