@@ -383,11 +383,11 @@ router.get('/exists', function(request, response, next) {
 });
 
 //获取鉴权信息
-router.get('/getAuthInfo',function(request,response,next){
+router.post('/getAuthInfo',function(request,response,next){
     logger.info("进入获取验证码接口");
     var resContent = {code:200};
     try{
-        var param = request.query;
+        var param = request.body;
         var token = param.token || "鉴权信息1";
         var ppInfo = param.ppInfo || "鉴权信息2";
         var userId = param.userId;
@@ -420,11 +420,11 @@ router.get('/getAuthInfo',function(request,response,next){
 });
 
 //验证鉴权
-router.get('/validAuth',function(request,response,next){
-    logger.info("进入验证短信验证码接口");
+router.post('/validAuth',function(request,response,next){
+    logger.info("进入验证鉴权接口");
     var resContent = {code:200};
     try{
-        var param = request.query;
+        var param = request.body;
         var token = param.token;
         var ppInfo = param.ppInfo;
         var userId = param.userId;
@@ -772,10 +772,10 @@ router.post('/scoreTrade', function(request, response, next) {
 });
 
 //重置密码
-router.get('resetPwd',function(request,response,next){
+router.post('/resetPwd',function(request,response,next){
     logger.info("进入重置密码接口...");
 
-    var param = request.query;
+    var param = request.body;
     var mobile = param.mobile || "13558731842";
     var userId = param.userId || 2;
     var newPwd = param.newPwd || "AB123456";
@@ -821,9 +821,31 @@ router.get('resetPwd',function(request,response,next){
             return response.json({result: true});
         }
     });
+});
 
+//修改密码
+router.post('/changePwd',function(request,response,next){
+    logger.info("进入修改密码接口...");
+    var result = {code:200};
 
+    var param = request.body;
+    var mobile = param.mobile || "13558731842";
+    var userId = param.userId || 2;
+    var newPwd = param.newPwd || "AB123456";
+    var captchaDesc = param.captchaDesc || "7LJG";
+    var token = param.token || "鉴权信息1";
+    var ppInfo = param.ppInfo || "鉴权信息2";
 
+    var args = {};
+    args.mobile = mobile;
+    args.userId = userId;
+    args.newPwd = newPwd;
+    args.captchaDesc = captchaDesc;
+    args.token = token;
+    args.ppInfo = ppInfo;
+
+    logger.info("参数为: " + JSON.stringify(args));
+    response.json(result);
 });
 
 module.exports = router;

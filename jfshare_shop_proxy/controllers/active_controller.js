@@ -57,7 +57,35 @@ router.get('/imgList', function(request, response, next) {
     }
 });
 
-//获取系统消息列表，数据库没表，暂缓
+//获取系统消息列表
+router.get('/messageList', function(request, response, next) {
 
+    logger.info("进入获取系统消息列表接口...");
+    var resContent = {code:200};
+
+    try{
+        var param = request.query;
+        logger.info("It's test______" + param);
+
+        /************************************测试数据*****************************************/
+        var messageList = [2];
+        var  message= {
+            title:"我是标题",
+            message:"我是消息内容"
+        };
+
+        messageList[0] = message;
+        messageList[1] = message;
+        resContent.messageList = messageList;
+        logger.info("===============" + messageList);
+        response.json(resContent);
+
+    }catch(ex){
+        logger.error("获取信息失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能获取信息";
+        response.json(resContent);
+    }
+});
 
 module.exports = router;
