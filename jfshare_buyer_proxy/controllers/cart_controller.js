@@ -135,10 +135,10 @@ router.post('/delete', function(req, res, next) {
 });
 
 //购物车列表
-router.get('/list', function(req, res, next) {
+router.post('/list', function(req, res, next) {
     var result = {code: 200};
     try{
-        var arg = req.query;
+        var arg = req.body;
         var param = {};
         param.userId = arg.userId || "2";
         param.source = arg.source || 2;
