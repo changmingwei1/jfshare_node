@@ -16,13 +16,13 @@ var pagination_types = require('../lib/thrift/gen_code/pagination_types');
 var product_types = require("../lib/thrift/gen_code/product_types");
 
 //商品列表
-router.post('/list', function(request, response, next) {
+router.get('/list', function(request, response, next) {
     logger.info("进入获取商品列表接口");
     var result = {code:200};
 
     try{
-       // var params = request.query;
-        var params = request.body;
+        var params = request.query;
+       // var params = request.body;
         logger.info("get product list args:" + JSON.stringify(params));
 
         var percount = params.percount || 20;
@@ -30,13 +30,7 @@ router.post('/list', function(request, response, next) {
 
 
         //参数验证
-        if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
 
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
 
         //静态数据，设置分页
         result.page = {total: 100, pageCount:5};
@@ -129,73 +123,9 @@ router.post('/list', function(request, response, next) {
 });
 
 //
-router.post('/creat', function(request, response, next) {
-
-    logger.info("进入获取商品详情接口");
-    var result = {code: 200};
-
-    try{
-        var productInfo = {};
-
-       // var params = request.query;
-        var params = request.body;
-        logger.info("creat product list args:" + JSON.stringify(params));
-
-        //参数验证
-        if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-
-        //参数验证
-        if(params.brandId == null || params.brandId == "" ||params.brandId <= 0){
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-        //参数验证
-        if(params.subjectId == null || params.subjectId == "" ||params.subjectId <= 0){
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-
-        //参数验证
-        if(params.productName == null || params.productName == "" ){
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-        //参数验证
-        if(params.viceName == null || params.viceName == "" ){
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-
-        response.json(result);
-
-    }catch(ex) {
-        logger.error("create product  error:" + ex);
-        result.code = 500;
-        result.desc = "创建商品失败";
-        response.json(result);
-    }
-});
 
 //获取商品信息，进行编辑
-router.get('/post', function(request, response, next) {
+router.post('/get', function(request, response, next) {
 
     logger.info("进入编辑商品接口");
     var result = {code: 200};
