@@ -120,12 +120,12 @@ var product_types = require("../lib/thrift/gen_code/product_types");
 
 
 //购物车中点击立即结算  ---> 实物
-router.get('/preview', function(request, response, next) {
+router.post('/preview', function(request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code:200};
     try{
         //var params = request.query;
-        var params = request.query;
+        var params = request.body;
         var args = {};
         args.token = params.token || "鉴权信息1";
         args.ppInfo = params.ppInfo || "鉴权信息2";
@@ -172,12 +172,12 @@ router.get('/preview', function(request, response, next) {
 });
 
 //商品详情中点击立即购买  ---> 虚拟
-router.get('/preview2', function(request, response, next) {
+router.post('/preview2', function(request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code:200};
     try{
         //var params = request.query;
-        var params = request.query;
+        var params = request.body;
         var args = {};
         args.token = params.token || "鉴权信息1";
         args.ppInfo = params.ppInfo || "鉴权信息2";
@@ -214,17 +214,12 @@ router.get('/preview2', function(request, response, next) {
     }
 });
 
-
-
-
-
-
 // 查询订单列表
-router.get('/list', function(req, res, next) {
+router.post('/list', function(req, res, next) {
 
     var result = {code: 200};
     try{
-        var arg = req.query;
+        var arg = req.body;
         logger.info("查询订单列表请求参数：" + JSON.stringify(arg));
         var params = {};
         //userid 改为了userId  2016.4.12
@@ -293,12 +288,12 @@ router.get('/list', function(req, res, next) {
 });
 
 //查询各订单状态的数量
-router.get('/count', function(request, response, next) {
+router.post('/count', function(request, response, next) {
 
     logger.info("进入获取用户积分接口");
     var resContent = {code:200};
 
-    var param = request.query;
+    var param = request.body;
     var token = param.token || "鉴权信息1";
     var ppInfo = param.ppInfo || "鉴权信息2";
     var userType = param.userType || 1;
@@ -331,10 +326,10 @@ router.get('/count', function(request, response, next) {
 });
 
 // 查询订单详情--虚拟
-router.get('/info2', function(req, res, next) {
+router.post('/info2', function(req, res, next) {
     var result = {code: 200};
     try{
-        var arg = req.query;
+        var arg = req.body;
         logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
 
         var params = {};
@@ -384,10 +379,10 @@ router.get('/info2', function(req, res, next) {
 });
 
 // 查询订单详情--实物
-router.get('/info', function(req, res, next) {
+router.post('/info', function(req, res, next) {
     var result = {code: 200};
     try{
-        var arg = req.query;
+        var arg = req.body;
         logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
 
         var params = {};
@@ -525,10 +520,10 @@ router.get('/info', function(req, res, next) {
 //});
 
 //立即付款
-router.get('/payApply', function(req, res, next) {
+router.post('/payApply', function(req, res, next) {
     var result = {code: 200};
 
-    var arg = req.query;
+    var arg = req.body;
     var params = {};
 
     params.orderIdList = arg.orderIdList || "1";
@@ -553,10 +548,10 @@ router.get('/payApply', function(req, res, next) {
 });
 
 //确认收货
-router.get('/changeState', function(req, res, next) {
+router.post('/changeState', function(req, res, next) {
     var result = {code: 200};
 
-    var arg = req.query;
+    var arg = req.body;
     var params = {};
 
     params.orderId = arg.orderId || "5390002";
@@ -579,10 +574,10 @@ router.get('/changeState', function(req, res, next) {
 });
 
 //查询支付状态
-router.get('/paystate', function(req, res, next) {
+router.post('/paystate', function(req, res, next) {
     var result = {code: 200};
     try{
-        var arg = req.query;
+        var arg = req.body;
         logger.info("get pay state request:" + JSON.stringify(arg));
 
         if(arg == null || arg.payId == null){
@@ -616,12 +611,12 @@ router.get('/paystate', function(req, res, next) {
 });
 
 //获取物流信息
-router.get('/queryExpress', function(request, response, next) {
+router.post('/queryExpress', function(request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code:200};
     try{
         //var params = request.query;
-        var params = request.query;
+        var params = request.body;
         if(params.orderId == null || params.orderId == ""){
             result.code = 500;
             result.desc = "参数错误";
@@ -646,12 +641,12 @@ router.get('/queryExpress', function(request, response, next) {
 });
 
 //根据订单信息获取运费值
-router.get('/freight', function(request, response, next) {
+router.post('/freight', function(request, response, next) {
 
     logger.info("进入获取用户积分接口");
     var resContent = {code:200};
 
-    var param = request.query;
+    var param = request.body;
     var token = param.token || "鉴权信息1";
     var ppInfo = param.ppInfo || "鉴权信息2";
     var orderId = param.orderId || 1;
@@ -704,12 +699,12 @@ router.get('/freight', function(request, response, next) {
 });
 
 //申请退货
-router.get('/refund', function(request, response, next) {
+router.post('/refund', function(request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code:200};
     try{
         //var params = request.query;
-        var params = request.query;
+        var params = request.body;
         var args = {};
         args.userId = params.userId || 2;
         args.token = params.token || "鉴权信息1";
@@ -731,12 +726,12 @@ router.get('/refund', function(request, response, next) {
 });
 
 //获取售后信息
-router.get('/refundDesc', function(request, response, next) {
+router.post('/refundDesc', function(request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code:200};
     try{
         //var params = request.query;
-        var params = request.query;
+        var params = request.body;
         var args = {};
         args.userId = params.userId || 2;
         args.token = params.token || "鉴权信息1";
@@ -760,12 +755,12 @@ router.get('/refundDesc', function(request, response, next) {
 });
 
 //支付完成通知接口
-router.get('/notify/alipay', function(request, response, next) {
+router.post('/notify/alipay', function(request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code:200};
     try{
         //var params = request.query;
-        var params = request.query;
+        var params = request.body;
         var args = {};
         args.token = params.token || "鉴权信息1";
         args.ppInfo = params.ppInfo || "鉴权信息2";
@@ -781,12 +776,12 @@ router.get('/notify/alipay', function(request, response, next) {
 });
 
 //获取第三方支付的url
-router.get('/pay', function(request, response, next) {
+router.post('/pay', function(request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code:200};
     try{
         //var params = request.query;
-        var params = request.query;
+        var params = request.body;
         var args = {};
         args.token = params.token || "鉴权信息1";
         args.ppInfo = params.ppInfo || "鉴权信息2";
