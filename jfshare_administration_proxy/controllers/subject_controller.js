@@ -1,7 +1,7 @@
 
 
 /**
- * Created by huapengpeng on 2016/4/12.
+ * Created by YinBo on 2016/4/12.
  */
 var express = require('express');
 var router = express.Router();
@@ -9,6 +9,29 @@ var async = require('async');
 
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+
+//增加类目
+router.post('/add', function(req, res, next) {
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        var params = {};
+        params.name = arg.name || "电饭煲";
+        params.pid = arg.pid || "2";
+        params.isLeaf = arg.isLeaf || "1";
+        params.level = arg.level || "3";
+
+        logger.info("请求， params:" + JSON.stringify(params));
+
+        res.json(result);
+        logger.info("add brand response:" + JSON.stringify(result));
+    } catch (ex) {
+        logger.error("add brand error:" + ex);
+        result.code = 500;
+        result.desc = "新增品牌失败";
+        res.json(result);
+    }
+});
 
 //查询类目列表
 router.post('/query', function(request, response, next) {
@@ -20,23 +43,15 @@ router.post('/query', function(request, response, next) {
         //var params = request.query;
         var params = request.body;
         //参数校验
-        if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-        if(params.subjectPid == null || params.subjectPid == "" ||params.subjectPid < 0){
+        if(params.pid == null || params.pid == "" ||params.pid < 0){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
         var subjectList = [];
-        //一级类目
-        if(params.subjectPid == 0){
+        //显示一级类目,默认为0
+        if(params.pid == 0){
 
             var subject= {id:1001,name:"家用电器",isLeaf:0};
             var subject1= {id:1002,name:"个护美妆",isLeaf:0};
@@ -68,25 +83,19 @@ router.post('/query', function(request, response, next) {
             return;
         }
 
-        if(params.subjectPid == 1001){
+        if(params.pid == 1001){
             var subject= {id:2001,name:"生活电器",isLeaf:0};
             var subject1= {id:2002,name:"厨房电器",isLeaf:0};
             var subject2= {id:2003,name:"车载电器",isLeaf:0};
 
-
             subjectList.push(subject);
             subjectList.push(subject1);
             subjectList.push(subject2);
-
-            result.subjectList = subjectList;
-
             result.subjectList = subjectList;
             response.json(result);
             return;
-
         }
-        if(params.subjectPid == 1002){
-
+        if(params.pid == 1002){
             var subject= {id:2005,name:"女士护理",isLeaf:0};
             var subject1= {id:2006,name:"面部保养",isLeaf:0};
             var subject2= {id:2007,name:"香水精油",isLeaf:0};
@@ -101,13 +110,11 @@ router.post('/query', function(request, response, next) {
             subjectList.push(subject4);
             subjectList.push(subject5);
             result.subjectList = subjectList;
-
-            result.subjectList = subjectList;
             response.json(result);
             return;
         }
 
-        if(params.subjectPid > 1002 && params.subjectPid <2000){
+        if(params.pid > 1002 && params.pid <2000){
 
             var subject= {id:2050,name:"游戏设备",isLeaf:0};
             var subject1= {id:2051,name:"电脑整机",isLeaf:0};
@@ -123,14 +130,11 @@ router.post('/query', function(request, response, next) {
             subjectList.push(subject4);
             subjectList.push(subject5);
             result.subjectList = subjectList;
-
-            result.subjectList = subjectList;
             response.json(result);
             return;
         }
 
-        if(params.subjectPid >=2000 && params.subjectPid <=3000){
-
+        if(params.pid >=2000 && params.pid <=3000){
             var subject= {id:3001,name:"空调",isLeaf:0};
             var subject1= {id:3002,name:"扫地机",isLeaf:0};
             var subject2= {id:3003,name:"电风扇",isLeaf:0};
@@ -145,11 +149,8 @@ router.post('/query', function(request, response, next) {
             subjectList.push(subject4);
             subjectList.push(subject5);
             result.subjectList = subjectList;
-
-            result.subjectList = subjectList;
             response.json(result);
             return;
-
         }
 
     }catch(ex){
@@ -160,70 +161,70 @@ router.post('/query', function(request, response, next) {
     }
 });
 
-//查询品牌列表
-router.post('/querybrand', function(request, response, next) {
-
-    logger.info("进入查询品牌列表流程....");
-    var result = {code:200};
+//获取类目属性
+router.post('/get', function(req, res, next) {
+    var result = {code: 200};
 
     try{
-        //var params = request.query;
-        var params = request.body;
-        //参数校验
-        if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
+        var arg = req.body;
+        var subjectId = arg.subjectId || 1;
+        logger.info("请求， arg:" + JSON.stringify("subjectId:" + subjectId));
 
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
+        var attributes = [201,202];
+        result.attributes = attributes;
+        res.json(result);
+        logger.info("获取 response:" + JSON.stringify(result));
 
-        if(params.subjectId == null || params.subjectId == "" ||params.subjectId < 0){
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        var brandList = [];
-        //品牌
-
-        var brand= {id:25,name:"三洋"};
-        var brand1= {id:45,name:"Hello Kitty"};
-        var brand2= {id:73,name:"纵贯线"};
-        var brand3= {id:144,name:"龙的"};
-        var brand4= {id:146,name:"先锋"};
-        var brand5= {id:147,name:"艾美特(Airmate)"};
-        var brand6= {id:148,name:"奥克斯"};
-        var brand7= {id:149,name:"TCL"};
-        var brand8= {id:150,name:"华生"};
-        var brand9= {id:151,name:"赛亿"};
-        var brand10= {id:152,name:"澳柯玛"};
-        var brand11= {id:153,name:"康佳"};
-
-        brandList.push(brand);
-        brandList.push(brand1);
-        brandList.push(brand2);
-        brandList.push(brand3);
-        brandList.push(brand4);
-        brandList.push(brand5);
-        brandList.push(brand6);
-        brandList.push(brand7);
-        brandList.push(brand8);
-        brandList.push(brand9);
-        brandList.push(brand10);
-        brandList.push(brand11);
-        result.brandList = brandList;
-        response.json(result);
-        return;
-
-
-    }catch(ex){
-        logger.error("查询类目列表信息"+"失败，because :" + ex);
+    } catch (ex) {
+        logger.error("获取 error:" + ex);
         result.code = 500;
-        result.desc = "查询类目列表失败";
-        result.json(result);
+        result.desc = "获取失败";
+        res.json(result);
     }
 });
 
+//品类应用全部属性
+router.post('/flush', function(req, res, next) {
+    var result = {code: 200};
+
+    try{
+        var arg = req.body;
+        var params = {};
+        params.pid = arg.pid || 2;
+        params.attributes = arg.attributes || [201,202];
+        logger.info("请求， arg:" + JSON.stringify("params:" + params));
+
+        res.json(result);
+        logger.info("获取 response:" + JSON.stringify(result));
+
+    } catch (ex) {
+        logger.error("获取 error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        res.json(result);
+    }
+});
+
+// 修改末节点的属性
+router.post('/update', function (req, res, next) {
+    var result = {code: 200};
+
+    try {
+        var arg = req.body;
+        var params = {};
+        params.subjectId = arg.subjectId || 3005;
+        params.attributes = arg.attributes || [201, 202];
+        logger.info("请求， arg:" + JSON.stringify("params:" + params));
+
+        res.json(result);
+        logger.info("获取 response:" + JSON.stringify(result));
+
+    } catch (ex) {
+        logger.error("获取 error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        res.json(result);
+    }
+});
 
 module.exports = router;
