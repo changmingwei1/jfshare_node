@@ -13,8 +13,10 @@ var order  = require('./controllers/order_controller');
 //var storehouse = require('./controllers/storehouse_controller');
 var subject = require('./controllers/subject_controller');
 var expressOrder = require('./controllers/express_controller');
-
+var message = require('./controllers/message_controller');
+var seller = require('./controllers/seller_controller');
 var score = require('./controllers/score_controller');
+var brand = require('./controllers/brand_controller');
 //var freight = require('./controllers/freight_controller');
 //var sellerfreight = require('./controllers/sellerfreight_controller');
 var app = express();
@@ -35,6 +37,9 @@ app.use('/manager/order',order);
 //app.use('/manager/storehouse',storehouse);
 app.use('/manager/expressorder',expressOrder);
 app.use('/manager/score',score);
+app.use('/manager/message',message);
+app.use('/manager/seller',seller);
+app.use('/manager/brand',brand);
 // error handlers
 
 // catch 404 and forward to error handler
