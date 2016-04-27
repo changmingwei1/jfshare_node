@@ -130,58 +130,79 @@ router.get('/validateMsgCaptcha',function(request,response,next){
 });
 
 //手机短信登录
-router.post('/login', function(request, response, next) {
+router.get('/login', function(request, response, next) {
 
     logger.info("进入手机短信登录接口..");
     var resContent = {code: 200};
-    var args = request.body;
-    var mobile = args.mobile || "13558731842";
+    var args = request.query;
+    var mobile = args.mobile;
     var captchaDesc = args.captchaDesc || "7LJG";
     var param = {};
     param.mobile = mobile;
     param.captchaDesc = captchaDesc;
     //param.ip = CommonUtil.getIP(response);
     //console.log(JSON.stringify(param));
+    if(param.mobile == null || param.mobile == "" ){
+        resContent.code = 500;
+        resContent.desc = "参数错误";
+        response.json(resContent);
+        return;
+    }
+    if(param.captchaDesc == null || param.captchaDesc == "" ){
+        resContent.code = 500;
+        resContent.desc = "参数错误";
+        response.json(resContent);
+        return;
+    }
     logger.info(param);
+    var userId = 2;
+    var ppinfo = "hkjasdfgkj";
+    var token = "kjsdhfh";
+    resContent.ppinfo = ppinfo;
+    resContent.token = token;
+    resContent.userId = userId;
+    response.json(resContent);
+    logger.info("响应的结果:" + JSON.stringify(resContent));
 
-    async.waterfall([
-        function (callback) {
-            Common.validateMsgCaptcha(param, function (err, data) {
-                if (err) {
-                    response.json(err);
-                } else {
-                    //response.json(resContent);
-                    //logger.info("响应的结果:" + JSON.stringify(resContent));
-                }
-            });
-        },
-        function (callback) {
-            Buyer.login(param, function (err, data) {
-                logger.info("****************************");
-                if (err) {
-                    response.json(err);
-                } else {
-                    //var loginLog = data[0].loginLog;
-                    var buyer = data[0].buyer;
-                    var userId = buyer.userId;
-                    var ppinfo = "hkjasdfgkj";
-                    var token = "kjsdhfh";
-                    resContent.ppinfo = ppinfo;
-                    resContent.token = token;
-                    resContent.userId = userId;
-                    response.json(resContent);
-                    logger.info("响应的结果:" + JSON.stringify(resContent));
-                }
-            });
-        }
-    ], function (err) {
-        if (err) {
-            err["result"] = false;
-            return response.json(err);
-        } else {
-            return response.json({result: true});
-        }
-    });
+
+    //async.waterfall([
+    //    function (callback) {
+    //        Common.validateMsgCaptcha(param, function (err, data) {
+    //            if (err) {
+    //                response.json(err);
+    //            } else {
+    //                //response.json(resContent);
+    //                //logger.info("响应的结果:" + JSON.stringify(resContent));
+    //            }
+    //        });
+    //    },
+    //    function (callback) {
+    //        Buyer.login(param, function (err, data) {
+    //            logger.info("****************************");
+    //            if (err) {
+    //                response.json(err);
+    //            } else {
+    //                //var loginLog = data[0].loginLog;
+    //                var buyer = data[0].buyer;
+    //                var userId = buyer.userId;
+    //                var ppinfo = "hkjasdfgkj";
+    //                var token = "kjsdhfh";
+    //                resContent.ppinfo = ppinfo;
+    //                resContent.token = token;
+    //                resContent.userId = userId;
+    //                response.json(resContent);
+    //                logger.info("响应的结果:" + JSON.stringify(resContent));
+    //            }
+    //        });
+    //    }
+    //], function (err) {
+    //    if (err) {
+    //        err["result"] = false;
+    //        return response.json(err);
+    //    } else {
+    //        return response.json({result: true});
+    //    }
+    //});
 });
 
 /*手机密码+验证码登录*/
