@@ -21,7 +21,7 @@ var ServiceKey = {
       OrderServer: "Order",
   //  BuyerServer: "Buyer",
       ProductServer : "Product",
-  //  StockServer :  "Stock",
+    //  StockServer :  "Stock",
   //  AddressServer: "Address",
    // CommonServer: "Common",
    // TradeServer: "Trade",
