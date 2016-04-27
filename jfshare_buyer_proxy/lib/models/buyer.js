@@ -100,13 +100,18 @@ Buyer.prototype.login = function(param,callback){
 };
 
 //注册
-Buyer.prototype.signin = function(data, callback) {
+Buyer.prototype.newSignin = function(data, callback) {
     //if(valid.empty(data)) {
     //    return callback({code:1, failDesc:'参数非法', result:false});
     //}
-    var thrift_buyer = new buyer_types.Buyer(data);
 
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "signin", [thrift_buyer]);
+
+    var thrift_buyer = new buyer_types.Buyer({
+        loginName:data.mobile,
+        pwdEnc:data.pwdEnc
+    });
+
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "newSignin", [thrift_buyer]);
     Lich.wicca.invokeClient(buyerServ, function (err, rdata) {
         if (err) {
             logger.error("buyerServ 连接买家服务失败 ======" + err);

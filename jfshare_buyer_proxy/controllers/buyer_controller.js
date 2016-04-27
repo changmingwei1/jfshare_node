@@ -151,7 +151,7 @@ router.post('/login', function(request, response, next) {
                     response.json(err);
                 } else {
                     //response.json(resContent);
-                    logger.info("响应的结果:" + JSON.stringify(resContent));
+                    //logger.info("响应的结果:" + JSON.stringify(resContent));
                 }
             });
         },
@@ -170,6 +170,7 @@ router.post('/login', function(request, response, next) {
                     resContent.token = token;
                     resContent.userId = userId;
                     response.json(resContent);
+                    logger.info("响应的结果:" + JSON.stringify(resContent));
                 }
             });
         }
@@ -294,28 +295,28 @@ router.post('/login2',function(req,res,next){
 });
 
 //注册
-router.post('/regist', function(req, res, next) {
+router.get('/regist', function(req, res, next) {
 
-    logger.info("进入登录接口");
+    logger.info("进入注册接口");
     var resContent = {code:200};
 
-    var args = req.body;
-    var value = args.value || "s3xm";
-    var id = args.id || "1024";
+    var args = req.query;
+    //var value = args.value || "s3xm";
+    //var id = args.id || "1024";
+    var captchaDesc = args.captchaDesc || "56SA";
     var mobile = args.mobile ||"13558731842";
-    var pwdEnc = args.pwdEnc ||"Ab123456";
+    var pwdEnc = args.pwdEnc ||"023AA15ED89871CE330CFF55567A8075";
 
     var param = {};
-    param.id = id;
-    param.value = value;
+    param.captchaDesc = captchaDesc;
     param.mobile = mobile;
     param.pwdEnc = pwdEnc;
-    Common.validateCaptcha(param, function(err,data){
+    Common.validateMsgCaptcha(param, function(err,data){
         if(err){
             res.json(err);
             return;
         }
-        Buyer.signin(param,function(error,data){
+        Buyer.newSignin(param,function(error,data){
             if(error){
                 res.json(error);
                 return;
