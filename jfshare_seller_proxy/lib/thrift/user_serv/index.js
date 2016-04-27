@@ -15,12 +15,12 @@ var reservoir = require("../reservoir.js");
 /**
  * 根据应用不同获取配置  名字不要变： Config
  */
-var Config = thrifgtConfig.ServiceFactory.product();
+var Config = thrifgtConfig.ServiceFactory.seller();
 /**
  *根据应用不同获取配置
  * @type {string}
  */
-Config.key = lich.ServiceKey.ProductServer;
+Config.key = lich.ServiceKey.UserServer;
 /**
  * 赋值  所有的都加这个名字  ： thriftService
  * @type {exports|module.exports}

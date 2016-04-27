@@ -35,7 +35,7 @@ User.prototype.login = function(param,callback){
 
 
     //获取客户端
-    var userServ = new Lich.InvokeBag(Lich.ServiceKey.userServ,'signin',[User,LoginLog]);
+    var userServ = new Lich.InvokeBag(Lich.ServiceKey.UserServer,'signin',[User,LoginLog]);
     Lich.wicca.invokeClient(userServ, function(err, data){
         logger.info("isLoginNameExist result:" + JSON.stringify(data));
         var res = {};
