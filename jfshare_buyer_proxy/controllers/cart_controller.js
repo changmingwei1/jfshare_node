@@ -152,114 +152,76 @@ router.post('/list', function(req, res, next) {
             res.json(result);
             return;
         }
+
+        var product1 = {
+            productId:"ze160216170722000745",
+            productName:"给力的中央空调",
+            viceName:"冷暖 定速 立柜式 空调",
+            skuNum:{
+                skuNm:"1-1:100-101",
+                skuName:"颜色-军绿色:功率-2匹"
+            },
+            count:1,
+            curPrice: "0.01",
+            orgPrice: "1200.00",
+            activeState: 300,
+            imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+            skuCount: 497
+        };
+        var product2 = {
+            productId:"ze160216170722000746",
+            productName:"给力的地方空调",
+            viceName:"冷暖 不定速 立柜式 空调",
+            skuNum:{
+                skuNm:"1-1:100-102",
+                skuName:"颜色-军绿色:功率-1匹"
+            },
+            count:1,
+            curPrice: "0.01",
+            orgPrice: "1200.00",
+            activeState: 300,
+            imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+            skuCount: 500
+        };
+        var product3 = {
+            productId:"ze160216170722000746",
+            productName:"给力的地方空调",
+            viceName:"冷暖 不定速 立柜式 空调",
+            skuNum:{
+                skuNm:"1-1:100-102",
+                skuName:"颜色-军绿色:功率-1匹"
+            },
+            count:1,
+            curPrice: "0.01",
+            orgPrice: "1200.00",
+            activeState: 300,
+            imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+            skuCount: 500
+        };
+
+        var productList1 = [product1,product2,product3];
+        var productList2 = [product1,product2];
+        var productList3 = [product1];
+
         var seller1 = {
             sellerId:1,
             sellerName:"聚分享品质商家",
-            productList1:{
-                productId:"ze160216170722000745",
-                productName:"给力的中央空调",
-                viceName:"冷暖 定速 立柜式 空调",
-                remark:"五一特惠，任意三件商品包邮",
-                skuNum:{
-                    skuNm:"1-1:100-101",
-                    skuName:"颜色-军绿色:功率-2匹"
-                },
-                count:1,
-                curPrice: "0.01",
-                orgPrice: "1200.00",
-                activeState: 300,
-                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-                skuCount: 497
-            },
-            productList2:{
-                productId:"ze160216170722000746",
-                productName:"给力的地方空调",
-                viceName:"冷暖 不定速 立柜式 空调",
-                remark:"五一特惠，任意三件商品包邮",
-                skuNum:{
-                    skuNm:"1-1:100-102",
-                    skuName:"颜色-军绿色:功率-1匹"
-                },
-                count:1,
-                curPrice: "0.01",
-                orgPrice: "1200.00",
-                activeState: 300,
-                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-                skuCount: 500
-            },
-            productList3:{
-                productId:"ze160216170722000746",
-                productName:"给力的地方空调",
-                viceName:"冷暖 不定速 立柜式 空调",
-                remark:"五一特惠，任意三件商品包邮",
-                skuNum:{
-                    skuNm:"1-1:100-102",
-                    skuName:"颜色-军绿色:功率-1匹"
-                },
-                count:1,
-                curPrice: "0.01",
-                orgPrice: "1200.00",
-                activeState: 300,
-                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-                skuCount: 500
-            }
+            remark:"五一特惠，任意三件商品包邮",
+            productList:productList1
         };
         var seller2 = {
             sellerId:2,
             sellerName:"聚分享品质商家",
-            productList1:{
-                productId:"ze160216170722000745",
-                productName:"给力的中央空调",
-                viceName:"冷暖 定速 立柜式 空调",
-                remark:"五一特惠，任意三件商品包邮",
-                skuNum:{
-                    skuNm:"1-1:100-101",
-                    skuName:"颜色-军绿色:功率-2匹"
-                },
-                count:1,
-                curPrice: "0.01",
-                orgPrice: "1200.00",
-                activeState: 300,
-                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-                skuCount: 497
-            },
-            productList2:{
-                productId:"ze160216170722000746",
-                productName:"给力的地方空调",
-                viceName:"冷暖 不定速 立柜式 空调",
-                remark:"五一特惠，任意三件商品包邮",
-                skuNum:{
-                    skuNm:"1-1:100-102",
-                    skuName:"颜色-军绿色:功率-1匹"
-                },
-                count:1,
-                curPrice: "0.01",
-                orgPrice: "1200.00",
-                activeState: 300,
-                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-                skuCount: 500
-            }
+            remark:"五一特惠，任意三件商品包邮",
+            productList:productList2
         };
         var seller3 = {
             sellerId:3,
             sellerName:"聚分享黄钻商家",
-            productList:{
-                productId:"ze160216170722000745",
-                productName:"给力的中央空调",
-                viceName:"冷暖 定速 立柜式 空调",
-                remark:"五一特惠，任意三件商品包邮",
-                skuNum:{
-                    skuNm:"1-1:100-101",
-                    skuName:"颜色-军绿色:功率-2匹"
-                },
-                count:1,
-                curPrice: "0.01",
-                orgPrice: "1200.00",
-                activeState: 300,
-                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-                skuCount: 497
-            }
+            remark:"五一特惠，任意三件商品包邮",
+            productList:productList3
         };
+
         result.seller1 = seller1;
         result.seller2 = seller2;
         result.seller3 = seller3;

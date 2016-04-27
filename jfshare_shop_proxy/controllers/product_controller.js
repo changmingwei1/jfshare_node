@@ -271,13 +271,13 @@ router.post('/skuitem', function(req, res, next) {
 });
 
 //获取类目列表
-router.get('/subjectList', function(req, res, next) {
+router.post('/subjectList', function(req, res, next) {
 
     logger.info("进入获取子分类接口");
     var result = {code: 200};
 
     try {
-        var arg = req.query;
+        var arg = req.body;
         logger.info("get child class arg:" + arg);
 
         var subjectId =  arg.subjectId || 0;

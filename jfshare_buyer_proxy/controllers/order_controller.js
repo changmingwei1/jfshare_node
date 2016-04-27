@@ -359,6 +359,7 @@ router.post('/info2', function(req, res, next) {
         var productList = {
             productId: "ze151220001240000950",
             productName:"测试商品－主流程",
+            sellerName:"测试商家",
             skuNum:{skuNum:"1-1:100-102", skuDesc:"颜色-军绿色:尺码-XXS"},
             curPrice: "0.01",
             imgUrl:"31E87669C4FA80B6BB7C08F42E560237.jpg",
@@ -379,10 +380,10 @@ router.post('/info2', function(req, res, next) {
 });
 
 // 查询订单详情--实物
-router.get('/info', function(req, res, next) {
+router.post('/info', function(req, res, next) {
     var result = {code: 200};
     try{
-        var arg = req.query;
+        var arg = req.body;
         logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
 
         var params = {};
