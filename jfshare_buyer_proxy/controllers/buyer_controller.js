@@ -251,8 +251,8 @@ router.post('/login2',function(req,res,next){
     var resContent = {code:200};
 
     var args = req.body;
-    var mobile = args.mobile || "13558731842";
-    var pwdEnc = args.pwdEnc || "Ab123456";
+    var mobile = args.mobile;
+    var pwdEnc = args.pwdEnc;
     var value  = args.value || "cajx";
     var id = args.id || "1024";
 
@@ -261,29 +261,43 @@ router.post('/login2',function(req,res,next){
     param.pwdEnc = pwdEnc;
     param.id = id;
     param.value = value;
+    //参数校验
+    if(param.mobile == null || param.mobile == "" ||param.mobile <= 0){
 
+        resContent.code = 500;
+        resContent.desc = "请求参数错误";
+        res.json(resContent);
+        return;
+    }
+    if(param.pwdEnc == null || param.pwdEnc == "" ||param.pwdEnc <= 0){
+
+        resContent.code = 500;
+        resContent.desc = "请求参数错误";
+        res.json(resContent);
+        return;
+    }
     logger.info("参数信息：" + JSON.stringify(param));
-    Common.validateCaptcha(param, function(err,data){
-        if(err){
-            res.json(err);
-            return;
-        }
+    //Common.validateCaptcha(param, function(err,data){
+    //    if(err){
+    //        res.json(err);
+    //        return;
+    //    }
         Buyer.login(param,function(error,data){
             if(error){
-                //res.json(error);
-                //return;
-                var authInfo = new buyer_types.AuthInfo({
-                    token:"鉴权信息1",
-                    ppInfo:"鉴权信息2"
-                });
-                resContent.authInfo = authInfo;
-                res.json(JSON.stringify(resContent));
-                logger.info("响应的结果:" + JSON.stringify(resContent));
+                res.json(error);
                 return;
+                //var authInfo = new buyer_types.AuthInfo({
+                //    token:"鉴权信息1",
+                //    ppInfo:"鉴权信息2"
+                //});
+                //resContent.authInfo = authInfo;
+                //res.json(JSON.stringify(resContent));
+                //logger.info("响应的结果:" + JSON.stringify(resContent));
+                //return;
             }
             var authInfo = new buyer_types.AuthInfo({
-                token:"鉴权信息1",
-                ppInfo:"鉴权信息2"
+                token:token,
+                ppInfo:ppinfo
              });
             resContent.authInfo = authInfo;
             res.json(JSON.stringify(resContent));
@@ -291,7 +305,7 @@ router.post('/login2',function(req,res,next){
         });
         //res.json(resContent);
         //logger.info("响应的结果:" + JSON.stringify(resContent));
-    });
+    //});
 });
 
 //注册

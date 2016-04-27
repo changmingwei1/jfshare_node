@@ -167,6 +167,7 @@ router.post('/list', function(req, res, next) {
                             var product = itemList[i].itemDetailList[j].product;
                             cartList.push({
                                 sellerId: product.product.sellerId,
+                                sellerName:"测试商家1",
                                 productId: product.product.productId,
                                 productName: product.product.productName,
                                 skunum: {

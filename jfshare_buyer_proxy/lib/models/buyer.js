@@ -78,13 +78,13 @@ Buyer.prototype.validAuth = function(param, callback){
 Buyer.prototype.login = function(param,callback){
     //参数
     var thrift_buyer = new buyer_types.Buyer({
-        mobile:param.mobile || "13558731842",
-        pwdEnc:param.pwdEnc || "Ab123456"
+        mobile:param.mobile,
+        pwdEnc:param.pwdEnc
     });
     //需要的字段可以继续增加
     var thrift_loginLog = new buyer_types.LoginLog(param);
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'login',[thrift_buyer,thrift_loginLog]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'newLogin',[thrift_buyer,thrift_loginLog]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到登录信息:" + JSON.stringify(data));
         var res = {};
