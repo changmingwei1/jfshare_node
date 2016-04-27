@@ -7,13 +7,13 @@ var bodyParser = require('body-parser');
 
 //var routes = require('./routes/index');
 
-var index = require('./controllers/index_controller');
+//var index = require('./controllers/index_controller');
 var product = require('./controllers/product_controller');
 var order = require('./controllers/order_controller');
 var cart = require('./controllers/cart_controller');
 var address = require('./controllers/address_controller');
 var buyer = require('./controllers/buyer_controller');
-var test = require('./controllers/test_controller');
+//var test = require('./controllers/test_controller');
 
 //var view_index = require("./view_center/index/view_index");
 
@@ -31,14 +31,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/share', index);
+//app.use('/share', index);
 app.use('/share/product', product);
 app.use('/share/class', product);
 app.use('/share/order', order);
 app.use('/share/cart', cart);
 app.use('/share/address', address);
 app.use('/share/buyer',buyer);
-app.use('/test', test);
+//app.use('/test', test);
 //app.use('/test', tests);
 
 // error handlers
