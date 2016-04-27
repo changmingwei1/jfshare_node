@@ -26,8 +26,8 @@ function User(){}
 User.prototype.login = function(param,callback){
 
     var User  =  new seller_types.Seller({
-        loginName:"jfshare",
-        pwdEnc:"123456"
+        loginName:param.username,
+        pwdEnc:param.password
     });
     //如果校验可能需要修改
     var LoginLog = new seller_types.LoginLog();
@@ -39,10 +39,11 @@ User.prototype.login = function(param,callback){
     Lich.wicca.invokeClient(userServ, function(err, data){
         logger.info("isLoginNameExist result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "500") {
+        if (err||data[0].result.code == "1") {
             logger.error("signin fail because: ======" + err);
             res.code = 500;
-            res.desc = "false to signin";
+            logger.error(data);
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);

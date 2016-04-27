@@ -3031,6 +3031,892 @@ SubjectServ_querySubjectsRelation_result.prototype.write = function(output) {
   return;
 };
 
+SubjectServ_queryBrandSubject_args = function(args) {
+  this.brand = null;
+  if (args) {
+    if (args.brand !== undefined) {
+      this.brand = args.brand;
+    }
+  }
+};
+SubjectServ_queryBrandSubject_args.prototype = {};
+SubjectServ_queryBrandSubject_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.brand = new brand_ttypes.BrandInfo();
+        this.brand.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_queryBrandSubject_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_queryBrandSubject_args');
+  if (this.brand !== null && this.brand !== undefined) {
+    output.writeFieldBegin('brand', Thrift.Type.STRUCT, 1);
+    this.brand.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_queryBrandSubject_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_queryBrandSubject_result.prototype = {};
+SubjectServ_queryBrandSubject_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.SubjectQueryResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_queryBrandSubject_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_queryBrandSubject_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_updateBrandSubject_args = function(args) {
+  this.bsParam = null;
+  if (args) {
+    if (args.bsParam !== undefined) {
+      this.bsParam = args.bsParam;
+    }
+  }
+};
+SubjectServ_updateBrandSubject_args.prototype = {};
+SubjectServ_updateBrandSubject_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.bsParam = new ttypes.BrandSubjectParam();
+        this.bsParam.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_updateBrandSubject_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_updateBrandSubject_args');
+  if (this.bsParam !== null && this.bsParam !== undefined) {
+    output.writeFieldBegin('bsParam', Thrift.Type.STRUCT, 1);
+    this.bsParam.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_updateBrandSubject_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_updateBrandSubject_result.prototype = {};
+SubjectServ_updateBrandSubject_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_updateBrandSubject_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_updateBrandSubject_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_addSubjectAttribute_args = function(args) {
+  this.atrribute = null;
+  if (args) {
+    if (args.atrribute !== undefined) {
+      this.atrribute = args.atrribute;
+    }
+  }
+};
+SubjectServ_addSubjectAttribute_args.prototype = {};
+SubjectServ_addSubjectAttribute_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.atrribute = new ttypes.SubjectAttribute();
+        this.atrribute.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_addSubjectAttribute_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_addSubjectAttribute_args');
+  if (this.atrribute !== null && this.atrribute !== undefined) {
+    output.writeFieldBegin('atrribute', Thrift.Type.STRUCT, 1);
+    this.atrribute.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_addSubjectAttribute_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_addSubjectAttribute_result.prototype = {};
+SubjectServ_addSubjectAttribute_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_addSubjectAttribute_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_addSubjectAttribute_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_updateSubjectAttribute_args = function(args) {
+  this.atrribute = null;
+  if (args) {
+    if (args.atrribute !== undefined) {
+      this.atrribute = args.atrribute;
+    }
+  }
+};
+SubjectServ_updateSubjectAttribute_args.prototype = {};
+SubjectServ_updateSubjectAttribute_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.atrribute = new ttypes.SubjectAttribute();
+        this.atrribute.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_updateSubjectAttribute_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_updateSubjectAttribute_args');
+  if (this.atrribute !== null && this.atrribute !== undefined) {
+    output.writeFieldBegin('atrribute', Thrift.Type.STRUCT, 1);
+    this.atrribute.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_updateSubjectAttribute_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_updateSubjectAttribute_result.prototype = {};
+SubjectServ_updateSubjectAttribute_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_updateSubjectAttribute_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_updateSubjectAttribute_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_deleteSubjectAttribute_args = function(args) {
+  this.atrribute = null;
+  if (args) {
+    if (args.atrribute !== undefined) {
+      this.atrribute = args.atrribute;
+    }
+  }
+};
+SubjectServ_deleteSubjectAttribute_args.prototype = {};
+SubjectServ_deleteSubjectAttribute_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.atrribute = new ttypes.SubjectAttribute();
+        this.atrribute.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_deleteSubjectAttribute_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_deleteSubjectAttribute_args');
+  if (this.atrribute !== null && this.atrribute !== undefined) {
+    output.writeFieldBegin('atrribute', Thrift.Type.STRUCT, 1);
+    this.atrribute.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_deleteSubjectAttribute_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_deleteSubjectAttribute_result.prototype = {};
+SubjectServ_deleteSubjectAttribute_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_deleteSubjectAttribute_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_deleteSubjectAttribute_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_deleteSubjectAttributeBatch_args = function(args) {
+  this.atrributeList = null;
+  if (args) {
+    if (args.atrributeList !== undefined) {
+      this.atrributeList = args.atrributeList;
+    }
+  }
+};
+SubjectServ_deleteSubjectAttributeBatch_args.prototype = {};
+SubjectServ_deleteSubjectAttributeBatch_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size88 = 0;
+        var _rtmp392;
+        this.atrributeList = [];
+        var _etype91 = 0;
+        _rtmp392 = input.readListBegin();
+        _etype91 = _rtmp392.etype;
+        _size88 = _rtmp392.size;
+        for (var _i93 = 0; _i93 < _size88; ++_i93)
+        {
+          var elem94 = null;
+          elem94 = new ttypes.SubjectAttribute();
+          elem94.read(input);
+          this.atrributeList.push(elem94);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_deleteSubjectAttributeBatch_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_deleteSubjectAttributeBatch_args');
+  if (this.atrributeList !== null && this.atrributeList !== undefined) {
+    output.writeFieldBegin('atrributeList', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.atrributeList.length);
+    for (var iter95 in this.atrributeList)
+    {
+      if (this.atrributeList.hasOwnProperty(iter95))
+      {
+        iter95 = this.atrributeList[iter95];
+        iter95.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_deleteSubjectAttributeBatch_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_deleteSubjectAttributeBatch_result.prototype = {};
+SubjectServ_deleteSubjectAttributeBatch_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_deleteSubjectAttributeBatch_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_deleteSubjectAttributeBatch_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_querySubjectAttribute_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+SubjectServ_querySubjectAttribute_args.prototype = {};
+SubjectServ_querySubjectAttribute_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.SubjectAttributeQueryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_querySubjectAttribute_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_querySubjectAttribute_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_querySubjectAttribute_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_querySubjectAttribute_result.prototype = {};
+SubjectServ_querySubjectAttribute_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.SubjectAttributeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_querySubjectAttribute_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_querySubjectAttribute_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_applyAttributeToSuperAll_args = function(args) {
+  this.subject = null;
+  if (args) {
+    if (args.subject !== undefined) {
+      this.subject = args.subject;
+    }
+  }
+};
+SubjectServ_applyAttributeToSuperAll_args.prototype = {};
+SubjectServ_applyAttributeToSuperAll_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.subject = new ttypes.SubjectInfo();
+        this.subject.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_applyAttributeToSuperAll_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_applyAttributeToSuperAll_args');
+  if (this.subject !== null && this.subject !== undefined) {
+    output.writeFieldBegin('subject', Thrift.Type.STRUCT, 1);
+    this.subject.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_applyAttributeToSuperAll_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_applyAttributeToSuperAll_result.prototype = {};
+SubjectServ_applyAttributeToSuperAll_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_applyAttributeToSuperAll_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_applyAttributeToSuperAll_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 SubjectServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -4358,6 +5244,382 @@ SubjectServClient.prototype.recv_querySubjectsRelation = function(input,mtype,rs
   }
   return callback('querySubjectsRelation failed: unknown result');
 };
+SubjectServClient.prototype.queryBrandSubject = function(brand, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryBrandSubject(brand);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryBrandSubject(brand);
+  }
+};
+
+SubjectServClient.prototype.send_queryBrandSubject = function(brand) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryBrandSubject', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_queryBrandSubject_args();
+  args.brand = brand;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_queryBrandSubject = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_queryBrandSubject_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryBrandSubject failed: unknown result');
+};
+SubjectServClient.prototype.updateBrandSubject = function(bsParam, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateBrandSubject(bsParam);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateBrandSubject(bsParam);
+  }
+};
+
+SubjectServClient.prototype.send_updateBrandSubject = function(bsParam) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('updateBrandSubject', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_updateBrandSubject_args();
+  args.bsParam = bsParam;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_updateBrandSubject = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_updateBrandSubject_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateBrandSubject failed: unknown result');
+};
+SubjectServClient.prototype.addSubjectAttribute = function(atrribute, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_addSubjectAttribute(atrribute);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_addSubjectAttribute(atrribute);
+  }
+};
+
+SubjectServClient.prototype.send_addSubjectAttribute = function(atrribute) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('addSubjectAttribute', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_addSubjectAttribute_args();
+  args.atrribute = atrribute;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_addSubjectAttribute = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_addSubjectAttribute_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('addSubjectAttribute failed: unknown result');
+};
+SubjectServClient.prototype.updateSubjectAttribute = function(atrribute, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateSubjectAttribute(atrribute);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateSubjectAttribute(atrribute);
+  }
+};
+
+SubjectServClient.prototype.send_updateSubjectAttribute = function(atrribute) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('updateSubjectAttribute', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_updateSubjectAttribute_args();
+  args.atrribute = atrribute;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_updateSubjectAttribute = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_updateSubjectAttribute_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateSubjectAttribute failed: unknown result');
+};
+SubjectServClient.prototype.deleteSubjectAttribute = function(atrribute, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_deleteSubjectAttribute(atrribute);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_deleteSubjectAttribute(atrribute);
+  }
+};
+
+SubjectServClient.prototype.send_deleteSubjectAttribute = function(atrribute) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('deleteSubjectAttribute', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_deleteSubjectAttribute_args();
+  args.atrribute = atrribute;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_deleteSubjectAttribute = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_deleteSubjectAttribute_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('deleteSubjectAttribute failed: unknown result');
+};
+SubjectServClient.prototype.deleteSubjectAttributeBatch = function(atrributeList, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_deleteSubjectAttributeBatch(atrributeList);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_deleteSubjectAttributeBatch(atrributeList);
+  }
+};
+
+SubjectServClient.prototype.send_deleteSubjectAttributeBatch = function(atrributeList) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('deleteSubjectAttributeBatch', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_deleteSubjectAttributeBatch_args();
+  args.atrributeList = atrributeList;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_deleteSubjectAttributeBatch = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_deleteSubjectAttributeBatch_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('deleteSubjectAttributeBatch failed: unknown result');
+};
+SubjectServClient.prototype.querySubjectAttribute = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_querySubjectAttribute(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_querySubjectAttribute(param);
+  }
+};
+
+SubjectServClient.prototype.send_querySubjectAttribute = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('querySubjectAttribute', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_querySubjectAttribute_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_querySubjectAttribute = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_querySubjectAttribute_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('querySubjectAttribute failed: unknown result');
+};
+SubjectServClient.prototype.applyAttributeToSuperAll = function(subject, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_applyAttributeToSuperAll(subject);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_applyAttributeToSuperAll(subject);
+  }
+};
+
+SubjectServClient.prototype.send_applyAttributeToSuperAll = function(subject) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('applyAttributeToSuperAll', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_applyAttributeToSuperAll_args();
+  args.subject = subject;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_applyAttributeToSuperAll = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_applyAttributeToSuperAll_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('applyAttributeToSuperAll failed: unknown result');
+};
 SubjectServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -5209,6 +6471,246 @@ SubjectServProcessor.prototype.process_querySubjectsRelation = function(seqid, i
     this._handler.querySubjectsRelation(args.displayId, args.page,  function (err, result) {
       var result = new SubjectServ_querySubjectsRelation_result((err != null ? err : {success: result}));
       output.writeMessageBegin("querySubjectsRelation", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_queryBrandSubject = function(seqid, input, output) {
+  var args = new SubjectServ_queryBrandSubject_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryBrandSubject.length === 1) {
+    Q.fcall(this._handler.queryBrandSubject, args.brand)
+      .then(function(result) {
+        var result = new SubjectServ_queryBrandSubject_result({success: result});
+        output.writeMessageBegin("queryBrandSubject", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_queryBrandSubject_result(err);
+        output.writeMessageBegin("queryBrandSubject", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryBrandSubject(args.brand,  function (err, result) {
+      var result = new SubjectServ_queryBrandSubject_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryBrandSubject", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_updateBrandSubject = function(seqid, input, output) {
+  var args = new SubjectServ_updateBrandSubject_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.updateBrandSubject.length === 1) {
+    Q.fcall(this._handler.updateBrandSubject, args.bsParam)
+      .then(function(result) {
+        var result = new SubjectServ_updateBrandSubject_result({success: result});
+        output.writeMessageBegin("updateBrandSubject", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_updateBrandSubject_result(err);
+        output.writeMessageBegin("updateBrandSubject", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.updateBrandSubject(args.bsParam,  function (err, result) {
+      var result = new SubjectServ_updateBrandSubject_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("updateBrandSubject", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_addSubjectAttribute = function(seqid, input, output) {
+  var args = new SubjectServ_addSubjectAttribute_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.addSubjectAttribute.length === 1) {
+    Q.fcall(this._handler.addSubjectAttribute, args.atrribute)
+      .then(function(result) {
+        var result = new SubjectServ_addSubjectAttribute_result({success: result});
+        output.writeMessageBegin("addSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_addSubjectAttribute_result(err);
+        output.writeMessageBegin("addSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.addSubjectAttribute(args.atrribute,  function (err, result) {
+      var result = new SubjectServ_addSubjectAttribute_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("addSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_updateSubjectAttribute = function(seqid, input, output) {
+  var args = new SubjectServ_updateSubjectAttribute_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.updateSubjectAttribute.length === 1) {
+    Q.fcall(this._handler.updateSubjectAttribute, args.atrribute)
+      .then(function(result) {
+        var result = new SubjectServ_updateSubjectAttribute_result({success: result});
+        output.writeMessageBegin("updateSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_updateSubjectAttribute_result(err);
+        output.writeMessageBegin("updateSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.updateSubjectAttribute(args.atrribute,  function (err, result) {
+      var result = new SubjectServ_updateSubjectAttribute_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("updateSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_deleteSubjectAttribute = function(seqid, input, output) {
+  var args = new SubjectServ_deleteSubjectAttribute_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.deleteSubjectAttribute.length === 1) {
+    Q.fcall(this._handler.deleteSubjectAttribute, args.atrribute)
+      .then(function(result) {
+        var result = new SubjectServ_deleteSubjectAttribute_result({success: result});
+        output.writeMessageBegin("deleteSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_deleteSubjectAttribute_result(err);
+        output.writeMessageBegin("deleteSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.deleteSubjectAttribute(args.atrribute,  function (err, result) {
+      var result = new SubjectServ_deleteSubjectAttribute_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("deleteSubjectAttribute", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_deleteSubjectAttributeBatch = function(seqid, input, output) {
+  var args = new SubjectServ_deleteSubjectAttributeBatch_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.deleteSubjectAttributeBatch.length === 1) {
+    Q.fcall(this._handler.deleteSubjectAttributeBatch, args.atrributeList)
+      .then(function(result) {
+        var result = new SubjectServ_deleteSubjectAttributeBatch_result({success: result});
+        output.writeMessageBegin("deleteSubjectAttributeBatch", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_deleteSubjectAttributeBatch_result(err);
+        output.writeMessageBegin("deleteSubjectAttributeBatch", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.deleteSubjectAttributeBatch(args.atrributeList,  function (err, result) {
+      var result = new SubjectServ_deleteSubjectAttributeBatch_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("deleteSubjectAttributeBatch", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_querySubjectAttribute = function(seqid, input, output) {
+  var args = new SubjectServ_querySubjectAttribute_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.querySubjectAttribute.length === 1) {
+    Q.fcall(this._handler.querySubjectAttribute, args.param)
+      .then(function(result) {
+        var result = new SubjectServ_querySubjectAttribute_result({success: result});
+        output.writeMessageBegin("querySubjectAttribute", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_querySubjectAttribute_result(err);
+        output.writeMessageBegin("querySubjectAttribute", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.querySubjectAttribute(args.param,  function (err, result) {
+      var result = new SubjectServ_querySubjectAttribute_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("querySubjectAttribute", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_applyAttributeToSuperAll = function(seqid, input, output) {
+  var args = new SubjectServ_applyAttributeToSuperAll_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.applyAttributeToSuperAll.length === 1) {
+    Q.fcall(this._handler.applyAttributeToSuperAll, args.subject)
+      .then(function(result) {
+        var result = new SubjectServ_applyAttributeToSuperAll_result({success: result});
+        output.writeMessageBegin("applyAttributeToSuperAll", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_applyAttributeToSuperAll_result(err);
+        output.writeMessageBegin("applyAttributeToSuperAll", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.applyAttributeToSuperAll(args.subject,  function (err, result) {
+      var result = new SubjectServ_applyAttributeToSuperAll_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("applyAttributeToSuperAll", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
