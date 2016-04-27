@@ -13,12 +13,12 @@ var Product = require('../lib/models/product');
 var detailStock = require('../lib/models/detail_stock');
 
 //查询商品列表
-router.post('/list', function(req, res, next) {
+router.get('/list', function(req, res, next) {
     logger.info("进入获取商品列表接口");
     var resContent = {code:200};
 
     try{
-        var arg = req.body;
+        var arg = req.query;
         logger.info("get product list args:" + JSON.stringify(arg));
 
         var percount = arg.percount || 20;
@@ -280,7 +280,7 @@ router.get('/subjectList', function(req, res, next) {
         var arg = req.query;
         logger.info("get child class arg:" + arg);
 
-        var subjectId =  arg.pid || 0;
+        var subjectId =  arg.subjectId || 0;
 
         Product.getSubTree(subjectId, function (err, data) {
             if(err) {
@@ -294,7 +294,8 @@ router.get('/subjectList', function(req, res, next) {
                             subjectId:node.id,
                             subjectName:node.name,
                             pid:node.pid,
-                            isLeaf:node.isLeaf
+                            isLeaf:node.isLeaf,
+                            img_key:node.img_key
                         });
                     });
                 }

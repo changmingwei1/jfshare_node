@@ -245,22 +245,24 @@ router.post('/login', function(request, response, next) {
         }
     });
 });*/
-router.post('/login2',function(req,res,next){
+router.get('/login2',function(req,res,next){
 
     logger.info("进入账号密码登录接口");
     var resContent = {code:200};
 
-    var args = req.body;
-    var mobile = args.mobile;
-    var pwdEnc = args.pwdEnc;
+    var args = req.query;
+    var mobile = args.mobile || "13558731842";
+    var pwdEnc = args.pwdEnc || "023AA15ED89871CE330CFF55567A8075";
     var value  = args.value || "cajx";
     var id = args.id || "1024";
+    var browser = args.browser || "121346";
 
     var param = {};
     param.mobile = mobile;
     param.pwdEnc = pwdEnc;
     param.id = id;
     param.value = value;
+    param.browser = browser;
     //参数校验
     if(param.mobile == null || param.mobile == "" ||param.mobile <= 0){
 
@@ -315,11 +317,10 @@ router.get('/regist', function(req, res, next) {
     var resContent = {code:200};
 
     var args = req.query;
-    //var value = args.value || "s3xm";
-    //var id = args.id || "1024";
-    var captchaDesc = args.captchaDesc || "56SA";
-    var mobile = args.mobile ||"18301198617";
-    var pwdEnc = args.pwdEnc ||"023AA15ED89871CE330CFF55567A8075";
+
+    var captchaDesc = args.captchaDescss;
+    var mobile = args.mobile;
+    var pwdEnc = args.pwdEnc;
 
     var param = {};
     param.captchaDesc = captchaDesc;

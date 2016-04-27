@@ -379,10 +379,10 @@ router.post('/info2', function(req, res, next) {
 });
 
 // 查询订单详情--实物
-router.post('/info', function(req, res, next) {
+router.get('/info', function(req, res, next) {
     var result = {code: 200};
     try{
-        var arg = req.body;
+        var arg = req.query;
         logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
 
         var params = {};
@@ -424,6 +424,7 @@ router.post('/info', function(req, res, next) {
             if(orderInfo.productList !== null && orderInfo.productList.length > 0){
                 for(var i=0; i < orderInfo.productList.length; i++) {
                     productList.push({
+                        sellerName:"测试商家1",
                         productId: orderInfo.productList[i].productId,
                         productName:orderInfo.productList[i].productName,
                         skuNum:{skuNum:orderInfo.productList[i].skuNum, skuDesc:orderInfo.productList[i].skuDesc},
@@ -626,6 +627,7 @@ router.post('/queryExpress', function(request, response, next) {
         var expressInfo = [{"time":"2016-02-22 13:37:26","ftime":"2016-02-22 13:37:26","context":"快件已签收,签收人是草签，签收网点是北京市朝阳安华桥"},{"time":"2016-02-22 07:51:50","ftime":"2016-02-22 07:51:50","context":"北京市朝阳安华桥的牛鹏超18518350628正在派件"},{"time":"2016-02-22 07:02:10","ftime":"2016-02-22 07:02:10","context":"快件到达北京市朝阳安华桥，上一站是北京集散，扫描员是张彪18519292322"},{"time":"2016-02-22 01:40:35","ftime":"2016-02-22 01:40:35","context":"快件由北京集散发往北京市朝阳安华桥"},{"time":"2016-02-20 22:42:14","ftime":"2016-02-20 22:42:14","context":"快件由温州分拨中心发往北京集散"},{"time":"2016-02-20 19:56:29","ftime":"2016-02-20 19:56:29","context":"快件由苍南(0577-59905999)发往温州分拨中心"},{"time":"2016-02-20 19:50:09","ftime":"2016-02-20 19:50:09","context":"快件由苍南(0577-59905999)发往北京(010-53703166转8039或8010)"},{"time":"2016-02-20 19:50:08","ftime":"2016-02-20 19:50:08","context":"苍南(0577-59905999)已进行装袋扫描"},{"time":"2016-02-20 19:46:22","ftime":"2016-02-20 19:46:22","context":"苍南(0577-59905999)的龙港公司已收件，扫描员是龙港公司"}];
         result.id = 100001;
         result.name = "顺丰";
+        result.productName = "超能洗衣液";
         result.traceJson = expressInfo;
         result.remark = "";
 

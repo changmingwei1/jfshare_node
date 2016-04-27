@@ -82,7 +82,9 @@ Buyer.prototype.login = function(param,callback){
         pwdEnc:param.pwdEnc
     });
     //需要的字段可以继续增加
-    var thrift_loginLog = new buyer_types.LoginLog(param);
+    var thrift_loginLog = new buyer_types.LoginLog({
+        browser:param.browser
+    });
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'newLogin',[thrift_buyer,thrift_loginLog]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){

@@ -140,7 +140,7 @@ router.post('/list', function(req, res, next) {
     try{
         var arg = req.body;
         var param = {};
-        param.userId = arg.userId || "2";
+        param.userId = arg.userId;
         param.source = arg.source || 2;
         param.token = arg.token || "鉴权信息1";
         param.ppInfo = arg.ppInfo || "鉴权信息2";
@@ -152,66 +152,181 @@ router.post('/list', function(req, res, next) {
             res.json(result);
             return;
         }
-
-        Cart.cartListItem(param, function(err, itemList) {
-            if(err){
-                res.json(err);
-                return;
+        var seller1 = {
+            sellerId:1,
+            sellerName:"聚分享品质商家",
+            productList1:{
+                productId:"ze160216170722000745",
+                productName:"给力的中央空调",
+                viceName:"冷暖 定速 立柜式 空调",
+                remark:"五一特惠，任意三件商品包邮",
+                skuNum:{
+                    skuNm:"1-1:100-101",
+                    skuName:"颜色-军绿色:功率-2匹"
+                },
+                count:1,
+                curPrice: "0.01",
+                orgPrice: "1200.00",
+                activeState: 300,
+                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+                skuCount: 497
+            },
+            productList2:{
+                productId:"ze160216170722000746",
+                productName:"给力的地方空调",
+                viceName:"冷暖 不定速 立柜式 空调",
+                remark:"五一特惠，任意三件商品包邮",
+                skuNum:{
+                    skuNm:"1-1:100-102",
+                    skuName:"颜色-军绿色:功率-1匹"
+                },
+                count:1,
+                curPrice: "0.01",
+                orgPrice: "1200.00",
+                activeState: 300,
+                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+                skuCount: 500
+            },
+            productList3:{
+                productId:"ze160216170722000746",
+                productName:"给力的地方空调",
+                viceName:"冷暖 不定速 立柜式 空调",
+                remark:"五一特惠，任意三件商品包邮",
+                skuNum:{
+                    skuNm:"1-1:100-102",
+                    skuName:"颜色-军绿色:功率-1匹"
+                },
+                count:1,
+                curPrice: "0.01",
+                orgPrice: "1200.00",
+                activeState: 300,
+                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+                skuCount: 500
             }
-            var cartList = [];
-            if(itemList) {
-                //res.json(itemList);
-                for(var i = 0; i < itemList.length; i++) {
-                    if(itemList[i].itemDetailList  && itemList[i].itemDetailList.length > 0){
-                        for(var j = 0; j < itemList[i].itemDetailList.length; j++){
-                            var product = itemList[i].itemDetailList[j].product;
-                            cartList.push({
-                                sellerId: product.product.sellerId,
-                                sellerName:"测试商家1",
-                                productId: product.product.productId,
-                                productName: product.product.productName,
-                                skunum: {
-                                    skuNum: product.product.productSku.skuNum,
-                                    skuName:product.product.productSku.skuName},
-                                count:product.count,
-                                curPrice: product.product.productSku.curPrice,
-                                orgPrice: product.product.productSku.orgPrice,
-                                activeState: product.product.activeState,
-                                imgUrl: product.product.imgKey.split(',')[0]
-                            });
-                        }
-                    }
-                }
-                var count = 0;
-                if(cartList.length > 0) {
-                    cartList.forEach(function(item) {
-                        var param = {productId: item.productId, skunum: item.skunum.skuNum};
-                        Product.getStockForSku(param, function(err, stockInfo) {
-                            if(err){
-                                //res.json(err);
-                                return;
-                            }
-                            var stock = stockInfo.stockInfo;
-                            var stockItemMap = stockInfo.stockInfo.stockItemMap;
-                            item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
-
-                            if(count >= cartList.length - 1) {
-                                result.cartList = cartList;
-                                res.json(result);
-                                logger.info("get cart list response:" + JSON.stringify(result));
-                            }
-                            count = count + 1;
-                        });
-                    });
-                } else {
-                    result.cartList = [];
-                    res.json(result);
-                }
-            } else {
-                result.cartList = [];
-                res.json(result);
+        };
+        var seller2 = {
+            sellerId:2,
+            sellerName:"聚分享品质商家",
+            productList1:{
+                productId:"ze160216170722000745",
+                productName:"给力的中央空调",
+                viceName:"冷暖 定速 立柜式 空调",
+                remark:"五一特惠，任意三件商品包邮",
+                skuNum:{
+                    skuNm:"1-1:100-101",
+                    skuName:"颜色-军绿色:功率-2匹"
+                },
+                count:1,
+                curPrice: "0.01",
+                orgPrice: "1200.00",
+                activeState: 300,
+                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+                skuCount: 497
+            },
+            productList2:{
+                productId:"ze160216170722000746",
+                productName:"给力的地方空调",
+                viceName:"冷暖 不定速 立柜式 空调",
+                remark:"五一特惠，任意三件商品包邮",
+                skuNum:{
+                    skuNm:"1-1:100-102",
+                    skuName:"颜色-军绿色:功率-1匹"
+                },
+                count:1,
+                curPrice: "0.01",
+                orgPrice: "1200.00",
+                activeState: 300,
+                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+                skuCount: 500
             }
-        });
+        };
+        var seller3 = {
+            sellerId:3,
+            sellerName:"聚分享黄钻商家",
+            productList:{
+                productId:"ze160216170722000745",
+                productName:"给力的中央空调",
+                viceName:"冷暖 定速 立柜式 空调",
+                remark:"五一特惠，任意三件商品包邮",
+                skuNum:{
+                    skuNm:"1-1:100-101",
+                    skuName:"颜色-军绿色:功率-2匹"
+                },
+                count:1,
+                curPrice: "0.01",
+                orgPrice: "1200.00",
+                activeState: 300,
+                imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
+                skuCount: 497
+            }
+        };
+        result.seller1 = seller1;
+        result.seller2 = seller2;
+        result.seller3 = seller3;
+        res.json(result);
+        logger.info("响应的结果:" + JSON.stringify(result));
+
+        //Cart.cartListItem(param, function(err, itemList) {
+        //    if(err){
+        //        res.json(err);
+        //        return;
+        //    }
+        //    var cartList = [];
+        //    if(itemList) {
+        //        //res.json(itemList);
+        //        for(var i = 0; i < itemList.length; i++) {
+        //            if(itemList[i].itemDetailList  && itemList[i].itemDetailList.length > 0){
+        //                for(var j = 0; j < itemList[i].itemDetailList.length; j++){
+        //                    var product = itemList[i].itemDetailList[j].product;
+        //                    cartList.push({
+        //                        sellerId: product.product.sellerId,
+        //                        sellerName:"测试商家1",
+        //                        productId: product.product.productId,
+        //                        productName: product.product.productName,
+        //                        viceName:product.product.viceName,
+        //                        remark:product.product.remark,//商家备注
+        //                        skunum: {
+        //                            skuNum: product.product.productSku.skuNum,
+        //                            skuName:product.product.productSku.skuName},
+        //                        count:product.count,
+        //                        curPrice: product.product.productSku.curPrice,
+        //                        orgPrice: product.product.productSku.orgPrice,
+        //                        activeState: product.product.activeState,
+        //                        imgUrl: product.product.imgKey.split(',')[0]
+        //                    });
+        //                }
+        //            }
+        //        }
+        //        var count = 0;
+        //        if(cartList.length > 0) {
+        //            cartList.forEach(function(item) {
+        //                var param = {productId: item.productId, skunum: item.skunum.skuNum};
+        //                Product.getStockForSku(param, function(err, stockInfo) {
+        //                    if(err){
+        //                        //res.json(err);
+        //                        return;
+        //                    }
+        //                    var stock = stockInfo.stockInfo;
+        //                    var stockItemMap = stockInfo.stockInfo.stockItemMap;
+        //                    item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
+        //
+        //                    if(count >= cartList.length - 1) {
+        //                        result.cartList = cartList;
+        //                        res.json(result);
+        //                        logger.info("get cart list response:" + JSON.stringify(result));
+        //                    }
+        //                    count = count + 1;
+        //                });
+        //            });
+        //        } else {
+        //            result.cartList = [];
+        //            res.json(result);
+        //        }
+        //    } else {
+        //        result.cartList = [];
+        //        res.json(result);
+        //    }
+        //});
     } catch(ex) {
         logger.error("get cart product list error:" + ex);
         result.code = 500;

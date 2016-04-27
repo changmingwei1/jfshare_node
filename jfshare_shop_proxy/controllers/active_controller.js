@@ -71,7 +71,8 @@ router.get('/messageList', function(request, response, next) {
         var messageList = [2];
         var  message= {
             title:"我是标题",
-            message:"我是消息内容"
+            content:"我是消息内容",
+            pushDate:"2016-4-27 13:55:26"
         };
 
         messageList[0] = message;

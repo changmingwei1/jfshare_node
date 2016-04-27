@@ -91,8 +91,8 @@ Common.prototype.validateMsgCaptcha = function(param, callback){
     //参数
     var msgCaptcha = new common_types.MsgCaptcha({
         type:param.type || "buyer_signin",
-        mobile:param.mobile || "13558731842",
-        captchaDesc:param.captchaDesc || "7LJG"
+        mobile:param.mobile,
+        captchaDesc:param.captchaDesc
     });
     //获取client
     var commonServ = new Lich.InvokeBag(Lich.ServiceKey.CommonServer,'validateMsgCaptcha',[msgCaptcha]);
