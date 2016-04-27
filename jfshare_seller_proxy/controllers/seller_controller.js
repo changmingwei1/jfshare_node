@@ -8,7 +8,7 @@ var async = require('async');
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
 
-var Buyer = require('../lib/models/buyer');
+var Seller = require('../lib/models/seller');
 
 //获取个人用户信息
 router.get('/get', function(request, response, next) {
@@ -21,20 +21,20 @@ router.get('/get', function(request, response, next) {
         logger.info("It's test______" + param);
         // 测试使用数据
         param.userId = 1;
-        Buyer.getBuyer(param.userId,function(error, data){
+        Seller.getSeller(param.userId,function(error, data){
 
             if(error){
                 response.json(error);
             }else{
-                //thrift中返回的是BuyerResult：Result，Buyer，Loginlog，bool(布尔？)，ThirdpartyUser
-                var buyer = data[0].buyer;
-                //logger.info(buyer);
+                //thrift中返回的是SellerResult：Result，Seller，Loginlog，bool(布尔？)，ThirdpartyUser
+                var Seller = data[0].Seller;
+                //logger.info(Seller);
 
                 var loginLog = data[0].loginLog;
                 var value = data[0].value;
                 var thirdUser = data[0].thirdUser;
 
-                resContent.buyer = buyer;
+                resContent.Seller = Seller;
                 resContent.loginLog = loginLog;
                 resContent.value = value;
                 resContent.thirdUser = thirdUser;
@@ -60,13 +60,13 @@ router.post('/update', function(request, response, next) {
         var param = request.body;
         logger.info("It's test_____" + param);
 
-        Buyer.updateBuyer(param,function(error, data){
+        Seller.updateSeller(param,function(error, data){
 
             if(error){
                 response.json(error);
             }else{
                 response.json(resContent);
-                logger.info("get buyer response:" + JSON.stringify(resContent));
+                logger.info("get Seller response:" + JSON.stringify(resContent));
             }
         });
     }catch(ex){
@@ -85,7 +85,7 @@ router.get('/queryScore', function(request, response, next) {
 
     try{
         var userId = 1;
-        Buyer.getBuyerScore(userId,function(error, data){
+        Seller.getSellerScore(userId,function(error, data){
 
             if(error){
                 response.json(error);
@@ -93,7 +93,7 @@ router.get('/queryScore', function(request, response, next) {
                 var score = data[0].score;
                 resContent.score = score;
                 response.json(resContent);
-                logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+                logger.info("get Seller's Score response:" + JSON.stringify(resContent));
             }
         });
     }catch(ex){
@@ -118,7 +118,7 @@ router.get('/queryScoreList', function(request, response, next) {
         var scoreType = arg.scoreType;
         var time = arg.time;
 
-        Buyer.getBuyerScoreList({percount:percount, curpage:curpage,userId:userId,time:time,scoreType:scoreType},function(error, data){
+        Seller.getSellerScoreList({percount:percount, curpage:curpage,userId:userId,time:time,scoreType:scoreType},function(error, data){
             var dataArr = [];
             if(error){
                 response.json(error);
@@ -126,14 +126,14 @@ router.get('/queryScoreList', function(request, response, next) {
                 var pagination = data[0].pagination;
                 resContent.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
 
-                var buyerScoreList = data[0].buyerScoreList;
-                buyerScoreList.forEach(function(a){
+                var SellerScoreList = data[0].SellerScoreList;
+                SellerScoreList.forEach(function(a){
                     dataArr.push({userId: a.userId, scoreType: a.scoreType, score: a.score});
                 });
-                resContent.buyerScoreList = dataArr;
+                resContent.SellerScoreList = dataArr;
 
                 response.json(resContent);
-                logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+                logger.info("get Seller's Score response:" + JSON.stringify(resContent));
             }
         });
     }catch(ex){
@@ -153,7 +153,7 @@ router.get('/querySlotImageList', function(request, response, next) {
     try{
         var arg = request.query;
 
-        Buyer.querySlotImageList({type:arg.type},function(error, data){
+        Seller.querySlotImageList({type:arg.type},function(error, data){
             var dataArr = [];
             if(error){
                 response.json(error);

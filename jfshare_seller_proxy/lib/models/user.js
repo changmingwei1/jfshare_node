@@ -26,26 +26,16 @@ function User(){}
 User.prototype.login = function(param,callback){
 
     var User  =  new seller_types.Seller({
-        sellerId:param.sellerId,
-        loginName:param.username,
-        sellerName:param.sellerName,
-        pwdEnc:param.password
+        loginName:"jfshare",
+        pwdEnc:"123456"
     });
-//如果校验可能需要修改
-    var LoginLog = new seller_types.LoginLog({
-        sellerId:param.sellerId,
-        tokenId:param.tokerId,
-        ip:param.ip,
-        browser:param.browser,
-        fromSource:param.fromSource,
-        loginAuto: param.loginAuto,
-        loginTime: param.loginTime,
-        logoutTime: param.logoutTime
-    });
+    //如果校验可能需要修改
+    var LoginLog = new seller_types.LoginLog();
+
 
 
     //获取客户端
-    var userServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServ,'signin',[User,LoginLog]);
+    var userServ = new Lich.InvokeBag(Lich.ServiceKey.userServ,'signin',[User,LoginLog]);
     Lich.wicca.invokeClient(userServ, function(err, data){
         logger.info("isLoginNameExist result:" + JSON.stringify(data));
         var res = {};
@@ -59,58 +49,6 @@ User.prototype.login = function(param,callback){
         }
     });
 };
-
-//�����û���Ϣ(�����޸�ע���ֻ�)
-//Buyer.prototype.updateBuyer = function(param,callback){
-//
-//    var value = new common_types.Captcha({value:param.value});
-//
-//    var buyer = new buyer_types.Buyer({
-//        userId:param.userId,
-//        loginName:param.loginName,
-//        userName:param.userName,
-//        pwdEnc:param.pwdEnc,
-//        favImg:param.favImg,
-//        birthday:param.birthday,
-//        sex:param.sex,
-//        idCard:param.idCard,
-//        mobile:param.mobile,
-//
-//        tel:param.tel,
-//        email:param.email,
-//        provinceId:param.provinceId,
-//        cityId:param.cityId,
-//        countyId:param.countyId,
-//        provinceName:param.provinceName,
-//        cityName:param.cityName,
-//        address:param.address,
-//        postCode:param.postCode,
-//        degree:param.degree,
-//        salary:param.salary,
-//        remark:param.remark,
-//        serial:param.serial,
-//        createTime:param.createTime,
-//        lastUpdateTime:param.lastUpdateTime
-//    });
-//
-//    //��ȡclient
-//    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'updateBuyer',[buyer]);
-//
-//    Lich.wicca.invokeClient(buyerServ,commonServ, function(err, data){
-//        logger.info("updateBuyer result:" + JSON.stringify(data));
-//        var res = {};
-//        if (err||data[0].result.code == "1") {
-//            logger.error("can't updateBuyer because: ======" + err);
-//            res.code = 500;
-//            res.desc = "false to updateBuyer";
-//            callback(res, null);
-//        } else {
-//            callback(null, data);
-//        }
-//    });
-//};
-
-
 
 
 

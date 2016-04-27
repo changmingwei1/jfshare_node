@@ -5,7 +5,7 @@ var express = require('express')
 
 var CommonUtil = require("./CommonUtil");
 
-var userModel = require('../models/buyer');
+var userModel = require('../models/seller');
 
 function SessionUtil(){
     this.key = "jfshare-session-Key#2015";
