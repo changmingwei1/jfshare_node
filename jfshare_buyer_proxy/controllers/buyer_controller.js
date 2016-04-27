@@ -19,11 +19,11 @@ var pagination_types = require('../lib/thrift/gen_code/pagination_types');
 var buyer_types = require('../lib/thrift/gen_code/buyer_types');
 
 //获取图形验证码
-router.post('/getCaptcha',function(request,response,next){
+router.get('/getCaptcha',function(request,response,next){
     logger.info("进入获取验证码接口");
     var resContent = {code:200};
     try{
-        var param = request.body;
+        var param = request.query;
         var id = param.id || "1024";
         Common.getCaptcha(id,function(err,data){
             if(err){
