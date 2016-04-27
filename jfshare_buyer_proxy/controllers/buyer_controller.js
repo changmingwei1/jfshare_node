@@ -318,7 +318,7 @@ router.get('/regist', function(req, res, next) {
     //var value = args.value || "s3xm";
     //var id = args.id || "1024";
     var captchaDesc = args.captchaDesc || "56SA";
-    var mobile = args.mobile ||"13558731842";
+    var mobile = args.mobile ||"18301198617";
     var pwdEnc = args.pwdEnc ||"023AA15ED89871CE330CFF55567A8075";
 
     var param = {};
@@ -335,40 +335,13 @@ router.get('/regist', function(req, res, next) {
                 res.json(error);
                 return;
             }
-            res.json("注册成功了" + resContent);
+
+            res.json(resContent);
             logger.info("响应的结果:" + JSON.stringify(resContent));
         });
-        res.json(resContent);
-        logger.info("响应的结果:" + JSON.stringify(resContent));
+
+
     });
-    /*原有的注册处理*/
-    //async.waterfall([
-    //    function (callback) {
-    //        Common.validateCaptcha(param, function(rdata){
-    //            if(rdata.result) {
-    //                callback(null);
-    //            } else {
-    //                callback({failDesc:"验证码错误!"});
-    //            }
-    //        });
-    //    },
-    //    function(callback) {
-    //        Buyer.singin(param, function(rdata) {
-    //            if(rdata.result){
-    //                callback(null);
-    //            } else {
-    //                callback({failDesc:rdata.failDesc});
-    //            }
-    //        });
-    //    }
-    //], function(err){
-    //    if(err) {
-    //        err["result"] = false;
-    //        res.json(err);
-    //    } else{
-    //        res.json({result:true});
-    //    }
-    //});
 
 });
 

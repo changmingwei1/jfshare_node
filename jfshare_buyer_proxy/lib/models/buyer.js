@@ -107,27 +107,21 @@ Buyer.prototype.newSignin = function(data, callback) {
 
 
     var thrift_buyer = new buyer_types.Buyer({
-        loginName:data.mobile,
+        mobile:data.mobile,
         pwdEnc:data.pwdEnc
     });
 
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "newSignin", [thrift_buyer]);
-    Lich.wicca.invokeClient(buyerServ, function (err, rdata) {
-        if (err) {
-            logger.error("buyerServ 连接买家服务失败 ======" + err);
-            return callback({code:1, failDesc:"系统异常", result:false});
+    Lich.wicca.invokeClient(buyerServ, function (err, data) {
+        var res = {};
+        if (err||data[0].code == "1") {
+            logger.error("注册失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "注册失败失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
         }
-        logger.info("buyerServ.signin() 访问成功  result=" + JSON.stringify(rdata));
-        if (rdata[0]["code"] != 0) {
-            var failDescList = rdata[0].failDescList;
-            var failDesc = "系统异常";
-            if(failDescList.length>0) {
-                failDesc = failDescList[0].desc;
-            }
-            logger.error("buyerServ.signin() 访问失败  =====原因:"+failDesc);
-            return callback({code: 1, failDesc:failDesc, result:false});
-        }
-        return callback({result:true});
     });
 };
 
