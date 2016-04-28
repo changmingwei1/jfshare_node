@@ -13,12 +13,13 @@ var Product = require('../lib/models/product');
 var detailStock = require('../lib/models/detail_stock');
 
 //查询商品列表
-router.post('/list', function(req, res, next) {
+router.get('/list', function(req, res, next) {
     logger.info("进入获取商品列表接口");
     var resContent = {code:200};
 
     try{
-        var arg = req.body;
+       // var arg = req.body;
+        var arg = req.query;
         logger.info("get product list args:" + JSON.stringify(arg));
 
         var percount = arg.percount || 20;
@@ -27,16 +28,18 @@ router.post('/list', function(req, res, next) {
         //增加两个查询条件
         var subjectId = arg.subjectId;
         var sellerId = arg.sellerId;
-
-        Product.queryProductList({percount:percount, curpage:curpage, subjectId:subjectId, sellerId:sellerId}, function(data){
+//currentPage:params.curpage,numPerPage:params.percount
+        Product.queryProductList({percount:percount, curpage:curpage, subjectId:subjectId, sellerId:sellerId}, function(err,data){
             var dataArr = [];
 
             var code = data[0].result.code;
-            if(code == 1){
-                resContent.code = 500;
-                resContent.desc = "失败";
-                res.json(resContent);
+            if(err||code == 1){
+                //resContent.code = 500;
+                //resContent.desc = "失败";
+                logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
+                res.json(err);
             } else {
+                logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
                 var productSurveyList = data[0].productSurveyList;
                 productSurveyList.forEach(function(a){
                     var imgUri = a.imgUrl.split(",")[0];
@@ -51,6 +54,7 @@ router.post('/list', function(req, res, next) {
             }
         });
     } catch (ex) {
+
         logger.error("获取商品列表失败:" + ex);
         resContent.code = 500;
         resContent.desc = "获取商品列表失败";
