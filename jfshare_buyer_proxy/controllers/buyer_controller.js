@@ -130,11 +130,11 @@ router.get('/validateMsgCaptcha',function(request,response,next){
 });
 
 //手机短信登录
-router.get('/login', function(request, response, next) {
+router.post('/login', function(request, response, next) {
 
     logger.info("进入手机短信登录接口..");
     var resContent = {code: 200};
-    var args = request.query;
+    var args = request.body;
     var mobile = args.mobile;
     var captchaDesc = args.captchaDesc || "7LJG";
     var param = {};
@@ -266,12 +266,12 @@ router.get('/login', function(request, response, next) {
         }
     });
 });*/
-router.get('/login2',function(req,res,next){
+router.post('/login2',function(req,res,next){
 
     logger.info("进入账号密码登录接口");
     var resContent = {code:200};
 
-    var args = req.query;
+    var args = req.body;
     var mobile = args.mobile || "13558731842";
     var pwdEnc = args.pwdEnc || "023AA15ED89871CE330CFF55567A8075";
     var value  = args.value || "cajx";
@@ -332,12 +332,12 @@ router.get('/login2',function(req,res,next){
 });
 
 //注册
-router.get('/regist', function(req, res, next) {
+router.post('/regist', function(req, res, next) {
 
     logger.info("进入注册接口");
     var resContent = {code:200};
 
-    var args = req.query;
+    var args = req.body;
 
     var captchaDesc = args.captchaDescss;
     var mobile = args.mobile;

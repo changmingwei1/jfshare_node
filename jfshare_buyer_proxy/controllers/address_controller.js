@@ -10,12 +10,12 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 var Product = require('../lib/models/product');
 var Address = require('../lib/models/address');
 
-// 新增收货地址
-router.get('/add', function(req, res, next) {
+//新增收货地址
+router.post('/add', function(req, res, next) {
     var result = {code: 200};
 
     try{
-        var arg = req.query;
+        var arg = req.body;
         if(arg == null) {
             result.code = 400;
             result.desc = "请求参数错误";
@@ -64,11 +64,11 @@ router.get('/add', function(req, res, next) {
 });
 
 //删除收货地址
-router.get('/delete', function(req, res, next) {
+router.post('/delete', function(req, res, next) {
     var result = {code: 200};
 
     try{
-        var arg = req.query;
+        var arg = req.body;
 
         var params = {};
         params.userId = arg.userId || 2;
@@ -93,11 +93,11 @@ router.get('/delete', function(req, res, next) {
 });
 
 //修改收货地址
-router.get('/update', function (req, res, next) {
+router.post('/update', function (req, res, next) {
     var result = {code: 200};
 
     try {
-        var arg = req.query;
+        var arg = req.body;
         if(arg == null) {
             result.code = 400;
             result.desc = "请求参数错误";
@@ -142,11 +142,11 @@ router.get('/update', function (req, res, next) {
 });
 
 //查询收货地址列表
-router.get('/list', function(req, res, next) {
+router.post('/list', function(req, res, next) {
     var result = {code: 200};
 
     try{
-        var arg = req.query;
+        var arg = req.body;
         var params = {};
         params.userId = arg.userId || 2;
         params.token = arg.token || "鉴权信息1";

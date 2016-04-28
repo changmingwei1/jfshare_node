@@ -176,7 +176,7 @@ router.get('/productDetail', function(req, res, next) {
 });
 
 //查询商品库存和sku
-router.post('/skuitem', function(req, res, next) {
+router.post('/querystore', function(req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code:200};
 
