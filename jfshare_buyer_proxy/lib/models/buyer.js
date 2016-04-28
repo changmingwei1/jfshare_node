@@ -138,7 +138,7 @@ Buyer.prototype.buyerIsExist = function(loginName,callback){
         if (err||data[0].result.code == "1") {
             logger.error("啥，因为: ======" + err);
             res.code = 500;
-            res.desc = "失败描述...";
+            res.desc = "改手机号已经存在...";
             callback(res, null);
         } else {
             callback(null, data);

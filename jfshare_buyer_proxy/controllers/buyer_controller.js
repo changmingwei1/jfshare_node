@@ -32,9 +32,10 @@ router.get('/getCaptcha',function(request,response,next){
                 var cb = data[0].captcha.captchaBytes;
                 response.writeHead('200', {'Content-Type': 'image/jpeg'});    //写http头部信息
                 response.write(cb,'binary');
-                var id = data[0].captcha.id;
-                resContent.id = id;
+               // var id = data[0].captcha.id;
+               // resContent.id = id;
                 logger.info("响应的结果:" + JSON.stringify(resContent));
+                response.end();
             }
         });
     }catch(ex){
@@ -339,7 +340,7 @@ router.post('/regist', function(req, res, next) {
 
     var args = req.body;
 
-    var captchaDesc = args.captchaDescss;
+    var captchaDesc = args.captchaDesc;
     var mobile = args.mobile;
     var pwdEnc = args.pwdEnc;
 
@@ -790,16 +791,13 @@ router.post('/resetPwd',function(request,response,next){
     var userId = param.userId || 2;
     var newPwd = param.newPwd || "AB123456";
     var captchaDesc = param.captchaDesc || "7LJG";
-    var token = param.token || "鉴权信息1";
-    var ppInfo = param.ppInfo || "鉴权信息2";
 
     var args = {};
     args.mobile = mobile;
     args.userId = userId;
     args.newPwd = newPwd;
     args.captchaDesc = captchaDesc;
-    args.token = token;
-    args.ppInfo = ppInfo;
+
 
     logger.info("参数为: " + JSON.stringify(args));
 
