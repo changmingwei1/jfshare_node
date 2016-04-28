@@ -140,7 +140,7 @@ router.post('/list', function(req, res, next) {
     try{
         var arg = req.body;
         var param = {};
-        param.userId = arg.userId;
+        param.userId = arg.userId || "2";
         param.source = arg.source || 2;
         param.token = arg.token || "鉴权信息1";
         param.ppInfo = arg.ppInfo || "鉴权信息2";
