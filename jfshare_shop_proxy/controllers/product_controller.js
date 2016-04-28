@@ -13,13 +13,13 @@ var Product = require('../lib/models/product');
 var detailStock = require('../lib/models/detail_stock');
 
 //查询商品列表
-router.get('/list', function(req, res, next) {
+router.post('/list', function(req, res, next) {
     logger.info("进入获取商品列表接口");
     var resContent = {code:200};
 
     try{
-       // var arg = req.body;
-        var arg = req.query;
+        var arg = req.body;
+        //var arg = req.query;
         logger.info("get product list args:" + JSON.stringify(arg));
 
         var percount = arg.percount || 20;
@@ -28,7 +28,7 @@ router.get('/list', function(req, res, next) {
         //增加两个查询条件
         var subjectId = arg.subjectId;
         var sellerId = arg.sellerId;
-//currentPage:params.curpage,numPerPage:params.percount
+/*
         Product.queryProductList({percount:percount, curpage:curpage, subjectId:subjectId, sellerId:sellerId}, function(err,data){
             var dataArr = [];
 
@@ -53,6 +53,13 @@ router.get('/list', function(req, res, next) {
                 logger.info("get product list response:" + JSON.stringify(resContent));
             }
         });
+
+
+
+*/
+
+        var result = {"code":200,"page":{"total":17,"pageCount":4},"productList":[{"productId":"ze160216170722000745","productName":"测试sku","viceName":"实用耐看","curPrice":0.01,"orgPrice":1200,"imgUrl":"6A413EEF9691774A9EED5E84D98A4A29.jpg"},{"productId":"ze160205135801000704","productName":"测试商品01","viceName":"优惠大促","curPrice":0.01,"orgPrice":140,"imgUrl":"3CC771625CC299789C2366F5B38AADE7.jpg"},{"productId":"ze160204115048000051","productName":"测试商品","viceName":"价格实惠","curPrice":0.01,"orgPrice":100,"imgUrl":"CA17833C754C0AC2A26488B741084DAA.jpg"},{"productId":"ze160121135417000693","productName":"变形金刚(THE TRANSFORMERS) 拉杆箱20寸 TF01【全国专柜联保】银海绿","viceName":"材质轻便 富有韧性 使用寿命更长 标配海关锁 无钥匙 让您出行无忧　","curPrice":435,"orgPrice":1058,"imgUrl":"9F3DF0E2C575A4E7318D47111C6C6496.jpg"},{"productId":"ze160122104236000322","productName":"慕云（MUYUN）羽绒床垫 斜纹防羽布 秋冬加厚 可折叠 保暖垫子床褥","viceName":"选用鸭绒作填充料，抗菌，防霉，除臭。","curPrice":369,"orgPrice":599,"imgUrl":"75B1957695653501779C08D47F8FF3E5.jpg"}]};
+        res.json(result);
     } catch (ex) {
 
         logger.error("获取商品列表失败:" + ex);
