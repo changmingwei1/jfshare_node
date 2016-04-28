@@ -376,7 +376,7 @@ router.get('/exists', function(request, response, next) {
 
     try{
         var param = request.query;
-        var loginName = param.loginName;
+        var loginName = param.mobile;
         Buyer.buyerIsExist(loginName,function(error, data){
             if(error){
                 response.json(error);
