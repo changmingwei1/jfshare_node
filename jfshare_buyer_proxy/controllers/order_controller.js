@@ -422,7 +422,8 @@ router.post('/list', function(req, res, next) {
                         createName:order.createName,
                         postage:order.postage,
                         orderState:order.orderState,
-                        curTime:order.curTime
+                        curTime:order.curTime,
+                        sellerName:"测试商家"
                     };
                     var productList = [];
                     if(order.productList !== null && order.productList.length > 0){
@@ -432,12 +433,11 @@ router.post('/list', function(req, res, next) {
                             var productItem = {
                                 productId: order.productList[i].productId,
                                 productName:order.productList[i].productName,
-                                sellerName:"测试商家",
                                 skuNum: order.productList[i].skuNum,
                                 skuName:order.productList[i].skuName,
                                 curPrice: order.productList[i].curPrice,
                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
-                                count: order.productList[i].count,
+                                count: order.productList[i].count
                                // type:order.productList[i].type
                             };
                             productList.push(productItem);
