@@ -214,12 +214,12 @@ router.post('/preview2', function(request, response, next) {
 });
 
 //提交订单 --> 实物
-router.get('/submit', function(request, response, next) {
+router.post('/submit', function(request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code:200};
     try{
-        var params = request.query;
-        //var params = request.body;
+        //var params = request.query;
+        var params = request.body;
         var args = {};
         args.token = params.token || "鉴权信息1";
         args.ppInfo = params.ppInfo || "鉴权信息2";
@@ -309,12 +309,12 @@ router.get('/submit', function(request, response, next) {
 });
 
 //提交订单 --> 虚拟
-router.get('/submit', function(request, response, next) {
+router.post('/submit', function(request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code:200};
     try{
-        var params = request.query;
-        //var params = request.body;
+        //var params = request.query;
+        var params = request.body;
         var args = {};
         args.token = params.token || "鉴权信息1";
         args.ppInfo = params.ppInfo || "鉴权信息2";
@@ -380,10 +380,10 @@ router.get('/submit', function(request, response, next) {
     }
 });
 
-
 // 查询订单列表
 router.post('/list', function(req, res, next) {
 
+    logger.info("++++++++++++");
     var result = {code: 200};
     try{
         var arg = req.body;
@@ -405,7 +405,7 @@ router.post('/list', function(req, res, next) {
             return;
         }
 
-        Product.orderProfileQuery(params, function (err, orderInfo) {
+        Order.orderProfileQuery(params, function (err, orderInfo) {
             if(err){
                 res.json(err);
                 return;
