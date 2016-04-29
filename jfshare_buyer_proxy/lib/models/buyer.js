@@ -75,7 +75,7 @@ Buyer.prototype.validAuth = function(param, callback){
 };
 
 //手机号密码登录
-Buyer.prototype.login = function(param,callback){
+Buyer.prototype.newLogin = function(param,callback){
     //参数
     var thrift_buyer = new buyer_types.Buyer({
         mobile:param.mobile,
@@ -94,6 +94,55 @@ Buyer.prototype.login = function(param,callback){
             logger.error("不能登录，因为: ======" + err);
             res.code = 500;
             res.desc = "登录失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//手机号短信登录
+Buyer.prototype.loginBySms = function(param,callback){
+    //参数
+    var thrift_buyer = new buyer_types.Buyer({
+        mobile:param.mobile
+    });
+    //需要的字段可以继续增加
+    var thrift_loginLog = new buyer_types.LoginLog({
+        browser:param.browser
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'smsLogin',[thrift_buyer,thrift_loginLog]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到登录信息:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == "1") {
+            logger.error("不能登录，因为: ======" + err);
+            res.code = 500;
+            res.desc = "登录失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//注销
+Buyer.prototype.logout = function(param,callback){
+    //需要的字段可以继续增加
+    var thrift_loginLog = new buyer_types.LoginLog({
+        tokenId:param.tokenId,
+        userId:param.userId
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'logout',[thrift_loginLog]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到注销信息信息:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].code == "1") {
+            logger.error("不能注销，因为: ======" + err);
+            res.code = 500;
+            res.desc = "注销失败";
             callback(res, null);
         } else {
             callback(null, data);

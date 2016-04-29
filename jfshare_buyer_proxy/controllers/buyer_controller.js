@@ -139,12 +139,16 @@ router.post('/login', function(request, response, next) {
     var resContent = {code: 200};
     var args = request.body;
     var mobile = args.mobile;
-    var captchaDesc = args.captchaDesc || "7LJG";
+    var captchaDesc = args.captchaDesc;
+    var browser = args.browser || null;
     var param = {};
     param.mobile = mobile;
     param.captchaDesc = captchaDesc;
+    param.browser = browser;
+
     //param.ip = CommonUtil.getIP(response);
     //console.log(JSON.stringify(param));
+
     if(param.mobile == null || param.mobile == "" ){
         resContent.code = 500;
         resContent.desc = "参数错误";
@@ -157,106 +161,131 @@ router.post('/login', function(request, response, next) {
         response.json(resContent);
         return;
     }
-    logger.info(param);
-    var userId = 2;
-    var ppinfo = "hkjasdfgkj";
-    var token = "kjsdhfh";
-    resContent.ppinfo = ppinfo;
-    resContent.token = token;
-    resContent.userId = userId;
-    response.json(resContent);
-    logger.info("响应的结果:" + JSON.stringify(resContent));
+    logger.info("请求参数：" + param);
+    //var userId = 2;
+    //var ppinfo = "hkjasdfgkj";
+    //var token = "kjsdhfh";
+    //resContent.ppinfo = ppinfo;
+    //resContent.token = token;
+    //resContent.userId = userId;
+    //response.json(resContent);
+    //logger.info("响应的结果:" + JSON.stringify(resContent));
 
-
-    //async.waterfall([
-    //    function (callback) {
-    //        Common.validateMsgCaptcha(param, function (err, data) {
-    //            if (err) {
-    //                response.json(err);
-    //            } else {
-    //                //response.json(resContent);
-    //                //logger.info("响应的结果:" + JSON.stringify(resContent));
-    //            }
-    //        });
-    //    },
-    //    function (callback) {
-    //        Buyer.login(param, function (err, data) {
-    //            logger.info("****************************");
-    //            if (err) {
-    //                response.json(err);
-    //            } else {
-    //                //var loginLog = data[0].loginLog;
-    //                var buyer = data[0].buyer;
-    //                var userId = buyer.userId;
-    //                var ppinfo = "hkjasdfgkj";
-    //                var token = "kjsdhfh";
-    //                resContent.ppinfo = ppinfo;
-    //                resContent.token = token;
-    //                resContent.userId = userId;
-    //                response.json(resContent);
-    //                logger.info("响应的结果:" + JSON.stringify(resContent));
-    //            }
-    //        });
-    //    }
-    //], function (err) {
-    //    if (err) {
-    //        err["result"] = false;
-    //        return response.json(err);
-    //    } else {
-    //        return response.json({result: true});
-    //    }
-    //});
-});
-
-/*手机密码+验证码登录*/
-/*router.post('/login2', function(req, res, next) {
-
-    var args = req.body;
-    var loginName = args["loginname"] || "";
-    var password = args["password"] || "";
-    var captchaValue = args["validateCode"] || "";
-    var captchaId = args["uuid"] || "";
-    var param = {};
-
-    param["loginName"] = loginName;
-    param["pwdEnc"] = password;
-    param["captchaId"] = captchaId;
-    param["captchaValue"] = captchaValue;
-    param["ip"] = CommonUtil.getIP(req);
-
-    console.log(JSON.stringify(param));
     async.waterfall([
         function (callback) {
-            Common.validateCaptcha(param, function(rdata){
-                if(rdata.result) {
-                    callback(null);
+            Common.validateMsgCaptcha(param, function (err, data) {
+                if (err) {
+                    //response.json(err);
+                    callback(err);
                 } else {
-                    callback({failDesc:"验证码错误!"});
+                    //response.json(resContent);
+                    callback(null);
                 }
             });
         },
         function (callback) {
-            new buyerModel().login(param, function(rdata){
-                if(rdata.result) {
-                    var loginLog = rdata["loginLog"];
-                    var buyer = rdata["buyer"];
-                    var cookieInfo ={
-                        tokenId:loginLog["tokenId"],
-                        userId:loginLog["userId"],
-                        loginName:buyer["loginName"]
-                    }
-                    var ssid = CommonUtil.jfxCryptor(cookieInfo, sessionUtil.getKey());
-                    var options = {
-                        path: "/",
-                        domain: null,
-                        secure: false,
-                        httpOnly: true,
-                        expires:0
-                    };
-                    CommonUtil.setCookie(req, res, "ssid", ssid, options);
-                    callback(null);
+            Buyer.loginBySms(param, function (err, data) {
+                if (err) {
+                    //response.json(err);
+                    callback(err);
                 } else {
-                    callback({failDesc:rdata.failDesc});
+                    var loginLog = data[0].loginLog;
+                    var userId = data[0].buyer.userId;
+                    var authInfo = data[0].authInfo;
+
+                    resContent.authInfo = authInfo;
+                    resContent.userId = userId;
+                    resContent.loginLog = loginLog;
+                    response.json(resContent);
+                    logger.info("响应的结果:" + JSON.stringify(resContent));
+                }
+            });
+        }
+    ], function (err) {
+        if (err) {
+            err["result"] = false;
+            return response.json(err);
+        } else {
+            return response.json({result: true});
+        }
+    });
+
+
+
+
+
+
+
+
+});
+
+//注销
+router.post('/logout',function(req,res,next){
+    logger.info("进入注销接口..");
+    var result = {code:200};
+    var args = req.body;
+    var param = {};
+    param.tokenId = args.tokenId || "m/B9EnrUoKFgvxVrI2jL0G001x/0abR2PQUoOvOMwAgXqVCw2ERd9A==";
+    param.userId = args.userId || 315;
+    Buyer.logout(param,function(err,data){
+        if(err){
+            res.json(err);
+        }
+        res.json(result);
+        logger.info("response:" + JSON.stringify(result));
+    })
+});
+
+/*手机密码+验证码登录*/
+router.post('/login2', function(req, res, next) {
+
+    var resContent = {code:200};
+    var args = req.body;
+    var param = {};
+    param.mobile = args.mobile;
+    param.pwdEnc = args.pwdEnc;
+    param.value = args.value;
+    param.id = args.id;
+    param.browser = args.browser;
+    //param["ip"] = CommonUtil.getIP(req);
+
+    logger.info("请求的参数: " + JSON.stringify(param));
+    async.waterfall([
+        function (callback) {
+            Common.validateCaptcha(param, function(err,data){
+                if(err) {
+                    callback(err);
+                } else {
+                    callback(null);
+                }
+            });
+        },
+        function (callback) {
+            Buyer.newLogin(param, function(err,data){
+                if(err) {
+                    callback(err);
+                } else {
+                    var loginLog = data[0].loginLog;
+                    var buyer = data[0].buyer;
+                    var authInfo = data[0].authInfo;
+                    //var cookieInfo ={
+                    //    tokenId:loginLog["tokenId"],
+                    //    userId:loginLog["userId"],
+                    //    loginName:buyer["loginName"]
+                    //};
+                    //var ssid = CommonUtil.jfxCryptor(cookieInfo, sessionUtil.getKey());
+                    //var options = {
+                    //    path: "/",
+                    //    domain: null,
+                    //    secure: false,
+                    //    httpOnly: true,
+                    //    expires:0
+                    //};
+                    //CommonUtil.setCookie(req, res, "ssid", ssid, options);
+                    resContent.userId = buyer.userId;
+                    resContent.loginLog = loginLog;
+                    resContent.authInfo = authInfo;
+                    res.json(resContent);
                 }
             });
         }
@@ -268,8 +297,8 @@ router.post('/login', function(request, response, next) {
             return res.json({result:true});
         }
     });
-});*/
-router.post('/login2',function(req,res,next){
+});
+/*router.post('/login2',function(req,res,next){
 
     logger.info("进入账号密码登录接口");
     var resContent = {code:200};
@@ -308,7 +337,7 @@ router.post('/login2',function(req,res,next){
     //        res.json(err);
     //        return;
     //    }
-        Buyer.login(param,function(error,data){
+        Buyer.newLogin(param,function(error,data){
             if(error){
                 res.json(error);
                 return;
@@ -323,7 +352,7 @@ router.post('/login2',function(req,res,next){
             }
             var authInfo = new buyer_types.AuthInfo({
                 token:token,
-                ppInfo:ppinfo
+                ppInfo:ppInfo
              });
             resContent.authInfo = authInfo;
             res.json(JSON.stringify(resContent));
@@ -332,7 +361,7 @@ router.post('/login2',function(req,res,next){
         //res.json(resContent);
         //logger.info("响应的结果:" + JSON.stringify(resContent));
     //});
-});
+});*/
 
 //注册
 router.post('/regist', function(req, res, next) {
@@ -360,14 +389,10 @@ router.post('/regist', function(req, res, next) {
                 res.json(error);
                 return;
             }
-
             res.json(resContent);
             logger.info("响应的结果:" + JSON.stringify(resContent));
         });
-
-
     });
-
 });
 
 //判断用户名(手机号)是否已存在
