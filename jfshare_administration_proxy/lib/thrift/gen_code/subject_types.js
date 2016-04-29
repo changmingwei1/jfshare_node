@@ -1191,20 +1191,20 @@ SubjectQueryParam.prototype.write = function(output) {
   return;
 };
 
-BrandSubjectKey = module.exports.BrandSubjectKey = function(args) {
+BrandSubjectParam = module.exports.BrandSubjectParam = function(args) {
   this.bId = null;
-  this.sId = null;
+  this.Subjects = null;
   if (args) {
     if (args.bId !== undefined) {
       this.bId = args.bId;
     }
-    if (args.sId !== undefined) {
-      this.sId = args.sId;
+    if (args.Subjects !== undefined) {
+      this.Subjects = args.Subjects;
     }
   }
 };
-BrandSubjectKey.prototype = {};
-BrandSubjectKey.prototype.read = function(input) {
+BrandSubjectParam.prototype = {};
+BrandSubjectParam.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -1225,65 +1225,10 @@ BrandSubjectKey.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.sId = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-BrandSubjectKey.prototype.write = function(output) {
-  output.writeStructBegin('BrandSubjectKey');
-  if (this.bId !== null && this.bId !== undefined) {
-    output.writeFieldBegin('bId', Thrift.Type.I32, 1);
-    output.writeI32(this.bId);
-    output.writeFieldEnd();
-  }
-  if (this.sId !== null && this.sId !== undefined) {
-    output.writeFieldBegin('sId', Thrift.Type.I32, 2);
-    output.writeI32(this.sId);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-BrandSubjectParam = module.exports.BrandSubjectParam = function(args) {
-  this.brandSubjects = null;
-  if (args) {
-    if (args.brandSubjects !== undefined) {
-      this.brandSubjects = args.brandSubjects;
-    }
-  }
-};
-BrandSubjectParam.prototype = {};
-BrandSubjectParam.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
       if (ftype == Thrift.Type.LIST) {
         var _size32 = 0;
         var _rtmp336;
-        this.brandSubjects = [];
+        this.Subjects = [];
         var _etype35 = 0;
         _rtmp336 = input.readListBegin();
         _etype35 = _rtmp336.etype;
@@ -1291,18 +1236,14 @@ BrandSubjectParam.prototype.read = function(input) {
         for (var _i37 = 0; _i37 < _size32; ++_i37)
         {
           var elem38 = null;
-          elem38 = new ttypes.BrandSubjectKey();
-          elem38.read(input);
-          this.brandSubjects.push(elem38);
+          elem38 = input.readI32();
+          this.Subjects.push(elem38);
         }
         input.readListEnd();
       } else {
         input.skip(ftype);
       }
       break;
-      case 0:
-        input.skip(ftype);
-        break;
       default:
         input.skip(ftype);
     }
@@ -1314,15 +1255,20 @@ BrandSubjectParam.prototype.read = function(input) {
 
 BrandSubjectParam.prototype.write = function(output) {
   output.writeStructBegin('BrandSubjectParam');
-  if (this.brandSubjects !== null && this.brandSubjects !== undefined) {
-    output.writeFieldBegin('brandSubjects', Thrift.Type.LIST, 1);
-    output.writeListBegin(Thrift.Type.STRUCT, this.brandSubjects.length);
-    for (var iter39 in this.brandSubjects)
+  if (this.bId !== null && this.bId !== undefined) {
+    output.writeFieldBegin('bId', Thrift.Type.I32, 1);
+    output.writeI32(this.bId);
+    output.writeFieldEnd();
+  }
+  if (this.Subjects !== null && this.Subjects !== undefined) {
+    output.writeFieldBegin('Subjects', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.I32, this.Subjects.length);
+    for (var iter39 in this.Subjects)
     {
-      if (this.brandSubjects.hasOwnProperty(iter39))
+      if (this.Subjects.hasOwnProperty(iter39))
       {
-        iter39 = this.brandSubjects[iter39];
-        iter39.write(output);
+        iter39 = this.Subjects[iter39];
+        output.writeI32(iter39);
       }
     }
     output.writeListEnd();

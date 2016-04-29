@@ -336,136 +336,6 @@ BrandServ_deleteBrand_result.prototype.write = function(output) {
   return;
 };
 
-BrandServ_deleteBrandBatch_args = function(args) {
-  this.brands = null;
-  if (args) {
-    if (args.brands !== undefined) {
-      this.brands = args.brands;
-    }
-  }
-};
-BrandServ_deleteBrandBatch_args.prototype = {};
-BrandServ_deleteBrandBatch_args.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
-        this.brands = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
-        {
-          var elem22 = null;
-          elem22 = new ttypes.BrandInfo();
-          elem22.read(input);
-          this.brands.push(elem22);
-        }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 0:
-        input.skip(ftype);
-        break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-BrandServ_deleteBrandBatch_args.prototype.write = function(output) {
-  output.writeStructBegin('BrandServ_deleteBrandBatch_args');
-  if (this.brands !== null && this.brands !== undefined) {
-    output.writeFieldBegin('brands', Thrift.Type.LIST, 1);
-    output.writeListBegin(Thrift.Type.STRUCT, this.brands.length);
-    for (var iter23 in this.brands)
-    {
-      if (this.brands.hasOwnProperty(iter23))
-      {
-        iter23 = this.brands[iter23];
-        iter23.write(output);
-      }
-    }
-    output.writeListEnd();
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-BrandServ_deleteBrandBatch_result = function(args) {
-  this.success = null;
-  if (args) {
-    if (args.success !== undefined) {
-      this.success = args.success;
-    }
-  }
-};
-BrandServ_deleteBrandBatch_result.prototype = {};
-BrandServ_deleteBrandBatch_result.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 0:
-        input.skip(ftype);
-        break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-BrandServ_deleteBrandBatch_result.prototype.write = function(output) {
-  output.writeStructBegin('BrandServ_deleteBrandBatch_result');
-  if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
-    this.success.write(output);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
 BrandServ_query_args = function(args) {
 };
 BrandServ_query_args.prototype = {};
@@ -680,18 +550,18 @@ BrandServ_queryBatch_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
+        var _size16 = 0;
+        var _rtmp320;
         this.idList = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
         {
-          var elem30 = null;
-          elem30 = input.readI32();
-          this.idList.push(elem30);
+          var elem22 = null;
+          elem22 = input.readI32();
+          this.idList.push(elem22);
         }
         input.readListEnd();
       } else {
@@ -715,12 +585,12 @@ BrandServ_queryBatch_args.prototype.write = function(output) {
   if (this.idList !== null && this.idList !== undefined) {
     output.writeFieldBegin('idList', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.idList.length);
-    for (var iter31 in this.idList)
+    for (var iter23 in this.idList)
     {
-      if (this.idList.hasOwnProperty(iter31))
+      if (this.idList.hasOwnProperty(iter23))
       {
-        iter31 = this.idList[iter31];
-        output.writeI32(iter31);
+        iter23 = this.idList[iter23];
+        output.writeI32(iter23);
       }
     }
     output.writeListEnd();
@@ -775,6 +645,113 @@ BrandServ_queryBatch_result.prototype.read = function(input) {
 
 BrandServ_queryBatch_result.prototype.write = function(output) {
   output.writeStructBegin('BrandServ_queryBatch_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BrandServ_queryBySubject_args = function(args) {
+  this.id = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+  }
+};
+BrandServ_queryBySubject_args.prototype = {};
+BrandServ_queryBySubject_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BrandServ_queryBySubject_args.prototype.write = function(output) {
+  output.writeStructBegin('BrandServ_queryBySubject_args');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BrandServ_queryBySubject_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BrandServ_queryBySubject_result.prototype = {};
+BrandServ_queryBySubject_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.BrandResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BrandServ_queryBySubject_result.prototype.write = function(output) {
+  output.writeStructBegin('BrandServ_queryBySubject_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -935,53 +912,6 @@ BrandServClient.prototype.recv_deleteBrand = function(input,mtype,rseqid) {
   }
   return callback('deleteBrand failed: unknown result');
 };
-BrandServClient.prototype.deleteBrandBatch = function(brands, callback) {
-  this._seqid = this.new_seqid();
-  if (callback === undefined) {
-    var _defer = Q.defer();
-    this._reqs[this.seqid()] = function(error, result) {
-      if (error) {
-        _defer.reject(error);
-      } else {
-        _defer.resolve(result);
-      }
-    };
-    this.send_deleteBrandBatch(brands);
-    return _defer.promise;
-  } else {
-    this._reqs[this.seqid()] = callback;
-    this.send_deleteBrandBatch(brands);
-  }
-};
-
-BrandServClient.prototype.send_deleteBrandBatch = function(brands) {
-  var output = new this.pClass(this.output);
-  output.writeMessageBegin('deleteBrandBatch', Thrift.MessageType.CALL, this.seqid());
-  var args = new BrandServ_deleteBrandBatch_args();
-  args.brands = brands;
-  args.write(output);
-  output.writeMessageEnd();
-  return this.output.flush();
-};
-
-BrandServClient.prototype.recv_deleteBrandBatch = function(input,mtype,rseqid) {
-  var callback = this._reqs[rseqid] || function() {};
-  delete this._reqs[rseqid];
-  if (mtype == Thrift.MessageType.EXCEPTION) {
-    var x = new Thrift.TApplicationException();
-    x.read(input);
-    input.readMessageEnd();
-    return callback(x);
-  }
-  var result = new BrandServ_deleteBrandBatch_result();
-  result.read(input);
-  input.readMessageEnd();
-
-  if (null !== result.success) {
-    return callback(null, result.success);
-  }
-  return callback('deleteBrandBatch failed: unknown result');
-};
 BrandServClient.prototype.query = function(callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -1122,6 +1052,53 @@ BrandServClient.prototype.recv_queryBatch = function(input,mtype,rseqid) {
   }
   return callback('queryBatch failed: unknown result');
 };
+BrandServClient.prototype.queryBySubject = function(id, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryBySubject(id);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryBySubject(id);
+  }
+};
+
+BrandServClient.prototype.send_queryBySubject = function(id) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryBySubject', Thrift.MessageType.CALL, this.seqid());
+  var args = new BrandServ_queryBySubject_args();
+  args.id = id;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BrandServClient.prototype.recv_queryBySubject = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BrandServ_queryBySubject_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryBySubject failed: unknown result');
+};
 BrandServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -1230,36 +1207,6 @@ BrandServProcessor.prototype.process_deleteBrand = function(seqid, input, output
   }
 }
 
-BrandServProcessor.prototype.process_deleteBrandBatch = function(seqid, input, output) {
-  var args = new BrandServ_deleteBrandBatch_args();
-  args.read(input);
-  input.readMessageEnd();
-  if (this._handler.deleteBrandBatch.length === 1) {
-    Q.fcall(this._handler.deleteBrandBatch, args.brands)
-      .then(function(result) {
-        var result = new BrandServ_deleteBrandBatch_result({success: result});
-        output.writeMessageBegin("deleteBrandBatch", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new BrandServ_deleteBrandBatch_result(err);
-        output.writeMessageBegin("deleteBrandBatch", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
-  } else {
-    this._handler.deleteBrandBatch(args.brands,  function (err, result) {
-      var result = new BrandServ_deleteBrandBatch_result((err != null ? err : {success: result}));
-      output.writeMessageBegin("deleteBrandBatch", Thrift.MessageType.REPLY, seqid);
-      result.write(output);
-      output.writeMessageEnd();
-      output.flush();
-    });
-  }
-}
-
 BrandServProcessor.prototype.process_query = function(seqid, input, output) {
   var args = new BrandServ_query_args();
   args.read(input);
@@ -1343,6 +1290,36 @@ BrandServProcessor.prototype.process_queryBatch = function(seqid, input, output)
     this._handler.queryBatch(args.idList,  function (err, result) {
       var result = new BrandServ_queryBatch_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryBatch", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BrandServProcessor.prototype.process_queryBySubject = function(seqid, input, output) {
+  var args = new BrandServ_queryBySubject_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryBySubject.length === 1) {
+    Q.fcall(this._handler.queryBySubject, args.id)
+      .then(function(result) {
+        var result = new BrandServ_queryBySubject_result({success: result});
+        output.writeMessageBegin("queryBySubject", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BrandServ_queryBySubject_result(err);
+        output.writeMessageBegin("queryBySubject", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryBySubject(args.id,  function (err, result) {
+      var result = new BrandServ_queryBySubject_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryBySubject", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

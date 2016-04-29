@@ -84,7 +84,7 @@ Subject.prototype.update = function(params, callback){
 Subject.prototype.query = function(params, callback){
 
     //
-    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTree",[0]);
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTree",[params.pid]);
     //
     Lich.wicca.invokeClient(subjectServ, function (err, data) {
         logger.info("subjectServ-getSubTree result:" + JSON.stringify(data[0]));
@@ -95,7 +95,23 @@ Subject.prototype.query = function(params, callback){
             result.desc = "查询类目列表失败";
             callback(result,data);
         }
-        callback(null,data);
+
+        var subjectNodes = data[0].subjectNodes;
+        var subejects = [];
+        subjectNodes.forEach(function(subject){
+
+            var subjectNode = ({
+                id:         subject.id,
+                name:       subject.name,
+                imgkey:     subject.img_key,
+                isLeaf:     subject.isLeaf
+            });
+            subejects.push(subjectNode);
+        });
+
+
+
+        callback(null,subejects);
     });
 };
 
@@ -184,7 +200,37 @@ Subject.prototype.list = function(params, callback){
     callback(null,addressList);
 
 };
+Subject.prototype.querySubjectPath = function(params, callback){
 
+    //
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSuperTree",[params.id]);
+    //
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-getSuperTree result:" + JSON.stringify(data));
+        if(err || data[0].result.code == 1){
+            logger.error("subjectServ-getSuperTree result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "查询类目列表失败";
+           return callback(result,null);
+        }
+        var subjectpath = "";
+        if(data[0].subjectNodes !=null){
+            for (var i = 0; i < data[0].subjectNodes.length; i++) {
+                if(i == data[0].subjectNodes.length-1){
+                    subjectpath += data[0].subjectNodes[i].name;
+                }else {
+                    subjectpath += data[0].subjectNodes[i].name+"-";
+
+                }
+
+            }
+
+        }
+
+       return callback(null,subjectpath);
+    });
+};
 
 module.exports = new Subject();/**
  * Created by Administrator on 2016/4/27 0027.
