@@ -30,7 +30,8 @@ var ServiceKey = {
      StorehouseServer: "Storehouse",
      FreightServer:"Freight",
     //ManagerServer:"Manager",
-      ExpressServer:"Express"
+      ExpressServer:"Express",
+    MessageServer:"Message"
 };
 
 /**
