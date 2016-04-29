@@ -381,17 +381,18 @@ router.post('/submit', function(request, response, next) {
 });
 
 // 查询订单列表
-router.post('/list', function(req, res, next) {
+router.get('/list', function(req, res, next) {
 
     logger.info("++++++++++++");
     var result = {code: 200};
     try{
-        var arg = req.body;
+        var arg = req.query;
         logger.info("查询订单列表请求参数：" + JSON.stringify(arg));
         var params = {};
         //userid 改为了userId  2016.4.12
         params.userId = arg.userId || 2;
-        params.orderStatus = Order.getOrderStateIdBuyerEnum(arg.orderstatus);
+        //params.orderStatus = Order.getOrderStateIdBuyerEnum(arg.orderState);
+        params.orderStatus = arg.orderState || null;
         params.percount = arg.percount || 20;
         params.curpage = arg.curpage || 1;
         params.userType = arg.userType || 1;
