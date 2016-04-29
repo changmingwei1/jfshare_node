@@ -432,6 +432,7 @@ router.post('/list', function(req, res, next) {
                             var productItem = {
                                 productId: order.productList[i].productId,
                                 productName:order.productList[i].productName,
+                                sellerName:"测试商家",
                                 skuNum: order.productList[i].skuNum,
                                 skuName:order.productList[i].skuName,
                                 curPrice: order.productList[i].curPrice,
