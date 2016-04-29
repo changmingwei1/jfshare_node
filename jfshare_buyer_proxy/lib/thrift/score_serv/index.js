@@ -16,7 +16,7 @@ var Config = thrifgtConfig.ServiceFactory.score();
  *根据应用不同获取配置
  * @type {string}
  */
-Config.key = lich.ServiceKey.ScoreServ;
+Config.key = lich.ServiceKey.ScoreServer;
 /**
  * 赋值  所有的都加这个名字  ： thriftService
  * @type {exports|module.exports}

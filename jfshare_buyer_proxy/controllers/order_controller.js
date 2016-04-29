@@ -118,7 +118,6 @@ var product_types = require("../lib/thrift/gen_code/product_types");
 
 
 
-
 //购物车中点击立即结算  ---> 实物
 router.post('/preview', function(request, response, next) {
     logger.info("进入获取物流信息流程");
@@ -213,6 +212,9 @@ router.post('/preview2', function(request, response, next) {
         response.json(result);
     }
 });
+
+//提交订单 --> 实物
+
 
 // 查询订单列表
 router.post('/list', function(req, res, next) {
@@ -661,11 +663,11 @@ router.post('/freight', function(request, response, next) {
     logger.info("请求参数信息" + JSON.stringify(params));
 
     try{
-        Buyer.validAuth(params,function(err,data){
+        /*Buyer.validAuth(params,function(err,data){
             if(err){
                 //response.json(err);
                 //return;
-                /***************************测试数据*******************************/
+                /!***************************测试数据*******************************!/
                 Score.getScore(params,function(error, data){
                     if(error){
                         response.json(error);
@@ -676,7 +678,7 @@ router.post('/freight', function(request, response, next) {
                         logger.info("get buyer's Score response:" + JSON.stringify(resContent));
                     }
                 });
-                /******************************************************************/
+                /!******************************************************************!/
             }
             Score.getScore(params,function(error, data){
                 if(error){
@@ -688,7 +690,7 @@ router.post('/freight', function(request, response, next) {
                     logger.info("get buyer's Score response:" + JSON.stringify(resContent));
                 }
             });
-        });
+        });*/
     }catch(ex){
         logger.error("不能获取，原因是:" + ex);
         resContent.code = 500;
@@ -780,7 +782,7 @@ router.post('/notify/alipay', function(request, response, next) {
 
 //获取第三方支付的url
 router.post('/pay', function(request, response, next) {
-    logger.info("进入获取物流信息流程");
+    logger.info("进入支付流程");
     var result = {code:200};
     try{
         //var params = request.query;

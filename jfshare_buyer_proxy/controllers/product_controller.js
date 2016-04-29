@@ -27,7 +27,7 @@ router.get('/list', function(req, res, next) {
         var subjectId = arg.subjectId;
         var sellerId = arg.sellerId;
 
-        Product.queryProductList({percount:percount, curpage:curpage, subjectId:subjectId, sellerId:sellerId}, function(data){
+        /*Product.queryProductList({percount:percount, curpage:curpage, subjectId:subjectId, sellerId:sellerId}, function(data){
             var dataArr = [];
 
             var code = data[0].result.code;
@@ -48,7 +48,9 @@ router.get('/list', function(req, res, next) {
                 res.json(resContent);
                 logger.info("get product list response:" + JSON.stringify(resContent));
             }
-        });
+        });*/
+
+
     } catch (ex) {
         logger.error("获取商品列表失败:" + ex);
         resContent.code = 500;

@@ -30,7 +30,7 @@ Product.prototype.queryProductList = function(params, callback){
     //添加查询条件：卖家id
     var sellerId = params.sellerId || '';
 
-    var thrift_pagination = new pagination_types.Pagination({currentPage:params.curpage,numPerPage:params.percount});
+    var thrift_pagination = new pagination_types.Pagination({currentPage:1,numPerPage:5});
     var thrift_params = new product_types.ProductSurveyQueryParam({
         pagination:thrift_pagination,
         subjectId:subjectId,
@@ -56,10 +56,12 @@ Product.prototype.queryProductList = function(params, callback){
             logger.error("调用productServ-queryProductList失败  失败原因 ======" + err);
             ret.code = 500;
             ret.desc = "查询商品列表失败！";
-            res.json(ret);
+            callback(ret,null);
             return;
+        }else{
+            logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
         }
-        callback(data);
+        callback(null,data);
     });
 };
 
