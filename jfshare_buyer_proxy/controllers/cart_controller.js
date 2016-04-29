@@ -203,28 +203,25 @@ router.post('/list', function(req, res, next) {
         var productList2 = [product1,product2];
         var productList3 = [product1];
 
-        var seller1 = {
+        var cartList1 = {
             sellerId:1,
             sellerName:"聚分享品质商家",
             remark:"五一特惠，任意三件商品包邮",
             productList:productList1
         };
-        var seller2 = {
+        var cartList2 = {
             sellerId:2,
             sellerName:"聚分享品质商家",
             remark:"五一特惠，任意三件商品包邮",
             productList:productList2
         };
-        var seller3 = {
+        var cartList3 = {
             sellerId:3,
             sellerName:"聚分享黄钻商家",
             remark:"五一特惠，任意三件商品包邮",
             productList:productList3
         };
-
-        result.seller1 = seller1;
-        result.seller2 = seller2;
-        result.seller3 = seller3;
+        result.cartList = [cartList1,cartList2,cartList3];
         res.json(result);
         logger.info("响应的结果:" + JSON.stringify(result));
 

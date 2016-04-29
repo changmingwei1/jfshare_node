@@ -118,8 +118,8 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     product: function(){
-        var obj = new ThriftConfig("120.24.153.155",1980);
-        //var obj = new ThriftConfig("127.0.0.1",1980);
+        //var obj = new ThriftConfig("120.24.153.155",1980);
+        var obj = new ThriftConfig("127.0.0.1",1980);
         return obj;
     },
     /**
@@ -170,6 +170,15 @@ module.exports.ServiceFactory  =  {
      */
     manager:function(){
         var obj = new ThriftConfig("120.24.153.155", 1993);
+        //var obj = new ThriftConfig("127.0.0.1", 1991);
+        return obj;
+    },
+    /**
+     * 积分服务
+     * @returns {ThriftConfig}
+     */
+    score:function(){
+        var obj = new ThriftConfig("120.24.153.155", 1994);
         //var obj = new ThriftConfig("127.0.0.1", 1991);
         return obj;
     }

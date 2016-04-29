@@ -32,8 +32,10 @@ router.get('/getCaptcha',function(request,response,next){
                 var cb = data[0].captcha.captchaBytes;
                 response.writeHead('200', {'Content-Type': 'image/jpeg'});    //写http头部信息
                 response.write(cb,'binary');
-               // var id = data[0].captcha.id;
-               // resContent.id = id;
+                //var id = data[0].captcha.id;
+                //var value = data[0].captcha.value;
+                //resContent.id = id;
+                //resContent.value = value;
                 logger.info("响应的结果:" + JSON.stringify(resContent));
                 response.end();
             }
@@ -53,7 +55,7 @@ router.post('/validateCaptcha',function(request,response,next){
     try{
         var param = request.body;
         var id = param.id || "1024";
-        var value = param.value || "cajx";
+        var value = param.value;
 
         var args = {};
         args.id = id;
@@ -463,7 +465,7 @@ router.post('/validAuth',function(request,response,next){
 });
 
 //获取个人用户信息
-router.post('/get', function(request, response, next) {
+router.post('/query', function(request, response, next) {
 
     logger.info("进入获取个人用户信息接口...");
     var resContent = {code:200};
@@ -855,5 +857,6 @@ router.post('/changePwd',function(request,response,next){
     logger.info("参数为: " + JSON.stringify(args));
     response.json(result);
 });
+
 
 module.exports = router;
