@@ -427,7 +427,7 @@ router.post('/list', function(req, res, next) {
                     var productList = [];
                     if(order.productList !== null && order.productList.length > 0){
 
-                        orderItem.type = order.productList[0].type;
+                        orderItem.type = 2;
                         for(var i=0; i < order.productList.length; i++){
                             var productItem = {
                                 productId: order.productList[i].productId,
