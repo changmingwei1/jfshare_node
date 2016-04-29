@@ -166,7 +166,7 @@ router.get('/productDetail', function(req, res, next) {
         arg.productId = "ze160122101802000570";
         logger.info("查询商品详情的条件:" + JSON.stringify(arg));
 
-        Product.queryProductDetail(arg, function (err, data) {
+        /*Product.queryProductDetail(arg, function (err, data) {
 
             if (err) {
                 res.json(err);
@@ -177,7 +177,10 @@ router.get('/productDetail', function(req, res, next) {
 
                 logger.info("查询到的商品详情为:" + JSON.stringify(result));
             }
-        });
+        });*/
+
+        var productDetail = {"code":200,"value":"<p><img src=\"http://www.jfshare.com/img/2015/7/26/2450713.jpg\" alt=\"\" data-cke-saved-src=\"/img/2015/7/26/2450713.jpg\" /></p>"};
+        res.json(productDetail);
     }catch(ex) {
         logger.error("查询失败，原因是:" + ex);
         result.code = 500;
