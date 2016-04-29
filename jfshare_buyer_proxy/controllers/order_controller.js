@@ -381,12 +381,12 @@ router.post('/submit', function(request, response, next) {
 });
 
 // 查询订单列表
-router.get('/list', function(req, res, next) {
+router.post('/list', function(req, res, next) {
 
     logger.info("++++++++++++");
     var result = {code: 200};
     try{
-        var arg = req.query;
+        var arg = req.body;
         logger.info("查询订单列表请求参数：" + JSON.stringify(arg));
         var params = {};
         //userid 改为了userId  2016.4.12
@@ -426,14 +426,18 @@ router.get('/list', function(req, res, next) {
                     };
                     var productList = [];
                     if(order.productList !== null && order.productList.length > 0){
+
+                        orderItem.type = order.productList[0].type;
                         for(var i=0; i < order.productList.length; i++){
                             var productItem = {
                                 productId: order.productList[i].productId,
                                 productName:order.productList[i].productName,
-                                skunum: order.productList[i].skuNum,
+                                skuNum: order.productList[i].skuNum,
+                                skuName:order.productList[i].skuName,
                                 curPrice: order.productList[i].curPrice,
                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
-                                count: order.productList[i].count
+                                count: order.productList[i].count,
+                               // type:order.productList[i].type
                             };
                             productList.push(productItem);
                         }
