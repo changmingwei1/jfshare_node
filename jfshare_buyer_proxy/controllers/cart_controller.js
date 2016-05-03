@@ -157,7 +157,7 @@ router.post('/list', function(req, res, next) {
             productId:"ze160216170722000745",
             productName:"给力的中央空调",
             viceName:"冷暖 定速 立柜式 空调",
-            skuNum:{
+            sku:{
                 skuNum:"1-1:100-101",
                 skuName:"颜色-军绿色:功率-2匹"
             },
@@ -172,7 +172,7 @@ router.post('/list', function(req, res, next) {
             productId:"ze160216170722000746",
             productName:"给力的地方空调",
             viceName:"冷暖 不定速 立柜式 空调",
-            skuNum:{
+            sku:{
                 skuNum:"1-1:100-102",
                 skuName:"颜色-军绿色:功率-1匹"
             },
@@ -187,7 +187,7 @@ router.post('/list', function(req, res, next) {
             productId:"ze160216170722000746",
             productName:"给力的地方空调",
             viceName:"冷暖 不定速 立柜式 空调",
-            skuNum:{
+            sku:{
                 skuNum:"1-1:100-102",
                 skuName:"颜色-军绿色:功率-1匹"
             },
