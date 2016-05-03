@@ -115,7 +115,10 @@ router.get('/productinfo', function(req, res, next) {
         logger.info("get product list args:" + JSON.stringify(arg));
         var productId = arg.productId || "ze160407160404000554";
 
-        Product.queryProduct(productId, 1, 1, 0, 0, function (err, data) {
+        var resContent = {"code":200,"productInfo":{"productId":"ze160407160404000554","productName":"特美刻 钛金保温杯 1BBS1226 480ml 薄荷绿/英伦白/土豪金/咖啡色/蜜桃粉","viceName":"超强保温 超轻体态 安全健康","imgKey":"04F6938E3E8B276FC9D7D6B6E50564CE.jpg,06B33C8F6ED44BDACF60CFE025A94ACB.jpg,F8BAC7500CB0F52FF86EF2D7C3D475E2.jpg,,6D31EA72FA9905C197C307BCE7FDED22.jpg","productDesc":null,"skuTemplate":{"sku":[{"key":{"id":"1","value":"颜色"},"values":[{"id":"1","value":"薄荷绿","image":"F8BAC7500CB0F52FF86EF2D7C3D475E2.jpg","isReplace":"1"},{"id":"2","value":"英伦白","image":"6D31EA72FA9905C197C307BCE7FDED22.jpg","isReplace":"1"},{"id":"3","value":"土豪金","image":"80D6AEFB3518A54AB9FB6B08AA85E24D.jpg","isReplace":"0"},{"id":"4","value":"咖啡色","image":"06B33C8F6ED44BDACF60CFE025A94ACB.jpg","isReplace":"1"},{"id":"5","value":"蜜桃粉","image":"04F6938E3E8B276FC9D7D6B6E50564CE.jpg","isReplace":"1"}]}]},"sellerId":1,"sellerName":"测试商家1"},"minCurPrice":0.01,"maxCurPrice":10000000,"minOrgPrice":0.02,"maxOrgPrice":20000000};
+        res.json(resContent);
+
+        /*Product.queryProduct(productId, 1, 1, 0, 0, function (err, data) {
             if (err) {
                 res.json(err);
             } else {
@@ -125,9 +128,9 @@ router.get('/productinfo', function(req, res, next) {
                 productInfo.viceName = product.viceName;
                 productInfo.imgKey = product.imgKey;
                 productInfo.productDesc = product.detailContent;
-                /**
+                /!**
                  * productInfo.productAttribute = product.attribute;   属性单独一个接口
-                 */
+                 *!/
                 productInfo.skuTemplate = JSON.parse(product.skuTemplate);
                 productInfo.sellerId = product.sellerId;
                 productInfo.sellerName = "测试商家1";
@@ -144,7 +147,7 @@ router.get('/productinfo', function(req, res, next) {
                 res.json(result);
                 logger.info("get product info response:" + JSON.stringify(result));
             }
-        });
+        });*/
     }catch(ex) {
         logger.error("get product info error:" + ex);
         result.code = 500;
