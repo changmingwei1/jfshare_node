@@ -246,7 +246,7 @@ router.post('/login2', function(req, res, next) {
     param.pwdEnc = args.pwdEnc;
     param.value = args.value;
     param.id = args.id;
-    param.browser = args.browser;
+    param.browser = args.browser || "1";
     //param["ip"] = CommonUtil.getIP(req);
 
     logger.info("请求的参数: " + JSON.stringify(param));
@@ -496,43 +496,23 @@ router.post('/query', function(request, response, next) {
     var resContent = {code:200};
 
     try{
-        var args = request.body;
-        var token = args.token || "鉴权信息1";
-        var ppInfo = args.ppInfo || "鉴权信息2";
-        var userId = args.userId || "2";
+        var param = request.body;
+        var token = param.token;
+        var ppInfo = param.ppInfo;
+        var userId = param.userId;
+        var browser = param.browser || "1";
 
+        var args = {};
         args.token = token;
         args.ppInfo = ppInfo;
         args.userId = userId;
+        args.browser = browser;
 
-        logger.info("It's test______" + JSON.stringify(args));
+        logger.info("It's test______" + JSON.stringify(param));
         Buyer.validAuth(args,function(err,data){
             if(err){
-                //response.json(err);
-                //return;
-                /***************************测试数据*******************************/
-                Buyer.getBuyer(args,function(error, data){
-
-                    if(error){
-                        response.json(error);
-                    }else{
-                        var buyer = data[0].buyer;
-                        //logger.info(buyer);
-
-                        var loginLog = data[0].loginLog;
-                        var value = data[0].value;
-                        var thirdUser = data[0].thirdUser;
-
-                        resContent.buyer = {userId:buyer.userId,userName:buyer.userName,favImg:buyer.favImg,birthday:buyer.birthday,sex:buyer.sex,mobile:buyer.mobile};
-                        resContent.loginLog = loginLog;
-                        resContent.value = value;
-                        resContent.thirdUser = thirdUser;
-                        response.json(resContent);
-                        logger.info("个人用户信息响应:" + JSON.stringify(resContent));
-                    }
-                });
+                response.json(err);
                 return;
-                /******************************************************************/
             }
             Buyer.getBuyer(args,function(error, data){
 
@@ -544,12 +524,12 @@ router.post('/query', function(request, response, next) {
 
                     var loginLog = data[0].loginLog;
                     var value = data[0].value;
-                    var thirdUser = data[0].thirdUser;
+                    //var thirdUser = data[0].thirdUser;
 
                     resContent.buyer = {userId:buyer.userId,userName:buyer.userName,favImg:buyer.favImg,birthday:buyer.birthday,sex:buyer.sex,mobile:buyer.mobile};
                     resContent.loginLog = loginLog;
                     resContent.value = value;
-                    resContent.thirdUser = thirdUser;
+                    //resContent.thirdUser = thirdUser;
                     response.json(resContent);
                     logger.info("个人用户信息响应:" + JSON.stringify(resContent));
                 }
@@ -571,13 +551,14 @@ router.post('/update', function(request, response, next) {
 
     try{
         var param = request.body;
-        var userId = param.userId || "2";
-        var userName = param.userName || "测试11";
+        var userId = param.userId;
+        var userName = param.userName;
         var favImg = param.favImg || "5544590E122CB3F01DD06CAE021E7EAB.jpg";
-        var birthday = param.birthday || "";
-        var sex = param.sex || "1";
-        var token = param.token || "鉴权信息1";
-        var ppInfo = param.ppInfo || "鉴权信息2";
+        var birthday = param.birthday;
+        var sex = param.sex;
+        var token = param.token;
+        var ppInfo = param.ppInfo;
+        var browser = param.browser || "1";
 
         var args = {};
         args.userId = userId;
@@ -587,25 +568,14 @@ router.post('/update', function(request, response, next) {
         args.sex = sex;
         args.token = token;
         args.ppInfo = ppInfo;
+        args.browser = browser;
 
         logger.info("It's test_____" + JSON.stringify(args));
 
         Buyer.validAuth(args,function(err,data){
             if(err){
-                //response.json(err);
-                //return;
-                /***************************测试数据*******************************/
-                Buyer.updateBuyer(args,function(error, data){
-
-                    if(error){
-                        response.json(error);
-                    }else{
-                        response.json(resContent);
-                        logger.info("get buyer response:" + JSON.stringify(resContent));
-                    }
-                });
+                response.json(err);
                 return;
-                /******************************************************************/
             }
             Buyer.updateBuyer(args,function(error, data){
 

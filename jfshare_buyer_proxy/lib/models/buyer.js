@@ -54,12 +54,15 @@ Buyer.prototype.getAuthInfo = function(param,callback){
 Buyer.prototype.validAuth = function(param, callback){
     //参数
     var authInfo = new buyer_types.AuthInfo({
-        token:param.token || "鉴权信息1",
-        ppInfo:param.ppInfo || "鉴权信息2"
+        token:param.token,
+        ppInfo:param.ppInfo
     });
-    var loginLog = new buyer_types.LoginLog(param);
+    var loginLog = new buyer_types.LoginLog({
+        browser:param.browser,
+        userId :param.userId
+    });
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'validAuth',[authInfo,loginLog]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'validAuth',[loginLog,authInfo]);
     Lich.wicca.invokeClient(buyerServ,function(err,data){
         logger.info("validAuth result: " + JSON.stringify(data));
         var res = {};

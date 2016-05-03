@@ -583,7 +583,7 @@ router.post('/info', function(req, res, next) {
                 return;
             }
             result.orderId = orderInfo.orderId;
-            result.orderstate = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+            result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
             if(orderInfo.deliverInfo !== null) {
                 result.address = orderInfo.deliverInfo.provinceName +
                     orderInfo.deliverInfo.cityName +
@@ -592,8 +592,8 @@ router.post('/info', function(req, res, next) {
                 result.receiverName = orderInfo.deliverInfo.receiverName;
                 result.mobile = orderInfo.deliverInfo.mobile || "13558731842";
             }
-            result.createTime = orderInfo.deliverTime;
-            result.comment = orderInfo.buyerComment;
+            result.createTime = orderInfo.deliverTime || "2016-5-3 10:01:58";
+            result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
             var productList = [];
             if(orderInfo.productList !== null && orderInfo.productList.length > 0){
                 for(var i=0; i < orderInfo.productList.length; i++) {
@@ -834,49 +834,21 @@ router.post('/freight', function(request, response, next) {
     logger.info("请求参数信息" + JSON.stringify(params));
 
     try{
-        /*Buyer.validAuth(params,function(err,data){
-            if(err){
-                //response.json(err);
-                //return;
-                /!***************************测试数据*******************************!/
-                Score.getScore(params,function(error, data){
-                    if(error){
-                        response.json(error);
-                    }else{
-                        var score = data[0].score;
-                        resContent.score = {userId:score.userId,amount:score.amount};
-                        response.json(resContent);
-                        logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-                    }
-                });
-                /!******************************************************************!/
-            }
-            Score.getScore(params,function(error, data){
-                if(error){
-                    response.json(error);
-                }else{
-                    var score = data[0].score;
-                    resContent.score = {userId:score.userId,amount:score.amount};
-                    response.json(resContent);
-                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-                }
-            });
-        });*/
+        var postage = "10";
+        resContent.postage = postage;
+        response.json(resContent);
+        logger.info("响应的信息：" + resContent);
     }catch(ex){
         logger.error("不能获取，原因是:" + ex);
         resContent.code = 500;
-        resContent.desc = "获取用户积分失败，显示测试数据内容为：";
-        /*******************************测试数据*********************************/
-        var postage = "10";
-        resContent.postage = postage;
-        /*******************************测试数据*********************************/
+        resContent.desc = "获取用户积分失败";
         response.json(resContent);
     }
 });
 
 //申请退货
 router.post('/refund', function(request, response, next) {
-    logger.info("进入获取物流信息流程");
+    logger.info("进入申请退货流程");
     var result = {code:200};
     try{
         //var params = request.query;
