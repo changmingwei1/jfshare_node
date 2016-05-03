@@ -424,7 +424,7 @@ router.post('/list', function(req, res, next) {
                         orderState:order.orderState,
                         curTime:order.curTime,
                         sellerId:order.sellerId,
-                        sellerName:order.sellerName,
+                        sellerName:"聚分享旗舰店",//order.sellerName
                         createTime:order.createTime,   //订单创建时间
                         deliverTime:order.deliverTime, //卖家发货时间
                         successTime:order.successTime  //确认收货时间
@@ -438,7 +438,7 @@ router.post('/list', function(req, res, next) {
                                 productId: order.productList[i].productId,
                                 productName:order.productList[i].productName,
                                 skuNum: order.productList[i].skuNum,
-                                skuName:order.productList[i].skuName,
+                                skuName:order.productList[i].skuDesc,//skuName 修改为 skuDesc
                                 curPrice: order.productList[i].curPrice,
                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                 count: order.productList[i].count

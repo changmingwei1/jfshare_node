@@ -25,7 +25,7 @@ function Seller(){}
 Seller.prototype.querySeller = function(sellerId,baseTag,callback){
 
     var param = new buyer_types.SellerRetParam({
-        baseTag:baseTag   //需要查询出的粒度，0:不需要此信息,1:需要此信息
+        baseTag:baseTag || 0  //需要查询出的粒度，0:不需要此信息,1:需要此信息
     });
 
     //获取client
