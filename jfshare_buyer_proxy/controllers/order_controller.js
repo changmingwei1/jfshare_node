@@ -13,6 +13,7 @@ var Product = require('../lib/models/product');
 var Util = require('../lib/models/util');
 var Order = require('../lib/models/order');
 var Address = require('../lib/models/address');
+var Seller = require('../lib/models/seller');
 
 var product_types = require("../lib/thrift/gen_code/product_types");
 
@@ -115,7 +116,6 @@ var product_types = require("../lib/thrift/gen_code/product_types");
         res.json(result);
     }
 });*/
-
 
 
 //购物车中点击立即结算  ---> 实物
@@ -423,7 +423,11 @@ router.post('/list', function(req, res, next) {
                         postage:order.postage,
                         orderState:order.orderState,
                         curTime:order.curTime,
-                        sellerName:"测试商家"
+                        sellerId:order.sellerId,
+                        sellerName:order.sellerName,
+                        createTime:order.createTime,   //订单创建时间
+                        deliverTime:order.deliverTime, //卖家发货时间
+                        successTime:order.successTime  //确认收货时间
                     };
                     var productList = [];
                     if(order.productList !== null && order.productList.length > 0){

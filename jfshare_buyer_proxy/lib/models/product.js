@@ -421,7 +421,6 @@ Product.prototype.queryOrderDetail = function (param, callback) {
     });
 };
 
-
 Product.prototype.payApply = function (param, callback) {
     logger.info("Product.prototype.payApply  param:" + JSON.stringify(param));
     var pay = {payChannel:param.payChannel};
@@ -472,7 +471,6 @@ Product.prototype.payState = function(param, callback) {
         }
     });
 };
-
 
 Product.prototype.addCartItem = function(param, callback){
 
@@ -737,7 +735,6 @@ Product.prototype.signinThirdParty = function(arg, callback){
         }
     });
 };
-
 
 Product.prototype.getOrderStateBuyerEnum = function(orderState) {
     if (orderState == null) {

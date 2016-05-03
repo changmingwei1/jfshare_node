@@ -298,70 +298,6 @@ router.post('/login2', function(req, res, next) {
         }
     });
 });
-/*router.post('/login2',function(req,res,next){
-
-    logger.info("进入账号密码登录接口");
-    var resContent = {code:200};
-
-    var args = req.body;
-    var mobile = args.mobile || "13558731842";
-    var pwdEnc = args.pwdEnc || "023AA15ED89871CE330CFF55567A8075";
-    var value  = args.value || "cajx";
-    var id = args.id || "1024";
-    var browser = args.browser || "121346";
-
-    var param = {};
-    param.mobile = mobile;
-    param.pwdEnc = pwdEnc;
-    param.id = id;
-    param.value = value;
-    param.browser = browser;
-    //参数校验
-    if(param.mobile == null || param.mobile == "" ||param.mobile <= 0){
-
-        resContent.code = 500;
-        resContent.desc = "请求参数错误";
-        res.json(resContent);
-        return;
-    }
-    if(param.pwdEnc == null || param.pwdEnc == "" ||param.pwdEnc <= 0){
-
-        resContent.code = 500;
-        resContent.desc = "请求参数错误";
-        res.json(resContent);
-        return;
-    }
-    logger.info("参数信息：" + JSON.stringify(param));
-    //Common.validateCaptcha(param, function(err,data){
-    //    if(err){
-    //        res.json(err);
-    //        return;
-    //    }
-        Buyer.newLogin(param,function(error,data){
-            if(error){
-                res.json(error);
-                return;
-                //var authInfo = new buyer_types.AuthInfo({
-                //    token:"鉴权信息1",
-                //    ppInfo:"鉴权信息2"
-                //});
-                //resContent.authInfo = authInfo;
-                //res.json(JSON.stringify(resContent));
-                //logger.info("响应的结果:" + JSON.stringify(resContent));
-                //return;
-            }
-            var authInfo = new buyer_types.AuthInfo({
-                token:token,
-                ppInfo:ppInfo
-             });
-            resContent.authInfo = authInfo;
-            res.json(JSON.stringify(resContent));
-            logger.info("响应的结果:" + JSON.stringify(resContent));
-        });
-        //res.json(resContent);
-        //logger.info("响应的结果:" + JSON.stringify(resContent));
-    //});
-});*/
 
 //注册
 router.post('/regist', function(req, res, next) {
@@ -779,58 +715,54 @@ router.post('/scoreTrade', function(request, response, next) {
     }
 });
 
-//重置密码
+//重置密码  ===  现在只有重置密码的thrift接口，但是传入的是userId，重置需要的mobile和短验
 router.post('/resetPwd',function(request,response,next){
     logger.info("进入重置密码接口...");
+    var resContent = {code:200};
 
     var param = request.body;
-    var mobile = param.mobile || "13558731842";
-    var userId = param.userId || 2;
-    var newPwd = param.newPwd || "AB123456";
-    var captchaDesc = param.captchaDesc || "7LJG";
+    var mobile = param.mobile;
+    var newPwd = param.newPwd;
+    var captchaDesc = param.captchaDesc;
 
     var args = {};
     args.mobile = mobile;
-    args.userId = userId;
     args.newPwd = newPwd;
     args.captchaDesc = captchaDesc;
-
-
+    //参数校验
+    if(mobile == null || newPwd == null || mobile == "" || newPwd == ""){
+        resContent.code = 400;
+        resContent.desc = "账号密码不能为空";
+        response.json(resContent);
+        return;
+    }
+    if(captchaDesc == null || captchaDesc == ""){
+        resContent.code = 400;
+        resContent.desc = "验证码不能为空";
+        response.json(resContent);
+        return;
+    }
     logger.info("参数为: " + JSON.stringify(args));
 
-    async.waterfall([
-        function (callback) {
-            Common.validateMsgCaptcha(args, function (data) {
-                if (data.result) {
-                    callback(null);
-                } else {
-                    callback({failDesc:"验证码错误!"});
-                }
-            });
-        },
-        function (callback) {
-            Buyer.newResetBuyerPwd(param, function (data) {
-                logger.info("****************************");
-                if (data.result) {
-                    callback(null);
-                } else {
-                    callback({failDesc:"验证码错误!"});
-                }
-            });
+    Common.validateMsgCaptcha(args, function(err,data){
+        if(err){
+            response.json(err);
+            return;
         }
-    ], function (err) {
-        if (err) {
-            err["result"] = false;
-            return response.json(err);
-        } else {
-            return response.json({result: true});
-        }
+        Buyer.newResetBuyerPwd(args,function(error,data){
+            if(error){
+                response.json(error);
+                return;
+            }
+            response.json(resContent);
+            logger.info("响应的结果:" + JSON.stringify(resContent));
+        });
     });
 });
 
-//修改密码
+//修改密码  ===  暂缓
 router.post('/changePwd',function(request,response,next){
-    logger.info("进入修改密码接口...");
+    /*logger.info("进入修改密码接口...");
     var result = {code:200};
 
     var param = request.body;
@@ -850,7 +782,65 @@ router.post('/changePwd',function(request,response,next){
     args.ppInfo = ppInfo;
 
     logger.info("参数为: " + JSON.stringify(args));
-    response.json(result);
+    response.json(result);*/
+
+    logger.info("进入修改密码接口...");
+    var resContent = {code:200};
+
+    var param = request.body;
+    var userId = param.userId;
+    var mobile = param.mobile;
+    var newPwd = param.newPwd;
+    var captchaDesc = param.captchaDesc;
+    var token = param.token;
+    var ppInfo = param.ppInfo;
+    var browser = param.browser;
+
+    var args = {};
+    args.userId = userId;
+    args.mobile = mobile;
+    args.newPwd = newPwd;
+    args.captchaDesc = captchaDesc;
+    args.token = token;
+    args.ppInfo = ppInfo;
+    args.browser = browser;
+
+    //参数校验
+    if(userId == null || newPwd == null || userId == "" || newPwd == ""){
+        resContent.code = 400;
+        resContent.desc = "用户id或密码不能为空";
+        response.json(resContent);
+        return;
+    }
+    if(captchaDesc == null || captchaDesc == ""){
+        resContent.code = 400;
+        resContent.desc = "验证码不能为空";
+        response.json(resContent);
+        return;
+    }
+
+    logger.info("参数为: " + JSON.stringify(args));
+
+    Buyer.validAuth(args,function(err,data) {
+        if (err) {
+            response.json(err);
+            return;
+        }
+        Common.validateMsgCaptcha(args, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            Buyer.newResetBuyerPwd(args, function (error, data) {
+                if (error) {
+                    response.json(error);
+                    return;
+                }
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            });
+        });
+    });
 });
 
 
