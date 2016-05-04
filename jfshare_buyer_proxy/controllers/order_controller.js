@@ -525,6 +525,10 @@ router.post('/info2', function(req, res, next) {
         result.orderId = "5780002";
         result.orderstate = 20;
         result.mobileNo = "13558731840";
+
+        var nowDate = new Date();
+        var curTime = nowDate.toLocaleDateString() + " "+ nowDate.toLocaleTimeString();
+        result.curTime = curTime;
         result.createTime = "2016-01-20 10:12:34"; //订单创建时间
         result.comment = "买家留言信息";
         result.closingPrice = "1";
@@ -596,6 +600,9 @@ router.post('/info', function(req, res, next) {
                 result.receiverName = orderInfo.deliverInfo.receiverName;
                 result.mobile = orderInfo.deliverInfo.mobile || "13558731842";
             }
+            var nowDate = new Date();
+            var curTime = nowDate.toLocaleDateString() + " "+ nowDate.toLocaleTimeString();
+            result.curTime = curTime;
             result.createTime = orderInfo.createTime || "2016-5-3 10:01:58";
             result.deliverTime= orderInfo.deliverTime || "2016-5-4 11:01:58"; //卖家发货时间
             result.successTime= orderInfo.successTime || "2016-5-6 12:01:58"; //确认收货时间
