@@ -87,13 +87,23 @@ module.exports.ServiceFactory  =  {
         var obj = new ThriftConfig("120.24.153.155",1985);
         return obj;
     },
+
+    /**
+     * 消息服务
+     * @returns {ThriftConfig}
+     */
+    message:function(){
+        // var obj = new ThriftConfig("120.24.153.155", 2001);
+        var obj = new ThriftConfig("127.0.0.1", 2001);
+        return obj;
+    },
     /**
      * 科目服务
      * @returns {ThriftConfig}
      */
     subject:function(){
-        var obj = new ThriftConfig("120.24.153.155",1982);
-        // var obj = new ThriftConfig("127.0.0.1",1982);
+        // var obj = new ThriftConfig("120.24.153.155",1982);
+        var obj = new ThriftConfig("127.0.0.1",1982);
         return obj;
     },
     /**
@@ -162,6 +172,16 @@ module.exports.ServiceFactory  =  {
     seller:function(){
         var obj = new ThriftConfig("120.24.153.155", 1991);
         //var obj = new ThriftConfig("127.0.0.1", 1991);
+        return obj;
+    },
+
+    /**
+     * 品牌服务
+     * @returns {ThriftConfig}
+     */
+    brand:function(){
+        // var obj = new ThriftConfig("120.24.153.155", 1981);
+        var obj = new ThriftConfig("127.0.0.1", 1981);
         return obj;
     }
 };

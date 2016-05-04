@@ -7,116 +7,185 @@ var router = express.Router();
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
 
-var Product = require('../lib/models/product');
+var Brand = require('../lib/models/brand');
 
 // 添加品牌
-router.post('/add', function(req, res, next) {
+router.post('/add', function(request, response, next) {
     var result = {code: 200};
     try{
-        var arg = req.body;
-        var params = {};
-        params.name = arg.name || "三星";
-        params.imgKey = arg.imgKey || "53AA8C093E164059D432971EA2F9C1DD.jpg";
+        var params = request.body;
 
-        logger.info("请求， params:" + JSON.stringify(params));
+        if(params.name=="" || params.name ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.imgKey=="" || params.imgKey ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
-        res.json(result);
-        logger.info("add brand response:" + JSON.stringify(result));
+        if(params.userId=="" || params.userId ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Brand.add(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                result.id = data;
+                logger.info("queryAttributes  result:" + JSON.stringify(result));
+                response.json(result);
+            }
+        });
+
     } catch (ex) {
         logger.error("add brand error:" + ex);
         result.code = 500;
         result.desc = "新增品牌失败";
-        res.json(result);
+        response.json(result);
     }
 });
 
-// 获取品牌信息
-router.post('/get', function(req, res, next) {
-    var result = {code: 200};
 
+
+//更新
+router.post('/update', function (request, response, next) {
+    var result = {code: 200};
     try{
-        var arg = req.body;
-        var brandId = arg.brandId || 1;
-        logger.info("请求， arg:" + JSON.stringify("brandId:" + brandId));
+        var params = request.body;
 
-        var brand = {};
-        brand.name = "华为";
-        brand.imgKey = "53AA8C093E164059D432971EA2F9C1DD.jpg";
-        result.brand = brand;
-        res.json(result);
-        logger.info("获取系统消息 response:" + JSON.stringify(result));
+        if(params.name=="" || params.name ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.imgKey=="" || params.imgKey ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.userId=="" || params.userId ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.id=="" || params.id ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Brand.update(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                logger.info("update brand   result:" + JSON.stringify(result));
+                response.json(result);
+            }
+        });
 
     } catch (ex) {
-        logger.error("获取系统消息 error:" + ex);
+        logger.error("update brand error:" + ex);
         result.code = 500;
-        result.desc = "获取系统消息失败";
-        res.json(result);
+        result.desc = "更新品牌失败";
+        response.json(result);
     }
 });
-
-// 修改商家信息
-router.post('/update', function (req, res, next) {
+//获取单个品牌的信息
+router.post('/get', function (request, response, next) {
     var result = {code: 200};
+    try{
+        var params = request.body;
 
-    try {
-        var arg = req.body;
-        var params = {};
-        params.name = arg.name || "小米";
-        params.imgKey = arg.imgKey || "53AA8C093E164059D432971EA2F9C1DD.jpg";
+        if(params.id=="" || params.id ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
-        logger.info("新增系统消息请求， params:" + JSON.stringify(params));
+        Brand.get(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                result.name = data.name;
+                result.id = data.id;
+                result.imgKey = data.imgKey;
+                response.json(result);
+            }
+        });
 
-        res.json(result);
-        logger.info("add address response:" + JSON.stringify(result));
     } catch (ex) {
-        logger.error("update address error:" + ex);
+        logger.error("get brandInfo   error:" + ex);
         result.code = 500;
-        result.desc = "更新系统消息失败";
-        res.json(result);
+        result.desc = "获取品牌失败";
+        response.json(result);
     }
 });
-
 //品牌列表
-router.post('/list', function(req, res, next) {
+router.post('/list', function(request, response, next) {
     var result = {code: 200};
-
     try{
-        var arg = req.body;
-        var params = {};
-        params.name = arg.name || "%华%";
-        params.perCount = arg.perCount || 50;
-        params.curPage = arg.curPage || 1;
+        var params = request.body;
 
-        logger.info("获取商家列表请求， arg:" + JSON.stringify(params));
-        var brand1 = {};
-        brand1.brandId = 1;
-        brand1.name = "三星";
-        brand1.imgKey = "53AA8C093E164059D432971EA2F9C1DD.jpg";
-        brand1.createTime = "2016-4-26";
-        var brand2 = {};
-        brand2.brandId = 2;
-        brand2.name = "华为";
-        brand2.imgKey = "53AA8C093E164059D432971EA2F9C1DD.jpg";
-        brand2.createTime = "2016-4-26";
-        var brand3 = {};
-        brand3.brandId = 3;
-        brand3.name = "小米";
-        brand3.imgKey = "53AA8C093E164059D432971EA2F9C1DD.jpg";
-        brand3.createTime = "2016-4-26";
+        if(params.perCount=="" || params.perCount ==null || params.perCount <=0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.curPage=="" || params.curPage ==null ||params.curPage <=0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
-        var page = {total:3,pageCount:1};
-        result.page = page;
-        result.brand1 = brand1;
-        result.brand2 = brand2;
-        result.brand3 = brand3;
-        res.json(result);
-        logger.info("获取商家列表 response:" + JSON.stringify(result));
+
+        Brand.list(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                logger.info("query brandlist   result:" + JSON.stringify(result));
+                var page = {total:data[0].total , pageCount:data[0].pageCount};
+               // result.
+                var brands = data[0].brandInfo;
+                var brandList = [];
+                if(data[0].total!=0){
+                    brands.forEach(function (brandInfo) {
+                        var brand = ({
+                            id:brandInfo.id,
+                            name:brandInfo.name,
+                            imgKey:brandInfo.imgKey,
+                            createTime:brandInfo.createTime,
+                            lastUpdateTime:brandInfo.lastUpdateTime
+                        });
+                        brandList.push(brand);
+                    });
+                }
+
+
+                result.brandList = brandList;
+                response.json(result);
+            }
+        });
 
     } catch (ex) {
-        logger.error("get 商家 list error:" + ex);
+        logger.error("get brandlist error:" + ex);
         result.code = 500;
-        result.desc = "获取商家列表列表失败";
-        res.json(result);
+        result.desc = "获取品牌列表失败";
+        response.json(result);
     }
 });
 

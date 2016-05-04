@@ -2,7 +2,7 @@
  * Created by huapengpeng on 2016/4/22.
  */
 /**
- * Created by zhaoshenghai on 16/3/20.
+ * Created by huapengpeng on 16/3/20.
  */
 
 var log4node = require('../../log4node');
@@ -14,7 +14,7 @@ var pagination_types = require('../thrift/gen_code/pagination_types');
 
 
 var subject_types  = require("../thrift/gen_code/subject_types");
-
+var brand_types = require("../thrift/gen_code/brand_types");
 
 
 function Subject(){}
@@ -22,61 +22,71 @@ function Subject(){}
 
 Subject.prototype.add = function(params, callback){
 
-    var storehouse = new storehouse_types.Storehouse({
-        sellerId:params.sellerId,
+
+    var subject = new subject_types.SubjectInfo({
         name:params.name,
-        supportProvince:params.supportProvince
+        pid:params.pid,
+        level:params.level,
+        img_key:params.imgkey,
+        creator:params.userId
     });
 
-    logger.info("addStorehouse:" + JSON.stringify(storehouse));
 
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.StorehouseServer, "addStorehouse",storehouse);
+    logger.info("addSubject:" + JSON.stringify(subject));
 
-    Lich.wicca.invokeClient(storehouseServ, function (err, data) {
-        logger.info("storehouseServ-addStorehouse result:" + JSON.stringify(data[0]));
-        if(err || data[0].result.code == 1){
-            logger.error("addressServ-addAddressʧ��  ʧ��ԭ�� ======" + err);
+    var subjectServer = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "add",subject);
+
+    Lich.wicca.invokeClient(subjectServer, function (err, data) {
+        logger.info("subjectServer-addSubject result:" + JSON.stringify(data));
+        if(err || data[0].code == 1){
+            logger.error("addressServ-addAddress error ======" + err);
 
             var result = {};
             result.code = 500;
-            result.desc = "��Ӳֿ�ʧ�ܣ�";
+            result.desc = "添加类目失败";
 
-            logger.error("storehouseServ-addStorehouseʧ��  ʧ��ԭ�� ======" + err);
+            logger.error("addressServ-addAddress error ======" + err);
 
-            callback(result, null);
+            return callback(result, null);
 
         }
-        callback(data);
+
+        return callback(null,data);
     });
 };
 
 
-//���²ֿ�
+
 Subject.prototype.update = function(params, callback){
 
-    var storehouse = new storehouse_types.Storehouse({
-        sellerId:params.sellerId,
-        id:params.id,
+    var subject = new subject_types.SubjectInfo({
         name:params.name,
-        supportProvince:params.supportProvince
+        img_key:params.imgkey,
+        updater:params.userId,
+        id:params.id
     });
 
 
+    logger.info("updateSubject:" + JSON.stringify(subject));
 
-    logger.info("updateStorehouse:" + JSON.stringify(storehouse));
-    // ��ȡclient
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.StorehouseServer, "updateStorehouse",storehouse);
-    // ���� storehouseServ
-    Lich.wicca.invokeClient(storehouseServ, function (err, data) {
-        logger.info("storehouseServ-updateStorehouse result:" + JSON.stringify(data[0]));
-        if(err || data[0].result.code == 1){
-            logger.error("����storehouseServ-updateStorehouseʧ��  ʧ��ԭ�� ======" + err);
+    var subjectServer = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "update",subject);
+
+    Lich.wicca.invokeClient(subjectServer, function (err, data) {
+        logger.info("subjectServer-updateSubject result:" + JSON.stringify(data));
+        if(err || data[0].code == 1){
+            logger.error("addressServ-updateSubject error ======" + err);
+
             var result = {};
             result.code = 500;
-            result.desc = "���²ֿ�ʧ�ܣ�";
-            callback(result,data);
+            result.desc = "更新类目失败";
+
+            logger.error("addressServ-updateSubject error ======" + err);
+
+            return callback(result, null);
+
         }
-        callback(null,data);
+
+        return callback(null,data);
     });
 };
 
@@ -121,65 +131,6 @@ Subject.prototype.query = function(params, callback){
 Subject.prototype.list = function(params, callback){
 
 
-    // ��ȡclient
-
-    //var queryParam = new storehouse_types.StorehouseQureyParam({
-    //    id      :params.id,
-    //    sellerId:params.sellerId
-    //});
-    //
-    //var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.StorehouseServer, "queryStorehouse",queryParam);
-    //// ���� storehouseServ
-    //Lich.wicca.invokeClient(storehouseServ, function (err, data) {
-    //    logger.info("storehouseServ-queryStorehouse result:" + JSON.stringify(data[0]));
-    //    if(err || data[0].result.code == 1){
-    //        logger.error("����storehouseServ-queryStorehouse  ʧ��ԭ�� ======" + err);
-    //        var result = {};
-    //        result.code = 500;
-    //        result.desc = "��ѯ�ֿ��б�ʧ�ܣ�";
-    //        callback(result,data);
-    //    }else{
-    //        callback(null, data[0].storehouseList);
-    //    }
-    //
-    //});
-    /*****************
-     *
-     *
-     *
-     * 530000	����ʡ
-     710000	̨��ʡ
-     220000	����ʡ
-     510000	�Ĵ�ʡ
-     340000	����ʡ
-     370000	ɽ��ʡ
-     140000	ɽ��ʡ
-     440000	�㶫ʡ
-     320000	����ʡ
-     360000	����ʡ
-     130000	�ӱ�ʡ
-     410000	����ʡ
-     330000	�㽭ʡ
-     460000	����ʡ
-     420000	����ʡ
-     430000	����ʡ
-     620000	����ʡ
-     350000	����ʡ
-     520000	����ʡ
-     210000	����ʡ
-     610000	����ʡ
-     630000	�ຣʡ
-     230000	������ʡ
-
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     * *****************/
-
     /*********************һ���ǲ�������****************************/
     var addressList = [];
     var storehouse = new storehouse_types.Storehouse({
@@ -198,8 +149,32 @@ Subject.prototype.list = function(params, callback){
 
 
     callback(null,addressList);
-
 };
+
+
+Subject.prototype.queryAttributes = function(params, callback){
+    var queryParam = new subject_types.SubjectAttributeQueryParam({
+        subjectId:params.subjectId
+    });
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "querySubjectAttribute",[queryParam]);
+
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-querySubjectAttribute result:" + JSON.stringify(data));
+        if(err || data[0].result.code == 1){
+            logger.error("subjectServ-querySubjectAttribute result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "查询属性列表失败";
+            return callback(result,null);
+        }
+
+        logger.info("subjectServ-querySubjectAttribute result:" + JSON.stringify(data));
+        return callback(null,data);
+    });
+};
+
+
+
 Subject.prototype.querySubjectPath = function(params, callback){
 
     //
@@ -231,6 +206,122 @@ Subject.prototype.querySubjectPath = function(params, callback){
        return callback(null,subjectpath);
     });
 };
+
+Subject.prototype.updateAttributes = function(params, callback){
+
+    //
+    var subjectAttribute = new subject_types.SubjectAttribute({
+        id:params.id,
+        name:params.name,
+        value:params.value,
+        beRequired:params.beRequired,
+        isSku:params.isSku,
+        updater:params.userId
+
+    });
+
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "updateSubjectAttribute",[subjectAttribute]);
+    //
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-updateSubjectAttribute result:" + JSON.stringify(data));
+        if(err || data[0].result.code == 1){
+            logger.error("subjectServ-updateSubjectAttribute result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "更新类目属性失败";
+            return callback(result,null);
+        }
+
+
+        return callback(null,subjectpath);
+    });
+};
+
+
+Subject.prototype.flushtoAll = function(params, callback){
+
+    //参数需要修改
+    var subjectInfo = new subject_types.SubjectInfo({
+        id:params.id,
+        name:params.name,
+        value:params.value,
+        beRequired:params.beRequired,
+        isSku:params.isSku,
+        updater:params.userId
+
+    });
+
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "applyAttributeToSuperAll",[subjectInfo]);
+    //
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-applyAttributeToSuperAll result:" + JSON.stringify(data));
+        if(err || data[0].result.code == 1){
+            logger.error("subjectServ-applyAttributeToSuperAll result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "类目属性应用全部属性失败";
+            return callback(result,null);
+        }
+
+
+        return callback(null,subjectpath);
+    });
+};
+
+Subject.prototype.getListforBrand = function(params, callback){
+
+    //
+    var brandInfo = new brand_types.BrandInfo({
+        id:params.id
+    });
+
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "queryBrandSubject",[brandInfo]);
+    //
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-getListforBrand result:" + JSON.stringify(data));
+        if(err || data[0].result.code == 1){
+            logger.error("subjectServ-getListforBrand result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "获取品牌关联类目失败";
+            return callback(result,null);
+        }
+
+
+        return callback(null,data);
+    });
+};
+
+Subject.prototype.updateBrandSubject = function(params, callback){
+
+    //
+
+    var subjectList = [];
+    subjectList.push(3198);
+    var brandSubjectParam = new subject_types.BrandSubjectParam({
+        bId:params.brandId,
+        Subjects:subjectList
+    });
+
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "updateBrandSubject",[brandSubjectParam]);
+    //
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-updateBrandSubject result:" + JSON.stringify(data));
+        if(err || data[0].code == 1){
+            logger.error("subjectServ-updateBrandSubject result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "更新品牌关联类目失败";
+            return callback(result,null);
+        }
+
+
+        return callback(null,subjectpath);
+    });
+};
+
+
+
 
 module.exports = new Subject();/**
  * Created by Administrator on 2016/4/27 0027.

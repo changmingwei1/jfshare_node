@@ -80,7 +80,7 @@ router.post('/delete', function(request, response, next) {
 
         var params = request.body;
         //var params = request.query;
-        if(params.id =="" || params.id==null){
+        if(params.id =="" || params.id==null ||params.id<=0){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
@@ -217,28 +217,28 @@ router.post('/get', function(request, response, next) {
 
 //系统消息列表
 
-router.get('/list', function(request, response, next) {
+router.post('/list', function(request, response, next) {
     var result = {code: 200};
-    //var params = request.body;
-    var params = request.query;
+    var params = request.body;
+    //var params = request.query;
     try{
-        Message.get(params, function(error,data){
+        Message.list(params, function(error,data){
             if(error){
                 response.json(error);
                 return;
             }
 
             if(data[0].messages!=null){
-                result.message = data[0].messages;
+                result.messageList = data[0].messages;
             }
             response.json(result);
-            logger.info("get message response:" + JSON.stringify(data));
+            logger.info("get messageList response:" + JSON.stringify(data));
         });
 
     } catch (ex) {
-        logger.error("获取系统消息 error:" + ex);
+        logger.error("获取系统消息List error:" + ex);
         result.code = 500;
-        result.desc = "获取系统消息失败";
+        result.desc = "获取系统消息列表失败";
         response.json(result);
     }
 });
