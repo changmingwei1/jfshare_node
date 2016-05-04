@@ -445,11 +445,12 @@ router.post('/query', function(request, response, next) {
         args.browser = browser;
 
         logger.info("It's test______" + JSON.stringify(param));
-        Buyer.validAuth(args,function(err,data){
-            if(err){
-                response.json(err);
-                return;
-            }
+//暂时去掉鉴权信息
+        //Buyer.validAuth(args,function(err,data){
+        //    if(err){
+        //        response.json(err);
+        //        return;
+        //    }
             Buyer.getBuyer(args,function(error, data){
 
                 if(error){
@@ -469,7 +470,7 @@ router.post('/query', function(request, response, next) {
                     response.json(resContent);
                     logger.info("个人用户信息响应:" + JSON.stringify(resContent));
                 }
-            });
+            //});
         });
     }catch(ex){
         logger.error("获取用户信息失败，because :" + ex);
@@ -507,12 +508,12 @@ router.post('/update', function(request, response, next) {
         args.browser = browser;
 
         logger.info("It's test_____" + JSON.stringify(args));
-
-        Buyer.validAuth(args,function(err,data){
-            if(err){
-                response.json(err);
-                return;
-            }
+//暂时去掉鉴权
+//        Buyer.validAuth(args,function(err,data){
+//            if(err){
+//                response.json(err);
+//                return;
+//            }
             Buyer.updateBuyer(args,function(error, data){
 
                 if(error){
@@ -521,7 +522,7 @@ router.post('/update', function(request, response, next) {
                     response.json(resContent);
                     logger.info("get buyer response:" + JSON.stringify(resContent));
                 }
-            });
+            //});
         });
     }catch(ex){
         logger.error("不能更新，原因是:" + ex);
@@ -531,7 +532,7 @@ router.post('/update', function(request, response, next) {
     }
 });
 
-//获取用户积分
+//获取用户积分 -- 服务还没完成
 router.post('/scoreTotal', function(request, response, next) {
 
     logger.info("进入获取用户积分接口");
@@ -592,7 +593,7 @@ router.post('/scoreTotal', function(request, response, next) {
     }
 });
 
-//获取积分列表
+//获取积分列表 -- 服务还没完成
 router.post('/scoreTrade', function(request, response, next) {
 
     logger.info("进入获取用户积分接口");
@@ -760,29 +761,8 @@ router.post('/resetPwd',function(request,response,next){
     });
 });
 
-//修改密码  ===  暂缓
+//修改密码
 router.post('/changePwd',function(request,response,next){
-    /*logger.info("进入修改密码接口...");
-    var result = {code:200};
-
-    var param = request.body;
-    var mobile = param.mobile || "13558731842";
-    var userId = param.userId || 2;
-    var newPwd = param.newPwd || "AB123456";
-    var captchaDesc = param.captchaDesc || "7LJG";
-    var token = param.token || "鉴权信息1";
-    var ppInfo = param.ppInfo || "鉴权信息2";
-
-    var args = {};
-    args.mobile = mobile;
-    args.userId = userId;
-    args.newPwd = newPwd;
-    args.captchaDesc = captchaDesc;
-    args.token = token;
-    args.ppInfo = ppInfo;
-
-    logger.info("参数为: " + JSON.stringify(args));
-    response.json(result);*/
 
     logger.info("进入修改密码接口...");
     var resContent = {code:200};
@@ -820,12 +800,12 @@ router.post('/changePwd',function(request,response,next){
     }
 
     logger.info("参数为: " + JSON.stringify(args));
-
-    Buyer.validAuth(args,function(err,data) {
-        if (err) {
-            response.json(err);
-            return;
-        }
+//暂时去掉鉴权信息
+//    Buyer.validAuth(args,function(err,data) {
+//        if (err) {
+//            response.json(err);
+//            return;
+//        }
         Common.validateMsgCaptcha(args, function (err, data) {
             if (err) {
                 response.json(err);
@@ -840,7 +820,7 @@ router.post('/changePwd',function(request,response,next){
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             });
         });
-    });
+    //});
 });
 
 
