@@ -380,7 +380,401 @@ router.post('/submit', function(request, response, next) {
     }
 });
 
-// 查询订单列表
+// 查询售后订单列表
+router.post('/afterSaleList', function(req, res, next) {
+
+    logger.info("++++++++++++");
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        logger.info("查询订单列表请求参数：" + JSON.stringify(arg));
+        var params = {};
+        //userid 改为了userId  2016.4.12
+        params.userId = arg.userId || 2;
+        //params.orderStatus = Order.getOrderStateIdBuyerEnum(arg.orderState);
+        params.orderStatus = arg.orderState || null;
+        params.percount = arg.percount || 20;
+        params.curpage = arg.curpage || 1;
+        params.userType = arg.userType || 1;
+        params.token = arg.token || "鉴权信息1";
+        params.ppInfo = arg.ppInfo || "鉴权信息2";
+
+        if(params.userId == null) {
+            result.code = 400;
+            result.desc = "没有填写用户ＩＤ";
+            res.json(result);
+            return;
+        }
+
+        //Order.orderProfileQuery(params, function (err, orderInfo) {
+        //    if(err){
+        //        res.json(err);
+        //        return;
+        //    }
+        //    var page = {total:orderInfo.total, pageCount: orderInfo.pageCount};
+        //    var orderList = [];
+        //    if(orderInfo.orderProfileList !== null) {
+        //        orderInfo.orderProfileList.forEach(function(order) {
+        //            var orderItem = {
+        //                orderId: order.orderId,
+        //                orderPrice: order.closingPrice,
+        //                username:order.username,
+        //                createName:order.createName,
+        //                postage:order.postage,
+        //                orderState:order.orderState,
+        //                sellerId:order.sellerId,
+        //                sellerName:"聚分享旗舰店",//order.sellerName
+        //                createTime:order.createTime,   //订单创建时间
+        //                deliverTime:order.deliverTime, //卖家发货时间
+        //                successTime:order.successTime  //确认收货时间
+        //            };
+        //            var productList = [];
+        //            if(order.productList !== null && order.productList.length > 0){
+        //
+        //                orderItem.type = 2;
+        //                for(var i=0; i < order.productList.length; i++){
+        //                    var productItem = {
+        //                        productId: order.productList[i].productId,
+        //                        productName:order.productList[i].productName,
+        //                        skuNum: order.productList[i].skuNum,
+        //                        skuName:order.productList[i].skuDesc,//skuName 修改为 skuDesc
+        //                        curPrice: order.productList[i].curPrice,
+        //                        imgUrl: order.productList[i].imagesUrl.split(',')[0],
+        //                        count: order.productList[i].count
+        //                       // type:order.productList[i].type
+        //                    };
+        //                    productList.push(productItem);
+        //                }
+        //                orderItem.productList = productList;
+        //                orderList.push(orderItem);
+        //            }
+        //        });
+        //        result.orderList = orderList;
+        //        result.page = page;
+        //    }
+        //    res.json(result);
+        //    logger.info("get order list response:" + JSON.stringify(result));
+        //});
+        var results = {
+            "code": 200,
+            "orderList": [
+                {
+                    "orderId": "5660002",
+                    "orderPrice": "1.00",
+                    "postage": null,
+                    "orderState": 1,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2016-01-04 18:43:46",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151224013609000987",
+                            "productName": "测试SKU",
+                            "skuNum": "1-2:100-101",
+                            "skuName": "颜色-天蓝色:尺码-均码",
+                            "curPrice": "1.00",
+                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5780002",
+                    "orderPrice": "0.10",
+                    "postage": null,
+                    "orderState": 2,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2016-01-04 17:22:30",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151220001240000950",
+                            "productName": "测试商品－主流程",
+                            "skuNum": "1-1:100-102",
+                            "skuName": "颜色-军绿色:尺码-XXS",
+                            "curPrice": "0.10",
+                            "imgUrl": "31E87669C4FA80B6BB7C08F42E560237.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5650002",
+                    "orderPrice": "1.00",
+                    "postage": null,
+                    "orderState": 3,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2016-01-04 00:17:05",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151224013609000987",
+                            "productName": "测试SKU",
+                            "skuNum": "1-1:100-101",
+                            "skuName": "颜色-军绿色:尺码-均码",
+                            "curPrice": "1.00",
+                            "imgUrl": "FC84964E8C0A36BB4F56C5866BBFB4F7.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5640002",
+                    "orderPrice": "0.01",
+                    "postage": null,
+                    "orderState": 1,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2016-01-04 00:15:59",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151228152841000732",
+                            "productName": "现代 空气净化器 HDJH-5501",
+                            "skuNum": "1-7:100-104",
+                            "skuName": "颜色-贝立安:尺码-S",
+                            "curPrice": "0.01",
+                            "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5610002",
+                    "orderPrice": "0.02",
+                    "postage": null,
+                    "orderState": 2,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-31 15:06:06",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151228152841000732",
+                            "productName": "现代 空气净化器 HDJH-5501",
+                            "skuNum": "1-7:100-105",
+                            "skuName": "颜色-贝立安:尺码-M",
+                            "curPrice": "0.02",
+                            "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5490002",
+                    "orderPrice": "0.10",
+                    "postage": null,
+                    "orderState": 3,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-28 16:24:44",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151220001240000950",
+                            "productName": "测试商品－主流程",
+                            "skuNum": "1-6:100-102",
+                            "skuName": "颜色-浅绿色:尺码-XXS",
+                            "curPrice": "0.10",
+                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5480002",
+                    "orderPrice": "0.10",
+                    "postage": null,
+                    "orderState": 1,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-28 16:23:24",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151220001240000950",
+                            "productName": "测试商品－主流程",
+                            "skuNum": "1-6:100-102",
+                            "skuName": "颜色-浅绿色:尺码-XXS",
+                            "curPrice": "0.10",
+                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5470002",
+                    "orderPrice": "0.10",
+                    "postage": null,
+                    "orderState": 1,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-28 16:17:41",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151220001240000950",
+                            "productName": "测试商品－主流程",
+                            "skuNum": "1-6:100-101",
+                            "skuName": "颜色-浅绿色:尺码-均码",
+                            "curPrice": "0.10",
+                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5420002",
+                    "orderPrice": "0.10",
+                    "postage": null,
+                    "orderState": 2,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-28 16:10:47",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151220001240000950",
+                            "productName": "测试商品－主流程",
+                            "skuNum": "1-6:100-101",
+                            "skuName": "颜色-浅绿色:尺码-均码",
+                            "curPrice": "0.10",
+                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5390002",
+                    "orderPrice": "0.10",
+                    "postage": null,
+                    "orderState": 2,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-28 16:05:22",
+                    "deliverTime": "",
+                    "successTime": "2016-05-03 16:47:41",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151220001240000950",
+                            "productName": "测试商品－主流程",
+                            "skuNum": "1-6:100-101",
+                            "skuName": "颜色-浅绿色:尺码-均码",
+                            "curPrice": "0.10",
+                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5380002",
+                    "orderPrice": "0.10",
+                    "postage": null,
+                    "orderState": 2,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-28 16:04:54",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151220001240000950",
+                            "productName": "测试商品－主流程",
+                            "skuNum": "1-6:100-101",
+                            "skuName": "颜色-浅绿色:尺码-均码",
+                            "curPrice": "0.10",
+                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+
+                {
+                    "orderId": "5260002",
+                    "orderPrice": "0.10",
+                    "postage": null,
+                    "orderState": 1,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-28 11:12:58",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151220001240000950",
+                            "productName": "测试商品－主流程",
+                            "skuNum": "1-1:100-101",
+                            "skuName": "颜色-军绿色:尺码-均码",
+                            "curPrice": "0.10",
+                            "imgUrl": "40923A2995EA7A154A02C3C0D210F1BA.jpg",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "orderId": "5210002",
+                    "orderPrice": "1.00",
+                    "postage": null,
+                    "orderState": 2,
+                    "sellerId": 1,
+                    "sellerName": "聚分享旗舰店",
+                    "createTime": "2015-12-27 19:54:00",
+                    "deliverTime": "",
+                    "successTime": "",
+                    "type": 2,
+                    "productList": [
+                        {
+                            "productId": "ze151219003508000502",
+                            "productName": "测试商品",
+                            "skuNum": "1-3:100-102",
+                            "skuName": "颜色-黄色:尺码-xxl",
+                            "curPrice": "1.00",
+                            "imgUrl": "E48CA9FA8A023F384962C2FE341366EA.jpg",
+                            "count": 1
+                        }
+                    ]
+                }
+
+
+            ],
+            "page": {
+                "total": 56,
+                "pageCount": 3
+            }
+        };
+        res.json(results);
+    } catch (ex) {
+        logger.error("get order list error:" + ex);
+        result.code = 500;
+        result.desc = "获取订单列表失败";
+        res.json(result);
+    }
+});
+
 router.post('/list', function(req, res, next) {
 
     logger.info("++++++++++++");
@@ -441,7 +835,7 @@ router.post('/list', function(req, res, next) {
                                 curPrice: order.productList[i].curPrice,
                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                 count: order.productList[i].count
-                               // type:order.productList[i].type
+                                // type:order.productList[i].type
                             };
                             productList.push(productItem);
                         }
@@ -526,9 +920,10 @@ router.post('/info2', function(req, res, next) {
         result.orderstate = 20;
         result.mobileNo = "13558731840";
 
-        var nowDate = new Date();
-        var curTime = nowDate.toLocaleDateString() + " "+ nowDate.toLocaleTimeString();
-        result.curTime = curTime;
+        //var nowDate = new Date();
+        //var curTime = nowDate.toLocaleDateString() + " "+ nowDate.toLocaleTimeString();
+        //result.curTime = curTime;
+        result.curTime = new Date().getTime();
         result.createTime = "2016-01-20 10:12:34"; //订单创建时间
         result.comment = "买家留言信息";
         result.closingPrice = "1";
@@ -540,7 +935,7 @@ router.post('/info2', function(req, res, next) {
             productId: "ze151220001240000950",
             productName:"测试商品－主流程",
             sellerName:"测试商家",
-            skuNum:{skuNum:"1-1:100-102", skuDesc:"颜色-军绿色:尺码-XXS"},
+            sku:{skuNum:"1-1:100-102", skuDesc:"颜色-军绿色:尺码-XXS"},
             curPrice: "0.01",
             imgUrl:"31E87669C4FA80B6BB7C08F42E560237.jpg",
             count:2
@@ -614,7 +1009,7 @@ router.post('/info', function(req, res, next) {
                         sellerName:"测试商家1",
                         productId: orderInfo.productList[i].productId,
                         productName:orderInfo.productList[i].productName,
-                        skuNum:{skuNum:orderInfo.productList[i].skuNum, skuDesc:orderInfo.productList[i].skuDesc},
+                        sku:{skuNum:orderInfo.productList[i].skuNum, skuDesc:orderInfo.productList[i].skuDesc},
                         curPrice: orderInfo.productList[i].curPrice,
                         orgPrice: orderInfo.productList[i].orgPrice,
                         imgUrl:orderInfo.productList[i].imagesUrl,
