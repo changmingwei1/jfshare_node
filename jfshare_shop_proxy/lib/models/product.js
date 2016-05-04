@@ -29,12 +29,13 @@ Product.prototype.queryProductList = function(params, callback){
     var subjectId = params.subjectId || '';
     //添加查询条件：卖家id
     var sellerId = params.sellerId || '';
-
+    var brandId = params.brandId || '';
     var thrift_pagination = new pagination_types.Pagination({currentPage:1,numPerPage:5});
     var thrift_params = new product_types.ProductSurveyQueryParam({
         pagination:thrift_pagination,
         subjectId:subjectId,
         sellerId:sellerId,
+        brandId:brandId,
         activeState:300,
         sort:"create_time DESC"});
     if(subjectId !== ''){
@@ -44,6 +45,10 @@ Product.prototype.queryProductList = function(params, callback){
     //判断卖家id是否为空
     if(sellerId !== ''){
         thrift_params.sellerId = sellerId;
+    }
+    //判断品牌id是否为空
+    if(brandId !== ''){
+        thrift_params.brandId = brandId;
     }
 
     logger.info("调用productServ-queryProductList args:" + JSON.stringify(thrift_params));
