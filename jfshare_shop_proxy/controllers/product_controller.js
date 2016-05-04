@@ -199,7 +199,7 @@ router.post('/querystore', function(req, res, next) {
 
     try{
         var arg = req.body;
-        logger.info("get product list args:" + JSON.stringify(arg));
+
         var productId = arg.productId;
         var provinceId = arg.provinceId;
         var skuNum = arg.skuNum;
@@ -217,27 +217,42 @@ router.post('/querystore', function(req, res, next) {
         params.skuTag = skuTag;
         params.attributeTag = attributeTag;
 
-        Product.queryHotSKU(params, function (err, data) {
-            if(err){
-                res.json(err);
-            }else{
-                var product = data[0].product;
-                /********************测试数据*******************/
-                //仓库id
-                var storehouseId = 1;
-                //库存量
-                var value = 100;
-                //销售价和原价
-                var curPrice = 100;
-                var orgPrice= 150;
-                result.storehourseId = storehourseId;
-                result.value = value;
-                result.curPrice = curPrice;
-                result.orgPrice = orgPrice;
-                res.json(result);
-                logger.info("查询到的详情为:" + JSON.stringify(result));
-            }
-        });
+        /********************测试数据*******************/
+        //仓库id
+        var storehouseId = 1;
+        //库存量
+        var value = 100;
+        //销售价和原价
+        var curPrice = 100;
+        var orgPrice= 150;
+        result.storehouseId = storehouseId;
+        result.value = value;
+        result.curPrice = curPrice;
+        result.orgPrice = orgPrice;
+        res.json(result);
+        logger.info("查询到的详情为:" + JSON.stringify(result));
+
+        //Product.queryHotSKU(params, function (err, data) {
+        //    if(err){
+        //        res.json(err);
+        //    }else{
+        //        var product = data[0].product;
+        //        /********************测试数据*******************/
+        //        //仓库id
+        //        var storehouseId = 1;
+        //        //库存量
+        //        var value = 100;
+        //        //销售价和原价
+        //        var curPrice = 100;
+        //        var orgPrice= 150;
+        //        result.storehouseId = storehouseId;
+        //        result.value = value;
+        //        result.curPrice = curPrice;
+        //        result.orgPrice = orgPrice;
+        //        res.json(result);
+        //        logger.info("查询到的详情为:" + JSON.stringify(result));
+        //    }
+        //});
 /*
         var detailStockIns = new detailStock();
 
