@@ -422,9 +422,8 @@ router.post('/list', function(req, res, next) {
                         createName:order.createName,
                         postage:order.postage,
                         orderState:order.orderState,
-                        curTime:order.curTime,
                         sellerId:order.sellerId,
-                        sellerName:order.sellerName,
+                        sellerName:"聚分享旗舰店",//order.sellerName
                         createTime:order.createTime,   //订单创建时间
                         deliverTime:order.deliverTime, //卖家发货时间
                         successTime:order.successTime  //确认收货时间
@@ -438,7 +437,7 @@ router.post('/list', function(req, res, next) {
                                 productId: order.productList[i].productId,
                                 productName:order.productList[i].productName,
                                 skuNum: order.productList[i].skuNum,
-                                skuName:order.productList[i].skuName,
+                                skuName:order.productList[i].skuDesc,//skuName 修改为 skuDesc
                                 curPrice: order.productList[i].curPrice,
                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                 count: order.productList[i].count
@@ -524,9 +523,9 @@ router.post('/info2', function(req, res, next) {
 
 
         result.orderId = "5780002";
-        result.orderstate = "已支付";
+        result.orderstate = 20;
         result.mobileNo = "13558731840";
-        result.createTime = "";
+        result.createTime = "2016-01-20 10:12:34"; //订单创建时间
         result.comment = "买家留言信息";
         result.closingPrice = "1";
         result.exchangeScore = "100";
@@ -587,7 +586,8 @@ router.post('/info', function(req, res, next) {
                 return;
             }
             result.orderId = orderInfo.orderId;
-            result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+            //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+            result.orderState = orderInfo.orderState;
             if(orderInfo.deliverInfo !== null) {
                 result.address = orderInfo.deliverInfo.provinceName +
                     orderInfo.deliverInfo.cityName +
@@ -596,7 +596,9 @@ router.post('/info', function(req, res, next) {
                 result.receiverName = orderInfo.deliverInfo.receiverName;
                 result.mobile = orderInfo.deliverInfo.mobile || "13558731842";
             }
-            result.createTime = orderInfo.deliverTime || "2016-5-3 10:01:58";
+            result.createTime = orderInfo.createTime || "2016-5-3 10:01:58";
+            result.deliverTime= orderInfo.deliverTime || "2016-5-4 11:01:58"; //卖家发货时间
+            result.successTime= orderInfo.successTime || "2016-5-6 12:01:58"; //确认收货时间
             result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
             var productList = [];
             if(orderInfo.productList !== null && orderInfo.productList.length > 0){

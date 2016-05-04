@@ -113,9 +113,9 @@ router.get('/productinfo', function(req, res, next) {
 
         var arg = req.query;
         logger.info("get product list args:" + JSON.stringify(arg));
-        var productId = arg.productId || "ze160407160404000554";
+        var productId = arg.productId || "ze160122104236000322";
 
-        var resContent = {"code":200,"productInfo":{"productId":"ze160407160404000554","productName":"特美刻 钛金保温杯 1BBS1226 480ml 薄荷绿/英伦白/土豪金/咖啡色/蜜桃粉","viceName":"超强保温 超轻体态 安全健康","imgKey":"04F6938E3E8B276FC9D7D6B6E50564CE.jpg,06B33C8F6ED44BDACF60CFE025A94ACB.jpg,F8BAC7500CB0F52FF86EF2D7C3D475E2.jpg,,6D31EA72FA9905C197C307BCE7FDED22.jpg","productDesc":null,"skuTemplate":{"sku":[{"key":{"id":"1","value":"颜色"},"values":[{"id":"1","value":"薄荷绿","image":"F8BAC7500CB0F52FF86EF2D7C3D475E2.jpg","isReplace":"1"},{"id":"2","value":"英伦白","image":"6D31EA72FA9905C197C307BCE7FDED22.jpg","isReplace":"1"},{"id":"3","value":"土豪金","image":"80D6AEFB3518A54AB9FB6B08AA85E24D.jpg","isReplace":"0"},{"id":"4","value":"咖啡色","image":"06B33C8F6ED44BDACF60CFE025A94ACB.jpg","isReplace":"1"},{"id":"5","value":"蜜桃粉","image":"04F6938E3E8B276FC9D7D6B6E50564CE.jpg","isReplace":"1"}]}]},"sellerId":1,"sellerName":"测试商家1"},"minCurPrice":0.01,"maxCurPrice":10000000,"minOrgPrice":0.02,"maxOrgPrice":20000000};
+        var resContent = {"code":200,"productInfo":{"productId":"ze160122104236000322","productName":"慕云（MUYUN）羽绒床垫 斜纹防羽布 秋冬加厚 可折叠 保暖垫子床褥","viceName":"选用鸭绒作填充料，抗菌，防霉，除臭。","imgKey":"75B1957695653501779C08D47F8FF3E5.jpg,FB158CCEC58E22C84D95ECCDCCA82E90.jpg,5BCADA5BF462428FE658BAA9D1160A74.jpg,E53C91A0CF9BBA3F9B2FD9C3CA0753F2.jpg,30B8315A5D5FA679D3FD02679BC8EE9C.jpg","productDesc":null,"skuTemplate":{"sku":[{"key":{"id":"1","value":"颜色"},"values":[{"id":"1","value":"米黄","image":"9D096B02FE2A2EF71A7A5AF21B655F04.jpg","isReplace":"1"},{"id":"12","value":"白色","image":"75B1957695653501779C08D47F8FF3E5.jpg","isReplace":"1"},{"id":"13","value":"粉色","image":"0C1AB7163B432790A66E81CCF32CA89C.jpg","isReplace":"1"},{"id":"15","value":"紫色","image":"34100C839DCAD532F66E6F7D031EFCAB.jpg","isReplace":"1"},{"id":"19","value":"蓝色","image":"699657CA3BE524444CA11E2E133437C0.jpg","isReplace":"1"}]},{"key":{"id":"100","value":"尺码"},"values":[{"id":"101","value":"100*200/6斤"},{"id":"102","value":"120*200/7斤"},{"id":"103","value":"150*200/8斤"},{"id":"104","value":"180*200/10斤"}]}]},"sellerId":1,"sellerName":"测试商家1"},"minCurPrice":0.01,"maxCurPrice":10000000,"minOrgPrice":0.02,"maxOrgPrice":20000000};
         res.json(resContent);
 
         /*Product.queryProduct(productId, 1, 1, 0, 0, function (err, data) {
@@ -123,6 +123,7 @@ router.get('/productinfo', function(req, res, next) {
                 res.json(err);
             } else {
                 var product = data[0].product;
+                var productInfo = {};
                 productInfo.productId = product.productId;
                 productInfo.productName = product.productName;
                 productInfo.viceName = product.viceName;
@@ -199,7 +200,7 @@ router.post('/querystore', function(req, res, next) {
 
     try{
         var arg = req.body;
-        logger.info("get product list args:" + JSON.stringify(arg));
+
         var productId = arg.productId;
         var provinceId = arg.provinceId;
         var skuNum = arg.skuNum;
@@ -217,27 +218,42 @@ router.post('/querystore', function(req, res, next) {
         params.skuTag = skuTag;
         params.attributeTag = attributeTag;
 
-        Product.queryHotSKU(params, function (err, data) {
-            if(err){
-                res.json(err);
-            }else{
-                var product = data[0].product;
-                /********************测试数据*******************/
-                //仓库id
-                var storehouseId = 1;
-                //库存量
-                var value = 100;
-                //销售价和原价
-                var curPrice = 100;
-                var orgPrice= 150;
-                result.storehourseId = storehourseId;
-                result.value = value;
-                result.curPrice = curPrice;
-                result.orgPrice = orgPrice;
-                res.json(result);
-                logger.info("查询到的详情为:" + JSON.stringify(result));
-            }
-        });
+        /********************测试数据*******************/
+        //仓库id
+        var storehouseId = 1;
+        //库存量
+        var value = 100;
+        //销售价和原价
+        var curPrice = 100;
+        var orgPrice= 150;
+        result.storehouseId = storehouseId;
+        result.value = value;
+        result.curPrice = curPrice;
+        result.orgPrice = orgPrice;
+        res.json(result);
+        logger.info("查询到的详情为:" + JSON.stringify(result));
+
+        //Product.queryHotSKU(params, function (err, data) {
+        //    if(err){
+        //        res.json(err);
+        //    }else{
+        //        var product = data[0].product;
+        //        /********************测试数据*******************/
+        //        //仓库id
+        //        var storehouseId = 1;
+        //        //库存量
+        //        var value = 100;
+        //        //销售价和原价
+        //        var curPrice = 100;
+        //        var orgPrice= 150;
+        //        result.storehouseId = storehouseId;
+        //        result.value = value;
+        //        result.curPrice = curPrice;
+        //        result.orgPrice = orgPrice;
+        //        res.json(result);
+        //        logger.info("查询到的详情为:" + JSON.stringify(result));
+        //    }
+        //});
 /*
         var detailStockIns = new detailStock();
 
