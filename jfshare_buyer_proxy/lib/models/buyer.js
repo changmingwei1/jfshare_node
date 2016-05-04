@@ -251,7 +251,7 @@ Buyer.prototype.updateBuyer = function(param,callback){
 Buyer.prototype.newResetBuyerPwd = function(param,callback){
 
     var params = new buyer_types.Buyer({
-        userId:param.userId
+        mobile:param.mobile
     });
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'newResetBuyerPwd',[param.newPwd, params]);

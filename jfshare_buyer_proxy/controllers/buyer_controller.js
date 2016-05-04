@@ -715,7 +715,7 @@ router.post('/scoreTrade', function(request, response, next) {
     }
 });
 
-//重置密码  ===  现在只有重置密码的thrift接口，但是传入的是userId，重置需要的mobile和短验
+//重置密码
 router.post('/resetPwd',function(request,response,next){
     logger.info("进入重置密码接口...");
     var resContent = {code:200};
