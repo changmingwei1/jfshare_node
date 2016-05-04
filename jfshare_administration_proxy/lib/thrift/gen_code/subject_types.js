@@ -2832,7 +2832,7 @@ SubjectAttributeResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 3:
+      case 2:
       if (ftype == Thrift.Type.LIST) {
         var _size80 = 0;
         var _rtmp384;
@@ -2870,7 +2870,7 @@ SubjectAttributeResult.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.subjectAttributes !== null && this.subjectAttributes !== undefined) {
-    output.writeFieldBegin('subjectAttributes', Thrift.Type.LIST, 3);
+    output.writeFieldBegin('subjectAttributes', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.subjectAttributes.length);
     for (var iter87 in this.subjectAttributes)
     {
@@ -2881,6 +2881,74 @@ SubjectAttributeResult.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectAttributeInfoResult = module.exports.SubjectAttributeInfoResult = function(args) {
+  this.result = null;
+  this.subjectAttribute = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.subjectAttribute !== undefined) {
+      this.subjectAttribute = args.subjectAttribute;
+    }
+  }
+};
+SubjectAttributeInfoResult.prototype = {};
+SubjectAttributeInfoResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.subjectAttribute = new ttypes.SubjectAttribute();
+        this.subjectAttribute.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectAttributeInfoResult.prototype.write = function(output) {
+  output.writeStructBegin('SubjectAttributeInfoResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.subjectAttribute !== null && this.subjectAttribute !== undefined) {
+    output.writeFieldBegin('subjectAttribute', Thrift.Type.STRUCT, 2);
+    this.subjectAttribute.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

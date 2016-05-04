@@ -71,7 +71,8 @@ Message.prototype.update = function(params,callback){
         title:params.title,
         content:params.content,
         beginDate:params.beginDate,
-        endDate:params.endDate
+        endDate:params.endDate,
+        pushTarget:params.pushTarget
     });
     logger.info("get message params:" + JSON.stringify(message));
     //获取client
@@ -108,5 +109,31 @@ Message.prototype.del = function(params,callback){
     });
 };
 
+//list
+Message.prototype.list = function(params,callback){
+    var SystemMessage = null;
+    if((params.title != undefined )||(params.status != undefined)||(params.pushTarget!= undefined)){
+            SystemMessage = new message_types.SystemMessage({
+                title:params.title,
+                status:params.status,
+                pushTarget:params.pushTarget
+        });
+    }
 
+
+    logger.info("list message params:" + JSON.stringify(params));
+    //获取client
+    var messageServ = new Lich.InvokeBag(Lich.ServiceKey.MessageServer,'getSystemMessage',[SystemMessage]);
+    Lich.wicca.invokeClient(messageServ, function(err, data){
+        logger.info("list messageList result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].code == "1") {
+            res.code = 500;
+            res.desc = "获取系统消息列表失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 module.exports = new Message();

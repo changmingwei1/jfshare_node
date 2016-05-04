@@ -92,7 +92,7 @@ SubjectServ_add_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
+        this.success = new ttypes.SubjectInfoResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
@@ -1343,7 +1343,7 @@ SubjectServ_add4dis_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
+        this.success = new ttypes.SubjectInfoResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
@@ -3325,7 +3325,7 @@ SubjectServ_addSubjectAttribute_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
+        this.success = new ttypes.SubjectAttributeInfoResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
