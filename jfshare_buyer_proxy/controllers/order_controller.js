@@ -920,9 +920,6 @@ router.post('/info2', function(req, res, next) {
         result.orderstate = 20;
         result.mobileNo = "13558731840";
 
-        //var nowDate = new Date();
-        //var curTime = nowDate.toLocaleDateString() + " "+ nowDate.toLocaleTimeString();
-        //result.curTime = curTime;
         result.curTime = new Date().getTime();
         result.createTime = "2016-01-20 10:12:34"; //订单创建时间
         result.comment = "买家留言信息";
@@ -995,12 +992,10 @@ router.post('/info', function(req, res, next) {
                 result.receiverName = orderInfo.deliverInfo.receiverName;
                 result.mobile = orderInfo.deliverInfo.mobile || "13558731842";
             }
-            var nowDate = new Date();
-            var curTime = nowDate.toLocaleDateString() + " "+ nowDate.toLocaleTimeString();
-            result.curTime = curTime;
-            result.createTime = orderInfo.createTime || "2016-5-3 10:01:58";
-            result.deliverTime= orderInfo.deliverTime || "2016-5-4 11:01:58"; //卖家发货时间
-            result.successTime= orderInfo.successTime || "2016-5-6 12:01:58"; //确认收货时间
+            result.curTime = new Date().getTime();
+            result.createTime = orderInfo.createTime || "2016-05-03 10:01:58";
+            result.deliverTime= orderInfo.deliverTime || "2016-05-04 11:01:58"; //卖家发货时间
+            result.successTime= orderInfo.successTime || "2016-05-06 12:01:58"; //确认收货时间
             result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
             var productList = [];
             if(orderInfo.productList !== null && orderInfo.productList.length > 0){
