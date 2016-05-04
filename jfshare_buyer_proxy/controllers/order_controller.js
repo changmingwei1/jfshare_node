@@ -844,6 +844,7 @@ router.post('/list', function(req, res, next) {
                     }
                 });
                 result.orderList = orderList;
+                result.curTime = new Date().getTime();/*给出系统当前时间*/
                 result.page = page;
             }
             res.json(result);
