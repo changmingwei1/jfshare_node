@@ -523,7 +523,7 @@ router.post('/info2', function(req, res, next) {
 
 
         result.orderId = "5780002";
-        result.orderstate = "已支付";
+        result.orderstate = 20;
         result.mobileNo = "13558731840";
         result.createTime = "2016-01-20 10:12:34"; //订单创建时间
         result.comment = "买家留言信息";
@@ -586,7 +586,8 @@ router.post('/info', function(req, res, next) {
                 return;
             }
             result.orderId = orderInfo.orderId;
-            result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+            //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+            result.orderState = orderInfo.orderState;
             if(orderInfo.deliverInfo !== null) {
                 result.address = orderInfo.deliverInfo.provinceName +
                     orderInfo.deliverInfo.cityName +
