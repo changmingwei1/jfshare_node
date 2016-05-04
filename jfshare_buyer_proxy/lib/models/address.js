@@ -93,6 +93,28 @@ Address.prototype.updateAddress = function(param,  callback) {
     });
 };
 
+//地址设为默认
+Address.prototype.setDefaultAddress = function(param,callback) {
+
+    var userId = param.userId;
+    var addressId = param.addressId;
+
+    var addressServ = new Lich.InvokeBag(Lich.ServiceKey.AddressServer, "setDefaultAddress", [userId,addressId]);
+
+    Lich.wicca.invokeClient(addressServ, function(err, data) {
+        logger.info("调用addressServ-setDefaultAddress  result:" + JSON.stringify(data));
+        var res = {};
+        if(err || data[0].code == "1"){
+            logger.error("调用addressServ-setDefaultAddress  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "设为默认地址失败！";
+            callback(res, null);
+        } else {
+            callback(null, null);
+        }
+    });
+};
+
 //删除收货地址
 Address.prototype.delAddress = function(param, callback) {
 

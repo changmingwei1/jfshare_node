@@ -190,6 +190,50 @@ router.post('/list', function(req, res, next) {
     }
 });
 
+//设置默认收货地址
+router.post('/setDefaultAddress', function (req, res, next) {
+    var result = {code: 200};
+
+    try {
+        var arg = req.body;
+        if(arg == null) {
+            result.code = 400;
+            result.desc = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        var params = {};
+        params.userId = arg.userId;
+        params.addressId = arg.id;
+
+        params.token = arg.token || "鉴权信息1";
+        params.ppInfo = arg.ppInfo || "鉴权信息2";
+        params.browser = arg.browser || "1";
+
+        logger.info("设为默认地址请求， arg:" + JSON.stringify(params));
+//暂时去掉鉴权信息
+//    Buyer.validAuth(args,function(err,data) {
+//        if (err) {
+//            response.json(err);
+//            return;
+//        }
+        Address.setDefaultAddress(params, function(err, data) {
+            if(err){
+                res.json(err);
+                return;
+            }
+            res.json(result);
+            logger.info("setDefaultAddress response:" + JSON.stringify(result));
+        });
+        //});
+    } catch (ex) {
+        logger.error("setDefaultAddress error:" + ex);
+        result.code = 500;
+        result.desc = "设置默认失败";
+        res.json(result);
+    }
+});
+
 //查询全国省份列表
 router.post('/getprovinces', function(req, res, next) {
     var result = {code: 200};
@@ -241,6 +285,7 @@ router.post('/getcitys', function(req, res, next) {
         res.json(result);
     }
 });
+
 //查询市下面的乡镇
 router.post('/getcountys', function(req, res, next) {
     var result = {code: 200};
