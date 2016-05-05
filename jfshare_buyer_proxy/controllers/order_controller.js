@@ -840,9 +840,102 @@ router.post('/list', function(req, res, next) {
                             productList.push(productItem);
                         }
                         orderItem.productList = productList;
-                        orderList.push(orderItem);
+
+                        var orderItem1 = {
+                            "orderId": "5660004",
+                            "orderPrice": "1.00",
+                            "orderState": 10,
+                            "sellerId": 1,
+                            "sellerName": "聚分享旗舰店1",
+                            "createTime": "2016-01-04 18:43:46",
+                            "deliverTime": "",
+                            "successTime": "",
+                            "type": 3,
+                            "productList": [
+                                {
+                                    productId:"ze160216170722000745",
+                                    productName:"博纳2D通兑票",
+                                    skuNum: "1-16",
+                                    skuName: "节假日通用",
+                                    count: 2,
+                                    curPrice: "100",
+                                    imgUrl:"BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                                }
+                            ]
+                        };
+                        var orderItem2 = {
+                            "orderId": "5660004",
+                            "orderPrice": "1.00",
+                            "orderState": 61,
+                            "sellerId": 2,
+                            "sellerName": "聚分享旗舰店2",
+                            "createTime": "2016-01-04 18:43:46",
+                            "deliverTime": "",
+                            "successTime": "",
+                            "type": 3,
+                            "productList": [
+                                {
+                                    productId:"ze160216170722000745",
+                                    productName:"博纳2D通兑票",
+                                    skuNum: "1-16",
+                                    skuName: "节假日通用",
+                                    count: 2,
+                                    curPrice: "100",
+                                    imgUrl:"BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                                }
+                            ]
+                        };
+                        var orderItem3 = {
+                            "orderId": "5660005",
+                            "orderPrice": "1.00",
+                            "orderState": 51,
+                            "sellerId": 3,
+                            "sellerName": "聚分享旗舰店3",
+                            "createTime": "2016-01-04 18:43:46",
+                            "deliverTime": "",
+                            "successTime": "",
+                            "type": 3,
+                            "productList": [
+                                {
+                                    productId:"ze160216170722000745",
+                                    productName:"博纳2D通兑票",
+                                    skuNum: "1-16",
+                                    skuName: "节假日通用",
+                                    count: 2,
+                                    curPrice: "100",
+                                    imgUrl:"BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                                }
+                            ]
+                        };
+                        var orderItem4 = {
+                            "orderId": "5660005",
+                            "orderPrice": "1.00",
+                            "orderState": 40,
+                            "sellerId": 3,
+                            "sellerName": "聚分享旗舰店3",
+                            "createTime": "2016-01-04 18:43:46",
+                            "deliverTime": "",
+                            "successTime": "",
+                            "type": 3,
+                            "productList": [
+                                {
+                                    productId:"ze160216170722000745",
+                                    productName:"高压锅",
+                                    skuNum: "1-16",
+                                    skuName: "节假日通用",
+                                    count: 2,
+                                    curPrice: "100",
+                                    imgUrl:"BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                                }
+                            ]
+                        };
+                        orderList.push(orderItem1);
+                        orderList.push(orderItem2);
+                        orderList.push(orderItem3);
+                        orderList.push(orderItem4);
                     }
                 });
+
                 result.orderList = orderList;
                 result.curTime = new Date().getTime();/*给出系统当前时间*/
                 result.page = page;
@@ -918,11 +1011,13 @@ router.post('/info2', function(req, res, next) {
 
 
         result.orderId = "5780002";
-        result.orderstate = 20;
+        result.orderstate = 10;
         result.mobileNo = "13558731840";
 
         result.curTime = new Date().getTime();
         result.createTime = "2016-01-20 10:12:34"; //订单创建时间
+        result.deliverTime = "";
+        result.successTime= "";
         result.comment = "买家留言信息";
         result.closingPrice = "1";
         result.exchangeScore = "100";
