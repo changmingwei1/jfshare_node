@@ -33,12 +33,12 @@ Freight.prototype.add = function(params, callback){
 
     logger.info("调用addPostage:" + JSON.stringify(freight));
     // 获取client
-    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "addPostage",freight);
+    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "addPostageTemplate",freight);
     // 调用 storehouseServ
     Lich.wicca.invokeClient(freightServ, function (err, data) {
-        logger.info("freightServ-addPostage result:" + JSON.stringify(data[0]));
+        logger.info("freightServ-addPostageTemplate result:" + JSON.stringify(data[0]));
         if(err || data[0].result.code == 1){
-            logger.error("freightServ-addPostage失败  失败原因 ======" + err);
+            logger.error("freightServ-addPostageTemplate  失败原因 ======" + err);
 
             var result = {};
             result.code = 500;
@@ -67,12 +67,12 @@ Freight.prototype.update = function(params, callback){
 
     logger.info("updatePostage:" + JSON.stringify(freight));
     // 获取client
-    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "updatePostage",storehouse);
+    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "updatePostageTemplate",freight);
     // 调用 freightServ
     Lich.wicca.invokeClient(freightServ, function (err, data) {
-        logger.info("freightServ-updatePostage result:" + JSON.stringify(data[0]));
+        logger.info("freightServ-updatePostageTemplate result:" + JSON.stringify(data[0]));
         if(err || data[0].result.code == 1){
-            logger.error("freightServ-updatePostage失败  失败原因 ======" + err);
+            logger.error("freightServ-updatePostageTemplate  失败原因 ======" + err);
             var result = {};
             result.code = 500;
             result.desc = "更新运费模板失败！";
@@ -87,15 +87,37 @@ Freight.prototype.delete = function(params, callback){
 
 
     // 获取client
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "deletePostage",storehouse);
+    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "deletePostageTemplate",[params.sellerId,params.id]);
     // 调用 storehouseServ
-    Lich.wicca.invokeClient(storehouseServ, function (err, data) {
-        logger.info("storehouseServ-deleteStorehouse result:" + JSON.stringify(data[0]));
+    Lich.wicca.invokeClient(freightServ, function (err, data) {
+        logger.info("freightServ-deletePostageTemplate result:" + JSON.stringify(data[0]));
         if(err || data[0].result.code == 1){
-            logger.error("调用storehouseServ-deleteStorehouse  失败原因 ======" + err);
+            logger.error("freightServ-deletePostageTemplate  失败原因 ======" + err);
             var result = {};
             result.code = 500;
-            result.desc = "删除仓库失败！";
+            result.desc = "删除运费模板失败！";
+            callback(result,data);
+        }
+        callback(null,data);
+    });
+};
+
+//获取运费模板
+Freight.prototype.get = function(params, callback){
+
+    var idList = [];
+    idList.push(params.id);
+
+    // 获取client
+    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "getPostageTemplate",[idLists]);
+    // 调用 storehouseServ
+    Lich.wicca.invokeClient(freightServ, function (err, data) {
+        logger.info("freightServ-getPostageTemplate result:" + JSON.stringify(data[0]));
+        if(err || data[0].result.code == 1){
+            logger.error("freightServ-getPostageTemplate  失败原因 ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "获取运费模板失败！";
             callback(result,data);
         }
         callback(null,data);
@@ -103,63 +125,26 @@ Freight.prototype.delete = function(params, callback){
 };
 
 
-
 //查询运费模板列表
 Freight.prototype.list = function(params, callback){
-
+    var freight_types = new freight_types.PostageQureyParam();
     logger.info("deleteStorehouse:" + JSON.stringify(storehouse));
     // 获取client
-    //var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.StorehouseServer, "queryStorehouse",storehouse);
-    //// 调用 storehouseServ
-    //Lich.wicca.invokeClient(storehouseServ, function (err, data) {
-    //    logger.info("storehouseServ-queryStorehouse result:" + JSON.stringify(data[0]));
-    //    if(err || data[0].result.code == 1){
-    //        logger.error("调用storehouseServ-queryStorehouse  失败原因 ======" + err);
-    //        var result = {};
-    //        result.code = 500;
-    //        result.desc = "查询仓库列表失败！";
-    //        callback(result,data);
-    //    }else{
-    //        callback(null, data[0].storehouseList);
-    //    }
-    //
-    //});
-    /*****************
-     *
-     *
-     *
-     * 530000	云南省
-     710000	台湾省
-     220000	吉林省
-     510000	四川省
-     340000	安徽省
-     370000	山东省
-     140000	山西省
-     440000	广东省
-     320000	江苏省
-     360000	江西省
-     130000	河北省
-     410000	河南省
-     330000	浙江省
-     460000	海南省
-     420000	湖北省
-     430000	湖南省
-     620000	甘肃省
-     350000	福建省
-     520000	贵州省
-     210000	辽宁省
-     610000	陕西省
-     630000	青海省
-     230000	黑龙江省
+    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "queryPostageTemplate",PostageQureyParam);
+    // 调用 storehouseServ
+    Lich.wicca.invokeClient(freightServ, function (err, data) {
+        logger.info("freightServ-queryPostageTemplate result:" + JSON.stringify(data[0]));
+        if(err || data[0].result.code == 1){
+            logger.error("freightServ-queryPostageTemplate  失败原因 ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "查询运费模板失败！";
+            callback(result,data);
+        }else{
+            callback(null, data[0].storehouseList);
+        }
 
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     * *****************/
+    });
 
 
 
