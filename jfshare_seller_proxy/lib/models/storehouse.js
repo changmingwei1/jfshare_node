@@ -51,6 +51,33 @@ Storehouse.prototype.add = function(params, callback){
 };
 
 
+// 获取仓库
+Storehouse.prototype.add = function(params, callback){
+
+    var list = [];
+    list.push(params.storeId);
+    logger.info("调用getStorehouse:" + JSON.stringify(storehouse));
+    // 获取client
+    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.StorehouseServer, "getStorehouse",list);
+    //调用 storehouseServ
+    Lich.wicca.invokeClient(storehouseServ, function (err, data) {
+        logger.info("storehouseServ-getStorehouse result:" + JSON.stringify(data[0]));
+        if(err || data[0].result.code == 1){
+            logger.error("storehouseServ-getStorehouse失败  失败原因 ======" + err);
+
+            var result = {};
+            result.code = 500;
+            result.desc = "获取仓库失败！";
+
+            logger.error("storehouseServ-getStorehouse失败  失败原因 ======" + err);
+
+            callback(result, null);
+
+        }
+        callback(data);
+    });
+};
+
 //更新仓库
 Storehouse.prototype.update = function(params, callback){
 
@@ -127,58 +154,6 @@ Storehouse.prototype.list = function(params, callback){
     //    }
     //
     //});
-    /*****************
-     *
-     *
-     *
-     * 530000	云南省
-     710000	台湾省
-     220000	吉林省
-     510000	四川省
-     340000	安徽省
-     370000	山东省
-     140000	山西省
-     440000	广东省
-     320000	江苏省
-     360000	江西省
-     130000	河北省
-     410000	河南省
-     330000	浙江省
-     460000	海南省
-     420000	湖北省
-     430000	湖南省
-     620000	甘肃省
-     350000	福建省
-     520000	贵州省
-     210000	辽宁省
-     610000	陕西省
-     630000	青海省
-     230000	黑龙江省
-
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     * *****************/
-
-    /*********************一下是测试数据****************************/
-    var addressList = [];
-    var storehouse = new storehouse_types.Storehouse({
-        id:1,sellerId:5,name:"华北仓",
-        supportProvince:"220000,370000,220000,630000,330000,440000"
-    });
-
-    var storehouse1 = new storehouse_types.Storehouse({
-        id:2,sellerId:5,name:"华南仓",
-        supportProvince:"460000,210000,220000,620000,330000,440000"
-    });
-
-
-    addressList.push(storehouse);
-    addressList.push(storehouse1);
 
 
     callback(null,addressList);
