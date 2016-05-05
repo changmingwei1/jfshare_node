@@ -247,7 +247,7 @@ Buyer.prototype.updateBuyer = function(param,callback){
     });
 };
 
-//重置密码new
+//重置密码 + 修改密码 new
 Buyer.prototype.newResetBuyerPwd = function(param,callback){
 
     var params = new buyer_types.Buyer({
