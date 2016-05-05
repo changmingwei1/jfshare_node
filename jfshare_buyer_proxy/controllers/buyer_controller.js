@@ -549,48 +549,51 @@ router.post('/scoreTotal', function(request, response, next) {
     params.userId = userId;
     logger.info("请求参数信息" + JSON.stringify(params));
 
-    try{
-        Buyer.validAuth(params,function(err,data){
-            if(err){
-                //response.json(err);
-                //return;
-                /***************************测试数据*******************************/
-                Score.getScore(params,function(error, data){
-                    if(error){
-                        response.json(error);
-                    }else{
-                        var score = data[0].score;
-                        resContent.score = {userId:score.userId,amount:score.amount};
-                        response.json(resContent);
-                        logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-                    }
-                });
-                /******************************************************************/
-            }
-            Score.getScore(params,function(error, data){
-                if(error){
-                    response.json(error);
-                }else{
-                    var score = data[0].score;
-                    resContent.score = {userId:score.userId,amount:score.amount};
-                    response.json(resContent);
-                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-                }
-            });
-        });
-    }catch(ex){
-        logger.error("不能获取，原因是:" + ex);
-        resContent.code = 500;
-        resContent.desc = "获取用户积分失败，显示测试数据内容为：";
-/*******************************测试数据*********************************/
-        var score = new score_types.Score({
-            userId:param.userId || "1",
-            amount:"100"
-        });
-        resContent.score = score;
-/*******************************测试数据*********************************/
-        response.json(resContent);
-    }
+
+    /*******************************测试数据*********************************/
+    var score = new score_types.Score({
+        userId:param.userId || "1",
+        amount:"100"
+    });
+    resContent.score = score;
+    response.json(resContent);
+    /*******************************测试数据*********************************/
+
+    //try{
+    //    Buyer.validAuth(params,function(err,data){
+    //        if(err){
+    //            //response.json(err);
+    //            //return;
+    //            /***************************测试数据*******************************/
+    //            Score.getScore(params,function(error, data){
+    //                if(error){
+    //                    response.json(error);
+    //                }else{
+    //                    var score = data[0].score;
+    //                    resContent.score = {userId:score.userId,amount:score.amount};
+    //                    response.json(resContent);
+    //                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+    //                }
+    //            });
+    //            /******************************************************************/
+    //        }
+    //        Score.getScore(params,function(error, data){
+    //            if(error){
+    //                response.json(error);
+    //            }else{
+    //                var score = data[0].score;
+    //                resContent.score = {userId:score.userId,amount:score.amount};
+    //                response.json(resContent);
+    //                logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+    //            }
+    //        });
+    //    });
+    //}catch(ex){
+    //    logger.error("不能获取，原因是:" + ex);
+    //    resContent.code = 500;
+    //    resContent.desc = "获取用户积分失败，显示测试数据内容为：";
+    //    response.json(resContent);
+    //}
 });
 
 //获取积分列表 -- 服务还没完成
@@ -622,98 +625,143 @@ router.post('/scoreTrade', function(request, response, next) {
     logger.info("请求参数信息" + JSON.stringify(params));
     var dataArr = [];
 
-    try{
-        Buyer.validAuth(params,function(err,data){
-            if(err){
-                //response.json(err);
-                //return;
-                /***************************测试数据*******************************/
-                Score.queryScoreTrade(params,function(error, data){
-                    var dataArr = [];
-                    if(error){
-                        response.json(error);
-                    }else{
-                        var pagination = data[0].pagination;
-                        resContent.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
+    /*******************************测试数据*********************************/
 
-                        var scoreTrades = data[0].scoreTrades;
-                        scoreTrades.forEach(function(a){
-                            dataArr.push({
-                                userId: a.userId,
-                                type: a.type,
-                                amount: a.amount,
-                                tradeId: a.tradeId,
-                                tradeTime: a.tradeTime,
-                                inOrPut: a.inOrOut,
-                                trader: a.trader
-                            });
-                        });
-                        resContent.scoreTrades = dataArr;
+    var pagination = new pagination_types.Pagination();
+    resContent.page = {
+        total: pagination.totalCount || 20,
+        pageCount:pagination.pageNumCount || 3,
+        numPerPage: pagination.perCount || 7,
+        currentPage:pagination.curPage || 1
+    };
 
-                        response.json(resContent);
-                        logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-                    }
-                });
-                /******************************************************************/
-            }
-            Score.queryScoreTrade(params,function(error, data){
-                var dataArr = [];
-                if(error){
-                    response.json(error);
-                }else{
-                    var pagination = data[0].pagination;
-                    resContent.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
+    var scoreTrade = new score_types.ScoreTrade({
+        userId: 2,
+        type: 2,
+        amount: 100,
+        tradeId: "123",
+        tradeTime: "2016-04-24 11:20:10",
+        inOrOut: 2,
+        trader: 1
+    });
+    var scoreTrade1 = new score_types.ScoreTrade({
+        userId: 2,
+        type: 2,
+        amount: 100,
+        tradeId: "124",
+        tradeTime: "2016-04-24 11:20:10",
+        inOrOut: 1,
+        trader: 2
+    });
+    var scoreTrade2 = new score_types.ScoreTrade({
+        userId: 2,
+        type: 2,
+        amount: 100,
+        tradeId: "125",
+        tradeTime: "2016-04-24 11:20:10",
+        inOrOut: 2,
+        trader: 3
+    });
+    var scoreTrade3 = new score_types.ScoreTrade({
+        userId: 2,
+        type: 2,
+        amount: 100,
+        tradeId: "126",
+        tradeTime: "2016-04-24 11:20:10",
+        inOrOut: 1,
+        trader: 4
+    });
+    var scoreTrade4 = new score_types.ScoreTrade({
+        userId: 2,
+        type: 2,
+        amount: 100,
+        tradeId: "127",
+        tradeTime: "2016-04-24 11:20:10",
+        inOrOut: 2,
+        trader: 4
+    });
+    var scoreTrade5 = new score_types.ScoreTrade({
+        userId: 2,
+        type: 2,
+        amount: 100,
+        tradeId: "128",
+        tradeTime: "2016-04-24 11:20:10",
+        inOrOut: 1,
+        trader: 2
+    });
+    var arr = [scoreTrade,scoreTrade1,scoreTrade2,scoreTrade3,scoreTrade4,scoreTrade5];
+    resContent.arr = arr;
+    response.json(resContent);
 
-                    var scoreTrades = data[0].scoreTrades;
-                    scoreTrades.forEach(function(a){
-                        dataArr.push({
-                            userId: a.userId,
-                            type: a.type,
-                            amount: a.amount,
-                            tradeId: a.tradeId,
-                            tradeTime: a.tradeTime,
-                            inOrPut: a.inOrOut,
-                            trader: a.trader
-                        });
-                    });
-                    resContent.scoreTrades = dataArr;
+    /*******************************测试数据*********************************/
 
-                    response.json(resContent);
-                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-                }
-            });
-        });
-    }catch(ex){
-        logger.error("获取失败，because: " + ex);
-        resContent.code = 500;
-        resContent.desc = "获取失败,显示测试数据内容为：";
-/*******************************测试数据*********************************/
-
-        var pagination = new pagination_types.Pagination();
-        resContent.page = {
-            total: pagination.totalCount || 20,
-            pageCount:pagination.pageNumCount || 3,
-            numPerPage: pagination.perCount || 7,
-            currentPage:pagination.curPage || 1
-        };
-        var arr = [3];
-        var scoreTrade = new score_types.ScoreTrade({
-            userId: 2,
-            type: 2,
-            amount: 100,
-            tradeId: "123",
-            tradeTime: "2016-04-24 11:20:10",
-            inOrPut: 2,
-            trader: 2
-        });
-        arr[0] = scoreTrade;
-        arr[1] = scoreTrade;
-        arr[2] = scoreTrade;
-        resContent.arr = arr;
-
-/*******************************测试数据*********************************/
-        response.json(resContent);
-    }
+    //try{
+    //    Buyer.validAuth(params,function(err,data){
+    //        if(err){
+    //            //response.json(err);
+    //            //return;
+    //            /***************************测试数据*******************************/
+    //            Score.queryScoreTrade(params,function(error, data){
+    //                var dataArr = [];
+    //                if(error){
+    //                    response.json(error);
+    //                }else{
+    //                    var pagination = data[0].pagination;
+    //                    resContent.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
+    //
+    //                    var scoreTrades = data[0].scoreTrades;
+    //                    scoreTrades.forEach(function(a){
+    //                        dataArr.push({
+    //                            userId: a.userId,
+    //                            type: a.type,
+    //                            amount: a.amount,
+    //                            tradeId: a.tradeId,
+    //                            tradeTime: a.tradeTime,
+    //                            inOrPut: a.inOrOut,
+    //                            trader: a.trader
+    //                        });
+    //                    });
+    //                    resContent.scoreTrades = dataArr;
+    //
+    //                    response.json(resContent);
+    //                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+    //                }
+    //            });
+    //            /******************************************************************/
+    //        }
+    //        Score.queryScoreTrade(params,function(error, data){
+    //            var dataArr = [];
+    //            if(error){
+    //                response.json(error);
+    //            }else{
+    //                var pagination = data[0].pagination;
+    //                resContent.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
+    //
+    //                var scoreTrades = data[0].scoreTrades;
+    //                scoreTrades.forEach(function(a){
+    //                    dataArr.push({
+    //                        userId: a.userId,
+    //                        type: a.type,
+    //                        amount: a.amount,
+    //                        tradeId: a.tradeId,
+    //                        tradeTime: a.tradeTime,
+    //                        inOrPut: a.inOrOut,
+    //                        trader: a.trader
+    //                    });
+    //                });
+    //                resContent.scoreTrades = dataArr;
+    //
+    //                response.json(resContent);
+    //                logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+    //            }
+    //        });
+    //    });
+    //}catch(ex){
+    //    logger.error("获取失败，because: " + ex);
+    //    resContent.code = 500;
+    //    resContent.desc = "获取失败,显示测试数据内容为：";
+    //    response.json(resContent);
+    //}
 });
 
 //重置密码
