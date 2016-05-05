@@ -998,14 +998,14 @@ router.post('/info', function(req, res, next) {
             result.deliverTime= orderInfo.deliverTime || "2016-05-04 11:01:58"; //卖家发货时间
             result.successTime= orderInfo.successTime || "2016-05-06 12:01:58"; //确认收货时间
             result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
+            result.sellerName = "测试商家1";
             var productList = [];
             if(orderInfo.productList !== null && orderInfo.productList.length > 0){
                 for(var i=0; i < orderInfo.productList.length; i++) {
                     productList.push({
-                        sellerName:"测试商家1",
                         productId: orderInfo.productList[i].productId,
                         productName:orderInfo.productList[i].productName,
-                        sku:{skuNum:orderInfo.productList[i].skuNum, skuDesc:orderInfo.productList[i].skuDesc},
+                        sku:{skuNum:orderInfo.productList[i].skuNum, skuName:orderInfo.productList[i].skuDesc},
                         curPrice: orderInfo.productList[i].curPrice,
                         orgPrice: orderInfo.productList[i].orgPrice,
                         imgUrl:orderInfo.productList[i].imagesUrl,
