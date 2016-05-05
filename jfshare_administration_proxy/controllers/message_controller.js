@@ -79,7 +79,7 @@ router.post('/add', function(request, response, next) {
 // 删除系统消息
 router.post('/delete', function(request, response, next) {
     var result = {code: 200};
-    response.json(results);
+    response.json(result);
     return;
     //var result = {code: 200};
     //try{
