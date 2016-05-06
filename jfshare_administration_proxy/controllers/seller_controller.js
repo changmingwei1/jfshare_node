@@ -187,9 +187,12 @@ router.post('/list', function(req, res, next) {
 
         var page = {total:3,pageCount:1};
         result.page = page;
-        result.seller1 = seller1;
-        result.seller2 = seller2;
-        result.seller3 = seller3;
+        var sellerList = [];
+        sellerList.push(seller1);
+        sellerList.push(seller2);
+        sellerList.push(seller3);
+        result.sellerList = sellerList;
+
         res.json(result);
         logger.info("获取商家列表 response:" + JSON.stringify(result));
 
