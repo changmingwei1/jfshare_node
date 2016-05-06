@@ -9,6 +9,8 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 
 var Product = require('../lib/models/product');
 var Address = require('../lib/models/address');
+
+
 //新增收货地址
 router.post('/add', function(req, res, next) {
     var result = {code: 200};
@@ -315,4 +317,6 @@ router.post('/getcountys', function(req, res, next) {
         res.json(result);
     }
 });
+
+
 module.exports = router;
