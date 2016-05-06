@@ -130,8 +130,21 @@ Storehouse.prototype.delete = function(params, callback){
 
 //查询仓库列表
 Storehouse.prototype.list = function(params, callback){
+    var addressList = [];
+    var storehouse = ({
+        id:1,sellerId:5,name:"华北仓",
+        supportProvince:"220000,370000,220000,630000,330000,440000"
+    });
+
+    var storehouse1 = ({
+        id:2,sellerId:5,name:"华南仓",
+        supportProvince:"460000,210000,220000,620000,330000,440000"
+    });
 
 
+    addressList.push(storehouse);
+    addressList.push(storehouse1);
+    callback(result,addressList);
     // 获取client
 
     //var queryParam = new storehouse_types.StorehouseQureyParam({
