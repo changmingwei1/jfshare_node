@@ -145,6 +145,38 @@ Product.prototype.queryHotSKU = function (paramters, callback) {
         }
     });
 };
+//查询商品指定sku ==> NEW
+Product.prototype.queryHotSKUV = function (paramters, callback) {
+
+    var param = new product_types.ProductRetParam({
+        baseTag:1,
+        skuTemplateTag:0,
+        skuTag:1,
+        attributeTag:0
+    });
+    var params = new product_types.ProductSkuParam({
+        productId:paramters.productId,
+        skuNum:paramters.skuNum,
+        storehouseId:paramters.storehouseId
+    });
+
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryHotSKUV", [params, param]);
+
+    //invite productServ
+    Lich.wicca.invokeClient(productServ, function(err, data){
+        logger.info("调用productServ-queryHotSku result:" + JSON.stringify(data));
+        var res = {};
+        if(err || data[0].result.code == "1"){
+            logger.error("调用productServ-queryHotSku查询商品sku失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询商品信息失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
 
 //查询商品详情
 Product.prototype.queryProductDetail = function (arg, callback) {

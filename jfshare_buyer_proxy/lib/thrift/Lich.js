@@ -29,7 +29,8 @@ var ServiceKey = {
     SellerServer: "Seller",
     ManagerServer:"Manager",
     ExpressServer:"Express",
-    ScoreServer:"Score"
+    ScoreServer:"Score",
+    BaseTemplateServer:"BaseTemplate"
 };
 
 /**

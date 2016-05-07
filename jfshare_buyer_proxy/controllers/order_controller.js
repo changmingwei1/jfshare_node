@@ -105,17 +105,18 @@ router.get('/previewTest', function (req, res, next) {
             var addressInfo = data[0].addressInfo;
             if (addressInfo != null) {
                 result.userName = addressInfo.receiverName;
-                result.mobileNo = addressInfo.mobile || "13013001340";
+                result.mobile = addressInfo.mobile || "13013001340";
                 var addressDes = addressInfo.provinceName + addressInfo.cityName + addressInfo.countyName + addressInfo.address;
                 result.address = {addressId: addressInfo.id, addressInfo: addressDes};
             }
 
             var count = 0;
             paramters.forEach(function (param) {
-                Product.queryHotSKU(param, function (err, productInfo) {
+                //查询商品指定sku
+                Product.queryHotSKUV(param, function (err, productInfo) {
                     if (err) {
-                        //res.json(err);
-                        //return;
+                        res.json(err);
+                        return;
                     }
                     var productItem = {
                         productId: productInfo.product.productId,
@@ -123,7 +124,7 @@ router.get('/previewTest', function (req, res, next) {
                         curPrice: productInfo.product.productSku.curPrice,
                         imgUrl: productInfo.product.imgKey.split(',')[0]
                     };
-
+                    //查询sku的库存
                     Product.getStockForSku(param, function (err, stockInfo) {
                         if (err) {
                             //res.json(err);
@@ -183,7 +184,6 @@ router.get('/previewTest', function (req, res, next) {
  res.json(result);
  }
  });*/
-
 
 //购物车中点击立即结算  ---> 实物
 router.post('/preview', function (request, response, next) {
@@ -857,7 +857,7 @@ router.post('/list', function (req, res, next) {
         params.orderStatus = arg.orderState || null;
         params.percount = arg.percount || 20;
         params.curpage = arg.curpage || 1;
-        params.userType = arg.userType || 1;
+        params.userType = arg.userType || 2;
         params.token = arg.token || "鉴权信息1";
         params.ppInfo = arg.ppInfo || "鉴权信息2";
 
@@ -885,7 +885,7 @@ router.post('/list', function (req, res, next) {
                         postage: order.postage,
                         orderState: order.orderState,
                         sellerId: order.sellerId,
-                        sellerName: "聚分享旗舰店",//order.sellerName
+                        sellerName: "聚分享旗舰店",//order.sellerName 现在没有数据
                         createTime: order.createTime,   //订单创建时间
                         deliverTime: order.deliverTime, //卖家发货时间
                         successTime: order.successTime  //确认收货时间
@@ -1029,21 +1029,27 @@ router.post('/count', function (request, response, next) {
     logger.info("进入获取用户积分接口");
     var resContent = {code: 200};
 
-    var param = request.body;
-    var token = param.token || "鉴权信息1";
-    var ppInfo = param.ppInfo || "鉴权信息2";
-    var userType = param.userType || 1;
-    var userId = param.userId || 1;
+    var arg = request.body;
+    arg.token = "鉴权信息1";
+    arg.ppInfo = "鉴权信息2";
 
-    var params = {};
-    params.token = token;
-    params.ppInfo = ppInfo;
-    params.userId = userId;
-    params.userType = userType;
-    logger.info("请求参数信息" + JSON.stringify(params));
+    if(arg.userId == null || arg.userId == "" || arg.userId <= 0){
+        resContent.code = 400;
+        resContent.desc = "用户id不能为空且必须大于0";
+        response.json(resContent);
+        return;
+    }
+    if(arg.userType == null || arg.userType == "" || arg.userType <= 0){
+        resContent.code = 400;
+        resContent.desc = "userType 不能为空【1（买家）、2（卖家）、3 (系统)】";
+        response.json(resContent);
+        return;
+    }
+
+    logger.info("请求参数信息" + JSON.stringify(arg));
 
     try {
-        Order.orderStateQuery(params, function (err, data) {
+        Order.orderStateQuery(arg, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
@@ -1058,6 +1064,7 @@ router.post('/count', function (request, response, next) {
         logger.error("不能获取，原因是:" + ex);
         resContent.code = 500;
         resContent.desc = "获取用户积分失败";
+        response.json(resContent);
     }
 });
 

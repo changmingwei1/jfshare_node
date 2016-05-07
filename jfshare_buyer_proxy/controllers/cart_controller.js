@@ -125,11 +125,11 @@ router.post('/countTest', function(req, res, next) {
         logger.info("get cart count request:" +  JSON.stringify(param));
 
 //暂时去掉鉴权信息
-    Buyer.validAuth(args,function(err,data) {
-        if (err) {
-            response.json(err);
-            return;
-        }
+//    Buyer.validAuth(args,function(err,data) {
+//        if (err) {
+//            response.json(err);
+//            return;
+//        }
         Cart.countItem(param, function(err, count) {
             if(err){
                 res.json(err);
@@ -139,7 +139,7 @@ router.post('/countTest', function(req, res, next) {
             res.json(result);
             logger.info("get cart item count response:" + JSON.stringify(result));
         });
-    });
+    //});
     } catch (ex) {
         logger.error("get product count in cart error:" + ex);
         result.code = 500;
@@ -355,6 +355,12 @@ router.post('/deleteTest', function(req, res, next) {
             res.json(result);
             return;
         }
+// 暂时去掉鉴权信息
+//    Buyer.validAuth(args,function(err,data) {
+//        if (err) {
+//            response.json(err);
+//            return;
+//        }
         Cart.deleteCartItem(arg.userId,cartKeys, function(err, data){
             if(err) {
                 res.json(err);
@@ -363,6 +369,7 @@ router.post('/deleteTest', function(req, res, next) {
             res.json(result);
             logger.info("delete cart item response:" + JSON.stringify(result));
         });
+    //});
     } catch(ex) {
         logger.error("delete product in cart error:" + ex);
         result.code = 500;
@@ -550,7 +557,12 @@ router.post('/listTest', function(req, res, next) {
             res.json(result);
             return;
         }
-
+//暂时去掉鉴权信息
+//    Buyer.validAuth(args,function(err,data) {
+//        if (err) {
+//            response.json(err);
+//            return;
+//        }
         Cart.cartListItem(param, function(err, itemList) {
             if(err){
                 res.json(err);
@@ -565,11 +577,11 @@ router.post('/listTest', function(req, res, next) {
                             var product = itemList[i].itemDetailList[j].product;
                             cartList.push({
                                 sellerId: product.product.sellerId,
-                                sellerName:"测试商家1",
+                                /*sellerName:"测试商家1",*/
                                 productId: product.product.productId,
                                 productName: product.product.productName,
                                 viceName:product.product.viceName,
-                                remark:product.product.remark,//商家备注
+                                remark:product.product.remark,
                                 skunum: {
                                     skuNum: product.product.productSku.skuNum,
                                     skuName:product.product.productSku.skuName},
@@ -612,6 +624,7 @@ router.post('/listTest', function(req, res, next) {
                 res.json(result);
             }
         });
+        //});
     } catch(ex) {
         logger.error("get cart product list error:" + ex);
         result.code = 500;
@@ -626,9 +639,9 @@ router.post('/listTest', function(req, res, next) {
 router.post('/update', function(req, res, next) {
     var result = {code: 200};
 
-    try{
+    try {
         var arg = req.body;
-        if(arg == null){
+        if (arg == null) {
             result.code = 400;
             res.json(result);
             return;
@@ -644,16 +657,22 @@ router.post('/update', function(req, res, next) {
         param.storehouseId = arg.storehouseId || "101";
         param.source = arg.source || 2;
 
-        logger.info("update product in cart request:" +  JSON.stringify(param));
-
-        Cart.cartUpdateItem(param, function(err, count) {
-            if(err){
+        logger.info("update product in cart request:" + JSON.stringify(param));
+//暂时去掉鉴权信息
+//    Buyer.validAuth(args,function(err,data) {
+//        if (err) {
+//            response.json(err);
+//            return;
+//        }
+        Cart.cartUpdateItem(param, function (err, count) {
+            if (err) {
                 //res.json(err);
                 //return;
             }
             res.json(result);
             logger.info("get cart item count response:" + JSON.stringify(result));
-        })
+        });
+    //});
     } catch (ex) {
         logger.error("update product in cart error:" + ex);
         result.code = 500;

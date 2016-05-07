@@ -24,8 +24,9 @@ function Cart(){}
 /************************************************现在的****************************************************/
 //获取购物车商品数量
 Cart.prototype.countItem = function(param, callback){
+    var source = param.source;
     //获取client
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "countItem", [param.userId, 2]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "countItem", [param.userId, source]);
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-countItem  result:" + JSON.stringify(data));
         var res = {};
@@ -69,15 +70,15 @@ Cart.prototype.addCartItem = function(param, callback){
 };
 
 //删除购物车
-Cart.prototype.deleteCartItem = function(param, callback){
-    //var carKeys = param.carKeys;
-    //var carKeyList = [];
-    //for(var i = 0; i < carKeys.length; i++){
-    //    var item = new cart_types.CartKey(carKeys[i]);
-    //    carKeyList.push(item);
-    //}
-    var cartKey = new cart_types.CartKey({productId:param.productId,skuNum:param.skunum});
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [param.userId, cartKey, 2]);
+Cart.prototype.deleteCartItem = function(userId,cartKeys, callback){
+
+    var cartKeyList = [];
+    for(var i = 0; i < cartKeys.length; i++){
+        var item = new cart_types.CartKey(cartKeys[i]);
+        cartKeyList.push(item);
+    }
+
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [userId, cartKeyList, 2]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-deleteItem  result:" + JSON.stringify(data));
@@ -85,10 +86,10 @@ Cart.prototype.deleteCartItem = function(param, callback){
         if(err || data[0].code == "1"){
             logger.error("调用cartServ-deleteItem失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "添加购物车失败！";
+            res.desc = "删除购物车失败！";
             callback(res, null);
         } else {
-            logger.info("add cart item:" + JSON.stringify(data[0]));
+            logger.info("delete cart item:" + JSON.stringify(data[0]));
             callback(null, data[0].checkList);
         }
     });

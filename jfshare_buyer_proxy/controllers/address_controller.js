@@ -74,7 +74,18 @@ router.post('/add', function(req, res, next) {
             res.json(result);
             return;
         }
-
+        if(arg.countyId==null ||arg.countyId ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.countyName==null ||arg.countyName ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
         if(arg.postCode==null ||arg.postCode ==""){
             result.code = 400;
             result.desc = "参数错误";
@@ -157,42 +168,74 @@ router.post('/update', function (req, res, next) {
         if( arg.userId==null ||arg.userId =="" || arg.userId <=0){
             result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if( arg.addrId==null ||arg.addrId =="" || arg.addrId <=0){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if( arg.mobile==null ||arg.mobile ==""){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if( arg.receiverName==null ||arg.receiverName ==""){
             result.code = 500;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if( arg.address==null ||arg.address ==""){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if(arg.provinceId==null ||arg.provinceId ==""){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if(arg.provinceName==null ||arg.provinceName ==""){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if(arg.cityId==null ||arg.cityId ==""){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if(arg.cityName==null ||arg.cityName ==""){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.countyId==null ||arg.countyId ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.countyName==null ||arg.countyName ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
         }
         if(arg.postCode==null ||arg.postCode ==""){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
+            res.json(result);
+            return;
         }
 
         logger.info("修改收货地址请求， arg:" + JSON.stringify(arg));
