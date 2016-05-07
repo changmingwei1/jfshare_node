@@ -47,17 +47,6 @@ router.post('/regist', function(request, respone, next) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //登录
 router.post('/login', function(request, respone, next) {
     var result = {code: 200};

@@ -134,16 +134,16 @@ StockServ_setStock_result.prototype.write = function(output) {
   return;
 };
 
-StockServ_getStock_args = function(args) {
-  this.productId = null;
+StockServ_queryStock_args = function(args) {
+  this.param = null;
   if (args) {
-    if (args.productId !== undefined) {
-      this.productId = args.productId;
+    if (args.param !== undefined) {
+      this.param = args.param;
     }
   }
 };
-StockServ_getStock_args.prototype = {};
-StockServ_getStock_args.prototype.read = function(input) {
+StockServ_queryStock_args.prototype = {};
+StockServ_queryStock_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -157,8 +157,9 @@ StockServ_getStock_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.productId = input.readString();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.QueryParam();
+        this.param.read(input);
       } else {
         input.skip(ftype);
       }
@@ -175,11 +176,11 @@ StockServ_getStock_args.prototype.read = function(input) {
   return;
 };
 
-StockServ_getStock_args.prototype.write = function(output) {
-  output.writeStructBegin('StockServ_getStock_args');
-  if (this.productId !== null && this.productId !== undefined) {
-    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
-    output.writeString(this.productId);
+StockServ_queryStock_args.prototype.write = function(output) {
+  output.writeStructBegin('StockServ_queryStock_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -187,7 +188,7 @@ StockServ_getStock_args.prototype.write = function(output) {
   return;
 };
 
-StockServ_getStock_result = function(args) {
+StockServ_queryStock_result = function(args) {
   this.success = null;
   if (args) {
     if (args.success !== undefined) {
@@ -195,8 +196,8 @@ StockServ_getStock_result = function(args) {
     }
   }
 };
-StockServ_getStock_result.prototype = {};
-StockServ_getStock_result.prototype.read = function(input) {
+StockServ_queryStock_result.prototype = {};
+StockServ_queryStock_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -229,8 +230,8 @@ StockServ_getStock_result.prototype.read = function(input) {
   return;
 };
 
-StockServ_getStock_result.prototype.write = function(output) {
-  output.writeStructBegin('StockServ_getStock_result');
+StockServ_queryStock_result.prototype.write = function(output) {
+  output.writeStructBegin('StockServ_queryStock_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -241,20 +242,16 @@ StockServ_getStock_result.prototype.write = function(output) {
   return;
 };
 
-StockServ_getStockForSku_args = function(args) {
-  this.productId = null;
-  this.skuNums = null;
+StockServ_batchQueryStock_args = function(args) {
+  this.param = null;
   if (args) {
-    if (args.productId !== undefined) {
-      this.productId = args.productId;
-    }
-    if (args.skuNums !== undefined) {
-      this.skuNums = args.skuNums;
+    if (args.param !== undefined) {
+      this.param = args.param;
     }
   }
 };
-StockServ_getStockForSku_args.prototype = {};
-StockServ_getStockForSku_args.prototype.read = function(input) {
+StockServ_batchQueryStock_args.prototype = {};
+StockServ_batchQueryStock_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -268,32 +265,16 @@ StockServ_getStockForSku_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.productId = input.readString();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.BatchQueryParam();
+        this.param.read(input);
       } else {
         input.skip(ftype);
       }
       break;
-      case 2:
-      if (ftype == Thrift.Type.LIST) {
-        var _size26 = 0;
-        var _rtmp330;
-        this.skuNums = [];
-        var _etype29 = 0;
-        _rtmp330 = input.readListBegin();
-        _etype29 = _rtmp330.etype;
-        _size26 = _rtmp330.size;
-        for (var _i31 = 0; _i31 < _size26; ++_i31)
-        {
-          var elem32 = null;
-          elem32 = input.readString();
-          this.skuNums.push(elem32);
-        }
-        input.readListEnd();
-      } else {
+      case 0:
         input.skip(ftype);
-      }
-      break;
+        break;
       default:
         input.skip(ftype);
     }
@@ -303,25 +284,11 @@ StockServ_getStockForSku_args.prototype.read = function(input) {
   return;
 };
 
-StockServ_getStockForSku_args.prototype.write = function(output) {
-  output.writeStructBegin('StockServ_getStockForSku_args');
-  if (this.productId !== null && this.productId !== undefined) {
-    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
-    output.writeString(this.productId);
-    output.writeFieldEnd();
-  }
-  if (this.skuNums !== null && this.skuNums !== undefined) {
-    output.writeFieldBegin('skuNums', Thrift.Type.LIST, 2);
-    output.writeListBegin(Thrift.Type.STRING, this.skuNums.length);
-    for (var iter33 in this.skuNums)
-    {
-      if (this.skuNums.hasOwnProperty(iter33))
-      {
-        iter33 = this.skuNums[iter33];
-        output.writeString(iter33);
-      }
-    }
-    output.writeListEnd();
+StockServ_batchQueryStock_args.prototype.write = function(output) {
+  output.writeStructBegin('StockServ_batchQueryStock_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -329,7 +296,7 @@ StockServ_getStockForSku_args.prototype.write = function(output) {
   return;
 };
 
-StockServ_getStockForSku_result = function(args) {
+StockServ_batchQueryStock_result = function(args) {
   this.success = null;
   if (args) {
     if (args.success !== undefined) {
@@ -337,8 +304,8 @@ StockServ_getStockForSku_result = function(args) {
     }
   }
 };
-StockServ_getStockForSku_result.prototype = {};
-StockServ_getStockForSku_result.prototype.read = function(input) {
+StockServ_batchQueryStock_result.prototype = {};
+StockServ_batchQueryStock_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -371,8 +338,8 @@ StockServ_getStockForSku_result.prototype.read = function(input) {
   return;
 };
 
-StockServ_getStockForSku_result.prototype.write = function(output) {
-  output.writeStructBegin('StockServ_getStockForSku_result');
+StockServ_batchQueryStock_result.prototype.write = function(output) {
+  output.writeStructBegin('StockServ_batchQueryStock_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -418,19 +385,19 @@ StockServ_lockStock_args.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size34 = 0;
-        var _rtmp338;
+        var _size24 = 0;
+        var _rtmp328;
         this.lockInfoList = [];
-        var _etype37 = 0;
-        _rtmp338 = input.readListBegin();
-        _etype37 = _rtmp338.etype;
-        _size34 = _rtmp338.size;
-        for (var _i39 = 0; _i39 < _size34; ++_i39)
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
         {
-          var elem40 = null;
-          elem40 = new ttypes.LockInfo();
-          elem40.read(input);
-          this.lockInfoList.push(elem40);
+          var elem30 = null;
+          elem30 = new ttypes.LockInfo();
+          elem30.read(input);
+          this.lockInfoList.push(elem30);
         }
         input.readListEnd();
       } else {
@@ -456,12 +423,12 @@ StockServ_lockStock_args.prototype.write = function(output) {
   if (this.lockInfoList !== null && this.lockInfoList !== undefined) {
     output.writeFieldBegin('lockInfoList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.lockInfoList.length);
-    for (var iter41 in this.lockInfoList)
+    for (var iter31 in this.lockInfoList)
     {
-      if (this.lockInfoList.hasOwnProperty(iter41))
+      if (this.lockInfoList.hasOwnProperty(iter31))
       {
-        iter41 = this.lockInfoList[iter41];
-        iter41.write(output);
+        iter31 = this.lockInfoList[iter31];
+        iter31.write(output);
       }
     }
     output.writeListEnd();
@@ -561,19 +528,19 @@ StockServ_releaseStock_args.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size42 = 0;
-        var _rtmp346;
+        var _size32 = 0;
+        var _rtmp336;
         this.lockInfoList = [];
-        var _etype45 = 0;
-        _rtmp346 = input.readListBegin();
-        _etype45 = _rtmp346.etype;
-        _size42 = _rtmp346.size;
-        for (var _i47 = 0; _i47 < _size42; ++_i47)
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
         {
-          var elem48 = null;
-          elem48 = new ttypes.LockInfo();
-          elem48.read(input);
-          this.lockInfoList.push(elem48);
+          var elem38 = null;
+          elem38 = new ttypes.LockInfo();
+          elem38.read(input);
+          this.lockInfoList.push(elem38);
         }
         input.readListEnd();
       } else {
@@ -599,12 +566,12 @@ StockServ_releaseStock_args.prototype.write = function(output) {
   if (this.lockInfoList !== null && this.lockInfoList !== undefined) {
     output.writeFieldBegin('lockInfoList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.lockInfoList.length);
-    for (var iter49 in this.lockInfoList)
+    for (var iter39 in this.lockInfoList)
     {
-      if (this.lockInfoList.hasOwnProperty(iter49))
+      if (this.lockInfoList.hasOwnProperty(iter39))
       {
-        iter49 = this.lockInfoList[iter49];
-        iter49.write(output);
+        iter39 = this.lockInfoList[iter39];
+        iter39.write(output);
       }
     }
     output.writeListEnd();
@@ -704,19 +671,19 @@ StockServ_releaseLockCount_args.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size50 = 0;
-        var _rtmp354;
+        var _size40 = 0;
+        var _rtmp344;
         this.lockInfoList = [];
-        var _etype53 = 0;
-        _rtmp354 = input.readListBegin();
-        _etype53 = _rtmp354.etype;
-        _size50 = _rtmp354.size;
-        for (var _i55 = 0; _i55 < _size50; ++_i55)
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
         {
-          var elem56 = null;
-          elem56 = new ttypes.LockInfo();
-          elem56.read(input);
-          this.lockInfoList.push(elem56);
+          var elem46 = null;
+          elem46 = new ttypes.LockInfo();
+          elem46.read(input);
+          this.lockInfoList.push(elem46);
         }
         input.readListEnd();
       } else {
@@ -742,12 +709,12 @@ StockServ_releaseLockCount_args.prototype.write = function(output) {
   if (this.lockInfoList !== null && this.lockInfoList !== undefined) {
     output.writeFieldBegin('lockInfoList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.lockInfoList.length);
-    for (var iter57 in this.lockInfoList)
+    for (var iter47 in this.lockInfoList)
     {
-      if (this.lockInfoList.hasOwnProperty(iter57))
+      if (this.lockInfoList.hasOwnProperty(iter47))
       {
-        iter57 = this.lockInfoList[iter57];
-        iter57.write(output);
+        iter47 = this.lockInfoList[iter47];
+        iter47.write(output);
       }
     }
     output.writeListEnd();
@@ -1339,7 +1306,7 @@ StockServClient.prototype.recv_setStock = function(input,mtype,rseqid) {
   }
   return callback('setStock failed: unknown result');
 };
-StockServClient.prototype.getStock = function(productId, callback) {
+StockServClient.prototype.queryStock = function(param, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -1350,25 +1317,25 @@ StockServClient.prototype.getStock = function(productId, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_getStock(productId);
+    this.send_queryStock(param);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_getStock(productId);
+    this.send_queryStock(param);
   }
 };
 
-StockServClient.prototype.send_getStock = function(productId) {
+StockServClient.prototype.send_queryStock = function(param) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('getStock', Thrift.MessageType.CALL, this.seqid());
-  var args = new StockServ_getStock_args();
-  args.productId = productId;
+  output.writeMessageBegin('queryStock', Thrift.MessageType.CALL, this.seqid());
+  var args = new StockServ_queryStock_args();
+  args.param = param;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-StockServClient.prototype.recv_getStock = function(input,mtype,rseqid) {
+StockServClient.prototype.recv_queryStock = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -1377,16 +1344,16 @@ StockServClient.prototype.recv_getStock = function(input,mtype,rseqid) {
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new StockServ_getStock_result();
+  var result = new StockServ_queryStock_result();
   result.read(input);
   input.readMessageEnd();
 
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('getStock failed: unknown result');
+  return callback('queryStock failed: unknown result');
 };
-StockServClient.prototype.getStockForSku = function(productId, skuNums, callback) {
+StockServClient.prototype.batchQueryStock = function(param, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -1397,26 +1364,25 @@ StockServClient.prototype.getStockForSku = function(productId, skuNums, callback
         _defer.resolve(result);
       }
     };
-    this.send_getStockForSku(productId, skuNums);
+    this.send_batchQueryStock(param);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_getStockForSku(productId, skuNums);
+    this.send_batchQueryStock(param);
   }
 };
 
-StockServClient.prototype.send_getStockForSku = function(productId, skuNums) {
+StockServClient.prototype.send_batchQueryStock = function(param) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('getStockForSku', Thrift.MessageType.CALL, this.seqid());
-  var args = new StockServ_getStockForSku_args();
-  args.productId = productId;
-  args.skuNums = skuNums;
+  output.writeMessageBegin('batchQueryStock', Thrift.MessageType.CALL, this.seqid());
+  var args = new StockServ_batchQueryStock_args();
+  args.param = param;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-StockServClient.prototype.recv_getStockForSku = function(input,mtype,rseqid) {
+StockServClient.prototype.recv_batchQueryStock = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -1425,14 +1391,14 @@ StockServClient.prototype.recv_getStockForSku = function(input,mtype,rseqid) {
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new StockServ_getStockForSku_result();
+  var result = new StockServ_batchQueryStock_result();
   result.read(input);
   input.readMessageEnd();
 
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('getStockForSku failed: unknown result');
+  return callback('batchQueryStock failed: unknown result');
 };
 StockServClient.prototype.lockStock = function(tranId, lockInfoList, callback) {
   this._seqid = this.new_seqid();
@@ -1817,29 +1783,29 @@ StockServProcessor.prototype.process_setStock = function(seqid, input, output) {
   }
 }
 
-StockServProcessor.prototype.process_getStock = function(seqid, input, output) {
-  var args = new StockServ_getStock_args();
+StockServProcessor.prototype.process_queryStock = function(seqid, input, output) {
+  var args = new StockServ_queryStock_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.getStock.length === 1) {
-    Q.fcall(this._handler.getStock, args.productId)
+  if (this._handler.queryStock.length === 1) {
+    Q.fcall(this._handler.queryStock, args.param)
       .then(function(result) {
-        var result = new StockServ_getStock_result({success: result});
-        output.writeMessageBegin("getStock", Thrift.MessageType.REPLY, seqid);
+        var result = new StockServ_queryStock_result({success: result});
+        output.writeMessageBegin("queryStock", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       }, function (err) {
-        var result = new StockServ_getStock_result(err);
-        output.writeMessageBegin("getStock", Thrift.MessageType.REPLY, seqid);
+        var result = new StockServ_queryStock_result(err);
+        output.writeMessageBegin("queryStock", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       });
   } else {
-    this._handler.getStock(args.productId,  function (err, result) {
-      var result = new StockServ_getStock_result((err != null ? err : {success: result}));
-      output.writeMessageBegin("getStock", Thrift.MessageType.REPLY, seqid);
+    this._handler.queryStock(args.param,  function (err, result) {
+      var result = new StockServ_queryStock_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryStock", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -1847,29 +1813,29 @@ StockServProcessor.prototype.process_getStock = function(seqid, input, output) {
   }
 }
 
-StockServProcessor.prototype.process_getStockForSku = function(seqid, input, output) {
-  var args = new StockServ_getStockForSku_args();
+StockServProcessor.prototype.process_batchQueryStock = function(seqid, input, output) {
+  var args = new StockServ_batchQueryStock_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.getStockForSku.length === 2) {
-    Q.fcall(this._handler.getStockForSku, args.productId, args.skuNums)
+  if (this._handler.batchQueryStock.length === 1) {
+    Q.fcall(this._handler.batchQueryStock, args.param)
       .then(function(result) {
-        var result = new StockServ_getStockForSku_result({success: result});
-        output.writeMessageBegin("getStockForSku", Thrift.MessageType.REPLY, seqid);
+        var result = new StockServ_batchQueryStock_result({success: result});
+        output.writeMessageBegin("batchQueryStock", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       }, function (err) {
-        var result = new StockServ_getStockForSku_result(err);
-        output.writeMessageBegin("getStockForSku", Thrift.MessageType.REPLY, seqid);
+        var result = new StockServ_batchQueryStock_result(err);
+        output.writeMessageBegin("batchQueryStock", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       });
   } else {
-    this._handler.getStockForSku(args.productId, args.skuNums,  function (err, result) {
-      var result = new StockServ_getStockForSku_result((err != null ? err : {success: result}));
-      output.writeMessageBegin("getStockForSku", Thrift.MessageType.REPLY, seqid);
+    this._handler.batchQueryStock(args.param,  function (err, result) {
+      var result = new StockServ_batchQueryStock_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("batchQueryStock", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
