@@ -23,32 +23,67 @@ router.post('/add', function(req, res, next) {
             res.json(result);
             return;
         }
-        //if(arg.userId == null || arg.received == null || arg.mobileNo == null || arg.area == null || arg.address == null || arg.postCode == null){
-        //    result.code = 400;
-        //    result.desc = "请求参数错误";
-        //    res.json(result);
-        //    return;
-        //}
-        var params = {};
-        params.userId = arg.userId || 2;
-        params.receiverName = arg.receiverName || "大表哥";
-        params.mobile = arg.mobile || "13558731840";
-        params.address = arg.address || "北京市朝阳区安外北苑路与红军营南路交汇处西南角";
-        params.postCode = arg.postCode || "100000";
-        params.isDefault = arg.isDefault || 1;
-        params.area = {
-            provinceId:arg.provinceId || "110000",
-            provinceName:arg.provinceName || "北京市",
-            cityId:arg.cityId || "110100",
-            cityName:arg.cityName || "北京市",
-            countyId:arg.countyId || "110105",
-            countyName:arg.countyName || ""
-        };
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
+        arg.token = "鉴权信息1";
+        arg.ppInfo = "鉴权信息2";
 
-        logger.info("新增收货地址请求， arg:" + JSON.stringify(params));
-        Address.addAddress(params, function(err, data) {
+        if( arg.userId==null ||arg.userId =="" || arg.userId <=0){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if( arg.mobile==null ||arg.mobile ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if( arg.receiverName==null ||arg.receiverName ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if( arg.address==null ||arg.address ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.provinceId==null ||arg.provinceId ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.provinceName==null ||arg.provinceName ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.cityId==null ||arg.cityId ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.cityName==null ||arg.cityName ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+
+        if(arg.postCode==null ||arg.postCode ==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+
+        logger.info("新增收货地址请求， arg:" + JSON.stringify(arg));
+        Address.addAddress(arg, function(err, data) {
             if(err){
                 res.json(err);
                 return;
@@ -71,13 +106,23 @@ router.post('/delete', function(req, res, next) {
     try{
         var arg = req.body;
 
-        var params = {};
-        params.userId = arg.userId || 2;
-        params.addrId = arg.addrId || 249;
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
-        logger.info("请求参数：" + JSON.stringify(params));
-        Address.delAddress(params, function(err, data) {
+        arg.token = "鉴权信息1";
+        arg.ppInfo = "鉴权信息2";
+        arg.browser = "asddf";
+        if(arg.userId == null || arg.userId == "" || arg.userId <= 0){
+            result.code = 400;
+            result.desc = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.addrId == null || arg.addrId == "" || arg.addrId <= 0){
+            result.code = 400;
+            result.desc = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        logger.info("请求参数：" + JSON.stringify(arg));
+        Address.delAddress(arg, function(err, data) {
             if(err){
                 res.json(err);
                 return;
@@ -105,28 +150,54 @@ router.post('/update', function (req, res, next) {
             res.json(result);
             return;
         }
-        var params = {};
-        params.userId = arg.userId || 2;
-        params.id = arg.id || 24;
-        params.receiverName = arg.receiverName || "大表哥";
-        params.mobile = arg.mobile || "13558731840";
-        params.address = arg.address || "北京市朝阳区安外北苑路与红军营南路交汇处西南角";
-        params.postCode = arg.postCode || "100000";
-        params.isDefault = arg.isDefault || 1;
-        params.area = {
-            provinceId:arg.provinceId || "110000",
-            provinceName:arg.provinceName || "北京市",
-            cityId:arg.cityId || "110100",
-            cityName:arg.cityName || "北京市",
-            countyId:arg.countyId || "110105",
-            countyName:arg.countyName || ""
-        };
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
+        arg.token = "鉴权信息1";
+        arg.ppInfo = "鉴权信息2";
+        arg.browser = "asdfasf";
 
-        logger.info("新增收货地址请求， arg:" + JSON.stringify(params));
+        if( arg.userId==null ||arg.userId =="" || arg.userId <=0){
+            result.code = 400;
+            result.desc = "参数错误";
+        }
+        if( arg.addrId==null ||arg.addrId =="" || arg.addrId <=0){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
+        if( arg.mobile==null ||arg.mobile ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
+        if( arg.receiverName==null ||arg.receiverName ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
+        if( arg.address==null ||arg.address ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
+        if(arg.provinceId==null ||arg.provinceId ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
+        if(arg.provinceName==null ||arg.provinceName ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
+        if(arg.cityId==null ||arg.cityId ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
+        if(arg.cityName==null ||arg.cityName ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
+        if(arg.postCode==null ||arg.postCode ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+        }
 
-        Address.updateAddress(params, function(err, data) {
+        logger.info("修改收货地址请求， arg:" + JSON.stringify(arg));
+
+        Address.updateAddress(arg, function(err, data) {
             if(err){
                 res.json(err);
                 return;
