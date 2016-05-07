@@ -15,105 +15,2338 @@ var afterSale = require('../lib/models/afterSale');
 
 // 查询订单列表
 router.post('/list', function (request, response, next) {
-    var result = {code: 200};
 
-
-    var params = request.body;
-    logger.info("查询订单列表请求参数：" + JSON.stringify(params));
-
-
-    if (params.userId == null || params.userId == "" || params.userId <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-
-    if (params.percount == null || params.percount == "" || params.percount <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-
-    if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-
-
-    async.series([
-            function (callback) {
-                Product.orderProfileQuery(params, function (err, orderInfo) {
-                    var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
-                    var orderList = [];
-                    if (orderInfo.orderProfileList !== null) {
-                        orderInfo.orderProfileList.forEach(function (order) {
-                            var orderItem = {
-                                orderId: order.orderId,
-                                orderPrice: order.closingPrice,
-                                //添加了应答的数据
-                                postage: order.postage,
-                                username: order.username,
-                                cancelName: order.cancelName,
-                                sellerName: order.sellerName,
-                                createTime: order.createTime,
-                                expressNo: order.expressNo,
-                                expressName: order.expressName,
-                                receiverAddress: order.receiverAddress,
-                                receiverName: order.receiverName,
-                                receiverMobile: order.receiverMobile,
-                                receiverTele: order.receiverTele,
-                                orderState: order.orderState,
-                                sellerComment: order.sellerComment,
-                                buyerComment: order.buyerComment,
-                                deliverTime: order.deliverTime,
-                                successTime: order.successTime,
-                                exchangeCash: order.exchangeCash,
-                                exchangeScore: order.exchangeScore,
-                                activeState: order.activeState,
-                                curTime: order.curTime
-                            };
-                            var productList = [];
-                            if (order.productList !== null && order.productList.length > 0) {
-                                for (var i = 0; i < order.productList.length; i++) {
-                                    var productItem = {
-                                        productId: order.productList[i].productId,
-                                        productName: order.productList[i].productName,
-                                        skunum: order.productList[i].skuNum,
-                                        curPrice: order.productList[i].curPrice,
-                                        imgUrl: order.productList[i].imagesUrl.split(',')[0],
-                                        count: order.productList[i].count
-                                    };
-                                    productList.push(productItem);
-                                }
-                                orderItem.productList = productList;
-                                orderList.push(orderItem);
-                            }
-                        });
-                        result.orderList = orderList;
-                        result.page = page;
+    var result = {
+        "code": 200,
+        "orderList": [
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
                     }
-                    logger.info("get order list response:" + JSON.stringify(result));
-                });
-                callback(null, result);
+                ]
             },
-            function (callback) {
-                afterSale.queryAfterSale(params, function (err, data) {
-
-                    logger.info("get order list response:" + JSON.stringify(result));
-                });
-
-                callback(null, data);
-
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660002",
+                "orderPrice": "1.00",
+                "postage": null,
+                "orderState": 61,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151224013609000987",
+                        "productName": "测试SKU",
+                        "skuNum": "1-2:100-101",
+                        "skuName": "颜色-天蓝色:尺码-均码",
+                        "curPrice": "1.00",
+                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5780002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 61,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2016-01-04 17:22:30",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-1:100-102",
+                        "skuName": "颜色-军绿色:尺码-XXS",
+                        "curPrice": "0.10",
+                        "imgUrl": "31E87669C4FA80B6BB7C08F42E560237.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5650002",
+                "orderPrice": "1.00",
+                "postage": null,
+                "orderState": 61,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2016-01-04 00:17:05",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151224013609000987",
+                        "productName": "测试SKU",
+                        "skuNum": "1-1:100-101",
+                        "skuName": "颜色-军绿色:尺码-均码",
+                        "curPrice": "1.00",
+                        "imgUrl": "FC84964E8C0A36BB4F56C5866BBFB4F7.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5640002",
+                "orderPrice": "0.01",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2016-01-04 00:15:59",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151228152841000732",
+                        "productName": "现代 空气净化器 HDJH-5501",
+                        "skuNum": "1-7:100-104",
+                        "skuName": "颜色-贝立安:尺码-S",
+                        "curPrice": "0.01",
+                        "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5610002",
+                "orderPrice": "0.02",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-31 15:06:06",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151228152841000732",
+                        "productName": "现代 空气净化器 HDJH-5501",
+                        "skuNum": "1-7:100-105",
+                        "skuName": "颜色-贝立安:尺码-M",
+                        "curPrice": "0.02",
+                        "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5490002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 16:24:44",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-6:100-102",
+                        "skuName": "颜色-浅绿色:尺码-XXS",
+                        "curPrice": "0.10",
+                        "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5480002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 16:23:24",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-6:100-102",
+                        "skuName": "颜色-浅绿色:尺码-XXS",
+                        "curPrice": "0.10",
+                        "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5470002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 16:17:41",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-6:100-101",
+                        "skuName": "颜色-浅绿色:尺码-均码",
+                        "curPrice": "0.10",
+                        "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5420002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 16:10:47",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-6:100-101",
+                        "skuName": "颜色-浅绿色:尺码-均码",
+                        "curPrice": "0.10",
+                        "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5390002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 51,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 16:05:22",
+                "deliverTime": "",
+                "successTime": "2016-05-05 19:11:05",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-6:100-101",
+                        "skuName": "颜色-浅绿色:尺码-均码",
+                        "curPrice": "0.10",
+                        "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5380002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 16:04:54",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-6:100-101",
+                        "skuName": "颜色-浅绿色:尺码-均码",
+                        "curPrice": "0.10",
+                        "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5330002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 15:38:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-6:100-101",
+                        "skuName": "颜色-浅绿色:尺码-均码",
+                        "curPrice": "0.10",
+                        "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5290002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 13:44:17",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-1:100-101",
+                        "skuName": "颜色-军绿色:尺码-均码",
+                        "curPrice": "0.10",
+                        "imgUrl": "40923A2995EA7A154A02C3C0D210F1BA.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5270002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 11:13:41",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-1:100-101",
+                        "skuName": "颜色-军绿色:尺码-均码",
+                        "curPrice": "0.10",
+                        "imgUrl": "40923A2995EA7A154A02C3C0D210F1BA.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5260002",
+                "orderPrice": "0.10",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-28 11:12:58",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151220001240000950",
+                        "productName": "测试商品－主流程",
+                        "skuNum": "1-1:100-101",
+                        "skuName": "颜色-军绿色:尺码-均码",
+                        "curPrice": "0.10",
+                        "imgUrl": "40923A2995EA7A154A02C3C0D210F1BA.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5210002",
+                "orderPrice": "1.00",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-27 19:54:00",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151219003508000502",
+                        "productName": "测试商品",
+                        "skuNum": "1-3:100-102",
+                        "skuName": "颜色-黄色:尺码-xxl",
+                        "curPrice": "1.00",
+                        "imgUrl": "E48CA9FA8A023F384962C2FE341366EA.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5200002",
+                "orderPrice": "1999.90",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-27 19:53:07",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151210145613000059",
+                        "productName": "给力的中央空调",
+                        "skuNum": "1-2:100-102",
+                        "skuName": "颜色-天蓝色:功率-3匹",
+                        "curPrice": "1999.90",
+                        "imgUrl": "6C212B881FB55F842CBA3BBBF8425D51.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5190002",
+                "orderPrice": "1999.90",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-27 19:50:42",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151210145613000059",
+                        "productName": "给力的中央空调",
+                        "skuNum": "1-2:100-102",
+                        "skuName": "颜色-天蓝色:功率-3匹",
+                        "curPrice": "1999.90",
+                        "imgUrl": "6C212B881FB55F842CBA3BBBF8425D51.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5180002",
+                "orderPrice": "1999.90",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-27 19:49:14",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151210145613000059",
+                        "productName": "给力的中央空调",
+                        "skuNum": "1-2:100-102",
+                        "skuName": "颜色-天蓝色:功率-3匹",
+                        "curPrice": "1999.90",
+                        "imgUrl": "6C212B881FB55F842CBA3BBBF8425D51.jpg",
+                        "count": 1
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店1",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660004",
+                "orderPrice": "1.00",
+                "orderState": 61,
+                "sellerId": 2,
+                "sellerName": "聚分享旗舰店2",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 51,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "博纳2D通兑票",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5660005",
+                "orderPrice": "1.00",
+                "orderState": 40,
+                "sellerId": 3,
+                "sellerName": "聚分享旗舰店3",
+                "createTime": "2016-01-04 18:43:46",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 3,
+                "productList": [
+                    {
+                        "productId": "ze160216170722000745",
+                        "productName": "高压锅",
+                        "skuNum": "1-16",
+                        "skuName": "节假日通用",
+                        "count": 2,
+                        "curPrice": "100",
+                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
+                    }
+                ]
+            },
+            {
+                "orderId": "5170002",
+                "orderPrice": "1999.90",
+                "postage": null,
+                "orderState": 10,
+                "sellerId": 1,
+                "sellerName": "聚分享旗舰店",
+                "createTime": "2015-12-27 19:48:49",
+                "deliverTime": "",
+                "successTime": "",
+                "type": 2,
+                "productList": [
+                    {
+                        "productId": "ze151210145613000059",
+                        "productName": "给力的中央空调",
+                        "skuNum": "1-2:100-102",
+                        "skuName": "颜色-天蓝色:功率-3匹",
+                        "curPrice": "1999.90",
+                        "imgUrl": "6C212B881FB55F842CBA3BBBF8425D51.jpg",
+                        "count": 1
+                    }
+                ]
             }
         ],
-        function (err, results) {
-            logger.error("err-------------->" + err);
-            return results;
-        });
+        "curTime": 1462604929959,
+        "page": {
+            "total": 56,
+            "pageCount": 3
+        }
+    };
+    response.json(result);
+
+    //var result = {code: 200};
+    //
+    //
+    //var params = request.body;
+    //logger.info("查询订单列表请求参数：" + JSON.stringify(params));
+    //
+    //
+    //if (params.userId == null || params.userId == "" || params.userId <= 0) {
+    //    result.code = 400;
+    //    result.desc = "参数错误";
+    //    response.json(result);
+    //    return;
+    //}
+    //
+    //if (params.percount == null || params.percount == "" || params.percount <= 0) {
+    //    result.code = 400;
+    //    result.desc = "参数错误";
+    //    response.json(result);
+    //    return;
+    //}
+    //
+    //if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
+    //    result.code = 400;
+    //    result.desc = "参数错误";
+    //    response.json(result);
+    //    return;
+    //}
+    //
+    //
+    //async.series([
+    //        function (callback) {
+    //            Product.orderProfileQuery(params, function (err, orderInfo) {
+    //                var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
+    //                var orderList = [];
+    //                if (orderInfo.orderProfileList !== null) {
+    //                    orderInfo.orderProfileList.forEach(function (order) {
+    //                        var orderItem = {
+    //                            orderId: order.orderId,
+    //                            orderPrice: order.closingPrice,
+    //                            //添加了应答的数据
+    //                            postage: order.postage,
+    //                            username: order.username,
+    //                            cancelName: order.cancelName,
+    //                            sellerName: order.sellerName,
+    //                            createTime: order.createTime,
+    //                            expressNo: order.expressNo,
+    //                            expressName: order.expressName,
+    //                            receiverAddress: order.receiverAddress,
+    //                            receiverName: order.receiverName,
+    //                            receiverMobile: order.receiverMobile,
+    //                            receiverTele: order.receiverTele,
+    //                            orderState: order.orderState,
+    //                            sellerComment: order.sellerComment,
+    //                            buyerComment: order.buyerComment,
+    //                            deliverTime: order.deliverTime,
+    //                            successTime: order.successTime,
+    //                            exchangeCash: order.exchangeCash,
+    //                            exchangeScore: order.exchangeScore,
+    //                            activeState: order.activeState,
+    //                            curTime: order.curTime
+    //                        };
+    //                        var productList = [];
+    //                        if (order.productList !== null && order.productList.length > 0) {
+    //                            for (var i = 0; i < order.productList.length; i++) {
+    //                                var productItem = {
+    //                                    productId: order.productList[i].productId,
+    //                                    productName: order.productList[i].productName,
+    //                                    skunum: order.productList[i].skuNum,
+    //                                    curPrice: order.productList[i].curPrice,
+    //                                    imgUrl: order.productList[i].imagesUrl.split(',')[0],
+    //                                    count: order.productList[i].count
+    //                                };
+    //                                productList.push(productItem);
+    //                            }
+    //                            orderItem.productList = productList;
+    //                            orderList.push(orderItem);
+    //                        }
+    //                    });
+    //                    result.orderList = orderList;
+    //                    result.page = page;
+    //                }
+    //                logger.info("get order list response:" + JSON.stringify(result));
+    //            });
+    //            callback(null, result);
+    //        },
+    //        function (callback) {
+    //            afterSale.queryAfterSale(params, function (err, data) {
+    //
+    //                logger.info("get order list response:" + JSON.stringify(result));
+    //            });
+    //
+    //            callback(null, data);
+    //
+    //        }
+    //    ],
+    //    function (err, results) {
+    //        logger.error("err-------------->" + err);
+    //        return results;
+    //    });
 
 });
 
