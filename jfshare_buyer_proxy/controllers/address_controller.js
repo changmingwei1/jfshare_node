@@ -1,5 +1,5 @@
 /**
- * @author by YinBo on 16/3/22.
+ * @author by YinBo on 16/4/22.
  */
 var express = require('express');
 var router = express.Router();
@@ -219,12 +219,17 @@ router.post('/list', function(req, res, next) {
 
     try{
         var arg = req.body;
-        var params = {};
-        params.userId = arg.userId || 2;
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
+        if(arg == null || arg.userId == null || arg.userId == "" || arg.userId <= 0 ){
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        arg.token = "鉴权信息1";
+        arg.ppInfo = "鉴权信息2";
+        arg.browser = "asdfas";
 
-        Address.queryAddress(params, function(err, addressInfoList) {
+        Address.queryAddress(arg, function(err, addressInfoList) {
             if(err) {
                 res.json(err);
                 return;

@@ -1,5 +1,5 @@
 /**
- * @author YinBo on 16/3/20.
+ * @author YinBo on 16/4/20.
  */
 
 var log4node = require('../../log4node');
@@ -178,25 +178,7 @@ Address.prototype.getDefaultAddress = function(param,  callback) {
     });
 };
 
-
-Address.prototype.getDefaultAddress = function(param,callback) {
-    var addressServ = new Lich.InvokeBag(Lich.ServiceKey.AddressServer, "getDefaultAddress", param.userId);
-
-    Lich.wicca.invokeClient(addressServ, function(err, data) {
-        logger.info("调用addressServ-getDefaultAddress  result:" + JSON.stringify(data));
-        var res = {};
-        if(err){
-            logger.error("调用addressServ-getDefaultAddress失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "获取默认地址失败！";
-            callback(res, null);
-        } else {
-            callback(null, data);
-        }
-    });
-};
-
-
+//获取省份
 Address.prototype.getProvinces = function(callback) {
 
 
@@ -229,6 +211,8 @@ Address.prototype.getProvinces = function(callback) {
     });
 
 };
+
+//获取城市
 Address.prototype.getCitys = function(params,callback) {
 
 
@@ -262,7 +246,7 @@ Address.prototype.getCitys = function(params,callback) {
 
 };
 
-
+//获取市县
 Address.prototype.getCountys = function(params,callback) {
 
 
@@ -295,4 +279,5 @@ Address.prototype.getCountys = function(params,callback) {
     });
 
 };
+
 module.exports = new Address();
