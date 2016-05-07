@@ -247,6 +247,8 @@ PostageTemplate = module.exports.PostageTemplate = function(args) {
   this.name = null;
   this.type = null;
   this.postageList = null;
+  this.group = null;
+  this.desc = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -262,6 +264,12 @@ PostageTemplate = module.exports.PostageTemplate = function(args) {
     }
     if (args.postageList !== undefined) {
       this.postageList = args.postageList;
+    }
+    if (args.group !== undefined) {
+      this.group = args.group;
+    }
+    if (args.desc !== undefined) {
+      this.desc = args.desc;
     }
   }
 };
@@ -328,6 +336,20 @@ PostageTemplate.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.group = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.desc = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -371,6 +393,16 @@ PostageTemplate.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.group !== null && this.group !== undefined) {
+    output.writeFieldBegin('group', Thrift.Type.I32, 6);
+    output.writeI32(this.group);
+    output.writeFieldEnd();
+  }
+  if (this.desc !== null && this.desc !== undefined) {
+    output.writeFieldBegin('desc', Thrift.Type.STRING, 7);
+    output.writeString(this.desc);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

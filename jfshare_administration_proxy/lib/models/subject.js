@@ -316,7 +316,7 @@ Subject.prototype.updateBrandSubject = function(params, callback){
         }
 
 
-        return callback(null,subjectpath);
+        return callback(null,data);
     });
 };
 

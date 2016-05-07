@@ -20,7 +20,7 @@ function Freight(){}
 // 添加运费模板
 Freight.prototype.add = function(params, callback){
 
-    var freight = new freight_types.Postage({
+    var freight = new freight_types.PostageTemplate({
         id             :params.id,
         sellerId       :params.sellerId,
         name           :params.name,
