@@ -183,5 +183,16 @@ module.exports.ServiceFactory  =  {
         // var obj = new ThriftConfig("120.24.153.155", 1981);
         var obj = new ThriftConfig("127.0.0.1", 1981);
         return obj;
+    },
+
+
+    /**
+     * 售后服务
+     * @returns {ThriftConfig}
+     */
+    afterSale:function(){
+        // var obj = new ThriftConfig("120.24.153.155", 2003);
+        var obj = new ThriftConfig("127.0.0.1", 2003);
+        return obj;
     }
 };
