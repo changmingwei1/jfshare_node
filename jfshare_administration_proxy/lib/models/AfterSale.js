@@ -73,16 +73,16 @@ AfterSale.prototype.request = function(param,  callback) {
     });
 };
 //查询审核信息
-AfterSale.prototype.queryAfterSale = function(param,  callback) {
+AfterSale.prototype.queryAfterSale = function(params,  callback) {
     var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
-        userId:param.buyerId,
+        userId:params.buyerId,
         sellerId:params.sellerId,
         orderId:params.ordrerId,
         productId:params.productId,
         productId:params.skuNum
         //加上sku
     });
-    logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSale));
+    logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
 
     var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSale", afterSaleQueryParam);
 
@@ -95,7 +95,7 @@ AfterSale.prototype.queryAfterSale = function(param,  callback) {
             res.desc = "查询审核信息失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            callback(null, data[0].afterSaleList);
         }
     });
 };

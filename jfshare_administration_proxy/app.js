@@ -18,6 +18,7 @@ var seller = require('./controllers/seller_controller');
 var score = require('./controllers/score_controller');
 var brand = require('./controllers/brand_controller');
 var address = require('./controllers/address_controller');
+var afterSale = require('./controllers/afterSale_controller');
 //var freight = require('./controllers/freight_controller');
 //var sellerfreight = require('./controllers/sellerfreight_controller');
 var app = express();
@@ -42,6 +43,7 @@ app.use('/manager/score',score);
 app.use('/manager/message',message);
 app.use('/manager/seller',seller);
 app.use('/manager/brand',brand);
+app.use('/manager/afterSale',afterSale);
 // error handlers
 
 // catch 404 and forward to error handler
