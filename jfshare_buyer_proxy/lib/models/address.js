@@ -28,12 +28,12 @@ Address.prototype.addAddress = function(param,  callback) {
         userId: param.userId,
         receiverName: param.receiverName,
         mobile: param.mobile,
-        provinceId: param.area.provinceId,
-        provinceName: param.area.provinceName,
-        cityId: param.area.cityId,
-        cityName: param.area.cityName,
-        countyId:param.area.countyId,
-        countyName:param.area.countyName,
+        provinceId: param.provinceId,
+        provinceName: param.provinceName,
+        cityId: param.cityId,
+        cityName: param.cityName,
+        countyId:param.countyId,
+        countyName:param.countyName,
         address: param.address,
         postCode: param.postCode,
         isDefault: param.isDefault
@@ -46,12 +46,19 @@ Address.prototype.addAddress = function(param,  callback) {
     Lich.wicca.invokeClient(addressServ, function(err, data) {
         logger.info("调用addressServ-addAddress  result:" + JSON.stringify(data));
         var res = {};
-        if(err || data[0].result.code == "1"){
+        if(err){
             logger.error("调用addressServ-addAddress失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "添加收货地址信息失败！";
             callback(res, null);
-        } else {
+        }
+        // data[0].result.code == "1"
+        if(data[0].result.code==1){
+            res.code = 500;
+            res.desc =data[0].result.failDescList[0].desc ;
+            callback(res, null);
+        }
+        else {
             callback(null, null);
         }
     });
@@ -62,15 +69,15 @@ Address.prototype.updateAddress = function(param,  callback) {
 
     var addrInfo = new address_types.AddressInfo({
         userId: param.userId,
-        id:param.id,
+        id:param.addrId,
         receiverName: param.receiverName,
         mobile: param.mobile,
-        provinceId: param.area.provinceId,
-        provinceName: param.area.provinceName,
-        cityId: param.area.cityId,
-        cityName: param.area.cityName,
-        countyId:param.area.countyId,
-        countyName:param.area.countyName,
+        provinceId: param.provinceId,
+        provinceName: param.provinceName,
+        cityId: param.cityId,
+        cityName: param.cityName,
+        countyId:param.countyId,
+        countyName:param.countyName,
         address: param.address,
         postCode: param.postCode,
         isDefault: param.isDefault
