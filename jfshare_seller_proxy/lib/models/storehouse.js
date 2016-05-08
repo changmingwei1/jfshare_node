@@ -13,7 +13,7 @@ var thrift = require('thrift');
 var pagination_types = require('../thrift/gen_code/pagination_types');
 
 
-var storehouse_types = require("../thrift/gen_code/template_types");
+var storehouse_types = require("../thrift/gen_code/baseTemplate_types");
 
 
 

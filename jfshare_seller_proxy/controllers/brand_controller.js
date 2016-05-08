@@ -188,28 +188,59 @@ router.post('/list', function(request, response, next) {
         response.json(result);
     }
 });
-
-//关联品牌的品类
-router.post('/relateSubject', function(req, res, next) {
+//类目下的品牌列表
+router.post('/subjectList', function(request, response, next) {
     var result = {code: 200};
-
     try{
-        var arg = req.body;
-        var params = {};
-        params.subjectIds = [3001,3002,3003];
-        params.brandId = arg.brandId || 1;
+        var params = request.body;
 
-        logger.info("获取商家列表请求， arg:" + JSON.stringify(params));
+        if(params.subjectId=="" || params.subjectId ==null || params.subjectId <0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.sellerId=="" || params.sellerId ==null ||params.sellerId <=0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
-        res.json(result);
-        logger.info("获取商家列表 response:" + JSON.stringify(result));
+
+        Brand.queryBySubject(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                logger.info("query brandlist   result:" + JSON.stringify(result));
+                var page = {total:data[0].total , pageCount:data[0].pageCount};
+                // result.
+                var brands = data[0].brandInfo;
+                var brandList = [];
+                if(data[0].total!=0){
+                    brands.forEach(function (brandInfo) {
+                        var brand = ({
+                            id:brandInfo.id,
+                            name:brandInfo.name,
+                            imgKey:brandInfo.imgKey,
+                            createTime:brandInfo.createTime,
+                            lastUpdateTime:brandInfo.lastUpdateTime
+                        });
+                        brandList.push(brand);
+                    });
+                }
+
+
+                result.brandList = brandList;
+                response.json(result);
+            }
+        });
 
     } catch (ex) {
-        logger.error("get 商家 list error:" + ex);
+        logger.error("get brandlist error:" + ex);
         result.code = 500;
-        result.desc = "获取商家列表列表失败";
-        res.json(result);
+        result.desc = "获取品牌列表失败";
+        response.json(result);
     }
 });
-
 module.exports = router;

@@ -169,6 +169,29 @@ Brand.prototype.get = function (params, callback) {
 
     });
 };
+
+Brand.prototype.queryBySubject = function (params, callback) {
+
+    logger.info("brandServ-queryBatch params:" + JSON.stringify(params));
+    var brandServ = new Lich.InvokeBag(Lich.ServiceKey.BrandServer, "queryBySubject", [params.subjectId]);
+    //
+    Lich.wicca.invokeClient(brandServ, function (err, data) {
+        logger.info("brandServ-queryBySubject result:" + JSON.stringify(data));
+        if (err || data[0].result.code == 1) {
+            logger.error("brandServ-queryBySubject result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "获取类目下的品牌列表信息失败";
+            callback(result, data);
+        }
+
+        if(data[0].result.code ==0){
+
+            callback(null, data[0].brandInfo[0]);
+        }
+
+    });
+};
 module.exports = new Brand();
 /**
 

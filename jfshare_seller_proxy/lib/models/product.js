@@ -182,7 +182,7 @@ Product.prototype.queryProduct = function (params, callback) {
     });
 
 
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProduct", [params.productId,productRetParam]);
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProduct", [params.productId, productRetParam]);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
@@ -198,5 +198,125 @@ Product.prototype.queryProduct = function (params, callback) {
     });
 };
 
+//获取商品信息(虚拟商品列表)
+Product.prototype.statisticsProductCard = function (params, callback) {
+
+    var productRetParam = new product_types.ProductCardStatisticsParam({
+        sellerId: params.sellerId,
+        productName: params.productName
+    });
+
+    var page = new pagination_types.Pagination({
+
+        numPerPage: params.perCount,
+        currentPage: parmas.curpage
+    });
+
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsProductCard", [productRetParam, page]);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("productServ-queryProduct  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询商品失败";
+            callback(res, null);
+        } else {
+            callback(null, data)
+        }
+    });
+};
+//卡密列表
+Product.prototype.queryProductCardViewList = function (params, callback) {
+
+    var ProductCardViewParam = new product_types.ProductCardViewParam({
+        sellerId: params.sellerId,
+        productId: params.productId,
+        cardNumber: params.cardNumber,
+        state: params.state
+    });
+
+    var page = new pagination_types.Pagination({
+
+        numPerPage: params.perCount,
+        currentPage: parmas.curpage
+    });
+
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCardViewList", [ProductCardViewParam, page]);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("productServ-queryProduct  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询商品失败";
+            callback(res, null);
+        } else {
+            callback(null, data)
+        }
+    });
+};
+
+//获取商品信息(虚拟商品列表)
+Product.prototype.queryProduct = function (params, callback) {
+
+    var productRetParam = new product_types.ProductCardStatisticsParam({
+        sellerId: params.sellerId,
+        productName: params.productName
+    });
+
+    var page = new pagination_types.Pagination({
+
+        numPerPage: params.perCount,
+        currentPage: parmas.curpage
+    });
+
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsProductCard", [productRetParam, page]);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("productServ-queryProduct  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询商品失败";
+            callback(res, null);
+        } else {
+            callback(null, data)
+        }
+    });
+};
+
+
+//申请上架
+Product.prototype.setProductState = function (params, callback) {
+
+    var productOpt = new product_types.ProductOpt({
+        productId: params.productId,
+        curState: params.curState,
+        activeState: params.activeState,
+        desc: "申请上架",
+        operatorId: params.sellerId,
+        operatorType: 1
+    });
+
+
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "setProductState", [productOpt]);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("productServ-queryProduct  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询商品失败";
+            callback(res, null);
+        } else {
+            callback(null, data)
+        }
+    });
+};
 
 module.exports = new Product();
