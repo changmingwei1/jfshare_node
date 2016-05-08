@@ -30,14 +30,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use('/manager/sellerfreight',sellerfreight);
-//app.use('/manager/freight',freight);
+
 app.use('/manager/subject',subject);
 app.use('/manager',user);
 app.use('/manager/product',product);
 app.use('/manager/order',order);
 app.use('/manager/address',address);
-//app.use('/manager/storehouse',storehouse);
+
 app.use('/manager/expressorder',expressOrder);
 app.use('/manager/score',score);
 app.use('/manager/message',message);
