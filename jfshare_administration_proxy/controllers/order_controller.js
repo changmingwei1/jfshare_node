@@ -16,344 +16,153 @@ var Express = require('../lib/models/express');
 // 查询订单列表
 router.post('/list', function (request, response, next) {
 
-    var result = {
-        "code": 200,
-        "orderList": [
-
-            {
-                "orderId": "5660005",
-                "orderPrice": "1.00",
-                "orderState": 51,
-                "sellerId": 3,
-                "sellerName": "聚分享旗舰店3",
-                "createTime": "2016-01-04 18:43:46",
-                "deliverTime": "",
-                "successTime": "",
-                "type": 3,
-                "productList": [
-                    {
-                        "productId": "ze160216170722000745",
-                        "productName": "博纳2D通兑票",
-                        "skuNum": "1-16",
-                        "skuName": "节假日通用",
-                        "count": 2,
-                        "curPrice": "100",
-                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-                    }
-                ]
-            },
-            {
-                "orderId": "5660005",
-                "orderPrice": "1.00",
-                "orderState": 40,
-                "sellerId": 3,
-                "sellerName": "聚分享旗舰店3",
-                "createTime": "2016-01-04 18:43:46",
-                "deliverTime": "",
-                "successTime": "",
-                "type": 3,
-                "productList": [
-                    {
-                        "productId": "ze160216170722000745",
-                        "productName": "高压锅",
-                        "skuNum": "1-16",
-                        "skuName": "节假日通用",
-                        "count": 2,
-                        "curPrice": "100",
-                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-                    }
-                ]
-            },
-            {
-                "orderId": "5640002",
-                "orderPrice": "0.01",
-                "postage": null,
-                "orderState": 10,
-                "sellerId": 1,
-                "sellerName": "聚分享旗舰店",
-                "createTime": "2016-01-04 00:15:59",
-                "deliverTime": "",
-                "successTime": "",
-                "type": 2,
-                "productList": [
-                    {
-                        "productId": "ze151228152841000732",
-                        "productName": "现代 空气净化器 HDJH-5501",
-                        "skuNum": "1-7:100-104",
-                        "skuName": "颜色-贝立安:尺码-S",
-                        "curPrice": "0.01",
-                        "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
-                        "count": 1
-                    }
-                ]
-            },
-            {
-                "orderId": "5660004",
-                "orderPrice": "1.00",
-                "orderState": 10,
-                "sellerId": 1,
-                "sellerName": "聚分享旗舰店1",
-                "createTime": "2016-01-04 18:43:46",
-                "deliverTime": "",
-                "successTime": "",
-                "type": 3,
-                "productList": [
-                    {
-                        "productId": "ze160216170722000745",
-                        "productName": "博纳2D通兑票",
-                        "skuNum": "1-16",
-                        "skuName": "节假日通用",
-                        "count": 2,
-                        "curPrice": "100",
-                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-                    }
-                ]
-            },
-            {
-                "orderId": "5660004",
-                "orderPrice": "1.00",
-                "orderState": 61,
-                "sellerId": 2,
-                "sellerName": "聚分享旗舰店2",
-                "createTime": "2016-01-04 18:43:46",
-                "deliverTime": "",
-                "successTime": "",
-                "type": 3,
-                "productList": [
-                    {
-                        "productId": "ze160216170722000745",
-                        "productName": "博纳2D通兑票",
-                        "skuNum": "1-16",
-                        "skuName": "节假日通用",
-                        "count": 2,
-                        "curPrice": "100",
-                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-                    }
-                ]
-            },
-            {
-                "orderId": "5660005",
-                "orderPrice": "1.00",
-                "orderState": 51,
-                "sellerId": 3,
-                "sellerName": "聚分享旗舰店3",
-                "createTime": "2016-01-04 18:43:46",
-                "deliverTime": "",
-                "successTime": "",
-                "type": 3,
-                "productList": [
-                    {
-                        "productId": "ze160216170722000745",
-                        "productName": "博纳2D通兑票",
-                        "skuNum": "1-16",
-                        "skuName": "节假日通用",
-                        "count": 2,
-                        "curPrice": "100",
-                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-                    }
-                ]
-            },
-            {
-                "orderId": "5660005",
-                "orderPrice": "1.00",
-                "orderState": 40,
-                "sellerId": 3,
-                "sellerName": "聚分享旗舰店3",
-                "createTime": "2016-01-04 18:43:46",
-                "deliverTime": "",
-                "successTime": "",
-                "type": 3,
-                "productList": [
-                    {
-                        "productId": "ze160216170722000745",
-                        "productName": "高压锅",
-                        "skuNum": "1-16",
-                        "skuName": "节假日通用",
-                        "count": 2,
-                        "curPrice": "100",
-                        "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-                    }
-                ]
-            },
-            {
-                "orderId": "5610002",
-                "orderPrice": "0.02",
-                "postage": null,
-                "orderState": 10,
-                "sellerId": 1,
-                "sellerName": "聚分享旗舰店",
-                "createTime": "2015-12-31 15:06:06",
-                "deliverTime": "",
-                "successTime": "",
-                "type": 2,
-                "productList": [
-                    {
-                        "productId": "ze151228152841000732",
-                        "productName": "现代 空气净化器 HDJH-5501",
-                        "skuNum": "1-7:100-105",
-                        "skuName": "颜色-贝立安:尺码-M",
-                        "curPrice": "0.02",
-                        "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
-                        "count": 1
-                    }
-                ]
-            },
+    var result = {code: 200};
 
 
+    var params = request.body;
+
+    logger.info("查询订单列表请求参数：" + JSON.stringify(params));
+
+
+    if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+        result.code = 400;
+        result.desc = "参数错误";
+        response.json(result);
+        return;
+    }
+
+    if (params.percount == null || params.percount == "" || params.percount <= 0) {
+        result.code = 400;
+        result.desc = "参数错误";
+        response.json(result);
+        return;
+    }
+
+    if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
+        result.code = 400;
+        result.desc = "参数错误";
+        response.json(result);
+        return;
+    }
+
+    var afterSaleList = [];
+    result.orderList = [];
+    result.afterSaleList =[];
+    async.series([
+            function (callback) {
+                try {
+                    Order.orderProfileQuery(params, function (err, orderInfo) {
+                        if (err) {
+                            logger.error("订单服务异常");
+                            return callback(1, null);
+                        }
+                        var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
+                        var orderList = [];
+                        if (orderInfo.orderProfileList !== null) {
+                            orderInfo.orderProfileList.forEach(function (order) {
+                                var orderItem = {
+                                    orderId: order.orderId,
+                                    orderPrice: order.closingPrice,
+                                    //添加了应答的数据
+                                    postage: order.postage,
+                                    username: order.username,
+                                    cancelName: order.cancelName,
+                                    sellerName: order.sellerName,
+                                    createTime: order.createTime,
+                                    expressNo: order.expressNo,
+                                    expressName: order.expressName,
+                                    receiverAddress: order.receiverAddress,
+                                    receiverName: order.receiverName,
+                                    receiverMobile: order.receiverMobile,
+                                    receiverTele: order.receiverTele,
+                                    orderState: order.orderState,
+                                    sellerComment: order.sellerComment,
+                                    buyerComment: order.buyerComment,
+                                    deliverTime: order.deliverTime,
+                                    successTime: order.successTime,
+                                    exchangeCash: order.exchangeCash,
+                                    exchangeScore: order.exchangeScore,
+                                    activeState: order.activeState,
+                                    curTime: order.curTime
+                                };
+                                var productList = [];
+                                if (order.productList !== null && order.productList.length > 0) {
+                                    for (var i = 0; i < order.productList.length; i++) {
+                                        var productItem = {
+                                            productId: order.productList[i].productId,
+                                            productName: order.productList[i].productName,
+                                            skunum: order.productList[i].skuNum,
+                                            curPrice: order.productList[i].curPrice,
+                                            imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                            count: order.productList[i].count
+                                        };
+                                        productList.push(productItem);
+                                    }
+                                    orderItem.productList = productList;
+                                    orderList.push(orderItem);
+                                }
+                            });
+                            result.orderList = orderList;
+                            result.page = page;
+                        }
+                        logger.info("get order list response:" + JSON.stringify(result));
+                        return callback(null, result);
+                    });
+
+                } catch (ex) {
+                    logger.info("订单服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                try {
+                    if (params.orderState == null) {
+                        afterSale.queryAfterSale(params, function (err, data) {
+                            if (err) {
+                                return callback(2, null);
+                            }
+                            logger.info("get order list response:" + JSON.stringify(result));
+                            afterSaleList = data;
+                            return callback(null, afterSaleList);
+                        });
+                    } else {
+                        return callback(3, null);
+                    }
+                } catch (ex) {
+                    logger.info("售后服务异常:" + ex);
+                    return callback(2, null);
+                }
+
+            }
         ],
-        "curTime": 1462604929959,
-        "page": {
-            "total": 56,
-            "pageCount": 3
-        }
-    };
-    response.json(result);
+        function (err, results) {
+            if (err == 1) {
+                logger.error("查询订单列表失败---订单服务异常：" + err);
+                result.code = 500;
+                result.desc = "查询订单失败";
+                response.json(result);
+                return;
+            }
+            if (err == 2) {
+                logger.error("查询售后失败--售后服务异常：" + err);
+                response.json(results[0]);
+                return;
+            }
 
-    //var result = {code: 200};
-    //
-    //
-    //var params = request.body;
-    //
-    //logger.info("查询订单列表请求参数：" + JSON.stringify(params));
-    //
-    //
-    //if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-    //    result.code = 400;
-    //    result.desc = "参数错误";
-    //    response.json(result);
-    //    return;
-    //}
-    //
-    //if (params.percount == null || params.percount == "" || params.percount <= 0) {
-    //    result.code = 400;
-    //    result.desc = "参数错误";
-    //    response.json(result);
-    //    return;
-    //}
-    //
-    //if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
-    //    result.code = 400;
-    //    result.desc = "参数错误";
-    //    response.json(result);
-    //    return;
-    //}
-    //
-    //var afterSaleList = [];
-    //async.series([
-    //        function (callback) {
-    //            try {
-    //                Order.orderProfileQuery(params, function (err, orderInfo) {
-    //                    if (err) {
-    //                        logger.error("订单服务异常");
-    //                        return callback(1, null);
-    //                    }
-    //                    var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
-    //                    var orderList = [];
-    //                    if (orderInfo.orderProfileList !== null) {
-    //                        orderInfo.orderProfileList.forEach(function (order) {
-    //                            var orderItem = {
-    //                                orderId: order.orderId,
-    //                                orderPrice: order.closingPrice,
-    //                                //添加了应答的数据
-    //                                postage: order.postage,
-    //                                username: order.username,
-    //                                cancelName: order.cancelName,
-    //                                sellerName: order.sellerName,
-    //                                createTime: order.createTime,
-    //                                expressNo: order.expressNo,
-    //                                expressName: order.expressName,
-    //                                receiverAddress: order.receiverAddress,
-    //                                receiverName: order.receiverName,
-    //                                receiverMobile: order.receiverMobile,
-    //                                receiverTele: order.receiverTele,
-    //                                orderState: order.orderState,
-    //                                sellerComment: order.sellerComment,
-    //                                buyerComment: order.buyerComment,
-    //                                deliverTime: order.deliverTime,
-    //                                successTime: order.successTime,
-    //                                exchangeCash: order.exchangeCash,
-    //                                exchangeScore: order.exchangeScore,
-    //                                activeState: order.activeState,
-    //                                curTime: order.curTime
-    //                            };
-    //                            var productList = [];
-    //                            if (order.productList !== null && order.productList.length > 0) {
-    //                                for (var i = 0; i < order.productList.length; i++) {
-    //                                    var productItem = {
-    //                                        productId: order.productList[i].productId,
-    //                                        productName: order.productList[i].productName,
-    //                                        skunum: order.productList[i].skuNum,
-    //                                        curPrice: order.productList[i].curPrice,
-    //                                        imgUrl: order.productList[i].imagesUrl.split(',')[0],
-    //                                        count: order.productList[i].count
-    //                                    };
-    //                                    productList.push(productItem);
-    //                                }
-    //                                orderItem.productList = productList;
-    //                                orderList.push(orderItem);
-    //                            }
-    //                        });
-    //                        result.orderList = orderList;
-    //                        result.page = page;
-    //                    }
-    //                    logger.info("get order list response:" + JSON.stringify(result));
-    //                    return callback(null, result);
-    //                });
-    //
-    //            } catch (ex) {
-    //                logger.info("订单服务异常:" + ex);
-    //                return callback(1, null);
-    //            }
-    //        },
-    //        function (callback) {
-    //            try {
-    //                if (params.orderState == null || params.orderState == 1) {
-    //                    afterSale.queryAfterSale(params, function (err, data) {
-    //                        if (err) {
-    //                            return callback(2, null);
-    //                        }
-    //                        logger.info("get order list response:" + JSON.stringify(result));
-    //                        afterSaleList = data;
-    //                        return callback(null, afterSaleList);
-    //                    });
-    //                } else {
-    //                    return callback(3, null);
-    //                }
-    //            } catch (ex) {
-    //                logger.info("售后服务异常:" + ex);
-    //                return callback(2, null);
-    //            }
-    //
-    //        }
-    //    ],
-    //    function (err, results) {
-    //        if (err == 1) {
-    //            logger.error("查询订单列表失败---订单服务异常：" + err);
-    //            result.code = 500;
-    //            result.desc = "查询订单失败";
-    //            response.json(result);
-    //            return;
-    //        }
-    //        if (err == 2) {
-    //            logger.error("查询售后失败--售后服务异常：" + err);
-    //            response.json(results[0]);
-    //            return;
-    //        }
-    //
-    //        if (err == null && err != 3) {
-    //            logger.info("shuju------------->" + JSON.stringify(results));
-    //            result = results[0];
-    //            result.afterSaleList = results[1];
-    //            response.json(result);
-    //            return;
-    //        } else {
-    //            logger.info("shuju------------->" + JSON.stringify(results));
-    //            result = results[0];
-    //
-    //            response.json(result);
-    //            return;
-    //        }
-    //    });
+            if (err == null && err != 3) {
+                logger.info("shuju------------->" + JSON.stringify(results));
+                result = results[0];
+                result.afterSaleList = results[1];
+                response.json(result);
+                return;
+            } else {
+                logger.info("shuju------------->" + JSON.stringify(results));
+                result = results[0];
+
+                response.json(result);
+                return;
+            }
+        });
 });
 // 查询订单详情
 router.post('/info', function (request, response, next) {
