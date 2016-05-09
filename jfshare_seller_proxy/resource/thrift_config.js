@@ -71,7 +71,7 @@ module.exports.getThriftConfig = function (url, port) {
     return new ThriftConfig(url, port);
 }
 
-
+var zookeeper = require('./zookeeper_util');
 /**********************************************************************************************************************************
  *
  * 所有的都按照下面写，没有的新加
@@ -84,7 +84,9 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     address: function () {
-        var obj = new ThriftConfig("120.24.153.155",1985);
+        var ip = zookeeper.getData("address_serv_ips");
+        var port = zookeeper.getData("address_port");
+        var obj = new ThriftConfig(ip,port);
         // var obj = new ThriftConfig("127.0.0.1", 1985);
         return obj;
     },

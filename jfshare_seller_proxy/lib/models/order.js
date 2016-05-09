@@ -4,7 +4,7 @@
 
 
 var log4node = require('../../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 
 var Lich = require('../thrift/Lich.js');
 var thrift = require('thrift');
@@ -21,18 +21,22 @@ var buyer_types = require('../thrift/gen_code/buyer_types');
 var common_types = require('../thrift/gen_code/common_types');
 //var express_types = require('../thrift/gen_code/express_types');
 
-function Order(){}
+function Order() {
+}
 
 //订单列表
-Order.prototype.orderProfileQuery = function (param, callback) {
+Order.prototype.orderProfileQuery = function (params, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
-        orderState: param.orderStatus || 0, count:param.percount, curPage: param.curpage});
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2,1,orderQueryConditions]);
+        orderState: params.orderStatus || 0,
+        count: params.percount,
+        curPage: params.curpage
+    });
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [1, params.userId, orderQueryConditions]);
 
-    Lich.wicca.invokeClient(orderServ, function(err, data) {
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-orderProfileQuery  result:" + JSON.stringify(data));
         var res = {};
-        if(err || data[0].result.code == "1"){
+        if (err || data[0].result.code == "1") {
             logger.error("调用orderServ-orderProfileQuery失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询定单列表失败！";
@@ -44,13 +48,13 @@ Order.prototype.orderProfileQuery = function (param, callback) {
 };
 //订单状态数量查询 --还需要查询退货中的订单状态
 Order.prototype.orderStateQuery = function (param, callback) {
-    var orderQueryConditions = new order_types.OrderQueryConditions({count:param.percount, curPage: param.curpage});
+    var orderQueryConditions = new order_types.OrderQueryConditions({count: param.percount, curPage: param.curpage});
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderStateQuery", [param.userType, param.userId, orderQueryConditions]);
 
-    Lich.wicca.invokeClient(orderServ, function(err, data) {
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-orderStateQuery  result:" + JSON.stringify(data));
         var res = {};
-        if(err || data[0].result.code == "1"){
+        if (err || data[0].result.code == "1") {
             logger.error("调用orderServ-orderStateQuery失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询定单列表失败！";
@@ -65,10 +69,10 @@ Order.prototype.queryOrderDetail = function (param, callback) {
 
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryOrderDetail", [param.userType, param.userId, param.orderId]);
 
-    Lich.wicca.invokeClient(orderServ, function(err, data) {
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-queryOrderDetail  result:" + JSON.stringify(data));
         var res = {};
-        if(err || data[0].result.code == "1"){
+        if (err || data[0].result.code == "1") {
             logger.error("调用orderServ-queryOrderDetail失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询定单明细失败！";
@@ -78,10 +82,6 @@ Order.prototype.queryOrderDetail = function (param, callback) {
         }
     });
 };
-
-
-
-
 
 
 module.exports = new Order();

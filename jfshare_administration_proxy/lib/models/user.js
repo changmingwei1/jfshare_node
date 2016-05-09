@@ -5,7 +5,7 @@
  * @auther YinBo 2016/4/12
  */
 var log4node = require('../../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 
 var Lich = require('../thrift/Lich.js');
 var thrift = require('thrift');
@@ -18,38 +18,38 @@ var order_types = require('../thrift/gen_code/order_types');
 var cart_types = require('../thrift/gen_code/cart_types');
 var trade_types = require('../thrift/gen_code/trade_types');
 var common_types = require('../thrift/gen_code/common_types');
-var seller_types = require("../thrift/gen_code/seller_types");
+var manager_types = require("../thrift/gen_code/manager_types");
 
 
-function User(){}
+function User() {
+}
 //登录
-User.prototype.login = function(param,callback){
+User.prototype.login = function (params, callback) {
 
-    var User  =  new seller_types.Seller({
-        sellerId:param.sellerId,
-        loginName:param.username,
-        sellerName:param.sellerName,
-        pwdEnc:param.password
+    var User = new manager_types.Commissioner({
+        loginName: params.loginName,
+
+        pwdEnc: params.pwdEnc
     });
 //如果校验可能需要修改
-    var LoginLog = new seller_types.LoginLog({
-        sellerId:param.sellerId,
-        tokenId:param.tokerId,
-        ip:param.ip,
-        browser:param.browser,
-        fromSource:param.fromSource,
-        loginAuto: param.loginAuto,
-        loginTime: param.loginTime,
-        logoutTime: param.logoutTime
+    var LoginLog = new manager_types.LoginLog({
+        sellerId: params.sellerId,
+        tokenId: params.tokerId,
+        ip: params.ip,
+        browser: params.browser,
+        fromSource: params.fromSource,
+        loginAuto: params.loginAuto,
+        loginTime: params.loginTime,
+        logoutTime: params.logoutTime
     });
 
 
     //获取客户端
-    var userServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServ,'signin',[User,LoginLog]);
-    Lich.wicca.invokeClient(userServ, function(err, data){
+    var userServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'signin', [User, LoginLog]);
+    Lich.wicca.invokeClient(userServ, function (err, data) {
         logger.info("isLoginNameExist result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "500") {
+        if (err || data[0].result.code == "500") {
             logger.error("signin fail because: ======" + err);
             res.code = 500;
             res.desc = "false to signin";
@@ -109,9 +109,6 @@ User.prototype.login = function(param,callback){
 //        }
 //    });
 //};
-
-
-
 
 
 module.exports = new User();
