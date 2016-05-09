@@ -447,6 +447,56 @@ router.post('/submit', function (request, response, next) {
     }
 });
 
+//取消订单
+router.post('/cancelOrder', function (req, res, next) {
+    logger.info("进入取消订单接口");
+    var result = {code: 200};
+
+    try {
+        var arg = req.body;
+        /*参数：
+         userType: int  //  1（买家）、2（卖家）、3 (系统)
+         userId: int    // 用户id
+         token: string 	// 鉴权信息
+         ppInfo: string 	// 鉴权信息
+         browser: string // 浏览器或手机设备号
+         orderId: string // 订单id
+         reason: int   //取消原因 */
+        if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if (arg.orderId == null || arg.orderId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if (arg.reason == null || arg.reason == "") {
+            result.code = 400;
+            result.desc = "请选择取消原因";
+            res.json(result);
+            return;
+        }
+
+        logger.info("请求参数，arg：" + arg);
+
+        Order.cancelOrder(arg, function (err, data) {
+            if (err) {
+                res.json(err);
+            }
+            res.json(result);
+        });
+    } catch (ex) {
+        logger.error("不能取消，原因是:" + ex);
+        result.code = 500;
+        result.desc = "取消订单失败";
+        res.json(result);
+    }
+});
+
 // 查询售后订单列表
 router.post('/afterSaleList', function (req, res, next) {
 
@@ -1237,76 +1287,93 @@ router.post('/info', function (req, res, next) {
     }
 });
 
+/*获取支付的url*/
+router.post('/payTest', function(req, res, next) {
+    var result = {code: 200};
 
-/*获取支付的url --> 暂缓*/
-//router.get('/pay', function(req, res, next) {
-//    var result = {code: 200};
-//
-//    var arg = req.query;
-//    var params = {};
-//
-//    params.payChannel = arg.payChannel || 4;
-//    params.orderIdList = arg.orderIdList || "[1,2,3]";
-//    params.payId = arg.payId || 2;
-//    logger.info("order pay request:" + JSON.stringify(arg));
-//
-//    //if(arg == null || arg.payChannel == null || arg.orderIdList == null || arg.orderIdList.length <= 0){
-//    //    result.code = 400;
-//    //    result.desc = "请求参数错误";
-//    //    res.json(result);
-//    //}
-//
-//    if(params.payChannel == 4){
-//        Util.getOpenApi(params, function(err, data) {
-//            try {
-//                logger.info("get open id response: " + JSON.stringify(data));
-//                var jsonData = JSON.parse(data);
-//                if (err == 500 || jsonData.openid == undefined) {
-//                    logger.error("error:" + err);
-//                    result.code = 500;
-//                    result.desc = "获取支付URL失败";
-//                    //res.json(result);
-//                    //return;
-//                }
-//                logger.info("jsonData:" + JSON.stringify(jsonData));
-//                params.openId = jsonData.openid;
-//
-//                logger.info("arg:" + JSON.stringify(params));
-//                Order.payApply(params, function (err, payUrl) {
-//                    var urlInof = JSON.parse(payUrl.value);
-//                    if (err) {
-//                        res.json(err);
-//                        return;
-//                    }
-//                    if (payUrl !== null) {
-//                        result.payUrl = urlInof;
-//                        res.json(result);
-//                        logger.info("order pay response:" + JSON.stringify(result));
-//                    }
-//                });
-//            }
-//            catch(ex) {
-//                logger.error("error:" + ex);
-//                result.code = 500;
-//                result.desc = "获取支付URL失败";
-//                res.json(result);
-//            }
-//        });
-//    } else {
-//        Order.payApply(params, function (err, payUrl) {
-//            var urlInof = JSON.parse(payUrl.value);
-//            if (err) {
-//                res.json(err);
-//                return;
-//            }
-//            if (payUrl !== null) {
-//                result.payUrl = urlInof;
-//                res.json(result);
-//                logger.info("order pay response:" + JSON.stringify(result));
-//            }
-//        });
-//    }
-//});
+    var arg = req.body;
+    logger.info("order pay request:" + JSON.stringify(arg));
+
+    if(arg == null || arg.payChannel == null || arg.orderIdList == null || arg.orderIdList.length <= 0){
+        result.code = 400;
+        result.desc = "请求参数错误";
+        res.json(result);
+    }
+
+    if(arg.payChannel == 4){
+        Util.getOpenApi(arg, function(err, data) {
+            try {
+                logger.info("get open id response: " + JSON.stringify(data));
+                var jsonData = JSON.parse(data);
+                if (err == 500 || jsonData.openid == undefined) {
+                    logger.error("error:" + err);
+                    result.code = 500;
+                    result.desc = "获取支付URL失败";
+                    res.json(result);
+                    return;
+                }
+                logger.info("jsonData:" + JSON.stringify(jsonData));
+                arg.openId = jsonData.openid;
+
+                logger.info("arg:" + JSON.stringify(arg));
+                Product.payApply1(arg, function (err, payUrl) {
+                    var urlInof = JSON.parse(payUrl.value);
+                    if (err) {
+                        res.json(err);
+                        return;
+                    }
+                    if (payUrl !== null) {
+                        result.payUrl = urlInof;
+                        res.json(result);
+                        logger.info("order pay response:" + JSON.stringify(result));
+                    }
+                });
+            }
+            catch(ex) {
+                logger.error("error:" + ex);
+                result.code = 500;
+                result.desc = "获取支付URL失败";
+                res.json(result);
+            }
+        });
+    } else {
+        Order.payApply1(arg, function (err, payUrl) {
+            var urlInof = JSON.parse(payUrl.value);
+            if (err) {
+                res.json(err);
+                return;
+            }
+            if (payUrl !== null) {
+                result.payUrl = urlInof;
+                res.json(result);
+                logger.info("order pay response:" + JSON.stringify(result));
+            }
+        });
+    }
+});
+//获取第三方支付的url
+router.post('/pay', function (request, response, next) {
+    logger.info("进入支付流程");
+    var result = {code: 200};
+    try {
+        //var params = request.query;
+        var params = request.body;
+        var args = {};
+        args.token = params.token || "鉴权信息1";
+        args.ppInfo = params.ppInfo || "鉴权信息2";
+        args.payChannel = params.payChannel || 4;
+        args.userId = params.userId || 2;
+        args.resUrl = params.resUrl || "支付返回的结果";
+        args.resUrl = {orderId: params.orderId || "5780002", exchangeScore: params.exchangeScore || "100"};
+
+        logger.info("query expressOrder params:" + JSON.stringify(args));
+
+        result.parUrl = "支付的url：www.pay.com";
+        response.json(result);
+    } catch (ex) {
+        response.json(result);
+    }
+});
 
 //立即付款
 router.post('/payApply', function (req, res, next) {
@@ -1414,30 +1481,6 @@ router.post('/notify/alipay', function (request, response, next) {
 
         logger.info("query expressOrder params:" + JSON.stringify(args));
 
-        response.json(result);
-    } catch (ex) {
-        response.json(result);
-    }
-});
-
-//获取第三方支付的url
-router.post('/pay', function (request, response, next) {
-    logger.info("进入支付流程");
-    var result = {code: 200};
-    try {
-        //var params = request.query;
-        var params = request.body;
-        var args = {};
-        args.token = params.token || "鉴权信息1";
-        args.ppInfo = params.ppInfo || "鉴权信息2";
-        args.payChannel = params.payChannel || 4;
-        args.userId = params.userId || 2;
-        args.resUrl = params.resUrl || "支付返回的结果";
-        args.resUrl = {orderId: params.orderId || "5780002", exchangeScore: params.exchangeScore || "100"};
-
-        logger.info("query expressOrder params:" + JSON.stringify(args));
-
-        result.parUrl = "支付的url：www.pay.com";
         response.json(result);
     } catch (ex) {
         response.json(result);
