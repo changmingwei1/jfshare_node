@@ -184,12 +184,6 @@ router.post('/info', function (request, response, next) {
         return;
     }
 
-    if (params.orderState == null || params.orderState == "") {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
     //订单详情，没有处理3的情况，这里就写2
     params.userType = 2; // 1:买家 2：卖家 3：系统
 
@@ -241,7 +235,7 @@ router.post('/info', function (request, response, next) {
                                     imgUrl: orderInfo.productList[i].imagesUrl,
                                     count: orderInfo.productList[i].count,
                                     postage:orderInfo.productList[i].postage,
-                                    type:orderInfo.productList[i].postage
+                                    type:orderInfo.productList[i].type
                                 });
                             }
                             result.productList = productList;
@@ -309,8 +303,7 @@ router.post('/info', function (request, response, next) {
         }
     )
     ;
-})
-;
+});
 
 
 //查询订单的售后状态列表
