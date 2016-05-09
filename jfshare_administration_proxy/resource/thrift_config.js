@@ -93,8 +93,8 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     message:function(){
-        // var obj = new ThriftConfig("120.24.153.155", 2001);
-        var obj = new ThriftConfig("127.0.0.1", 2001);
+        var obj = new ThriftConfig("120.24.153.102", 2001);
+        //var obj = new ThriftConfig("127.0.0.1", 2001);
         return obj;
     },
     /**
@@ -180,8 +180,8 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     brand:function(){
-        // var obj = new ThriftConfig("120.24.153.155", 1981);
-        var obj = new ThriftConfig("127.0.0.1", 1981);
+        var obj = new ThriftConfig("120.24.153.102", 1981);
+        // var obj = new ThriftConfig("127.0.0.1", 1981);
         return obj;
     },
 
@@ -191,8 +191,8 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     afterSale:function(){
-        // var obj = new ThriftConfig("120.24.153.155", 2003);
-        var obj = new ThriftConfig("127.0.0.1", 2003);
+         var obj = new ThriftConfig("120.24.153.102", 2003);
+        //var obj = new ThriftConfig("127.0.0.1", 2003);
         return obj;
     },
 

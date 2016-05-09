@@ -12,7 +12,7 @@ var product=require('./controllers/product_controller');
 var order  = require('./controllers/order_controller');
 //var storehouse = require('./controllers/storehouse_controller');
 var subject = require('./controllers/subject_controller');
-var expressOrder = require('./controllers/express_controller');
+//var expressOrder = require('./controllers/express_controller');
 var message = require('./controllers/message_controller');
 var seller = require('./controllers/seller_controller');
 var score = require('./controllers/score_controller');
@@ -37,7 +37,7 @@ app.use('/manager/product',product);
 app.use('/manager/order',order);
 app.use('/manager/address',address);
 
-app.use('/manager/expressorder',expressOrder);
+//app.use('/manager/expressorder',expressOrder);
 app.use('/manager/score',score);
 app.use('/manager/message',message);
 app.use('/manager/seller',seller);
