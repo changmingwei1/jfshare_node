@@ -903,8 +903,8 @@ router.post('/list', function (req, res, next) {
         var params = {};
         //userid 改为了userId  2016.4.12
         params.userId = arg.userId || 2;
-        //params.orderStatus = Order.getOrderStateIdBuyerEnum(arg.orderState);
-        params.orderStatus = arg.orderState || null;
+        params.orderStatus = Order.getOrderStateBuyerEnum(arg.orderState) || null;
+        //params.orderStatus = arg.orderState || null;
         params.percount = arg.percount || 20;
         params.curpage = arg.curpage || 1;
         params.userType = arg.userType || 2;
@@ -1049,10 +1049,10 @@ router.post('/list', function (req, res, next) {
                                 }
                             ]
                         };
-                        orderList.push(orderItem1);
-                        orderList.push(orderItem2);
-                        orderList.push(orderItem3);
-                        orderList.push(orderItem4);
+                        //orderList.push(orderItem1);
+                        //orderList.push(orderItem2);
+                        //orderList.push(orderItem3);
+                        //orderList.push(orderItem4);
                         orderList.push(orderItem);
                     }
                 });
