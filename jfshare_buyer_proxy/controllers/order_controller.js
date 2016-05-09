@@ -1256,10 +1256,9 @@ router.post('/info', function (req, res, next) {
             result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
             result.sellerName = "测试商家1";
             var productList = [];
-            var productList1 = [];
             if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
                 for (var i = 0; i < orderInfo.productList.length; i++) {
-                    productList1.push({
+                    productList.push({
                         productId: orderInfo.productList[i].productId,
                         productName: orderInfo.productList[i].productName,
                         sku: {skuNum: orderInfo.productList[i].skuNum, skuName: orderInfo.productList[i].skuDesc},
@@ -1304,7 +1303,10 @@ router.post('/info', function (req, res, next) {
                     "postage":10,
                     "productState":3
                 };
-                productList = [productList1,productList2,productList3,productList4];
+
+                productList.push(productList2);
+                productList.push(productList3);
+                productList.push(productList4);
                 result.productList = productList;
             }
             res.json(result);

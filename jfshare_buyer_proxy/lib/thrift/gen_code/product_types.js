@@ -1220,6 +1220,7 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
   this.viceName = null;
   this.createTime = null;
   this.sellerId = null;
+  this.type = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -1259,6 +1260,9 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
     }
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
     }
   }
 };
@@ -1367,6 +1371,13 @@ ProductSurvey.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 14:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1441,6 +1452,11 @@ ProductSurvey.prototype.write = function(output) {
   if (this.sellerId !== null && this.sellerId !== undefined) {
     output.writeFieldBegin('sellerId', Thrift.Type.I32, 13);
     output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 14);
+    output.writeI32(this.type);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1965,15 +1981,19 @@ ProductSurveyResult.prototype.write = function(output) {
 };
 
 ProductCard = module.exports.ProductCard = function(args) {
+  this.sellerId = null;
   this.productId = null;
-  this.card_number = null;
+  this.cardNumber = null;
   this.password = null;
   if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
     if (args.productId !== undefined) {
       this.productId = args.productId;
     }
-    if (args.card_number !== undefined) {
-      this.card_number = args.card_number;
+    if (args.cardNumber !== undefined) {
+      this.cardNumber = args.cardNumber;
     }
     if (args.password !== undefined) {
       this.password = args.password;
@@ -1995,20 +2015,27 @@ ProductCard.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.productId = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
       if (ftype == Thrift.Type.STRING) {
-        this.card_number = input.readString();
+        this.productId = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.cardNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
       if (ftype == Thrift.Type.STRING) {
         this.password = input.readString();
       } else {
@@ -2026,18 +2053,23 @@ ProductCard.prototype.read = function(input) {
 
 ProductCard.prototype.write = function(output) {
   output.writeStructBegin('ProductCard');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 1);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
   if (this.productId !== null && this.productId !== undefined) {
-    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 2);
     output.writeString(this.productId);
     output.writeFieldEnd();
   }
-  if (this.card_number !== null && this.card_number !== undefined) {
-    output.writeFieldBegin('card_number', Thrift.Type.STRING, 2);
-    output.writeString(this.card_number);
+  if (this.cardNumber !== null && this.cardNumber !== undefined) {
+    output.writeFieldBegin('cardNumber', Thrift.Type.STRING, 3);
+    output.writeString(this.cardNumber);
     output.writeFieldEnd();
   }
   if (this.password !== null && this.password !== undefined) {
-    output.writeFieldBegin('password', Thrift.Type.STRING, 3);
+    output.writeFieldBegin('password', Thrift.Type.STRING, 4);
     output.writeString(this.password);
     output.writeFieldEnd();
   }
@@ -2048,21 +2080,21 @@ ProductCard.prototype.write = function(output) {
 
 ProductCardView = module.exports.ProductCardView = function(args) {
   this.productId = null;
-  this.card_number = null;
+  this.cardNumber = null;
   this.password = null;
-  this.isUsed = null;
+  this.state = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
     }
-    if (args.card_number !== undefined) {
-      this.card_number = args.card_number;
+    if (args.cardNumber !== undefined) {
+      this.cardNumber = args.cardNumber;
     }
     if (args.password !== undefined) {
       this.password = args.password;
     }
-    if (args.isUsed !== undefined) {
-      this.isUsed = args.isUsed;
+    if (args.state !== undefined) {
+      this.state = args.state;
     }
   }
 };
@@ -2089,7 +2121,7 @@ ProductCardView.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRING) {
-        this.card_number = input.readString();
+        this.cardNumber = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -2103,7 +2135,7 @@ ProductCardView.prototype.read = function(input) {
       break;
       case 4:
       if (ftype == Thrift.Type.I32) {
-        this.isUsed = input.readI32();
+        this.state = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -2124,9 +2156,9 @@ ProductCardView.prototype.write = function(output) {
     output.writeString(this.productId);
     output.writeFieldEnd();
   }
-  if (this.card_number !== null && this.card_number !== undefined) {
-    output.writeFieldBegin('card_number', Thrift.Type.STRING, 2);
-    output.writeString(this.card_number);
+  if (this.cardNumber !== null && this.cardNumber !== undefined) {
+    output.writeFieldBegin('cardNumber', Thrift.Type.STRING, 2);
+    output.writeString(this.cardNumber);
     output.writeFieldEnd();
   }
   if (this.password !== null && this.password !== undefined) {
@@ -2134,9 +2166,9 @@ ProductCardView.prototype.write = function(output) {
     output.writeString(this.password);
     output.writeFieldEnd();
   }
-  if (this.isUsed !== null && this.isUsed !== undefined) {
-    output.writeFieldBegin('isUsed', Thrift.Type.I32, 4);
-    output.writeI32(this.isUsed);
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 4);
+    output.writeI32(this.state);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -2148,7 +2180,7 @@ ProductCardViewParam = module.exports.ProductCardViewParam = function(args) {
   this.sellerId = null;
   this.productId = null;
   this.cardNumber = null;
-  this.isUsed = null;
+  this.state = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -2159,8 +2191,8 @@ ProductCardViewParam = module.exports.ProductCardViewParam = function(args) {
     if (args.cardNumber !== undefined) {
       this.cardNumber = args.cardNumber;
     }
-    if (args.isUsed !== undefined) {
-      this.isUsed = args.isUsed;
+    if (args.state !== undefined) {
+      this.state = args.state;
     }
   }
 };
@@ -2201,7 +2233,7 @@ ProductCardViewParam.prototype.read = function(input) {
       break;
       case 4:
       if (ftype == Thrift.Type.I32) {
-        this.isUsed = input.readI32();
+        this.state = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -2232,9 +2264,9 @@ ProductCardViewParam.prototype.write = function(output) {
     output.writeString(this.cardNumber);
     output.writeFieldEnd();
   }
-  if (this.isUsed !== null && this.isUsed !== undefined) {
-    output.writeFieldBegin('isUsed', Thrift.Type.I32, 4);
-    output.writeI32(this.isUsed);
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 4);
+    output.writeI32(this.state);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -2613,12 +2645,16 @@ ProductCardResult.prototype.write = function(output) {
 ProductCardViewListResult = module.exports.ProductCardViewListResult = function(args) {
   this.result = null;
   this.cardViewList = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.cardViewList !== undefined) {
       this.cardViewList = args.cardViewList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -2665,6 +2701,14 @@ ProductCardViewListResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2695,6 +2739,11 @@ ProductCardViewListResult.prototype.write = function(output) {
     output.writeListEnd();
     output.writeFieldEnd();
   }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -2703,12 +2752,16 @@ ProductCardViewListResult.prototype.write = function(output) {
 ProductCardStatisticsResult = module.exports.ProductCardStatisticsResult = function(args) {
   this.result = null;
   this.cardtatisticsList = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.cardtatisticsList !== undefined) {
       this.cardtatisticsList = args.cardtatisticsList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -2755,6 +2808,14 @@ ProductCardStatisticsResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2783,6 +2844,11 @@ ProductCardStatisticsResult.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
