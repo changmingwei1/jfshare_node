@@ -1049,10 +1049,10 @@ router.post('/list', function (req, res, next) {
                                 }
                             ]
                         };
-                        //orderList.push(orderItem1);
-                        //orderList.push(orderItem2);
-                        //orderList.push(orderItem3);
-                        //orderList.push(orderItem4);
+                        orderList.push(orderItem1);
+                        orderList.push(orderItem2);
+                        orderList.push(orderItem3);
+                        orderList.push(orderItem4);
                         orderList.push(orderItem);
                     }
                 });
