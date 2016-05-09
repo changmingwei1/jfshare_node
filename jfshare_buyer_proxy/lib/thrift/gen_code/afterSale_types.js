@@ -10,6 +10,7 @@ var Q = thrift.Q;
 var result_ttypes = require('./result_types')
 
 
+
 var ttypes = module.exports = {};
 AfterSale = module.exports.AfterSale = function(args) {
   this.userId = null;

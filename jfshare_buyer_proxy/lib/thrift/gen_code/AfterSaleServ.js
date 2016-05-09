@@ -10,6 +10,7 @@ var Q = thrift.Q;
 var result_ttypes = require('./result_types')
 
 
+
 var ttypes = require('./afterSale_types');
 //HELPER FUNCTIONS AND STRUCTURES
 

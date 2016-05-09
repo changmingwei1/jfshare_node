@@ -15,7 +15,7 @@ var Seller = require('../lib/models/seller');
 var detailStock = require('../lib/models/detail_stock');
 
 //查询商品列表
-router.post('/listTest', function (req, res, next) {
+router.post('/list', function (req, res, next) {
     logger.info("进入获取商品列表接口");
     var resContent = {code: 200};
 
@@ -55,10 +55,22 @@ router.post('/listTest', function (req, res, next) {
                         viceName: a.viceName,
                         curPrice: a.curPrice / 100,
                         orgPrice: a.orgPrice / 100,
-                        sellerId: a.sellerId,   //测试用,没意义
+                        //sellerId: a.sellerId,   //测试用,没意义
                         imgUrl: imgUri,
-                        type: a.type
+                        type: a.type || 2
                     });
+
+                    var productList = {
+                        productId:"ze160205135801000704",
+                        productName: "测试商品01",
+                        viceName: "优惠大促",
+                        curPrice: "0.01",
+                        orgPrice: "140",
+                        //sellerId: a.sellerId,   //测试用,没意义
+                        imgUrl: imgUri,
+                        type: 3
+                    };
+                    dataArr.push(productList);
                 });
 
                 var pagination = data[0].pagination;
@@ -78,7 +90,7 @@ router.post('/listTest', function (req, res, next) {
     }
 });
 //查询商品列表
-router.post('/list', function (req, res, next) {
+router.post('/listTest', function (req, res, next) {
     logger.info("进入获取商品列表接口");
     var resContent = {code: 200};
 
