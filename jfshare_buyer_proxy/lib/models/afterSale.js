@@ -76,9 +76,9 @@ AfterSale.prototype.request = function (params, callback) {
 AfterSale.prototype.queryAfterSale = function (params, callback) {
 
     var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
-        userId: params.buyerId,
+        userId: params.userId,
         sellerId: params.sellerId,
-        orderId: params.ordrerId,
+        orderId: params.orderId,
         productId: params.productId,
         skuNum: params.skuNum
         //º”…œsku
