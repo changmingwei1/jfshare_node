@@ -56,7 +56,8 @@ router.post('/listTest', function (req, res, next) {
                         curPrice: a.curPrice / 100,
                         orgPrice: a.orgPrice / 100,
                         sellerId: a.sellerId,   //测试用,没意义
-                        imgUrl: imgUri
+                        imgUrl: imgUri,
+                        type: a.type
                     });
                 });
 

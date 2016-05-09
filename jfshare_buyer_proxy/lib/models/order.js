@@ -81,40 +81,40 @@ Order.prototype.queryOrderDetail = function (param, callback) {
 };
 
 /*注掉的立即付款*/
-//Order.prototype.payApply = function (param, callback) {
-//    logger.info("Product.prototype.payApply  param:" + JSON.stringify(param));
-//    var pay = {payChannel:param.payChannel};
-//    if(param.payChannel == 4){
-//        pay.custId = param.openId;
-//    }
-//    var payChannel = new pay_types.PayChannel(pay);
-//
-//    var payParam = new order_types.PayParam({
-//        userId: param.userId,
-//        orderIdList: param.orderIdList,
-//        payChannel:payChannel
-//    });
-//
-//    logger.info("call orderServ-payApply args:" + JSON.stringify(payParam));
-//    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "payApply", payParam);
-//
-//    Lich.wicca.invokeClient(orderServ, function(err, data) {
-//        logger.info("call orderServ-payApply result:" + JSON.stringify(data[0]));
-//        var res = {};
-//        if(err || data[0].code == "1"){
-//            logger.error("调用orderServ-payApply失败  失败原因 ======" + err);
-//            res.code = 500;
-//            res.desc = "提交订单失败！";
-//            callback(res, null);
-//        } else {
-//            callback(null, data[0]);
-//        }
-//    });
-//};
-
-//立即付款
 Order.prototype.payApply = function (param, callback) {
     logger.info("Product.prototype.payApply  param:" + JSON.stringify(param));
+    var pay = {payChannel:param.payChannel};
+    if(param.payChannel == 4){
+        pay.custId = param.openId;
+    }
+    var payChannel = new pay_types.PayChannel(pay);
+
+    var payParam = new order_types.PayParam({
+        userId: param.userId,
+        orderIdList: param.orderIdList,
+        payChannel:payChannel
+    });
+
+    logger.info("call orderServ-payApply args:" + JSON.stringify(payParam));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "payApply", payParam);
+
+    Lich.wicca.invokeClient(orderServ, function(err, data) {
+        logger.info("call orderServ-payApply result:" + JSON.stringify(data[0]));
+        var res = {};
+        if(err || data[0].code == "1"){
+            logger.error("调用orderServ-payApply失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "提交订单失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
+//立即付款
+Order.prototype.payApply1 = function (param, callback) {
+    logger.info("Order.prototype.payApply  param:" + JSON.stringify(param));
     var payParam = new order_types.PayParam({
         userId: param.userId,
         orderIdList: param.orderIdList

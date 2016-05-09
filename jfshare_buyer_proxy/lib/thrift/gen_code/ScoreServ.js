@@ -15,10 +15,10 @@ var ttypes = require('./score_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
 ScoreServ_income_args = function(args) {
-  this.score = null;
+  this.scoreTrade = null;
   if (args) {
-    if (args.score !== undefined) {
-      this.score = args.score;
+    if (args.scoreTrade !== undefined) {
+      this.scoreTrade = args.scoreTrade;
     }
   }
 };
@@ -38,8 +38,8 @@ ScoreServ_income_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.score = new ttypes.Score();
-        this.score.read(input);
+        this.scoreTrade = new ttypes.ScoreTrade();
+        this.scoreTrade.read(input);
       } else {
         input.skip(ftype);
       }
@@ -58,9 +58,9 @@ ScoreServ_income_args.prototype.read = function(input) {
 
 ScoreServ_income_args.prototype.write = function(output) {
   output.writeStructBegin('ScoreServ_income_args');
-  if (this.score !== null && this.score !== undefined) {
-    output.writeFieldBegin('score', Thrift.Type.STRUCT, 1);
-    this.score.write(output);
+  if (this.scoreTrade !== null && this.scoreTrade !== undefined) {
+    output.writeFieldBegin('scoreTrade', Thrift.Type.STRUCT, 1);
+    this.scoreTrade.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -123,10 +123,10 @@ ScoreServ_income_result.prototype.write = function(output) {
 };
 
 ScoreServ_expenditure_args = function(args) {
-  this.score = null;
+  this.scoreTrade = null;
   if (args) {
-    if (args.score !== undefined) {
-      this.score = args.score;
+    if (args.scoreTrade !== undefined) {
+      this.scoreTrade = args.scoreTrade;
     }
   }
 };
@@ -146,8 +146,8 @@ ScoreServ_expenditure_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.score = new ttypes.Score();
-        this.score.read(input);
+        this.scoreTrade = new ttypes.ScoreTrade();
+        this.scoreTrade.read(input);
       } else {
         input.skip(ftype);
       }
@@ -166,9 +166,9 @@ ScoreServ_expenditure_args.prototype.read = function(input) {
 
 ScoreServ_expenditure_args.prototype.write = function(output) {
   output.writeStructBegin('ScoreServ_expenditure_args');
-  if (this.score !== null && this.score !== undefined) {
-    output.writeFieldBegin('score', Thrift.Type.STRUCT, 1);
-    this.score.write(output);
+  if (this.scoreTrade !== null && this.scoreTrade !== undefined) {
+    output.writeFieldBegin('scoreTrade', Thrift.Type.STRUCT, 1);
+    this.scoreTrade.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -468,7 +468,7 @@ ScoreServClient = exports.Client = function(output, pClass) {
 ScoreServClient.prototype = {};
 ScoreServClient.prototype.seqid = function() { return this._seqid; }
 ScoreServClient.prototype.new_seqid = function() { return this._seqid += 1; }
-ScoreServClient.prototype.income = function(score, callback) {
+ScoreServClient.prototype.income = function(scoreTrade, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -479,19 +479,19 @@ ScoreServClient.prototype.income = function(score, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_income(score);
+    this.send_income(scoreTrade);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_income(score);
+    this.send_income(scoreTrade);
   }
 };
 
-ScoreServClient.prototype.send_income = function(score) {
+ScoreServClient.prototype.send_income = function(scoreTrade) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('income', Thrift.MessageType.CALL, this.seqid());
   var args = new ScoreServ_income_args();
-  args.score = score;
+  args.scoreTrade = scoreTrade;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -515,7 +515,7 @@ ScoreServClient.prototype.recv_income = function(input,mtype,rseqid) {
   }
   return callback('income failed: unknown result');
 };
-ScoreServClient.prototype.expenditure = function(score, callback) {
+ScoreServClient.prototype.expenditure = function(scoreTrade, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -526,19 +526,19 @@ ScoreServClient.prototype.expenditure = function(score, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_expenditure(score);
+    this.send_expenditure(scoreTrade);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_expenditure(score);
+    this.send_expenditure(scoreTrade);
   }
 };
 
-ScoreServClient.prototype.send_expenditure = function(score) {
+ScoreServClient.prototype.send_expenditure = function(scoreTrade) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('expenditure', Thrift.MessageType.CALL, this.seqid());
   var args = new ScoreServ_expenditure_args();
-  args.score = score;
+  args.scoreTrade = scoreTrade;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -680,7 +680,7 @@ ScoreServProcessor.prototype.process_income = function(seqid, input, output) {
   args.read(input);
   input.readMessageEnd();
   if (this._handler.income.length === 1) {
-    Q.fcall(this._handler.income, args.score)
+    Q.fcall(this._handler.income, args.scoreTrade)
       .then(function(result) {
         var result = new ScoreServ_income_result({success: result});
         output.writeMessageBegin("income", Thrift.MessageType.REPLY, seqid);
@@ -695,7 +695,7 @@ ScoreServProcessor.prototype.process_income = function(seqid, input, output) {
         output.flush();
       });
   } else {
-    this._handler.income(args.score,  function (err, result) {
+    this._handler.income(args.scoreTrade,  function (err, result) {
       var result = new ScoreServ_income_result((err != null ? err : {success: result}));
       output.writeMessageBegin("income", Thrift.MessageType.REPLY, seqid);
       result.write(output);
@@ -710,7 +710,7 @@ ScoreServProcessor.prototype.process_expenditure = function(seqid, input, output
   args.read(input);
   input.readMessageEnd();
   if (this._handler.expenditure.length === 1) {
-    Q.fcall(this._handler.expenditure, args.score)
+    Q.fcall(this._handler.expenditure, args.scoreTrade)
       .then(function(result) {
         var result = new ScoreServ_expenditure_result({success: result});
         output.writeMessageBegin("expenditure", Thrift.MessageType.REPLY, seqid);
@@ -725,7 +725,7 @@ ScoreServProcessor.prototype.process_expenditure = function(seqid, input, output
         output.flush();
       });
   } else {
-    this._handler.expenditure(args.score,  function (err, result) {
+    this._handler.expenditure(args.scoreTrade,  function (err, result) {
       var result = new ScoreServ_expenditure_result((err != null ? err : {success: result}));
       output.writeMessageBegin("expenditure", Thrift.MessageType.REPLY, seqid);
       result.write(output);

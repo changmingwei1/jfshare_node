@@ -14,6 +14,8 @@ var Util = require('../lib/models/util');
 var Order = require('../lib/models/order');
 var Address = require('../lib/models/address');
 var Seller = require('../lib/models/seller');
+var Express = require('../lib/models/express');
+var AfterSale = require('../lib/models/afterSale');
 
 var product_types = require("../lib/thrift/gen_code/product_types");
 
@@ -371,6 +373,36 @@ router.post('/submit', function (request, response, next) {
 
         response.json(result);
     } catch (ex) {
+        response.json(result);
+    }
+});
+//提交订单 --> 实物
+router.post('/submitTest', function (request, response, next) {
+    logger.info("进入实物提交订单流程");
+    var result = {code:200};
+    try{
+        var arg = request.body;
+        logger.info("提交订单请求， arg:" + JSON.stringify(arg));
+
+        if(arg == null || arg.userId == null || arg.deliverInfo == null ||
+            arg.sellerDetailList == null ){
+            result.code = 400;
+            result.desc = "没有填写用户ＩＤ";
+            response.json(result);
+            return;
+        }
+        Order.orderConfirm(arg, function (err, orderIdList) {
+            if(err){
+                res.json(err);
+                return;
+            }
+            result.orderIdList = orderIdList;
+            response.json(result);
+        });
+    } catch(ex) {
+        logger.error("submit order error:" + ex);
+        result.code = 500;
+        result.desc = "提交订单失败";
         response.json(result);
     }
 });
@@ -1224,10 +1256,9 @@ router.post('/info', function (req, res, next) {
             result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
             result.sellerName = "测试商家1";
             var productList = [];
-            var productList1 = [];
             if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
                 for (var i = 0; i < orderInfo.productList.length; i++) {
-                    productList1.push({
+                    productList.push({
                         productId: orderInfo.productList[i].productId,
                         productName: orderInfo.productList[i].productName,
                         sku: {skuNum: orderInfo.productList[i].skuNum, skuName: orderInfo.productList[i].skuDesc},
@@ -1272,7 +1303,10 @@ router.post('/info', function (req, res, next) {
                     "postage":10,
                     "productState":3
                 };
-                productList = [productList1,productList2,productList3,productList4];
+
+                productList.push(productList2);
+                productList.push(productList3);
+                productList.push(productList4);
                 result.productList = productList;
             }
             res.json(result);
@@ -1316,7 +1350,7 @@ router.post('/payTest', function(req, res, next) {
                 arg.openId = jsonData.openid;
 
                 logger.info("arg:" + JSON.stringify(arg));
-                Product.payApply1(arg, function (err, payUrl) {
+                Order.payApply(arg, function (err, payUrl) {
                     var urlInof = JSON.parse(payUrl.value);
                     if (err) {
                         res.json(err);
@@ -1337,7 +1371,7 @@ router.post('/payTest', function(req, res, next) {
             }
         });
     } else {
-        Order.payApply1(arg, function (err, payUrl) {
+        Order.payApply(arg, function (err, payUrl) {
             var urlInof = JSON.parse(payUrl.value);
             if (err) {
                 res.json(err);
@@ -1553,6 +1587,46 @@ router.post('/queryExpress', function (request, response, next) {
         response.json(result);
     }
 });
+//获取物流信息
+router.post('/queryExpressTest', function (request, response, next) {
+    logger.info("进入获取物流信息流程");
+    var result = {code: 200};
+    try {
+        //var params = request.query;
+        var params = request.body;
+        var token = "鉴权信息1";
+        var ppInfo = "鉴权信息2";
+        var browser = "asdafas";
+        if (params.orderId == null || params.orderId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.userId == null || params.userId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        logger.info("query expressOrder params:" + JSON.stringify(params));
+
+        Express.queryExpress(params,function(err,data){
+            if(err){
+                response.json(err);
+                return;
+            }
+            result.data = data;
+            response.json(result);
+        });
+
+    } catch (ex) {
+        result.code = 500;
+        result.desc = "查询物流信息失败";
+        response.json(result);
+    }
+});
 
 //根据订单信息获取运费值
 router.post('/freight', function (request, response, next) {
@@ -1610,6 +1684,42 @@ router.post('/refund', function (request, response, next) {
         response.json(result);
     }
 });
+//申请退货
+router.post('/refundTest', function (request, response, next) {
+    logger.info("进入申请退货流程");
+    var result = {code: 200};
+    try {
+        //var params = request.query;
+        var params = request.body;
+        var token = "鉴权信息1";
+        var ppInfo = "鉴权信息2";
+        var browser = "asdafas";
+        if (params.orderId == null || params.orderId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.userId == null || params.userId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        logger.info("query expressOrder params:" + JSON.stringify(params));
+
+        AfterSale.request(params,function(err,data){
+            if(err){
+                response.json(err);
+                return;
+            }
+            response.json(result);
+        });
+    } catch (ex) {
+        response.json(result);
+    }
+});
 
 //获取售后信息
 router.post('/refundDesc', function (request, response, next) {
@@ -1641,6 +1751,52 @@ router.post('/refundDesc', function (request, response, next) {
         response.json(result);
     }
 });
+//获取售后信息
+router.post('/refundDescTest', function (request, response, next) {
+    logger.info("进入获取售后信息流程");
+    var result = {code: 200};
 
+    try{
+        var params = request.body;
+        var token = "鉴权信息1";
+        var ppInfo = "鉴权信息2";
+        var browser = "asdafas";
+        logger.info("售后信息查询， arg:" + JSON.stringify(params));
+
+        if(params.productId == null || params.productId == ""){
+            result.code = 400;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.orderId == null || params.orderId == ""){
+            result.code = 400;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.skuNum == null || params.skuNum == ""){
+            result.code = 400;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        AfterSale.queryAfterSale(params,function(err, data) {
+            if(err){
+                response.json(err);
+                return;
+            }
+            result.data = data;
+            response.json(result);
+            logger.info("AfterSale.queryAfterSale response:" + JSON.stringify(result));
+        });
+    } catch (ex) {
+        logger.error("AfterSale.queryAfterSale error:" + ex);
+        result.code = 500;
+        result.desc = "查询售后信息失败";
+        response.json(result);
+    }
+});
 
 module.exports = router;
