@@ -45,14 +45,14 @@ Manager.prototype.signup = function (params, callback) {
 Manager.prototype.signin = function (params, callback) {
 
     var commissioner = new manager_types.Commissioner({
-        csId: params.csId,
+        //csId: params.csId,
         loginName: params.loginName,
-        csName: params.csName,
+        //csName: params.csName,
         pwdEnc: params.pwdEnc
     });
 
     var loginLog = new manager_types.LoginLog({
-        csId: params.csId
+        //csId: params.csId
     });
 
 
@@ -61,9 +61,9 @@ Manager.prototype.signin = function (params, callback) {
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("signin manager user result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == "1") {
+        if (err || data[0].result.code == 1) {
             res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
@@ -82,7 +82,7 @@ Manager.prototype.signout = function (params, callback) {
 
 
     //ªÒ»°client
-    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'signin', [loginLog]);
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'signout', [loginLog]);
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("signout manager user result:" + JSON.stringify(data));
         var res = {};
