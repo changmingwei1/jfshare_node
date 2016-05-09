@@ -464,7 +464,7 @@ router.post('/cancelOrder', function (request, response, next) {
                 return;
             }
             response.json(result);
-            return
+            return;
         });
 
     } catch (ex) {
@@ -691,6 +691,36 @@ router.post('/getExpressInfo', function (request, response, next) {
         response.json(result);
     }
 });
+
+
+//获取物流商列表
+router.post('/expresslist', function (request, response, next) {
+    logger.info("进入取消订单流程");
+    var result = {code: 200};
+
+    try {
+
+        var params = request.body;
+
+        Express.queryList(params, function (err, data) {
+            if (err) {
+                response.json(error);
+                return;
+            }
+
+
+            response.json(data);
+            return;
+        });
+
+    } catch (ex) {
+        logger.error("查询物流商列表失败：" + ex);
+        result.code = 500;
+        result.desc = "查询物流商列表失败";
+        response.json(result);
+    }
+});
+
 
 
 module.exports = router;

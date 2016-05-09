@@ -52,7 +52,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
 //订单状态数量查询 --还需要查询退货中的订单状态
 Order.prototype.orderStateQuery = function (param, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({count: param.percount, curPage: param.curpage});
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderStateQuery", [param.userType, param.userId, orderQueryConditions]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderStateQuery", [2, param.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-orderStateQuery  result:" + JSON.stringify(data));
@@ -85,9 +85,75 @@ Order.prototype.queryOrderDetail = function (param, callback) {
         }
     });
 };
+//	result.Result cancelOrder(1:i32 userType, 2:i32 userId, 3:string orderId, 4:i32 reason)
+//取消订单
+Order.prototype.cancelOrder = function (param, callback) {
+    //result.Result cancelOrder(1:i32 userType, 2:i32 userId, 3:string orderId, 4:i32 reason)
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [3, param.userId, param.orderId,1]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-cancelOrder  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用orderServ-cancelOrder  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "取消订单失败！";
+            callback(res, null);
+        } else {
+            callback(null, null);
+        }
+    });
+};
+//	result.Result deliver(1:i32 sellerId, 2:DeliverInfo deliverInfo)
+
+//发货，其实就是添加物流单
+Order.prototype.deliver = function (params, callback) {
+
+    var deliverInfo = new order_types.DeliverInfo({
+
+        orderId:params.orderId,
+        sellerComment:params.sellerComment,
+        expressId:params.expressId,
+        expressName:params.expressName,
+        expressNo:params.expressNo
+    });
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId,deliverInfo]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-deliver  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用orderServ-deliver  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "发货失败！";
+            callback(res, null);
+        } else {
+            callback(null, null);
+        }
+    });
+};
+
+//result.Result updateExpressInfo(1:i32 sellerId, 2:string orderId, 3:string expressId, 4:string expressNo, 5:string expressName)
+
+//发货，其实就是添加物流单
+Order.prototype.updateExpressInfo = function (params, callback) {
 
 
 
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId,params.orderId,params.expressId,params.expressNo,params.expressName]);
 
-
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-updateExpressInfo  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用orderServ-updateExpressInfo  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "更新物流单！";
+            callback(res, null);
+        } else {
+            callback(null, null);
+        }
+    });
+};
 module.exports = new Order();
