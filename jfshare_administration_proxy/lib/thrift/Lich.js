@@ -21,7 +21,7 @@ var ServiceKey = {
     ProductServer : "Product",
   //StockServer :  "Stock",
     CommonServer: "Common",
-     UserServer: "Seller",
+    // UserServer: "Seller",
      BrandServer:"Brand",
      ManagerServer:"Manager",
       MessageServer:"Message",
