@@ -18,7 +18,7 @@ function AfterSale() {
 AfterSale.prototype.auditPass = function (params, callback) {
 
     var afterSale = new afterSale_types.AfterSale({
-        userId: params.buyerId,
+        userId: params.userId,
         sellerId: params.sellerId,
         orderId: params.orderId,
         productId: params.productId,

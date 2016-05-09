@@ -25,7 +25,8 @@ var ServiceKey = {
      BrandServer:"Brand",
      ManagerServer:"Manager",
       MessageServer:"Message",
-      AfterSaleServer:"AfterSale"
+      AfterSaleServer:"AfterSale",
+        Expresss:"Expresss"
 };
 
 /**

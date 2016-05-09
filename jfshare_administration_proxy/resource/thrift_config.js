@@ -210,6 +210,16 @@ module.exports.ServiceFactory = {
         //var obj = new ThriftConfig(ip, port);
 
         return obj;
+    },
+
+    /**
+     * 物流服务
+     * @returns {ThriftConfig}
+     */
+    expresss: function () {
+        var obj = new ThriftConfig("120.24.153.155", 1989);
+        //  var obj = new ThriftConfig("127.0.0.1", 1989);
+        return obj;
     }
 
 };
