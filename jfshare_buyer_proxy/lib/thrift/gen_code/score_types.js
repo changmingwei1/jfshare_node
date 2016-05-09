@@ -225,10 +225,14 @@ ScoreTrade.prototype.write = function(output) {
 };
 
 ScoreTradeQueryParam = module.exports.ScoreTradeQueryParam = function(args) {
+  this.userId = null;
   this.tradeTime = null;
   this.inOrOut = null;
   this.type = null;
   if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
     if (args.tradeTime !== undefined) {
       this.tradeTime = args.tradeTime;
     }
@@ -255,20 +259,27 @@ ScoreTradeQueryParam.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
       if (ftype == Thrift.Type.STRING) {
         this.tradeTime = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 2:
+      case 3:
       if (ftype == Thrift.Type.I32) {
         this.inOrOut = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 3:
+      case 4:
       if (ftype == Thrift.Type.I32) {
         this.type = input.readI32();
       } else {
@@ -286,18 +297,23 @@ ScoreTradeQueryParam.prototype.read = function(input) {
 
 ScoreTradeQueryParam.prototype.write = function(output) {
   output.writeStructBegin('ScoreTradeQueryParam');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
   if (this.tradeTime !== null && this.tradeTime !== undefined) {
-    output.writeFieldBegin('tradeTime', Thrift.Type.STRING, 1);
+    output.writeFieldBegin('tradeTime', Thrift.Type.STRING, 2);
     output.writeString(this.tradeTime);
     output.writeFieldEnd();
   }
   if (this.inOrOut !== null && this.inOrOut !== undefined) {
-    output.writeFieldBegin('inOrOut', Thrift.Type.I32, 2);
+    output.writeFieldBegin('inOrOut', Thrift.Type.I32, 3);
     output.writeI32(this.inOrOut);
     output.writeFieldEnd();
   }
   if (this.type !== null && this.type !== undefined) {
-    output.writeFieldBegin('type', Thrift.Type.I32, 3);
+    output.writeFieldBegin('type', Thrift.Type.I32, 4);
     output.writeI32(this.type);
     output.writeFieldEnd();
   }

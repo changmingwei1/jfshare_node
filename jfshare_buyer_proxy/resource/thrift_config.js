@@ -85,9 +85,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     address:function(){
-       // var ip = zookeeper.getData("address_serv_ips");
-      //  var port = zookeeper.getData("address_port");
-       // var obj = new ThriftConfig(ip,port);
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155",1985);
          //var obj = new ThriftConfig("127.0.0.1",1985);
         return obj;
@@ -97,6 +97,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     subject:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155",1982);
         // var obj = new ThriftConfig("127.0.0.1",1982);
         return obj;
@@ -106,6 +109,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     order:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155", 1986);
         return obj;
     },
@@ -114,6 +120,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     buyer:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155", 1990);
         // var obj = new ThriftConfig("127.0.0.1", 1990);
         return obj;
@@ -123,8 +132,11 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     product: function(){
-        //var obj = new ThriftConfig("120.24.153.155",1980);
-        var obj = new ThriftConfig("127.0.0.1",1980);
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
+        var obj = new ThriftConfig("120.24.153.155",1980);
+        //var obj = new ThriftConfig("127.0.0.1",1980);
         return obj;
     },
     /**
@@ -132,6 +144,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     stock:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155",1983);
         //var obj = new ThriftConfig("127.0.0.1",1983);
         return obj;
@@ -141,6 +156,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     common:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155",1984);
         //var obj = new ThriftConfig("127.0.0.1",1984);
         return obj;
@@ -150,6 +168,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     trade:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155", 1987);
         return obj;
     },
@@ -158,8 +179,11 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     cart:function(){
-        //var obj = new ThriftConfig("120.24.153.155", 1992);
-        var obj = new ThriftConfig("127.0.0.1",1992);
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
+        var obj = new ThriftConfig("120.24.153.155", 1992);
+        //var obj = new ThriftConfig("127.0.0.1",1992);
         return obj;
     },
     /**
@@ -167,6 +191,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     seller:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155", 1991);
         //var obj = new ThriftConfig("127.0.0.1", 1991);
         return obj;
@@ -176,6 +203,9 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     manager:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155", 1993);
         //var obj = new ThriftConfig("127.0.0.1", 1991);
         return obj;
@@ -185,8 +215,23 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     score:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
         var obj = new ThriftConfig("120.24.153.155", 1994);
         //var obj = new ThriftConfig("127.0.0.1", 1991);
+        return obj;
+    },
+    /**
+     * 售后服务
+     * @returns {ThriftConfig}
+     */
+    afterSale:function(){
+        //var ip = zookeeper.getData("address_serv_ips");
+        //var port = zookeeper.getData("address_port");
+        //var obj = new ThriftConfig(ip,port);
+        var obj = new ThriftConfig("120.24.153.102", 2003);
+        //var obj = new ThriftConfig("127.0.0.1", 2003);
         return obj;
     }
 };
