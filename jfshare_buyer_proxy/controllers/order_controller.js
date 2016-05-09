@@ -1680,7 +1680,7 @@ router.post('/pay', function (request, response, next) {
 
         logger.info("query expressOrder params:" + JSON.stringify(args));
 
-        result.parUrl = "支付的url：www.pay.com";
+        result.payUrl = "支付的url：www.pay.com";
         response.json(result);
     } catch (ex) {
         response.json(result);
