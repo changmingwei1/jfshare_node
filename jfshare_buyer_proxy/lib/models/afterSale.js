@@ -84,25 +84,26 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
         //加上sku
     });
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
+    var ret = {};
     try {
         var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSale", afterSaleQueryParam);
 
         Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
             logger.info("AfterSaleServ-queryAfterSale  result:" + JSON.stringify(data));
-            var res = {};
+
             if (err || data[0].result.code == "1") {
                 logger.error("AfterSaleServ-queryAfterSale  失败原因 ======" + err);
-                res.code = 500;
-                res.desc = "查询审核信息失败！";
-                callback(res, null);
+                ret.code = 500;
+                ret.desc = "查询审核信息失败！";
+                callback(ret, null);
             } else {
                 callback(null, data[0].afterSaleList);
             }
         });
     } catch (ex) {
-        res.code = 500;
-        res.desc = "查询审核信息失败！";
-        callback(res, null);
+        ret.code = 500;
+        ret.desc = "查询审核信息失败！";
+        callback(ret, null);
     }
 
 };
