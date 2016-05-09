@@ -6,9 +6,8 @@
  * 关于thrift的配置信息
  * @constructor
  * ********************************************************************************************************************/
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
-var zookeeper = require('./zookeeper_util');
+
+//var zookeeper = require('./zookeeper_util');
 function poolConfig(name, createFn, destroyFn) {
     this.name = name;
     this.create = createFn;
@@ -103,8 +102,8 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     subject: function () {
-        // var obj = new ThriftConfig("120.24.153.155",1982);
-        var obj = new ThriftConfig("127.0.0.1", 1982);
+        var obj = new ThriftConfig("120.24.153.102",1982);
+        // var obj = new ThriftConfig("127.0.0.1", 1982);
         return obj;
     },
     /**

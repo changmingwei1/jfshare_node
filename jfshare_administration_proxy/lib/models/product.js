@@ -27,7 +27,11 @@ function Product() {
 Product.prototype.queryProductList = function (params, callback) {
 
     var thrift_pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
-    var thrift_params = new product_types.ProductSurveyQueryParam();
+    var thrift_params = new product_types.ProductSurveyQueryParam({
+
+
+
+    });
 
 
     thrift_params.pagination = thrift_pagination;
@@ -47,6 +51,7 @@ Product.prototype.queryProductList = function (params, callback) {
     // 调用 productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
+        var ret = {};
         if (err || data[0].result.code == 1) {
             logger.error("调用productServ-queryProductList失败  失败原因 ======" + err);
             ret.code = 500;

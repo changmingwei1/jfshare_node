@@ -292,46 +292,59 @@ router.post('/querySubjectPath', function (request, response, next) {
     //}
 });
 
-
 //获取类目属性
 router.post('/get', function (request, response, next) {
-    var result = {
-        code: 200,
-        attributes: [{"id": 1, "name": "产地", "sorted": 1},
-            {"id": 2, "name": "寿命", "sorted": 2},
-            {
-                "id": 3,
-                "name": "型号",
-                "sorted": 3
-            }]
-    };
-    response.json(result);
-    //try{
-    //    var params = request.body;
-    //    if(params.subjectId == null || params.subjectId == "" ||params.subjectId < 0){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    logger.info("请求， arg:" + JSON.stringify("subjectId:" + JSON.stringify(params)));
-    //
-    //    Subject.queryAttributes(params,function(error,data){
-    //        if (error) {
-    //            response.json(error);
-    //        } else {
-    //            result.data = data;
-    //            logger.info("queryAttributes  result:" + JSON.stringify(result));
-    //            response.json(result);
-    //
-    //        }
-    //    });
-    //} catch (ex) {
-    //    logger.error("获取 error:" + ex);
-    //    result.code = 500;
-    //    result.desc = "获取失败";
-    //    response.json(result);
-    //}
+    //var result = {
+    //    code: 200,
+    //    attributes: [{"id": 1, "name": "产地", "sorted": 1},
+    //        {"id": 2, "name": "寿命", "sorted": 2},
+    //        {
+    //            "id": 3,
+    //            "name": "型号",
+    //            "sorted": 3
+    //        }]
+    //};
+    //response.json(result);
+    var result = {code:200};
+    result.attributes = {};
+    var attributes = null;
+    try{
+        var params = request.body;
+        if(params.subjectId == null || params.subjectId == "" ||params.subjectId < 0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        logger.info("请求， arg:" + JSON.stringify("subjectId:" + JSON.stringify(params)));
+        var subjectAttributes = [];
+        Subject.queryAttributes(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                if(data[0].subjectAttributes!=null){
+                   var list = data[0].subjectAttributes;
+                    list.forEach(function(attribute){
+                       if(attribute.isSku == 0){
+                           attributes = attribute;
+                           return false;
+                       }
+
+                    });
+                }
+                result.attributes.id = attributes.id;
+                result.attributes.value = attributes.value;
+                logger.info("queryAttributes  result:" + JSON.stringify(result));
+                response.json(result);
+
+            }
+        });
+    } catch (ex) {
+        logger.error("获取 error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        response.json(result);
+    }
 });
 
 //品类应用全部属性
@@ -479,7 +492,7 @@ router.post('/getListforBrand', function (request, response, next) {
 });
 
 
-// 获取品牌关联的类目列表
+// 更新品牌关联的类目
 router.post('/updateBrandSubject', function (request, response, next) {
     var result = {code: 200};
 

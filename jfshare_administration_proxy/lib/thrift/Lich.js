@@ -17,21 +17,13 @@ var reservoir = require('./reservoir.js');
  */
 var ServiceKey = {
 	SubjectServer        : "Subject",
-//	AddressServer: "Address",
     OrderServer: "Order",
-  //BuyerServer: "Buyer",
     ProductServer : "Product",
   //StockServer :  "Stock",
-    //AddressServer: "Address",
     CommonServer: "Common",
-   // TradeServer: "Trade",
-   // CartServer: "Cart",
      UserServer: "Seller",
-     StorehouseServer: "Storehouse",
-     FreightServer:"Freight",
      BrandServer:"Brand",
      ManagerServer:"Manager",
-      ExpressServer:"Express",
       MessageServer:"Message",
       AfterSaleServer:"AfterSale"
 };

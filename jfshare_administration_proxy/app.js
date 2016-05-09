@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 var user = require('./controllers/user_controller');
 var product=require('./controllers/product_controller');
 var order  = require('./controllers/order_controller');
-//var storehouse = require('./controllers/storehouse_controller');
+
 var subject = require('./controllers/subject_controller');
 //var expressOrder = require('./controllers/express_controller');
 var message = require('./controllers/message_controller');
@@ -19,8 +19,7 @@ var score = require('./controllers/score_controller');
 var brand = require('./controllers/brand_controller');
 var address = require('./controllers/address_controller');
 var afterSale = require('./controllers/afterSale_controller');
-//var freight = require('./controllers/freight_controller');
-//var sellerfreight = require('./controllers/sellerfreight_controller');
+
 var app = express();
 
 
