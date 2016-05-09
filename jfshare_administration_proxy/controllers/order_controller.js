@@ -423,7 +423,7 @@ router.post('/queryexpress', function (request, response, next) {
             }
 
             response.json(result);
-            return
+            return;
         });
 
 
