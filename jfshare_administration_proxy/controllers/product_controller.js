@@ -85,11 +85,10 @@ router.post('/list', function(request, response, next) {
         //result.productList = productList;
         //
         //response.json(result);
-        Product.queryProductList(params, function(data){
-            var dataArr = [];
+        var dataArr = [];
+        Product.queryProductList(params, function(err,data){
 
-            var code = data[0].result.code;
-            if(code == 1){
+            if(err){
                 result.code = 500;
                 result.desc = "失败";
                 response.json(result);
@@ -97,14 +96,15 @@ router.post('/list', function(request, response, next) {
                 var productSurveyList = data[0].productSurveyList;
                 productSurveyList.forEach(function(a){
                     var imgUri = a.imgUrl.split(",")[0];
-                    dataArr.push({productId: a.productId, productName: a.productName, curPrice: a.curPrice /100, imgUrl: imgUri});
+                    dataArr.push({productId: a.productId, productName: a.productName,orgPrice: (Number(a.orgPrice)/100).toFixed(2), curPrice: (Number(a.curPrice) /100).toFixed(2),totalSales: a.totalSales, imgUrl: imgUri});
                 });
 
                 var pagination = data[0].pagination;
                 result.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
+                logger.info("get product list response:" + JSON.stringify(result));
                 result.productList = dataArr;
                 response.json(result);
-                logger.info("get product list response:" + JSON.stringify(result));
+
             }
 
         });
