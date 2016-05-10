@@ -19,16 +19,16 @@ router.get('/imgList', function(request, response, next) {
     try{
         var param = request.query;
         logger.info("It's test______" + param);
-        // 测试使用数据
+
         Active.querySlotImageList(param,function(error, data){
             if(error){
                 response.json(error);
                 return;
             }else{
                 var slotImageList = data[0].slotImageList;
-
-                response.json(slotImageList);
-                logger.info("响应:" + JSON.stringify(slotImageList));
+                resContent.slotImageList = slotImageList;
+                response.json(resContent);
+                logger.info("响应:" + JSON.stringify(resContent));
             }
         });
     }catch(ex){
