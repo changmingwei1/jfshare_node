@@ -26,28 +26,28 @@ function Product() {
 // 查询商品列表，包含带条件查询：商品名称，商品id，商品状态
 Product.prototype.queryProductList = function (params, callback) {
 
-    //var thrift_pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
-    //var thrift_params = new product_types.ProductSurveyQueryParam({
-    //
-    //
-    //
-    //});
-    //
-    //
-    //thrift_params.pagination = thrift_pagination;
-    //thrift_params.sellerId = params.sellerId;
-    //thrift_params.productName = params.productName;
-    //thrift_params.activeState = params.activeState;
-    //thrift_params.productId = params.productId;
-    //thrift_params.subjectId = 0;//默认是获取所有商品
-    //thrift_params.sort = "create_time DESC";
+    var thrift_pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
+    var thrift_params = new product_types.ProductSurveyQueryParam({
+
+
+
+    });
+
+
+    thrift_params.pagination = thrift_pagination;
+    thrift_params.sellerId = params.sellerId;
+    thrift_params.productName = params.productName;
+    thrift_params.activeState = params.activeState;
+    thrift_params.productId = params.productId;
+    thrift_params.subjectId = 0;//默认是获取所有商品
+    thrift_params.sort = "create_time DESC";
     //
     //
     ////判断卖家id是否为空
     //
     //logger.info("调用productServ-queryProductList args:" + JSON.stringify(thrift_params));
-    // 获取client
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "productSurveyQuery", null);
+    // 获取client//Product ProductServer
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "productSurveyQuery", thrift_params);
     // 调用 productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));

@@ -21,26 +21,26 @@ router.post('/list', function(request, response, next) {
     var result = {code:200};
 
     try{
-        var params = request.query;
-       // var params = request.body;
-        logger.info("get product list args:" + JSON.stringify(params));
-
-        var percount = params.percount || 20;
-        var curpage = params.curpage || 1;
-
-
-        //参数验证
-
-
-        //静态数据，设置分页
-        result.page = {total: 100, pageCount:5};
-
-        //商品列表
-
-        var productList = [];
-
-        var product = {};
-
+        //var params = request.query;
+       var params = request.body;
+        //logger.info("get product list args:" + JSON.stringify(params));
+        //
+        //var percount = params.percount || 20;
+        //var curpage = params.curpage || 1;
+        //
+        //
+        ////参数验证
+        //
+        //
+        ////静态数据，设置分页
+        //result.page = {total: 100, pageCount:5};
+        //
+        ////商品列表
+        //
+        //var productList = [];
+        //
+        //var product = {};
+        //
         //product.productId  = "ze160120140359000104";
         //product.productName= "韩国现代（Hyundai）酸奶机HYSZ-5302";
         //product.subjectName= "家具生活,生活日用,酸奶机";

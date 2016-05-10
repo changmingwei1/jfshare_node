@@ -19,7 +19,7 @@ Expresss.prototype.queryList = function(params, callback){
 
 
     // 获取client
-    var expressOrderServ = new Lich.InvokeBag(Lich.ServiceKey.ExpresssServer, "query");
+    var expressOrderServ = new Lich.InvokeBag(Lich.ServiceKey.ExpresssServer, "queryEx");
     // 调用 expressOrderServ
     Lich.wicca.invokeClient(expressOrderServ, function (err, data) {
         logger.info("expressOrderServ-queryList result:" + JSON.stringify(data));
@@ -38,9 +38,10 @@ Expresss.prototype.queryList = function(params, callback){
 Expresss.prototype.expressQuery = function(params, callback){
 
     var expressParams = new express_types.ExpressParams({
-       orderId:params.orderId||"17870082",
+        orderId:params.orderId||"17870082",
         num:params.num ||"3305764433295",
-        queryType:2
+        comId:3,
+        queryType:3
     });
     // 获取client
     var expressOrderServ = new Lich.InvokeBag(Lich.ServiceKey.ExpresssServer, "expressQuery",expressParams);
@@ -52,9 +53,9 @@ Expresss.prototype.expressQuery = function(params, callback){
             var ret = {};
             ret.code = 500;
             ret.desc = "查询物流失败！";
-            callback(ret,null);
+            return callback(ret,null);
         }
-        callback(null,data);
+        return callback(null,data[0]);
     });
 }
 
