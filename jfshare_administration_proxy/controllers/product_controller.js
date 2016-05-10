@@ -21,73 +21,102 @@ router.post('/list', function(request, response, next) {
     var result = {code:200};
 
     try{
-        //var params = request.query;
+
        var params = request.body;
-        //logger.info("get product list args:" + JSON.stringify(params));
-        //
+        logger.info("get product list args:" + JSON.stringify(params));
+
+        if(params.percount == null || params.percount == "" ||params.percount <= 0){
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.curpage == null || params.curpage == "" ||params.curpage <= 0){
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+
         //var percount = params.percount || 20;
         //var curpage = params.curpage || 1;
-        //
-        //
-        ////参数验证
-        //
-        //
-        ////静态数据，设置分页
-        //result.page = {total: 100, pageCount:5};
-        //
-        ////商品列表
-        //
-        //var productList = [];
-        //
-        //var product = {};
-        //
-        //product.productId  = "ze160120140359000104";
-        //product.productName= "韩国现代（Hyundai）酸奶机HYSZ-5302";
-        //product.subjectName= "家具生活,生活日用,酸奶机";
-        //product.sellerId = 1;
-        //product.curPrice = "200";
-        //product.orgPrice = "250";
-        //product.activeStock = "100"; //创建成功
-        //product.storeValue = 1000;
-        //product.createTime = "2015-06-07";
-        //product.imgUrl = "530A5A4577179F1068981FB10BD09BB5.jpg,530A5A4577179F1068981FB10BD09BB5.jpg,530A5A4577179F1068981FB10BD09BB5.jpg";
-        //productList.push(product);
-        //
-        //
-        //var product1 = {};
-        //product1.productId  = "ze160120162205000328";
-        //product1.productName= "哆啦A梦 炫酷伞折叠包套装 DM-4522";
-        //product1.subjectName= "家具生活,生活日用,伞";
-        //product.sellerId = 2;
-        //product1.curPrice = "100";
-        //product1.orgPrice = "150";
-        //product1.activeStock = "200"; //审核中
-        //product1.storeValue = 1000;
-        //product1.createTime = "2015-06-07";
-        //product1.imgUrl = "7E2D8E99229FB372F8A9FE609B3350CF.jpg,3CBC93724AF7B26328508DE9F32F68F7.jpg,EB016A0A49D59E8C23ADB2D358E53D51.jpg,E0E865C6BFCD68A36D8CBA65DDAB784A.jpg,AD12C9CBBE0E4916B26CC47F3A270C7F.jpg";
-        //productList.push(product1);
-        //
-        //var product2 = {};
-        //product2.productId  = "ze160120162205000327";
-        //product2.productName= "点卡 梦幻西游 49块";
-        //product2.subjectName= "虚拟商品,游戏,点券";
-        //product.sellerId = 2;
-        //product2.curPrice = "49";
-        //product2.orgPrice = "50";
-        //product2.activeStock = "300"; //销售中
-        //product2.storeValue = 1000;
-        //product2.createTime = "2015-06-07";
-        //product2.imgUrl = "7E2D8E99229FB372F8A9FE609B3350CF.jpg,3CBC93724AF7B26328508DE9F32F68F7.jpg,EB016A0A49D59E8C23ADB2D358E53D51.jpg,E0E865C6BFCD68A36D8CBA65DDAB784A.jpg,AD12C9CBBE0E4916B26CC47F3A270C7F.jpg";
-        //productList.push(product2);
-        //
-        //productList.push(product);
-        //productList.push(product1);
-        //result.productList = productList;
-        //
-        //response.json(result);
-        var dataArr = [];
-        Product.queryProductList(params, function(err,data){
 
+        //async.series([
+        //        function (callback) {
+        //            try {
+        //                Product.queryProductList(params, function(err,data){
+        //
+        //                    if(err){
+        //                        result.code = 500;
+        //                        result.desc = "失败";
+        //                        response.json(result);
+        //                    } else {
+        //                        var productSurveyList = data[0].productSurveyList;
+        //                        productSurveyList.forEach(function(a){
+        //                            var imgUri = a.imgUrl.split(",")[0];
+        //                            dataArr.push({productId: a.productId, productName: a.productName,orgPrice: (Number(a.orgPrice)/100).toFixed(2), curPrice: (Number(a.curPrice) /100).toFixed(2),totalSales: a.totalSales, imgUrl: imgUri});
+        //                        });
+        //
+        //                        var pagination = data[0].pagination;
+        //                        result.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
+        //                        logger.info("get product list response:" + JSON.stringify(result));
+        //                        result.productList = dataArr;
+        //                        response.json(result);
+        //
+        //                    }
+        //
+        //                });
+        //            }
+        //            catch
+        //                (ex) {
+        //                logger.info("订单服务异常:" + ex);
+        //                return callback(1, null);
+        //            }
+        //        },
+        //        function (callback) {
+        //            try {
+        //
+        //            } catch (ex) {
+        //                logger.info("售后服务异常:" + ex);
+        //                return callback(2, null);
+        //            }
+        //
+        //        }
+        //    ],
+        //    function (err, results) {
+        //        if (err == 1) {
+        //            logger.error("查询订单列表失败---订单服务异常：" + err);
+        //            result.code = 500;
+        //            result.desc = "查询订单失败";
+        //            response.json(result);
+        //            return;
+        //        }
+        //        if (err == 2) {
+        //            logger.error("查询售后失败--售后服务异常：" + err);
+        //            response.json(results[0]);
+        //            return;
+        //        }
+        //
+        //        if (err == null && err != 3) {
+        //            logger.info("shuju------------->" + JSON.stringify(results));
+        //            result = results[0];
+        //            result.afterSaleList = results[1];
+        //            response.json(result);
+        //            return;
+        //        } else {
+        //            logger.info("shuju------------->" + JSON.stringify(results));
+        //            result = results[0];
+        //
+        //            response.json(result);
+        //            return;
+        //        }
+        //    }
+        //);
+        Product.queryProductList(params, function(err,data){
+            var dataArr = [];
             if(err){
                 result.code = 500;
                 result.desc = "失败";
