@@ -192,6 +192,7 @@ router.post('/login', function (request, response, next) {
                     //var loginLog = data[0].loginLog;
                     var userId = data[0].buyer.userId;
                     var authInfo = data[0].authInfo;
+                    resContent.loginName = data[0].buyer.mobile;
                     resContent.ppInfo = authInfo.ppInfo;
                     resContent.token = authInfo.token;
                     resContent.userId = userId;
@@ -277,6 +278,7 @@ router.post('/login2', function (req, res, next) {
                     //};
                     //CommonUtil.setCookie(req, res, "ssid", ssid, options);
                     resContent.userId = buyer.userId;
+                    resContent.loginName = buyer.mobile;
                     //resContent.loginLog = loginLog;
                     resContent.token = authInfo.token;
                     resContent.ppInfo = authInfo.ppInfo;
@@ -339,6 +341,7 @@ router.get('/exists', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
+                resContent.desc = "该手机已存在，不能注册";
                 response.json(resContent);
                 logger.info("get buyer response:" + JSON.stringify(resContent));
             }
@@ -397,11 +400,13 @@ router.post('/validAuth', function (request, response, next) {
         var token = param.token;
         var ppInfo = param.ppInfo;
         var userId = param.userId;
+        var browser = param.browser;
 
         var params = {};
         params.token = token;
         params.ppInfo = ppInfo;
         params.userId = userId;
+        params.browser = browser;
 
         logger.info("请求参数：" + JSON.stringify(params));
         Buyer.validAuth(params, function (err, data) {
