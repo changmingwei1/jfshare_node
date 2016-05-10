@@ -54,7 +54,7 @@ router.post('/validateCaptcha', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.body;
-        var id = param.id || "1024";
+        var id = param.id;
         var value = param.value;
 
         var args = {};
