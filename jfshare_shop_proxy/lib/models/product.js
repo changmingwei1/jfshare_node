@@ -25,32 +25,22 @@ function Product(){}
 // 查询商品列表，包含带条件查询：类目、卖家id
 Product.prototype.queryProductList = function(params, callback){
 
-    //这是科目id=classId？由原来的classId修改为subjectId
-    var subjectId = params.subjectId || '';
-    //添加查询条件：卖家id
-    var sellerId = params.sellerId || '';
-    var brandId = params.brandId || '';
-    var thrift_pagination = new pagination_types.Pagination({currentPage:1,numPerPage:5});
+    var thrift_pagination = new pagination_types.Pagination({
+        currentPage:params.curPage || 1,
+        numPerPage:params.perCount || 20
+    });
     var thrift_params = new product_types.ProductSurveyQueryParam({
         pagination:thrift_pagination,
-        subjectId:subjectId,
-        sellerId:sellerId,
-        brandId:brandId,
+        subjectId: params.subjectId,
+        sellerId: params.sellerId,
+        brandId: params.brandId,
         activeState:300,
-        sort:"create_time DESC"});
-    if(subjectId !== ''){
-        thrift_params.subjectId = subjectId;
-        thrift_params.subjectIdList = [subjectId];
-    }
-    //判断卖家id是否为空
-    if(sellerId !== ''){
-        thrift_params.sellerId = sellerId;
-    }
-    //判断品牌id是否为空
-    if(brandId !== ''){
-        thrift_params.brandId = brandId;
-    }
-
+        /* create_time DESC:按创建时间降序
+           cur_price DESC:按现价降序
+           cur_price ASC:按现价升序
+           click_rate DESC:按点击量降序 */
+        sort:params.sort || 'create_time DESC'
+    });
     logger.info("调用productServ-queryProductList args:" + JSON.stringify(thrift_params));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "productSurveyQuery", thrift_params);

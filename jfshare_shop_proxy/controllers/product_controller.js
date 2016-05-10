@@ -23,22 +23,7 @@ router.post('/list', function (req, res, next) {
         var arg = req.body;
         //var arg = req.query;
         logger.info("get product list args:" + JSON.stringify(arg));
-
-        var perCount = arg.perCount || 20;
-        var curPage = arg.curPage || 1;
-        //增加两个查询条件
-        var subjectId = arg.subjectId;
-        var sellerId = arg.sellerId;
-        var brandId = arg.brandId;
-
-        var params = {};
-        params.perCount = perCount;
-        params.curPage = curPage;
-        params.subjectId = subjectId;
-        params.sellerId = sellerId;
-        params.brandId = brandId;
-
-        Product.queryProductList(params, function (err, data) {
+        Product.queryProductList(arg, function (err, data) {
             var dataArr = [];
 
             var code = data[0].result.code;
@@ -59,20 +44,18 @@ router.post('/list', function (req, res, next) {
                         imgUrl: imgUri,
                         type: a.type || 2
                     });
-
-                    var productList = {
-                        productId:"ze160205135801000704",
-                        productName: "测试商品01",
-                        viceName: "优惠大促",
-                        curPrice: "0.01",
-                        orgPrice: "140",
-                        //sellerId: a.sellerId,   //测试用,没意义
-                        imgUrl: imgUri,
-                        type: 3
-                    };
-                    dataArr.push(productList);
                 });
-
+                var productList = {
+                    productId:"ze160205135801000704",
+                    productName: "测试商品01",
+                    viceName: "优惠大促",
+                    curPrice: "0.01",
+                    orgPrice: "140",
+                    //sellerId: a.sellerId,   //测试用,没意义
+                    imgUrl: "9258E4A9FC083140D36383B2A5426A5C.jpg",
+                    type: 3
+                };
+                dataArr.push(productList);
                 var pagination = data[0].pagination;
                 resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                 resContent.productList = dataArr;
