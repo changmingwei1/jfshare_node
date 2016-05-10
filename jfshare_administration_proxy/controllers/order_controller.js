@@ -301,8 +301,7 @@ router.post('/info', function (request, response, next) {
                 return;
             }
         }
-    )
-    ;
+    );
 });
 
 
