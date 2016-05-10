@@ -20,6 +20,10 @@ AfterSale = module.exports.AfterSale = function(args) {
   this.reason = null;
   this.state = null;
   this.skuNum = null;
+  this.userComment = null;
+  this.applyTime = null;
+  this.approveComment = null;
+  this.approveTime = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -44,6 +48,18 @@ AfterSale = module.exports.AfterSale = function(args) {
     }
     if (args.skuNum !== undefined) {
       this.skuNum = args.skuNum;
+    }
+    if (args.userComment !== undefined) {
+      this.userComment = args.userComment;
+    }
+    if (args.applyTime !== undefined) {
+      this.applyTime = args.applyTime;
+    }
+    if (args.approveComment !== undefined) {
+      this.approveComment = args.approveComment;
+    }
+    if (args.approveTime !== undefined) {
+      this.approveTime = args.approveTime;
     }
   }
 };
@@ -117,6 +133,34 @@ AfterSale.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.userComment = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.applyTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.approveComment = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.approveTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -168,6 +212,26 @@ AfterSale.prototype.write = function(output) {
     output.writeString(this.skuNum);
     output.writeFieldEnd();
   }
+  if (this.userComment !== null && this.userComment !== undefined) {
+    output.writeFieldBegin('userComment', Thrift.Type.STRING, 9);
+    output.writeString(this.userComment);
+    output.writeFieldEnd();
+  }
+  if (this.applyTime !== null && this.applyTime !== undefined) {
+    output.writeFieldBegin('applyTime', Thrift.Type.STRING, 10);
+    output.writeString(this.applyTime);
+    output.writeFieldEnd();
+  }
+  if (this.approveComment !== null && this.approveComment !== undefined) {
+    output.writeFieldBegin('approveComment', Thrift.Type.STRING, 11);
+    output.writeString(this.approveComment);
+    output.writeFieldEnd();
+  }
+  if (this.approveTime !== null && this.approveTime !== undefined) {
+    output.writeFieldBegin('approveTime', Thrift.Type.STRING, 12);
+    output.writeString(this.approveTime);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -180,6 +244,7 @@ AfterSaleQueryParam = module.exports.AfterSaleQueryParam = function(args) {
   this.productId = null;
   this.type = null;
   this.state = null;
+  this.skuNum = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -198,6 +263,9 @@ AfterSaleQueryParam = module.exports.AfterSaleQueryParam = function(args) {
     }
     if (args.state !== undefined) {
       this.state = args.state;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
     }
   }
 };
@@ -257,6 +325,13 @@ AfterSaleQueryParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -296,6 +371,11 @@ AfterSaleQueryParam.prototype.write = function(output) {
   if (this.state !== null && this.state !== undefined) {
     output.writeFieldBegin('state', Thrift.Type.I32, 6);
     output.writeI32(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 7);
+    output.writeString(this.skuNum);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
