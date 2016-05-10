@@ -38,10 +38,7 @@ Product.prototype.queryProductList = function (params, callback) {
     thrift_params.subjectId = 0;//默认是获取所有商品
     thrift_params.sort = "create_time DESC";
     //
-    //
-    ////判断卖家id是否为空
-    //
-    //logger.info("调用productServ-queryProductList args:" + JSON.stringify(thrift_params));
+    logger.info("调用productServ-queryProductList args:" + JSON.stringify(thrift_params));
     // 获取client//Product ProductServer
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "productSurveyBackendQuery", thrift_params);
     // 调用 productServ
@@ -679,28 +676,6 @@ Product.prototype.sendMsgCaptcha = function (arg, callback) {
     });
 };
 
-Product.prototype.validateMsgCaptcha = function (arg, callback) {
-
-    var param = new common_types.MsgCaptcha({
-        type: arg.type || "buyer_signin",
-        mobile: arg.mobile,
-        captchaDesc: arg.smscode
-    });
-    var commonServ = new Lich.InvokeBag(Lich.ServiceKey.CommonServer, "validateMsgCaptcha", param);
-
-    Lich.wicca.invokeClient(commonServ, function (err, data) {
-        logger.info("调用commonServ-validateMsgCaptcha  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].code == "1") {
-            logger.error("调用commonServ-validateMsgCaptcha失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "验证码错误！";
-            callback(res, null);
-        } else {
-            callback(null, null);
-        }
-    });
-};
 
 Product.prototype.signinThirdParty = function (arg, callback) {
     var loginLog = new buyer_types.LoginLog();
@@ -772,27 +747,43 @@ Product.prototype.getOrderStateIdBuyerEnum = function (orderState) {
     return 0;
 };
 
-//获取物流信息(根据orderId)
-Product.prototype.expressQuery = function (arg, callback) {
-    var expressParams = new express_types.ExpressParams({
-        orderId: arg.orderId
+
+
+
+//result.Result setProductState(1:ProductOpt productOpt);
+//修改商品状态
+
+Product.prototype.setProductState = function (params, callback) {
+
+    var productOpt = new product_types.ProductOpt({
+       productId:params.productId,
+        curState:100,
+        activeState:params.activeState,
+        operatorId:params.userId,
+        operatorType:2
     });
 
-    //获取client
-    var expressServ = new Lich.InvokeBag(Lich.ServiceKey.ExpressServer, 'expressQuery', [expressParams]);
-    Lich.wicca.invokeClient(expressServ, function (err, data) {
-        logger.info("get expressInfo result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("can't get expressInfo because: ======" + err);
-            res.code = 500;
-            res.desc = "false to get expressInfo";
-            callback(res, null);
-        } else {
-            callback(null, data);
+    //
+    logger.info("调用productServ-queryProductList args:" + JSON.stringify(productOpt));
+    // 获取client//Product ProductServer
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "setProductState", productOpt);
+    // 调用 productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
+        var ret = {};
+        if (err) {
+            logger.error("调用productServ-queryProductList失败  失败原因 ======" + err);
+            ret.code = 500;
+            ret.desc = "查询商品列表失败！";
+            return callback(ret, null);
+        }else if(data[0].code == 1){
+            ret.code = 500;
+            ret.desc = data[0].failDescList[0].desc;
+            return callback(ret, null);
         }
+       return callback(null, data);
     });
-}
+};
 
 
 module.exports = new Product();

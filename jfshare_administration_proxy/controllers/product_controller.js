@@ -40,81 +40,6 @@ router.post('/list', function(request, response, next) {
             return;
         }
 
-
-        //var percount = params.percount || 20;
-        //var curpage = params.curpage || 1;
-
-        //async.series([
-        //        function (callback) {
-        //            try {
-        //                Product.queryProductList(params, function(err,data){
-        //
-        //                    if(err){
-        //                        result.code = 500;
-        //                        result.desc = "失败";
-        //                        response.json(result);
-        //                    } else {
-        //                        var productSurveyList = data[0].productSurveyList;
-        //                        productSurveyList.forEach(function(a){
-        //                            var imgUri = a.imgUrl.split(",")[0];
-        //                            dataArr.push({productId: a.productId, productName: a.productName,orgPrice: (Number(a.orgPrice)/100).toFixed(2), curPrice: (Number(a.curPrice) /100).toFixed(2),totalSales: a.totalSales, imgUrl: imgUri});
-        //                        });
-        //
-        //                        var pagination = data[0].pagination;
-        //                        result.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
-        //                        logger.info("get product list response:" + JSON.stringify(result));
-        //                        result.productList = dataArr;
-        //                        response.json(result);
-        //
-        //                    }
-        //
-        //                });
-        //            }
-        //            catch
-        //                (ex) {
-        //                logger.info("订单服务异常:" + ex);
-        //                return callback(1, null);
-        //            }
-        //        },
-        //        function (callback) {
-        //            try {
-        //
-        //            } catch (ex) {
-        //                logger.info("售后服务异常:" + ex);
-        //                return callback(2, null);
-        //            }
-        //
-        //        }
-        //    ],
-        //    function (err, results) {
-        //        if (err == 1) {
-        //            logger.error("查询订单列表失败---订单服务异常：" + err);
-        //            result.code = 500;
-        //            result.desc = "查询订单失败";
-        //            response.json(result);
-        //            return;
-        //        }
-        //        if (err == 2) {
-        //            logger.error("查询售后失败--售后服务异常：" + err);
-        //            response.json(results[0]);
-        //            return;
-        //        }
-        //
-        //        if (err == null && err != 3) {
-        //            logger.info("shuju------------->" + JSON.stringify(results));
-        //            result = results[0];
-        //            result.afterSaleList = results[1];
-        //            response.json(result);
-        //            return;
-        //        } else {
-        //            logger.info("shuju------------->" + JSON.stringify(results));
-        //            result = results[0];
-        //
-        //            response.json(result);
-        //            return;
-        //        }
-        //    }
-        //);
         Product.queryProductList(params, function(err,data){
             var dataArr = [];
             if(err){
@@ -125,7 +50,7 @@ router.post('/list', function(request, response, next) {
                 var productSurveyList = data[0].productSurveyList;
                 productSurveyList.forEach(function(a){
                     var imgUri = a.imgUrl.split(",")[0];
-                    dataArr.push({productId: a.productId, productName: a.productName,orgPrice: (Number(a.orgPrice)/100).toFixed(2), curPrice: (Number(a.curPrice) /100).toFixed(2),totalSales: a.totalSales, imgUrl: imgUri});
+                    dataArr.push({productId: a.productId, sellerId: a.sellerId, productName: a.productName,orgPrice: (Number(a.orgPrice)/100).toFixed(2), curPrice: (Number(a.curPrice) /100).toFixed(2),totalSales: a.totalSales, imgUrl: imgUri,activeState: a.activeState,crateTime: a.createTime});
                 });
 
                 var pagination = data[0].pagination;
@@ -145,7 +70,7 @@ router.post('/list', function(request, response, next) {
     }
 });
 
-//
+//审核商品
 router.post('/updateProductState', function(request, response, next) {
 
     logger.info("进入审核商品接口");
@@ -154,7 +79,6 @@ router.post('/updateProductState', function(request, response, next) {
     try {
          //var params = request.query;
         var params = request.body;
-        //var params = request.body;
         logger.info("审核商品:" + params);
 
         //参数校验
@@ -174,8 +98,7 @@ router.post('/updateProductState', function(request, response, next) {
             response.json(result);
             return;
         }
-
-        if(params.state == null || params.state == ""){
+        if(params.state == null || params.state == "" || params.state<0 || params.state>1){
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -185,24 +108,31 @@ router.post('/updateProductState', function(request, response, next) {
 
         //表示拒绝
         if(params.state ==1){
-            result.activeState = 102;
-            response.json(result);
-            return;
-        }
-        //表示同意
-        if(params.state ==0){
-            result.activeState = 300;
+            params.activeState = 102;
+        }else if(params.state ==0){
+            params.activeState = 300;
+        }else{
+            result.code = 500;
+            result.desc = "请求参数错误";
             response.json(result);
             return;
         }
 
-        response.json(result);
+        Product.setProductState(params, function(err,data){
+            if(err){
+                response.json(err);
+                return;
+            }
+            response.json(result);
+            return;
+        });
+
 
     } catch (ex) {
         logger.error("apply state error:" + ex);
         result.code = 500;
         result.desc = "审核商品失败";
-        res.json(result);
+        response.json(result);
     }
 });
 
