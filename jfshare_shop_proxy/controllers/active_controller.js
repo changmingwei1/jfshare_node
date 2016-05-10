@@ -21,15 +21,15 @@ router.get('/imgList', function(request, response, next) {
         logger.info("It's test______" + param);
         // 测试使用数据
         Active.querySlotImageList(param,function(error, data){
-            //logger.info(param);
+            logger.info("=============");
             var dataArr = [];
             if(error){
                 //response.json(error);
-
+                //return;
 /************************************测试数据*****************************************/
                 var list = [4];
                 var  slotImage= new slotImage_types.SlotImage();
-                slotImage.imgKey = "3A1F539A9B21F45A37B8A5AABCD38FFF.jpg";
+                slotImage.imgKey = "C1948B248013AEC62ADF9B914818A9B7.jpg";
                 slotImage.jump = "www.baidu.com";
 
                 list[0] = slotImage;
@@ -39,6 +39,7 @@ router.get('/imgList', function(request, response, next) {
                 resContent.list = list;
                 logger.info("===============" + list);
                 response.json(resContent);
+
 
             }else{
                 var slotImageList = data[0].slotImage;
