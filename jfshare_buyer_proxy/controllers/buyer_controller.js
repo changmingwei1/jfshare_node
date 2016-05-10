@@ -189,13 +189,13 @@ router.post('/login', function (request, response, next) {
                     //response.json(err);
                     callback(err);
                 } else {
-                    var loginLog = data[0].loginLog;
+                    //var loginLog = data[0].loginLog;
                     var userId = data[0].buyer.userId;
                     var authInfo = data[0].authInfo;
-
-                    resContent.authInfo = authInfo;
+                    resContent.ppInfo = authInfo.ppInfo;
+                    resContent.token = authInfo.token;
                     resContent.userId = userId;
-                    resContent.loginLog = loginLog;
+                    //resContent.loginLog = loginLog;
                     response.json(resContent);
                     logger.info("响应的结果:" + JSON.stringify(resContent));
                 }
@@ -259,7 +259,7 @@ router.post('/login2', function (req, res, next) {
                 if (err) {
                     callback(err);
                 } else {
-                    var loginLog = data[0].loginLog;
+                    //var loginLog = data[0].loginLog;
                     var buyer = data[0].buyer;
                     var authInfo = data[0].authInfo;
                     //var cookieInfo ={
@@ -277,8 +277,9 @@ router.post('/login2', function (req, res, next) {
                     //};
                     //CommonUtil.setCookie(req, res, "ssid", ssid, options);
                     resContent.userId = buyer.userId;
-                    resContent.loginLog = loginLog;
-                    resContent.authInfo = authInfo;
+                    //resContent.loginLog = loginLog;
+                    resContent.token = authInfo.token;
+                    resContent.ppInfo = authInfo.ppInfo;
                     res.json(resContent);
                 }
             });
