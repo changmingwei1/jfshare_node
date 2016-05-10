@@ -1260,9 +1260,52 @@ router.post('/list', function (request, response, next) {
                                     }
                                 ]
                             };
+                            var orderList4 = {
+                                "orderId": "5660002",
+                                "orderPrice": "1.00",
+                                "sellerName": null,
+                                "createTime": "2016-01-04 18:43:46",
+                                "orderState": 51,
+                                "sellerComment": null,
+                                "buyerComment": "",
+                                "deliverTime": "",
+                                "successTime": "",
+                                "exchangeCash": "0.00",
+                                "exchangeScore": 0,
+                                "activeState": 0,
+                                "type": 2,
+                                "productList": [
+                                    {
+                                        "productId": "ze151224013609000987",
+                                        "productName": "测试SKU",
+                                        "skuNum": "1-2:100-101",
+                                        "curPrice": "1.00",
+                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                        "count": 1
+                                    },
+                                    {
+                                        "productId": "ze151224013609000987",
+                                        "productName": "测试SKU",
+                                        "skuNum": "1-2:100-101",
+                                        "curPrice": "1.00",
+                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                        "count": 1
+                                    },
+                                    {
+                                        "productId": "ze151224013609000987",
+                                        "productName": "测试SKU",
+                                        "skuNum": "1-2:100-101",
+                                        "curPrice": "1.00",
+                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                        "count": 1
+                                    }
+                                ]
+                            };
+
                             orderList.push(orderList1);
                             orderList.push(orderList2);
                             orderList.push(orderList3);
+                            orderList.push(orderList4);
                             result.orderList = orderList;
                             /*给出系统当前时间*/
                             result.curTime = new Date().getTime();

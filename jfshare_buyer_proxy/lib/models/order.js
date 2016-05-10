@@ -25,7 +25,7 @@ function Order(){}
 //查询订单列表
 Order.prototype.orderProfileQuery = function (param, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
-        orderState: param.orderState, count:param.percount, curPage: param.curpage});
+        orderState: param.orderState, count:param.perCount, curPage: param.curPage});
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [1, param.userId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function(err, data) {
