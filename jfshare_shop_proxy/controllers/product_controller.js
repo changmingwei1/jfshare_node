@@ -23,22 +23,7 @@ router.post('/list', function (req, res, next) {
         var arg = req.body;
         //var arg = req.query;
         logger.info("get product list args:" + JSON.stringify(arg));
-
-        var perCount = arg.perCount || 20;
-        var curPage = arg.curPage || 1;
-        //增加两个查询条件
-        var subjectId = arg.subjectId;
-        var sellerId = arg.sellerId;
-        var brandId = arg.brandId;
-
-        var params = {};
-        params.perCount = perCount;
-        params.curPage = curPage;
-        params.subjectId = subjectId;
-        params.sellerId = sellerId;
-        params.brandId = brandId;
-
-        Product.queryProductList(params, function (err, data) {
+        Product.queryProductList(arg, function (err, data) {
             var dataArr = [];
 
             var code = data[0].result.code;
