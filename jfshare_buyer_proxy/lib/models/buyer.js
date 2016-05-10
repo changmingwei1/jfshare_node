@@ -93,12 +93,16 @@ Buyer.prototype.newLogin = function(param,callback){
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到登录信息:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
             logger.error("不能登录，因为: ======" + err);
             res.code = 500;
             res.desc = "登录失败";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == "1"){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data);
         }
     });

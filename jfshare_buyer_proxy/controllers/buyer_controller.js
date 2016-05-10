@@ -288,7 +288,6 @@ router.post('/login2', function (req, res, next) {
         }
     ], function (err) {
         if (err) {
-            err["result"] = false;
             return res.json(err);
         } else {
             return res.json({result: true});
