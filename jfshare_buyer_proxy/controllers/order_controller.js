@@ -1115,13 +1115,13 @@ router.post('/list', function (request, response, next) {
         response.json(result);
         return;
     }
-    if (params.percount == null || params.percount == "" || params.percount <= 0) {
+    if (params.perCount == null || params.perCount == "" || params.perCount <= 0) {
         result.code = 400;
         result.desc = "参数错误";
         response.json(result);
         return;
     }
-    if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
+    if (params.curPage == null || params.curPage == "" || params.curPage <= 0) {
         result.code = 400;
         result.desc = "参数错误";
         response.json(result);
@@ -1165,7 +1165,7 @@ router.post('/list', function (request, response, next) {
                                     exchangeCash: order.exchangeCash,
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
-                                    type:order.type
+                                    type:2
                                 };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
@@ -1173,7 +1173,7 @@ router.post('/list', function (request, response, next) {
                                         var productItem = {
                                             productId: order.productList[i].productId,
                                             productName: order.productList[i].productName,
-                                            skunum: order.productList[i].skuNum,
+                                            skuNum: order.productList[i].skuNum,
                                             curPrice: order.productList[i].curPrice,
                                             imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                             count: order.productList[i].count
@@ -1184,6 +1184,85 @@ router.post('/list', function (request, response, next) {
                                     orderList.push(orderItem);
                                 }
                             });
+
+                            var orderList1 = {
+                                "orderId": "5660002",
+                                "orderPrice": "1.00",
+                                "sellerName": null,
+                                "createTime": "2016-01-04 18:43:46",
+                                "orderState": 10,
+                                "sellerComment": null,
+                                "buyerComment": "",
+                                "deliverTime": "",
+                                "successTime": "",
+                                "exchangeCash": "0.00",
+                                "exchangeScore": 0,
+                                "activeState": 0,
+                                "type": 3,
+                                "productList": [
+                                    {
+                                        "productId": "ze151224013609000987",
+                                        "productName": "测试SKU",
+                                        "skuNum": "1-2:100-101",
+                                        "curPrice": "1.00",
+                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                        "count": 1
+                                    }
+                                ]
+                            };
+                            var orderList2 = {
+                                "orderId": "5660002",
+                                "orderPrice": "1.00",
+                                "sellerName": null,
+                                "createTime": "2016-01-04 18:43:46",
+                                "orderState": 61,
+                                "sellerComment": null,
+                                "buyerComment": "",
+                                "deliverTime": "",
+                                "successTime": "",
+                                "exchangeCash": "0.00",
+                                "exchangeScore": 0,
+                                "activeState": 0,
+                                "type": 3,
+                                "productList": [
+                                    {
+                                        "productId": "ze151224013609000987",
+                                        "productName": "测试SKU",
+                                        "skuNum": "1-2:100-101",
+                                        "curPrice": "1.00",
+                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                        "count": 1
+                                    }
+                                ]
+                            };
+                            var orderList3 = {
+                                "orderId": "5660002",
+                                "orderPrice": "1.00",
+                                "sellerName": null,
+                                "createTime": "2016-01-04 18:43:46",
+                                "orderState": 51,
+                                "sellerComment": null,
+                                "buyerComment": "",
+                                "deliverTime": "",
+                                "successTime": "",
+                                "exchangeCash": "0.00",
+                                "exchangeScore": 0,
+                                "activeState": 0,
+                                "type": 3,
+                                "productList": [
+                                    {
+                                        "productId": "ze151224013609000987",
+                                        "productName": "测试SKU",
+                                        "skuNum": "1-2:100-101",
+                                        "curPrice": "1.00",
+                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                        "count": 1
+                                    }
+                                ]
+                            };
+                            orderList.push(orderList1);
+                            orderList.push(orderList2);
+                            orderList.push(orderList3);
                             result.orderList = orderList;
                             /*给出系统当前时间*/
                             result.curTime = new Date().getTime();
