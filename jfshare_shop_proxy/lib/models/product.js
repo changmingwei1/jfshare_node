@@ -32,7 +32,7 @@ Product.prototype.queryProductList = function(params, callback){
     var brandId = params.brandId || '';
     var thrift_pagination = new pagination_types.Pagination({
         currentPage:params.curPage || 1,
-        numPerPage:params.perCount || 5
+        numPerPage:params.perCount || 20
     });
     var thrift_params = new product_types.ProductSurveyQueryParam({
         pagination:thrift_pagination,
