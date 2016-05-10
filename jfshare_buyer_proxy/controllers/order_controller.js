@@ -408,7 +408,7 @@ router.post('/submitTest', function (request, response, next) {
 });
 
 //提交订单 --> 虚拟
-router.post('/submit', function (request, response, next) {
+router.post('/submit', function (request, response, next)   {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
     try {
@@ -1164,7 +1164,8 @@ router.post('/list', function (request, response, next) {
                                     successTime: order.successTime,
                                     exchangeCash: order.exchangeCash,
                                     exchangeScore: order.exchangeScore,
-                                    activeState: order.activeState
+                                    activeState: order.activeState,
+                                    type:order.type
                                 };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
