@@ -22,7 +22,6 @@ AfterSale.prototype.auditPass = function (params, callback) {
         sellerId: params.sellerId,
         orderId: params.orderId,
         productId: params.productId,
-        type: params.type,//申请类型. 1:用户申请， 2:系统申请
         state: params.state, //根据实际情况定义 如 1：新建（待审核） 2：审核通过 3：审核不通过
         skuNum: params.skuNum
     });
