@@ -440,38 +440,38 @@ router.post('/query', function (request, response, next) {
 
         logger.info("It's test______" + JSON.stringify(param));
 //暂时去掉鉴权信息
-        //Buyer.validAuth(args,function(err,data){
-        //    if(err){
-        //        response.json(err);
-        //        return;
-        //    }
-        Buyer.getBuyer(args, function (error, data) {
-
-            if (error) {
-                response.json(error);
-            } else {
-                var buyer = data[0].buyer;
-                //logger.info(buyer);
-
-                var loginLog = data[0].loginLog;
-                var value = data[0].value;
-                //var thirdUser = data[0].thirdUser;
-
-                resContent.buyer = {
-                    userId: buyer.userId,
-                    userName: buyer.userName,
-                    favImg: buyer.favImg,
-                    birthday: buyer.birthday,
-                    sex: buyer.sex,
-                    mobile: buyer.mobile
-                };
-                resContent.loginLog = loginLog;
-                resContent.value = value;
-                //resContent.thirdUser = thirdUser;
-                response.json(resContent);
-                logger.info("个人用户信息响应:" + JSON.stringify(resContent));
+        Buyer.validAuth(args, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
-            //});
+            Buyer.getBuyer(args, function (error, data) {
+
+                if (error) {
+                    response.json(error);
+                } else {
+                    var buyer = data[0].buyer;
+                    //logger.info(buyer);
+
+                    var loginLog = data[0].loginLog;
+                    var value = data[0].value;
+                    //var thirdUser = data[0].thirdUser;
+
+                    resContent.buyer = {
+                        userId: buyer.userId,
+                        userName: buyer.userName,
+                        favImg: buyer.favImg,
+                        birthday: buyer.birthday,
+                        sex: buyer.sex,
+                        mobile: buyer.mobile
+                    };
+                    resContent.loginLog = loginLog;
+                    resContent.value = value;
+                    //resContent.thirdUser = thirdUser;
+                    response.json(resContent);
+                    logger.info("个人用户信息响应:" + JSON.stringify(resContent));
+                }
+            });
         });
     } catch (ex) {
         logger.error("获取用户信息失败，because :" + ex);
@@ -510,20 +510,20 @@ router.post('/update', function (request, response, next) {
 
         logger.info("It's test_____" + JSON.stringify(args));
 //暂时去掉鉴权
-//        Buyer.validAuth(args,function(err,data){
-//            if(err){
-//                response.json(err);
-//                return;
-//            }
-        Buyer.updateBuyer(args, function (error, data) {
-
-            if (error) {
-                response.json(error);
-            } else {
-                response.json(resContent);
-                logger.info("get buyer response:" + JSON.stringify(resContent));
+        Buyer.validAuth(args, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
-            //});
+            Buyer.updateBuyer(args, function (error, data) {
+
+                if (error) {
+                    response.json(error);
+                } else {
+                    response.json(resContent);
+                    logger.info("get buyer response:" + JSON.stringify(resContent));
+                }
+            });
         });
     } catch (ex) {
         logger.error("不能更新，原因是:" + ex);
@@ -948,26 +948,26 @@ router.post('/changePwd', function (request, response, next) {
 
     logger.info("参数为: " + JSON.stringify(args));
 //暂时去掉鉴权信息
-//    Buyer.validAuth(args,function(err,data) {
-//        if (err) {
-//            response.json(err);
-//            return;
-//        }
-    Common.validateMsgCaptcha(args, function (err, data) {
+    Buyer.validAuth(args, function (err, data) {
         if (err) {
             response.json(err);
             return;
         }
-        Buyer.newResetBuyerPwd(args, function (error, data) {
-            if (error) {
-                response.json(error);
+        Common.validateMsgCaptcha(args, function (err, data) {
+            if (err) {
+                response.json(err);
                 return;
             }
-            response.json(resContent);
-            logger.info("响应的结果:" + JSON.stringify(resContent));
+            Buyer.newResetBuyerPwd(args, function (error, data) {
+                if (error) {
+                    response.json(error);
+                    return;
+                }
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            });
         });
     });
-    //});
 });
 
 
