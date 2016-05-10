@@ -240,7 +240,7 @@ router.post('/login2', function (req, res, next) {
     param.pwdEnc = args.pwdEnc;
     param.value = args.value;
     param.id = args.id;
-    param.browser = args.browser || "1";
+    param.browser = args.browser;
     //param["ip"] = CommonUtil.getIP(req);
 
     logger.info("请求的参数: " + JSON.stringify(param));
