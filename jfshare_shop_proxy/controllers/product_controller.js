@@ -44,20 +44,18 @@ router.post('/list', function (req, res, next) {
                         imgUrl: imgUri,
                         type: a.type || 2
                     });
-
-                    var productList = {
-                        productId:"ze160205135801000704",
-                        productName: "测试商品01",
-                        viceName: "优惠大促",
-                        curPrice: "0.01",
-                        orgPrice: "140",
-                        //sellerId: a.sellerId,   //测试用,没意义
-                        imgUrl: imgUri,
-                        type: 3
-                    };
-                    dataArr.push(productList);
                 });
-
+                var productList = {
+                    productId:"ze160205135801000704",
+                    productName: "测试商品01",
+                    viceName: "优惠大促",
+                    curPrice: "0.01",
+                    orgPrice: "140",
+                    //sellerId: a.sellerId,   //测试用,没意义
+                    imgUrl: "9258E4A9FC083140D36383B2A5426A5C.jpg",
+                    type: 3
+                };
+                dataArr.push(productList);
                 var pagination = data[0].pagination;
                 resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                 resContent.productList = dataArr;
