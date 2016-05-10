@@ -9,6 +9,7 @@ var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
 
 var Active = require('../lib/models/active');
+var Message = require('../lib/models/message');
 
 //获取首页轮播图列表
 router.get('/imgList', function(request, response, next) {
@@ -52,25 +53,12 @@ router.get('/messageList', function(request, response, next) {
         /************************************测试数据*****************************************/
         var messageList = [2];
         /***
-         *
-         *
-         *
-         *
          * id:int//消息id
          title: string //标题
          content: string //内容
          beginDate: string //开始时间（yyyy-mm-dd）
          endDate: string //结束时间(yyyy-mm-dd)
          createTime:string//创建时间(格式如2016-04-25 14:51:55)
-
-         *
-         *
-         *
-         *
-         *
-         *
-         *
-         *
          * **/
         var  message= {
             id:1,
@@ -119,5 +107,34 @@ router.get('/messageList', function(request, response, next) {
         response.json(resContent);
     }
 });
+//获取系统消息列表
+router.get('/messageListTest', function(request, response, next) {
+
+    logger.info("进入获取系统消息列表接口...");
+    var resContent = {code:200};
+
+    try{
+        var param = request.query;
+        logger.info("It's test______" + param);
+
+        Message.list(param,function(err,data){
+            if(err){
+                response.json(err);
+                return;
+            }
+            var messages = data[0].messages;
+            resContent.messages = messages;
+            response.json(resContent);
+            logger.info("响应的结果:" + JSON.stringify(resContent));
+        });
+
+    }catch(ex){
+        logger.error("获取信息失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能获取信息";
+        response.json(resContent);
+    }
+});
+
 
 module.exports = router;

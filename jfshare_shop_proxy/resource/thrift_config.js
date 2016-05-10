@@ -103,6 +103,15 @@ module.exports.ServiceFactory  =  {
         return obj;
     },
     /**
+     * 消息服务
+     * @returns {ThriftConfig}
+     */
+    message: function () {
+        var obj = new ThriftConfig("120.24.153.155", 2001);
+        //var obj = new ThriftConfig("127.0.0.1", 2001);
+        return obj;
+    },
+    /**
      * 订单服务
      * @returns {ThriftConfig}
      */
