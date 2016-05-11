@@ -888,35 +888,27 @@ router.post('/resetPwd', function (request, response, next) {
     var resContent = {code: 200};
 
     var param = request.body;
-    var mobile = param.mobile;
-    var newPwd = param.newPwd;
-    var captchaDesc = param.captchaDesc;
-
-    var args = {};
-    args.mobile = mobile;
-    args.newPwd = newPwd;
-    args.captchaDesc = captchaDesc;
     //参数校验
-    if (mobile == null || newPwd == null || mobile == "" || newPwd == "") {
+    if (param.mobile == null || param.newPwd == null || param.mobile == "" || param.newPwd == "") {
         resContent.code = 400;
         resContent.desc = "账号密码不能为空";
         response.json(resContent);
         return;
     }
-    if (captchaDesc == null || captchaDesc == "") {
+    if (param.captchaDesc == null || param.captchaDesc == "") {
         resContent.code = 400;
         resContent.desc = "验证码不能为空";
         response.json(resContent);
         return;
     }
-    logger.info("参数为: " + JSON.stringify(args));
+    //logger.info("参数为: " + JSON.stringify(args));
 
-    Common.validateMsgCaptcha(args, function (err, data) {
+    Common.validateMsgCaptcha(param, function (err, data) {
         if (err) {
             response.json(err);
             return;
         }
-        Buyer.newResetBuyerPwd(args, function (error, data) {
+        Buyer.newResetBuyerPwd(param, function (error, data) {
             if (error) {
                 response.json(error);
                 return;
