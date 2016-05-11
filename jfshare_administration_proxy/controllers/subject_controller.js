@@ -241,8 +241,11 @@ router.post('/get', function (request, response, next) {
 
                     });
                 }
-                result.attributes.id = attributes.id;
-                result.attributes.value = attributes.value;
+                if(attributes!=null){
+                    result.attributes.id = attributes.id;
+                    result.attributes.value = attributes.value;
+                }
+
                 logger.info("queryAttributes  result:" + JSON.stringify(result));
                 response.json(result);
 
@@ -438,6 +441,44 @@ router.post('/updateBrandSubject', function (request, response, next) {
         result.desc = "获取品牌关联类目失败";
         res.json(result);
     }
+});
+
+router.post('/getBatchSuperTree', function (request, response, next) {
+
+    var subjectIds=[];
+    subjectIds.push("3021");
+    subjectIds.push("3022");
+
+    var params=subjectIds;
+    Subject.getBatchSuperTree(params, function (error, data) {
+        if (error) {
+            response.json(error);
+        } else {
+
+            //组装list
+            var partsNames=[];
+            var subjectNodeTrees = data[0].subjectNodeTrees;
+            if(subjectNodeTrees.length<=0){
+                result.code = 500;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+            subjectNodeTrees.forEach(function(a){
+                partsNames.push({
+
+                });
+            });
+            var pagination = data[0].pagination;
+            result.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
+            logger.info("get product list response:" + JSON.stringify(result));
+            result.scoreList=dataArr;
+
+            response.json(result);
+
+        }
+    });
+
 });
 
 module.exports = router;
