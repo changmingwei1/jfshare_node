@@ -320,7 +320,41 @@ Subject.prototype.updateBrandSubject = function(params, callback){
     });
 };
 
+//根据id查询，批量查询此节点所属路径
+Subject.prototype.getBatchSuperTree = function(productIdList, callback){
+    //参数list
+    var subjectIds=[];
+    var proNameList=productIdList;
 
+    if(proNameList.length<=0){
+        logger.error("subjectServ-getBatchSuperTree result  proNameList.lenth" + proNameList.length);
+        var result = {};
+        result.code = 500;
+        result.desc = "批量获取类目失败";
+        return callback(result,null);
+    }
+
+    logger.info("subjectServ-getBatchSuperTree proNameList:" + JSON.stringify( proNameList.length));
+
+    proNameList.forEach(function(a){
+        subjectIds.push(a);
+    });
+    logger.info("subjectIds subjectIds:" + JSON.stringify(subjectIds));
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getBatchSuperTree",[subjectIds]);
+    //
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-getBatchSuperTree result:" + JSON.stringify(data));
+        if(err || data[0].code == 1){
+            logger.error("subjectServ-getBatchSuperTree result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "批量获取类目失败";
+            return callback(result,null);
+        }
+        return callback(null,data);
+    });
+
+};
 
 
 module.exports = new Subject();/**
