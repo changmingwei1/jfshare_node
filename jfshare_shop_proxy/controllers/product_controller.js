@@ -318,7 +318,7 @@ router.get('/productinfo', function (req, res, next) {
                 "productName": "慕云（MUYUN）羽绒床垫 斜纹防羽布 秋冬加厚 可折叠 保暖垫子床褥",
                 "viceName": "选用鸭绒作填充料，抗菌，防霉，除臭。",
                 "imgKey": "75B1957695653501779C08D47F8FF3E5.jpg,FB158CCEC58E22C84D95ECCDCCA82E90.jpg,5BCADA5BF462428FE658BAA9D1160A74.jpg,E53C91A0CF9BBA3F9B2FD9C3CA0753F2.jpg,30B8315A5D5FA679D3FD02679BC8EE9C.jpg",
-                "productDesc": null,
+                "productDesc": "超级舒服，值得购买",
                 "skuTemplate": {
                     "sku": [{
                         "key": {"id": "1", "value": "颜色"},
