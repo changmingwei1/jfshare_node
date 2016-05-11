@@ -903,12 +903,12 @@ router.post('/resetPwd', function (request, response, next) {
         response.json(resContent);
         return;
     }
-    //logger.info("参数为: " + JSON.stringify(args));
-    //Common.validateMsgCaptcha(param, function (err, data) {
-    //    if (err) {
-    //        response.json(err);
-    //        return;
-    //    }
+    logger.info("参数为: " + JSON.stringify(args));
+    Common.validateMsgCaptcha(param, function (err, data) {
+        if (err) {
+            response.json(err);
+            return;
+        }
         Buyer.newResetBuyerPwd(param, function (error, data) {
             if (error) {
                 response.json(error);
@@ -917,7 +917,7 @@ router.post('/resetPwd', function (request, response, next) {
             response.json(resContent);
             logger.info("响应的结果:" + JSON.stringify(resContent));
         });
-    //});
+    });
 });
 
 //修改密码
