@@ -464,17 +464,30 @@ router.post('/getBatchSuperTree', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            subjectNodeTrees.forEach(function(a){
-                partsNames.push({
 
+            var nameList=[];
+            subjectNodeTrees.forEach(function(a){
+
+              //  logger.info("get product list response-----:" + JSON.stringify(a));
+                var lmNames=[];
+                var numNames=a;
+                numNames.forEach(function(b){
+                    lmNames.push({
+                        id: b.id,
+                        subjectName: b.name
+                    });
                 });
+                nameList.push(lmNames);
             });
+            logger.info("get product list response-----:" + JSON.stringify(nameList));
+            /**
             var pagination = data[0].pagination;
             result.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
             logger.info("get product list response:" + JSON.stringify(result));
             result.scoreList=dataArr;
 
             response.json(result);
+             */
 
         }
     });
