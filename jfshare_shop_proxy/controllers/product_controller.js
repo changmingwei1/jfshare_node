@@ -698,15 +698,13 @@ router.post('/subjectList', function (req, res, next) {
     try {
         var arg = req.body;
 
-        var subjectId = arg.subjectId;
-        if (subjectId == null || subjectId == "" || subjectId < 0) {
-
-            result.code = 500;
+        if (arg.subjectId == null || arg.subjectId == "" || arg.subjectId < 0) {
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        Product.getSubTree(subjectId, function (err, data) {
+        Product.getSubTree(arg, function (err, data) {
             if (err) {
                 res.json(err);
             } else {

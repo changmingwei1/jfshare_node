@@ -198,9 +198,9 @@ Product.prototype.queryProductDetail = function (arg, callback) {
 };
 
 //获取类目列表
-Product.prototype.getSubTree = function(subjectId, callback) {
-    //参数说明：现有的thrift文件参数为subjectId，但实际使用pid，暂时用这个
-    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTree", subjectId);
+Product.prototype.getSubTree = function(param, callback) {
+
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTree", [param.subjectId]);
 
     Lich.wicca.invokeClient(subjectServ, function(err, data) {
         logger.info("调用subjectServ-getSubTree  result:" + JSON.stringify(data));
