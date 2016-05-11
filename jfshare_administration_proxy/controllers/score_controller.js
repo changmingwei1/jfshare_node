@@ -9,9 +9,45 @@ var async = require('async');
 
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var Score = require('../lib/models/score');
+
+router.post('/getTotal', function(request, response, next) {
+    logger.info("进入获取积分流程");
+    var result = {code:200};
+
+    try{
+        //var params = request.query;
+        var params = request.body;
+
+        if(params.userId ==null ||params.userId =="" || params.userId<=0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        //参数校验
+        Score.getScore(params, function(err, data) {
+            if(err){
+                res.json(err);
+                return;
+            }
+            result.total = data[0].sroce.amount;
+            logger.info(" AfterSale.auditPass response:" + JSON.stringify(result));
+            response.json(result);
+
+        });
+
+    } catch (ex) {
 
 
+        logger.error("获取积分错误:" + ex);
+        result.code = 500;
+        result.desc = "获取积分错误";
 
+
+        response.json(result);
+    }
+});
 
 
 router.post('/socrelist', function(request, response, next) {
@@ -66,34 +102,52 @@ router.post('/scoreinfolist', function(request, response, next) {
 
         logger.info("get scoreinfolist params:" + JSON.stringify(params));
 
-        var page ={total:100, pageCount: 5};
+        if(params.userId ==null ||params.userId =="" || params.userId<=0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
-        result.page = page;
+        //参数校验
+        Score.getScoreDetail(params, function(err, data) {
+            if(err){
+                res.json(err);
+                return;
+            }else {
+                var scoreTradeList = data[0].scoreTrades;
+                if(scoreTradeList.length<=0){
+                    result.code = 500;
+                    result.desc = "参数错误";
+                    response.json(result);
+                    return;
+                }
+                scoreTradeList.forEach(function(a){
+                    dataArr.push({
+                        id: a.tradeId,
+                       // userId: a.userId,
+                        createtime: a.tradeTime,
+                        type: a.inOrOut,
+                        scoretype: a.type,
+                        value: a.amount,
+                        remark: a.trader
+                    });
+                });
+                var pagination = data[0].pagination;
+                result.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
+                logger.info("get product list response:" + JSON.stringify(result));
+                result.scoreList=dataArr;
 
-        var scoreInfo={id:1,type:0,scoretype:1,createtime:"2016-08-05",value:"1000",remark:"电信天翼"};
+                response.json(result);
 
-        var scoreInfo1={id:2,type:1,scoretype:4,createtime:"2016-07-05",value:"2000",remark:"聚分享"};
-
-        var scoreInfo2={id:3,type:0,scoretype:2,createtime:"2016-07-05",value:"2000",remark:"线下消费获取"};
-
-        var scoreInfo3={id:4,type:0,scoretype:3,createtime:"2016-07-07",value:"1000",remark:"线下折扣消费"};
-
-        var scoreList = [];
-
-        scoreList.push(scoreInfo);
-        scoreList.push(scoreInfo1);
-        scoreList.push(scoreInfo2);
-        scoreList.push(scoreInfo3);
-
-        result.scoreList= scoreList;
-
-        response.json(result);
+            }
+        });
     } catch (ex) {
-
-
+        logger.error("获取积分详情失败:" + ex);
+        result.code = 500;
+        result.desc = "获取积分详情失败";
         response.json(result);
     }
 });
-
 
 module.exports = router;
