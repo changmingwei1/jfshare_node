@@ -272,18 +272,18 @@ router.post('/list', function(req, res, next) {
         arg.ppInfo = "鉴权信息2";
         arg.browser = "asdfas";
 
-        Address.queryAddress(arg, function(err, addressInfoList) {
+        Address.queryAddress(arg, function(err, addressList) {
             if(err) {
                 res.json(err);
                 return;
             }
-            var addressList = [];
-            if(addressInfoList !== null && addressInfoList.length >0){
-                addressInfoList.forEach(function(address) {
-                    addressList.push({
+            var addressInfoList = [];
+            if(addressList !== null && addressList.length >0){
+                addressList.forEach(function(address) {
+                    addressInfoList.push({
                         addrId: address.id,
-                        received: address.receiverName,
-                        mobileNo: address.mobile,
+                        receiverName: address.receiverName,
+                        mobile: address.mobile,
                         provinceId: address.provinceId,
                         provinceName: address.provinceName,
                         cityId: address.cityId,
@@ -295,7 +295,7 @@ router.post('/list', function(req, res, next) {
                         isDefault: address.isDefault
                     });
                 });
-                result.addressList = addressList;
+                result.addressInfoList = addressInfoList;
             }
 
             res.json(result);
