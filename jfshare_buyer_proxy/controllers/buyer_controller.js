@@ -957,7 +957,24 @@ router.post('/changePwd', function (request, response, next) {
         response.json(resContent);
         return;
     }
-
+    if(param.token == null || param.token == ""){
+        resContent.code = 400;
+        resContent.desc = "参数错误";
+        response.json(resContent);
+        return;
+    }
+    if(param.browser == null || param.browser == ""){
+        resContent.code = 400;
+        resContent.desc = "参数错误";
+        response.json(resContent);
+        return;
+    }
+    if(param.ppInfo == null || param.ppInfo == ""){
+        resContent.code = 400;
+        resContent.desc = "参数错误";
+        response.json(resContent);
+        return;
+    }
     logger.info("参数为: " + JSON.stringify(args));
 //暂时去掉鉴权信息
     Buyer.validAuth(args, function (err, data) {

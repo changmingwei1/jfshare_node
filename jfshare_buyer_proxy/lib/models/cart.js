@@ -97,8 +97,8 @@ Cart.prototype.deleteCartItem = function(userId,cartKeys, callback){
 
 //购物车列表
 Cart.prototype.cartListItem = function(param, callback){
-
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [param.userId, 2]);
+    /*source  0:系统；1：PC；2：无线*/
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [param.userId, param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-listItem  result:" + JSON.stringify(data));
