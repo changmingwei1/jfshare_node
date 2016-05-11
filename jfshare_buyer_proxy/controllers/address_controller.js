@@ -284,14 +284,12 @@ router.post('/list', function(req, res, next) {
                         addrId: address.id,
                         received: address.receiverName,
                         mobileNo: address.mobile,
-                        area: {
-                            provinceId: address.provinceId,
-                            provinceName: address.provinceName,
-                            cityId: address.cityId,
-                            cityName: address.cityName,
-                            countyId: address.countyId,
-                            countyName: address.countyName
-                        },
+                        provinceId: address.provinceId,
+                        provinceName: address.provinceName,
+                        cityId: address.cityId,
+                        cityName: address.cityName,
+                        countyId: address.countyId,
+                        countyName: address.countyName,
                         address: address.address,
                         postcode: address.postCode,
                         isDefault: address.isDefault
