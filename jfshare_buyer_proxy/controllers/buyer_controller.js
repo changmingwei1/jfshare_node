@@ -432,25 +432,39 @@ router.post('/query', function (request, response, next) {
 
     try {
         var param = request.body;
-        var token = param.token;
-        var ppInfo = param.ppInfo;
-        var userId = param.userId;
-        var browser = param.browser || "1";
-
-        var args = {};
-        args.token = token;
-        args.ppInfo = ppInfo;
-        args.userId = userId;
-        args.browser = browser;
+        if(param.token == null || param.token == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.ppInfo == null || param.ppInfo == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.ppInfo == null || param.ppInfo == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.userId == null || param.userId == "" || param.userId <= 0){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
 
         logger.info("It's test______" + JSON.stringify(param));
 //暂时去掉鉴权信息
-        Buyer.validAuth(args, function (err, data) {
+        Buyer.validAuth(param, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            Buyer.getBuyer(args, function (error, data) {
+            Buyer.getBuyer(param, function (error, data) {
 
                 if (error) {
                     response.json(error);
