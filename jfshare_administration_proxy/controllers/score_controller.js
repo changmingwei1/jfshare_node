@@ -40,7 +40,7 @@ router.post('/getTotal', function(request, response, next) {
     } catch (ex) {
 
 
-        logger.error("获取积分错误:" + ex);
+        logger.error("获取积分错误: " + ex);
         result.code = 500;
         result.desc = "获取积分错误";
 
