@@ -102,14 +102,11 @@ Message.prototype.del = function(params,callback){
 
 //消息列表
 Message.prototype.list = function(params,callback){
-    var SystemMessage = null;
-    if((params.title != undefined )||(params.status != undefined)||(params.pushTarget!= undefined)){
-            SystemMessage = new message_types.SystemMessage({
-                title:params.title,
-                status:params.status,
-                pushTarget:params.pushTarget
+
+          var  SystemMessage = new message_types.SystemMessage({
+                pushTarget:params.type
         });
-    }
+
     logger.info("list message params:" + JSON.stringify(params));
     //获取client
     var messageServ = new Lich.InvokeBag(Lich.ServiceKey.MessageServer,'getSystemMessage',[SystemMessage]);
