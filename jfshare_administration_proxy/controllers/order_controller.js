@@ -199,8 +199,9 @@ router.post('/info', function (request, response, next) {
                             logger.error("订单服务异常");
                             return callback(1, null);
                         }
-
+                        logger.info(orderInfo);
                         result.orderid = orderInfo.orderId;
+                        result.sellerId= orderInfo.sellerId;
                         result.postage = orderInfo.postage;
                         result.postage = orderInfo.postage;
                         result. exchangeScore = orderInfo.exchangeScore;

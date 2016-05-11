@@ -11,70 +11,66 @@ var Subject = require("../lib/models/subject");
 router.post('/add', function (request, response, next) {
 
     var result = {code: 200};
+    try{
+        var params = request.body;
+
+        if(params.name == null || params.name == ""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.pid == null || params.name == "" || params.pid<0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.level == null || params.level == "" || params.level<1 || params.level>3 ){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.imgkey == null || params.imgkey == ""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.userId == null || params.userId == "" || params.userId<=0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        //默认每个层级最多不到1000个
+        if(params.pid<((params.level-1)*1000)||params.pid>(params.level*1000)){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
 
-    response.json(result);
-    //var result = {code: 200};
-    //try{
-    //    var params = request.body;
-    //
-    //    if(params.name == null || params.name == ""){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    if(params.pid == null || params.name == "" || params.pid<0){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    if(params.level == null || params.level == "" || params.level<1 || params.level>3 ){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    if(params.imgkey == null || params.imgkey == ""){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    if(params.userId == null || params.userId == "" || params.userId<=0){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    //默认每个层级最多不到1000个
-    //    if(params.pid<((params.level-1)*1000)||params.pid>(params.level*1000)){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //
-    //    logger.info("add subject 请求， params:" + JSON.stringify(params));
-    //    Subject.add(params,function(error,data){
-    //        if (error) {
-    //            response.json(error);
-    //        } else {
-    //            result.id = data[0].subjectInfo.id;
-    //            response.json(result);
-    //            logger.info("add subject  result:" + JSON.stringify(result));
-    //        }
-    //    });
-    //} catch (ex) {
-    //    logger.error("add subject error:" + ex);
-    //    result.code = 500;
-    //    result.desc = "新增类目失败";
-    //    response.json(result);
-    //}
+        logger.info("add subject 请求， params:" + JSON.stringify(params));
+        Subject.add(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                result.id = data[0].subjectInfo.id;
+                response.json(result);
+                logger.info("add subject  result:" + JSON.stringify(result));
+            }
+        });
+    } catch (ex) {
+        logger.error("add subject error:" + ex);
+        result.code = 500;
+        result.desc = "新增类目失败";
+        response.json(result);
+    }
 });
 
 //更新类目
@@ -84,176 +80,89 @@ router.post('/update', function (request, response, next) {
 
     response.json(result);
 
-    //var result = {code: 200};
-    //try{
-    //    var params = request.body;
-    //
-    //    if(params.name == null || params.name == ""){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    if(params.id == null || params.id == ""){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    if(params.imgkey == null || params.imgkey == ""){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    if(params.userId == null || params.userId == "" || params.userId<=0){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    logger.info("update subject 请求， params:" + JSON.stringify(params));
-    //    Subject.update(params,function(error,data){
-    //        if (error) {
-    //            response.json(error);
-    //        } else {
-    //            response.json(result);
-    //            logger.info("update subject  result:" + JSON.stringify(result));
-    //        }
-    //    });
-    //} catch (ex) {
-    //    logger.error("update subject error:" + ex);
-    //    result.code = 500;
-    //    result.desc = "更新类目失败";
-    //    response.json(result);
-    //}
+    var result = {code: 200};
+    try{
+        var params = request.body;
+
+        if(params.name == null || params.name == ""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.id == null || params.id == ""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.imgkey == null || params.imgkey == ""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.userId == null || params.userId == "" || params.userId<=0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        logger.info("update subject 请求， params:" + JSON.stringify(params));
+        Subject.update(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                response.json(result);
+                logger.info("update subject  result:" + JSON.stringify(result));
+            }
+        });
+    } catch (ex) {
+        logger.error("update subject error:" + ex);
+        result.code = 500;
+        result.desc = "更新类目失败";
+        response.json(result);
+    }
 });
 
 
 //查询类目列表
 router.post('/query', function (request, response, next) {
 
+    logger.info("进入查询类目列表流程....");
+    var result = {code:200};
 
-    var result = {
-        "code": 200,
-        "subjectList": [
-            {
-                "id": 1003,
-                "name": "家居生活",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1004,
-                "name": "手机数码",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1001,
-                "name": "家用电器",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1002,
-                "name": "个护美妆",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1007,
-                "name": "母婴玩具",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1008,
-                "name": "服装服饰",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1005,
-                "name": "箱包配饰",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1006,
-                "name": "食品酒水",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1009,
-                "name": "电脑办公",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1013,
-                "name": "测试类目",
-                "imgkey": "123.jpg",
-                "isLeaf": 0
-            },
-            {
-                "id": 1012,
-                "name": "卡券商品",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1011,
-                "name": "运动健康",
-                "imgkey": "",
-                "isLeaf": 0
-            },
-            {
-                "id": 1010,
-                "name": "图书音像",
-                "imgkey": "",
-                "isLeaf": 0
+    try{
+        //var params = request.query;
+        var params = request.body;
+        //参数校验
+        if(params.pid == null || params.pid == "" ||params.pid < 0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Subject.query(params,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                result.subjectList = data;
+                response.json(result);
+                logger.info("get subject list result:" + JSON.stringify(result));
             }
-        ]
-    };
+        });
 
-    response.json(result);
 
-    //logger.info("进入查询类目列表流程....");
-    //var result = {code:200};
-    //
-    //try{
-    //    //var params = request.query;
-    //    var params = request.body;
-    //    //参数校验
-    //    if(params.pid == null || params.pid == "" ||params.pid < 0){
-    //        result.code = 500;
-    //        result.desc = "参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    Subject.query(params,function(error,data){
-    //        if (error) {
-    //            response.json(error);
-    //        } else {
-    //            result.subjectList = data;
-    //            response.json(result);
-    //            logger.info("get subject list result:" + JSON.stringify(result));
-    //        }
-    //    });
-    //
-    //
-    //}catch(ex){
-    //    logger.error("查询类目列表信息"+"失败，because :" + ex);
-    //    result.code = 500;
-    //    result.desc = "查询类目列表失败";
-    //    result.json(result);
-    //}
+    }catch(ex){
+        logger.error("查询类目列表信息"+"失败，because :" + ex);
+        result.code = 500;
+        result.desc = "查询类目列表失败";
+        result.json(result);
+    }
 });
 
 //查询类目所属的路径
