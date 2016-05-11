@@ -233,7 +233,7 @@ router.get('/productInfo', function (req, res, next) {
     var result = {code: 200};
 
     var arg = req.query;
-    var productId = arg.productId || "ze160122104236000322";
+    var productId = arg.productId;
     if (productId == null || productId == "") {
         result.code = 400;
         result.desc = "请求参数错误";
