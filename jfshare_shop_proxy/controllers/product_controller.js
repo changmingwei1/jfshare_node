@@ -168,7 +168,7 @@ router.post('/listTest', function (req, res, next) {
 
 
 //查询商品属性信息
-router.get('/productAttributeTest', function (req, res, next) {
+router.get('/productAttribute', function (req, res, next) {
 
     logger.info("进入获取商品详情接口");
     var result = {code: 200};
@@ -200,30 +200,30 @@ router.get('/productAttributeTest', function (req, res, next) {
     }
 });
 //查询商品属性信息
-router.get('/productAttribute', function (req, res, next) {
-
-    logger.info("进入获取商品详情接口");
-    var result = {code: 200};
-
-    try {
-        var productInfo = {};
-
-        var arg = req.query;
-        logger.info("get product list args:" + JSON.stringify(arg));
-        var productId = arg.productId;
-
-        var resContent = {
-            "code": 200,
-            "productInfo": {"productAttribute": "[{\"id\":\"1\",\"name\":\"产地\",\"value\":\"中国\"},{\"id\":\"2\",\"name\":\"寿命\",\"value\":\"\"},{\"id\":\"3\",\"name\":\"型号\",\"value\":\"羽绒床垫\"}]"}
-        };
-        res.json(resContent);
-    } catch (ex) {
-        logger.error("get product info error:" + ex);
-        result.code = 500;
-        result.desc = "获取商品属性失败";
-        res.json(result);
-    }
-});
+//router.get('/productAttribute', function (req, res, next) {
+//
+//    logger.info("进入获取商品详情接口");
+//    var result = {code: 200};
+//
+//    try {
+//        var productInfo = {};
+//
+//        var arg = req.query;
+//        logger.info("get product list args:" + JSON.stringify(arg));
+//        var productId = arg.productId;
+//
+//        var resContent = {
+//            "code": 200,
+//            "productInfo": {"productAttribute": "[{\"id\":\"1\",\"name\":\"产地\",\"value\":\"中国\"},{\"id\":\"2\",\"name\":\"寿命\",\"value\":\"\"},{\"id\":\"3\",\"name\":\"型号\",\"value\":\"羽绒床垫\"}]"}
+//        };
+//        res.json(resContent);
+//    } catch (ex) {
+//        logger.error("get product info error:" + ex);
+//        result.code = 500;
+//        result.desc = "获取商品属性失败";
+//        res.json(result);
+//    }
+//});
 
 
 //查询商品
@@ -407,7 +407,7 @@ router.get('/productInfo', function (req, res, next) {
 
 
 //查询商品详情queryProductDetail
-router.get('/productDetailTest', function (req, res, next) {
+router.get('/productDetail', function (req, res, next) {
 
     logger.info("进入查询商品详情接口");
     var result = {code: 200};
@@ -418,13 +418,13 @@ router.get('/productDetailTest', function (req, res, next) {
         //arg.productId = "ze160122101802000570";
         if (arg.detailKey == null && arg.productId == null) {
 
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
         if (arg.detailKey == "" && arg.productId == "") {
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
@@ -448,43 +448,43 @@ router.get('/productDetailTest', function (req, res, next) {
     }
 });
 //查询商品详情queryProductDetail
-router.get('/productDetail', function (req, res, next) {
-
-    logger.info("进入查询商品详情接口");
-    var result = {code: 200};
-
-    try {
-
-        var arg = req.query;
-        arg.detailKey = "56a1915a0cf2bb85eb5701a7";
-        arg.productId = "ze160122101802000570";
-        logger.info("查询商品详情的条件:" + JSON.stringify(arg));
-
-        /*Product.queryProductDetail(arg, function (err, data) {
-
-         if (err) {
-         res.json(err);
-         } else {
-
-         result.value = data.value;
-         res.json(result);
-
-         logger.info("查询到的商品详情为:" + JSON.stringify(result));
-         }
-         });*/
-
-        var productDetail = {
-            "code": 200,
-            "value": "<p><img src=\"http://www.jfshare.com/img/2015/7/26/2450713.jpg\" alt=\"\" data-cke-saved-src=\"/img/2015/7/26/2450713.jpg\" /></p>"
-        };
-        res.json(productDetail);
-    } catch (ex) {
-        logger.error("查询失败，原因是:" + ex);
-        result.code = 500;
-        result.desc = "查询商品详情失败";
-        res.json(result);
-    }
-});
+//router.get('/productDetail', function (req, res, next) {
+//
+//    logger.info("进入查询商品详情接口");
+//    var result = {code: 200};
+//
+//    try {
+//
+//        var arg = req.query;
+//        arg.detailKey = "56a1915a0cf2bb85eb5701a7";
+//        arg.productId = "ze160122101802000570";
+//        logger.info("查询商品详情的条件:" + JSON.stringify(arg));
+//
+//        /*Product.queryProductDetail(arg, function (err, data) {
+//
+//         if (err) {
+//         res.json(err);
+//         } else {
+//
+//         result.value = data.value;
+//         res.json(result);
+//
+//         logger.info("查询到的商品详情为:" + JSON.stringify(result));
+//         }
+//         });*/
+//
+//        var productDetail = {
+//            "code": 200,
+//            "value": "<p><img src=\"http://www.jfshare.com/img/2015/7/26/2450713.jpg\" alt=\"\" data-cke-saved-src=\"/img/2015/7/26/2450713.jpg\" /></p>"
+//        };
+//        res.json(productDetail);
+//    } catch (ex) {
+//        logger.error("查询失败，原因是:" + ex);
+//        result.code = 500;
+//        result.desc = "查询商品详情失败";
+//        res.json(result);
+//    }
+//});
 
 
 //查询商品库存和sku
