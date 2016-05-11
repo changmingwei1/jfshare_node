@@ -440,7 +440,7 @@ router.post('/query', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if(param.ppInfo == null || param.ppInfo == ""){
+        if(param.browser == null || param.browser == ""){
             resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);

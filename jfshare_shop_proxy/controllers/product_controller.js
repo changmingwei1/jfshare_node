@@ -168,7 +168,7 @@ router.post('/listTest', function (req, res, next) {
 
 
 //查询商品属性信息
-router.get('/productAttributeTest', function (req, res, next) {
+router.get('/productAttribute', function (req, res, next) {
 
     logger.info("进入获取商品详情接口");
     var result = {code: 200};
@@ -200,40 +200,40 @@ router.get('/productAttributeTest', function (req, res, next) {
     }
 });
 //查询商品属性信息
-router.get('/productAttribute', function (req, res, next) {
-
-    logger.info("进入获取商品详情接口");
-    var result = {code: 200};
-
-    try {
-        var productInfo = {};
-
-        var arg = req.query;
-        logger.info("get product list args:" + JSON.stringify(arg));
-        var productId = arg.productId;
-
-        var resContent = {
-            "code": 200,
-            "productInfo": {"productAttribute": "[{\"id\":\"1\",\"name\":\"产地\",\"value\":\"中国\"},{\"id\":\"2\",\"name\":\"寿命\",\"value\":\"\"},{\"id\":\"3\",\"name\":\"型号\",\"value\":\"羽绒床垫\"}]"}
-        };
-        res.json(resContent);
-    } catch (ex) {
-        logger.error("get product info error:" + ex);
-        result.code = 500;
-        result.desc = "获取商品属性失败";
-        res.json(result);
-    }
-});
+//router.get('/productAttribute', function (req, res, next) {
+//
+//    logger.info("进入获取商品详情接口");
+//    var result = {code: 200};
+//
+//    try {
+//        var productInfo = {};
+//
+//        var arg = req.query;
+//        logger.info("get product list args:" + JSON.stringify(arg));
+//        var productId = arg.productId;
+//
+//        var resContent = {
+//            "code": 200,
+//            "productInfo": {"productAttribute": "[{\"id\":\"1\",\"name\":\"产地\",\"value\":\"中国\"},{\"id\":\"2\",\"name\":\"寿命\",\"value\":\"\"},{\"id\":\"3\",\"name\":\"型号\",\"value\":\"羽绒床垫\"}]"}
+//        };
+//        res.json(resContent);
+//    } catch (ex) {
+//        logger.error("get product info error:" + ex);
+//        result.code = 500;
+//        result.desc = "获取商品属性失败";
+//        res.json(result);
+//    }
+//});
 
 
 //查询商品
-router.get('/productInfoTest', function (req, res, next) {
+router.get('/productInfo', function (req, res, next) {
 
     logger.info("进入获取商品详情接口");
     var result = {code: 200};
 
     var arg = req.query;
-    var productId = arg.productId || "ze160122104236000322";
+    var productId = arg.productId;
     if (productId == null || productId == "") {
         result.code = 400;
         result.desc = "请求参数错误";
@@ -263,15 +263,15 @@ router.get('/productInfoTest', function (req, res, next) {
                     //var minOrgPrice = productSku.minOrgPrice;
                     //var maxOrgPrice = productSku.maxOrgPrice;
 
-                    // logger.info(productSku);
-                    //var minCurPrice = 0.01;
-                    //var maxCurPrice = 1000;
-                    //var minOrgPrice = 0.02;
-                    //var maxOrgPrice = 2000;
-                    //result.minCurPrice = minCurPrice;
-                    //result.maxCurPrice = maxCurPrice;
-                    //result.minOrgPrice = minOrgPrice;
-                    //result.maxOrgPrice = maxOrgPrice;
+                     //logger.info(productSku);
+                    var minCurPrice = 0.01;
+                    var maxCurPrice = 1000;
+                    var minOrgPrice = 0.02;
+                    var maxOrgPrice = 2000;
+                    result.minCurPrice = minCurPrice;
+                    result.maxCurPrice = maxCurPrice;
+                    result.minOrgPrice = minOrgPrice;
+                    result.maxOrgPrice = maxOrgPrice;
                     callback(null, result);
                 });
             },
@@ -298,116 +298,116 @@ router.get('/productInfoTest', function (req, res, next) {
             }
         });
 });
-//查询商品
-router.get('/productinfo', function (req, res, next) {
-
-    logger.info("进入获取商品详情接口");
-    var result = {code: 200};
-
-    try {
-        var productInfo = {};
-
-        var arg = req.query;
-        logger.info("get product list args:" + JSON.stringify(arg));
-        var productId = arg.productId || "ze160122104236000322";
-
-        var resContent = {
-            "code": 200,
-            "productInfo": {
-                "productId": "ze160122104236000322",
-                "productName": "慕云（MUYUN）羽绒床垫 斜纹防羽布 秋冬加厚 可折叠 保暖垫子床褥",
-                "viceName": "选用鸭绒作填充料，抗菌，防霉，除臭。",
-                "imgKey": "75B1957695653501779C08D47F8FF3E5.jpg,FB158CCEC58E22C84D95ECCDCCA82E90.jpg,5BCADA5BF462428FE658BAA9D1160A74.jpg,E53C91A0CF9BBA3F9B2FD9C3CA0753F2.jpg,30B8315A5D5FA679D3FD02679BC8EE9C.jpg",
-                "productDesc": null,
-                "skuTemplate": {
-                    "sku": [{
-                        "key": {"id": "1", "value": "颜色"},
-                        "values": [{
-                            "id": "1",
-                            "value": "米黄",
-                            "image": "9D096B02FE2A2EF71A7A5AF21B655F04.jpg",
-                            "isReplace": "1"
-                        }, {
-                            "id": "12",
-                            "value": "白色",
-                            "image": "75B1957695653501779C08D47F8FF3E5.jpg",
-                            "isReplace": "1"
-                        }, {
-                            "id": "13",
-                            "value": "粉色",
-                            "image": "0C1AB7163B432790A66E81CCF32CA89C.jpg",
-                            "isReplace": "1"
-                        }, {
-                            "id": "15",
-                            "value": "紫色",
-                            "image": "34100C839DCAD532F66E6F7D031EFCAB.jpg",
-                            "isReplace": "1"
-                        }, {
-                            "id": "19",
-                            "value": "蓝色",
-                            "image": "699657CA3BE524444CA11E2E133437C0.jpg",
-                            "isReplace": "1"
-                        }]
-                    }, {
-                        "key": {"id": "100", "value": "尺码"},
-                        "values": [{"id": "101", "value": "100*200/6斤"}, {
-                            "id": "102",
-                            "value": "120*200/7斤"
-                        }, {"id": "103", "value": "150*200/8斤"}, {"id": "104", "value": "180*200/10斤"}]
-                    }]
-                },
-                "sellerId": 1,
-                "sellerName": "测试商家1"
-            },
-            "minCurPrice": 0.01,
-            "maxCurPrice": 10000000,
-            "minOrgPrice": 0.02,
-            "maxOrgPrice": 20000000
-        };
-        res.json(resContent);
-
-        /*Product.queryProduct(productId, 1, 1, 0, 0, function (err, data) {
-         if (err) {
-         res.json(err);
-         } else {
-         var product = data[0].product;
-         var productInfo = {};
-         productInfo.productId = product.productId;
-         productInfo.productName = product.productName;
-         productInfo.viceName = product.viceName;
-         productInfo.imgKey = product.imgKey;
-         productInfo.productDesc = product.detailContent;
-         /!**
-         * productInfo.productAttribute = product.attribute;   属性单独一个接口
-         *!/
-         productInfo.skuTemplate = JSON.parse(product.skuTemplate);
-         productInfo.sellerId = product.sellerId;
-         productInfo.sellerName = "测试商家1";
-         //添加最高价和最低价
-         var minCurPrice = 0.01;
-         var maxCurPrice = 10000000;
-         var minOrgPrice = 0.02;
-         var maxOrgPrice = 20000000;
-         result.productInfo = productInfo;
-         result.minCurPrice = minCurPrice;
-         result.maxCurPrice = maxCurPrice;
-         result.minOrgPrice = minOrgPrice;
-         result.maxOrgPrice = maxOrgPrice;
-         res.json(result);
-         logger.info("get product info response:" + JSON.stringify(result));
-         }
-         });*/
-    } catch (ex) {
-        logger.error("get product info error:" + ex);
-        result.code = 500;
-        result.desc = "获取商品详情失败";
-        res.json(result);
-    }
-});
+////查询商品
+//router.get('/productinfo', function (req, res, next) {
+//
+//    logger.info("进入获取商品详情接口");
+//    var result = {code: 200};
+//
+//    try {
+//        var productInfo = {};
+//
+//        var arg = req.query;
+//        logger.info("get product list args:" + JSON.stringify(arg));
+//        var productId = arg.productId || "ze160122104236000322";
+//
+//        var resContent = {
+//            "code": 200,
+//            "productInfo": {
+//                "productId": "ze160122104236000322",
+//                "productName": "慕云（MUYUN）羽绒床垫 斜纹防羽布 秋冬加厚 可折叠 保暖垫子床褥",
+//                "viceName": "选用鸭绒作填充料，抗菌，防霉，除臭。",
+//                "imgKey": "75B1957695653501779C08D47F8FF3E5.jpg,FB158CCEC58E22C84D95ECCDCCA82E90.jpg,5BCADA5BF462428FE658BAA9D1160A74.jpg,E53C91A0CF9BBA3F9B2FD9C3CA0753F2.jpg,30B8315A5D5FA679D3FD02679BC8EE9C.jpg",
+//                "productDesc": "超级舒服，值得购买",
+//                "skuTemplate": {
+//                    "sku": [{
+//                        "key": {"id": "1", "value": "颜色"},
+//                        "values": [{
+//                            "id": "1",
+//                            "value": "米黄",
+//                            "image": "9D096B02FE2A2EF71A7A5AF21B655F04.jpg",
+//                            "isReplace": "1"
+//                        }, {
+//                            "id": "12",
+//                            "value": "白色",
+//                            "image": "75B1957695653501779C08D47F8FF3E5.jpg",
+//                            "isReplace": "1"
+//                        }, {
+//                            "id": "13",
+//                            "value": "粉色",
+//                            "image": "0C1AB7163B432790A66E81CCF32CA89C.jpg",
+//                            "isReplace": "1"
+//                        }, {
+//                            "id": "15",
+//                            "value": "紫色",
+//                            "image": "34100C839DCAD532F66E6F7D031EFCAB.jpg",
+//                            "isReplace": "1"
+//                        }, {
+//                            "id": "19",
+//                            "value": "蓝色",
+//                            "image": "699657CA3BE524444CA11E2E133437C0.jpg",
+//                            "isReplace": "1"
+//                        }]
+//                    }, {
+//                        "key": {"id": "100", "value": "尺码"},
+//                        "values": [{"id": "101", "value": "100*200/6斤"}, {
+//                            "id": "102",
+//                            "value": "120*200/7斤"
+//                        }, {"id": "103", "value": "150*200/8斤"}, {"id": "104", "value": "180*200/10斤"}]
+//                    }]
+//                },
+//                "sellerId": 1,
+//                "sellerName": "测试商家1"
+//            },
+//            "minCurPrice": 0.01,
+//            "maxCurPrice": 10000000,
+//            "minOrgPrice": 0.02,
+//            "maxOrgPrice": 20000000
+//        };
+//        res.json(resContent);
+//
+//        /*Product.queryProduct(productId, 1, 1, 0, 0, function (err, data) {
+//         if (err) {
+//         res.json(err);
+//         } else {
+//         var product = data[0].product;
+//         var productInfo = {};
+//         productInfo.productId = product.productId;
+//         productInfo.productName = product.productName;
+//         productInfo.viceName = product.viceName;
+//         productInfo.imgKey = product.imgKey;
+//         productInfo.productDesc = product.detailContent;
+//         /!**
+//         * productInfo.productAttribute = product.attribute;   属性单独一个接口
+//         *!/
+//         productInfo.skuTemplate = JSON.parse(product.skuTemplate);
+//         productInfo.sellerId = product.sellerId;
+//         productInfo.sellerName = "测试商家1";
+//         //添加最高价和最低价
+//         var minCurPrice = 0.01;
+//         var maxCurPrice = 10000000;
+//         var minOrgPrice = 0.02;
+//         var maxOrgPrice = 20000000;
+//         result.productInfo = productInfo;
+//         result.minCurPrice = minCurPrice;
+//         result.maxCurPrice = maxCurPrice;
+//         result.minOrgPrice = minOrgPrice;
+//         result.maxOrgPrice = maxOrgPrice;
+//         res.json(result);
+//         logger.info("get product info response:" + JSON.stringify(result));
+//         }
+//         });*/
+//    } catch (ex) {
+//        logger.error("get product info error:" + ex);
+//        result.code = 500;
+//        result.desc = "获取商品详情失败";
+//        res.json(result);
+//    }
+//});
 
 
 //查询商品详情queryProductDetail
-router.get('/productDetailTest', function (req, res, next) {
+router.get('/productDetail', function (req, res, next) {
 
     logger.info("进入查询商品详情接口");
     var result = {code: 200};
@@ -418,13 +418,13 @@ router.get('/productDetailTest', function (req, res, next) {
         //arg.productId = "ze160122101802000570";
         if (arg.detailKey == null && arg.productId == null) {
 
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
         if (arg.detailKey == "" && arg.productId == "") {
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
@@ -448,43 +448,43 @@ router.get('/productDetailTest', function (req, res, next) {
     }
 });
 //查询商品详情queryProductDetail
-router.get('/productDetail', function (req, res, next) {
-
-    logger.info("进入查询商品详情接口");
-    var result = {code: 200};
-
-    try {
-
-        var arg = req.query;
-        arg.detailKey = "56a1915a0cf2bb85eb5701a7";
-        arg.productId = "ze160122101802000570";
-        logger.info("查询商品详情的条件:" + JSON.stringify(arg));
-
-        /*Product.queryProductDetail(arg, function (err, data) {
-
-         if (err) {
-         res.json(err);
-         } else {
-
-         result.value = data.value;
-         res.json(result);
-
-         logger.info("查询到的商品详情为:" + JSON.stringify(result));
-         }
-         });*/
-
-        var productDetail = {
-            "code": 200,
-            "value": "<p><img src=\"http://www.jfshare.com/img/2015/7/26/2450713.jpg\" alt=\"\" data-cke-saved-src=\"/img/2015/7/26/2450713.jpg\" /></p>"
-        };
-        res.json(productDetail);
-    } catch (ex) {
-        logger.error("查询失败，原因是:" + ex);
-        result.code = 500;
-        result.desc = "查询商品详情失败";
-        res.json(result);
-    }
-});
+//router.get('/productDetail', function (req, res, next) {
+//
+//    logger.info("进入查询商品详情接口");
+//    var result = {code: 200};
+//
+//    try {
+//
+//        var arg = req.query;
+//        arg.detailKey = "56a1915a0cf2bb85eb5701a7";
+//        arg.productId = "ze160122101802000570";
+//        logger.info("查询商品详情的条件:" + JSON.stringify(arg));
+//
+//        /*Product.queryProductDetail(arg, function (err, data) {
+//
+//         if (err) {
+//         res.json(err);
+//         } else {
+//
+//         result.value = data.value;
+//         res.json(result);
+//
+//         logger.info("查询到的商品详情为:" + JSON.stringify(result));
+//         }
+//         });*/
+//
+//        var productDetail = {
+//            "code": 200,
+//            "value": "<p><img src=\"http://www.jfshare.com/img/2015/7/26/2450713.jpg\" alt=\"\" data-cke-saved-src=\"/img/2015/7/26/2450713.jpg\" /></p>"
+//        };
+//        res.json(productDetail);
+//    } catch (ex) {
+//        logger.error("查询失败，原因是:" + ex);
+//        result.code = 500;
+//        result.desc = "查询商品详情失败";
+//        res.json(result);
+//    }
+//});
 
 
 //查询商品库存和sku
@@ -698,15 +698,13 @@ router.post('/subjectList', function (req, res, next) {
     try {
         var arg = req.body;
 
-        var subjectId = arg.subjectId;
-        if (subjectId == null || subjectId == "" || subjectId < 0) {
-
-            result.code = 500;
+        if (arg.subjectId == null || arg.subjectId == "" || arg.subjectId < 0) {
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        Product.getSubTree(subjectId, function (err, data) {
+        Product.getSubTree(arg, function (err, data) {
             if (err) {
                 res.json(err);
             } else {
