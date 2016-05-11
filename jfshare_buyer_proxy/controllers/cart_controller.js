@@ -17,11 +17,11 @@ router.post('/count', function(req, res, next) {
     var result = {code: 200};
     try {
         var arg = req.body;
-        var userId = arg.userId || "2";
-        var token = arg.token || "鉴权信息1";
-        var ppInfo = arg.ppInfo || "鉴权信息2";
+        var userId = arg.userId;
+        var token = arg.token;
+        var ppInfo = arg.ppInfo;
         var source = arg.source || 2;
-        var browser = arg.browser || "1";
+        var browser = arg.browser;
 
         var param = {};
         param.userId = userId;
@@ -31,28 +31,28 @@ router.post('/count', function(req, res, next) {
         param.browser = browser;
 
         if(param.userId=="" || param.userId ==null){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
         if(param.token=="" || param.token ==null){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
         if(param.ppInfo=="" || param.ppInfo ==null){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
         if(param.browser=="" || param.browser ==null){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
@@ -95,28 +95,28 @@ router.post('/countTest', function(req, res, next) {
         param.browser = browser;
 
         if(param.userId=="" || param.userId ==null){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
         if(param.token=="" || param.token ==null){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
         if(param.ppInfo=="" || param.ppInfo ==null){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
         if(param.browser=="" || param.browser ==null){
-            result.code = 500;
+            result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
