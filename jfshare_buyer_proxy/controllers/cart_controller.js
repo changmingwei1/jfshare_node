@@ -381,7 +381,7 @@ router.post('/deleteTest', function(req, res, next) {
 
 
 //购物车列表
-router.post('/list', function(req, res, next) {
+/*router.post('/list', function(req, res, next) {
     var result = {code: 200};
     try{
         var arg = req.body;
@@ -538,9 +538,9 @@ router.post('/list', function(req, res, next) {
         result.desc = "获取购物车商品列表失败";
         res.json(result);
     }
-});
+});*/
 //购物车列表
-router.post('/listTest', function(req, res, next) {
+router.post('/list', function(req, res, next) {
     var result = {code: 200};
     try{
         var arg = req.body;
@@ -594,31 +594,33 @@ router.post('/listTest', function(req, res, next) {
                         }
                     }
                 }
-                var count = 0;
-                if(cartList.length > 0) {
-                    cartList.forEach(function(item) {
-                        var param = {productId: item.productId, skunum: item.skunum.skuNum};
-                        Product.getStockForSku(param, function(err, stockInfo) {
-                            if(err){
-                                //res.json(err);
-                                return;
-                            }
-                            var stock = stockInfo.stockInfo;
-                            var stockItemMap = stockInfo.stockInfo.stockItemMap;
-                            item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
-
-                            if(count >= cartList.length - 1) {
-                                result.cartList = cartList;
-                                res.json(result);
-                                logger.info("get cart list response:" + JSON.stringify(result));
-                            }
-                            count = count + 1;
-                        });
-                    });
-                } else {
-                    result.cartList = [];
-                    res.json(result);
-                }
+                //var count = 0;
+                //if(cartList.length > 0) {
+                //    cartList.forEach(function(item) {
+                //        var param = {productId: item.productId, skunum: item.skunum.skuNum};
+                //        Product.getStockForSku(param, function(err, stockInfo) {
+                //            if(err){
+                //                //res.json(err);
+                //                return;
+                //            }
+                //            var stock = stockInfo.stockInfo;
+                //            var stockItemMap = stockInfo.stockInfo.stockItemMap;
+                //            item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
+                //
+                //            if(count >= cartList.length - 1) {
+                //                result.cartList = cartList;
+                //                res.json(result);
+                //                logger.info("get cart list response:" + JSON.stringify(result));
+                //            }
+                //            count = count + 1;
+                //        });
+                //    });
+                //} else {
+                //    result.cartList = [];
+                //    res.json(result);
+                //}
+                result.cartList = cartList;
+                res.json(result);
             } else {
                 result.cartList = [];
                 res.json(result);
