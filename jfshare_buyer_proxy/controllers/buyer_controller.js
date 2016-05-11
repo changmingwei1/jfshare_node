@@ -340,7 +340,9 @@ router.get('/exists', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                resContent.desc = "该手机已存在，不能注册";
+                var value = data[0].value;
+                resContent.value = value;
+                resContent.description = "友情提示【 true:已存在，不能注册；false:不存在，可以注册】";
                 response.json(resContent);
                 logger.info("get buyer response:" + JSON.stringify(resContent));
             }
@@ -902,21 +904,28 @@ router.post('/resetPwd', function (request, response, next) {
         return;
     }
     //logger.info("参数为: " + JSON.stringify(args));
-
-    Common.validateMsgCaptcha(param, function (err, data) {
-        if (err) {
-            response.json(err);
+    Buyer.newResetBuyerPwd(param, function (error, data) {
+        if (error) {
+            response.json(error);
             return;
         }
-        Buyer.newResetBuyerPwd(param, function (error, data) {
-            if (error) {
-                response.json(error);
-                return;
-            }
-            response.json(resContent);
-            logger.info("响应的结果:" + JSON.stringify(resContent));
-        });
+        response.json(resContent);
+        logger.info("响应的结果:" + JSON.stringify(resContent));
     });
+    //Common.validateMsgCaptcha(param, function (err, data) {
+    //    if (err) {
+    //        response.json(err);
+    //        return;
+    //    }
+    //    Buyer.newResetBuyerPwd(param, function (error, data) {
+    //        if (error) {
+    //            response.json(error);
+    //            return;
+    //        }
+    //        response.json(resContent);
+    //        logger.info("响应的结果:" + JSON.stringify(resContent));
+    //    });
+    //});
 });
 
 //修改密码
