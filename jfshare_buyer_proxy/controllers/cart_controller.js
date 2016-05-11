@@ -571,18 +571,42 @@ router.post('/list', function(req, res, next) {
             var cartList = [];
             if(itemList) {
                 //res.json(itemList);
-                for(var i = 0; i < itemList.length; i++) {
+                var cartLists = {};
+                itemList.forEach(function(a){
+                    cartLists.sellerId = a.seller.sellerId;
+                    cartLists.sellerName = a.seller.sellerName;
+                    cartLists.remark = "六一儿童节大优惠";
+                    var productList = [];
+                    var itemDetailList = itemList[0].itemDetailList;
+                    itemDetailList.forEach(function(b){
+                        productList.push({
+                            productId: b.product.product.productId,
+                            productName: b.product.product.productName,
+                            activeState: b.product.product.activeState,
+                            cartPrice: b.product.cartPrice,
+                            skuCount: b.product.skuCount,
+                            count: b.product.count,
+                            sku:{
+                                skuNum: b.product.product.productSku.skuNum,
+                                skuName: b.product.product.productSku.skuName
+                            },
+                            imgKey: b.product.product.imgKey.split(',')[0]
+                        });
+                    });
+                    cartLists.productList = productList;
+                });
+                /*for(var i = 0; i < itemList.length; i++) {
                     if(itemList[i].itemDetailList  && itemList[i].itemDetailList.length > 0){
                         for(var j = 0; j < itemList[i].itemDetailList.length; j++){
                             var product = itemList[i].itemDetailList[j].product;
                             cartList.push({
                                 sellerId: product.product.sellerId,
-                                /*sellerName:"测试商家1",*/
+                                /!*sellerName:"测试商家1",*!/
                                 productId: product.product.productId,
                                 productName: product.product.productName,
                                 viceName:product.product.viceName,
                                 remark:product.product.remark,
-                                skunum: {
+                                sku: {
                                     skuNum: product.product.productSku.skuNum,
                                     skuName:product.product.productSku.skuName},
                                 count:product.count,
@@ -594,31 +618,32 @@ router.post('/list', function(req, res, next) {
                         }
                     }
                 }
-                //var count = 0;
-                //if(cartList.length > 0) {
-                //    cartList.forEach(function(item) {
-                //        var param = {productId: item.productId, skunum: item.skunum.skuNum};
-                //        Product.getStockForSku(param, function(err, stockInfo) {
-                //            if(err){
-                //                //res.json(err);
-                //                return;
-                //            }
-                //            var stock = stockInfo.stockInfo;
-                //            var stockItemMap = stockInfo.stockInfo.stockItemMap;
-                //            item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
-                //
-                //            if(count >= cartList.length - 1) {
-                //                result.cartList = cartList;
-                //                res.json(result);
-                //                logger.info("get cart list response:" + JSON.stringify(result));
-                //            }
-                //            count = count + 1;
-                //        });
-                //    });
-                //} else {
-                //    result.cartList = [];
-                //    res.json(result);
-                //}
+                var count = 0;
+                if(cartList.length > 0) {
+                    cartList.forEach(function(item) {
+                        var param = {productId: item.productId, skunum: item.skunum.skuNum};
+                        Product.getStockForSku(param, function(err, stockInfo) {
+                            if(err){
+                                //res.json(err);
+                                return;
+                            }
+                            var stock = stockInfo.stockInfo;
+                            var stockItemMap = stockInfo.stockInfo.stockItemMap;
+                            item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
+
+                            if(count >= cartList.length - 1) {
+                                result.cartList = cartList;
+                                res.json(result);
+                                logger.info("get cart list response:" + JSON.stringify(result));
+                            }
+                            count = count + 1;
+                        });
+                    });
+                } else {
+                    result.cartList = [];
+                    res.json(result);
+                }*/
+                cartList.push(cartLists);
                 result.cartList = cartList;
                 res.json(result);
             } else {
