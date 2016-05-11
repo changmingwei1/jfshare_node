@@ -93,12 +93,16 @@ Buyer.prototype.newLogin = function(param,callback){
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到登录信息:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
             logger.error("不能登录，因为: ======" + err);
             res.code = 500;
             res.desc = "登录失败";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == "1"){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data);
         }
     });
@@ -187,12 +191,17 @@ Buyer.prototype.buyerIsExist = function(loginName,callback){
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到的信息:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
             logger.error("啥，因为: ======" + err);
             res.code = 500;
-            res.desc = "改手机号已经存在...";
+            res.desc = "不能判断";
             callback(res, null);
-        } else {
+        }
+        if (data[0].result.code == 1) {
+            res.code = 300;
+            res.desc = "改手机号不存在，可以注册";
+            callback(res, null);
+        }else{
             callback(null, data);
         }
     });

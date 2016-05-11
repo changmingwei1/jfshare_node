@@ -192,6 +192,7 @@ router.post('/login', function (request, response, next) {
                     //var loginLog = data[0].loginLog;
                     var userId = data[0].buyer.userId;
                     var authInfo = data[0].authInfo;
+                    resContent.loginName = data[0].buyer.mobile;
                     resContent.ppInfo = authInfo.ppInfo;
                     resContent.token = authInfo.token;
                     resContent.userId = userId;
@@ -277,6 +278,7 @@ router.post('/login2', function (req, res, next) {
                     //};
                     //CommonUtil.setCookie(req, res, "ssid", ssid, options);
                     resContent.userId = buyer.userId;
+                    resContent.loginName = buyer.mobile;
                     //resContent.loginLog = loginLog;
                     resContent.token = authInfo.token;
                     resContent.ppInfo = authInfo.ppInfo;
@@ -286,7 +288,6 @@ router.post('/login2', function (req, res, next) {
         }
     ], function (err) {
         if (err) {
-            err["result"] = false;
             return res.json(err);
         } else {
             return res.json({result: true});
@@ -339,6 +340,7 @@ router.get('/exists', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
+                resContent.desc = "该手机已存在，不能注册";
                 response.json(resContent);
                 logger.info("get buyer response:" + JSON.stringify(resContent));
             }
@@ -397,11 +399,13 @@ router.post('/validAuth', function (request, response, next) {
         var token = param.token;
         var ppInfo = param.ppInfo;
         var userId = param.userId;
+        var browser = param.browser;
 
         var params = {};
         params.token = token;
         params.ppInfo = ppInfo;
         params.userId = userId;
+        params.browser = browser;
 
         logger.info("请求参数：" + JSON.stringify(params));
         Buyer.validAuth(params, function (err, data) {
@@ -428,25 +432,39 @@ router.post('/query', function (request, response, next) {
 
     try {
         var param = request.body;
-        var token = param.token;
-        var ppInfo = param.ppInfo;
-        var userId = param.userId;
-        var browser = param.browser || "1";
-
-        var args = {};
-        args.token = token;
-        args.ppInfo = ppInfo;
-        args.userId = userId;
-        args.browser = browser;
+        if(param.token == null || param.token == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.ppInfo == null || param.ppInfo == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.ppInfo == null || param.ppInfo == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.userId == null || param.userId == "" || param.userId <= 0){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
 
         logger.info("It's test______" + JSON.stringify(param));
 //暂时去掉鉴权信息
-        Buyer.validAuth(args, function (err, data) {
+        Buyer.validAuth(param, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            Buyer.getBuyer(args, function (error, data) {
+            Buyer.getBuyer(param, function (error, data) {
 
                 if (error) {
                     response.json(error);

@@ -103,6 +103,15 @@ module.exports.ServiceFactory  =  {
         return obj;
     },
     /**
+     * 消息服务
+     * @returns {ThriftConfig}
+     */
+    message: function () {
+        var obj = new ThriftConfig("120.24.153.102", 2001);
+        //var obj = new ThriftConfig("127.0.0.1", 2001);
+        return obj;
+    },
+    /**
      * 订单服务
      * @returns {ThriftConfig}
      */
@@ -202,8 +211,8 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1993);
-        //var obj = new ThriftConfig("127.0.0.1", 1991);
+        var obj = new ThriftConfig("120.24.153.155", 1988);
+       // var obj = new ThriftConfig("127.0.0.1", 1988);
         return obj;
     },
     /**

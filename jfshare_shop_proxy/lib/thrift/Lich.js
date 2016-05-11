@@ -28,7 +28,8 @@ var ServiceKey = {
     CartServer: "Cart",
     SellerServer: "Seller",
     ManagerServer:"Manager",
-    ExpressServer:"Express"
+    ExpressServer:"Express",
+    MessageServer:"Message"
 };
 
 /**

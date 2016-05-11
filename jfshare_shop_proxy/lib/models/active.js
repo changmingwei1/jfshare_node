@@ -45,27 +45,4 @@ Active.prototype.querySlotImageList = function(param,callback){
     });
 };
 
-//获取系统消息列表
-Active.prototype.querySlotImageList = function(param,callback){
-    var imageParm = new slotImage_types.QuerySlotImageParam({
-        type:param.type
-    });
-    logger.info(imageParm);
-    //获取client
-    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer,'querySlotImageList',imageParm);
-    Lich.wicca.invokeClient(managerServ, function(err, data){
-        logger.info("获取到的资源:" + JSON.stringify(data));
-        var res = {};
-        if (err||data[0].result.code == "1") {
-            logger.error("不能获取，因为: ======" + err);
-            res.code = 500;
-            res.desc = "不能获取到资源";
-            callback(res, null);
-        } else {
-            callback(null, data);
-        }
-    });
-};
-
-
 module.exports = new Active();
