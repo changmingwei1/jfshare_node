@@ -151,7 +151,7 @@ router.post('/countTest', function(req, res, next) {
 
 
 //新增购物车项目
-router.post('/add', function(req, res, next) {
+router.post('/addTest', function(req, res, next) {
     var result = {code:200};
     try{
         var arg = req.body;
@@ -195,7 +195,7 @@ router.post('/add', function(req, res, next) {
     }
 });
 //新增购物车项目
-router.post('/addTest', function(req, res, next) {
+router.post('/add', function(req, res, next) {
     var result = {code:200};
     try{
         var arg = req.body;
