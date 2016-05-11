@@ -27,7 +27,7 @@ Product.prototype.queryProductList = function(params, callback){
 
     var thrift_pagination = new pagination_types.Pagination({
         currentPage:params.curPage || 1,
-        numPerPage:params.perCount || 20
+        numPerPage:params.perCount
     });
     var thrift_params = new product_types.ProductSurveyQueryParam({
         pagination:thrift_pagination,
