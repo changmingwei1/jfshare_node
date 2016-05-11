@@ -281,7 +281,7 @@ router.post('/list', function(req, res, next) {
             if(addressList !== null && addressList.length >0){
                 addressList.forEach(function(address) {
                     addressInfoList.push({
-                        addrId: address.id,
+                        id: address.id,
                         receiverName: address.receiverName,
                         mobile: address.mobile,
                         provinceId: address.provinceId,
