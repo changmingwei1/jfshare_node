@@ -70,15 +70,15 @@ Cart.prototype.addCartItem = function(param, callback){
 };
 
 //删除购物车
-Cart.prototype.deleteCartItem = function(userId,cartKeys, callback){
+Cart.prototype.deleteCartItem = function(param, callback){
 
     var cartKeyList = [];
-    for(var i = 0; i < cartKeys.length; i++){
-        var item = new cart_types.CartKey(cartKeys[i]);
+    for(var i = 0; i < param.cartKey.length; i++){
+        var item = new cart_types.CartKey(param.cartKey[i]);
         cartKeyList.push(item);
     }
 
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [userId, cartKeyList, 2]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [param.userId, cartKeyList, param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-deleteItem  result:" + JSON.stringify(data));

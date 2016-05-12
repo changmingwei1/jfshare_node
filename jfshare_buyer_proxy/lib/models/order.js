@@ -169,9 +169,10 @@ Order.prototype.orderConfirm = function(arg, callback){
                 productId:product.productId,
                 productName:product.productName,
                 skuNum:product.skuNum,
-                skuDesc:product.skuName,
+                skuName:product.skuDesc,
                 count:product.count,
-                curPrice:product.curPrice
+                curPrice:product.curPrice,
+                imgKey:product.imagesUrl
             }));
         }
         sellerDetailList.push(new trade_types.BuySellerDetail({

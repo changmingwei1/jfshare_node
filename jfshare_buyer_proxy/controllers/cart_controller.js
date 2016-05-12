@@ -174,24 +174,8 @@ router.post('/delete', function(req, res, next) {
 
     try {
         var arg = req.body;
-
-        //var userId = arg.userId || "2";
-        //var cartKey = {
-        //    productId:arg.productId || "ze160122104236000322",
-        //    skuNum:arg.skuNum || "1-12:100-102"
-        //};
-        //var source = arg.source || 2;
-        //var params = {};
-        //params.userId = userId;
-        //params.cartKey = cartKey;
-        //params.source = source;
-
         arg.token = "鉴权信息1";
         arg.ppInfo = "鉴权信息2";
-        //var cartKeys = {
-        //    productId:arg.productId,
-        //    skuNum:arg.skuNum
-        //};
 
         if(arg == null || arg.userId == null) {
             result.code = 400;
@@ -205,7 +189,7 @@ router.post('/delete', function(req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.deleteCartItem(arg.userId,arg.cartKey, function(err, data){
+        Cart.deleteCartItem(arg, function(err, data){
             if(err) {
                 res.json(err);
                 return;
