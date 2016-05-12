@@ -320,7 +320,7 @@ StockServ_batchQueryStock_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.StockResult();
+        this.success = new ttypes.BatchStockResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
@@ -385,19 +385,19 @@ StockServ_lockStock_args.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
+        var _size32 = 0;
+        var _rtmp336;
         this.lockInfoList = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
         {
-          var elem30 = null;
-          elem30 = new ttypes.LockInfo();
-          elem30.read(input);
-          this.lockInfoList.push(elem30);
+          var elem38 = null;
+          elem38 = new ttypes.LockInfo();
+          elem38.read(input);
+          this.lockInfoList.push(elem38);
         }
         input.readListEnd();
       } else {
@@ -423,12 +423,12 @@ StockServ_lockStock_args.prototype.write = function(output) {
   if (this.lockInfoList !== null && this.lockInfoList !== undefined) {
     output.writeFieldBegin('lockInfoList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.lockInfoList.length);
-    for (var iter31 in this.lockInfoList)
+    for (var iter39 in this.lockInfoList)
     {
-      if (this.lockInfoList.hasOwnProperty(iter31))
+      if (this.lockInfoList.hasOwnProperty(iter39))
       {
-        iter31 = this.lockInfoList[iter31];
-        iter31.write(output);
+        iter39 = this.lockInfoList[iter39];
+        iter39.write(output);
       }
     }
     output.writeListEnd();
@@ -528,19 +528,19 @@ StockServ_releaseStock_args.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size32 = 0;
-        var _rtmp336;
+        var _size40 = 0;
+        var _rtmp344;
         this.lockInfoList = [];
-        var _etype35 = 0;
-        _rtmp336 = input.readListBegin();
-        _etype35 = _rtmp336.etype;
-        _size32 = _rtmp336.size;
-        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
         {
-          var elem38 = null;
-          elem38 = new ttypes.LockInfo();
-          elem38.read(input);
-          this.lockInfoList.push(elem38);
+          var elem46 = null;
+          elem46 = new ttypes.LockInfo();
+          elem46.read(input);
+          this.lockInfoList.push(elem46);
         }
         input.readListEnd();
       } else {
@@ -566,12 +566,12 @@ StockServ_releaseStock_args.prototype.write = function(output) {
   if (this.lockInfoList !== null && this.lockInfoList !== undefined) {
     output.writeFieldBegin('lockInfoList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.lockInfoList.length);
-    for (var iter39 in this.lockInfoList)
+    for (var iter47 in this.lockInfoList)
     {
-      if (this.lockInfoList.hasOwnProperty(iter39))
+      if (this.lockInfoList.hasOwnProperty(iter47))
       {
-        iter39 = this.lockInfoList[iter39];
-        iter39.write(output);
+        iter47 = this.lockInfoList[iter47];
+        iter47.write(output);
       }
     }
     output.writeListEnd();
@@ -671,19 +671,19 @@ StockServ_releaseLockCount_args.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size40 = 0;
-        var _rtmp344;
+        var _size48 = 0;
+        var _rtmp352;
         this.lockInfoList = [];
-        var _etype43 = 0;
-        _rtmp344 = input.readListBegin();
-        _etype43 = _rtmp344.etype;
-        _size40 = _rtmp344.size;
-        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
         {
-          var elem46 = null;
-          elem46 = new ttypes.LockInfo();
-          elem46.read(input);
-          this.lockInfoList.push(elem46);
+          var elem54 = null;
+          elem54 = new ttypes.LockInfo();
+          elem54.read(input);
+          this.lockInfoList.push(elem54);
         }
         input.readListEnd();
       } else {
@@ -709,12 +709,12 @@ StockServ_releaseLockCount_args.prototype.write = function(output) {
   if (this.lockInfoList !== null && this.lockInfoList !== undefined) {
     output.writeFieldBegin('lockInfoList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.lockInfoList.length);
-    for (var iter47 in this.lockInfoList)
+    for (var iter55 in this.lockInfoList)
     {
-      if (this.lockInfoList.hasOwnProperty(iter47))
+      if (this.lockInfoList.hasOwnProperty(iter55))
       {
-        iter47 = this.lockInfoList[iter47];
-        iter47.write(output);
+        iter55 = this.lockInfoList[iter55];
+        iter55.write(output);
       }
     }
     output.writeListEnd();
