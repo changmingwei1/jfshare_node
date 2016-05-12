@@ -188,7 +188,7 @@ Order.prototype.orderConfirm = function(arg, callback){
         userName: arg.userName,
         amount: arg.totalSum,
         //payChannel: new pay_types.PayChannel({payChannel:arg.payChannel}),
-        deliverInfo: new order_types.DeliverInfo(arg.deliverInfo),
+        deliverInfo: new order_types.DeliverInfo(arg.addressDesc), /*deliverInfo*/
         sellerDetailList: sellerDetailList,
         fromSource: arg.fromSource,
         fromBatch: arg.fromBatch,
