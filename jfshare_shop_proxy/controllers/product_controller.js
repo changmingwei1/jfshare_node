@@ -58,7 +58,7 @@ router.post('/list', function (req, res, next) {
                     curPrice: "0.01",
                     orgPrice: "140",
                     //sellerId: a.sellerId,   //测试用,没意义
-                    imgUrl: "9258E4A9FC083140D36383B2A5426A5C.jpg",
+                    imgKey: "9258E4A9FC083140D36383B2A5426A5C.jpg",
                     type: 3
                 };
                 dataArr.push(productList);

@@ -20,7 +20,7 @@ router.post('/count', function(req, res, next) {
         var userId = arg.userId;
         var token = arg.token;
         var ppInfo = arg.ppInfo;
-        var source = arg.source || 2;
+        var source = arg.source;
         var browser = arg.browser;
 
         var param = {};
