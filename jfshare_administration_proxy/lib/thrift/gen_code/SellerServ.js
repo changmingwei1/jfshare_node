@@ -8,6 +8,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var result_ttypes = require('./result_types')
+var pagination_ttypes = require('./pagination_types')
 
 
 var ttypes = require('./seller_types');

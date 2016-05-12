@@ -39,7 +39,7 @@ app.use('/manager/address',address);
 
 app.use('/manager/score',score);
 app.use('/manager/message',message);
-//app.use('/manager/seller',seller);
+app.use('/manager/seller',seller);
 app.use('/manager/brand',brand);
 app.use('/manager/afterSale',afterSale);
 // error handlers

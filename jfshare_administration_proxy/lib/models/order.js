@@ -30,9 +30,9 @@ Order.prototype.orderProfileQuery = function (params, callback) {
         orderState: params.orderStatus || 0,
         count: params.percount,
         curPage: params.curpage,
-        orderState:params.orderState,
-        startTime:params.startTime,
-        endTime:params.endTime
+        orderState: params.orderState,
+        startTime: params.startTime,
+        endTime: params.endTime
     });
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2, params.sellerId, orderQueryConditions]);
 
@@ -69,7 +69,7 @@ Order.prototype.orderStateQuery = function (param, callback) {
 };
 //订单详情
 Order.prototype.queryOrderDetail = function (param, callback) {
-
+    logger.info("调用orderServ-queryOrderDetail  param:" + JSON.stringify(param));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryOrderDetail", [param.userType, param.sellerId, param.orderId]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
@@ -89,7 +89,7 @@ Order.prototype.queryOrderDetail = function (param, callback) {
 //取消订单
 Order.prototype.cancelOrder = function (param, callback) {
     //result.Result cancelOrder(1:i32 userType, 2:i32 userId, 3:string orderId, 4:i32 reason)
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [3, param.userId, param.orderId,1]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [3, param.userId, param.orderId, 1]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-cancelOrder  result:" + JSON.stringify(data));
@@ -111,14 +111,36 @@ Order.prototype.deliver = function (params, callback) {
 
     var deliverInfo = new order_types.DeliverInfo({
 
-        orderId:params.orderId,
-        sellerComment:params.sellerComment,
-        expressId:params.expressId,
-        expressName:params.expressName,
-        expressNo:params.expressNo
-    });
+        userId: 25,
+        orderId:"5300025",
+        sellerId:1,
+        //tradeCode:"Z0003",
+        //receiverName: "收货人",
+       // receiverMobile: "13122222222",
+       // receiverTele: "13222222222",
+       // receiverAddress:"详细收货地址",
+        //buyerComment: "卖家备注",
 
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId,deliverInfo]);
+        //sellerComment: "备注信息",
+        expressId:"24",
+        expressName: "namename",
+        expressNo: "123321231231",
+        //expressTypeState: 0,
+
+       // addressId: 24,
+        //provinceId: 110000,
+        //cityId: 110100,
+        //countyId: 110108,
+       // provinceName: "省名称",
+      //  cityName: "是名称",
+      //  countyName: "区县名称",
+      //  postCode: "100000",
+       // expressQueryUrl: "http://10.0.0.1",
+       // expressDnfTel: "13111111111"
+
+    });
+    logger.info("调用orderServ-deliver  result:" + JSON.stringify(deliverInfo));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [1, deliverInfo]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-deliver  result:" + JSON.stringify(data));
@@ -129,19 +151,17 @@ Order.prototype.deliver = function (params, callback) {
             res.desc = "发货失败！";
             callback(res, null);
         } else {
-            callback(null, null);
+            callback(null, data);
         }
     });
 };
 
 //result.Result updateExpressInfo(1:i32 sellerId, 2:string orderId, 3:string expressId, 4:string expressNo, 5:string expressName)
 
-//发货，其实就是添加物流单
+//更新物流单
 Order.prototype.updateExpressInfo = function (params, callback) {
 
-
-
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId,params.orderId,params.expressId,params.expressNo,params.expressName]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "updateExpressInfo", [params.sellerId, params.orderId, params.expressId, params.expressNo, params.expressName]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-updateExpressInfo  result:" + JSON.stringify(data));
@@ -149,10 +169,10 @@ Order.prototype.updateExpressInfo = function (params, callback) {
         if (err || data[0].code == "1") {
             logger.error("调用orderServ-updateExpressInfo  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "更新物流单！";
+            res.desc = "更新物流单失败";
             callback(res, null);
         } else {
-            callback(null, null);
+            callback(null, data);
         }
     });
 };

@@ -20,18 +20,37 @@ Seller.prototype.signup = function (params, callback) {
     var seller = new seller_types.Seller({
         loginName: params.loginName,
         sellerName: params.sellerName,
-        pwdEnc: params.pwdEnc
-    });
+        pwdEnc: params.pwdEnc,
+        companyName: params.companyName,
+        shopName: params.shopName,
+        contactName: params.contactName,
+        openBank: params.openBank,
+        accountHolder: params.accountHolder,
+        accountNumber: params.accountNumber,
+        remark: params.remark,
+        provinceId: params.provinceId,
+        provinceName: params.provinceName,
+        cityId: params.cityId,
+        cityName: params.cityName,
+        countyId: params.countyId,
+        countyName: params.countyName,
+        address: params.address,
+        mobile: params.mobile,
+        tel: params.tel,
+        email: params.email
 
+    });
+    logger.info("signup seller params:" + JSON.stringify(seller));
     //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.Seller, 'signup', [seller]);
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'signup', [seller]);
     Lich.wicca.invokeClient(sellerServ, function (err, data) {
         logger.info("signup seller result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "1") {
+        if (err || data[0].code == "1") {
             logger.error("signup seller error result: ======" + err);
             res.code = 500;
-            res.desc = "注册失败";
+            var dataBrand=data[0].failDescList[0];
+            res.desc=dataBrand.desc;
             callback(res, null);
         } else {
             callback(null, data);
@@ -42,9 +61,8 @@ Seller.prototype.signup = function (params, callback) {
 //查询用户名是否存在
 Seller.prototype.isLoginNameExist = function (params, callback) {
 
-
     //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.Seller, 'isLoginNameExist', [params.loginName]);
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'isLoginNameExist', [params.loginName]);
     Lich.wicca.invokeClient(sellerServ, function (err, data) {
         logger.info("isLoginNameExist result:" + JSON.stringify(data));
         var res = {};
@@ -70,7 +88,7 @@ Seller.prototype.querySeller = function (params, callback) {
 
 
     //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.Seller, 'querySeller', [params.sellerId, sellerRetParam]);
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'querySeller', [params.sellerId, sellerRetParam]);
     Lich.wicca.invokeClient(sellerServ, function (err, data) {
         logger.info("query seller result:" + JSON.stringify(data));
         var res = {};
@@ -99,7 +117,7 @@ Seller.prototype.querySellerBatch = function (params, callback) {
     });
 
     //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.Seller, 'querySellerBatch', [null, sellerRetParam]);
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'querySellerBatch', [null, sellerRetParam]);
     Lich.wicca.invokeClient(sellerServ, function (err, data) {
         logger.info("get seller list result:" + JSON.stringify(data));
         var res = {};
@@ -114,22 +132,39 @@ Seller.prototype.querySellerBatch = function (params, callback) {
     });
 };
 
-//更新买家信息
+//更新卖家信息
 Seller.prototype.updateSeller = function (params, callback) {
 
     var seller = new seller_types.Seller({
         loginName: params.loginName,
-        sellerName: params.sellerName,
-        pwdEnc: params.pwdEnc
+        //sellerName: params.sellerName,
+        //pwdEnc: params.pwdEnc,
+        companyName: params.companyName,
+        shopName: params.shopName,
+        contactName: params.contactName,
+        openBank: params.openBank,
+        accountHolder: params.accountHolder,
+        accountNumber: params.accountNumber,
+        remark: params.remark,
+        provinceId: params.provinceId,
+        provinceName: params.provinceName,
+        cityId: params.cityId,
+        cityName: params.cityName,
+        countyId: params.countyId,
+        countyName: params.countyName,
+        address: params.address,
+        mobile: params.mobile,
+        tel: params.tel,
+        email: params.email
     });
 
 
     //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.Seller, 'updateSeller', [seller]);
-    Lich.wicca.invokeClient(buyerServ, function (err, data) {
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'updateSeller', [seller]);
+    Lich.wicca.invokeClient(sellerServ, function (err, data) {
         logger.info("update seller result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "1") {
+        if (err || data[0].code == "1") {
             logger.error("can't update seller result because: ======" + err);
             res.code = 500;
             res.desc = "更新卖家信息失败";
@@ -150,12 +185,12 @@ Seller.prototype.signin = function (params, callback) {
         pwdEnc: params.pwdEnc
     });
     var loginLog = new seller_types.LoginLog({
-                sellerId: params.sellerId
-            });
+        sellerId: params.sellerId
+    });
 
 
 //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.Seller, 'signin', [seller,loginLog]);
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'signin', [seller, loginLog]);
     Lich.wicca.invokeClient(buyerServ, function (err, data) {
         logger.info("seller signin result:" + JSON.stringify(data));
         var res = {};
@@ -177,12 +212,12 @@ Seller.prototype.signout = function (params, callback) {
 
     var loginLog = new seller_types.LoginLog({
         sellerId: params.sellerId,
-        tokenId:  params.tokenId
+        tokenId: params.tokenId
     });
 
 
 //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.Seller, 'signout', [loginLog]);
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'signout', [loginLog]);
     Lich.wicca.invokeClient(buyerServ, function (err, data) {
         logger.info("seller signout result:" + JSON.stringify(data));
         var res = {};
