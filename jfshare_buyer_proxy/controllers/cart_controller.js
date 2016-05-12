@@ -176,7 +176,6 @@ router.post('/delete', function(req, res, next) {
         var arg = req.body;
         arg.token = "鉴权信息1";
         arg.ppInfo = "鉴权信息2";
-
         if(arg == null || arg.userId == null) {
             result.code = 400;
             result.desc = "请求参数错误";
@@ -191,8 +190,6 @@ router.post('/delete', function(req, res, next) {
 //        }
         logger.info("请求的参数，arg：" + arg.cartKey);
         //logger.info("请求的参数，arg：" + JSON.stringify(arg));
-
-
         Cart.deleteCartItem(arg, function(err, data){
             if(err) {
                 res.json(err);
