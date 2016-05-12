@@ -76,10 +76,17 @@ Cart.prototype.deleteCartItem = function(param, callback){
     var cartKey = param.cartKey;
 
     logger.info(cartKey);
-    for(var i = 0; i < cartKey.length; i++){
-        var item = new cart_types.CartKey(cartKey[i]);
-        cartKeyList.push(item);
-    }
+    //for(var i = 0; i < cartKey.length; i++){
+    //    var item = new cart_types.CartKey(cartKey[i]);
+    //    cartKeyList.push(item);
+    //}
+
+    cartKey.forEach(function(a){
+        cartList.push({
+            productId: a.productId,
+            skuNum: a.skuNum
+        });
+    });
 
     var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [param.userId, cartKeyList, param.source]);
 
