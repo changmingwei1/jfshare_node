@@ -47,7 +47,7 @@ router.post('/list', function (req, res, next) {
                         curPrice: a.curPrice / 100,
                         orgPrice: a.orgPrice / 100,
                         //sellerId: a.sellerId,   //测试用,没意义
-                        imgUrl: imgUri,
+                        imgKey: imgUri,
                         type: a.type || 2
                     });
                 });
