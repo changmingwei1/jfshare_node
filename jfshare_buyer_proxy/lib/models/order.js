@@ -182,6 +182,15 @@ Order.prototype.orderConfirm = function(arg, callback){
             productList:productList
         }));
     }
+    //var addressDesc = {
+    //    provinceName:arg.deliverInfo.provinceName,
+    //    cityName:arg.deliverInfo.cityName,
+    //    countryName:arg.deliverInfo.countryName,
+    //    receiverAddress:arg.deliverInfo.address
+    //};
+
+    logger.info("看看是啥："+JSON.stringify(arg.addressDesc));
+
 
     var param = new trade_types.BuyInfo({
         userId: arg.userId,
@@ -190,11 +199,13 @@ Order.prototype.orderConfirm = function(arg, callback){
         //payChannel: new pay_types.PayChannel({payChannel:arg.payChannel}),
         deliverInfo: new order_types.DeliverInfo(arg.addressDesc), /*deliverInfo*/
         sellerDetailList: sellerDetailList,
+        fromBatch: arg.fromBatch
+        /*
         fromSource: arg.fromSource,
-        fromBatch: arg.fromBatch,
         exchangeScore:arg.exchangeScore || 0,
         exchangeCash:arg.exchangeCash || 0,
         tradeCode:arg.tradeCode
+        */
     });
 
     logger.info("调用cartServ-orderConfirm args:" + JSON.stringify(param));
