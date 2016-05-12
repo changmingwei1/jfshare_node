@@ -903,7 +903,6 @@ router.post('/resetPwd', function (request, response, next) {
         response.json(resContent);
         return;
     }
-    logger.info("参数为: " + JSON.stringify(args));
     Common.validateMsgCaptcha(param, function (err, data) {
         if (err) {
             response.json(err);
