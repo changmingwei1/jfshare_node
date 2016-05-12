@@ -383,55 +383,6 @@ router.post('/updateBrandSubject', function (request, response, next) {
     }
 });
 
-router.post('/getBatchSuperTree', function (request, response, next) {
 
-    var subjectIds = [];
-    subjectIds.push("3021");
-    subjectIds.push("3022");
-
-    var params = subjectIds;
-    Subject.getBatchSuperTree(params, function (error, data) {
-        if (error) {
-            response.json(error);
-        } else {
-
-            //组装list
-            var partsNames = [];
-            var subjectNodeTrees = data[0].subjectNodeTrees;
-            if (subjectNodeTrees.length <= 0) {
-                result.code = 500;
-                result.desc = "参数错误";
-                response.json(result);
-                return;
-            }
-
-            var nameList = [];
-            subjectNodeTrees.forEach(function (a) {
-
-                //  logger.info("get product list response-----:" + JSON.stringify(a));
-                var lmNames = [];
-                var numNames = a;
-                numNames.forEach(function (b) {
-                    lmNames.push({
-                        id: b.id,
-                        subjectName: b.name
-                    });
-                });
-                nameList.push(lmNames);
-            });
-            logger.info("get product list response-----:" + JSON.stringify(nameList));
-            /**
-             var pagination = data[0].pagination;
-             result.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
-             logger.info("get product list response:" + JSON.stringify(result));
-             result.scoreList=dataArr;
-
-             response.json(result);
-             */
-
-        }
-    });
-
-});
 
 module.exports = router;

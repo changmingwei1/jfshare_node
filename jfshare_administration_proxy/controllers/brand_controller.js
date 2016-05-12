@@ -260,9 +260,9 @@ router.post('/queryBySubject', function(request, response,next) {
                             id: brandInfo.id,
                             name: brandInfo.name,
                             imgKey: brandInfo.imgKey,
-                            state: brandInfo.state,
-                            createTime: brandInfo.createTime,
-                            lastUpdateTime: brandInfo.lastUpdateTime
+                            //state: brandInfo.state,
+                            //createTime: brandInfo.createTime,
+                            //lastUpdateTime: brandInfo.lastUpdateTime
                         });
                         //brandList.push(brand);
                     });
