@@ -177,18 +177,18 @@ Brand.prototype.queryBySubject = function (params, callback) {
     var brandServ = new Lich.InvokeBag(Lich.ServiceKey.BrandServer, "queryBySubject", [id]);
     //
     Lich.wicca.invokeClient(brandServ, function (err, data) {
-        logger.info("brandServ-queryBatch result:" + JSON.stringify(data));
+        logger.info("++brandServ-queryBySubject result:" + JSON.stringify(data));
         if (err || data[0].result.code == 1) {
             logger.error("brandServ-queryBatch result ======" + err);
             var result = {};
             result.code = 500;
-            result.desc = "获取品牌信息失败";
+            result.desc = "获取类目品牌信息失败";
             callback(result, data);
         }
 
         if(data[0].result.code ==0){
 
-            callback(null, data[0].brandInfo[0]);
+            callback(null, data);
         }
 
     });

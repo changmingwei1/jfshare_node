@@ -247,17 +247,31 @@ router.post('/queryBySubject', function(request, response,next) {
             if(err){
                 response.json(err);
                 return;
-            }else{
+            }else {
                 //var dataBrand=data[0]
                 //brandInfo.push();
 
+                var brands = data[0].brandInfo;
+                var brandList = [];
+                if (data[0].total != 0) {
+                    brands.forEach(function (brandInfo) {
+                        //var brand = ({
+                        brandList.push({
+                            id: brandInfo.id,
+                            name: brandInfo.name,
+                            imgKey: brandInfo.imgKey,
+                            state: brandInfo.state,
+                            createTime: brandInfo.createTime,
+                            lastUpdateTime: brandInfo.lastUpdateTime
+                        });
+                        //brandList.push(brand);
+                    });
 
-
+                }
+                logger.info(" brandServ-queryBatch response:" + JSON.stringify(brandList));
+                result.brandList = brandList;
+                response.json(result);
             }
-
-            logger.info(" brandServ-queryBatch response:" + JSON.stringify(result));
-            response.json(result);
-
         });
 
     } catch (ex) {

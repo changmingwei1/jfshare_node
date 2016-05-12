@@ -5,54 +5,89 @@ var express = require('express');
 var router = express.Router();
 
 var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 
-var Product = require('../lib/models/product');
+var Seller = require('../lib/models/seller');
 
 // 添加商家
-router.post('/add', function(req, res, next) {
+router.post('/add', function (request, response, next) {
     var result = {code: 200};
-    try{
-        var arg = req.body;
-        var params = {};
-        params.companyName = arg.companyName || "新媒传信";
-        params.loginName = arg.loginName || "卖家测试1号";
-        params.userName = arg.userName || "测试昵称";
-        params.pwdEnc = arg.pwdEnc || "123456";
-        params.mobile = arg.mobile || "13558731840";
-        params.contacts = arg.contacts || "张三";
-        params.tel = arg.tel || "010-88888888";
-        params.email = arg.email || "123456@qq.com";
-        params.provinceId = arg.provinceId || "110000";
-        params.cityId = arg.cityId || "110100";
-        params.countyId = arg.countyId || "110102";
-        params.provinceName = arg.provinceName || "北京市";
-        params.cityName = arg.cityName || "北京市";
-        params.countyName = arg.countyName || "";
-        params.address = arg.address || "地址啦";
-        params.remark = arg.remark || "备注信息";
-        params.bank = arg.bank || "中国人民银行";
-        params.account = arg.account || "10000000000000000";
-        params.accountName = arg.accountName || "李四";
+    try {
+        var params = request.body;
 
-        logger.info("新增系统消息请求， params:" + JSON.stringify(params));
+        //----测试参数---------------
+        //var arg = request.body;
+        //var params = {};
+        //
+        //params.loginName = arg.loginName || "卖家测试2号";
+        //params.sellerName = arg.sellerName || "卖家昵称111";
+        //params.pwdEnc = arg.pwdEnc || "123456abc2434";
+        //params.companyName = arg.companyName || "新媒传信";
+        //params.shopName = arg.shopName || "新媒传信shopname";
+        //params.contactName = arg.contactName || "测试联系人名";
+        //params.openBank = arg.openBank || "中国人民银行";
+        //params.accountHolder = arg.accountHolder || "李四2";
+        //params.accountNumber = arg.accountNumber || "1000000000000000";
+        //params.remark = arg.remark || "备注信息";
+        //params.provinceId = arg.provinceId || "110000";
+        //params.provinceName = arg.provinceName || "北京市";
+        //params.cityId = arg.cityId || "110100";
+        //params.cityName = arg.cityName || "北京市";
+        //params.countyId = arg.countyId || "110102";
+        //params.countyName = arg.countyName || "昌平";
+        //params.address = arg.address || "地址";
+        //params.mobile = arg.mobile || "13558731840";
+        //params.tel = arg.tel || "010-88888888";
+        //params.email = arg.email || "123456@qq.com";
+        //-----------------end--------------------
+
+        logger.info("SellerServ-signup params:" + JSON.stringify(params));
 
 
-        res.json(result);
-        logger.info("add address response:" + JSON.stringify(result));
+        if (params.loginName == null || params.loginName == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.companyName == null || params.companyName == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.pwdEnc == null || params.pwdEnc == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Seller.signup(params, function (err, data) {
+            logger.info("SellerServ-signup response:" + JSON.stringify(data));
+            var brandInfo = [];
+            if (err) {
+                response.json(err);
+                return;
+            }
+            logger.info(" SellerServ-signup response:" + JSON.stringify(result));
+            response.json(result);
+        });
+
     } catch (ex) {
-        logger.error("add address error:" + ex);
+        logger.error("SellerServ-signup error:" + ex);
         result.code = 500;
-        result.desc = "添加系统消息失败";
-        res.json(result);
+        result.desc = "商家注册异常";
+        response.json(result);
     }
 });
 
 // 获取商家信息
-router.post('/get', function(req, res, next) {
+router.post('/get', function (req, res, next) {
     var result = {code: 200};
 
-    try{
+    try {
         var arg = req.body;
         var sellerId = arg.sellerId || 1;
         logger.info("获取系统消息请求， arg:" + JSON.stringify("sellerId:" + sellerId));
@@ -112,49 +147,70 @@ router.post('/editpwd', function (req, res, next) {
 });
 
 // 修改商家信息
-router.post('/update', function (req, res, next) {
+router.post('/update', function (request, response, next) {
     var result = {code: 200};
 
     try {
-        var arg = req.body;
-        var params = {};
-        params.companyName = arg.companyName || "新媒传信";
-        params.loginName = arg.loginName || "卖家测试1号";
-        params.userName = arg.userName || "测试昵称";
-        params.pwdEnc = arg.pwdEnc || "123456";
-        params.mobile = arg.mobile || "13558731840";
-        params.contacts = arg.contacts || "张三";
-        params.tel = arg.tel || "010-88888888";
-        params.email = arg.email || "123456@qq.com";
-        params.provinceId = arg.provinceId || "110000";
-        params.cityId = arg.cityId || "110100";
-        params.countyId = arg.countyId || "110102";
-        params.provinceName = arg.provinceName || "北京市";
-        params.cityName = arg.cityName || "北京市";
-        params.countyName = arg.countyName || "";
-        params.address = arg.address || "地址啦";
-        params.remark = arg.remark || "备注信息";
-        params.bank = arg.bank || "中国人民银行";
-        params.account = arg.account || "10000000000000000";
-        params.accountName = arg.accountName || "李四";
+        var params = request.body;
 
-        logger.info("新增系统消息请求， params:" + JSON.stringify(params));
+        //---------------测试参数-------------------
+        //var arg = request.body;
+        //var params = {};
+        //params.id= arg.id || "15";
+        //params.loginName = arg.loginName || "卖家测试2号 update";
+        ////params.sellerName = arg.sellerName || "卖家昵称111";
+        ////params.pwdEnc = arg.pwdEnc || "123456abc2434";
+        //params.companyName = arg.companyName || "新媒传信";
+        //params.shopName = arg.shopName || "新媒传信shopname";
+        //params.contactName = arg.contactName || "测试联系人名";
+        //params.openBank = arg.openBank || "中国人民银行";
+        //params.accountHolder = arg.accountHolder || "李四2";
+        //params.accountNumber = arg.accountNumber || "1000000000000000";
+        //params.remark = arg.remark || "备注信息";
+        //params.provinceId = arg.provinceId || "110000";
+        //params.provinceName = arg.provinceName || "北京市";
+        //params.cityId = arg.cityId || "110100";
+        //params.cityName = arg.cityName || "北京市";
+        //params.countyId = arg.countyId || "110102";
+        //params.countyName = arg.countyName || "昌平";
+        //params.address = arg.address || "地址";
+        //params.mobile = arg.mobile || "13555555555";
+        //params.tel = arg.tel || "010-88888888";
+        //params.email = arg.email || "12345678@qq.com";
 
-        res.json(result);
-        logger.info("add address response:" + JSON.stringify(result));
+        logger.info("SellerServ-update params:" + JSON.stringify(params));
+
+
+        //if (params.id == null || params.id == "") {
+        //    result.code = 500;
+        //    result.desc = "参数错误";
+        //    response.json(result);
+        //    return;
+        //}
+
+        Seller.updateSeller(params, function (err, data) {
+            logger.info("SellerServ-update response:" + JSON.stringify(data));
+            var brandInfo = [];
+            if (err) {
+                response.json(err);
+                return;
+            }
+            logger.info(" SellerServ-update response:" + JSON.stringify(result));
+            response.json(result);
+        });
     } catch (ex) {
-        logger.error("update address error:" + ex);
+        logger.error("update seller error:" + ex);
         result.code = 500;
         result.desc = "更新系统消息失败";
-        res.json(result);
+        response.json(result);
     }
 });
 
 //商家列表
-router.post('/list', function(req, res, next) {
+router.post('/list', function (req, res, next) {
     var result = {code: 200};
 
-    try{
+    try {
         var arg = req.body;
         var params = {};
         params.userName = arg.userName || "%测试%";
@@ -185,7 +241,7 @@ router.post('/list', function(req, res, next) {
         seller3.contacts = "张三";
         seller3.email = "123456@qq.com";
 
-        var page = {total:3,pageCount:1};
+        var page = {total: 3, pageCount: 1};
         result.page = page;
         var sellerList = [];
         sellerList.push(seller1);
