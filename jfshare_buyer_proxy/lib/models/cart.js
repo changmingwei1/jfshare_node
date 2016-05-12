@@ -52,7 +52,7 @@ Cart.prototype.addCartItem = function(param, callback){
         price: param.price
     });
 
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId,item,2]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId,item,param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-addItem  result:" + JSON.stringify(data));
@@ -70,15 +70,22 @@ Cart.prototype.addCartItem = function(param, callback){
 };
 
 //删除购物车
-Cart.prototype.deleteCartItem = function(userId,cartKeys, callback){
+Cart.prototype.deleteCartItem = function(param, callback){
 
     var cartKeyList = [];
-    for(var i = 0; i < cartKeys.length; i++){
-        var item = new cart_types.CartKey(cartKeys[i]);
+    var cartKey;
+    if(param.source == 1){
+        cartKey = JSON.parse(param.cartKey);
+    }
+    if(param.source == 2){
+        cartKey = param.cartKey;
+    }
+    for(var i = 0; i < cartKey.length; i++){
+        var item = new cart_types.CartKey(cartKey[i]);
         cartKeyList.push(item);
     }
 
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [userId, cartKeyList, 2]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [param.userId, cartKeyList, param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-deleteItem  result:" + JSON.stringify(data));
@@ -97,8 +104,8 @@ Cart.prototype.deleteCartItem = function(userId,cartKeys, callback){
 
 //购物车列表
 Cart.prototype.cartListItem = function(param, callback){
-
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [param.userId, 2]);
+    /*source  0:系统；1：PC；2：无线*/
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [param.userId, param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-listItem  result:" + JSON.stringify(data));
@@ -117,17 +124,17 @@ Cart.prototype.cartListItem = function(param, callback){
 
 //修改购物车中商品的数量
 Cart.prototype.cartUpdateItem = function(param, callback){
-    var cartKey = new cart_types.CartKey({productId:param.productId,skuNum:param.skunum});
+    var cartKey = new cart_types.CartKey({productId:param.productId,skuNum:param.skuNum});
     var item = new cart_types.Item({
         productId:param.productId,
         skuNum:param.skuNum,
         count:param.count,
-        price:param.price || "0",
+        price:param.price,
         wi: param.wi || null
     });
 
     var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "updateItem",
-        [param.userId, null, cartKey, item, 2]);
+        [param.userId, null, cartKey, item, param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-updateItem result:" + JSON.stringify(data[0]));

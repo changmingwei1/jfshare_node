@@ -340,7 +340,9 @@ router.get('/exists', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                resContent.desc = "该手机已存在，不能注册";
+                var value = data[0].value;
+                resContent.value = value;
+                resContent.description = "友情提示【 true:已存在，不能注册；false:不存在，可以注册】";
                 response.json(resContent);
                 logger.info("get buyer response:" + JSON.stringify(resContent));
             }
@@ -438,7 +440,7 @@ router.post('/query', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if(param.ppInfo == null || param.ppInfo == ""){
+        if(param.browser == null || param.browser == ""){
             resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
@@ -643,7 +645,7 @@ router.post('/scoreTotalTest', function (request, response, next) {
                     response.json(error);
                 } else {
                     var score = data[0].score;
-                    resContent.score = {userId: score.userId, amount: score.amount};
+                    resContent.acount = score.acount;
                     response.json(resContent);
                     logger.info("get buyer's Score response:" + JSON.stringify(resContent));
                 }
@@ -901,8 +903,6 @@ router.post('/resetPwd', function (request, response, next) {
         response.json(resContent);
         return;
     }
-    //logger.info("参数为: " + JSON.stringify(args));
-
     Common.validateMsgCaptcha(param, function (err, data) {
         if (err) {
             response.json(err);
@@ -956,7 +956,24 @@ router.post('/changePwd', function (request, response, next) {
         response.json(resContent);
         return;
     }
-
+    if(param.token == null || param.token == ""){
+        resContent.code = 400;
+        resContent.desc = "参数错误";
+        response.json(resContent);
+        return;
+    }
+    if(param.browser == null || param.browser == ""){
+        resContent.code = 400;
+        resContent.desc = "参数错误";
+        response.json(resContent);
+        return;
+    }
+    if(param.ppInfo == null || param.ppInfo == ""){
+        resContent.code = 400;
+        resContent.desc = "参数错误";
+        response.json(resContent);
+        return;
+    }
     logger.info("参数为: " + JSON.stringify(args));
 //暂时去掉鉴权信息
     Buyer.validAuth(args, function (err, data) {

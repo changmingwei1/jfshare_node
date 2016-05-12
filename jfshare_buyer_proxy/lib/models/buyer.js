@@ -191,17 +191,12 @@ Buyer.prototype.buyerIsExist = function(loginName,callback){
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到的信息:" + JSON.stringify(data));
         var res = {};
-        if (err) {
-            logger.error("啥，因为: ======" + err);
+        if (err || data[0].result.code == 1) {
+            logger.error("err，because: ======" + err);
             res.code = 500;
-            res.desc = "不能判断";
+            res.desc = "服务器异常不能判断";
             callback(res, null);
-        }
-        if (data[0].result.code == 1) {
-            res.code = 300;
-            res.desc = "改手机号不存在，可以注册";
-            callback(res, null);
-        }else{
+        } else{
             callback(null, data);
         }
     });
@@ -258,7 +253,7 @@ Buyer.prototype.updateBuyer = function(param,callback){
 
 //重置密码 + 修改密码 new
 Buyer.prototype.newResetBuyerPwd = function(param,callback){
-
+    logger.info("newResetBuyerPwd --params: ======" + JSON.stringify(param));
     var params = new buyer_types.Buyer({
         mobile:param.mobile
     });
