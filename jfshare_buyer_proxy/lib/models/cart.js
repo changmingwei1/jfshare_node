@@ -134,7 +134,7 @@ Cart.prototype.cartUpdateItem = function(param, callback){
     });
 
     var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "updateItem",
-        [param.userId, null, cartKey, item, 2]);
+        [param.userId, null, cartKey, item, param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-updateItem result:" + JSON.stringify(data[0]));
