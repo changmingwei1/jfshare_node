@@ -281,51 +281,51 @@ router.post('/add', function(req, res, next) {
 
 
 //删除购物车项目
-router.post('/delete', function(req, res, next) {
-    var result = {code: 200};
-
-    try {
-        var arg = req.body;
-        var userId = arg.userId || "2";
-        var cartKey = {
-            productId:arg.productId || "1000",
-            skuNum:arg.skuNum || "1-1:100-101"
-        };
-        var source = arg.source;
-        var params = {};
-        params.userId = userId;
-        params.cartKey = cartKey;
-        params.source = source || 2;
-
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
-
-        logger.info("delete cart item request:" + JSON.stringify(params));
-
-        if(params == null || userId == null || cartKey == null || cartKey <= 0) {
-            result.code = 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
-        Cart.deleteCartItem(params, function(err, data){
-            if(err) {
-                res.json(err);
-                return;
-            }
-            res.json(result);
-            logger.info("delete cart item response:" + JSON.stringify(result));
-        });
-    } catch(ex) {
-        /***************************暂时注掉******************************/
-            //logger.error("delete product in cart error:" + ex);
-            //result.code = 500;
-            //result.desc = "删除购物车商品失败";
-        res.json(result);
-    }
-});
+//router.post('/delete', function(req, res, next) {
+//    var result = {code: 200};
+//
+//    try {
+//        var arg = req.body;
+//        var userId = arg.userId || "2";
+//        var cartKey = {
+//            productId:arg.productId || "1000",
+//            skuNum:arg.skuNum || "1-1:100-101"
+//        };
+//        var source = arg.source;
+//        var params = {};
+//        params.userId = userId;
+//        params.cartKey = cartKey;
+//        params.source = source || 2;
+//
+//        params.token = arg.token || "鉴权信息1";
+//        params.ppInfo = arg.ppInfo || "鉴权信息2";
+//
+//        logger.info("delete cart item request:" + JSON.stringify(params));
+//
+//        if(params == null || userId == null || cartKey == null || cartKey <= 0) {
+//            result.code = 400;
+//            result.desc = "请求参数错误";
+//            res.json(result);
+//            return;
+//        }
+//        Cart.deleteCartItem(params, function(err, data){
+//            if(err) {
+//                res.json(err);
+//                return;
+//            }
+//            res.json(result);
+//            logger.info("delete cart item response:" + JSON.stringify(result));
+//        });
+//    } catch(ex) {
+//        /***************************暂时注掉******************************/
+//            //logger.error("delete product in cart error:" + ex);
+//            //result.code = 500;
+//            //result.desc = "删除购物车商品失败";
+//        res.json(result);
+//    }
+//});
 //删除购物车项目
-router.post('/deleteTest', function(req, res, next) {
+router.post('/delete', function(req, res, next) {
     var result = {code: 200};
 
     try {
