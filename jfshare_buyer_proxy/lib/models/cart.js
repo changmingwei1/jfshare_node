@@ -73,8 +73,11 @@ Cart.prototype.addCartItem = function(param, callback){
 Cart.prototype.deleteCartItem = function(param, callback){
 
     var cartKeyList = [];
-    for(var i = 0; i < param.cartKey.length; i++){
-        var item = new cart_types.CartKey(param.cartKey[i]);
+    var cartKey = JSON.parse(param.cartKey);
+
+    logger.info(cartKey);
+    for(var i = 0; i < cartKey.length; i++){
+        var item = new cart_types.CartKey(cartKey[i]);
         cartKeyList.push(item);
     }
 
