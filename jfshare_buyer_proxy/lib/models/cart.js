@@ -117,12 +117,12 @@ Cart.prototype.cartListItem = function(param, callback){
 
 //修改购物车中商品的数量
 Cart.prototype.cartUpdateItem = function(param, callback){
-    var cartKey = new cart_types.CartKey({productId:param.productId,skuNum:param.skunum});
+    var cartKey = new cart_types.CartKey({productId:param.productId,skuNum:param.skuNum});
     var item = new cart_types.Item({
         productId:param.productId,
         skuNum:param.skuNum,
         count:param.count,
-        price:param.price || "0",
+        price:param.price,
         wi: param.wi || null
     });
 
