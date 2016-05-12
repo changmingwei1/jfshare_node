@@ -20,73 +20,6 @@ var AfterSale = require('../lib/models/afterSale');
 var product_types = require("../lib/thrift/gen_code/product_types");
 
 // 订单预览页
-/*router.get('/preview', function(req, res, next) {
- var result = {code:200};
- try{
- var productRes = [];
-
- var arg = req.query;
- var paramters = arg.product;
- var length = paramters.length;
- var params = {};
- params.userId = arg.userId || 2;
- params.token = arg.token || "鉴权信息1";
- params.ppInfo = arg.token || "鉴权信息2";
-
- Address.getDefaultAddress(params, function(err, data) {
- if(err){
- res.json(err);
- return;
- }
- var addressInfo = data[0].addressInfo;
- if(addressInfo != null) {
- result.userName = addressInfo.receiverName;
- result.mobileNo = addressInfo.mobile || "13013001340";
- var addressDes = addressInfo.provinceName + addressInfo.cityName + addressInfo.countyName + addressInfo.address;
- result.address = {addressId: addressInfo.id, addressInfo:addressDes};
- }
-
- var count = 0;
- paramters.forEach(function (param) {
- Product.queryHotSKU(param, function(err, productInfo) {
- if(err){
- //res.json(err);
- //return;
- }
- var productItem = {
- productId:productInfo.product.productId,
- productName:productInfo.product.productName,
- curPrice: productInfo.product.productSku.curPrice,
- imgUrl: productInfo.product.imgKey.split(',')[0]
- };
-
- Product.getStockForSku(param, function(err, stockInfo) {
- if(err){
- //res.json(err);
- return;
- }
- var stock = stockInfo.stockInfo;
- productItem.activeStock = stock.total - stock.lockTotal;
- productRes.push(productItem);
- logger.info("productRes:" + JSON.stringify(productRes));
-
- if(count >= length - 1) {
- result.product = productRes;
- res.json(result);
- logger.info("order preview response:" + JSON.stringify(result));
- }
- count = count + 1;
- });
- });
- });
- });
- } catch(ex) {
- logger.error("produce preview error:" + ex);
- result.code = 500;
- result.desc = "获取用户信息及商品信息失败";
- res.json(result);
- }
- });*/
 router.get('/previewTest', function (req, res, next) {
     var result = {code: 200};
     try {
@@ -99,54 +32,53 @@ router.get('/previewTest', function (req, res, next) {
         arg.token = "鉴权信息1";
         arg.token = "鉴权信息2";
 
-        Address.getDefaultAddress(arg.userId, function (err, data) {
-            if (err) {
-                res.json(err);
-                return;
-            }
-            var addressInfo = data[0].addressInfo;
-            if (addressInfo != null) {
-                result.userName = addressInfo.receiverName;
-                result.mobile = addressInfo.mobile || "13013001340";
-                var addressDes = addressInfo.provinceName + addressInfo.cityName + addressInfo.countyName + addressInfo.address;
-                result.address = {addressId: addressInfo.id, addressInfo: addressDes};
-            }
-
-            var count = 0;
-            paramters.forEach(function (param) {
-                //查询商品指定sku
-                Product.queryHotSKUV(param, function (err, productInfo) {
+        //Address.getDefaultAddress(arg.userId, function (err, data) {
+        //    if (err) {
+        //        res.json(err);
+        //        return;
+        //    }
+        //    var addressInfo = data[0].addressInfo;
+        //    if (addressInfo != null) {
+        //        result.userName = addressInfo.receiverName;
+        //        result.mobile = addressInfo.mobile || "13013001340";
+        //        var addressDes = addressInfo.provinceName + addressInfo.cityName + addressInfo.countyName + addressInfo.address;
+        //        result.address = {addressId: addressInfo.id, addressInfo: addressDes};
+        //    }
+        var count = 0;
+        paramters.forEach(function (param) {
+            //查询商品指定sku
+            Product.queryHotSKUV(param, function (err, productInfo) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                var productItem = {
+                    productId: productInfo.product.productId,
+                    productName: productInfo.product.productName,
+                    curPrice: productInfo.product.productSku.curPrice,
+                    imgUrl: productInfo.product.imgKey.split(',')[0]
+                };
+                //查询sku的库存
+                Product.getStockForSku(param, function (err, stockInfo) {
                     if (err) {
-                        res.json(err);
+                        //res.json(err);
                         return;
                     }
-                    var productItem = {
-                        productId: productInfo.product.productId,
-                        productName: productInfo.product.productName,
-                        curPrice: productInfo.product.productSku.curPrice,
-                        imgUrl: productInfo.product.imgKey.split(',')[0]
-                    };
-                    //查询sku的库存
-                    Product.getStockForSku(param, function (err, stockInfo) {
-                        if (err) {
-                            //res.json(err);
-                            return;
-                        }
-                        var stock = stockInfo.stockInfo;
-                        productItem.activeStock = stock.total - stock.lockTotal;
-                        productRes.push(productItem);
-                        logger.info("productRes:" + JSON.stringify(productRes));
+                    var stock = stockInfo.stockInfo;
+                    productItem.activeStock = stock.total - stock.lockTotal;
+                    productRes.push(productItem);
+                    logger.info("productRes:" + JSON.stringify(productRes));
 
-                        if (count >= length - 1) {
-                            result.product = productRes;
-                            res.json(result);
-                            logger.info("order preview response:" + JSON.stringify(result));
-                        }
-                        count = count + 1;
-                    });
+                    if (count >= length - 1) {
+                        result.product = productRes;
+                        res.json(result);
+                        logger.info("order preview response:" + JSON.stringify(result));
+                    }
+                    count = count + 1;
                 });
             });
         });
+        //});
     } catch (ex) {
         logger.error("produce preview error:" + ex);
         result.code = 500;
@@ -238,7 +170,6 @@ router.post('/preview', function (request, response, next) {
         response.json(result);
     }
 });
-
 //商品详情中点击立即购买  ---> 虚拟
 router.post('/preview2', function (request, response, next) {
     logger.info("进入获取物流信息流程");
@@ -408,7 +339,7 @@ router.post('/submitTest', function (request, response, next) {
 });
 
 //提交订单 --> 虚拟
-router.post('/submit', function (request, response, next)   {
+router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
     try {
@@ -1165,7 +1096,7 @@ router.post('/list', function (request, response, next) {
                                     exchangeCash: order.exchangeCash,
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
-                                    type:2
+                                    type: 2
                                 };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
@@ -1446,7 +1377,7 @@ router.post('/infoTest', function (request, response, next) {
                         result.orderId = orderInfo.orderId;
                         result.postage = orderInfo.postage;
                         result.postage = orderInfo.postage;
-                        result. exchangeScore = orderInfo.exchangeScore;
+                        result.exchangeScore = orderInfo.exchangeScore;
                         result.closingPrice = orderInfo.closingPrice;
                         result.createTime = orderInfo.deliverTime;
                         result.comment = orderInfo.buyerComment;
@@ -1477,8 +1408,8 @@ router.post('/infoTest', function (request, response, next) {
                                     orgPrice: orderInfo.productList[i].orgPrice,
                                     imgUrl: orderInfo.productList[i].imagesUrl,
                                     count: orderInfo.productList[i].count,
-                                    postage:orderInfo.productList[i].postage,
-                                    type:orderInfo.productList[i].postage
+                                    postage: orderInfo.productList[i].postage,
+                                    type: orderInfo.productList[i].postage
                                 });
                             }
                             result.productList = productList;

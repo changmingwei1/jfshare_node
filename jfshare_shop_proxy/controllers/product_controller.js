@@ -22,6 +22,12 @@ router.post('/list', function (req, res, next) {
     try {
         var arg = req.body;
         //var arg = req.query;
+        if(arg.perCount == null || arg.perCount == "" || arg.perCount <= 0){
+            resContent.code = 400;
+            resContent.desc = "请输入每页显示条数";
+            res.json(resContent);
+            return;
+        }
         logger.info("get product list args:" + JSON.stringify(arg));
         Product.queryProductList(arg, function (err, data) {
             var dataArr = [];
