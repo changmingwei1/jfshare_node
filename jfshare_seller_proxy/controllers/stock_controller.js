@@ -14,125 +14,111 @@ var Stock = require('../lib/models/stock');
 var Storehouse = require('../lib/models/storehouse');
 
 
-// ²éÑ¯ÉÌÆ·µÄ×Ü¿â´æ
+// æŸ¥è¯¢å•†å“çš„æ€»åº“å­˜
 /****
  *
- * Õâ¸ö½Ó¿Ú²»Ó¦¸Ã¶ÔÍâ¿ª·Å£¬Ö»ÊÇ·şÎñÆ÷ÄÚ²¿Ö±½Óµ÷ÓÃstock½«¿â´æ×ÜÊıÉèÖÃµ½ÉÌÆ·ÖĞ
+ * è¿™ä¸ªæ¥å£ä¸åº”è¯¥å¯¹å¤–å¼€æ”¾ï¼Œåªæ˜¯æœåŠ¡å™¨å†…éƒ¨ç›´æ¥è°ƒç”¨stockå°†åº“å­˜æ€»æ•°è®¾ç½®åˆ°å•†å“ä¸­
  *
  *
  *
  *
  */
-router.post('/query', function(request, response, next) {
-    //var result = {code: 200};
-    //
-    //try{
-    //    var arg = request.body;
-    //    logger.info("²éÑ¯¶©µ¥ÁĞ±íÇëÇó²ÎÊı£º" + JSON.stringify(arg));
-    //    var params = {};
-    //    //userid ¸ÄÎªÁËuserId  2016.4.12
-    //    params.userId = arg.sellerId || null;
-    //    params.orderStatus = arg.orderstatus;
-    //    params.percount = arg.percount || 20;
-    //    params.curpage = arg.curpage || 1;
-    //    params.userType = arg.userType || 1;
-    //
-    //    if(params.userId == null) {
-    //        result.code = 400;
-    //        result.desc = "Ã»ÓĞÌîĞ´ÓÃ»§£É£Ä";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    Stock.queryProduct(params, function (err, data) {
-    //        if(err){
-    //            response.json(err);
-    //            return;
-    //        }
-    //        response.json(result);
-    //        logger.info("get order list response:" + JSON.stringify(result));
-    //    });
-    //} catch (ex) {
-    //    logger.error("get product stock error:" + ex);
-    //    result.code = 500;
-    //    result.desc = "»ñÈ¡ÉÌÆ·¿â´æÊ§°Ü";
-    //    response.json(result);
-    //}
-});
-
-//²éÑ¯Ä³¸öshuÔÚÄ³¸öÊ¡·İµÄ¿â´æ£¬ÆäÊµ¾ÍÊÇ²éÑ¯Ä³¸ö
-router.post('/quertySku', function(request, response, next) {
-    var result = {code: 200};
-
-    try{
-        var params = request.body;
-        logger.info("²éÑ¯sku¿â´æÇëÇó²ÎÊı£º" + JSON.stringify(arg));
-
-        if(params.skuNum == null ||params.skuNum=="") {
-            result.code = 400;
-            result.desc = "²ÎÊı´íÎó";
-            response.json(result);
-            return;
-        }
-
-        if(params.provinceId == null|| params.provinceId == ""||params.provinceId <=0){
-            result.code = 400;
-            result.desc = "²ÎÊı´íÎó";
-            response.json(result);
-            return;
-        }
-        if(params.sellerId == null|| params.sellerId == ""||params.sellerId <=0){
-            result.code = 400;
-            result.desc = "²ÎÊı´íÎó";
-            response.json(result);
-            return;
-        }
-        if(params.productId == null||params.productId == ""){
-            result.code = 400;
-            result.desc = "²ÎÊı´íÎó";
-            response.json(result);
-            return;
-        }
-        var storehouseId = "";
-        async.waterfall([
-                function (callback) {
-                    Storehouse.list(params, function(err, data) {
-
-
-                        /*********¿â´æÁĞ±í½øĞĞ´¦Àí²éÑ¯************/
-
-                        storehouseId = 1;
-                        logger.info("get storehouse list response:" + JSON.stringify(data));
-                        callback(null,storehouseId);
-                    })
-                },
-                function (storehouseId,callback) {
-                    //²éÑ¯sku¿â´æ
-                    Stock.queryBySkuAndStoreId(params, function (err, data) {
-                        if(err){
-                            response.json(err);
-                            return;
-                        }
-                        response.json(result);
-                        logger.info("quertySku response:" + JSON.stringify(result));
-                    })
-                }
-
-            ],
-            function (err, data) {
-                if (err) {
-                    logger.error("get skuStock error:" + err);
-                } else {
-                    logger.info("get skuStock response:" + JSON.stringify(result));
-                    response.json(result);
-
-                }
-            });
-    } catch (ex) {
-        logger.error("get product stock error:" + ex);
-        result.code = 500;
-        result.desc = "»ñÈ¡ÉÌÆ·¿â´æÊ§°Ü";
-        response.json(result);
-    }
-});
+//router.post('/query', function(request, response, next) {
+//    var result = {code: 200};
+//
+//    try{
+//        var params = request.body;
+//        logger.info("æŸ¥è¯¢è®¢å•åˆ—è¡¨è¯·æ±‚å‚æ•°ï¼š" + JSON.stringify(params));
+//
+//        Stock.queryProductTotal(params, function (err, data) {
+//            if(err){
+//                response.json(err);
+//                return;
+//            }
+//            response.json(data);
+//            logger.info("get order list response:" + JSON.stringify(result));
+//        });
+//    } catch (ex) {
+//        logger.error("get product stock error:" + ex);
+//        result.code = 500;
+//        result.desc = "è·å–å•†å“åº“å­˜å¤±è´¥";
+//        response.json(result);
+//    }
+//});
+//
+////æŸ¥è¯¢æŸä¸ªshuåœ¨æŸä¸ªçœä»½çš„åº“å­˜ï¼Œå…¶å®å°±æ˜¯æŸ¥è¯¢æŸä¸ª
+//router.post('/quertySku', function(request, response, next) {
+//    var result = {code: 200};
+//
+//    try{
+//        var params = request.body;
+//        logger.info("æŸ¥è¯¢skuåº“å­˜è¯·æ±‚å‚æ•°ï¼š" + JSON.stringify(arg));
+//
+//        if(params.skuNum == null ||params.skuNum=="") {
+//            result.code = 400;
+//            result.desc = "å‚æ•°é”™è¯¯";
+//            response.json(result);
+//            return;
+//        }
+//
+//        if(params.provinceId == null|| params.provinceId == ""||params.provinceId <=0){
+//            result.code = 400;
+//            result.desc = "å‚æ•°é”™è¯¯";
+//            response.json(result);
+//            return;
+//        }
+//        if(params.sellerId == null|| params.sellerId == ""||params.sellerId <=0){
+//            result.code = 400;
+//            result.desc = "å‚æ•°é”™è¯¯";
+//            response.json(result);
+//            return;
+//        }
+//        if(params.productId == null||params.productId == ""){
+//            result.code = 400;
+//            result.desc = "å‚æ•°é”™è¯¯";
+//            response.json(result);
+//            return;
+//        }
+//        var storehouseId = "";
+//        async.waterfall([
+//                function (callback) {
+//                    Storehouse.list(params, function(err, data) {
+//
+//
+//                        /*********åº“å­˜åˆ—è¡¨è¿›è¡Œå¤„ç†æŸ¥è¯¢************/
+//
+//                        storehouseId = 1;
+//                        logger.info("get storehouse list response:" + JSON.stringify(data));
+//                        callback(null,storehouseId);
+//                    })
+//                },
+//                function (storehouseId,callback) {
+//                    //æŸ¥è¯¢skuåº“å­˜
+//                    Stock.queryBySkuAndStoreId(params, function (err, data) {
+//                        if(err){
+//                            response.json(err);
+//                            return;
+//                        }
+//                        response.json(result);
+//                        logger.info("quertySku response:" + JSON.stringify(result));
+//                    })
+//                }
+//
+//            ],
+//            function (err, data) {
+//                if (err) {
+//                    logger.error("get skuStock error:" + err);
+//                } else {
+//                    logger.info("get skuStock response:" + JSON.stringify(result));
+//                    response.json(result);
+//
+//                }
+//            });
+//    } catch (ex) {
+//        logger.error("get product stock error:" + ex);
+//        result.code = 500;
+//        result.desc = "è·å–å•†å“åº“å­˜å¤±è´¥";
+//        response.json(result);
+//    }
+//});
 module.exports = router;

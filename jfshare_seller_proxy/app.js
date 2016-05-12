@@ -15,6 +15,7 @@ var subject = require('./controllers/subject_controller');
 var expressOrder = require('./controllers/express_controller');
 var freight = require('./controllers/freight_controller');
 var sellerfreight = require('./controllers/sellerfreight_controller');
+var stock = require('./controllers/stock_controller');
 var app = express();
 
 
@@ -32,6 +33,7 @@ app.use('/seller/product',product);
 app.use('/seller/order',order);
 app.use('/seller/storehouse',storehouse);
 app.use('/seller/expressorder',expressOrder);
+app.use('/seller/stock',stock);
 // error handlers
 
 // catch 404 and forward to error handler
