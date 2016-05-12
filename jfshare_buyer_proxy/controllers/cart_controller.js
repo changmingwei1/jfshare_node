@@ -355,14 +355,14 @@ router.post('/update', function(req, res, next) {
             return;
         }
         var param = {};
-        param.userId = arg.userId || "2";
-        param.productId = arg.productId || "1000";
-        param.skuNum = arg.skuNum || '1-1:100-101';
-        param.count = arg.count || 10;
-        param.price = arg.price || "5000";
-        param.token = arg.token || "鉴权信息1";
-        param.ppInfo = arg.ppInfo || "鉴权信息2";
-        param.storehouseId = arg.storehouseId || "101";
+        param.userId = arg.userId;
+        param.productId = arg.productId;
+        param.skuNum = arg.skuNum;
+        param.count = arg.count;
+        param.price = arg.price;
+        param.token = arg.token;
+        param.ppInfo = arg.ppInfo;
+        param.storehouseId = arg.storehouseId;
         param.source = arg.source || 2;
 
         logger.info("update product in cart request:" + JSON.stringify(param));
@@ -374,8 +374,8 @@ router.post('/update', function(req, res, next) {
 //        }
         Cart.cartUpdateItem(param, function (err, count) {
             if (err) {
-                //res.json(err);
-                //return;
+                res.json(err);
+                return;
             }
             res.json(result);
             logger.info("get cart item count response:" + JSON.stringify(result));
