@@ -354,25 +354,13 @@ router.post('/update', function(req, res, next) {
             res.json(result);
             return;
         }
-        var param = {};
-        param.userId = arg.userId;
-        param.productId = arg.productId;
-        param.skuNum = arg.skuNum;
-        param.count = arg.count;
-        param.price = arg.price;
-        param.token = arg.token;
-        param.ppInfo = arg.ppInfo;
-        param.storehouseId = arg.storehouseId;
-        param.source = arg.source || 2;
-
-        logger.info("update product in cart request:" + JSON.stringify(param));
 //暂时去掉鉴权信息
-//    Buyer.validAuth(args,function(err,data) {
+//    Buyer.validAuth(arg,function(err,data) {
 //        if (err) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.cartUpdateItem(param, function (err, count) {
+        Cart.cartUpdateItem(arg, function (err, count) {
             if (err) {
                 res.json(err);
                 return;
