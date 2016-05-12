@@ -214,7 +214,7 @@ router.post('/preview2', function (request, response, next) {
 });
 
 //提交订单 --> 实物
-router.post('/submit', function (request, response, next) {
+/*router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
     try {
@@ -306,9 +306,9 @@ router.post('/submit', function (request, response, next) {
     } catch (ex) {
         response.json(result);
     }
-});
+});*/
 //提交订单 --> 实物
-router.post('/submitTest', function (request, response, next) {
+router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
     try {
@@ -337,9 +337,8 @@ router.post('/submitTest', function (request, response, next) {
         response.json(result);
     }
 });
-
 //提交订单 --> 虚拟
-router.post('/submit', function (request, response, next) {
+/*router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
     try {
@@ -408,7 +407,7 @@ router.post('/submit', function (request, response, next) {
     } catch (ex) {
         response.json(result);
     }
-});
+});*/
 
 //取消订单
 router.post('/cancelOrder', function (req, res, next) {
