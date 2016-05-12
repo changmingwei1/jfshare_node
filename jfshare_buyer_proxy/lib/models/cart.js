@@ -74,7 +74,10 @@ Cart.prototype.deleteCartItem = function(param, callback){
 
     var cartKeyList = [];
     for(var i = 0; i < param.cartKey.length; i++){
-        var item = new cart_types.CartKey(param.cartKey[i]);
+        var item = new cart_types.CartKey({
+            productId:param.cartKey.productId,
+            skuNum:param.cartKey.skuNum
+        });
         cartKeyList.push(item);
     }
 
