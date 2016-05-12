@@ -190,6 +190,7 @@ router.post('/delete', function(req, res, next) {
 //            return;
 //        }
         logger.info("请求的参数，arg：" + JSON.parse(arg.cartKey));
+        logger.info("请求的参数，arg：" + JSON.stringify(arg));
         Cart.deleteCartItem(arg, function(err, data){
             if(err) {
                 res.json(err);
