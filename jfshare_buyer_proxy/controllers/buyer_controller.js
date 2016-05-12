@@ -645,7 +645,7 @@ router.post('/scoreTotalTest', function (request, response, next) {
                     response.json(error);
                 } else {
                     var score = data[0].score;
-                    resContent.score = {userId: score.userId, amount: score.amount};
+                    resContent.acount = score.acount;
                     response.json(resContent);
                     logger.info("get buyer's Score response:" + JSON.stringify(resContent));
                 }
@@ -903,7 +903,6 @@ router.post('/resetPwd', function (request, response, next) {
         response.json(resContent);
         return;
     }
-    logger.info("参数为: " + JSON.stringify(args));
     Common.validateMsgCaptcha(param, function (err, data) {
         if (err) {
             response.json(err);

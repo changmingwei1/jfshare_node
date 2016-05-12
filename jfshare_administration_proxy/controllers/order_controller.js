@@ -450,7 +450,13 @@ router.post('/cancelOrder', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.userId == null || params.userId == "") {
 
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         if (params.account == null || params.account == "") {
             result.code = 500;
             result.desc = "参数错误";

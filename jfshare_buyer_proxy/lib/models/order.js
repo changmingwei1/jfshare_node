@@ -169,9 +169,10 @@ Order.prototype.orderConfirm = function(arg, callback){
                 productId:product.productId,
                 productName:product.productName,
                 skuNum:product.skuNum,
-                skuDesc:product.skuDesc,
+                skuDesc:product.skuName,
                 count:product.count,
-                curPrice:product.curPrice
+                curPrice:product.curPrice,
+                imagesUrl:product.imgUrl
             }));
         }
         sellerDetailList.push(new trade_types.BuySellerDetail({
@@ -184,10 +185,10 @@ Order.prototype.orderConfirm = function(arg, callback){
 
     var param = new trade_types.BuyInfo({
         userId: arg.userId,
-        userName: arg.userName || "",
+        userName: arg.userName,
         amount: arg.totalSum,
         //payChannel: new pay_types.PayChannel({payChannel:arg.payChannel}),
-        deliverInfo: new order_types.DeliverInfo(arg.deliverInfo),
+        deliverInfo: new order_types.DeliverInfo(arg.addressDesc), /*deliverInfo*/
         sellerDetailList: sellerDetailList,
         fromSource: arg.fromSource,
         fromBatch: arg.fromBatch,

@@ -59,41 +59,57 @@ Product.prototype.queryProductList = function (params, callback) {
 
 Product.prototype.create = function (params, callback) {
 
-    var productSkuList = [];
+    var productSkuItemList = [];
 
-    var productSkuItem = new product_types.ProductSkuItem({
-        sellerClassNum: params,
-        shelf: params,
-        curPrice: params,
-        orgPrice: params,
-        vPicture: params,
-        skuName: params,
-        weight: params,
-        refPrice: params,
-        storehouseId: params,
-        skuNum: params
+    var productSkuList = params.storeinfo;
+    logger.info("productSkuList 长度是---》" + JSON.stringify(productSkuList.length));
+    if (productSkuList.length > 0) {
+        productSkuList.forEach(function (sku) {
+            if (sku != null && sku.key != null) {
+                logger.info("sku 信息是---》" + JSON.stringify(sku));
+                logger.info("sku  key 信息是---》" + JSON.stringify(sku.key));
+                logger.info("sku  value 信息是---》" + JSON.stringify(sku.values));
 
+                for (var i = 0; i < sku.values.length; i++) {
+                   var productSkuItem = new product_types.ProductSkuItem({
+                        //sellerClassNum: params,
+                        //shelf: sku.values[i].location,
+                        curPrice: sku.values[i].sellprice,//销售价
+                        orgPrice: sku.values[i].oriprice,//原价
+                        //vPicture: params,
+                        skuName: sku.key.name,
+                        weight:sku.values[i].weight,
+                        refPrice: sku.values[i].setprice,//结算价
+                        storehouseId: sku.values[i].storeid,
+                        skuNum: sku.key.id
+                    });
+
+                    productSkuItemList.push(productSkuItem);
+                }
+
+
+            }
+        });
+    }
+
+    var productSku = new product_types.ProductSku({
+        skuItems:  productSkuItemList
     });
 
-    productSkuList.push(productSkuItem);
     var product = new product_types.Product({
         sellerId: params.sellerId,
-        productName: params.brandId,
-        viceName: params.brandId,
+        productName: params.productName,
+        viceName: params.viceName,
         subjectId: params.subjectId,
-        brandId: params.subjectId,
-        imgKey: params.img_key,
-        //detailKey:params.detailkey,
-        //maxBuyLimit:params.maxBuyLimit
+        brandId: params.brandId,
+        imgKey: params.imgKey,
         type: params.type,//商品类型 2表示普通商品 3表示虚拟商品
-
         createUserId: params.sellerId,
-        skuTemplate: params.skuTemplate,
-        attribute: params.attribute,
-        productSku: params.productSkuList,
-
-        storehouseIds: params.storehouseIds,
-        postageId: params.postageId
+        skuTemplate: JSON.stringify(params.skuTemplate),
+        attribute:JSON.stringify(params.attribute),
+        productSku:productSku,
+        postageId: params.postageId,
+        detailContent:params.detailContent
     });
 
 
@@ -102,11 +118,11 @@ Product.prototype.create = function (params, callback) {
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("productServ-addProduct  result:" + JSON.stringify(data));
         var res = {};
-        if (err) {
+        if (err||data[0].result==1) {
             logger.error("productServ-addProduct  失败原因 ======" + err);
             res.code = 500;
             res.desc = "创建商品失败";
-            callback(res, null);
+            callback(data, null);
         } else {
             callback(null, data)
         }

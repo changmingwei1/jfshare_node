@@ -214,7 +214,7 @@ router.post('/preview2', function (request, response, next) {
 });
 
 //提交订单 --> 实物
-router.post('/submit', function (request, response, next) {
+/*router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
     try {
@@ -306,9 +306,9 @@ router.post('/submit', function (request, response, next) {
     } catch (ex) {
         response.json(result);
     }
-});
+});*/
 //提交订单 --> 实物
-router.post('/submitTest', function (request, response, next) {
+router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
     try {
@@ -337,9 +337,8 @@ router.post('/submitTest', function (request, response, next) {
         response.json(result);
     }
 });
-
 //提交订单 --> 虚拟
-router.post('/submit', function (request, response, next) {
+/*router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
     try {
@@ -408,7 +407,7 @@ router.post('/submit', function (request, response, next) {
     } catch (ex) {
         response.json(result);
     }
-});
+});*/
 
 //取消订单
 router.post('/cancelOrder', function (req, res, next) {
@@ -1342,6 +1341,51 @@ router.post('/list', function (request, response, next) {
         });
 });
 
+//查询各订单状态的数量
+router.post('/count', function (request, response, next) {
+
+    logger.info("进入获取用户积分接口");
+    var resContent = {code: 200};
+
+    var arg = request.body;
+    arg.token = "鉴权信息1";
+    arg.ppInfo = "鉴权信息2";
+
+    if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
+        resContent.code = 400;
+        resContent.desc = "用户id不能为空且必须大于0";
+        response.json(resContent);
+        return;
+    }
+    if (arg.userType == null || arg.userType == "" || arg.userType <= 0) {
+        resContent.code = 400;
+        resContent.desc = "userType 不能为空【1（买家）、2（卖家）、3 (系统)】";
+        response.json(resContent);
+        return;
+    }
+
+    logger.info("请求参数信息" + JSON.stringify(arg));
+
+    try {
+        Order.orderStateQuery(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            //var orderCountList = data[0].orderCountList;
+            //resContent.orderCountList = orderCountList;
+            resContent.orderCountList = data;
+            response.json(resContent);
+            logger.info("各状态对应的数量是:" + JSON.stringify(resContent));
+        });
+    } catch (ex) {
+        logger.error("不能获取，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "获取用户积分失败";
+        response.json(resContent);
+    }
+});
+
 // 查询订单详情
 router.post('/infoTest', function (request, response, next) {
     var result = {code: 200};
@@ -1400,16 +1444,16 @@ router.post('/infoTest', function (request, response, next) {
                                 productList.push({
                                     productId: orderInfo.productList[i].productId,
                                     productName: orderInfo.productList[i].productName,
-                                    skunum: {
+                                    sku: {
                                         skuNum: orderInfo.productList[i].skuNum,
-                                        skuDesc: orderInfo.productList[i].skuDesc
+                                        skuName: orderInfo.productList[i].skuDesc
                                     },
                                     curPrice: orderInfo.productList[i].curPrice,
                                     orgPrice: orderInfo.productList[i].orgPrice,
                                     imgUrl: orderInfo.productList[i].imagesUrl,
                                     count: orderInfo.productList[i].count,
                                     postage: orderInfo.productList[i].postage,
-                                    type: orderInfo.productList[i].postage
+                                    type: orderInfo.productList[i].type
                                 });
                             }
                             result.productList = productList;
@@ -1477,51 +1521,6 @@ router.post('/infoTest', function (request, response, next) {
         }
     )
     ;
-});
-
-//查询各订单状态的数量
-router.post('/count', function (request, response, next) {
-
-    logger.info("进入获取用户积分接口");
-    var resContent = {code: 200};
-
-    var arg = request.body;
-    arg.token = "鉴权信息1";
-    arg.ppInfo = "鉴权信息2";
-
-    if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
-        resContent.code = 400;
-        resContent.desc = "用户id不能为空且必须大于0";
-        response.json(resContent);
-        return;
-    }
-    if (arg.userType == null || arg.userType == "" || arg.userType <= 0) {
-        resContent.code = 400;
-        resContent.desc = "userType 不能为空【1（买家）、2（卖家）、3 (系统)】";
-        response.json(resContent);
-        return;
-    }
-
-    logger.info("请求参数信息" + JSON.stringify(arg));
-
-    try {
-        Order.orderStateQuery(arg, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
-            //var orderCountList = data[0].orderCountList;
-            //resContent.orderCountList = orderCountList;
-            resContent.orderCountList = data;
-            response.json(resContent);
-            logger.info("各状态对应的数量是:" + JSON.stringify(resContent));
-        });
-    } catch (ex) {
-        logger.error("不能获取，原因是:" + ex);
-        resContent.code = 500;
-        resContent.desc = "获取用户积分失败";
-        response.json(resContent);
-    }
 });
 
 // 查询订单详情--虚拟

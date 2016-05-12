@@ -21,13 +21,8 @@ router.post('/list', function (request, response, next) {
     var result = {code: 200};
 
     try {
-        // var params = request.query;
         var params = request.body;
         logger.info("get product list args:" + JSON.stringify(params));
-
-        var percount = params.percount || 20;
-        var curpage = params.curpage || 1;
-
 
         //参数验证
         if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
@@ -37,85 +32,47 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
+        //参数验证
+        if (params.percount == null || params.percount == "" || params.percount <= 0) {
 
-        //静态数据，设置分页
-        result.page = {total: 100, pageCount: 5};
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        //参数验证
+        if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
 
-        //商品列表
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        Product.queryProductList(params, function (data) {
+            var dataArr = [];
 
-        var productList = [];
+            var code = data[0].result.code;
+            if (code == 1) {
+                result.code = 500;
+                result.desc = "失败";
+                response.json(result);
+            } else {
+                var productSurveyList = data[0].productSurveyList;
+                productSurveyList.forEach(function (a) {
+                    var imgUri = a.imgUrl.split(",")[0];
+                    dataArr.push({productId: a.productId, sellerId: a.sellerId, productName: a.productName,orgPrice: (Number(a.orgPrice)/100).toFixed(2), curPrice: (Number(a.curPrice) /100).toFixed(2),totalSales: a.totalSales, imgUrl: imgUri,activeState: a.activeState,crateTime: a.createTime});
 
-        var product = {};
+                });
 
-        product.productId = "ze160120140359000104";
-        product.productName = "韩国现代（Hyundai）酸奶机HYSZ-5302";
-        product.subjectName = "家具生活,生活日用,酸奶机";
-
-        product.curPrice = "200";
-        product.orgPrice = "250";
-        product.activeStock = "100"; //创建成功
-        product.storeValue = 1000;
-        product.createTime = "2015-06-07";
-        product.imgUrl = "530A5A4577179F1068981FB10BD09BB5.jpg,530A5A4577179F1068981FB10BD09BB5.jpg,530A5A4577179F1068981FB10BD09BB5.jpg";
-        productList.push(product);
-
-
-        var product1 = {};
-        product1.productId = "ze160120162205000328";
-        product1.productName = "哆啦A梦 炫酷伞折叠包套装 DM-4522";
-        product1.subjectName = "家具生活,生活日用,伞";
-
-        product1.curPrice = "100";
-        product1.orgPrice = "150";
-        product1.activeStock = "200"; //审核中
-        product1.storeValue = 1000;
-        product1.createTime = "2015-06-07";
-        product1.imgUrl = "7E2D8E99229FB372F8A9FE609B3350CF.jpg,3CBC93724AF7B26328508DE9F32F68F7.jpg,EB016A0A49D59E8C23ADB2D358E53D51.jpg,E0E865C6BFCD68A36D8CBA65DDAB784A.jpg,AD12C9CBBE0E4916B26CC47F3A270C7F.jpg";
-        productList.push(product1);
-
-        var product2 = {};
-        product2.productId = "ze160120162205000327";
-        product2.productName = "点卡 梦幻西游 49块";
-        product2.subjectName = "虚拟商品,游戏,点券";
-
-        product2.curPrice = "49";
-        product2.orgPrice = "50";
-        product2.activeStock = "300"; //销售中
-        product2.storeValue = 1000;
-        product2.createTime = "2015-06-07";
-        product2.imgUrl = "7E2D8E99229FB372F8A9FE609B3350CF.jpg,3CBC93724AF7B26328508DE9F32F68F7.jpg,EB016A0A49D59E8C23ADB2D358E53D51.jpg,E0E865C6BFCD68A36D8CBA65DDAB784A.jpg,AD12C9CBBE0E4916B26CC47F3A270C7F.jpg";
-        productList.push(product2);
-
-        productList.push(product);
-        productList.push(product1);
-        result.productList = productList;
-
-        response.json(result);
-        return;
-        //Product.queryProductList(arg, function(data){
-        //    var dataArr = [];
-        //
-        //    var code = data[0].result.code;
-        //    if(code == 1){
-        //        result.code = 500;
-        //        result.desc = "失败";
-        //        response.json(result);
-        //    } else {
-        //        var productSurveyList = data[0].productSurveyList;
-        //        productSurveyList.forEach(function(a){
-        //            var imgUri = a.imgUrl.split(",")[0];
-        //            dataArr.push({productId: a.productId, productName: a.productName, curPrice: a.curPrice /100, imgUrl: imgUri});
-        //        });
-        //
-        //        var pagination = data[0].pagination;
-        //        result.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
-        //        result.productList = dataArr;
-        //        response.json(result);
-        //        logger.info("get product list response:" + JSON.stringify(result));
-        //    }
+                var pagination = data[0].pagination;
+                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+                result.productList = dataArr;
+                response.json(result);
+                logger.info("get product list response:" + JSON.stringify(result));
+            }
 
 
-        //});
+        });
     } catch (ex) {
         logger.error("获取商品列表失败:" + ex);
         result.code = 500;
@@ -126,78 +83,72 @@ router.post('/list', function (request, response, next) {
 
 //
 router.post('/creat', function (request, response, next) {
-
+    logger.info("进入获取商品详情接口");
     var result = {code: 200};
+    try{
+        var productInfo = {};
+        var params = request.body;
+        logger.info("creat product list args:" + JSON.stringify(params));
 
-    response.json(result);
+        //参数验证
+        if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
 
-    //logger.info("进入获取商品详情接口");
-    //var result = {code: 200};
-    //
-    //try{
-    //    var productInfo = {};
-    //
-    //   // var params = request.query;
-    //    var params = request.body;
-    //    logger.info("creat product list args:" + JSON.stringify(params));
-    //
-    //    //参数验证
-    //    if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    //参数验证
-    //    if(params.brandId == null || params.brandId == "" ||params.brandId <= 0){
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    //参数验证
-    //    if(params.subjectId == null || params.subjectId == "" ||params.subjectId <= 0){
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    //参数验证
-    //    if(params.productName == null || params.productName == "" ){
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    //参数验证
-    //    if(params.viceName == null || params.viceName == "" ){
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    Product.create(params,function(err,data){
-    //        if(err){
-    //            response.json(err);
-    //        }else{
-    //            logger.info("响应的结果:" + JSON.stringify(resContent));
-    //        }
-    //    });
-    //    response.json(result);
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
 
-    //}catch(ex) {
-    //    logger.error("create product  error:" + ex);
-    //    result.code = 500;
-    //    result.desc = "创建商品失败";
-    //    response.json(result);
-    //}
+        //参数验证
+        if(params.brandId == null || params.brandId == "" ||params.brandId <= 0){
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        //参数验证
+        if(params.subjectId == null || params.subjectId == "" ||params.subjectId <= 0){
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        //参数验证
+        if(params.productName == null || params.productName == "" ){
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        //参数验证
+        if(params.viceName == null || params.viceName == "" ){
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        Product.create(params,function(err,data){
+            if(err){
+                response.json(err);
+                return;
+            }else{
+                logger.info("响应的结果:" + JSON.stringify(data));
+                return;
+            }
+        });
+
+
+    }catch(ex) {
+        logger.error("create product  error:" + ex);
+        result.code = 500;
+        result.desc = "创建商品失败";
+        response.json(result);
+    }
 });
 
 //获取商品信息，进行编辑
