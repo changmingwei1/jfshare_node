@@ -52,7 +52,7 @@ Cart.prototype.addCartItem = function(param, callback){
         price: param.price
     });
 
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId,item,2]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId,item,param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-addItem  result:" + JSON.stringify(data));

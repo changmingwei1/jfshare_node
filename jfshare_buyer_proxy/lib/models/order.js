@@ -169,7 +169,7 @@ Order.prototype.orderConfirm = function(arg, callback){
                 productId:product.productId,
                 productName:product.productName,
                 skuNum:product.skuNum,
-                skuDesc:product.skuDesc,
+                skuDesc:product.skuName,
                 count:product.count,
                 curPrice:product.curPrice
             }));

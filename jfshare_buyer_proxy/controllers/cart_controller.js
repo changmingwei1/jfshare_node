@@ -101,7 +101,7 @@ router.post('/add', function(req, res, next) {
         param.count = arg.count;
         param.price = arg.price;
         param.storehouseId = arg.storehouseId;
-        param.source = arg.source || 2;
+        param.source = arg.source;
         param.token = arg.token || "111";
         param.ppInfo = arg.ppInfo || "222";
         param.browser = arg.browser || "1";
