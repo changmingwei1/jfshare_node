@@ -188,10 +188,10 @@ router.post('/delete', function(req, res, next) {
 
         arg.token = "鉴权信息1";
         arg.ppInfo = "鉴权信息2";
-        var cartKeys = {
-            productId:arg.productId,
-            skuNum:arg.skuNum
-        };
+        //var cartKeys = {
+        //    productId:arg.productId,
+        //    skuNum:arg.skuNum
+        //};
 
         if(arg == null || arg.userId == null) {
             result.code = 400;
@@ -205,7 +205,7 @@ router.post('/delete', function(req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.deleteCartItem(arg.userId,cartKeys, function(err, data){
+        Cart.deleteCartItem(arg.userId,arg.cartKey, function(err, data){
             if(err) {
                 res.json(err);
                 return;
