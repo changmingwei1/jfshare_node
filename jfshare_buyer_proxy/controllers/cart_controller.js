@@ -5,14 +5,14 @@ var express = require('express');
 var router = express.Router();
 
 var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 
 var Product = require('../lib/models/product');
 var Cart = require('../lib/models/cart');
 var Buyer = require('../lib/models/buyer');
 
 /*获取购物车中商品的数量*/
-router.post('/count', function(req, res, next) {
+router.post('/count', function (req, res, next) {
     logger.info("进入查询购物车中商品数量的接口...");
     var result = {code: 200};
     try {
@@ -30,35 +30,35 @@ router.post('/count', function(req, res, next) {
         param.source = source;
         param.browser = browser;
 
-        if(param.userId=="" || param.userId ==null || param.userId <= 0){
+        if (param.userId == "" || param.userId == null || param.userId <= 0) {
             result.code = 400;
             result.desc = "参数错误，用户id不能为空";
             res.json(result);
             return;
         }
 
-        if(param.token=="" || param.token ==null){
+        if (param.token == "" || param.token == null) {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
-        if(param.ppInfo=="" || param.ppInfo ==null){
+        if (param.ppInfo == "" || param.ppInfo == null) {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
-        if(param.browser=="" || param.browser ==null){
+        if (param.browser == "" || param.browser == null) {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
-        logger.info("get cart count request:" +  JSON.stringify(param));
+        logger.info("get cart count request:" + JSON.stringify(param));
 
 //暂时去掉鉴权信息
 //    Buyer.validAuth(param,function(err,data) {
@@ -66,8 +66,8 @@ router.post('/count', function(req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.countItem(param, function(err, count) {
-            if(err){
+        Cart.countItem(param, function (err, count) {
+            if (err) {
                 res.json(err);
                 return;
             }
@@ -75,7 +75,7 @@ router.post('/count', function(req, res, next) {
             res.json(result);
             logger.info("get cart item count response:" + JSON.stringify(result));
         });
-    //});
+        //});
     } catch (ex) {
         logger.error("get product count in cart error:" + ex);
         result.code = 500;
@@ -85,11 +85,11 @@ router.post('/count', function(req, res, next) {
 });
 
 /*新增购物车项目*/
-router.post('/add', function(req, res, next) {
-    var result = {code:200};
-    try{
+router.post('/add', function (req, res, next) {
+    var result = {code: 200};
+    try {
         var arg = req.body;
-        if(arg == null){
+        if (arg == null) {
             result.code = 400;
             res.json(result);
             return;
@@ -106,37 +106,37 @@ router.post('/add', function(req, res, next) {
         param.ppInfo = arg.ppInfo || "222";
         param.browser = arg.browser || "1";
 
-        if(param.userId == null || param.userId == "" || param.userId <= 0){
+        if (param.userId == null || param.userId == "" || param.userId <= 0) {
             result.code = 400;
             result.desc = "用户id参数错误";
             res.json(result);
             return;
         }
-        if(param.price == null || param.price == "" || param.price < 0){
+        if (param.price == null || param.price == "" || param.price < 0) {
             result.code = 400;
             result.desc = "请求价格参数错误";
             res.json(result);
             return;
         }
-        if(param.browser == null || param.browser == ""){
+        if (param.browser == null || param.browser == "") {
             result.code = 400;
             result.desc = "浏览器标识不能为空";
             res.json(result);
             return;
         }
-        if(param.token == null || param.token == ""){
+        if (param.token == null || param.token == "") {
             result.code = 400;
             result.desc = "鉴权信息不能为空";
             res.json(result);
             return;
         }
-        if(param.ppInfo == null || param.ppInfo == ""){
+        if (param.ppInfo == null || param.ppInfo == "") {
             result.code = 400;
             result.desc = "鉴权信息不能为空";
             res.json(result);
             return;
         }
-        if(param.count == null || param.count == "" || param.count <=0){
+        if (param.count == null || param.count == "" || param.count <= 0) {
             result.code = 400;
             result.desc = "购买数量参数有误";
             res.json(result);
@@ -151,16 +151,16 @@ router.post('/add', function(req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.addCartItem(param, function(err, data) {
-            if(err){
+        Cart.addCartItem(param, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
             res.json(result);
             logger.info("add cart item response:" + JSON.stringify(result));
         });
-    //});
-    } catch(ex) {
+        //});
+    } catch (ex) {
         logger.error("add product to cart error:" + ex);
         result.code = 500;
         result.desc = "添加商品到购物车失败";
@@ -169,14 +169,14 @@ router.post('/add', function(req, res, next) {
 });
 
 /*删除购物车项目*/
-router.post('/delete', function(req, res, next) {
+router.post('/delete', function (req, res, next) {
     var result = {code: 200};
 
     try {
         var arg = req.body;
         arg.token = "鉴权信息1";
         arg.ppInfo = "鉴权信息2";
-        if(arg == null || arg.userId == null) {
+        if (arg == null || arg.userId == null) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
@@ -190,16 +190,16 @@ router.post('/delete', function(req, res, next) {
 //        }
         logger.info("请求的参数，arg：" + JSON.stringify(arg));
         //logger.info("请求的参数，arg：" + JSON.stringify(arg));
-        Cart.deleteCartItem(arg, function(err, data){
-            if(err) {
+        Cart.deleteCartItem(arg, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
             res.json(result);
             logger.info("delete cart item response:" + JSON.stringify(result));
         });
-    //});
-    } catch(ex) {
+        //});
+    } catch (ex) {
         logger.error("delete product in cart error:" + ex);
         result.code = 500;
         result.desc = "删除购物车商品失败";
@@ -208,9 +208,9 @@ router.post('/delete', function(req, res, next) {
 });
 
 /*购物车列表*/
-router.post('/list', function(req, res, next) {
+router.post('/list', function (req, res, next) {
     var result = {code: 200};
-    try{
+    try {
         var arg = req.body;
         var param = {};
         param.userId = arg.userId;
@@ -219,7 +219,7 @@ router.post('/list', function(req, res, next) {
         param.ppInfo = arg.ppInfo || "鉴权信息2";
 
         logger.info("get cart list request:" + JSON.stringify(arg));
-        if(param == null || param.userId == null || param.userId == ""){
+        if (param == null || param.userId == null || param.userId == "") {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
@@ -231,22 +231,21 @@ router.post('/list', function(req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.cartListItem(param, function(err, itemList) {
-            if(err){
+        Cart.cartListItem(param, function (err, itemList) {
+            if (err) {
                 res.json(err);
                 return;
             }
             var cartList = [];
-            if(itemList) {
-                //res.json(itemList);
+            if (itemList) {
                 var cartLists = {};
-                itemList.forEach(function(a){
+                itemList.forEach(function (a) {
                     cartLists.sellerId = a.seller.sellerId;
                     cartLists.sellerName = a.seller.sellerName;
                     cartLists.remark = "六一儿童节大优惠";
                     var productList = [];
                     var itemDetailList = itemList[0].itemDetailList;
-                    itemDetailList.forEach(function(b){
+                    itemDetailList.forEach(function (b) {
                         productList.push({
                             productId: b.product.product.productId,
                             productName: b.product.product.productName,
@@ -254,7 +253,7 @@ router.post('/list', function(req, res, next) {
                             cartPrice: b.product.cartPrice,
                             skuCount: b.product.skuCount,
                             count: b.product.count,
-                            sku:{
+                            sku: {
                                 skuNum: b.product.product.productSku.skuNum,
                                 skuName: b.product.product.productSku.skuName
                             },
@@ -263,35 +262,13 @@ router.post('/list', function(req, res, next) {
                     });
                     cartLists.productList = productList;
                 });
-                /*for(var i = 0; i < itemList.length; i++) {
-                    if(itemList[i].itemDetailList  && itemList[i].itemDetailList.length > 0){
-                        for(var j = 0; j < itemList[i].itemDetailList.length; j++){
-                            var product = itemList[i].itemDetailList[j].product;
-                            cartList.push({
-                                sellerId: product.product.sellerId,
-                                /!*sellerName:"测试商家1",*!/
-                                productId: product.product.productId,
-                                productName: product.product.productName,
-                                viceName:product.product.viceName,
-                                remark:product.product.remark,
-                                sku: {
-                                    skuNum: product.product.productSku.skuNum,
-                                    skuName:product.product.productSku.skuName},
-                                count:product.count,
-                                curPrice: product.product.productSku.curPrice,
-                                orgPrice: product.product.productSku.orgPrice,
-                                activeState: product.product.activeState,
-                                imgUrl: product.product.imgKey.split(',')[0]
-                            });
-                        }
-                    }
-                }
+
                 var count = 0;
-                if(cartList.length > 0) {
-                    cartList.forEach(function(item) {
+                if (cartList.length > 0) {
+                    cartList.forEach(function (item) {
                         var param = {productId: item.productId, skunum: item.skunum.skuNum};
-                        Product.getStockForSku(param, function(err, stockInfo) {
-                            if(err){
+                        Product.getStockForSku(param, function (err, stockInfo) {
+                            if (err) {
                                 //res.json(err);
                                 return;
                             }
@@ -299,7 +276,7 @@ router.post('/list', function(req, res, next) {
                             var stockItemMap = stockInfo.stockInfo.stockItemMap;
                             item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
 
-                            if(count >= cartList.length - 1) {
+                            if (count >= cartList.length - 1) {
                                 result.cartList = cartList;
                                 res.json(result);
                                 logger.info("get cart list response:" + JSON.stringify(result));
@@ -310,7 +287,7 @@ router.post('/list', function(req, res, next) {
                 } else {
                     result.cartList = [];
                     res.json(result);
-                }*/
+                }
                 cartList.push(cartLists);
                 result.cartList = cartList;
                 res.json(result);
@@ -320,7 +297,7 @@ router.post('/list', function(req, res, next) {
             }
         });
         //});
-    } catch(ex) {
+    } catch (ex) {
         logger.error("get cart product list error:" + ex);
         result.code = 500;
         result.desc = "获取购物车商品列表失败";
@@ -329,7 +306,7 @@ router.post('/list', function(req, res, next) {
 });
 
 /*修改购物车中商品的数量*/
-router.post('/update', function(req, res, next) {
+router.post('/update', function (req, res, next) {
     var result = {code: 200};
 
     try {
@@ -353,7 +330,7 @@ router.post('/update', function(req, res, next) {
             res.json(result);
             logger.info("get cart item count response:" + JSON.stringify(result));
         });
-    //});
+        //});
     } catch (ex) {
         logger.error("update product in cart error:" + ex);
         result.code = 500;

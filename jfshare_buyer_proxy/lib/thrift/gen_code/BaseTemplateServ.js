@@ -373,19 +373,19 @@ BaseTemplateServ_deleteStorehouseBatch_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
+        var _size48 = 0;
+        var _rtmp352;
         this.storehouseList = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
         {
-          var elem30 = null;
-          elem30 = new ttypes.Storehouse();
-          elem30.read(input);
-          this.storehouseList.push(elem30);
+          var elem54 = null;
+          elem54 = new ttypes.Storehouse();
+          elem54.read(input);
+          this.storehouseList.push(elem54);
         }
         input.readListEnd();
       } else {
@@ -409,12 +409,12 @@ BaseTemplateServ_deleteStorehouseBatch_args.prototype.write = function(output) {
   if (this.storehouseList !== null && this.storehouseList !== undefined) {
     output.writeFieldBegin('storehouseList', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.storehouseList.length);
-    for (var iter31 in this.storehouseList)
+    for (var iter55 in this.storehouseList)
     {
-      if (this.storehouseList.hasOwnProperty(iter31))
+      if (this.storehouseList.hasOwnProperty(iter55))
       {
-        iter31 = this.storehouseList[iter31];
-        iter31.write(output);
+        iter55 = this.storehouseList[iter55];
+        iter55.write(output);
       }
     }
     output.writeListEnd();
@@ -611,18 +611,18 @@ BaseTemplateServ_getStorehouse_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size32 = 0;
-        var _rtmp336;
+        var _size56 = 0;
+        var _rtmp360;
         this.storehouseIds = [];
-        var _etype35 = 0;
-        _rtmp336 = input.readListBegin();
-        _etype35 = _rtmp336.etype;
-        _size32 = _rtmp336.size;
-        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        var _etype59 = 0;
+        _rtmp360 = input.readListBegin();
+        _etype59 = _rtmp360.etype;
+        _size56 = _rtmp360.size;
+        for (var _i61 = 0; _i61 < _size56; ++_i61)
         {
-          var elem38 = null;
-          elem38 = input.readI32();
-          this.storehouseIds.push(elem38);
+          var elem62 = null;
+          elem62 = input.readI32();
+          this.storehouseIds.push(elem62);
         }
         input.readListEnd();
       } else {
@@ -646,12 +646,12 @@ BaseTemplateServ_getStorehouse_args.prototype.write = function(output) {
   if (this.storehouseIds !== null && this.storehouseIds !== undefined) {
     output.writeFieldBegin('storehouseIds', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.storehouseIds.length);
-    for (var iter39 in this.storehouseIds)
+    for (var iter63 in this.storehouseIds)
     {
-      if (this.storehouseIds.hasOwnProperty(iter39))
+      if (this.storehouseIds.hasOwnProperty(iter63))
       {
-        iter39 = this.storehouseIds[iter39];
-        output.writeI32(iter39);
+        iter63 = this.storehouseIds[iter63];
+        output.writeI32(iter63);
       }
     }
     output.writeListEnd();
@@ -1076,19 +1076,19 @@ BaseTemplateServ_deletePostageTemplateBatch_args.prototype.read = function(input
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size40 = 0;
-        var _rtmp344;
+        var _size64 = 0;
+        var _rtmp368;
         this.postageTemplateList = [];
-        var _etype43 = 0;
-        _rtmp344 = input.readListBegin();
-        _etype43 = _rtmp344.etype;
-        _size40 = _rtmp344.size;
-        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        var _etype67 = 0;
+        _rtmp368 = input.readListBegin();
+        _etype67 = _rtmp368.etype;
+        _size64 = _rtmp368.size;
+        for (var _i69 = 0; _i69 < _size64; ++_i69)
         {
-          var elem46 = null;
-          elem46 = new ttypes.PostageTemplate();
-          elem46.read(input);
-          this.postageTemplateList.push(elem46);
+          var elem70 = null;
+          elem70 = new ttypes.PostageTemplate();
+          elem70.read(input);
+          this.postageTemplateList.push(elem70);
         }
         input.readListEnd();
       } else {
@@ -1112,12 +1112,12 @@ BaseTemplateServ_deletePostageTemplateBatch_args.prototype.write = function(outp
   if (this.postageTemplateList !== null && this.postageTemplateList !== undefined) {
     output.writeFieldBegin('postageTemplateList', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.postageTemplateList.length);
-    for (var iter47 in this.postageTemplateList)
+    for (var iter71 in this.postageTemplateList)
     {
-      if (this.postageTemplateList.hasOwnProperty(iter47))
+      if (this.postageTemplateList.hasOwnProperty(iter71))
       {
-        iter47 = this.postageTemplateList[iter47];
-        iter47.write(output);
+        iter71 = this.postageTemplateList[iter71];
+        iter71.write(output);
       }
     }
     output.writeListEnd();
@@ -1314,18 +1314,18 @@ BaseTemplateServ_getPostageTemplate_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size48 = 0;
-        var _rtmp352;
+        var _size72 = 0;
+        var _rtmp376;
         this.postageTemplateIds = [];
-        var _etype51 = 0;
-        _rtmp352 = input.readListBegin();
-        _etype51 = _rtmp352.etype;
-        _size48 = _rtmp352.size;
-        for (var _i53 = 0; _i53 < _size48; ++_i53)
+        var _etype75 = 0;
+        _rtmp376 = input.readListBegin();
+        _etype75 = _rtmp376.etype;
+        _size72 = _rtmp376.size;
+        for (var _i77 = 0; _i77 < _size72; ++_i77)
         {
-          var elem54 = null;
-          elem54 = input.readI32();
-          this.postageTemplateIds.push(elem54);
+          var elem78 = null;
+          elem78 = input.readI32();
+          this.postageTemplateIds.push(elem78);
         }
         input.readListEnd();
       } else {
@@ -1349,12 +1349,12 @@ BaseTemplateServ_getPostageTemplate_args.prototype.write = function(output) {
   if (this.postageTemplateIds !== null && this.postageTemplateIds !== undefined) {
     output.writeFieldBegin('postageTemplateIds', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.postageTemplateIds.length);
-    for (var iter55 in this.postageTemplateIds)
+    for (var iter79 in this.postageTemplateIds)
     {
-      if (this.postageTemplateIds.hasOwnProperty(iter55))
+      if (this.postageTemplateIds.hasOwnProperty(iter79))
       {
-        iter55 = this.postageTemplateIds[iter55];
-        output.writeI32(iter55);
+        iter79 = this.postageTemplateIds[iter79];
+        output.writeI32(iter79);
       }
     }
     output.writeListEnd();
@@ -1409,6 +1409,114 @@ BaseTemplateServ_getPostageTemplate_result.prototype.read = function(input) {
 
 BaseTemplateServ_getPostageTemplate_result.prototype.write = function(output) {
   output.writeStructBegin('BaseTemplateServ_getPostageTemplate_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BaseTemplateServ_calculatePostage_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+BaseTemplateServ_calculatePostage_args.prototype = {};
+BaseTemplateServ_calculatePostage_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case -1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.CalculatePostageParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BaseTemplateServ_calculatePostage_args.prototype.write = function(output) {
+  output.writeStructBegin('BaseTemplateServ_calculatePostage_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, -1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BaseTemplateServ_calculatePostage_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BaseTemplateServ_calculatePostage_result.prototype = {};
+BaseTemplateServ_calculatePostage_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.CalculatePostageResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BaseTemplateServ_calculatePostage_result.prototype.write = function(output) {
+  output.writeStructBegin('BaseTemplateServ_calculatePostage_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -1994,6 +2102,53 @@ BaseTemplateServClient.prototype.recv_getPostageTemplate = function(input,mtype,
   }
   return callback('getPostageTemplate failed: unknown result');
 };
+BaseTemplateServClient.prototype.calculatePostage = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_calculatePostage(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_calculatePostage(param);
+  }
+};
+
+BaseTemplateServClient.prototype.send_calculatePostage = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('calculatePostage', Thrift.MessageType.CALL, this.seqid());
+  var args = new BaseTemplateServ_calculatePostage_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BaseTemplateServClient.prototype.recv_calculatePostage = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BaseTemplateServ_calculatePostage_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('calculatePostage failed: unknown result');
+};
 BaseTemplateServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -2365,6 +2520,36 @@ BaseTemplateServProcessor.prototype.process_getPostageTemplate = function(seqid,
     this._handler.getPostageTemplate(args.postageTemplateIds,  function (err, result) {
       var result = new BaseTemplateServ_getPostageTemplate_result((err != null ? err : {success: result}));
       output.writeMessageBegin("getPostageTemplate", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BaseTemplateServProcessor.prototype.process_calculatePostage = function(seqid, input, output) {
+  var args = new BaseTemplateServ_calculatePostage_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.calculatePostage.length === 1) {
+    Q.fcall(this._handler.calculatePostage, args.param)
+      .then(function(result) {
+        var result = new BaseTemplateServ_calculatePostage_result({success: result});
+        output.writeMessageBegin("calculatePostage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BaseTemplateServ_calculatePostage_result(err);
+        output.writeMessageBegin("calculatePostage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.calculatePostage(args.param,  function (err, result) {
+      var result = new BaseTemplateServ_calculatePostage_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("calculatePostage", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
