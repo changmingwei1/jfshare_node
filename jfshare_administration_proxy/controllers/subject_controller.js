@@ -306,7 +306,6 @@ router.post('/updateAttributes', function (request, response, next) {
 // 获取品牌关联的类目列表
 router.post('/getListforBrand', function (request, response, next) {
     var result = {code: 200};
-
     try {
         var params = request.body;
 
@@ -317,7 +316,6 @@ router.post('/getListforBrand', function (request, response, next) {
             response.json(result);
             return;
         }
-
 
         Subject.getListforBrand(params, function (error, data) {
             if (error) {

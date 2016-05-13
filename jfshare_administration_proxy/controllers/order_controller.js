@@ -68,6 +68,7 @@ router.post('/list', function (request, response, next) {
                                     username: order.username,
                                     cancelName: order.cancelName,
                                     sellerName: order.sellerName,
+                                    sellerId:order.sellerId,
                                     createTime: order.createTime,
                                     expressNo: order.expressNo,
                                     expressName: order.expressName,
@@ -860,29 +861,37 @@ router.post('/getExpressInfo', function (request, response, next) {
 //获取物流商列表--不能获取
 router.post('/expresslist', function (request, response, next) {
     logger.info("进入取消订单流程");
-    var result = {code: 200};
 
-    try {
+    var result = {code:200,expressList:[{
 
-        var params = request.body;
+    },{
 
-        Express.queryList(params, function (err, data) {
-            if (err) {
-                response.json(error);
-                return;
-            }
+    },{
 
+    }]}
+    //var result = {code: 200};
 
-            response.json(data);
-            return;
-        });
-
-    } catch (ex) {
-        logger.error("查询物流商列表失败：" + ex);
-        result.code = 500;
-        result.desc = "查询物流商列表失败";
-        response.json(result);
-    }
+    //try {
+    //
+    //    var params = request.body;
+    //
+    //    Express.queryList(params, function (err, data) {
+    //        if (err) {
+    //            response.json(error);
+    //            return;
+    //        }
+    //
+    //
+    //        response.json(data);
+    //        return;
+    //    });
+    //
+    //} catch (ex) {
+    //    logger.error("查询物流商列表失败：" + ex);
+    //    result.code = 500;
+    //    result.desc = "查询物流商列表失败";
+    //    response.json(result);
+    //}
 });
 
 
