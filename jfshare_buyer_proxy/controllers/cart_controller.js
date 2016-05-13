@@ -263,7 +263,7 @@ router.post('/list', function (req, res, next) {
                     cartLists.productList = productList;
                 });
 
-                var count = 0;
+                /*var count = 0;
                 if (cartList.length > 0) {
                     cartList.forEach(function (item) {
                         var param = {productId: item.productId, skunum: item.skunum.skuNum};
@@ -287,7 +287,7 @@ router.post('/list', function (req, res, next) {
                 } else {
                     result.cartList = [];
                     res.json(result);
-                }
+                }*/
                 cartList.push(cartLists);
                 result.cartList = cartList;
                 res.json(result);
