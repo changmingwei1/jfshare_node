@@ -68,6 +68,7 @@ router.post('/list', function (request, response, next) {
                                     username: order.username,
                                     cancelName: order.cancelName,
                                     sellerName: order.sellerName,
+                                    sellerId:order.sellerId,
                                     createTime: order.createTime,
                                     expressNo: order.expressNo,
                                     expressName: order.expressName,
@@ -736,14 +737,6 @@ router.post('/updateExpressInfo', function (request, response, next) {
     try {
 
         var params = request.body;
-
-        params.sellerId = "1"//商家id
-        params.expressNo = "123321231231"//物流单id
-        params.orderId = "5300025"//订单id
-        params.expressId = "24"//物流公司id
-        params.expressName = "测试快递111"//物流公司名字
-        params.remark = "112" //备注
-
         if (params.sellerId == null || params.sellerId == "") {
 
             result.code = 500;
@@ -759,7 +752,6 @@ router.post('/updateExpressInfo', function (request, response, next) {
             response.json(result);
             return;
         }
-        //params.expressId,params.expressNo,params.expressName
         if (params.expressId == null || params.expressId == "") {
 
             result.code = 500;
@@ -860,29 +852,42 @@ router.post('/getExpressInfo', function (request, response, next) {
 //获取物流商列表--不能获取
 router.post('/expresslist', function (request, response, next) {
     logger.info("进入取消订单流程");
-    var result = {code: 200};
 
-    try {
+    var result = {code:200,expressList:[{
+        expressId:1,
+        expressname:"圆通速递"
+    },{
+        expressId:2,
+        expressname:"韵达快递"
+    },{
+        expressId:3,
+        expressname:"申通快递"
+    }]};
 
-        var params = request.body;
+    response.json(result)
+    //var result = {code: 200};
 
-        Express.queryList(params, function (err, data) {
-            if (err) {
-                response.json(error);
-                return;
-            }
-
-
-            response.json(data);
-            return;
-        });
-
-    } catch (ex) {
-        logger.error("查询物流商列表失败：" + ex);
-        result.code = 500;
-        result.desc = "查询物流商列表失败";
-        response.json(result);
-    }
+    //try {
+    //
+    //    var params = request.body;
+    //
+    //    Express.queryList(params, function (err, data) {
+    //        if (err) {
+    //            response.json(error);
+    //            return;
+    //        }
+    //
+    //
+    //        response.json(data);
+    //        return;
+    //    });
+    //
+    //} catch (ex) {
+    //    logger.error("查询物流商列表失败：" + ex);
+    //    result.code = 500;
+    //    result.desc = "查询物流商列表失败";
+    //    response.json(result);
+    //}
 });
 
 

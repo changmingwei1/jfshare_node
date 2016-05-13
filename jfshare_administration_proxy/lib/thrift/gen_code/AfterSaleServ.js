@@ -8,6 +8,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var result_ttypes = require('./result_types')
+var pagination_ttypes = require('./pagination_types')
 
 
 var ttypes = require('./afterSale_types');
@@ -340,12 +341,16 @@ AfterSaleServ_queryAfterSale_result.prototype.write = function(output) {
 AfterSaleServ_queryAfterSaleOrder_args = function(args) {
   this.userType = null;
   this.userId = null;
+  this.pagination = null;
   if (args) {
     if (args.userType !== undefined) {
       this.userType = args.userType;
     }
     if (args.userId !== undefined) {
       this.userId = args.userId;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -377,6 +382,14 @@ AfterSaleServ_queryAfterSaleOrder_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -396,6 +409,11 @@ AfterSaleServ_queryAfterSaleOrder_args.prototype.write = function(output) {
   if (this.userId !== null && this.userId !== undefined) {
     output.writeFieldBegin('userId', Thrift.Type.I32, 2);
     output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -607,7 +625,7 @@ AfterSaleServClient.prototype.recv_queryAfterSale = function(input,mtype,rseqid)
   }
   return callback('queryAfterSale failed: unknown result');
 };
-AfterSaleServClient.prototype.queryAfterSaleOrder = function(userType, userId, callback) {
+AfterSaleServClient.prototype.queryAfterSaleOrder = function(userType, userId, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -618,20 +636,21 @@ AfterSaleServClient.prototype.queryAfterSaleOrder = function(userType, userId, c
         _defer.resolve(result);
       }
     };
-    this.send_queryAfterSaleOrder(userType, userId);
+    this.send_queryAfterSaleOrder(userType, userId, pagination);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_queryAfterSaleOrder(userType, userId);
+    this.send_queryAfterSaleOrder(userType, userId, pagination);
   }
 };
 
-AfterSaleServClient.prototype.send_queryAfterSaleOrder = function(userType, userId) {
+AfterSaleServClient.prototype.send_queryAfterSaleOrder = function(userType, userId, pagination) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('queryAfterSaleOrder', Thrift.MessageType.CALL, this.seqid());
   var args = new AfterSaleServ_queryAfterSaleOrder_args();
   args.userType = userType;
   args.userId = userId;
+  args.pagination = pagination;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -767,8 +786,8 @@ AfterSaleServProcessor.prototype.process_queryAfterSaleOrder = function(seqid, i
   var args = new AfterSaleServ_queryAfterSaleOrder_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.queryAfterSaleOrder.length === 2) {
-    Q.fcall(this._handler.queryAfterSaleOrder, args.userType, args.userId)
+  if (this._handler.queryAfterSaleOrder.length === 3) {
+    Q.fcall(this._handler.queryAfterSaleOrder, args.userType, args.userId, args.pagination)
       .then(function(result) {
         var result = new AfterSaleServ_queryAfterSaleOrder_result({success: result});
         output.writeMessageBegin("queryAfterSaleOrder", Thrift.MessageType.REPLY, seqid);
@@ -783,7 +802,7 @@ AfterSaleServProcessor.prototype.process_queryAfterSaleOrder = function(seqid, i
         output.flush();
       });
   } else {
-    this._handler.queryAfterSaleOrder(args.userType, args.userId,  function (err, result) {
+    this._handler.queryAfterSaleOrder(args.userType, args.userId, args.pagination,  function (err, result) {
       var result = new AfterSaleServ_queryAfterSaleOrder_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryAfterSaleOrder", Thrift.MessageType.REPLY, seqid);
       result.write(output);
