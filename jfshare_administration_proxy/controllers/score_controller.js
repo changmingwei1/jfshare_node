@@ -21,11 +21,13 @@ router.post('/socrelist', function (request, response, next) {
                 response.json(err);
                 return;
             }
+            result.scoreList = data[0].scoreUsers;
             logger.info("socrelist result:" + JSON.stringify(data));
-            response.json(data);
+            response.json(result);
+            return;
         });
 
-        //result.scoreList = scoreList;
+
 
     } catch (ex) {
         logger.error("获取积分列表错误:" + ex);
@@ -52,20 +54,19 @@ router.post('/scoreinfolist', function (request, response, next) {
             return;
         }
 
-        if (params.userId == null || params.userId == "" || params.userId <= 0) {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.userId == null || params.userId == "" || params.userId <= 0) {
+        if (params.curPage == null || params.curPage == "" || params.curPage <= 0) {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
 
-
+        if (params.perCount == null || params.perCount == "" || params.perCount <= 0) {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         //参数校验
         Score.getScoreDetail(params, function (err, data) {
             if (err) {
