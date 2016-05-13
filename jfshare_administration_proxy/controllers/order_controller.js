@@ -15,14 +15,9 @@ var afterSale = require('../lib/models/afterSale');
 var Express = require('../lib/models/express');
 // 查询订单列表
 router.post('/list', function (request, response, next) {
-
     var result = {code: 200};
-
-
     var params = request.body;
-
     logger.info("查询订单列表请求参数：" + JSON.stringify(params));
-
 
     if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
         result.code = 400;
@@ -149,7 +144,6 @@ router.post('/list', function (request, response, next) {
                 response.json(results[0]);
                 return;
             }
-
             if (err == null && err != 3) {
                 logger.info("shuju------------->" + JSON.stringify(results));
                 result = results[0];
@@ -165,7 +159,7 @@ router.post('/list', function (request, response, next) {
             }
         });
 });
-// 查询订单详情
+//查询订单详情
 router.post('/info', function (request, response, next) {
     var result = {code: 200};
 
@@ -737,6 +731,7 @@ router.post('/updateExpressInfo', function (request, response, next) {
     try {
 
         var params = request.body;
+        logger.info("进入更新物流单流程-->参数"+JSON.stringify(params));
         if (params.sellerId == null || params.sellerId == "") {
 
             result.code = 500;
