@@ -38,13 +38,13 @@ Score.prototype.getScoreDetail = function (params, callback) {
         userId:params.userId,
         tradeTime:params.tradeTime,
         inOrOut:params.inOrOut,
-        type:params.type,
+        type:params.scoreType,
         beginTime:params.beginTime,
         endTime:params.endTime
     });
     var pagination = new pagination_types.Pagination({
-        currentPage: params.curpage,
-        numPerPage: params.percount
+        currentPage: params.curPage,
+        numPerPage: params.perCount
     });
     //获取客户端
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreTrade', [coreTradeQueryParam,pagination]);
