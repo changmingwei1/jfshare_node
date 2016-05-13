@@ -315,13 +315,21 @@ router.post('/submit', function (request, response, next) {
         var arg = request.body;
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 
-        if (arg == null || arg.userId == null || arg.addressDesc == null ||
+        if (arg == null || arg.userId == null || arg.deliverInfo == null ||
             arg.sellerDetailList == null) {
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
             response.json(result);
             return;
         }
+
+        /*
+        * 1 根据省份，获取仓库信息storehouseId
+        * 2 根据storehouseId，productId，skuNum查询库存接口【库存数量，锁定数量】
+        *
+        * */
+
+
         Order.orderConfirm(arg, function (err, orderIdList) {
             if (err) {
                 response.json(err);

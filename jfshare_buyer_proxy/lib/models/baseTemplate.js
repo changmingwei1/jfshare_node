@@ -18,82 +18,40 @@ var pay_types = require('../thrift/gen_code/pay_types');
 var trade_types = require('../thrift/gen_code/trade_types');
 var buyer_types = require('../thrift/gen_code/buyer_types');
 var common_types = require('../thrift/gen_code/common_types');
-var baseTemplate = require('../thrift/gen_code/baseTemplate_types');
+var baseTemplate_types = require('../thrift/gen_code/baseTemplate_types');
 
 function BaseTemplate(){}
 
-//添加收货地址
-BaseTemplate.prototype.addAddress = function(param,  callback) {
+/*邮费计算*/
+BaseTemplate.prototype.calculatePostage = function(param,  callback) {
 
-    var addrInfo = new address_types.AddressInfo({
-        userId: param.userId,
-        receiverName: param.receiverName,
-        mobile: param.mobile,
-        provinceId: param.provinceId,
-        provinceName: param.provinceName,
-        cityId: param.cityId,
-        cityName: param.cityName,
-        countyId:param.countyId,
-        countyName:param.countyName,
-        address: param.address,
-        postCode: param.postCode,
-        isDefault: param.isDefault
+    var productPostageBasicList = [];
+    var sellerPostageBasicList = [];
+    var productPostageBasic = ({
+        productId:param.productId,
+        templateId:param.templateId,
+        number:param.number,
+        weight:param.weight,
+        amount:param.amount
+    });
+    productPostageBasicList.push(productPostageBasic);
+    sellerPostageBasicList.push(productPostageBasicList);
+
+    var params = new baseTemplate_types.CalculatePostageParam({
+        sendToProvince: param.sendToProvince,
+        sellerPostageBasicList:sellerPostageBasicList
     });
 
-    logger.info("调用addressServ-addAddress  args:" + JSON.stringify(addrInfo));
-
-    var addressServ = new Lich.InvokeBag(Lich.ServiceKey.AddressServer, "addAddress", addrInfo);
+    logger.info("调用邮费计算，  args:" + JSON.stringify(params));
+    var addressServ = new Lich.InvokeBag(Lich.ServiceKey.AddressServer, "calculatePostage", params);
 
     Lich.wicca.invokeClient(addressServ, function(err, data) {
-        logger.info("调用addressServ-addAddress  result:" + JSON.stringify(data));
+        logger.info("调用邮费计算，  result:" + JSON.stringify(data));
         var res = {};
-        if(err){
-            logger.error("调用addressServ-addAddress失败  失败原因 ======" + err);
+        if(err || data[0].result.code == "1"){
+            logger.error("调用邮费计算失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "添加收货地址信息失败！";
-            callback(res, null);
-        }
-        // data[0].result.code == "1"
-        if(data[0].result.code==1){
-            res.code = 500;
-            res.desc =data[0].result.failDescList[0].desc ;
-            callback(res, null);
-        }
-        else {
-            callback(null, null);
-        }
-    });
-};
-
-//修改收货地址,包含设为默认
-BaseTemplate.prototype.updateAddress = function(param,  callback) {
-
-    var addrInfo = new address_types.AddressInfo({
-        userId: param.userId,
-        id:param.addrId,
-        receiverName: param.receiverName,
-        mobile: param.mobile,
-        provinceId: param.provinceId,
-        provinceName: param.provinceName,
-        cityId: param.cityId,
-        cityName: param.cityName,
-        countyId:param.countyId,
-        countyName:param.countyName,
-        address: param.address,
-        postCode: param.postCode,
-        isDefault: param.isDefault
-    });
-
-    logger.info("调用addressServ-updateAddress  args:" + JSON.stringify(addrInfo));
-    var addressServ = new Lich.InvokeBag(Lich.ServiceKey.AddressServer, "updateAddress", addrInfo);
-
-    Lich.wicca.invokeClient(addressServ, function(err, data) {
-        logger.info("调用addressServ-updateAddress  result:" + JSON.stringify(data));
-        var res = {};
-        if(err || data[0].code == "1"){
-            logger.error("调用addressServ-updateAddress失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "列新收货地址信息失败！";
+            res.desc = "邮费计算失败！";
             callback(res, null);
         } else {
             callback(null, null);
