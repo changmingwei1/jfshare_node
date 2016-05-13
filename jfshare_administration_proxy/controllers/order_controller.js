@@ -730,7 +730,7 @@ router.post('/updateExpressInfo', function (request, response, next) {
 
     try {
         var params = request.body;
-
+        logger.info("进入更新物流单流程---params"+JSON.stringify(params));
         if (params.sellerId == null || params.sellerId == "") {
 
             result.code = 500;
@@ -796,7 +796,7 @@ router.post('/getExpressInfo', function (request, response, next) {
     try {
 
         var params = request.body;
-        logger.info("进入取消订单流程" + JSON.stringify(params));
+        logger.info("进入获取物流单流程" + JSON.stringify(params));
         //卖家
         params.userType = 2;
         if (params.sellerId == null || params.sellerId == "") {
