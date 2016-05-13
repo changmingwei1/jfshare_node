@@ -31,12 +31,10 @@ router.post('/list', function (req, res, next) {
         logger.info("get product list args:" + JSON.stringify(arg));
         Product.queryProductList(arg, function (err, data) {
             var dataArr = [];
-
-            var code = data[0].result.code;
-            if (err || code == 1) {
+            if (err) {
                 res.json(err);
             } else {
-                logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
+                logger.info("调用productServ-queryProductList result:" + JSON.stringify(data));
                 var productSurveyList = data[0].productSurveyList;
                 productSurveyList.forEach(function (a) {
                     var imgUri = a.imgUrl.split(",")[0];
@@ -69,7 +67,6 @@ router.post('/list', function (req, res, next) {
                 logger.info("get product list response:" + JSON.stringify(resContent));
             }
         });
-
     } catch (ex) {
 
         logger.error("获取商品列表失败:" + ex);

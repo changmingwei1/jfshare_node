@@ -47,16 +47,22 @@ Product.prototype.queryProductList = function(params, callback){
     // 调用 productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
-        if(err || data[0].result.code == 1){
+        var ret ={};
+        if(err){
             logger.error("调用productServ-queryProductList失败  失败原因 ======" + err);
             ret.code = 500;
             ret.desc = "查询商品列表失败！";
             callback(ret,null);
             return;
-        }else{
+        }else if(data[0].result.code == 1 && data[0].result.productSurveyList == null){
+            ret.code = 200;
+            ret.desc = "列表为空";
+            ret.productList = [];
+            callback(ret,null);
             logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
+        }else{
+            callback(null,data);
         }
-        callback(null,data);
     });
 };
 
