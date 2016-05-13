@@ -81,12 +81,11 @@ Seller.prototype.isLoginNameExist = function (params, callback) {
 //查询单个卖家
 Seller.prototype.querySeller = function (params, callback) {
 
-
     var sellerRetParam = new seller_types.SellerRetParam({
         baseTag: 1
     });
 
-
+    logger.info("SellerServ-get params:" + JSON.stringify(params));
     //获取client
     var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'querySeller', [params.sellerId, sellerRetParam]);
     Lich.wicca.invokeClient(sellerServ, function (err, data) {
@@ -95,7 +94,7 @@ Seller.prototype.querySeller = function (params, callback) {
         if (err || data[0].result.code == "1") {
             logger.error("can't get seller because: ======" + err);
             res.code = 500;
-            res.desc = "获取seller失败";
+            res.desc = "获取商家信息失败";
             callback(res, null);
         } else {
             callback(null, data);
@@ -136,9 +135,10 @@ Seller.prototype.querySellerBatch = function (params, callback) {
 Seller.prototype.updateSeller = function (params, callback) {
 
     var seller = new seller_types.Seller({
+        sellerId: params.sellerId,
         loginName: params.loginName,
         //sellerName: params.sellerName,
-        //pwdEnc: params.pwdEnc,
+        pwdEnc: params.pwdEnc,
         companyName: params.companyName,
         shopName: params.shopName,
         contactName: params.contactName,
@@ -230,6 +230,90 @@ Seller.prototype.signout = function (params, callback) {
             callback(null, data);
         }
     });
-}
-;
+};
+
+//修改密码
+Seller.prototype.resetSellerPwd = function (params, callback) {
+
+    var seller = new seller_types.Seller({
+        sellerId: params.sellerId,
+        pwdEnc: params.pwdEnc
+    });
+    logger.info("seller resetSellerPwd seller :" + JSON.stringify(seller));
+//获取client
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'resetSellerPwd', [params.newPwd,seller]);
+    Lich.wicca.invokeClient(sellerServ, function (err, data) {
+        logger.info("seller resetSellerPwd result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("can't seller resetSellerPwd result because: ======" + err);
+            res.code = 500;
+            res.desc = "密码修改失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//查询卖家列表
+Seller.prototype.querySellerList = function (params, callback) {
+    logger.info("sellerServ list params:" + JSON.stringify(params));
+    var sellerParam = new seller_types.Seller({
+        //sellerId:params.sellerId,
+        loginName:params.loginName,
+        sellerName:params.userName
+    });
+    var pagination = new pagination_types.Pagination({
+        currentPage:params.curPage,
+        numPerPage:params.perCount
+    });
+
+    logger.info("sellerServ list sellerParam-after:" + JSON.stringify(sellerParam));
+    //获取client
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'querySellerList', [sellerParam, pagination]);
+    Lich.wicca.invokeClient(sellerServ, function (err, data) {
+        logger.info("sellerServ list result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("can't get seller list result because: ======" + err);
+            res.code = 500;
+            res.desc = "获取卖家列表失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//查询卖家列表
+Seller.prototype.querySellerList = function (params, callback) {
+    logger.info("sellerServ list params:" + JSON.stringify(params));
+    var sellerParam = new seller_types.Seller({
+        //sellerId:params.sellerId,
+        loginName:params.loginName,
+        sellerName:params.userName
+    });
+    var pagination = new pagination_types.Pagination({
+        currentPage:params.curPage,
+        numPerPage:params.perCount
+    });
+
+    logger.info("sellerServ list sellerParam-after:" + JSON.stringify(sellerParam));
+    //获取client
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'querySellerList', [sellerParam, pagination]);
+    Lich.wicca.invokeClient(sellerServ, function (err, data) {
+        logger.info("sellerServ list result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("can't get seller list result because: ======" + err);
+            res.code = 500;
+            res.desc = "获取卖家列表失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Seller();
