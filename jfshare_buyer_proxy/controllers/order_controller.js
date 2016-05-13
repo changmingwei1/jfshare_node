@@ -315,7 +315,7 @@ router.post('/submit', function (request, response, next) {
         var arg = request.body;
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 
-        if (arg == null || arg.userId == null || arg.deliverInfo == null ||
+        if (arg == null || arg.userId == null || arg.addressDesc == null ||
             arg.sellerDetailList == null) {
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
