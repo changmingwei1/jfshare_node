@@ -1302,7 +1302,7 @@ router.post('/list', function (request, response, next) {
             },
             function (callback) {
                 try {
-                    if (params.orderState == null) {
+                    if (params.orderState == null || params.orderState == "") {
                         AfterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
                                 return callback(2, null);
