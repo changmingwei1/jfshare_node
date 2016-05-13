@@ -146,9 +146,6 @@ router.post('/get', function (request, response, next) {
 });
 //品牌列表
 router.post('/list', function(request, response, next) {
-
-
-
     var result = {code: 200};
     try{
         var params = request.body;
@@ -171,9 +168,9 @@ router.post('/list', function(request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                logger.info("query brandlist   result:" + JSON.stringify(result));
+
                 var page = {total:data[0].total , pageCount:data[0].pageCount};
-               // result.
+                logger.info("query brandlist   result:" + JSON.stringify(page));
                 var brands = data[0].brandInfo;
                 var brandList = [];
                 if(data[0].total!=0){
@@ -189,7 +186,7 @@ router.post('/list', function(request, response, next) {
                     });
                 }
 
-
+                result.page = page;
                 result.brandList = brandList;
                 response.json(result);
             }
@@ -259,7 +256,7 @@ router.post('/queryBySubject', function(request, response,next) {
                         brandList.push({
                             id: brandInfo.id,
                             name: brandInfo.name,
-                            imgKey: brandInfo.imgKey,
+                            imgKey: brandInfo.imgKey
                             //state: brandInfo.state,
                             //createTime: brandInfo.createTime,
                             //lastUpdateTime: brandInfo.lastUpdateTime
