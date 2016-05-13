@@ -186,7 +186,7 @@ Order.prototype.orderConfirm = function(arg, callback){
     }
 
     var deliverInfo = new order_types.DeliverInfo({
-        addressId:arg.addressDesc.addressId,
+        addressId:arg.addressDesc.id,
         provinceName:arg.addressDesc.provinceName,
         cityName:arg.addressDesc.cityName,
         countyName:arg.addressDesc.countyName,
