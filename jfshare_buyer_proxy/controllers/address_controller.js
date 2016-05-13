@@ -99,6 +99,7 @@ router.post('/add', function(req, res, next) {
                 res.json(err);
                 return;
             }
+            result.addressId = data[0].value;
             res.json(result);
             logger.info("add address response:" + JSON.stringify(result));
         });
