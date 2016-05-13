@@ -173,7 +173,8 @@ Order.prototype.orderConfirm = function(arg, callback){
                 skuDesc:product.skuName,
                 count:product.count,
                 curPrice:product.curPrice,
-                imagesUrl:product.imgUrl
+                imagesUrl:product.imgUrl,
+                storehouseId:product.storehouseId
             }));
         }
         sellerDetailList.push(new trade_types.BuySellerDetail({
