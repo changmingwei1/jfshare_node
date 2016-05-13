@@ -59,7 +59,7 @@ Address.prototype.addAddress = function(param,  callback) {
             callback(res, null);
         }
         else {
-            callback(null, null);
+            callback(null, data);
         }
     });
 };

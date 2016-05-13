@@ -185,11 +185,11 @@ Order.prototype.orderConfirm = function(arg, callback){
     }
 
     var deliverInfo = new order_types.DeliverInfo({
-        addressId:arg.deliverInfo.addressId,
-        provinceName:arg.deliverInfo.provinceName,
-        cityName:arg.deliverInfo.cityName,
-        countyName:arg.deliverInfo.countyName,
-        receiverAddress:arg.deliverInfo.address
+        addressId:arg.addressDesc.addressId,
+        provinceName:arg.addressDesc.provinceName,
+        cityName:arg.addressDesc.cityName,
+        countyName:arg.addressDesc.countyName,
+        receiverAddress:arg.addressDesc.address
     });
 
 

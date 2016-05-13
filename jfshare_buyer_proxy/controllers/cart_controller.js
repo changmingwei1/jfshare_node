@@ -251,7 +251,7 @@ router.post('/list', function (req, res, next) {
                             productName: b.product.product.productName,
                             activeState: b.product.product.activeState,
                             cartPrice: b.product.cartPrice,
-                            skuCount: b.product.skuCount,
+                            skuCount: b.product.skuCount - b.product.lockCount,
                             count: b.product.count,
                             sku: {
                                 skuNum: b.product.product.productSku.skuNum,
