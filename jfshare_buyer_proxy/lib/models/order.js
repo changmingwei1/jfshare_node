@@ -179,8 +179,8 @@ Order.prototype.orderConfirm = function(arg, callback){
         }
         sellerDetailList.push(new trade_types.BuySellerDetail({
             sellerId:arg.sellerDetailList[i].sellerId,
-            sellerName: arg.sellerDetailList[i].sellerName || "",
-            buyerComment: arg.sellerDetailList[i].buyerComment || "",
+            sellerName: arg.sellerDetailList[i].sellerName,
+            buyerComment: arg.sellerDetailList[i].buyerComment,
             productList:productList
         }));
     }
