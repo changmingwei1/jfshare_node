@@ -242,18 +242,25 @@ router.post('/login2', function (req, res, next) {
     param.value = args.value;
     param.id = args.id;
     param.browser = args.browser;
+    param.type = args.type;
     //param["ip"] = CommonUtil.getIP(req);
 
     logger.info("请求的参数: " + JSON.stringify(param));
     async.waterfall([
         function (callback) {
-            Common.validateCaptcha(param, function (err, data) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
+            //快捷登录，跳过验证码
+            if(param.type!=null && param.type ==1){
+
+                callback(null);
+            }else{//否则就是正常登录，需要验证码
+                Common.validateCaptcha(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+            }
         },
         function (callback) {
             Buyer.newLogin(param, function (err, data) {
@@ -361,8 +368,8 @@ router.post('/getAuthInfo', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.body;
-        var token = param.token || "鉴权信息1";
-        var ppInfo = param.ppInfo || "鉴权信息2";
+        var token = param.token;
+        var ppInfo = param.ppInfo;
         var userId = param.userId;
         var loginAuto = param.loginAuto;
         var loginTime = param.loginTime;
