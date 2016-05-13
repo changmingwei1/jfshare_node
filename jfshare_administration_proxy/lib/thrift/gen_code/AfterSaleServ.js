@@ -337,6 +337,126 @@ AfterSaleServ_queryAfterSale_result.prototype.write = function(output) {
   return;
 };
 
+AfterSaleServ_queryAfterSaleOrder_args = function(args) {
+  this.userType = null;
+  this.userId = null;
+  if (args) {
+    if (args.userType !== undefined) {
+      this.userType = args.userType;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+  }
+};
+AfterSaleServ_queryAfterSaleOrder_args.prototype = {};
+AfterSaleServ_queryAfterSaleOrder_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AfterSaleServ_queryAfterSaleOrder_args.prototype.write = function(output) {
+  output.writeStructBegin('AfterSaleServ_queryAfterSaleOrder_args');
+  if (this.userType !== null && this.userType !== undefined) {
+    output.writeFieldBegin('userType', Thrift.Type.I32, 1);
+    output.writeI32(this.userType);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AfterSaleServ_queryAfterSaleOrder_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+AfterSaleServ_queryAfterSaleOrder_result.prototype = {};
+AfterSaleServ_queryAfterSaleOrder_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.AfterSaleOrderResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AfterSaleServ_queryAfterSaleOrder_result.prototype.write = function(output) {
+  output.writeStructBegin('AfterSaleServ_queryAfterSaleOrder_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 AfterSaleServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -487,6 +607,54 @@ AfterSaleServClient.prototype.recv_queryAfterSale = function(input,mtype,rseqid)
   }
   return callback('queryAfterSale failed: unknown result');
 };
+AfterSaleServClient.prototype.queryAfterSaleOrder = function(userType, userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryAfterSaleOrder(userType, userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryAfterSaleOrder(userType, userId);
+  }
+};
+
+AfterSaleServClient.prototype.send_queryAfterSaleOrder = function(userType, userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryAfterSaleOrder', Thrift.MessageType.CALL, this.seqid());
+  var args = new AfterSaleServ_queryAfterSaleOrder_args();
+  args.userType = userType;
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+AfterSaleServClient.prototype.recv_queryAfterSaleOrder = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new AfterSaleServ_queryAfterSaleOrder_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryAfterSaleOrder failed: unknown result');
+};
 AfterSaleServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -588,6 +756,36 @@ AfterSaleServProcessor.prototype.process_queryAfterSale = function(seqid, input,
     this._handler.queryAfterSale(args.param,  function (err, result) {
       var result = new AfterSaleServ_queryAfterSale_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryAfterSale", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+AfterSaleServProcessor.prototype.process_queryAfterSaleOrder = function(seqid, input, output) {
+  var args = new AfterSaleServ_queryAfterSaleOrder_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryAfterSaleOrder.length === 2) {
+    Q.fcall(this._handler.queryAfterSaleOrder, args.userType, args.userId)
+      .then(function(result) {
+        var result = new AfterSaleServ_queryAfterSaleOrder_result({success: result});
+        output.writeMessageBegin("queryAfterSaleOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new AfterSaleServ_queryAfterSaleOrder_result(err);
+        output.writeMessageBegin("queryAfterSaleOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryAfterSaleOrder(args.userType, args.userId,  function (err, result) {
+      var result = new AfterSaleServ_queryAfterSaleOrder_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryAfterSaleOrder", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
