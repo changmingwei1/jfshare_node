@@ -468,11 +468,11 @@ router.post('/query', function (request, response, next) {
 
         logger.info("It's test______" + JSON.stringify(param));
 //暂时去掉鉴权信息
-        Buyer.validAuth(param, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
+//        Buyer.validAuth(param, function (err, data) {
+//            if (err) {
+//                response.json(err);
+//                return;
+//            }
             Buyer.getBuyer(param, function (error, data) {
 
                 if (error) {
@@ -500,7 +500,7 @@ router.post('/query', function (request, response, next) {
                     logger.info("个人用户信息响应:" + JSON.stringify(resContent));
                 }
             });
-        });
+        //});
     } catch (ex) {
         logger.error("获取用户信息失败，because :" + ex);
         resContent.code = 500;
@@ -538,11 +538,11 @@ router.post('/update', function (request, response, next) {
 
         logger.info("It's test_____" + JSON.stringify(args));
 //暂时去掉鉴权
-        Buyer.validAuth(args, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
+//        Buyer.validAuth(args, function (err, data) {
+//            if (err) {
+//                response.json(err);
+//                return;
+//            }
             Buyer.updateBuyer(args, function (error, data) {
 
                 if (error) {
@@ -552,7 +552,7 @@ router.post('/update', function (request, response, next) {
                     logger.info("get buyer response:" + JSON.stringify(resContent));
                 }
             });
-        });
+        //});
     } catch (ex) {
         logger.error("不能更新，原因是:" + ex);
         resContent.code = 500;

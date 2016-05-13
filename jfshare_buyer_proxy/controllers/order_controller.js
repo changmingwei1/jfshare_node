@@ -1765,9 +1765,9 @@ router.post('/info', function (req, res, next) {
                     "productState": 3
                 };
 
-                //productList.push(productList2);
-                //productList.push(productList3);
-                //productList.push(productList4);
+                productList.push(productList2);
+                productList.push(productList3);
+                productList.push(productList4);
                 result.productList = productList;
             }
             res.json(result);
