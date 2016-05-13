@@ -103,7 +103,7 @@ module.exports.ServiceFactory = {
      */
     subject: function () {
         var obj = new ThriftConfig("120.24.153.102",1982);
-        // var obj = new ThriftConfig("127.0.0.1", 1982);
+        //var obj = new ThriftConfig("127.0.0.1", 1982);
         return obj;
     },
     /**
@@ -181,7 +181,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     brand: function () {
-        var obj = new ThriftConfig("120.24.153.102", 1981);
+        var obj = new ThriftConfig("120.24.153.155", 1981);
         // var obj = new ThriftConfig("127.0.0.1", 1981);
         return obj;
     },

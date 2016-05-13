@@ -315,16 +315,24 @@ router.post('/submit', function (request, response, next) {
         var arg = request.body;
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 
-        if (arg == null || arg.userId == null || arg.deliverInfo == null ||
+        if (arg == null || arg.userId == null || arg.addressDesc == null ||
             arg.sellerDetailList == null) {
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
             response.json(result);
             return;
         }
+
+        /*
+        * 1 根据省份，获取仓库信息storehouseId
+        * 2 根据storehouseId，productId，skuNum查询库存接口【库存数量，锁定数量】
+        *
+        * */
+
+
         Order.orderConfirm(arg, function (err, orderIdList) {
             if (err) {
-                res.json(err);
+                response.json(err);
                 return;
             }
             result.orderIdList = orderIdList;
@@ -1294,7 +1302,7 @@ router.post('/list', function (request, response, next) {
             },
             function (callback) {
                 try {
-                    if (params.orderState == null) {
+                    if (params.orderState == null || params.orderState == "") {
                         AfterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
                                 return callback(2, null);
@@ -1580,6 +1588,85 @@ router.post('/info2', function (req, res, next) {
         res.json(result);
     }
 });
+// 查询订单详情--虚拟
+router.post('/info2Test', function (req, res, next) {
+    var result = {code: 200};
+    try {
+        var arg = req.body;
+        logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
+
+        var params = {};
+        params.userId = arg.userId || 2;
+        params.orderId = arg.orderId || "5780002";
+        params.userType = arg.userType || 1; // 1:买家 2：卖家 3：系统
+        params.token = arg.token || "鉴权信息1";
+        params.ppInfo = arg.ppInfo || "鉴权信息2";
+        if (params.userId == null || params.orderId == null) {
+            result.code = 400;
+            result.desc = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        Order.queryOrderDetail(params, function (err, orderInfo) {
+            if (err) {
+                res.json(err);
+                return;
+            }
+            if (orderInfo == null) {
+                result.code = 404;
+                result.desc = "未找到订单";
+                res.json(result);
+                return;
+            }
+            result.orderId = orderInfo.orderId;
+            //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+            result.orderState = orderInfo.orderState;
+            if (orderInfo.deliverInfo !== null) {
+                result.address = orderInfo.deliverInfo.provinceName +
+                    orderInfo.deliverInfo.cityName +
+                    orderInfo.deliverInfo.countyName +
+                    orderInfo.deliverInfo.receiverAddress;
+                result.receiverName = orderInfo.deliverInfo.receiverName;
+                result.mobile = orderInfo.deliverInfo.mobile || "13558731842";
+            }
+            result.curTime = new Date().getTime();
+            result.createTime = orderInfo.createTime || "2016-05-03 10:01:58";
+            result.deliverTime = orderInfo.deliverTime || "2016-05-04 11:01:58"; //卖家发货时间
+            result.successTime = orderInfo.successTime || "2016-05-06 12:01:58"; //确认收货时间
+            result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
+            result.sellerName = "测试商家1";
+            //result.sellerName = orderInfo.sellerName;  /*thrift文件有字段，但是没办法读取*/
+            var productList = [];
+            if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
+                for (var i = 0; i < orderInfo.productList.length; i++) {
+                    productList.push({
+                        productId: orderInfo.productList[i].productId,
+                        productName: orderInfo.productList[i].productName,
+                        sku: {skuNum: orderInfo.productList[i].skuNum, skuName: orderInfo.productList[i].skuDesc},
+                        curPrice: orderInfo.productList[i].curPrice,
+                        orgPrice: orderInfo.productList[i].orgPrice,
+                        imgUrl: orderInfo.productList[i].imagesUrl,
+                        count: orderInfo.productList[i].count
+                    });
+                }
+                result.productList = productList;
+            }
+
+
+
+
+
+            res.json(result);
+            logger.info("get order info response:" + JSON.stringify(result));
+        });
+
+    } catch (ex) {
+        logger.error("查询订单详情失败：" + ex);
+        result.code = 500;
+        result.desc = "查询订单详情失败";
+        res.json(result);
+    }
+});
 
 // 查询订单详情--实物
 router.post('/info', function (req, res, next) {
@@ -1628,6 +1715,7 @@ router.post('/info', function (req, res, next) {
             result.successTime = orderInfo.successTime || "2016-05-06 12:01:58"; //确认收货时间
             result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
             result.sellerName = "测试商家1";
+            //result.sellerName = orderInfo.sellerName;  /*thrift文件有字段，但是没办法读取*/
             var productList = [];
             if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
                 for (var i = 0; i < orderInfo.productList.length; i++) {
@@ -1639,7 +1727,7 @@ router.post('/info', function (req, res, next) {
                         orgPrice: orderInfo.productList[i].orgPrice,
                         imgUrl: orderInfo.productList[i].imagesUrl,
                         count: orderInfo.productList[i].count,
-                        postage: orderInfo.productList[i].postage || "10",
+                        postage: orderInfo.productList[i].postage || "10"
 
                     });
                 }
@@ -1677,9 +1765,9 @@ router.post('/info', function (req, res, next) {
                     "productState": 3
                 };
 
-                productList.push(productList2);
-                productList.push(productList3);
-                productList.push(productList4);
+                //productList.push(productList2);
+                //productList.push(productList3);
+                //productList.push(productList4);
                 result.productList = productList;
             }
             res.json(result);

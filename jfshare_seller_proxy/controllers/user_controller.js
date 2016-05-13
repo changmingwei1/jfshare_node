@@ -12,21 +12,21 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 var User = require('../lib/models/user');
 
 //登录
-router.get('/login', function(request, respone, next) {
+router.post('/login', function(request, respone, next) {
     var result = {code: 200};
 
     try{
-        var arg = request.query;
-        //var arg = request.body;
+        //var arg = request.query;
+        var arg = request.body;
 
         //参数验证
-        if(arg == null || arg.username == null ||arg.username == ""){
+        if(arg == null || arg.loginName == null ||arg.loginName == ""){
             result.code = 500;
             result.desc = "请求参数错误";
             respone.json(result);
             return;
         }
-        if(arg == null || arg.password == null ||arg.password == ""){
+        if(arg == null || arg.pwdEnc == null ||arg.pwdEnc == ""){
             result.code = 500;
             result.desc = "请求参数错误";
             respone.json(result);

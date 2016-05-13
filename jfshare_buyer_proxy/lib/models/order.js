@@ -137,6 +137,7 @@ Order.prototype.payApply1 = function (param, callback) {
     });
 };
 
+/*查询支付状态*/
 Order.prototype.payState = function(param, callback) {
 
     var statePara = new order_types.PayState({
@@ -172,7 +173,8 @@ Order.prototype.orderConfirm = function(arg, callback){
                 skuDesc:product.skuName,
                 count:product.count,
                 curPrice:product.curPrice,
-                imagesUrl:product.imgUrl
+                imagesUrl:product.imgUrl,
+                storehouseId:product.storehouseId
             }));
         }
         sellerDetailList.push(new trade_types.BuySellerDetail({
@@ -183,18 +185,29 @@ Order.prototype.orderConfirm = function(arg, callback){
         }));
     }
 
+    var deliverInfo = new order_types.DeliverInfo({
+        addressId:arg.addressDesc.addressId,
+        provinceName:arg.addressDesc.provinceName,
+        cityName:arg.addressDesc.cityName,
+        countyName:arg.addressDesc.countyName,
+        receiverAddress:arg.addressDesc.address
+    });
+
+
     var param = new trade_types.BuyInfo({
         userId: arg.userId,
         userName: arg.userName,
         amount: arg.totalSum,
         //payChannel: new pay_types.PayChannel({payChannel:arg.payChannel}),
-        deliverInfo: new order_types.DeliverInfo(arg.addressDesc), /*deliverInfo*/
+        deliverInfo: deliverInfo,
         sellerDetailList: sellerDetailList,
+        fromBatch: arg.fromBatch
+        /*
         fromSource: arg.fromSource,
-        fromBatch: arg.fromBatch,
         exchangeScore:arg.exchangeScore || 0,
         exchangeCash:arg.exchangeCash || 0,
         tradeCode:arg.tradeCode
+        */
     });
 
     logger.info("调用cartServ-orderConfirm args:" + JSON.stringify(param));
@@ -203,13 +216,18 @@ Order.prototype.orderConfirm = function(arg, callback){
     Lich.wicca.invokeClient(tradeServ, function(err, data) {
         logger.info("调用cartServ-orderConfirm result:" + JSON.stringify(data[0]));
         var res = {};
-        if(err || data[0].result.code == "1"){
+        if(err){
             logger.error("调用cartServ-orderConfirm失败  失败原因 ======" + err);
             logger.error("错误信息:" + JSON.stringify(data[0].result));
             res.code = 500;
             res.desc = "购物车商品数失败！";
             callback(res, null);
-        } else {
+        }else if(data[0].result.code == "1"){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res,null);
+        }
+        else {
             logger.info("orderConfirm response:" + JSON.stringify(data[0]));
             callback(null, data[0].orderIdList);
         }
@@ -277,6 +295,29 @@ Order.prototype.confirmReceipt = function(param, callback) {
     });
 };
 
+/*获取虚拟商品卡密（关键接口）*/
+Order.prototype.confirmReceipt = function(param, callback) {
+
+    var params = new product_types.ProductCardParam({
+        productId:param.productId,
+        transactionId:param.orderId,
+        num:param.num,
+        skuNum:param.skuNum
+    });
+
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "getProductCard", [params]);
+    Lich.wicca.invokeClient(productServ, function(err, data) {
+        logger.info("call orderSer-payState result:" + JSON.stringify(data));
+        if(err || data[0].result.code == '1'){
+            var res = {};
+            res.code = 500;
+            res.desc = "获取虚拟商品卡密失败！";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 
 

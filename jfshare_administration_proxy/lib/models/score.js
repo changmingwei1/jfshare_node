@@ -14,10 +14,10 @@ var score_types = require("../thrift/gen_code/score_types");
 
 function Score() {
 }
-//����userId��ѯ����
+//根据userId查询积分
 Score.prototype.getScore = function (params, callback) {
 
-    //��ȡ�ͻ���
+    //获取客户端
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'getScore', [params.userId]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("scoreServ.getScore result:" + JSON.stringify(data));
@@ -32,29 +32,29 @@ Score.prototype.getScore = function (params, callback) {
         }
     });
 };
-//��ѯ����
+//查询详情
 Score.prototype.getScoreDetail = function (params, callback) {
     var coreTradeQueryParam= new score_types.ScoreTradeQueryParam({
         userId:params.userId,
         tradeTime:params.tradeTime,
         inOrOut:params.inOrOut,
-        type:params.type,
+        type:params.scoreType,
         beginTime:params.beginTime,
         endTime:params.endTime
     });
     var pagination = new pagination_types.Pagination({
-        currentPage: params.curpage,
-        numPerPage: params.percount
+        currentPage: params.curPage,
+        numPerPage: params.perCount
     });
-    //��ȡ�ͻ���
+    //获取客户端
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreTrade', [coreTradeQueryParam,pagination]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
-        logger.info("userServ.queryScoreTrade result:" + JSON.stringify(data));
+        logger.info("scoreServ.queryScoreTrade result:" + JSON.stringify(data));
         var res = {};
-        if (err/* || data[0].result.code == 1*/) {
-            logger.error("signin fail because: ======" + err);
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.queryScoreTrade because: ======" + err);
             res.code = 500;
-            res.desc = "false to signin";
+            res.desc = "查询积分错误";
             callback(res, null);
         } else {
             callback(null, data);
@@ -62,6 +62,33 @@ Score.prototype.getScoreDetail = function (params, callback) {
     });
 };
 
-
+//查询积分记录
+Score.prototype.queryScoreUser = function (params, callback) {
+    var scoreUserQueryParam = new score_types.ScoreUserQueryParam({
+        userId:params.userId,
+        mobile:params.mobile,
+        startTime:params.startTime,
+        endTime:params.endTime,
+        amount:params.amount/* 积分值  0:全部   1:0积分  2:0以上积分 */
+    });
+    var pagination = new pagination_types.Pagination({
+        currentPage: params.curpage,
+        numPerPage: params.percount
+    });
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreUser', [scoreUserQueryParam,pagination]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("scoreServ.queryScoreUser result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.queryScoreUser because: ======" + err);
+            res.code = 500;
+            res.desc = "查询积分错误";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new Score();

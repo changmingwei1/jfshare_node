@@ -1,5 +1,5 @@
 
-var AfterSaleServ = require("../gen_code/afterSaleServ.js");
+var AfterSaleServ = require("../gen_code/AfterSaleServ.js");
 
 /*****************************固定引用 直接copy***********************************************************/
 var thrifgtConfig = require("../../../resource/thrift_config.js");

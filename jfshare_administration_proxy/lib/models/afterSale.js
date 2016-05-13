@@ -14,7 +14,7 @@ var afterSale_types = require("../thrift/gen_code/afterSale_types");
 function AfterSale() {
 }
 
-//ÊÛºóÉóºË
+//å”®åå®¡æ ¸
 AfterSale.prototype.auditPass = function (params, callback) {
 
     var afterSale = new afterSale_types.AfterSale({
@@ -22,7 +22,7 @@ AfterSale.prototype.auditPass = function (params, callback) {
         sellerId: params.sellerId,
         orderId: params.orderId,
         productId: params.productId,
-        state: params.state, //¸ù¾İÊµ¼ÊÇé¿ö¶¨Òå Èç 1£ºĞÂ½¨£¨´ıÉóºË£© 2£ºÉóºËÍ¨¹ı 3£ºÉóºË²»Í¨¹ı
+        state: params.state, //æ ¹æ®å®é™…æƒ…å†µå®šä¹‰ å¦‚ 1ï¼šæ–°å»ºï¼ˆå¾…å®¡æ ¸ï¼‰ 2ï¼šå®¡æ ¸é€šè¿‡ 3ï¼šå®¡æ ¸ä¸é€šè¿‡
         skuNum: params.skuNum
     });
 
@@ -34,9 +34,9 @@ AfterSale.prototype.auditPass = function (params, callback) {
         logger.info("AfterSaleServ-auditPass  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("AfterSaleServ-auditPass  Ê§°ÜÔ­Òò ======" + err);
+            logger.error("AfterSaleServ-auditPass  å¤±è´¥åŸå›  ======" + err);
             res.code = 500;
-            res.desc = "ÉóºËÊ§°Ü£¡";
+            res.desc = "å®¡æ ¸å¤±è´¥ï¼";
             callback(res, null);
         } else {
             callback(null, data);
@@ -44,15 +44,15 @@ AfterSale.prototype.auditPass = function (params, callback) {
     });
 };
 
-//ÉêÇëÉóºË
+//ç”³è¯·å®¡æ ¸
 AfterSale.prototype.request = function (params, callback) {
     var afterSale = new afterSale_types.AfterSale({
         userId: params.buyerId,
         sellerId: params.sellerId,
         orderId: params.orderId,
         productId: params.productId,
-        type: 1,//ÉêÇëÀàĞÍ. 1:ÓÃ»§ÉêÇë£¬ 2:ÏµÍ³ÉêÇë
-        state: 1, //¸ù¾İÊµ¼ÊÇé¿ö¶¨Òå Èç 1£ºĞÂ½¨£¨´ıÉóºË£© 2£ºÉóºËÍ¨¹ı 3£ºÉóºË²»Í¨¹ı
+        type: 1,//ç”³è¯·ç±»å‹. 1:ç”¨æˆ·ç”³è¯·ï¼Œ 2:ç³»ç»Ÿç”³è¯·
+        state: 1, //æ ¹æ®å®é™…æƒ…å†µå®šä¹‰ å¦‚ 1ï¼šæ–°å»ºï¼ˆå¾…å®¡æ ¸ï¼‰ 2ï¼šå®¡æ ¸é€šè¿‡ 3ï¼šå®¡æ ¸ä¸é€šè¿‡
         skuNum: params.skuNum
     });
     logger.info("AfterSaleServ-request  args:" + JSON.stringify(afterSale));
@@ -63,16 +63,16 @@ AfterSale.prototype.request = function (params, callback) {
         logger.info("AfterSaleServ-request  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("AfterSaleServ-request  Ê§°ÜÔ­Òò ======" + err);
+            logger.error("AfterSaleServ-request  å¤±è´¥åŸå›  ======" + err);
             res.code = 500;
-            res.desc = "ÉêÇëÉóºËÊ§°Ü£¡";
+            res.desc = "ç”³è¯·å®¡æ ¸å¤±è´¥ï¼";
             callback(res, null);
         } else {
             callback(null, data);
         }
     });
 };
-//²éÑ¯ÉóºËĞÅÏ¢
+//æŸ¥è¯¢å®¡æ ¸ä¿¡æ¯
 AfterSale.prototype.queryAfterSale = function (params, callback) {
 
     var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
@@ -81,7 +81,7 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
         orderId: params.orderId,
         productId: params.productId,
         skuNum: params.skuNum
-        //¼ÓÉÏsku
+        //åŠ ä¸Šsku
     });
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
     try {
@@ -91,19 +91,47 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
             logger.info("AfterSaleServ-queryAfterSale  result:" + JSON.stringify(data));
             var res = {};
             if (err || data[0].result.code == "1") {
-                logger.error("AfterSaleServ-queryAfterSale  Ê§°ÜÔ­Òò ======" + err);
+                logger.error("AfterSaleServ-queryAfterSale  å¤±è´¥åŸå›  ======" + err);
                 res.code = 500;
-                res.desc = "²éÑ¯ÉóºËĞÅÏ¢Ê§°Ü£¡";
+                res.desc = "æŸ¥è¯¢å®¡æ ¸ä¿¡æ¯å¤±è´¥ï¼";
                 callback(res, null);
             } else {
                 callback(null, data[0].afterSaleList);
             }
         });
     } catch (ex) {
+        logger.error("æŸ¥è¯¢å®¡æ ¸ä¿¡æ¯å¤±è´¥ï¼ï¼š" + ex);
+        var res = {};
         res.code = 500;
-        res.desc = "²éÑ¯ÉóºËĞÅÏ¢Ê§°Ü£¡";
+        res.desc = "æŸ¥è¯¢å®¡æ ¸ä¿¡æ¯å¤±è´¥ï¼";
         callback(res, null);
     }
+
+};
+
+
+//æŸ¥è¯¢å”®åçš„è®¢å•list
+AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
+
+    var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
+        sellerId: params.sellerId
+    });
+    logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
+        var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [2, params.sellerId]);
+
+        Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
+            logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
+            var res = {};
+            if (err || data[0].result.code == "1") {
+                logger.error("AfterSaleServ-queryAfterSaleOrderList  å¤±è´¥åŸå›  ======" + err);
+                res.code = 500;
+                res.desc = "æŸ¥è¯¢å”®åè®¢å•åˆ—è¡¨å¤±è´¥ï¼";
+                callback(res, null);
+            } else {
+                callback(null, data);
+            }
+        });
+
 
 };
 module.exports = new AfterSale();

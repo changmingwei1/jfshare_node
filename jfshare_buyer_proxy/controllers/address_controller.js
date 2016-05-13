@@ -73,7 +73,7 @@ router.post('/add', function(req, res, next) {
             result.desc = "参数错误";
             res.json(result);
             return;
-        }
+        }/*
         if(arg.countyId==null ||arg.countyId ==""){
             result.code = 400;
             result.desc = "参数错误";
@@ -85,7 +85,7 @@ router.post('/add', function(req, res, next) {
             result.desc = "参数错误";
             res.json(result);
             return;
-        }
+        }*/
         if(arg.postCode==null ||arg.postCode ==""){
             result.code = 400;
             result.desc = "参数错误";
@@ -99,6 +99,7 @@ router.post('/add', function(req, res, next) {
                 res.json(err);
                 return;
             }
+            result.addressId = data[0].value;
             res.json(result);
             logger.info("add address response:" + JSON.stringify(result));
         });
