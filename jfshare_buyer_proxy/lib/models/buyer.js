@@ -226,11 +226,13 @@ Buyer.prototype.getBuyer = function(param,callback){
 //更新用户信息
 Buyer.prototype.updateBuyer = function(param,callback){
 
+    var birthday = param.birthday + " 00:00:00";
+
     var buyer = new buyer_types.Buyer({
         userId:param.userId,
         userName:param.userName,
         favImg:param.favImg,
-        birthday:param.birthday,
+        birthday:birthday,
         sex:param.sex
     });
 
