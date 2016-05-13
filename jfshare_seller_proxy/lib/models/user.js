@@ -26,11 +26,13 @@ function User(){}
 User.prototype.login = function(param,callback){
 
     var User  =  new seller_types.Seller({
-        loginName:param.username,
-        pwdEnc:param.password
+        loginName:param.loginName,
+        pwdEnc:param.pwdEnc
     });
     //如果校验可能需要修改
-    var LoginLog = new seller_types.LoginLog();
+    var LoginLog = new seller_types.LoginLog({
+       // browser:"1"
+    });
 
 
 
