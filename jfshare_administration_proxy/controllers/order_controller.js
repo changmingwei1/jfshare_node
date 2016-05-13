@@ -727,10 +727,18 @@ router.post('/deliver', function (request, response, next) {
 router.post('/updateExpressInfo', function (request, response, next) {
     logger.info("进入更新物流单流程");
     var result = {code: 200};
+   //var params= {"orderId":"18120090","sellerId":1,"expressNo":"3305764433295","expressId":"3","expressName":"申通快递","remark":""}
 
     try {
+//{"orderId":"18120090","sellerId":"1","expressNo":"3305764433295","expressId":"3","expressName":"申通快递","remark":""}
 
         var params = request.body;
+        params.sellerId = "1"//商家id
+        params.expressNo = "123321231231"//物流单id
+        params.orderId = "5300025"//订单id
+        params.expressId = "24"//物流公司id
+        params.expressName = "测试快递111"//物流公司名字
+        params.remark = "112" //备注
         logger.info("进入更新物流单流程-->参数"+JSON.stringify(params));
         if (params.sellerId == null || params.sellerId == "") {
 
