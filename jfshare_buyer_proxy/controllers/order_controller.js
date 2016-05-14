@@ -1793,6 +1793,7 @@ router.post('/payTest', function (req, res, next) {
         result.code = 400;
         result.desc = "请求参数错误";
         res.json(result);
+        return;
     }
 
     if (arg.payChannel == 4) {
@@ -1868,34 +1869,6 @@ router.post('/pay', function (request, response, next) {
     } catch (ex) {
         response.json(result);
     }
-});
-
-//立即付款
-router.post('/payApply', function (req, res, next) {
-    var result = {code: 200};
-
-    var arg = req.body;
-    var params = {};
-
-    params.orderIdList = arg.orderIdList || "1";
-    params.userId = arg.userId || 2;
-    params.token = arg.token || "鉴权信息1";
-    params.ppInfo = arg.ppInfo || "鉴权信息2";
-    logger.info("order pay request:" + JSON.stringify(params));
-
-    Order.payApply(params, function (err, payUrl) {
-        var urlInof = JSON.parse(payUrl.value);
-        if (err) {
-            res.json(err);
-            return;
-        }
-        if (payUrl !== null) {
-            result.payUrl = urlInof;
-            res.json(result);
-            logger.info("order pay response:" + JSON.stringify(result));
-        }
-    });
-
 });
 
 //确认收货
