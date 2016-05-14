@@ -455,47 +455,37 @@ router.post('/virtualList', function (request, response, next) {
             return;
         }
 
+        if (params.perCount == null || params.perCount == "" || params.perCount <= 0) {
 
-        //静态数据，设置分页
-        result.page = {total: 100, pageCount: 5};
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
 
-        //商品列表
+        if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
 
-        var productList = [];
-
-        var product = {};
-
-        product.productId = "1";
-
-        product.productname = "电影票",//商品名称
-            product.skuid = "12-11-2"// sku id
-        product.count = 1000; //总数量
-        product.alreadysend = 100//已经发送数量
-        product.restcount = 900//未发放的数量
-        product.importtime = "2016-07-08 18:06:12"   //导入时间
-
-        productList.push(product);
-        var product1 = {};
-        product1.productId = "2";
-
-        product1.productname = "点卡",//商品名称
-            product1.skuid = "10-11-2"// sku id
-        product1.count = 1000; //总数量
-        product1.alreadysend = 300//已经发送数量
-        product1.restcount = 700//未发放的数量
-        product1.importtime = "2016-06-12 12:02:11";  //导入时间
-
-        productList.push(product1);
-        productList.push(product);
-        productList.push(product1);
-        result.productList = productList;
-        response.json(result);
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        Product.queryProductCard(params, function (err, data) {
+            if(err){
+                result.code = 500;
+                result.desc = "查看虚拟商品失败";
+                response.json(result);
+                return
+            }
+            result.value = data.value;
+            response.json(result);
+        });
 
     } catch (ex) {
         logger.error("get  virtual product List error:" + ex);
         result.code = 500;
         result.desc = "获取虚拟商品列表";
-        res.json(result);
+        response.json(result);
     }
 });
 
@@ -535,51 +525,38 @@ router.post('/ticketList', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.perCount == null || params.perCount == "" || params.perCount <= 0) {
 
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
 
-        //静态数据，设置分页
-        result.page = {total: 100, pageCount: 5};
+        if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
 
-        //商品列表
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        Product.queryProductCardViewList(params, function (err, data) {
+            if(err){
+                result.code = 500;
+                result.desc = "查看虚拟商品卡密列表失败";
+                response.json(result);
+                return
+            }
+            response.json(data);
+            return;
+        });
 
-        var productList = [];
-
-        var product = {};
-
-        product.id = 1;
-
-        product.password = "123***12";
-
-        product.state = 1;
-
-        var product1 = {};
-
-        product1.id = 2;
-
-        product1.password = "234***12";
-
-        product1.state = 2;
-
-        var product2 = {};
-
-        product2.id = 2;
-
-        product2.password = "234***17";
-
-        product2.state = 3;
-
-        productList.push(product);
-        productList.push(product1);
-        productList.push(product2);
-
-        result.productList = productList;
-        response.json(result);
 
     } catch (ex) {
         logger.error("get  ticketList error:" + ex);
         result.code = 500;
-        result.desc = "获取券码列表";
-        res.json(result);
+        result.desc = "获取券码列表失败";
+        response.json(result);
     }
 });
 

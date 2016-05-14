@@ -298,7 +298,6 @@ Product.prototype.queryProductCard = function (params, callback) {
     });
 
     var page = new pagination_types.Pagination({
-
         numPerPage: params.perCount,
         currentPage: params.curpage
     });
@@ -306,12 +305,12 @@ Product.prototype.queryProductCard = function (params, callback) {
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsProductCard", [productRetParam, page]);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
+        logger.info("productServ-queryProductCard  result:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("productServ-queryProduct  失败原因 ======" + err);
+            logger.error("productServ-queryProductCard  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "查询商品失败";
+            res.desc = "查询虚拟商品失败";
             return callback(res, null);
         } else {
            return callback(null, data)
