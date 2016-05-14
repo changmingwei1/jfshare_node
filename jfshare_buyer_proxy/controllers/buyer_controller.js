@@ -18,7 +18,7 @@ var score_types = require('../lib/thrift/gen_code/score_types');
 var pagination_types = require('../lib/thrift/gen_code/pagination_types');
 var buyer_types = require('../lib/thrift/gen_code/buyer_types');
 
-//获取图形验证码
+/*获取图形验证码*/
 router.get('/getCaptcha', function (request, response, next) {
     logger.info("进入获取验证码接口");
     var resContent = {code: 200};
@@ -48,7 +48,7 @@ router.get('/getCaptcha', function (request, response, next) {
     }
 });
 
-//验证图形验证码
+/*验证图形验证码*/
 router.post('/validateCaptcha', function (request, response, next) {
     logger.info("进入验证图形验证码接口");
     var resContent = {code: 200};
@@ -77,7 +77,7 @@ router.post('/validateCaptcha', function (request, response, next) {
     }
 });
 
-//获取短信验证码
+/*获取短信验证码*/
 router.get('/sms', function (request, response, next) {
     logger.info("进入获取验证码接口");
     var resContent = {code: 200};
@@ -104,7 +104,7 @@ router.get('/sms', function (request, response, next) {
     }
 });
 
-//验证短信验证码
+/*验证短信验证码*/
 router.get('/validateMsgCaptcha', function (request, response, next) {
     logger.info("进入验证短信验证码接口");
     var resContent = {code: 200};
@@ -132,7 +132,7 @@ router.get('/validateMsgCaptcha', function (request, response, next) {
     }
 });
 
-//手机短信登录
+/*手机短信登录*/
 router.post('/login', function (request, response, next) {
 
     logger.info("进入手机短信登录接口..");
@@ -161,24 +161,14 @@ router.post('/login', function (request, response, next) {
         response.json(resContent);
         return;
     }
-    logger.info("请求参数：" + param);
-    //var userId = 2;
-    //var ppinfo = "hkjasdfgkj";
-    //var token = "kjsdhfh";
-    //resContent.ppinfo = ppinfo;
-    //resContent.token = token;
-    //resContent.userId = userId;
-    //response.json(resContent);
-    //logger.info("响应的结果:" + JSON.stringify(resContent));
+    logger.info("请求参数：" + JSON.stringify(param));
 
     async.waterfall([
         function (callback) {
             Common.validateMsgCaptcha(param, function (err, data) {
                 if (err) {
-                    //response.json(err);
                     callback(err);
                 } else {
-                    //response.json(resContent);
                     callback(null);
                 }
             });
@@ -186,7 +176,6 @@ router.post('/login', function (request, response, next) {
         function (callback) {
             Buyer.loginBySms(param, function (err, data) {
                 if (err) {
-                    //response.json(err);
                     callback(err);
                 } else {
                     //var loginLog = data[0].loginLog;
@@ -210,11 +199,9 @@ router.post('/login', function (request, response, next) {
             return response.json({result: true});
         }
     });
-
-
 });
 
-//注销
+/*注销*/
 router.post('/logout', function (req, res, next) {
     logger.info("进入注销接口..");
     var result = {code: 200};
@@ -231,7 +218,7 @@ router.post('/logout', function (req, res, next) {
     })
 });
 
-/*手机密码+验证码登录*/
+/*手机密码登录*/
 router.post('/login2', function (req, res, next) {
 
     var resContent = {code: 200};
@@ -302,7 +289,7 @@ router.post('/login2', function (req, res, next) {
     });
 });
 
-//注册
+/*注册*/
 router.post('/regist', function (req, res, next) {
 
     logger.info("进入注册接口");
@@ -334,7 +321,7 @@ router.post('/regist', function (req, res, next) {
     });
 });
 
-//判断用户名(手机号)是否已存在
+/*判断用户名(手机号)是否已存在*/
 router.get('/exists', function (request, response, next) {
 
     logger.info("进入接口...");
@@ -362,7 +349,7 @@ router.get('/exists', function (request, response, next) {
     }
 });
 
-//获取鉴权信息
+/*获取鉴权信息*/
 router.post('/getAuthInfo', function (request, response, next) {
     logger.info("进入获取验证码接口");
     var resContent = {code: 200};
@@ -399,7 +386,7 @@ router.post('/getAuthInfo', function (request, response, next) {
     }
 });
 
-//验证鉴权
+/*验证鉴权*/
 router.post('/validAuth', function (request, response, next) {
     logger.info("进入验证鉴权接口");
     var resContent = {code: 200};
@@ -433,7 +420,7 @@ router.post('/validAuth', function (request, response, next) {
     }
 });
 
-//获取个人用户信息
+/*获取个人用户信息*/
 router.post('/query', function (request, response, next) {
 
     logger.info("进入获取个人用户信息接口...");
@@ -509,7 +496,7 @@ router.post('/query', function (request, response, next) {
     }
 });
 
-//更新个人用户信息
+/*更新个人用户信息*/
 router.post('/update', function (request, response, next) {
 
     logger.info("进入更新用户信息接口");
@@ -517,33 +504,40 @@ router.post('/update', function (request, response, next) {
 
     try {
         var param = request.body;
-        var userId = param.userId;
-        var userName = param.userName;
-        var favImg = param.favImg || "5544590E122CB3F01DD06CAE021E7EAB.jpg";
-        var birthday = param.birthday;
-        var sex = param.sex;
-        var token = param.token;
-        var ppInfo = param.ppInfo;
-        var browser = param.browser || "1";
 
-        var args = {};
-        args.userId = userId;
-        args.userName = userName;
-        args.favImg = favImg;
-        args.birthday = birthday;
-        args.sex = sex;
-        args.token = token;
-        args.ppInfo = ppInfo;
-        args.browser = browser;
+        if(param.token == null || param.token == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.browser == null || param.browser == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.ppInfo == null || param.ppInfo == ""){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.userId == null || param.userId == "" || param.userId <= 0){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
 
-        logger.info("It's test_____" + JSON.stringify(args));
+        logger.info("It's test_____" + JSON.stringify(param));
 //暂时去掉鉴权
-//        Buyer.validAuth(args, function (err, data) {
+//        Buyer.validAuth(param, function (err, data) {
 //            if (err) {
 //                response.json(err);
 //                return;
 //            }
-            Buyer.updateBuyer(args, function (error, data) {
+            Buyer.updateBuyer(param, function (error, data) {
 
                 if (error) {
                     response.json(error);
@@ -561,7 +555,7 @@ router.post('/update', function (request, response, next) {
     }
 });
 
-//获取用户积分
+/*获取用户积分*/
 router.post('/scoreTotal', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
@@ -624,7 +618,7 @@ router.post('/scoreTotal', function (request, response, next) {
     //    response.json(resContent);
     //}
 });
-//获取用户积分
+/*获取用户积分*/
 router.post('/scoreTotalTest', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
@@ -666,7 +660,7 @@ router.post('/scoreTotalTest', function (request, response, next) {
     }
 });
 
-//获取积分列表
+/*获取积分列表*/
 router.post('/scoreTrade', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
@@ -833,7 +827,7 @@ router.post('/scoreTrade', function (request, response, next) {
     //    response.json(resContent);
     //}
 });
-//获取积分列表
+/*获取积分列表*/
 router.post('/scoreTradeTest', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
@@ -891,7 +885,7 @@ router.post('/scoreTradeTest', function (request, response, next) {
     }
 });
 
-//重置密码
+/*重置密码*/
 router.post('/resetPwd', function (request, response, next) {
     logger.info("进入重置密码接口...");
     var resContent = {code: 200};
@@ -926,38 +920,22 @@ router.post('/resetPwd', function (request, response, next) {
     });
 });
 
-//修改密码
+/*修改密码*/
 router.post('/changePwd', function (request, response, next) {
 
     logger.info("进入修改密码接口...");
     var resContent = {code: 200};
 
     var param = request.body;
-    var userId = param.userId;
-    var mobile = param.mobile;
-    var newPwd = param.newPwd;
-    var captchaDesc = param.captchaDesc;
-    var token = param.token;
-    var ppInfo = param.ppInfo;
-    var browser = param.browser;
-
-    var args = {};
-    args.userId = userId;
-    args.mobile = mobile;
-    args.newPwd = newPwd;
-    args.captchaDesc = captchaDesc;
-    args.token = token;
-    args.ppInfo = ppInfo;
-    args.browser = browser;
 
     //参数校验
-    if (userId == null || newPwd == null || userId == "" || newPwd == "") {
+    if (param.userId == null || param.newPwd == null || param.userId == "" || param.newPwd == "") {
         resContent.code = 400;
         resContent.desc = "用户id或密码不能为空";
         response.json(resContent);
         return;
     }
-    if (captchaDesc == null || captchaDesc == "") {
+    if (param.captchaDesc == null || param.captchaDesc == "") {
         resContent.code = 400;
         resContent.desc = "验证码不能为空";
         response.json(resContent);
@@ -981,19 +959,19 @@ router.post('/changePwd', function (request, response, next) {
         response.json(resContent);
         return;
     }
-    logger.info("参数为: " + JSON.stringify(args));
+    logger.info("参数为: " + JSON.stringify(param));
 //暂时去掉鉴权信息
-    Buyer.validAuth(args, function (err, data) {
+    Buyer.validAuth(param, function (err, data) {
         if (err) {
             response.json(err);
             return;
         }
-        Common.validateMsgCaptcha(args, function (err, data) {
+        Common.validateMsgCaptcha(param, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            Buyer.newResetBuyerPwd(args, function (error, data) {
+            Buyer.newResetBuyerPwd(param, function (error, data) {
                 if (error) {
                     response.json(error);
                     return;
