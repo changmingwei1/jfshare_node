@@ -2225,7 +2225,7 @@ router.post('/refund', function (request, response, next) {
 });
 
 //获取售后信息
-router.post('/refundDesc', function (request, response, next) {
+/*router.post('/refundDesc', function (request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code: 200};
     try {
@@ -2252,9 +2252,9 @@ router.post('/refundDesc', function (request, response, next) {
     } catch (ex) {
         response.json(result);
     }
-});
+});*/
 //获取售后信息
-router.post('/refundDescTest', function (request, response, next) {
+router.post('/refundDesc', function (request, response, next) {
     logger.info("进入获取售后信息流程");
     var result = {code: 200};
 
