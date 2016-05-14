@@ -12,7 +12,7 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var Product = require('../lib/models/product');
 var detailStock = require('../lib/models/detail_stock');
 var pagination_types = require('../lib/thrift/gen_code/pagination_types');
-
+var Subject = require('../lib/models/subject');
 var product_types = require("../lib/thrift/gen_code/product_types");
 var Stock = require('../lib/models/stock');
 //商品列表
@@ -21,18 +21,10 @@ router.post('/list', function (request, response, next) {
     var result = {code: 200};
 
     try {
+
         var params = request.body;
         logger.info("get product list args:" + JSON.stringify(params));
 
-        //参数验证
-        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-        //参数验证
         if (params.percount == null || params.percount == "" || params.percount <= 0) {
 
             result.code = 500;
@@ -40,7 +32,6 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
-        //参数验证
         if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
 
             result.code = 500;
@@ -48,31 +39,129 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
-        Product.queryProductList(params, function (data) {
-            var dataArr = [];
 
-            var code = data[0].result.code;
-            if (code == 1) {
-                result.code = 500;
-                result.desc = "失败";
-                response.json(result);
-            } else {
-                var productSurveyList = data[0].productSurveyList;
-                productSurveyList.forEach(function (a) {
-                    var imgUri = a.imgUrl.split(",")[0];
-                    dataArr.push({productId: a.productId, sellerId: a.sellerId, productName: a.productName,orgPrice: (Number(a.orgPrice)/100).toFixed(2), curPrice: (Number(a.curPrice) /100).toFixed(2),totalSales: a.totalSales, imgUrl: imgUri,activeState: a.activeState,crateTime: a.createTime});
+        var dataArr = [];
+        var productIdList = [];
+        var subjectName = [];
+        var newData;
+        async.series([
+                function (callback) {
+                    try {
+                        Product.queryProductList(params, function (err, data) {
 
-                });
+                            if (err) {
+                                callback(1, null);
+                            } else {
+                                var productSurveyList = data[0].productSurveyList;
 
-                var pagination = data[0].pagination;
-                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
-                result.productList = dataArr;
-                response.json(result);
-                logger.info("get product list response:" + JSON.stringify(result));
-            }
+                                var pagination = data[0].pagination;
+                                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+                                // logger.info("get product list response:" + JSON.stringify(result));
+                                productSurveyList.forEach(function (a) {
+                                    var imgUri = a.imgUrl.split(",")[0];
+                                    dataArr.push({
+                                        productId: a.productId,
+                                        sellerId: a.sellerId,
+                                        subjectName: "1",
+                                        productName: a.productName,
+                                        orgPrice: (Number(a.orgPrice) / 100).toFixed(2),
+                                        curPrice: (Number(a.curPrice) / 100).toFixed(2),
+                                        totalSales: a.totalSales,
+                                        imgUrl: imgUri,
+                                        activeState: a.activeState,
+                                        crateTime: a.createTime
+                                    });
+                                    productIdList.push(
+                                        a.subjectId
+                                    );
+                                });
+
+                                callback(null, dataArr);
+                            }
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取订单列表异常:" + ex);
+                        return callback(1, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        Subject.getBatchSuperTree(productIdList, function (error, data) {
+                            //logger.info("get product list response:" + JSON.stringify(data));
+                            if (error) {
+                                callback(2, null);
+
+                            } else {
+                                //组装list
+                                var partsNames = [];
+                                var subjectNodeTrees = data[0].subjectNodeTrees;
+
+                                subjectNodeTrees.forEach(function (subjectList) {
+                                    //logger.info("get subjectList list response-----:" + JSON.stringify(subjectList));
+                                    if (subjectList != null) {
+                                        var subjectpath = "";
+                                        for (var i = 0; i < subjectList.length; i++) {
+                                            if (i == subjectList.length - 1) {
+                                                subjectpath += subjectList[i].name;
+                                            } else {
+                                                subjectpath += subjectList[i].name + "-";
+
+                                            }
+                                        }
+                                        subjectName.push(subjectpath);
+                                    } else {
+                                        subjectName.push("");
+                                    }
 
 
-        });
+                                });
+                                callback(null, subjectName);
+                                // logger.info("------------get subjectName list response-----:" + JSON.stringify(subjectName));
+                            }
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取批量类目异常:" + ex);
+                        return callback(2, null);
+                    }
+                }
+            ],
+            function (err, results) {
+
+                logger.info("result[0]:" + JSON.stringify(results[0]));
+                logger.info("result[1]:" + JSON.stringify(results[1]));
+
+                if (err == 1) {
+                    logger.error("查询商品列表失败---商品服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "查询商品列表失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("获取批量类目异常--类目服务异常：" + err);
+                    response.json(results[0]);
+                    return;
+                }
+
+                if (err == null) {
+                    logger.info("shuju------------->" + JSON.stringify(results));
+                    for (var i = 0; i < results[0].length; i++) {
+                        results[0][i].subjectName = results[1][i];
+                        logger.info("get product list response:" + JSON.stringify(dataArr));
+                        logger.info("get product list response:" + JSON.stringify(subjectName));
+                    }
+                    result.productList = results[0];
+                    response.json(result);
+                    return;
+                } else {
+                    logger.info("shuju------------->" + JSON.stringify(results));
+                    result = results[0];
+                    response.json(result);
+                    return;
+                }
+            });
     } catch (ex) {
         logger.error("获取商品列表失败:" + ex);
         result.code = 500;
@@ -493,6 +582,54 @@ router.post('/ticketList', function (request, response, next) {
         res.json(result);
     }
 });
+
+router.post('/queryDetail', function (request, response, next) {
+
+    logger.info("进入商品详情接口");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        logger.info("进入商品详情:" + params);
+
+        //参数校验
+        //参数验证
+        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.productId == null || params.productId == "") {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        Product.queryDetail(params, function (err, data) {
+            if(err){
+                result.code = 500;
+                result.desc = "查看详情失败";
+                response.json(result);
+                return
+            }
+            result.value = data.value;
+            response.json(result);
+        });
+
+    } catch (ex) {
+        logger.error("查看详情失败:" + ex);
+        result.code = 500;
+        result.desc = "查看详情失败";
+        response.json(result);
+    }
+});
+
+
 
 router.post('/apply', function (request, response, next) {
 

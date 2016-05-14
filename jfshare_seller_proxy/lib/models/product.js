@@ -47,13 +47,14 @@ Product.prototype.queryProductList = function (params, callback) {
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
         if (err || data[0].result.code == 1) {
+            var ret = {};
             logger.error("调用productServ-queryProductList失败  失败原因 ======" + err);
             ret.code = 500;
             ret.desc = "查询商品列表失败！";
             res.json(ret);
             return;
         }
-        callback(data);
+        callback(null,data);
     });
 };
 
@@ -347,5 +348,24 @@ Product.prototype.setProductState = function (params, callback) {
         }
     });
 };
+Product.prototype.queryDetail = function(params, callback){
 
+    var productDetailParam = new product_types.ProductDetailParam({
+        productId:params.productId
+    });
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductDetail", [productDetailParam]);
+
+    Lich.wicca.invokeClient(productServ, function(err, data) {
+        logger.info("productServ-queryDetail  result:" + JSON.stringify(data));
+        var res = {};
+        if(err || data[0].result.code == "1"){
+            logger.error("productServ-queryDetail  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询详情失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
 module.exports = new Product();
