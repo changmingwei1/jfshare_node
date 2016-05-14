@@ -21,12 +21,12 @@ function Freight(){}
 Freight.prototype.add = function(params, callback){
 
     var freight = new freight_types.PostageTemplate({
-        id             :params.id,
         sellerId       :params.sellerId,
         name           :params.name,
         supportProvince:params.supportProvince,
-        rule           :params.rule,
-        type           :params.type
+        group           :params.group,
+        type           :params.type,
+        desc           :params.desc
     });
 
 

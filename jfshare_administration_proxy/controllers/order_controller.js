@@ -320,11 +320,10 @@ router.post('/queryafterSaleOrder', function (request, response, next) {
                 return;
             }
             logger.info("Order.orderStateQuery response:" + JSON.stringify(data));
-            if (data[0].afterSaleOrders != null && data[0].afterSaleOrders.length > 0) {
-                result.count = data[0].afterSaleOrders.length;
-            }
+
+            result.count =data;
             response.json(result);
-            return
+            return;
         });
 
     } catch (ex) {

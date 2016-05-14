@@ -12,7 +12,6 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var Product = require('../lib/models/product');
 var Subject = require("../lib/models/subject");
 var pagination_types = require('../lib/thrift/gen_code/pagination_types');
-
 var product_types = require("../lib/thrift/gen_code/product_types");
 
 //商品列表
