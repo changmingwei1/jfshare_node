@@ -43,8 +43,8 @@ Common.prototype.getCaptcha = function(id,callback){
 Common.prototype.validateCaptcha = function(param, callback){
     //参数
     var captcha = new common_types.Captcha({
-        id:param.id || "1024",
-        value:param.value || "cajx"
+        id:param.id,
+        value:param.value
         //captchaBytes:param.captchaBytes
     });
     //获取client
@@ -55,7 +55,7 @@ Common.prototype.validateCaptcha = function(param, callback){
         if (err||data[0].code == "1") {
             logger.error("can't getCaptcha because: ======" + err);
             res.code = 500;
-            res.desc = "false to getCaptcha";
+            res.desc = "验证图形验证码失败";
             callback(res,null);
         } else {
             callback(null,data);
@@ -102,7 +102,7 @@ Common.prototype.validateMsgCaptcha = function(param, callback){
         if (err||data[0].code == "1") {
             logger.error("can't getCaptcha because: ======" + err);
             res.code = 500;
-            res.desc = "false to getCaptcha";
+            res.desc = "验证短信验证码失败";
             callback(res,null);
         } else {
             callback(null,data);

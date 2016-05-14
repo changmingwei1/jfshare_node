@@ -226,6 +226,7 @@ QueryParam = module.exports.QueryParam = function(args) {
   this.curPage = null;
   this.id = null;
   this.name = null;
+  this.hsubjectIdList = null;
   if (args) {
     if (args.pageSize !== undefined) {
       this.pageSize = args.pageSize;
@@ -238,6 +239,9 @@ QueryParam = module.exports.QueryParam = function(args) {
     }
     if (args.name !== undefined) {
       this.name = args.name;
+    }
+    if (args.hsubjectIdList !== undefined) {
+      this.hsubjectIdList = args.hsubjectIdList;
     }
   }
 };
@@ -283,6 +287,26 @@ QueryParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.LIST) {
+        var _size0 = 0;
+        var _rtmp34;
+        this.hsubjectIdList = [];
+        var _etype3 = 0;
+        _rtmp34 = input.readListBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        {
+          var elem6 = null;
+          elem6 = input.readI32();
+          this.hsubjectIdList.push(elem6);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -312,6 +336,20 @@ QueryParam.prototype.write = function(output) {
   if (this.name !== null && this.name !== undefined) {
     output.writeFieldBegin('name', Thrift.Type.STRING, 4);
     output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.hsubjectIdList !== null && this.hsubjectIdList !== undefined) {
+    output.writeFieldBegin('hsubjectIdList', Thrift.Type.LIST, 5);
+    output.writeListBegin(Thrift.Type.I32, this.hsubjectIdList.length);
+    for (var iter7 in this.hsubjectIdList)
+    {
+      if (this.hsubjectIdList.hasOwnProperty(iter7))
+      {
+        iter7 = this.hsubjectIdList[iter7];
+        output.writeI32(iter7);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -377,19 +415,19 @@ BrandResult.prototype.read = function(input) {
       break;
       case 4:
       if (ftype == Thrift.Type.LIST) {
-        var _size0 = 0;
-        var _rtmp34;
+        var _size8 = 0;
+        var _rtmp312;
         this.brandInfo = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readListBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
         {
-          var elem6 = null;
-          elem6 = new ttypes.BrandInfo();
-          elem6.read(input);
-          this.brandInfo.push(elem6);
+          var elem14 = null;
+          elem14 = new ttypes.BrandInfo();
+          elem14.read(input);
+          this.brandInfo.push(elem14);
         }
         input.readListEnd();
       } else {
@@ -425,15 +463,83 @@ BrandResult.prototype.write = function(output) {
   if (this.brandInfo !== null && this.brandInfo !== undefined) {
     output.writeFieldBegin('brandInfo', Thrift.Type.LIST, 4);
     output.writeListBegin(Thrift.Type.STRUCT, this.brandInfo.length);
-    for (var iter7 in this.brandInfo)
+    for (var iter15 in this.brandInfo)
     {
-      if (this.brandInfo.hasOwnProperty(iter7))
+      if (this.brandInfo.hasOwnProperty(iter15))
       {
-        iter7 = this.brandInfo[iter7];
-        iter7.write(output);
+        iter15 = this.brandInfo[iter15];
+        iter15.write(output);
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BrandInfoResult = module.exports.BrandInfoResult = function(args) {
+  this.result = null;
+  this.brandInfo = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.brandInfo !== undefined) {
+      this.brandInfo = args.brandInfo;
+    }
+  }
+};
+BrandInfoResult.prototype = {};
+BrandInfoResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.brandInfo = new ttypes.BrandInfo();
+        this.brandInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BrandInfoResult.prototype.write = function(output) {
+  output.writeStructBegin('BrandInfoResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.brandInfo !== null && this.brandInfo !== undefined) {
+    output.writeFieldBegin('brandInfo', Thrift.Type.STRUCT, 2);
+    this.brandInfo.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

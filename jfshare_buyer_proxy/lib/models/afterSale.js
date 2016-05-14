@@ -61,10 +61,14 @@ AfterSale.prototype.request = function (params, callback) {
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-request  result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "1") {
+        if (err) {
             logger.error("AfterSaleServ-request   ß∞‹‘≠“Ú ======" + err);
             res.code = 500;
             res.desc = "…Í«Î…Û∫À ß∞‹£°";
+            callback(res, null);
+        } else if(data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
@@ -84,13 +88,12 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
         //º”…œsku
     });
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
-    var res = {};
     try {
         var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSale", afterSaleQueryParam);
 
         Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
             logger.info("AfterSaleServ-queryAfterSale  result:" + JSON.stringify(data));
-
+            var res = {};
             if (err || data[0].result.code == "1") {
                 logger.error("AfterSaleServ-queryAfterSale   ß∞‹‘≠“Ú ======" + err);
                 res.code = 500;
