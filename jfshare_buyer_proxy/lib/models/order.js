@@ -201,7 +201,9 @@ Order.prototype.orderConfirm = function(arg, callback){
         //payChannel: new pay_types.PayChannel({payChannel:arg.payChannel}),
         deliverInfo: deliverInfo,
         sellerDetailList: sellerDetailList,
-        fromBatch: arg.fromBatch
+        fromBatch: arg.fromBatch,
+        fromSource: arg.fromSource,
+        tradeCode: arg.tradeCode
         /*
         fromSource: arg.fromSource,
         exchangeScore:arg.exchangeScore || 0,
