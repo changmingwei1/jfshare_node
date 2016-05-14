@@ -16,6 +16,7 @@ var Address = require('../lib/models/address');
 var Seller = require('../lib/models/seller');
 var Express = require('../lib/models/express');
 var AfterSale = require('../lib/models/afterSale');
+var Pay = require('../lib/models/pay');
 
 var product_types = require("../lib/thrift/gen_code/product_types");
 
@@ -1734,7 +1735,7 @@ router.post('/info', function (req, res, next) {
                 var productList2 = {
                     "productId": "ze151224013609000987",
                     "productName": "测试SKU",
-                    sku: {"skuNum": "1-2:100-101", "skuDesc": "颜色-天蓝色:尺码-均码"},
+                    sku: {"skuNum": "1-2:100-101", "skuName": "颜色-天蓝色:尺码-均码"},
                     "curPrice": "1.00",
                     "orgPrice": "2.00",
                     "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
@@ -1745,7 +1746,7 @@ router.post('/info', function (req, res, next) {
                 var productList3 = {
                     "productId": "ze151224013609000987",
                     "productName": "测试SKU",
-                    sku: {"skuNum": "1-2:100-101", "skuDesc": "颜色-天蓝色:尺码-均码"},
+                    sku: {"skuNum": "1-2:100-101", "skuName": "颜色-天蓝色:尺码-均码"},
                     "curPrice": "1.00",
                     "orgPrice": "2.00",
                     "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
@@ -1756,7 +1757,7 @@ router.post('/info', function (req, res, next) {
                 var productList4 = {
                     "productId": "ze151224013609000987",
                     "productName": "测试SKU",
-                    sku: {"skuNum": "1-2:100-101", "skuDesc": "颜色-天蓝色:尺码-均码"},
+                    sku: {"skuNum": "1-2:100-101", "skuName": "颜色-天蓝色:尺码-均码"},
                     "curPrice": "1.00",
                     "orgPrice": "2.00",
                     "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
@@ -1868,6 +1869,72 @@ router.post('/pay', function (request, response, next) {
         response.json(result);
     } catch (ex) {
         response.json(result);
+    }
+});
+
+/*申请支付请求*/
+router.post('/payUrl', function (req, res, next) {
+    var result = {code: 200};
+
+    var arg = req.body;
+    logger.info("order pay request:" + JSON.stringify(arg));
+
+    if (arg == null || arg.payChannel == null || arg.orderIdList == null || arg.orderIdList.length <= 0) {
+        result.code = 400;
+        result.desc = "请求参数错误";
+        res.json(result);
+        return;
+    }
+
+    if (arg.payChannel == 4) {
+        Util.getOpenApi(arg, function (err, data) {
+            try {
+                logger.info("get open id response: " + JSON.stringify(data));
+                var jsonData = JSON.parse(data);
+                if (err == 500 || jsonData.openid == undefined) {
+                    logger.error("error:" + err);
+                    result.code = 500;
+                    result.desc = "获取支付URL失败";
+                    res.json(result);
+                    return;
+                }
+                logger.info("jsonData:" + JSON.stringify(jsonData));
+                arg.openId = jsonData.openid;
+
+                logger.info("arg:" + JSON.stringify(arg));
+                Pay.payUrl(arg, function (err, data) {
+                    var urlInfo = JSON.parse(data.value);
+                    if (err) {
+                        res.json(err);
+                        return;
+                    }
+                    if (payUrl !== null) {
+                        result.payUrl = urlInfo;
+                        res.json(result);
+                        logger.info("order pay response:" + JSON.stringify(result));
+                    }
+                });
+            }
+            catch (ex) {
+                logger.error("error:" + ex);
+                result.code = 500;
+                result.desc = "获取支付URL失败";
+                res.json(result);
+            }
+        });
+    } else {
+        Pay.payUrl(arg, function (err, data) {
+            var urlInfo = JSON.parse(data.value);
+            if (err) {
+                res.json(err);
+                return;
+            }
+            if (payUrl !== null) {
+                result.payUrl = urlInfo;
+                res.json(result);
+                logger.info("order pay response:" + JSON.stringify(result));
+            }
+        });
     }
 });
 
