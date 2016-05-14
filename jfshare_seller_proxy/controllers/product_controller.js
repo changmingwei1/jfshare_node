@@ -14,7 +14,7 @@ var detailStock = require('../lib/models/detail_stock');
 var pagination_types = require('../lib/thrift/gen_code/pagination_types');
 
 var product_types = require("../lib/thrift/gen_code/product_types");
-
+var Stock = require('../lib/models/stock');
 //商品列表
 router.post('/list', function (request, response, next) {
     logger.info("进入获取商品列表接口");
@@ -132,17 +132,55 @@ router.post('/creat', function (request, response, next) {
             response.json(result);
             return;
         }
-        Product.create(params,function(err,data){
-            if(err){
-                response.json(err);
-                return;
-            }else{
-                logger.info("响应的结果:" + JSON.stringify(data));
-                return;
-            }
-        });
+        async.series([
+                function (callback) {
+                    try {
 
+                        Product.create(params,function(err,data){
+                            if(err){
+                                callback(1,err);
+                            }else{
+                                params.productId = data[0].value;
+                                callback(null,params.productId);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("创建商品服务异常:" + ex);
+                        return callback(1, ex);
+                    }
+                },
+                function (callback) {
+                    try {
+                        Stock.createStock(params,function(err,data){
+                            if(err){
+                                callback(2,err);
+                            }else{
+                                callback(null,params.productId);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("创建库存服务异常:" + ex);
+                        return callback(2, null);
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err == 1) {
+                    logger.error("创建商品失败---商品服务异常：" + results[0]);
+                    result.code = 500;
+                    result.desc = "创建商品失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("创建商品库存失败--商品库存服务异常：" + err);
+                    response.json(results[1]);
+                    return;
+                }
+                result.productId = results[0];
+                response.json(result);
 
+            });
     }catch(ex) {
         logger.error("create product  error:" + ex);
         result.code = 500;
@@ -154,10 +192,10 @@ router.post('/creat', function (request, response, next) {
 //获取商品信息，进行编辑
 router.post('/get', function (request, response, next) {
 
-    logger.info("进入编辑商品接口");
+    logger.info("进入获取商品接口");
     var result = {code: 200};
-    // var params = request.query;
     var params = request.body;
+    logger.info("编辑获取商品--编辑--接口参数:" + JSON.stringify(params));
     //参数验证
     if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
 
@@ -167,7 +205,6 @@ router.post('/get', function (request, response, next) {
         return;
     }
 
-    //参数验证
     if (params.productId == null || params.productId == "" || params.productId <= 0) {
 
         result.code = 500;
@@ -175,234 +212,17 @@ router.post('/get', function (request, response, next) {
         response.json(result);
         return;
     }
-
-
     try {
+        Product.queryProduct(params, function (err,data) {
+            if(err){
+                response.json(err);
+                return;
+            }
+            result.product = data[0].product;
+            response.json(result);
+            return;
+        });
 
-        var arg = request.query;
-
-        logger.info("编辑商品接口参数:" + JSON.stringify(arg));
-
-
-        var product = {};
-
-
-        product.sellerId = 5;
-        product.productId = "ze160105143450000070";
-        product.subjectId = 3002;
-        product.brandId = 25;
-        product.productName = "韩国现代（Hyundai）酸奶机HYSZ-5302";
-        product.viceName = "PTC低功率循环加热结构设计 温度控制精准";
-        product.oriprice = 100;
-        product.postageId = 1;
-        product.img_key = "23DC861A6CB8BF286C955DEE5FB16913.jpg,63A6F2BA63706A0CB1660947F0BE514E.jpg,2F6EF419A33D8038036A16A229DC46EE.jpg,1FC9670B5463C5588A1FFB30C9EB05CA.jpg,21E6934156C63EDAEDE922B8E8CC5DBF.jpg";
-        product.weight = 100;
-        product.volume = 100;
-        product.type = 2;
-        product.detailkey = "";
-
-        var sku = {
-            "sku": [{
-                "key": {"id": 1, "value": "不叫颜色可否"},
-                "values": [{
-                    "id": 1,
-                    "value": "军绿色",
-                    "image": "40923A2995EA7A154A02C3C0D210F1BA.jpg",
-                    "isReplace": "0"
-                }, {
-                    "id": "6",
-                    "value": "浅绿色",
-                    "image": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
-                    "isReplace": "0"
-                }, {"id": "11", "value": "深蓝色", "image": "CC94147A0A54810BF8380D47DF9E6FC7.jpg", "isReplace": "0"}]
-            }, {
-                "key": {"id": "100", "value": "自定义规格"},
-                "values": [{"id": "101", "value": "女神"}, {"id": "102", "value": "男神"}]
-            }]
-        };
-
-        product.skuTemplate = sku;
-
-
-        var attribute = [{"id": "1", "name": "产地", "value": ""}, {"id": "2", "name": "寿命", "value": ""}, {
-            "id": "3",
-            "name": "型号",
-            "value": ""
-        }];
-
-        product.attribute = attribute;
-
-        var storeinfo = {
-            "store": [
-                {
-                    "key": {
-                        "id": "1-11:100-101"
-                    },
-                    "values": [
-                        {
-                            "storeid": "1",
-                            "oriprice": "100",
-                            "sellprice": "200",
-                            "setprice": "150",
-                            "location": "",
-                            "num": "",
-                            "storecount": "190",
-                            "limitcount": "12"
-                        },
-                        {
-                            "storeid": "2",
-                            "oriprice": "110",
-                            "sellprice": "210",
-                            "setprice": "160",
-                            "location": "",
-                            "num": "",
-                            "storecount": "200",
-                            "limitcount": "12"
-                        }
-                    ]
-                },
-                {
-                    "key": {
-                        "id": "1-11:100-102"
-                    },
-                    "values": [
-                        {
-                            "storeid": "1",
-                            "oriprice": "100",
-                            "sellprice": "200",
-                            "setprice": "150",
-                            "location": "",
-                            "num": "",
-                            "storecount": "190",
-                            "limitcount": "12"
-                        },
-                        {
-                            "storeid": "2",
-                            "oriprice": "110",
-                            "sellprice": "210",
-                            "setprice": "160",
-                            "location": "",
-                            "num": "",
-                            "storecount": "200",
-                            "limitcount": "12"
-                        }
-                    ]
-                },
-                {
-                    "key": {
-                        "id": "1-1:100-101"
-                    },
-                    "values": [
-                        {
-                            "storeid": "1",
-                            "oriprice": "100",
-                            "sellprice": "200",
-                            "setprice": "150",
-                            "location": "",
-                            "num": "",
-                            "storecount": "190",
-                            "limitcount": "12"
-                        },
-                        {
-                            "storeid": "2",
-                            "oriprice": "110",
-                            "sellprice": "210",
-                            "setprice": "160",
-                            "location": "",
-                            "num": "",
-                            "storecount": "200",
-                            "limitcount": "12"
-                        }
-                    ]
-                },
-                {
-                    "key": {
-                        "id": "1-1:100-102"
-                    },
-                    "values": [
-                        {
-                            "storeid": "1",
-                            "oriprice": "100",
-                            "sellprice": "200",
-                            "setprice": "150",
-                            "location": "",
-                            "num": "",
-                            "storecount": "190",
-                            "limitcount": "12"
-                        },
-                        {
-                            "storeid": "2",
-                            "oriprice": "110",
-                            "sellprice": "210",
-                            "setprice": "160",
-                            "location": "",
-                            "num": "",
-                            "storecount": "200",
-                            "limitcount": "12"
-                        }
-                    ]
-                },
-                {
-                    "key": {
-                        "id": "1-6:100-101"
-                    },
-                    "values": [
-                        {
-                            "storeid": "1",
-                            "oriprice": "100",
-                            "sellprice": "200",
-                            "setprice": "150",
-                            "location": "",
-                            "num": "",
-                            "storecount": "190",
-                            "limitcount": "12"
-                        },
-                        {
-                            "storeid": "2",
-                            "oriprice": "110",
-                            "sellprice": "210",
-                            "setprice": "160",
-                            "location": "",
-                            "num": "",
-                            "storecount": "200",
-                            "limitcount": "12"
-                        }
-                    ]
-                },
-                {
-                    "key": {
-                        "id": "1-6:100-102"
-                    },
-                    "values": [
-                        {
-                            "storeid": "1",
-                            "oriprice": "100",
-                            "sellprice": "200",
-                            "setprice": "150",
-                            "location": "",
-                            "num": "",
-                            "storecount": "190",
-                            "limitcount": "12"
-                        },
-                        {
-                            "storeid": "2",
-                            "oriprice": "110",
-                            "sellprice": "210",
-                            "setprice": "160",
-                            "location": "",
-                            "num": "",
-                            "storecount": "200",
-                            "limitcount": "12"
-                        }
-                    ]
-                }
-            ]
-        };
-
-
-        product.storeinfo = storeinfo;
-        result.product = product;
-        response.json(result);
     } catch (ex) {
         logger.error("查询失败，原因是:" + ex);
         result.code = 500;
@@ -412,66 +232,117 @@ router.post('/get', function (request, response, next) {
 });
 
 router.post('/update', function (request, response, next) {
-    var result = {code:200};
-    response.json(result);
-    //logger.info("进入更新商品接口");
-    //var result = {code: 200};
-    //
-    //try {
-    //    var params = request.body;
-    //
-    //    //参数验证
-    //    if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    //参数验证
-    //    if (params.brandId == null || params.brandId == "" || params.brandId <= 0) {
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    //参数验证
-    //    if (params.subjectId == null || params.subjectId == "" || params.subjectId <= 0) {
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    //参数验证
-    //    if (params.productName == null || params.productName == "") {
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //    //参数验证
-    //    if (params.viceName == null || params.viceName == "") {
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //
-    //    logger.info("update product  args:" + JSON.stringify(params));
-    //    response.json(result);
-    //} catch (ex) {
-    //    logger.error("update product error:" + ex);
-    //    result.code = 500;
-    //    result.desc = "更新商品失败";
-    //    response.json(result);
-    //}
+
+    logger.info("进入更新商品接口");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+
+        //参数验证
+        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        //参数验证
+        if (params.productId == null || params.productId == "" || params.productId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        //参数验证
+        if (params.brandId == null || params.brandId == "" || params.brandId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        //参数验证
+        if (params.subjectId == null || params.subjectId == "" || params.subjectId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        //参数验证
+        if (params.productName == null || params.productName == "") {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        //参数验证
+        if (params.viceName == null || params.viceName == "") {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        async.series([
+                function (callback) {
+                    try {
+                        Product.update(params, function (err,data) {
+                            if(err){
+                                callback(1,err);
+                            }else{
+                                callback(null,data);
+                            }
+
+                        });
+                    } catch (ex) {
+                        logger.info("创建商品服务异常:" + ex);
+                        return callback(1, ex);
+                    }
+                },
+                function (callback) {
+                    try {
+                        Stock.updateStock(params,function(err,data){
+                            if(err){
+                                callback(2,err);
+                            }else{
+                                callback(null,data);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("更新库存服务异常:" + ex);
+                        return callback(2, null);
+                    }
+
+                }
+            ],
+            function (err, results) {
+                if (err == 1) {
+                    logger.error("更新商品失败---商品服务异常：" + results[0]);
+                    result.code = 500;
+                    result.desc = "更新商品失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("更新商品库存失败--商品库存服务异常：" + err);
+                    response.json(result);
+                    return;
+                }
+                response.json(result);
+
+            });
+    } catch (ex) {
+        logger.error("update product error:" + ex);
+        result.code = 500;
+        result.desc = "更新商品失败";
+        response.json(result);
+    }
 });
 
 

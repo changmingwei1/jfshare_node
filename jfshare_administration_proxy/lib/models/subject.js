@@ -233,8 +233,8 @@ Subject.prototype.flushtoAll = function (params, callback) {
 
     //参数需要修改
     var subjectInfo = new subject_types.SubjectInfo({
-        pid:params.pid,
-        attributes:params.attributes
+        pid: params.pid,
+        attributes: params.attributes
     });
 
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "applyAttributeToSuperAll", [subjectInfo]);
@@ -279,8 +279,6 @@ Subject.prototype.getListforBrand = function (params, callback) {
 };
 
 Subject.prototype.updateBrandSubject = function (params, callback) {
-
-    //
 
     var subjectList = [];
     subjectList.push(3198);
@@ -341,6 +339,34 @@ Subject.prototype.getBatchSuperTree = function (productIdList, callback) {
     });
 
 };
+
+
+//添加属性
+Subject.prototype.addSubjectAttribute = function (params, callback) {
+    logger.info("subjectServ-addSubjectAttribute params:" + JSON.stringify(params));
+   var subjectAttribute = new subject_types.SubjectAttribute({
+            name: "name",
+            subjectId: params.subjectId,
+            value: params.value,
+            isSku: 0,
+            creator: params.userId
+        });
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "addSubjectAttribute", [subjectAttribute]);
+
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-addSubjectAttribute result:" + JSON.stringify(data));
+        if (err || data[0].code == 1) {
+            logger.error("subjectServ-addSubjectAttribute result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "添加属性失败";
+            return callback(result, null);
+        }
+        return callback(null, data);
+    });
+
+}
+;
 
 
 module.exports = new Subject();

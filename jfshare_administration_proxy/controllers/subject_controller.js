@@ -381,6 +381,42 @@ router.post('/updateBrandSubject', function (request, response, next) {
     }
 });
 
+// 添加属性，这个是因为彻底没有属性所以添加属性
+router.post('/addSubjectAttribute', function (request, response, next) {
+    var result = {code: 200};
+    try {
+        var params = request.body;
 
+        logger.info("params:" + JSON.stringify(params));
+        if (params.subjectIds == null || params.subjectIds == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.brandId == null || params.brandId == "" || params.brandId <= 0) {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        params.subjectList = params.subjectIds.split(",");
+
+
+        Subject.addSubjectAttribute(params, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+                response.json(result);
+            }
+        });
+
+    } catch (ex) {
+        logger.error("获取 error:" + ex);
+        result.code = 500;
+        result.desc = "获取品牌关联类目失败";
+        res.json(result);
+    }
+});
 
 module.exports = router;

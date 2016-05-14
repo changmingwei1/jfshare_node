@@ -62,4 +62,111 @@ Stock.prototype.queryProductTotal = function (params, callback) {
         }
     });
 };
+
+///* 创建库存接口 */
+//result.Result createStock(1:string tranId, 2:StockInfo stockInfo)
+
+//获取某一个商品的总库存,需要提供产品的id列表list
+Stock.prototype.createStock = function (params, callback) {
+
+    var stockList = [];
+    var total = 0;
+    var productSkuList = params.storeinfo;
+    logger.info("productSkuList 长度是---》" + JSON.stringify(productSkuList.length));
+    if (productSkuList.length > 0) {
+        productSkuList.forEach(function (sku) {
+            if (sku != null && sku.key != null) {
+                for (var i = 0; i < sku.values.length; i++) {
+                    var stockItem = new stock_types.StockItem({
+                        skuNum:sku.key.id,
+                        lockCount:0,
+                        count:sku.values[i].storecount,//storecount
+                        storehouseId: sku.values[i].storeid
+                    });
+                    total+=sku.values[i].storecount;
+                    stockList.push(stockItem);
+                }
+
+
+            }
+        });
+    }
+
+
+    var StockInfo = new stock_types.StockInfo({
+        total:total,
+        productId:params.productId,
+        lockTotal:0,
+        stockItems:stockList
+    });
+
+    //获取client
+    var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, 'createStock', [params.productId,StockInfo]);
+    Lich.wicca.invokeClient(stockServ, function (err, data) {
+        logger.info("createStock result:" + JSON.stringify(data));
+
+        if (err || data[0].code == "1") {
+            logger.error("can'tcreateStock because: ======" + err);
+            res.code = 500;
+            res.desc = "创建库存失败";
+            callback(res, null);
+        } else {
+            callback(null, null);
+        }
+    });
+};
+
+//更新库存
+Stock.prototype.updateStock = function (params, callback) {
+
+    var stockList = [];
+    var total = 0;
+    var productSkuList = params.storeinfo;
+    logger.info("productSkuList 长度是---》" + JSON.stringify(productSkuList.length));
+    if (productSkuList.length > 0) {
+        productSkuList.forEach(function (sku) {
+            if (sku != null && sku.key != null) {
+                for (var i = 0; i < sku.values.length; i++) {
+                    var stockItem = new stock_types.StockItem({
+                        skuNum:sku.key.id,
+                        lockCount:0,
+                        count:sku.values[i].storecount,//storecount
+                        storehouseId: sku.values[i].storeid
+
+                    });
+                    total+=sku.values[i].storecount;
+                    stockList.push(stockItem);
+                }
+
+
+            }
+        });
+    }
+
+
+    var StockInfo = new stock_types.StockInfo({
+        total:total,
+        productId:params.productId,
+        lockTotal:0,
+        stockItems:stockList
+    });
+
+    //获取client
+    var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, 'supplyFullStock', [params.productId,StockInfo]);
+    Lich.wicca.invokeClient(stockServ, function (err, data) {
+        logger.info("updateStock result:" + JSON.stringify(data));
+
+        if (err || data[0].code == "1") {
+            var res = {};
+            logger.error("can'tcreateStock because: ======" + err);
+            res.code = 500;
+            res.desc = "更新库存失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
 module.exports = new Stock();

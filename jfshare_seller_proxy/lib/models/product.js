@@ -66,10 +66,6 @@ Product.prototype.create = function (params, callback) {
     if (productSkuList.length > 0) {
         productSkuList.forEach(function (sku) {
             if (sku != null && sku.key != null) {
-                logger.info("sku 信息是---》" + JSON.stringify(sku));
-                logger.info("sku  key 信息是---》" + JSON.stringify(sku.key));
-                logger.info("sku  value 信息是---》" + JSON.stringify(sku.values));
-
                 for (var i = 0; i < sku.values.length; i++) {
                    var productSkuItem = new product_types.ProductSkuItem({
                         //sellerClassNum: params,
@@ -105,11 +101,12 @@ Product.prototype.create = function (params, callback) {
         imgKey: params.imgKey,
         type: params.type,//商品类型 2表示普通商品 3表示虚拟商品
         createUserId: params.sellerId,
-        skuTemplate: JSON.stringify(params.skuTemplate),
-        attribute:JSON.stringify(params.attribute),
+        skuTemplate: params.skuTemplate,
+        attribute:params.attribute,
         productSku:productSku,
         postageId: params.postageId,
-        detailContent:params.detailContent
+        detailContent:params.detailContent,
+        storehouseIds:params.storehouseIds
     });
 
 
@@ -132,41 +129,55 @@ Product.prototype.create = function (params, callback) {
 //更新商品信息
 Product.prototype.update = function (params, callback) {
 
-    var productSkuList = [];
+    var productSkuItemList = [];
 
-    var productSkuItem = new product_types.ProductSkuItem({
-        sellerClassNum: params,
-        shelf: params,
-        curPrice: params,
-        orgPrice: params,
-        vPicture: params,
-        skuName: params,
-        weight: params,
-        refPrice: params,
-        storehouseId: params,
-        skuNum: params
+    var productSkuList = params.storeinfo;
+    logger.info("productSkuList 长度是---》" + JSON.stringify(productSkuList.length));
+    if (productSkuList.length > 0) {
+        productSkuList.forEach(function (sku) {
+            if (sku != null && sku.key != null) {
+                for (var i = 0; i < sku.values.length; i++) {
+                    var productSkuItem = new product_types.ProductSkuItem({
+                        //sellerClassNum: params,
+                        //shelf: sku.values[i].location,
+                        curPrice: sku.values[i].sellprice,//销售价
+                        orgPrice: sku.values[i].oriprice,//原价
+                        //vPicture: params,
+                        skuName: sku.key.name,
+                        weight:sku.values[i].weight,
+                        refPrice: sku.values[i].setprice,//结算价
+                        storehouseId: sku.values[i].storeid,
+                        skuNum: sku.key.id
+                    });
 
+                    productSkuItemList.push(productSkuItem);
+                }
+
+
+            }
+        });
+    }
+
+    var productSku = new product_types.ProductSku({
+        skuItems:  productSkuItemList
     });
 
-    productSkuList.push(productSkuItem);
     var product = new product_types.Product({
+        productId:params.productId,
         sellerId: params.sellerId,
-        productName: params.brandId,
-        viceName: params.brandId,
+        productName: params.productName,
+        viceName: params.viceName,
         subjectId: params.subjectId,
-        brandId: params.subjectId,
-        imgKey: params.img_key,
-        //detailKey:params.detailkey,
-        //maxBuyLimit:params.maxBuyLimit
+        brandId: params.brandId,
+        imgKey: params.imgKey,
         type: params.type,//商品类型 2表示普通商品 3表示虚拟商品
-
         createUserId: params.sellerId,
-        skuTemplate: params.skuTemplate,
-        attribute: params.attribute,
-        productSku: params.productSkuList,
-
-        storehouseIds: params.storehouseIds,
-        postageId: params.postageId
+        skuTemplate: JSON.stringify(params.skuTemplate),
+        attribute:JSON.stringify(params.attribute),
+        productSku:productSku,
+        postageId: params.postageId,
+        detailContent:params.detailContent,
+        storehouseIds:params.storehouseIds
     });
 
 
@@ -208,8 +219,10 @@ Product.prototype.queryProduct = function (params, callback) {
             res.code = 500;
             res.desc = "查询商品失败";
             callback(res, null);
+            return;
         } else {
-            callback(null, data)
+            callback(null, data);
+            return;
         }
     });
 };
@@ -225,7 +238,7 @@ Product.prototype.statisticsProductCard = function (params, callback) {
     var page = new pagination_types.Pagination({
 
         numPerPage: params.perCount,
-        currentPage: parmas.curpage
+        currentPage: params.curpage
     });
 
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsProductCard", [productRetParam, page]);
@@ -256,7 +269,7 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
     var page = new pagination_types.Pagination({
 
         numPerPage: params.perCount,
-        currentPage: parmas.curpage
+        currentPage: params.curpage
     });
 
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCardViewList", [ProductCardViewParam, page]);
@@ -276,7 +289,7 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
 };
 
 //获取商品信息(虚拟商品列表)
-Product.prototype.queryProduct = function (params, callback) {
+Product.prototype.queryProductCard = function (params, callback) {
 
     var productRetParam = new product_types.ProductCardStatisticsParam({
         sellerId: params.sellerId,
@@ -286,7 +299,7 @@ Product.prototype.queryProduct = function (params, callback) {
     var page = new pagination_types.Pagination({
 
         numPerPage: params.perCount,
-        currentPage: parmas.curpage
+        currentPage: params.curpage
     });
 
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsProductCard", [productRetParam, page]);
@@ -298,9 +311,9 @@ Product.prototype.queryProduct = function (params, callback) {
             logger.error("productServ-queryProduct  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询商品失败";
-            callback(res, null);
+            return callback(res, null);
         } else {
-            callback(null, data)
+           return callback(null, data)
         }
     });
 };
