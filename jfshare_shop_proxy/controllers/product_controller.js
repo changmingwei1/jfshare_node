@@ -13,6 +13,7 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var Product = require('../lib/models/product');
 var Seller = require('../lib/models/seller');
 var detailStock = require('../lib/models/detail_stock');
+var baseTemplate = require('../lib/models/baseTemplate');
 
 //查询商品列表
 router.post('/list', function (req, res, next) {
@@ -139,6 +140,7 @@ router.get('/productInfo', function (req, res, next) {
                     productInfo.skuTemplate = JSON.parse(product.skuTemplate);
                     productInfo.sellerId = product.sellerId;
                     productInfo.type = product.type;
+                    productInfo.storehouseIds = product.storehouseIds;
 
                     //添加最高价和最低价    ====   现在的productSku是null
                     //var productSku = product.productSku;
@@ -169,7 +171,11 @@ router.get('/productInfo', function (req, res, next) {
                         callback(null, result);
                     }
                 });
-            }],
+            },
+            function(result,callback){
+
+            }
+        ],
         function (err, data) {
             if (err) {
                 logger.error("get product info fail err:" + err);
@@ -225,7 +231,7 @@ router.get('/productDetail', function (req, res, next) {
     }
 });
 
-//查询商品库存和sku
+//查询商品指定sku和库存
 router.post('/querystoreTest', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
@@ -250,27 +256,6 @@ router.post('/querystoreTest', function (req, res, next) {
         params.skuTag = skuTag;
         params.attributeTag = attributeTag;
 
-        //Product.queryHotSKU(params, function (err, data) {
-        //    if(err){
-        //        res.json(err);
-        //    }else{
-        //        var product = data[0].product;
-        //        /********************测试数据*******************/
-        //        //仓库id
-        //        var storehouseId = 1;
-        //        //库存量
-        //        var value = 100;
-        //        //销售价和原价
-        //        var curPrice = 100;
-        //        var orgPrice= 150;
-        //        result.storehouseId = storehouseId;
-        //        result.value = value;
-        //        result.curPrice = curPrice;
-        //        result.orgPrice = orgPrice;
-        //        res.json(result);
-        //        logger.info("查询到的详情为:" + JSON.stringify(result));
-        //    }
-        //});
         var detailStockIns = new detailStock();
 
         async.waterfall([

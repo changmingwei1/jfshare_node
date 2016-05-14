@@ -2160,7 +2160,7 @@ router.post('/freight', function (request, response, next) {
 });
 
 //申请退货
-router.post('/refund', function (request, response, next) {
+/*router.post('/refund', function (request, response, next) {
     logger.info("进入申请退货流程");
     var result = {code: 200};
     try {
@@ -2184,9 +2184,9 @@ router.post('/refund', function (request, response, next) {
     } catch (ex) {
         response.json(result);
     }
-});
+});*/
 //申请退货
-router.post('/refundTest', function (request, response, next) {
+router.post('/refund', function (request, response, next) {
     logger.info("进入申请退货流程");
     var result = {code: 200};
     try {
@@ -2215,7 +2215,9 @@ router.post('/refundTest', function (request, response, next) {
                 response.json(err);
                 return;
             }
+            result.value = data[0].value;
             response.json(result);
+            logger.info("响应的结果:" + JSON.stringify(result));
         });
     } catch (ex) {
         response.json(result);

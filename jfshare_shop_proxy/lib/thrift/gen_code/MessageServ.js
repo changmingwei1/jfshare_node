@@ -552,6 +552,330 @@ MessageServ_sendPush_result.prototype.write = function(output) {
   return;
 };
 
+MessageServ_getAppUpgradeInfo_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+MessageServ_getAppUpgradeInfo_args.prototype = {};
+MessageServ_getAppUpgradeInfo_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.GetUpgradeParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MessageServ_getAppUpgradeInfo_args.prototype.write = function(output) {
+  output.writeStructBegin('MessageServ_getAppUpgradeInfo_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+MessageServ_getAppUpgradeInfo_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+MessageServ_getAppUpgradeInfo_result.prototype = {};
+MessageServ_getAppUpgradeInfo_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.AppUpgradeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MessageServ_getAppUpgradeInfo_result.prototype.write = function(output) {
+  output.writeStructBegin('MessageServ_getAppUpgradeInfo_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+MessageServ_addAppUpgradeInfo_args = function(args) {
+  this.info = null;
+  if (args) {
+    if (args.info !== undefined) {
+      this.info = args.info;
+    }
+  }
+};
+MessageServ_addAppUpgradeInfo_args.prototype = {};
+MessageServ_addAppUpgradeInfo_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.info = new ttypes.AppUpgradeInfo();
+        this.info.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MessageServ_addAppUpgradeInfo_args.prototype.write = function(output) {
+  output.writeStructBegin('MessageServ_addAppUpgradeInfo_args');
+  if (this.info !== null && this.info !== undefined) {
+    output.writeFieldBegin('info', Thrift.Type.STRUCT, 1);
+    this.info.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+MessageServ_addAppUpgradeInfo_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+MessageServ_addAppUpgradeInfo_result.prototype = {};
+MessageServ_addAppUpgradeInfo_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MessageServ_addAppUpgradeInfo_result.prototype.write = function(output) {
+  output.writeStructBegin('MessageServ_addAppUpgradeInfo_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+MessageServ_updateAppUpgradeInfo_args = function(args) {
+  this.info = null;
+  if (args) {
+    if (args.info !== undefined) {
+      this.info = args.info;
+    }
+  }
+};
+MessageServ_updateAppUpgradeInfo_args.prototype = {};
+MessageServ_updateAppUpgradeInfo_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.info = new ttypes.AppUpgradeInfo();
+        this.info.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MessageServ_updateAppUpgradeInfo_args.prototype.write = function(output) {
+  output.writeStructBegin('MessageServ_updateAppUpgradeInfo_args');
+  if (this.info !== null && this.info !== undefined) {
+    output.writeFieldBegin('info', Thrift.Type.STRUCT, 1);
+    this.info.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+MessageServ_updateAppUpgradeInfo_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+MessageServ_updateAppUpgradeInfo_result.prototype = {};
+MessageServ_updateAppUpgradeInfo_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MessageServ_updateAppUpgradeInfo_result.prototype.write = function(output) {
+  output.writeStructBegin('MessageServ_updateAppUpgradeInfo_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 MessageServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -796,6 +1120,147 @@ MessageServClient.prototype.recv_sendPush = function(input,mtype,rseqid) {
   }
   return callback('sendPush failed: unknown result');
 };
+MessageServClient.prototype.getAppUpgradeInfo = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getAppUpgradeInfo(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getAppUpgradeInfo(param);
+  }
+};
+
+MessageServClient.prototype.send_getAppUpgradeInfo = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getAppUpgradeInfo', Thrift.MessageType.CALL, this.seqid());
+  var args = new MessageServ_getAppUpgradeInfo_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+MessageServClient.prototype.recv_getAppUpgradeInfo = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new MessageServ_getAppUpgradeInfo_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getAppUpgradeInfo failed: unknown result');
+};
+MessageServClient.prototype.addAppUpgradeInfo = function(info, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_addAppUpgradeInfo(info);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_addAppUpgradeInfo(info);
+  }
+};
+
+MessageServClient.prototype.send_addAppUpgradeInfo = function(info) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('addAppUpgradeInfo', Thrift.MessageType.CALL, this.seqid());
+  var args = new MessageServ_addAppUpgradeInfo_args();
+  args.info = info;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+MessageServClient.prototype.recv_addAppUpgradeInfo = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new MessageServ_addAppUpgradeInfo_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('addAppUpgradeInfo failed: unknown result');
+};
+MessageServClient.prototype.updateAppUpgradeInfo = function(info, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateAppUpgradeInfo(info);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateAppUpgradeInfo(info);
+  }
+};
+
+MessageServClient.prototype.send_updateAppUpgradeInfo = function(info) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('updateAppUpgradeInfo', Thrift.MessageType.CALL, this.seqid());
+  var args = new MessageServ_updateAppUpgradeInfo_args();
+  args.info = info;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+MessageServClient.prototype.recv_updateAppUpgradeInfo = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new MessageServ_updateAppUpgradeInfo_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateAppUpgradeInfo failed: unknown result');
+};
 MessageServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -957,6 +1422,96 @@ MessageServProcessor.prototype.process_sendPush = function(seqid, input, output)
     this._handler.sendPush(args.message,  function (err, result) {
       var result = new MessageServ_sendPush_result((err != null ? err : {success: result}));
       output.writeMessageBegin("sendPush", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+MessageServProcessor.prototype.process_getAppUpgradeInfo = function(seqid, input, output) {
+  var args = new MessageServ_getAppUpgradeInfo_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getAppUpgradeInfo.length === 1) {
+    Q.fcall(this._handler.getAppUpgradeInfo, args.param)
+      .then(function(result) {
+        var result = new MessageServ_getAppUpgradeInfo_result({success: result});
+        output.writeMessageBegin("getAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new MessageServ_getAppUpgradeInfo_result(err);
+        output.writeMessageBegin("getAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getAppUpgradeInfo(args.param,  function (err, result) {
+      var result = new MessageServ_getAppUpgradeInfo_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+MessageServProcessor.prototype.process_addAppUpgradeInfo = function(seqid, input, output) {
+  var args = new MessageServ_addAppUpgradeInfo_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.addAppUpgradeInfo.length === 1) {
+    Q.fcall(this._handler.addAppUpgradeInfo, args.info)
+      .then(function(result) {
+        var result = new MessageServ_addAppUpgradeInfo_result({success: result});
+        output.writeMessageBegin("addAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new MessageServ_addAppUpgradeInfo_result(err);
+        output.writeMessageBegin("addAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.addAppUpgradeInfo(args.info,  function (err, result) {
+      var result = new MessageServ_addAppUpgradeInfo_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("addAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+MessageServProcessor.prototype.process_updateAppUpgradeInfo = function(seqid, input, output) {
+  var args = new MessageServ_updateAppUpgradeInfo_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.updateAppUpgradeInfo.length === 1) {
+    Q.fcall(this._handler.updateAppUpgradeInfo, args.info)
+      .then(function(result) {
+        var result = new MessageServ_updateAppUpgradeInfo_result({success: result});
+        output.writeMessageBegin("updateAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new MessageServ_updateAppUpgradeInfo_result(err);
+        output.writeMessageBegin("updateAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.updateAppUpgradeInfo(args.info,  function (err, result) {
+      var result = new MessageServ_updateAppUpgradeInfo_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("updateAppUpgradeInfo", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
