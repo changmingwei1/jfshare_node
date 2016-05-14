@@ -11,203 +11,10 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 
 var Order = require('../lib/models/order');
 var Util = require('../lib/models/util');
-
+var afterSale = require('../lib/models/afterSale');
 
 // 查询订单列表
 router.post('/list', function (request, response, next) {
-
-    //var result = {
-    //    "code": 200,
-    //    "orderList": [
-    //
-    //        {
-    //            "orderId": "5660005",
-    //            "orderPrice": "1.00",
-    //            "orderState": 51,
-    //            "sellerId": 3,
-    //            "sellerName": "聚分享旗舰店3",
-    //            "createTime": "2016-01-04 18:43:46",
-    //            "deliverTime": "",
-    //            "successTime": "",
-    //            "type": 3,
-    //            "productList": [
-    //                {
-    //                    "productId": "ze160216170722000745",
-    //                    "productName": "博纳2D通兑票",
-    //                    "skuNum": "1-16",
-    //                    "skuName": "节假日通用",
-    //                    "count": 2,
-    //                    "curPrice": "100",
-    //                    "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-    //                }
-    //            ]
-    //        },
-    //        {
-    //            "orderId": "5660005",
-    //            "orderPrice": "1.00",
-    //            "orderState": 40,
-    //            "sellerId": 3,
-    //            "sellerName": "聚分享旗舰店3",
-    //            "createTime": "2016-01-04 18:43:46",
-    //            "deliverTime": "",
-    //            "successTime": "",
-    //            "type": 3,
-    //            "productList": [
-    //                {
-    //                    "productId": "ze160216170722000745",
-    //                    "productName": "高压锅",
-    //                    "skuNum": "1-16",
-    //                    "skuName": "节假日通用",
-    //                    "count": 2,
-    //                    "curPrice": "100",
-    //                    "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-    //                }
-    //            ]
-    //        },
-    //        {
-    //            "orderId": "5640002",
-    //            "orderPrice": "0.01",
-    //            "postage": null,
-    //            "orderState": 10,
-    //            "sellerId": 1,
-    //            "sellerName": "聚分享旗舰店",
-    //            "createTime": "2016-01-04 00:15:59",
-    //            "deliverTime": "",
-    //            "successTime": "",
-    //            "type": 2,
-    //            "productList": [
-    //                {
-    //                    "productId": "ze151228152841000732",
-    //                    "productName": "现代 空气净化器 HDJH-5501",
-    //                    "skuNum": "1-7:100-104",
-    //                    "skuName": "颜色-贝立安:尺码-S",
-    //                    "curPrice": "0.01",
-    //                    "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
-    //                    "count": 1
-    //                }
-    //            ]
-    //        },
-    //        {
-    //            "orderId": "5660004",
-    //            "orderPrice": "1.00",
-    //            "orderState": 10,
-    //            "sellerId": 1,
-    //            "sellerName": "聚分享旗舰店1",
-    //            "createTime": "2016-01-04 18:43:46",
-    //            "deliverTime": "",
-    //            "successTime": "",
-    //            "type": 3,
-    //            "productList": [
-    //                {
-    //                    "productId": "ze160216170722000745",
-    //                    "productName": "博纳2D通兑票",
-    //                    "skuNum": "1-16",
-    //                    "skuName": "节假日通用",
-    //                    "count": 2,
-    //                    "curPrice": "100",
-    //                    "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-    //                }
-    //            ]
-    //        },
-    //        {
-    //            "orderId": "5660004",
-    //            "orderPrice": "1.00",
-    //            "orderState": 61,
-    //            "sellerId": 2,
-    //            "sellerName": "聚分享旗舰店2",
-    //            "createTime": "2016-01-04 18:43:46",
-    //            "deliverTime": "",
-    //            "successTime": "",
-    //            "type": 3,
-    //            "productList": [
-    //                {
-    //                    "productId": "ze160216170722000745",
-    //                    "productName": "博纳2D通兑票",
-    //                    "skuNum": "1-16",
-    //                    "skuName": "节假日通用",
-    //                    "count": 2,
-    //                    "curPrice": "100",
-    //                    "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-    //                }
-    //            ]
-    //        },
-    //        {
-    //            "orderId": "5660005",
-    //            "orderPrice": "1.00",
-    //            "orderState": 51,
-    //            "sellerId": 3,
-    //            "sellerName": "聚分享旗舰店3",
-    //            "createTime": "2016-01-04 18:43:46",
-    //            "deliverTime": "",
-    //            "successTime": "",
-    //            "type": 3,
-    //            "productList": [
-    //                {
-    //                    "productId": "ze160216170722000745",
-    //                    "productName": "博纳2D通兑票",
-    //                    "skuNum": "1-16",
-    //                    "skuName": "节假日通用",
-    //                    "count": 2,
-    //                    "curPrice": "100",
-    //                    "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-    //                }
-    //            ]
-    //        },
-    //        {
-    //            "orderId": "5660005",
-    //            "orderPrice": "1.00",
-    //            "orderState": 40,
-    //            "sellerId": 3,
-    //            "sellerName": "聚分享旗舰店3",
-    //            "createTime": "2016-01-04 18:43:46",
-    //            "deliverTime": "",
-    //            "successTime": "",
-    //            "type": 3,
-    //            "productList": [
-    //                {
-    //                    "productId": "ze160216170722000745",
-    //                    "productName": "高压锅",
-    //                    "skuNum": "1-16",
-    //                    "skuName": "节假日通用",
-    //                    "count": 2,
-    //                    "curPrice": "100",
-    //                    "imgUrl": "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-    //                }
-    //            ]
-    //        },
-    //        {
-    //            "orderId": "5610002",
-    //            "orderPrice": "0.02",
-    //            "postage": null,
-    //            "orderState": 10,
-    //            "sellerId": 1,
-    //            "sellerName": "聚分享旗舰店",
-    //            "createTime": "2015-12-31 15:06:06",
-    //            "deliverTime": "",
-    //            "successTime": "",
-    //            "type": 2,
-    //            "productList": [
-    //                {
-    //                    "productId": "ze151228152841000732",
-    //                    "productName": "现代 空气净化器 HDJH-5501",
-    //                    "skuNum": "1-7:100-105",
-    //                    "skuName": "颜色-贝立安:尺码-M",
-    //                    "curPrice": "0.02",
-    //                    "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
-    //                    "count": 1
-    //                }
-    //            ]
-    //        },
-    //
-    //
-    //    ],
-    //    "curTime": 1462604929959,
-    //    "page": {
-    //        "total": 56,
-    //        "pageCount": 3
-    //    }
-    //};
-    //response.json(result);
 
     var result = {code: 200};
 
@@ -216,7 +23,7 @@ router.post('/list', function (request, response, next) {
     logger.info("查询订单列表请求参数：" + JSON.stringify(params));
 
 
-    if (params.userId == null || params.userId == "" || params.userId <= 0) {
+    if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
         result.code = 400;
         result.desc = "参数错误";
         response.json(result);
@@ -252,6 +59,7 @@ router.post('/list', function (request, response, next) {
                             orderInfo.orderProfileList.forEach(function (order) {
                                 var orderItem = {
                                     orderId: order.orderId,
+                                    sellerId:order.sellerId,
                                     orderPrice: order.closingPrice,
                                     //添加了应答的数据
                                     postage: order.postage,
@@ -374,12 +182,6 @@ router.post('/info', function (request, response, next) {
         return;
     }
 
-    if (params.orderState == null || params.orderState == "") {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
     //订单详情，没有处理3的情况，这里就写2
     params.userType = 2; // 1:买家 2：卖家 3：系统
 
@@ -503,9 +305,10 @@ router.post('/info', function (request, response, next) {
 ;
 
 
-//查询订单的售后状态列表
-router.post('/queryafterSaleOrder', function (request, response,next) {
+//查询售后的订单个数
+router.post('/queryafterSaleOrder', function (request, response, next) {
     var result = {code: 200};
+    result.count = 0;
     try {
         var params = request.body;
         logger.info("查询订单状态个数请求参数：" + JSON.stringify(params));
@@ -515,22 +318,20 @@ router.post('/queryafterSaleOrder', function (request, response,next) {
             response.json(result);
             return;
         }
-        afterSale.queryAfterSale(params, function (err, data) {
+        afterSale.queryAfterSaleOrderList(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            logger.info("Order.orderStateQuery response:" + JSON.stringify(data));
-
-            result.afterSaleOrderList  = data;
+            result.count = data;
             response.json(result);
             return
         });
 
     } catch (ex) {
-        logger.error("查询订单状态个数失败：" + ex);
+        logger.error("查询售后订单个数失败：" + ex);
         result.code = 500;
-        result.desc = "查询订单状态个数失败";
+        result.desc = "查询售后订单个数失败";
         response.json(result);
     }
 });

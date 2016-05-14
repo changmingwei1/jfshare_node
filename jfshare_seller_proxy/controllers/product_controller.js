@@ -285,9 +285,21 @@ router.post('/get', function (request, response, next) {
     var result = {code: 200};
     var params = request.body;
     logger.info("编辑获取商品--编辑--接口参数:" + JSON.stringify(params));
+
+    if (params.productStatus == null || params.productStatus == "" || params.productStatus <= 0) {
+        result.code = 500;
+        result.desc = "请求参数错误";
+        response.json(result);
+        return;
+    }
+    if (params.productStatus==200||params.productStatus==300) {
+        result.code = 500;
+        result.desc = "此状态下商品不可以编辑";
+        response.json(result);
+        return;
+    }
     //参数验证
     if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-
         result.code = 500;
         result.desc = "请求参数错误";
         response.json(result);
@@ -644,15 +656,51 @@ router.post('/apply', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.curState == null || params.curState == "") {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+//ENUM商品状态:100 - 199 不可出售的状态，200 - 299 审核中的状态，
+//300 - 399 销售中的状态，100 初始化，101 商家下架，102 审核未通过，103 管理员下架，200 审核中，300 销售中
+        if(params.state==1){// 0：表示申请上架，1：表示下架
+            if(params.curState !=300){
+                result.code = 500;
+                result.desc = "商品未处于销售状态中,不用下架";
+                response.json(result);
+                return;
+            }
+            params.activeState = 101;
+        }
+        if(params.state==0){// 0：表示申请上架，1：表示下架
+            if(params.curState ==300){
+                result.code = 500;
+                result.desc = "商品处于销售状态中,不用申请上架";
+                response.json(result);
+                return;
+            }
+            params.activeState = 200;
+        }
 
 
-        response.json(result);
+        Product.setProductState(params, function (err, expressData) {
+            if(err){
+                result.code = 500;
+                result.desc = "上架下架失败";
+                response.json(result);
+                return;
+            }
+            response.json(result);
+            return;
+        });
 
     } catch (ex) {
         logger.error("apply state error:" + ex);
         result.code = 500;
         result.desc = "上架下架失败";
-        res.json(result);
+        response.json(result);
     }
 });
 router.post('/improtTicket', function (request, response, next) {

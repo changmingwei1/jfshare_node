@@ -40,7 +40,7 @@ Freight.prototype.addPostageTemplate = function (params, callback) {
 
     logger.info("调用addPostage:" + JSON.stringify(freight));
     // 获取client
-    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "addPostageTemplate", freight);
+    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.TradeServer, "addPostageTemplate", freight);
     // 调用
     Lich.wicca.invokeClient(freightServ, function (err, data) {
         logger.info("freightServ-addPostageTemplate result:" + JSON.stringify(data[0]));
@@ -124,7 +124,7 @@ Freight.prototype.get = function (params, callback) {
     idList.push(params.id);
 
     // 获取client
-    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.FreightServer, "getPostageTemplate", [idLists]);
+    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.TemplatetServer, "getPostageTemplate", [idList]);
     // 调用 storehouseServ
     Lich.wicca.invokeClient(freightServ, function (err, data) {
         logger.info("freightServ-getPostageTemplate result:" + JSON.stringify(data[0]));
@@ -133,9 +133,10 @@ Freight.prototype.get = function (params, callback) {
             var result = {};
             result.code = 500;
             result.desc = "获取运费模板失败！";
-            callback(result, data);
+            callback(result, null);
+            return;
         }
-        callback(null, data);
+        return callback(null, data);
     });
 };
 

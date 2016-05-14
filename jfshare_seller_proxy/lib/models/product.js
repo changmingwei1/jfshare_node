@@ -319,34 +319,34 @@ Product.prototype.queryProductCard = function (params, callback) {
 };
 
 
-//申请上架
-Product.prototype.setProductState = function (params, callback) {
-
-    var productOpt = new product_types.ProductOpt({
-        productId: params.productId,
-        curState: params.curState,
-        activeState: params.activeState,
-        desc: "申请上架",
-        operatorId: params.sellerId,
-        operatorType: 1
-    });
-
-
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "setProductState", [productOpt]);
-
-    Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
-        var res = {};
-        if (err) {
-            logger.error("productServ-queryProduct  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "查询商品失败";
-            callback(res, null);
-        } else {
-            callback(null, data)
-        }
-    });
-};
+////申请上架
+//Product.prototype.setProductState = function (params, callback) {
+//
+//    var productOpt = new product_types.ProductOpt({
+//        productId: params.productId,
+//        curState: params.curState,
+//        activeState: params.activeState,
+//        desc: "申请上架",
+//        operatorId: params.sellerId,
+//        operatorType: 1
+//    });
+//
+//
+//    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "setProductState", [productOpt]);
+//
+//    Lich.wicca.invokeClient(productServ, function (err, data) {
+//        logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
+//        var res = {};
+//        if (err) {
+//            logger.error("productServ-queryProduct  失败原因 ======" + err);
+//            res.code = 500;
+//            res.desc = "查询商品失败";
+//            callback(res, null);
+//        } else {
+//            callback(null, data)
+//        }
+//    });
+//};
 Product.prototype.queryDetail = function(params, callback){
 
     var productDetailParam = new product_types.ProductDetailParam({
@@ -364,6 +364,32 @@ Product.prototype.queryDetail = function(params, callback){
             callback(res, null);
         } else {
             callback(null, data[0]);
+        }
+    });
+};
+
+
+Product.prototype.setProductState = function(params, callback){
+
+    var productOpt = new product_types.ProductOpt({
+        productId:params.productId,
+        curState:params.curState,
+        activeState:params.activeState,
+        operatorId:params.sellerId,
+        operatorType:1
+    });
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "setProductState", [productOpt]);
+
+    Lich.wicca.invokeClient(productServ, function(err, data) {
+        logger.info("productServ-setProductState  result:" + JSON.stringify(data));
+        var res = {};
+        if(err || data[0].code == "1"){
+            logger.error("productServ-setProductState  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "申请上架或下架失败！";
+            callback(res, null);
+        } else {
+            callback(null,null);
         }
     });
 };

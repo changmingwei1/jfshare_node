@@ -31,7 +31,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
         count: params.percount,
         curPage: params.curpage
     });
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [1, params.userId, orderQueryConditions]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2, params.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-orderProfileQuery  result:" + JSON.stringify(data));
@@ -67,7 +67,7 @@ Order.prototype.orderStateQuery = function (param, callback) {
 //订单详情
 Order.prototype.queryOrderDetail = function (param, callback) {
 
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryOrderDetail", [param.userType, param.userId, param.orderId]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryOrderDetail", [2, param.sellerId, param.orderId]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-queryOrderDetail  result:" + JSON.stringify(data));

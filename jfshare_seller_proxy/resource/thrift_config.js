@@ -163,6 +163,15 @@ module.exports.ServiceFactory = {
         return obj;
     },
     /**
+     * 售后服务
+     * @returns {ThriftConfig}
+     */
+    afterSale: function () {
+        var obj = new ThriftConfig("120.24.153.102", 2003);
+        //var obj = new ThriftConfig("127.0.0.1", 2003);
+        return obj;
+    },
+    /**
      * 卖家服务
      * @returns {ThriftConfig}
      */
@@ -174,6 +183,11 @@ module.exports.ServiceFactory = {
     },
     expresss: function () {
        var obj = new ThriftConfig("120.24.153.155", 1989);
+        //  var obj = new ThriftConfig("127.0.0.1", 1989);
+        return obj;
+    },
+    template: function () {
+        var obj = new ThriftConfig("120.24.153.155", 1989);
         //  var obj = new ThriftConfig("127.0.0.1", 1989);
         return obj;
     }
