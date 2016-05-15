@@ -11,7 +11,7 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 
 var Stock = require('../lib/models/stock');
 
-var Storehouse = require('../lib/models/storehouse');
+//var Storehouse = require('../lib/models/storehouse');
 
 
 // 查询商品的总库存

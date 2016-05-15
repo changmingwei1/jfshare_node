@@ -10,51 +10,46 @@ var router = express.Router();
 var async = require('async');
 
 var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 var expresss = require('../lib/models/express');
 
 
-
 //
-router.post('/expresslist', function(request, response, next) {
+router.post('/expresslist', function (request, response, next) {
     logger.info("进入获取物流商列表");
-    //var result = {code:200};
-    //
-    //
-    //var express = {id:1,name:"顺丰"};
-    //var express1 = {id:2,name:"天天"};
-    //var express2 = {id:3,name:"圆通"};
-    //var express3 = {id:4,name:"运通"};
-    //var express4 = {id:5,name:"如风达"};
-    //
-    //var expressList = [];
-    //expressList.push(express);
-    //expressList.push(express1);
-    //expressList.push(express2);
-    //expressList.push(express3);
-    //expressList.push(express4);
-    //result.expressList = expressList;
-    //response.json(result);
-    //
-    //return;
+    var result = {code: 200};
+    var expressList = [];
+    result.expressList = expressList;
 
-    try{
+    try {
 
         var params = request.body;
 
-        expresss.queryList(params, function(err, data) {
-            if(err){
-                res.json(err);
+        expresss.queryList(params, function (err, data) {
+            if (err) {
+                response.json(err);
                 return;
             }
-            response.json(data);
+
+
+            if (data[0].expressInfoList != null) {
+                for (var i = 0; i < data[0].expressInfoList.length; i++) {
+                    var express = {};
+                    express.id = data[0].expressInfoList[i].id;
+
+                    express.name = data[0].expressInfoList[i].name;
+
+                    expressList.push(express);
+                }
+
+            }
             logger.info("query expressList response:" + JSON.stringify(data));
+            response.json(result);
+            return;
         });
 
 
-
         logger.info("expresslist params:" + JSON.stringify(params));
-
 
 
     } catch (ex) {
@@ -64,7 +59,6 @@ router.post('/expresslist', function(request, response, next) {
         response.json(result);
     }
 });
-
 
 
 module.exports = router;
