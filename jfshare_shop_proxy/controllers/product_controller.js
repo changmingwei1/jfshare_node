@@ -171,9 +171,6 @@ router.get('/productInfo', function (req, res, next) {
                         callback(null, result);
                     }
                 });
-            },
-            function(result,callback){
-
             }
         ],
         function (err, data) {

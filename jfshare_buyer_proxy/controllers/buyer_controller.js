@@ -436,19 +436,19 @@ router.post('/query', function (request, response, next) {
         }
         if(param.browser == null || param.browser == ""){
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
         if(param.ppInfo == null || param.ppInfo == ""){
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
         if(param.userId == null || param.userId == "" || param.userId <= 0){
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
@@ -507,25 +507,25 @@ router.post('/update', function (request, response, next) {
 
         if(param.token == null || param.token == ""){
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
         if(param.browser == null || param.browser == ""){
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
         if(param.ppInfo == null || param.ppInfo == ""){
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
         if(param.userId == null || param.userId == "" || param.userId <= 0){
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "用户id不能为空";
             response.json(resContent);
             return;
         }
@@ -560,97 +560,49 @@ router.post('/scoreTotal', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
     var resContent = {code: 200};
-
-    var param = request.body;
-    var token = param.token || "鉴权信息1";
-    var ppInfo = param.ppInfo || "鉴权信息2";
-    var userId = param.userId || 1;
-
-    var params = {};
-    params.token = token;
-    params.ppInfo = ppInfo;
-    params.userId = userId;
-    logger.info("请求参数信息" + JSON.stringify(params));
-
-
-    /*******************************测试数据*********************************/
-    var score = new score_types.Score({
-        userId: param.userId || "1",
-        amount: "100"
-    });
-    resContent.score = score;
-    response.json(resContent);
-    /*******************************测试数据*********************************/
-
-    //try{
-    //    Buyer.validAuth(params,function(err,data){
-    //        if(err){
-    //            //response.json(err);
-    //            //return;
-    //            /***************************测试数据*******************************/
-    //            Score.getScore(params,function(error, data){
-    //                if(error){
-    //                    response.json(error);
-    //                }else{
-    //                    var score = data[0].score;
-    //                    resContent.score = {userId:score.userId,amount:score.amount};
-    //                    response.json(resContent);
-    //                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-    //                }
-    //            });
-    //            /******************************************************************/
-    //        }
-    //        Score.getScore(params,function(error, data){
-    //            if(error){
-    //                response.json(error);
-    //            }else{
-    //                var score = data[0].score;
-    //                resContent.score = {userId:score.userId,amount:score.amount};
-    //                response.json(resContent);
-    //                logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-    //            }
-    //        });
-    //    });
-    //}catch(ex){
-    //    logger.error("不能获取，原因是:" + ex);
-    //    resContent.code = 500;
-    //    resContent.desc = "获取用户积分失败，显示测试数据内容为：";
-    //    response.json(resContent);
-    //}
-});
-/*获取用户积分*/
-router.post('/scoreTotalTest', function (request, response, next) {
-
-    logger.info("进入获取用户积分接口");
-    var resContent = {code: 200};
     try {
         var param = request.body;
-        var token = "鉴权信息1";
-        var ppInfo = "鉴权信息2";
-        var browser = "asdsafas";
         if (param.userId == null || param.userId == "" || param.userId <= 0) {
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "用户id不能为空";
+            response.json(resContent);
+            return;
+        }
+        if(param.token == null || param.token == ""){
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.browser == null || param.browser == ""){
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.ppInfo == null || param.ppInfo == ""){
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
         logger.info("请求参数信息" + JSON.stringify(param));
 
-        Buyer.validAuth(param, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
+        //Buyer.validAuth(param, function (err, data) {
+        //    if (err) {
+        //        response.json(err);
+        //        return;
+        //    }
             Score.getScore(param.userId, function (error, data) {
                 if (error) {
                     response.json(error);
                 } else {
-                    var score = data[0].score;
-                    resContent.acount = score.acount;
+                    var score = data[0].sroce;
+                    resContent.amount = score.amount;
                     response.json(resContent);
                     logger.info("get buyer's Score response:" + JSON.stringify(resContent));
                 }
-            });
+            //});
         });
     } catch (ex) {
         logger.error("不能获取，原因是:" + ex);
@@ -665,199 +617,59 @@ router.post('/scoreTrade', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
     var resContent = {code: 200};
-
-    var arg = request.body;
-    var perCount = arg.perCount || 20;
-    var curPage = arg.curPage || 1;
-    var userId = arg.userId || 2;
-    var type = arg.type || 2;
-    var inOrOut = arg.inOrOut || 2;
-    var tradeTime = arg.tradeTime || "2016-01-19 15:20:10";
-    var token = arg.token || "鉴权信息1";
-    var ppInfo = arg.ppInfo || "鉴权信息2";
-
-    var params = {};
-    params.perCount = perCount;
-    params.curPage = curPage;
-    params.userId = userId;
-    params.type = type;
-    params.inOrOut = inOrOut;
-    params.tradeTime = tradeTime;
-    params.token = token;
-    params.ppInfo = ppInfo;
-
-    logger.info("请求参数信息" + JSON.stringify(params));
-    var dataArr = [];
-
-    /*******************************测试数据*********************************/
-
-    var pagination = new pagination_types.Pagination();
-    resContent.page = {
-        total: pagination.totalCount || 20,
-        pageCount: pagination.pageNumCount || 3,
-        numPerPage: pagination.perCount || 7,
-        currentPage: pagination.curPage || 1
-    };
-
-    var scoreTrade = new score_types.ScoreTrade({
-        userId: 2,
-        type: 2,
-        amount: 100,
-        tradeId: "123",
-        tradeTime: "2016-04-24 11:20:10",
-        inOrOut: 2,
-        trader: 1
-    });
-    var scoreTrade1 = new score_types.ScoreTrade({
-        userId: 2,
-        type: 2,
-        amount: 100,
-        tradeId: "124",
-        tradeTime: "2016-04-24 11:20:10",
-        inOrOut: 1,
-        trader: 2
-    });
-    var scoreTrade2 = new score_types.ScoreTrade({
-        userId: 2,
-        type: 2,
-        amount: 100,
-        tradeId: "125",
-        tradeTime: "2016-04-24 11:20:10",
-        inOrOut: 2,
-        trader: 3
-    });
-    var scoreTrade3 = new score_types.ScoreTrade({
-        userId: 2,
-        type: 2,
-        amount: 100,
-        tradeId: "126",
-        tradeTime: "2016-04-24 11:20:10",
-        inOrOut: 1,
-        trader: 4
-    });
-    var scoreTrade4 = new score_types.ScoreTrade({
-        userId: 2,
-        type: 2,
-        amount: 100,
-        tradeId: "127",
-        tradeTime: "2016-04-24 11:20:10",
-        inOrOut: 2,
-        trader: 4
-    });
-    var scoreTrade5 = new score_types.ScoreTrade({
-        userId: 2,
-        type: 2,
-        amount: 100,
-        tradeId: "128",
-        tradeTime: "2016-04-24 11:20:10",
-        inOrOut: 1,
-        trader: 2
-    });
-    var arr = [scoreTrade, scoreTrade1, scoreTrade2, scoreTrade3, scoreTrade4, scoreTrade5];
-    resContent.arr = arr;
-    response.json(resContent);
-
-    /*******************************测试数据*********************************/
-
-    //try{
-    //    Buyer.validAuth(params,function(err,data){
-    //        if(err){
-    //            //response.json(err);
-    //            //return;
-    //            /***************************测试数据*******************************/
-    //            Score.queryScoreTrade(params,function(error, data){
-    //                var dataArr = [];
-    //                if(error){
-    //                    response.json(error);
-    //                }else{
-    //                    var pagination = data[0].pagination;
-    //                    resContent.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
-    //
-    //                    var scoreTrades = data[0].scoreTrades;
-    //                    scoreTrades.forEach(function(a){
-    //                        dataArr.push({
-    //                            userId: a.userId,
-    //                            type: a.type,
-    //                            amount: a.amount,
-    //                            tradeId: a.tradeId,
-    //                            tradeTime: a.tradeTime,
-    //                            inOrPut: a.inOrOut,
-    //                            trader: a.trader
-    //                        });
-    //                    });
-    //                    resContent.scoreTrades = dataArr;
-    //
-    //                    response.json(resContent);
-    //                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-    //                }
-    //            });
-    //            /******************************************************************/
-    //        }
-    //        Score.queryScoreTrade(params,function(error, data){
-    //            var dataArr = [];
-    //            if(error){
-    //                response.json(error);
-    //            }else{
-    //                var pagination = data[0].pagination;
-    //                resContent.page = {total: pagination.totalCount, pageCount:pagination.pageNumCount};
-    //
-    //                var scoreTrades = data[0].scoreTrades;
-    //                scoreTrades.forEach(function(a){
-    //                    dataArr.push({
-    //                        userId: a.userId,
-    //                        type: a.type,
-    //                        amount: a.amount,
-    //                        tradeId: a.tradeId,
-    //                        tradeTime: a.tradeTime,
-    //                        inOrPut: a.inOrOut,
-    //                        trader: a.trader
-    //                    });
-    //                });
-    //                resContent.scoreTrades = dataArr;
-    //
-    //                response.json(resContent);
-    //                logger.info("get buyer's Score response:" + JSON.stringify(resContent));
-    //            }
-    //        });
-    //    });
-    //}catch(ex){
-    //    logger.error("获取失败，because: " + ex);
-    //    resContent.code = 500;
-    //    resContent.desc = "获取失败,显示测试数据内容为：";
-    //    response.json(resContent);
-    //}
-});
-/*获取积分列表*/
-router.post('/scoreTradeTest', function (request, response, next) {
-
-    logger.info("进入获取用户积分接口");
-    var resContent = {code: 200};
     try {
         var arg = request.body;
-        var perCount = 20;
-        var curPage = 1;
-        var userId = 2;
-        var type = 2;
-        var inOrOut = 2;
-        var tradeTime = "2016-01-19 15:20:10";
-        var token = "鉴权信息1";
-        var ppInfo = "鉴权信息2";
-        var browser = "asdfsa";
 
-        logger.info("请求参数信息" + JSON.stringify(params));
+        logger.info("请求参数信息" + JSON.stringify(arg));
+        if(arg.userId == null || arg.userId == "" || arg.userId <= 0){
+            response.code = 400;
+            response.desc = "用户id不能为空";
+            response.json(resContent);
+            return;
+        }
+        if(arg.curPage == null || arg.curPage == ""){
+            response.code = 400;
+            response.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(arg.perCount == null || arg.perCount == ""){
+            response.code = 400;
+            response.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.token == null || param.token == ""){
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.browser == null || param.browser == ""){
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if(param.ppInfo == null || param.ppInfo == ""){
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
 
-        Buyer.validAuth(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
-            Score.queryScoreTrade(params, function (error, data) {
+        //Buyer.validAuth(arg, function (err, data) {
+        //    if (err) {
+        //        response.json(err);
+        //        return;
+        //    }
+            Score.queryScoreTrade(arg, function (error, data) {
                 var dataArr = [];
                 if (error) {
                     response.json(error);
                 } else {
                     var pagination = data[0].pagination;
-                    resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+                    //resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
 
                     var scoreTrades = data[0].scoreTrades;
                     scoreTrades.forEach(function (a) {
@@ -875,7 +687,7 @@ router.post('/scoreTradeTest', function (request, response, next) {
                     response.json(resContent);
                     logger.info("get buyer's Score response:" + JSON.stringify(resContent));
                 }
-            });
+            //});
         });
     } catch (ex) {
         logger.error("获取失败，because: " + ex);
@@ -943,19 +755,19 @@ router.post('/changePwd', function (request, response, next) {
     }
     if(param.token == null || param.token == ""){
         resContent.code = 400;
-        resContent.desc = "参数错误";
+        resContent.desc = "鉴权参数错误";
         response.json(resContent);
         return;
     }
     if(param.browser == null || param.browser == ""){
         resContent.code = 400;
-        resContent.desc = "参数错误";
+        resContent.desc = "鉴权参数错误";
         response.json(resContent);
         return;
     }
     if(param.ppInfo == null || param.ppInfo == ""){
         resContent.code = 400;
-        resContent.desc = "参数错误";
+        resContent.desc = "鉴权参数错误";
         response.json(resContent);
         return;
     }

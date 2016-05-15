@@ -215,100 +215,6 @@ router.post('/preview2', function (request, response, next) {
 });
 
 //提交订单 --> 实物
-/*router.post('/submit', function (request, response, next) {
-    logger.info("进入实物提交订单流程");
-    var result = {code: 200};
-    try {
-        //var params = request.query;
-        var params = request.body;
-        var args = {};
-        args.token = params.token || "鉴权信息1";
-        args.ppInfo = params.ppInfo || "鉴权信息2";
-        args.userId = params.userId || 2;
-
-        params.deliverInfo = {
-            id: 1,
-            receiverName: "张先生",
-            mobile: "1355871840",
-            postCode: "100000",
-            address: "（程先生收）  邮编：518000   手机号：18500000000"
-        };
-
-        var product1 = {
-            productId: "ze160216170722000745",
-            productName: "给力的中央空调",
-            viceName: "冷暖 定速 立柜式 空调",
-            skuNum: {
-                skuNm: "1-1:100-101",
-                skuName: "颜色-军绿色:功率-2匹"
-            },
-            count: 1,
-            curPrice: "0.01",
-            imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-            postage: 10
-        };
-        var product2 = {
-            productId: "ze160216170722000746",
-            productName: "给力的地方空调",
-            viceName: "冷暖 不定速 立柜式 空调",
-            skuNum: {
-                skuNm: "1-1:100-102",
-                skuName: "颜色-军绿色:功率-1匹"
-            },
-            count: 1,
-            curPrice: "0.01",
-            imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-            postage: 10
-        };
-        var product3 = {
-            productId: "ze160216170722000746",
-            productName: "给力的地方空调",
-            viceName: "冷暖 不定速 立柜式 空调",
-            skuNum: {
-                skuNm: "1-1:100-102",
-                skuName: "颜色-军绿色:功率-1匹"
-            },
-            count: 1,
-            curPrice: "0.01",
-            imgUrl: "6A413EEF9691774A9EED5E84D98A4A29.jpg",
-            postage: 10
-        };
-        var productList1 = [product1, product2, product3];
-        var productList2 = [product1, product2];
-        var productList3 = [product1];
-        var cartList1 = {
-            sellerId: 1,
-            sellerName: "聚分享品质商家",
-            remark: "五一特惠，任意三件商品包邮",
-            productList: productList1
-        };
-        var cartList2 = {
-            sellerId: 2,
-            sellerName: "聚分享品质商家",
-            remark: "五一特惠，任意三件商品包邮",
-            productList: productList2
-        };
-        var cartList3 = {
-            sellerId: 3,
-            sellerName: "聚分享黄钻商家",
-            remark: "五一特惠，任意三件商品包邮",
-            productList: productList3
-        };
-        params.cartList = [cartList1, cartList2, cartList3];
-
-        args.cartList = params.cartList;
-        args.deliverInfo = params.deliverInfo;
-        args.buyerComment = params.buyerComment;
-        logger.info(JSON.stringify(args));
-
-        result.orderId = "13110057";
-
-        response.json(result);
-    } catch (ex) {
-        response.json(result);
-    }
-});*/
-//提交订单 --> 实物
 router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
@@ -329,7 +235,6 @@ router.post('/submit', function (request, response, next) {
         * 2 根据storehouseId，productId，skuNum查询库存接口【库存数量，锁定数量】
         *
         * */
-
 
         Order.orderConfirm(arg, function (err, orderIdList) {
             if (err) {
@@ -1922,6 +1827,14 @@ router.post('/payUrl', function (req, res, next) {
                 res.json(result);
             }
         });
+
+
+
+
+
+
+
+
     } else {
         Pay.payUrl(arg, function (err, data) {
             var urlInfo = JSON.parse(data.value);

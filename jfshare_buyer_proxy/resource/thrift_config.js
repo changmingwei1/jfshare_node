@@ -229,8 +229,8 @@ module.exports.ServiceFactory = {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1994);
-        //var obj = new ThriftConfig("127.0.0.1", 1991);
+        var obj = new ThriftConfig("120.24.153.102", 2002);
+        //var obj = new ThriftConfig("127.0.0.1", 2002);
         return obj;
     },
     /**
