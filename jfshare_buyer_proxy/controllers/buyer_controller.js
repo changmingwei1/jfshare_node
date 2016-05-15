@@ -24,10 +24,11 @@ router.get('/getCaptcha', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.query;
-        var id = param.id || "1024";
+        var id = param.id;
         Common.getCaptcha(id, function (err, data) {
             if (err) {
                 response.json(err);
+                return;
             } else {
                 var cb = data[0].captcha.captchaBytes;
                 response.writeHead('200', {'Content-Type': 'image/jpeg'});    //写http头部信息
@@ -793,6 +794,37 @@ router.post('/changePwd', function (request, response, next) {
             });
         });
     });
+});
+
+/*获取二维码*/
+router.get('/getQRCode', function (request, response, next) {
+    logger.info("进入获取验证码接口");
+    var resContent = {code: 200};
+    try {
+        var param = request.query;
+        var id = param.id;
+        Common.getQRCode(id, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            } else {
+                var cb = data[0].captcha.captchaBytes;
+                response.writeHead('200', {'Content-Type': 'image/jpeg'});    //写http头部信息
+                response.write(cb, 'binary');
+                //var id = data[0].captcha.id;
+                //var value = data[0].captcha.value;
+                //resContent.id = id;
+                //resContent.value = value;
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+                response.end();
+            }
+        });
+    } catch (ex) {
+        logger.error("获取验证码失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能获取验证码";
+        response.json(resContent);
+    }
 });
 
 
