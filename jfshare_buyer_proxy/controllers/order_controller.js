@@ -220,7 +220,7 @@ router.post('/submit', function (request, response, next) {
     var result = {code: 200};
     try {
         var arg = request.body;
-        logger.info("提交订单请求， arg:" + JSON.stringify(arg));
+        logger.info("提交订单请求， arg:" + arg);
 
         if (arg == null || arg.userId == null || arg.addressDesc == null ||
             arg.sellerDetailList == null) {
