@@ -80,7 +80,6 @@ Product.prototype.create = function (params, callback) {
                         storehouseId: sku.values[i].storeid,
                         skuNum: sku.key.id
                     });
-
                     productSkuItemList.push(productSkuItem);
                 }
 
@@ -102,8 +101,8 @@ Product.prototype.create = function (params, callback) {
         imgKey: params.imgKey,
         type: params.type,//商品类型 2表示普通商品 3表示虚拟商品
         createUserId: params.sellerId,
-        skuTemplate: params.skuTemplate,
-        attribute:params.attribute,
+        skuTemplate: JSON.stringify(params.skuTemplate),
+        attribute:JSON.stringify(params.attribute),
         productSku:productSku,
         postageId: params.postageId,
         detailContent:params.detailContent,
@@ -272,13 +271,13 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
         numPerPage: params.perCount,
         currentPage: params.curpage
     });
-
+    logger.info("productServ-queryProduct  result:" + JSON.stringify(ProductCardViewParam));
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCardViewList", [ProductCardViewParam, page]);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
         var res = {};
-        if (err) {
+        if (err||data[0].result.code ==1) {
             logger.error("productServ-queryProduct  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询商品失败";
@@ -296,12 +295,10 @@ Product.prototype.queryProductCard = function (params, callback) {
         sellerId: params.sellerId,
         productName: params.productName
     });
-
     var page = new pagination_types.Pagination({
         numPerPage: params.perCount,
         currentPage: params.curpage
     });
-
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsProductCard", [productRetParam, page]);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
@@ -350,7 +347,8 @@ Product.prototype.queryProductCard = function (params, callback) {
 Product.prototype.queryDetail = function(params, callback){
 
     var productDetailParam = new product_types.ProductDetailParam({
-        productId:params.productId
+        productId:params.productId,
+        detailKey:params.detailKey
     });
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductDetail", [productDetailParam]);
 

@@ -24,12 +24,11 @@ var ServiceKey = {
       StockServer :  "Stock",
   //  AddressServer: "Address",
    // CommonServer: "Common",
-     TradeServer: "Freight",
+     //TradeServer: "Freight",
    // CartServer: "Cart",
      SellerServer: "Seller",
     AfterSaleServer:"AfterSale",
-     StorehouseServer: "Storehouse",
-
+    TemplateServer:"Template",
     //ManagerServer:"Manager",
     ExpresssServer:"Expresss"
 };

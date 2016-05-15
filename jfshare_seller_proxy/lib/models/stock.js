@@ -152,7 +152,7 @@ Stock.prototype.updateStock = function (params, callback) {
     });
 
     //获取client
-    var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, 'supplyFullStock', [params.productId,StockInfo]);
+    var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, 'setStock', [params.productId,StockInfo]);
     Lich.wicca.invokeClient(stockServ, function (err, data) {
         logger.info("updateStock result:" + JSON.stringify(data));
 

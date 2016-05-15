@@ -339,7 +339,7 @@ router.post('/update', function (request, response, next) {
 
     try {
         var params = request.body;
-
+        logger.info("更新商品--接口参数:" + JSON.stringify(params));
         //参数验证
         if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
 
@@ -451,11 +451,11 @@ router.post('/virtualList', function (request, response, next) {
 
     logger.info("进入虚拟商品列表接口");
     var result = {code: 200};
-
+    result.cardtatisticsList = [];
     try {
         //var params = request.query;
         var params = request.body;
-        logger.info("虚拟商品列表:" + params);
+        logger.info("虚拟商品列表:" + JSON.stringify(params));
 
         //参数校验
         //参数验证
@@ -489,7 +489,9 @@ router.post('/virtualList', function (request, response, next) {
                 response.json(result);
                 return
             }
-            result.value = data.value;
+            if(data[0].cardtatisticsList!=null){
+                result.cardtatisticsList = data[0].cardtatisticsList;
+            }
             response.json(result);
         });
 
@@ -505,12 +507,12 @@ router.post('/ticketList', function (request, response, next) {
 
     logger.info("进入虚拟券码列表列表接口");
     var result = {code: 200};
-
+    result.cardViewList = [];
     try {
         // var params = request.query;
         var params = request.body;
         //var params = request.body;
-        logger.info("虚拟券码列表:" + params);
+        logger.info("虚拟券码列表:" + JSON.stringify(params));
 
         //参数校验
         //参数验证
@@ -530,7 +532,7 @@ router.post('/ticketList', function (request, response, next) {
             return;
         }
 
-        if (params.skuid == null || params.skuid == "") {
+        if (params.skuNum == null || params.skuNum == "") {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -554,12 +556,13 @@ router.post('/ticketList', function (request, response, next) {
         }
         Product.queryProductCardViewList(params, function (err, data) {
             if(err){
-                result.code = 500;
-                result.desc = "查看虚拟商品卡密列表失败";
-                response.json(result);
+                response.json(err);
                 return
             }
-            response.json(data);
+            if(data[0].cardViewList !=null){
+                result.cardViewList = data[0].cardViewList;
+            }
+            response.json(result);
             return;
         });
 
@@ -592,6 +595,14 @@ router.post('/queryDetail', function (request, response, next) {
         }
 
         if (params.productId == null || params.productId == "") {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.detailKey == null || params.detailKey == "") {
 
             result.code = 500;
             result.desc = "请求参数错误";
