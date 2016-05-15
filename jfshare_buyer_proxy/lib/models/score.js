@@ -30,10 +30,10 @@ Score.prototype.getScore = function(userId,callback){
     Lich.wicca.invokeClient(scoreServ, function(err, data){
         logger.info("get buyerScore result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err||data[0].result.code == 1) {
             logger.error("can't get buyerScore because: ======" + err);
             res.code = 500;
-            res.desc = "false to get buyerScore";
+            res.desc = "获取积分失败";
             callback(res, null);
         } else {
             callback(null, data);
@@ -43,22 +43,28 @@ Score.prototype.getScore = function(userId,callback){
 
 //获取积分交易记录
 Score.prototype.queryScoreTrade = function(param,callback){
-    var thrift_pagination = new pagination_types.Pagination({currentPage:param.curPage,numPerPage:param.perCount});
+
+    var thrift_pagination = new pagination_types.Pagination({
+        currentPage:param.curPage,
+        numPerPage:param.perCount
+    });
     var params = new score_types.ScoreTradeQueryParam({
-        pagination:thrift_pagination,
         userId:param.userId,
         type:param.type,
         inOrOut:param.inOrOut,
-        tradeTime:param.tradeTime});
+        startTime:param.startTime,
+        endTime:param.endTime
+    });
+
     //获取client
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'queryScoreTrade',params);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'queryScoreTrade',[params,thrift_pagination]);
     Lich.wicca.invokeClient(scoreServ, function(err, data){
         logger.info("get buyerScoreList result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err||data[0].result.code == 1) {
             logger.error("can't get queryScoreTrade because: ======" + err);
             res.code = 500;
-            res.desc = "false to get queryScoreTrade";
+            res.desc = "获取积分交易列表失败";
             callback(res, null);
         } else {
             callback(null, data);
