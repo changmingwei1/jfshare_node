@@ -1746,7 +1746,20 @@ router.post('/pay', function (req, res, next) {
                 return;
             }
             if (payUrl !== null) {
-                result.payUrl = urlInof;
+                result.payUrl = {
+                    payment_type: urlInof.payment_type,
+                    out_trade_no: urlInof.out_trade_no,
+                    partner: urlInof.partner,
+                    _input_charset: urlInof._input_charset,
+                    service: urlInof.service,
+                    subject: urlInof.subject,
+                    total_fee: "0.01",
+                    sign: urlInof.sign,
+                    body: urlInof.body,
+                    notify_url: urlInof.notify_url,
+                    sign_type: urlInof.sign_type,
+                    seller_id: urlInof.seller_id
+                };
                 res.json(result);
                 logger.info("order pay response:" + JSON.stringify(result));
             }
