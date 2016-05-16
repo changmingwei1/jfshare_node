@@ -356,26 +356,15 @@ router.post('/getAuthInfo', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.body;
-        var token = param.token;
-        var ppInfo = param.ppInfo;
-        var userId = param.userId;
-        var loginAuto = param.loginAuto;
-        var loginTime = param.loginTime;
-
-        var params = {};
-        params.token = token;
-        params.ppInfo = ppInfo;
-        params.userId = userId;
-        params.loginAuto = loginAuto;
-        params.loginTime = loginTime;
-        logger.info("请求参数：" + JSON.stringify(params));
-        Buyer.getAuthInfo(params, function (err, data) {
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.getAuthInfo(param, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            var autoInfo = data[0].autoInfo;
-            resContent.autoInfo = {token: autoInfo.token, ppinfo: autoInfo.ppinfo};
+            var authInfo = data[0].authInfo;
+            resContent.token = authInfo.token;
+            resContent.ppInfo = authInfo.ppInfo;
             response.json(resContent);
             logger.info("获取到的信息是：" + JSON.stringify(resContent));
         });
