@@ -110,37 +110,15 @@ Order.prototype.cancelOrder = function (param, callback) {
 Order.prototype.deliver = function (params, callback) {
 
     var deliverInfo = new order_types.DeliverInfo({
-
-        userId: 25,
-        orderId:"5300025",
-        sellerId:1,
-        //tradeCode:"Z0003",
-        //receiverName: "收货人",
-       // receiverMobile: "13122222222",
-       // receiverTele: "13222222222",
-       // receiverAddress:"详细收货地址",
-        //buyerComment: "卖家备注",
-
-        //sellerComment: "备注信息",
-        expressId:"24",
-        expressName: "namename",
-        expressNo: "123321231231",
-        //expressTypeState: 0,
-
-       // addressId: 24,
-        //provinceId: 110000,
-        //cityId: 110100,
-        //countyId: 110108,
-       // provinceName: "省名称",
-      //  cityName: "是名称",
-      //  countyName: "区县名称",
-      //  postCode: "100000",
-       // expressQueryUrl: "http://10.0.0.1",
-       // expressDnfTel: "13111111111"
-
+        orderId:params.orderId,
+        sellerComment:params.comment,
+        expressId:params.expressId,
+        expressName: params.expressName,
+        expressNo: params.expressNo,
+        userId:params.userId
     });
-    logger.info("调用orderServ-deliver  result:" + JSON.stringify(deliverInfo));
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [1, deliverInfo]);
+    logger.info("调用orderServ-deliver  params:" + JSON.stringify(deliverInfo));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId,deliverInfo]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-deliver  result:" + JSON.stringify(data));

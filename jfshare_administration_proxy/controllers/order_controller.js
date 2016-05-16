@@ -43,6 +43,7 @@ router.post('/list', function (request, response, next) {
     var afterSaleList = [];
     result.orderList = [];
     result.afterSaleList = [];
+    var isVirtual = 0;
     async.series([
             function (callback) {
                 try {
@@ -520,191 +521,45 @@ router.post('/deliver', function (request, response, next) {
 
         var params = request.body;
 
-        //if (params.sellerId == null || params.sellerId == "") {
-        //
-        //    result.code = 500;
-        //    result.desc = "参数错误";
-        //    response.json(result);
-        //    return;
-        //}
-        //
-        //if (params.orderId == null || params.orderId == "") {
-        //
-        //    result.code = 500;
-        //    result.desc = "参数错误";
-        //    response.json(result);
-        //    return;
-        //}
-        ////params.expressId,params.expressNo,params.expressName
-        //if (params.expressId == null || params.expressId == "") {
-        //
-        //    result.code = 500;
-        //    result.desc = "参数错误";
-        //    response.json(result);
-        //    return;
-        //}
-        //
-        //if (params.expressNo == null || params.expressNo == "") {
-        //
-        //    result.code = 500;
-        //    result.desc = "参数错误";
-        //    response.json(result);
-        //    return;
-        //}
-        //
-        //if (params.expressName == null || params.expressName == "") {
-        //
-        //    result.code = 500;
-        //    result.desc = "参数错误";
-        //    response.json(result);
-        //    return;
-        //}
-//----------------------------------------------------------------------------
-//        async.series([
-//                function (callback) {
-//                    try {
-//                        //---------------
-//
-//                        Order.queryOrderDetail(params, function (err, orderInfo) {
-//                            if (err) {
-//                                response.json(error);
-//                                return;
-//                            }
-//
-//                            result.OrderId = orderInfo.orderId;
-//
-//                            result.comment = orderInfo.sellerComment;
-//                            logger.info(orderInfo.deliverInfo);
-//                            if (orderInfo.deliverInfo != null) {
-//                                result.expressId = orderInfo.deliverInfo.expressId;
-//                                result.expressName = orderInfo.deliverInfo.expressName;
-//                                result.expressNo = orderInfo.deliverInfo.expressNo;
-//                            }
-//                            response.json(result);
-//                        });
-//
-//                        //-----------
-//
-//
-//                        Order.queryOrderDetail(params, function (err, orderInfo) {
-//
-//                            if (err) {
-//                                result.code = 500;
-//                                result.desc = "失败";
-//                                response.json(result);
-//                            } else {
-//                                var productSurveyList = data[0].productSurveyList;
-//
-//                                var pagination = data[0].pagination;
-//                                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
-//                                // logger.info("get product list response:" + JSON.stringify(result));
-//                                productSurveyList.forEach(function (a) {
-//                                    var imgUri = a.imgUrl.split(",")[0];
-//                                    dataArr.push({
-//                                        productId: a.productId,
-//                                        sellerId: a.sellerId,
-//                                        subjectName: "1",
-//                                        productName: a.productName,
-//                                        orgPrice: (Number(a.orgPrice) / 100).toFixed(2),
-//                                        curPrice: (Number(a.curPrice) / 100).toFixed(2),
-//                                        totalSales: a.totalSales,
-//                                        imgUrl: imgUri,
-//                                        activeState: a.activeState,
-//                                        crateTime: a.createTime
-//                                    });
-//                                    productIdList.push(
-//                                        a.subjectId
-//                                    );
-//                                });
-//
-//                                callback(null, dataArr);
-//                            }
-//                        });
-//
-//                    } catch (ex) {
-//                        logger.info("获取订单列表异常:" + ex);
-//                        return callback(1, null);
-//                    }
-//                },
-//                function (callback) {
-//                    try {
-//                        Subject.getBatchSuperTree(productIdList, function (error, data) {
-//                            //logger.info("get product list response:" + JSON.stringify(data));
-//                            if (error) {
-//                                response.json(error);
-//                            } else {
-//                                //组装list
-//                                var partsNames = [];
-//                                var subjectNodeTrees = data[0].subjectNodeTrees;
-//
-//                                subjectNodeTrees.forEach(function (subjectList) {
-//                                    //logger.info("get subjectList list response-----:" + JSON.stringify(subjectList));
-//                                    if (subjectList != null) {
-//                                        var subjectpath = "";
-//                                        for (var i = 0; i < subjectList.length; i++) {
-//                                            if (i == subjectList.length - 1) {
-//                                                subjectpath += subjectList[i].name;
-//                                            } else {
-//                                                subjectpath += subjectList[i].name + "-";
-//
-//                                            }
-//                                        }
-//                                        subjectName.push(subjectpath);
-//                                    } else {
-//                                        subjectName.push("");
-//                                    }
-//
-//
-//                                });
-//                                callback(null, subjectName);
-//                                // logger.info("------------get subjectName list response-----:" + JSON.stringify(subjectName));
-//                            }
-//                        });
-//
-//                    } catch (ex) {
-//                        logger.info("获取批量类目异常:" + ex);
-//                        return callback(2, null);
-//                    }
-//                }
-//            ],
-//            function (err, results) {
-//
-//                logger.info("result[0]:" + JSON.stringify(results[0]));
-//                logger.info("result[1]:" + JSON.stringify(results[1]));
-//
-//                if (err == 1) {
-//                    logger.error("查询商品列表失败---商品服务异常：" + err);
-//                    result.code = 500;
-//                    result.desc = "查询商品列表失败";
-//                    response.json(result);
-//                    return;
-//                }
-//                if (err == 2) {
-//                    logger.error("获取批量类目异常--类目服务异常：" + err);
-//                    response.json(results[0]);
-//                    return;
-//                }
-//
-//                if (err == null) {
-//                    logger.info("shuju------------->" + JSON.stringify(results));
-//                    for (var i = 0; i < results[0].length; i++) {
-//                        results[0][i].subjectName = results[1][i];
-//                        logger.info("get product list response:" + JSON.stringify(dataArr));
-//                        logger.info("get product list response:" + JSON.stringify(subjectName));
-//                    }
-//                    result.productList = results[0];
-//                    response.json(result);
-//                    return;
-//                } else {
-//                    logger.info("shuju------------->" + JSON.stringify(results));
-//                    result = results[0];
-//                    response.json(result);
-//                    return;
-//                }
-//            });
+        if (params.sellerId == null || params.sellerId == "") {
 
-        //--------------------------------------------------------------------------------
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
+        if (params.orderId == null || params.orderId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        //params.expressId,params.expressNo,params.expressName
+        if (params.expressId == null || params.expressId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.expressNo == null || params.expressNo == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.expressName == null || params.expressName == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
         Order.deliver(params, function (err, data) {
             if (err) {
@@ -716,9 +571,9 @@ router.post('/deliver', function (request, response, next) {
         });
 
     } catch (ex) {
-        logger.error("查询物流信息失败：" + ex);
+        logger.error("发货失败：" + ex);
         result.code = 500;
-        result.desc = "查询物流信息失败";
+        result.desc = "发货信息失败";
         response.json(result);
     }
 });
@@ -844,43 +699,48 @@ router.post('/getExpressInfo', function (request, response, next) {
 
 //获取物流商列表--不能获取
 router.post('/expresslist', function (request, response, next) {
-    logger.info("进入取消订单流程");
+    logger.info("进入获取物流商列表");
+    var result = {code: 200};
+    var expressList = [];
+    result.expressList = expressList;
 
-    var result = {code:200,expressList:[{
-        expressId:1,
-        expressname:"圆通速递"
-    },{
-        expressId:2,
-        expressname:"韵达快递"
-    },{
-        expressId:3,
-        expressname:"申通快递"
-    }]};
+    try {
 
-    response.json(result)
-    //var result = {code: 200};
+        var params = request.body;
 
-    //try {
-    //
-    //    var params = request.body;
-    //
-    //    Express.queryList(params, function (err, data) {
-    //        if (err) {
-    //            response.json(error);
-    //            return;
-    //        }
-    //
-    //
-    //        response.json(data);
-    //        return;
-    //    });
-    //
-    //} catch (ex) {
-    //    logger.error("查询物流商列表失败：" + ex);
-    //    result.code = 500;
-    //    result.desc = "查询物流商列表失败";
-    //    response.json(result);
-    //}
+        Express.queryList(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+
+
+            if (data[0].expressInfoList != null) {
+                for (var i = 0; i < data[0].expressInfoList.length; i++) {
+                    var express = {};
+                    express.id = data[0].expressInfoList[i].id;
+
+                    express.name = data[0].expressInfoList[i].name;
+
+                    expressList.push(express);
+                }
+
+            }
+            logger.info("query expressList response:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+
+
+        logger.info("expresslist params:" + JSON.stringify(params));
+
+
+    } catch (ex) {
+        logger.error("query expressList error:" + ex);
+        result.code = 500;
+        result.desc = "获取物流商列表";
+        response.json(result);
+    }
 });
 
 

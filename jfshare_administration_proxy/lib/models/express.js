@@ -19,7 +19,7 @@ Expresss.prototype.queryList = function(params, callback){
 
 
     // 获取client
-    var expressOrderServ = new Lich.InvokeBag(Lich.ServiceKey.ExpresssServer, "queryEx");
+    var expressOrderServ = new Lich.InvokeBag(Lich.ServiceKey.ExpresssServer, "query",[]);
     // 调用 expressOrderServ
     Lich.wicca.invokeClient(expressOrderServ, function (err, data) {
         logger.info("expressOrderServ-queryList result:" + JSON.stringify(data));
