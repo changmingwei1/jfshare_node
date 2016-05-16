@@ -621,8 +621,8 @@ router.post('/queryStockAndPrice', function (request, response, next) {
                             var sku = {};
                             sku.productId = productStorehouseList[i].productId;
                             sku.sellerId = productStorehouseList[i].sellerId;
+                            sku.skuNum = params.sellerList[i].skuNum;
                             sku.storehouseId = productStorehouseList[i].storehouseId;
-                            sku.skuNum = productStorehouseList[i].skuNum;
                             var itemList = productstockSkuList[i].stockItems;
                             if (storehouseId == 0) {
                                 productStockAndPriceList.push(sku);
