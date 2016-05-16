@@ -629,19 +629,19 @@ router.post('/scoreTrade', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if(param.token == null || param.token == ""){
+        if(arg.token == null || arg.token == ""){
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
-        if(param.browser == null || param.browser == ""){
+        if(arg.browser == null || arg.browser == ""){
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
-        if(param.ppInfo == null || param.ppInfo == ""){
+        if(arg.ppInfo == null || arg.ppInfo == ""){
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
             response.json(resContent);
