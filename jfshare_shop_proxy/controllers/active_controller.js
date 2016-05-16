@@ -35,11 +35,11 @@ router.get('/imgList', function (request, response, next) {
                 //resContent.slotImageList = slotImageList;
                 var slotImageList = [];
                 var slotImage2 = {
-                    imgKey: "64D7EFCA3C2E067AB1A833B626D848D1.jpg",
+                    imgKey: "07B35E4775CB41A6C9CCB44C8F0D1D7F.jpg",
                     jump: "www.baidu.com"
                 };
                 var slotImage3 = {
-                    imgKey: "A70B6E531976F893D02A6322A8BDA981.jpg",
+                    imgKey: "6D64AC14C4D153D8D51960B3697AF84C.jpg",
                     jump: "www.baidu.com"
                 };
                 slotImageList = [slotImage2,slotImage3];
