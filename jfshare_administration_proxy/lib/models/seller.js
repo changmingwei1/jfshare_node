@@ -260,7 +260,6 @@ Seller.prototype.resetSellerPwd = function (params, callback) {
 Seller.prototype.querySellerList = function (params, callback) {
     logger.info("sellerServ list params:" + JSON.stringify(params));
     var sellerParam = new seller_types.Seller({
-        //sellerId:params.sellerId,
         loginName:params.loginName,
         sellerName:params.userName
     });

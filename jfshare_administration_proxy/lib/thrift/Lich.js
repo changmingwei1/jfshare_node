@@ -23,6 +23,7 @@ var ServiceKey = {
     CommonServer: "Common",
     // UserServer: "Seller",
      BrandServer:"Brand",
+    SellerServer:"Seller",
      ManagerServer:"Manager",
       MessageServer:"Message",
       AfterSaleServer:"AfterSale",
