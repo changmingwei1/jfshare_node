@@ -561,7 +561,13 @@ router.post('/deliver', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.userId == null || params.userId == "") {
 
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         Order.deliver(params, function (err, data) {
             if (err) {
                 response.json(err);
