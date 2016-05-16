@@ -321,18 +321,15 @@ Template.prototype.getDeliverStorehouse = function(params, callback){
     var list = [];
     if(sellerList!=null){
         for(var i=0;i<sellerList.length;i++){
-
             var productRefProvince = new baseTemplate_types.ProductRefProvince({
                 sellerId:sellerList[i].sellerId,
-                productId:sellerList[i].skulist[0].productId,
+                productId:sellerList[i].productId,
                 storehouseIds:sellerList[i].storehouseIds,
                 sendToProvince:sellerList[i].provinceId
             });
             list.push(productRefProvince);
         }
-
     }
-
     var queryParam = new baseTemplate_types.DeliverStorehouseParam({
         productRefProvinceList:list
     });
@@ -350,10 +347,7 @@ Template.prototype.getDeliverStorehouse = function(params, callback){
         }else{
             callback(null, data);
         }
-
     });
-
 };
-
 
 module.exports = new Template();

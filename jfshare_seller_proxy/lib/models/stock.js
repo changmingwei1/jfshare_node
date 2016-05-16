@@ -12,7 +12,7 @@ var thrift = require('thrift');
 
 
 var stock_types = require('../thrift/gen_code/stock_types');
-
+var product_types =require('../thrift/gen_code/product_types');
 
 function Stock() {
 }
@@ -62,6 +62,48 @@ Stock.prototype.queryProductTotal = function (params, callback) {
         }
     });
 };
+
+//获取产品的sku信息
+Stock.prototype.queryHotSKUBatch = function (params, callback) {
+
+    var productRetParam = new product_types.ProductRetParam({
+        skuTag:1
+    });
+    var list = [];
+    var skulist = params.productStockAndPriceList;
+    for(var i=0;i<skulist.length;i++){
+        if(skulist[i].storehouseId!=0){
+            var ProductSkuParam = new product_types.ProductSkuParam({
+                productId:skulist[i].productId,
+                skuNum:skulist[i].skuNum,
+                storehouseId:skulist[i].storehouseId
+            });
+            list.push(ProductSkuParam);
+        }
+
+    }
+
+    var productSkuBatchParam = new product_types.ProductSkuBatchParam({
+        productSkuParams:list
+    });
+
+    //获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, 'queryHotSKUBatch', [productSkuBatchParam,productRetParam]);
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("queryHotSKUBatch result:" + JSON.stringify(data));
+
+        if (err || data[0].result.code == "1") {
+            var res = {};
+            logger.error("queryHotSKUBatch fail because: ======" + err);
+            res.code = 500;
+            res.desc = "获取商品sku信息失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 
 ///* 创建库存接口 */
 //result.Result createStock(1:string tranId, 2:StockInfo stockInfo)
