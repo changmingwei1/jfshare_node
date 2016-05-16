@@ -34,19 +34,15 @@ router.get('/imgList', function (request, response, next) {
                 //var slotImageList = data[0].slotImageList;
                 //resContent.slotImageList = slotImageList;
                 var slotImageList = [];
-                var slotImage1 = {
-                    imgKey: "7EC68E30C7BDF09CB9D788AD487BAEA0.jpg",
-                    jump: "www.baidu.com"
-                };
                 var slotImage2 = {
-                    imgKey: "35699DF511D4D33E81FA7066BF99D552.jpg",
+                    imgKey: "64D7EFCA3C2E067AB1A833B626D848D1.jpg",
                     jump: "www.baidu.com"
                 };
                 var slotImage3 = {
-                    imgKey: "C1948B248013AEC62ADF9B914818A9B7.jpg",
+                    imgKey: "A70B6E531976F893D02A6322A8BDA981.jpg",
                     jump: "www.baidu.com"
                 };
-                slotImageList = [slotImage1,slotImage2,slotImage3];
+                slotImageList = [slotImage2,slotImage3];
                 resContent.slotImageList = slotImageList;
                 response.json(resContent);
                 logger.info("响应:" + JSON.stringify(resContent));
