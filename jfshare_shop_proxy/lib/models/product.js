@@ -149,7 +149,7 @@ Product.prototype.queryProductSku = function (productId, callback) {
     });
 };
 
-//查询商品指定sku
+/*查询商品指定sku*/
 Product.prototype.queryHotSKUV1 = function (paramters, callback) {
 
     var param = new product_types.ProductRetParam({
@@ -226,42 +226,39 @@ Product.prototype.getSubTree = function (param, callback) {
     });
 };
 
-/*查询sku库存*/
-Product.prototype.getStock = function (productId, callback) {
-
-    // 获取client
-    var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, "getStock", productId);
-    //invite productServ
-    Lich.wicca.invokeClient(stockServ, function (err, data) {
-        logger.info("调用stockServ-getStock result:" + JSON.stringify(data));
-        var res = {};
-        if (err) {
-            logger.error("调用stockServ-getStock失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "获取库存失败";
-            callback(res, null);
-        } else {
-            callback(null, data)
-        }
+/*批量获取指定sku*/
+Product.prototype.queryHotSKUBatch = function (params, callback) {
+    var productRetParam = new product_types.ProductRetParam({
+        skuTag: 1
     });
-};
+    var list = [];
+    var skuList = params.productStockAndPriceList;
+    for (var i = 0; i < skuList.length; i++) {
+        if (skuList[i].storehouseId != 0) {
+            var ProductSkuParam = new product_types.ProductSkuParam({
+                productId: skuList[i].productId,
+                skuNum: skuList[i].skuNum,
+                storehouseId: skuList[i].storehouseId
+            });
+            list.push(ProductSkuParam);
+        }
+    }
+    var productSkuBatchParam = new product_types.ProductSkuBatchParam({
+        productSkuParams: list
+    });
+    //获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, 'queryHotSKUBatch', [productSkuBatchParam, productRetParam]);
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("queryHotSKUBatch result:" + JSON.stringify(data));
 
-Product.prototype.getStockForSku = function (paramters, callback) {
-    // 获取client
-    var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, "getStockForSku", [paramters.productId, [paramters.skuNum]]);
-
-    //invite productServ
-    Lich.wicca.invokeClient(stockServ, function (err, data) {
-        logger.info("调用stockServ-getStockForSku  result:" + JSON.stringify(data));
-        var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用stockServ-getStockForSku  失败原因 ======" + err);
-            logger.error("eeeee:" + JSON.stringify(data[0].result));
+            var res = {};
+            logger.error("queryHotSKUBatch fail because: ======" + err);
             res.code = 500;
-            res.desc = "获取库存失败！";
+            res.desc = "获取商品sku信息失败";
             callback(res, null);
         } else {
-            callback(null, data[0]);
+            callback(null, data);
         }
     });
 };

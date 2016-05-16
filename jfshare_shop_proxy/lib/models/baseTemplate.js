@@ -101,32 +101,34 @@ BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
 };
 
 /*批量获取商品收货省份对应的发货仓库*/
-BaseTemplate.prototype.getDeliverStorehouse = function(params,calback){
+BaseTemplate.prototype.getDeliverStorehouse = function(params,callback){
 
-    var productRefProvinceList = [];
-
-    var productRefProvince = new baseTemplate_types.ProductRefProvince({
-        sellerId: params.sellerId,
-        productId: params.productId,
-        storehouseIds: params.storehouseIds,
-        sendToProvince: params.provinceId
-    });
-
-    productRefProvinceList.push(productRefProvince);
-
+    var productRefProvinceList = params.sellerList;
+    var list = [];
+    if(productRefProvinceList!=null){
+        for(var i=0;i<productRefProvinceList.length;i++){
+            var productRefProvince = new baseTemplate_types.ProductRefProvince({
+                sellerId:productRefProvinceList[i].sellerId,
+                productId:productRefProvinceList[i].productId,
+                storehouseIds:productRefProvinceList[i].storehouseIds,
+                sendToProvince:productRefProvinceList[i].provinceId
+            });
+            list.push(productRefProvince);
+        }
+    }
     var param = new baseTemplate_types.DeliverStorehouseParam({
-        productRefProvinceList:productRefProvinceList
+        productRefProvinceList:list
     });
 
     //获取client
     var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getDeliverStorehouse',param);
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
-        logger.info("get BaseTemplate result:" + JSON.stringify(data));
-        var res = {};
+        logger.info("getDeliverStorehouse result:" + JSON.stringify(data[0]));
         if (err||data[0].result.code == 1) {
-            logger.error("不能获取仓库信息 because: ======" + err);
+            var res = {};
+            logger.error("false to getDeliverStorehouse because: " + err);
             res.code = 500;
-            res.desc = "获取仓库失败";
+            res.desc = "获取仓库列表失败";
             callback(res, null);
         } else {
             callback(null, data);

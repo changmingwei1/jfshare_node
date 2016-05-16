@@ -227,6 +227,10 @@ module.exports.ServiceFactory  =  {
         //var obj = new ThriftConfig("127.0.0.1", 1991);
         return obj;
     },
+    /**
+     * 仓库服务
+     * @returns {ThriftConfig}
+     */
     baseTemplate: function () {
         var obj = new ThriftConfig("120.24.153.155", 2004);
         return obj;
