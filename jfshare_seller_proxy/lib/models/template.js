@@ -297,8 +297,63 @@ Template.prototype.listStorehouse = function(params, callback){
     });
 
 };
+/******
+ *
+ *
+ *{
+sellerList:[{
+    sellerId: int  	//商家id
+    provinceId: int //省份id
+    storehouseIds:int //
+    skulist:[{
+			skuNum: string  //sku_编码 格式为1-1:100-102
+            productId: string //产品id
+        }]
+    }]
+}
+ *
+ *
+ */
+//批量查询仓库
+Template.prototype.getDeliverStorehouse = function(params, callback){
+    var sellerList = params.sellerList;
+    // 获取client
+    var list = [];
+    if(sellerList!=null){
+        for(var i=0;i<sellerList.length;i++){
 
+            var productRefProvince = new baseTemplate_types.ProductRefProvince({
+                sellerId:sellerList[i].sellerId,
+                productId:sellerList[i].skulist[0].productId,
+                storehouseIds:sellerList[i].storehouseIds,
+                sendToProvince:sellerList[i].provinceId
+            });
+            list.push(productRefProvince);
+        }
 
+    }
+
+    var queryParam = new baseTemplate_types.DeliverStorehouseParam({
+        productRefProvinceList:list
+    });
+
+    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "getDeliverStorehouse",queryParam);
+    // 调用 storehouseServ
+    Lich.wicca.invokeClient(storehouseServ, function (err, data) {
+        logger.info("storehouseServ-queryStorehouse result:" + JSON.stringify(data[0]));
+        if(err || data[0].result.code == 1){
+            logger.error("调用storehouseServ-queryStorehouse  失败原因 ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "查询仓库列表失败！";
+            callback(result,null);
+        }else{
+            callback(null, data);
+        }
+
+    });
+
+};
 
 
 module.exports = new Template();
