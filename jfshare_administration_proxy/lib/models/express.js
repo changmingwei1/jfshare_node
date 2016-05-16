@@ -40,7 +40,7 @@ Expresss.prototype.expressQuery = function(params, callback){
     var expressParams = new express_types.ExpressParams({
         orderId:params.orderId,
         num:params.num ,
-        comId:3,
+        comId:params.comId,
         queryType:3
     });
     // 获取client

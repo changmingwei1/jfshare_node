@@ -251,6 +251,20 @@ router.post('/list', function (request, response, next) {
     try {
 
         var params = request.body;
+        if (params.curPage == null || params.curPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.perCount == null || params.perCount == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
 
         Seller.querySellerList(params, function (err, data) {
             logger.info("SellerServ-querySellerList response:" + JSON.stringify(data));
@@ -268,7 +282,6 @@ router.post('/list', function (request, response, next) {
                             sellerId: sellerData.sellerId,
                             userName: sellerData.sellerName,
                             loginName: sellerData.loginName,
-
                             contacts: sellerData.contactName,
                             mobile: sellerData.mobile,
                             email: sellerData.email

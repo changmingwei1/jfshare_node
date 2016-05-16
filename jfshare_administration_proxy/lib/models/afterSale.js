@@ -110,7 +110,7 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
 };
 
 
-//查询售后的订单list
+//查询售后的订单list的个数
 AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
 
     var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
@@ -118,8 +118,8 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
     });
 
     var page = new pagination_types.Pagination({
-        numPerPage:10,
-        currentPage:1
+        numPerPage:params.percount,
+        currentPage:params.curpage
     });
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
     var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [2, params.sellerId,page]);
@@ -139,4 +139,36 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
 
 
 };
+
+
+//查询售后的订单list的个数
+AfterSale.prototype.queryAfterSaleOrderListBySellerId = function (params, callback) {
+
+    var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
+        sellerId: params.sellerId
+    });
+
+    var page = new pagination_types.Pagination({
+        numPerPage:params.percount,
+        currentPage:params.curpage
+    });
+    logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [2, params.sellerId,page]);
+
+    Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
+        logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("AfterSaleServ-queryAfterSaleOrderList  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询售后订单列表失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+
+
+};
+
 module.exports = new AfterSale();

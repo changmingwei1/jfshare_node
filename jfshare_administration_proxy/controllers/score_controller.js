@@ -30,7 +30,6 @@ router.post('/socrelist', function (request, response, next) {
             response.json(result);
             return;
         }
-
         Score.queryScoreUser(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -41,9 +40,6 @@ router.post('/socrelist', function (request, response, next) {
             response.json(result);
             return;
         });
-
-
-
     } catch (ex) {
         logger.error("获取积分列表错误:" + ex);
         result.code = 500;
