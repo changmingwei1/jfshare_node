@@ -86,8 +86,6 @@ Stock.prototype.createStock = function (params, callback) {
                     total+=sku.values[i].storecount;
                     stockList.push(stockItem);
                 }
-
-
             }
         });
     }

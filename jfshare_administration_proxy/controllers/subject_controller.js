@@ -402,7 +402,6 @@ router.post('/addSubjectAttribute', function (request, response, next) {
         }
         params.subjectList = params.subjectIds.split(",");
 
-
         Subject.addSubjectAttribute(params, function (error, data) {
             if (error) {
                 response.json(error);

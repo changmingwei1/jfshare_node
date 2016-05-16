@@ -49,9 +49,7 @@ router.post('/list', function (request, response, next) {
                         Product.queryProductList(params, function (err, data) {
 
                             if (err) {
-                                result.code = 500;
-                                result.desc = "失败";
-                                response.json(result);
+                               callback(1,null);
                             } else {
                                 var productSurveyList = data[0].productSurveyList;
 
@@ -91,7 +89,7 @@ router.post('/list', function (request, response, next) {
                         Subject.getBatchSuperTree(productIdList, function (error, data) {
                             //logger.info("get product list response:" + JSON.stringify(data));
                             if (error) {
-                                response.json(error);
+                                callback(2, null);
                             } else {
                                 //组装list
                                 var partsNames = [];

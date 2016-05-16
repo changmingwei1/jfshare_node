@@ -121,4 +121,8 @@ var Stock = require('../lib/models/stock');
 //        response.json(result);
 //    }
 //});
+
+
+
+
 module.exports = router;
