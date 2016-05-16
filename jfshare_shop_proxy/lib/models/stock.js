@@ -44,4 +44,39 @@ Stock.prototype.queryStock = function(params,callback){
     });
 };
 
+/*批量查询库存接口*/
+Stock.prototype.batchQueryStock = function (params, callback) {
+
+    var productList = params.productList;
+    var res = {};
+    if (productList == null || productList.length <= 0) {
+        res.code = 500;
+        res.desc = "产品ID列表不能为空";
+        callback(res, null);
+    }
+    var queryContents = [];
+    for (var i = 0; i < productList.length; i++) {
+        queryContents.push(productList[i].productId);
+    }
+    var batchQueryParam = new stock_types.BatchQueryParam({
+        queryContents: queryContents,
+        queryType: "total"
+    });
+    //获取client
+    var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, 'batchQueryStock', [batchQueryParam]);
+    Lich.wicca.invokeClient(stockServ, function (err, data) {
+        logger.info("query stock result:" + JSON.stringify(data));
+
+        if (err || data[0].result.code == "1") {
+            logger.error("can't query stock because: ======" + err);
+            res.code = 500;
+            res.desc = "获取库存失败";
+            callback(res, null);
+        } else {
+            callback(null, data[0].stockInfos);
+        }
+    });
+};
+
+
 module.exports = new Stock();

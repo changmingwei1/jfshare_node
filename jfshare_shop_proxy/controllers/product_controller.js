@@ -320,7 +320,7 @@ router.post('/querystore', function (req, res, next) {
                                 var storehouseId;
                                 for (var i = 0; i < storehouseList.length; i++) {
                                     var supportProvince = storehouseList[i].supportProvince;
-                                    if (supportProvince.indexOf(arg.provinceId) == 0) {
+                                    if (supportProvince.indexOf(arg.provinceId) != -1) {
                                         storehouseId = storehouseList[i].id;
                                     }
                                 }
@@ -334,7 +334,7 @@ router.post('/querystore', function (req, res, next) {
                     });
                 },
                 function (arg, callback) {
-                    logger.info("请求参数，arg:" + arg);
+                    logger.info("请求参数，arg:" + JSON.stringify(arg));
                     Product.queryHotSKUV1(arg, function (err, data) {
                         if (err) {
                             callback('error', err);
@@ -345,14 +345,6 @@ router.post('/querystore', function (req, res, next) {
                             result.orgPrice = skuItems[0].orgPrice;
                             result.storehouseId = skuItems[0].storehouseId;
                             result.skuNum = skuItems[0].skuNum;
-                            Stock.queryStock(arg, function (err, data) {
-                                if (err) {
-                                    callback('error', err);
-                                } else {
-                                    var stockInfo = data[0].stockInfo;
-                                    result.total = stockInfo.total;
-                                }
-                            });
                             callback(null, result);
                         }
                     });
@@ -383,6 +375,136 @@ router.post('/querystore', function (req, res, next) {
         result.code = 500;
         result.desc = "查询商品库存失败";
         res.json(result);
+    }
+});
+
+/*批量获取指定sku*/
+router.post('/querystoreBatch', function (request, response, next) {
+    var result = {code: 200};
+    try {
+        var productStorehouseList = [];
+        var productStockSkuList = [];
+        var productStockAndPriceList = [];
+        var params = request.body;
+        async.series([
+                function (callback) {
+                    try {
+                        logger.info("getDeliverStorehousea--params：" + JSON.stringify(params));
+                        //先获取仓库id
+                        BaseTemplate.getDeliverStorehouse(params, function (err, data) {
+                            if (err) {
+                                return callback(1, null);
+                            }
+                            productStorehouseList = data[0].productStorehouseList;
+                            params.productList = productStorehouseList;
+                            logger.info("get order list response:" + JSON.stringify(result));
+                            callback(null, data);
+                        });
+                    } catch (ex) {
+                        logger.info("获取仓库id异常:" + ex);
+                        return callback(1, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        logger.info("queryProductTotal--params：" + JSON.stringify(params));
+                        if (productStorehouseList != null && productStorehouseList.length > 0) {
+                            params.productList = productStorehouseList;
+                            Stock.batchQueryStock(params, function (err, data) {
+                                if (err) {
+                                    return callback(2, null);
+                                }
+                                logger.info("queryProductTotal list response:" + JSON.stringify(data));
+                                productStockSkuList = data;
+                                callback(null, data);
+                            });
+                        }
+                    } catch (ex) {
+                        logger.info("queryProductTotal--异常:" + ex);
+                        return callback(2, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        for (var i = 0; i < params.sellerList.length; i++) {
+                            var storehouseId = productStorehouseList[i].storehouseId;
+                            var sku = {};
+                            sku.productId = productStorehouseList[i].productId;
+                            sku.sellerId = productStorehouseList[i].sellerId;
+                            sku.skuNum = params.sellerList[i].skuNum;
+                            sku.storehouseId = productStorehouseList[i].storehouseId;
+                            var itemList = productStockSkuList[i].stockItems;
+                            if (storehouseId == 0) {
+                                productStockAndPriceList.push(sku);
+                                continue;
+                            }
+                            for (var j = 0; i < itemList.length; j++) {
+                                if (params.sellerList[i].skuNum == itemList[j].skuNum && itemList[j].storehouseId == productStorehouseList[i].storehouseId) {
+                                    sku.count = itemList[j].count;
+                                    break;
+                                }
+                            }
+                            productStockAndPriceList.push(sku);
+                        }
+                        params.productStockAndPriceList = productStockAndPriceList;
+                        logger.info("queryProductTotal--params：" + JSON.stringify(params));
+                        Product.queryHotSKUBatch(params, function (err, data) {
+                            if (err) {
+                                return callback(3, null);
+                            }
+
+                            logger.info("queryProductTotal list response:" + JSON.stringify(data));
+
+                            if (data[0].productList != null) {
+                                var productSkuPriceList = data[0].productList;
+                                var j = 0;
+                                for (var i = 0; i < productStockAndPriceList.length; i++) {
+                                    if (productStockAndPriceList[i].storehouseId != 0) {
+                                        if (productStockAndPriceList[i].productId == productSkuPriceList[j].productId) {
+                                            var skuPriceList = productSkuPriceList[j].productSku.skuItems;
+                                            for (var h = 0; h < skuPriceList.length; h++) {
+                                                if (productStockAndPriceList[i].skuNum == skuPriceList[h].skuNum && productStockAndPriceList[i].storehouseId == skuPriceList[h].storehouseId) {
+                                                    productStockAndPriceList[i].curPrice = skuPriceList[h].curPrice;
+                                                    productStockAndPriceList[i].orgPrice = skuPriceList[h].orgPrice;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        if (j != 0) {
+                                            j = i - 1;
+                                        }
+                                    }
+                                }
+                                callback(null, productStockAndPriceList);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("queryProductSKU--异常:" + ex);
+                        return callback(3, null);
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    result.code = 500;
+                    result.desc = "获取商品库存价格信息失败失败";
+                    logger.error("get product stock error:" + err);
+                    response.json(result);
+                    return;
+                } else {
+                    if (results != null && results[2] != null) {
+                        result.skuPriceAndStockList = results[2];
+                        response.json(result);
+                        return;
+                    }
+                }
+            });
+    } catch (ex) {
+        logger.error("get product stock error:" + ex);
+        result.code = 500;
+        result.desc = "获取商品库存失败";
+        response.json(result);
     }
 });
 
