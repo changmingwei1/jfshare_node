@@ -95,7 +95,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     subject: function () {
-        var obj = new ThriftConfig("120.24.153.155",1982);
+        var obj = new ThriftConfig("120.24.153.102",1982);
         // var obj = new ThriftConfig("127.0.0.1", 1982);
         return obj;
     },
