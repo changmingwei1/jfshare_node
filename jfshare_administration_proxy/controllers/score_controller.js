@@ -16,6 +16,21 @@ router.post('/socrelist', function (request, response, next) {
     try {
         var params = request.body;
         //参数校验
+
+        if(params.percount ==null || params.percount ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.curpage ==null || params.curpage ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
         Score.queryScoreUser(params, function (err, data) {
             if (err) {
                 response.json(err);
