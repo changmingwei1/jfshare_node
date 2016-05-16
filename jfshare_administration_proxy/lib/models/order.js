@@ -26,14 +26,22 @@ function Order() {
 
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
-    var orderQueryConditions = new order_types.OrderQueryConditions({
-        orderState: params.orderStatus || 0,
-        count: params.percount,
-        curPage: params.curpage,
-        orderState: params.orderState,
-        startTime: params.startTime,
-        endTime: params.endTime
-    });
+    var orderQueryConditions = null;
+    if(params.orderList !=null ){
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderIds:params.orderList
+        });
+    }else{
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderState: params.orderStatus || 0,
+            count: params.percount,
+            curPage: params.curpage,
+            orderState: params.orderState,
+            startTime: params.startTime,
+            endTime: params.endTime
+        });
+    }
+
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2, params.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {

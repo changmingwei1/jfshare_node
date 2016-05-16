@@ -268,7 +268,6 @@ router.post('/list', function (request, response, next) {
                             sellerId: sellerData.sellerId,
                             userName: sellerData.sellerName,
                             loginName: sellerData.loginName,
-
                             contacts: sellerData.contactName,
                             mobile: sellerData.mobile,
                             email: sellerData.email
