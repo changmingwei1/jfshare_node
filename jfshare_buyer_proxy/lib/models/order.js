@@ -22,7 +22,7 @@ var common_types = require('../thrift/gen_code/common_types');
 
 function Order(){}
 
-//查询订单列表
+/*查询订单列表*/
 Order.prototype.orderProfileQuery = function (param, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
         orderState: param.orderState, count:param.perCount, curPage: param.curPage});
@@ -42,7 +42,7 @@ Order.prototype.orderProfileQuery = function (param, callback) {
     });
 };
 
-//查询各订单状态的数量
+/*查询各订单状态的数量*/
 Order.prototype.orderStateQuery = function (param, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({count:param.percount, curPage: param.curpage});
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderStateQuery", [param.userType, param.userId, orderQueryConditions]);
@@ -61,7 +61,7 @@ Order.prototype.orderStateQuery = function (param, callback) {
     });
 };
 
-//查询订单详情
+/*查询订单详情*/
 Order.prototype.queryOrderDetail = function (param, callback) {
 
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryOrderDetail", [1, param.userId, param.orderId]);
@@ -133,7 +133,7 @@ Order.prototype.payState = function(param, callback) {
     });
 };
 
-//提交订单
+/*提交订单*/
 Order.prototype.orderConfirm = function(arg, callback){
 
     var sellerDetailList = [];
@@ -211,6 +211,7 @@ Order.prototype.orderConfirm = function(arg, callback){
     });
 };
 
+/*订单状态转换*/
 Order.prototype.getOrderStateBuyerEnum = function(orderState) {
     if (orderState == null) {
         return "";
@@ -233,6 +234,7 @@ Order.prototype.getOrderStateBuyerEnum = function(orderState) {
     return "";
 };
 
+/*订单状态转换*/
 Order.prototype.getOrderStateIdBuyerEnum = function (orderState) {
     if (orderState == null) {
         return 0;
@@ -295,7 +297,6 @@ Order.prototype.confirmReceipt = function(param, callback) {
         }
     });
 };
-
 
 
 module.exports = new Order();

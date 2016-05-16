@@ -1689,7 +1689,7 @@ router.post('/info', function (req, res, next) {
 });
 
 /*获取支付的url*/
-router.post('/payTest', function (req, res, next) {
+router.post('/pay', function (req, res, next) {
     var result = {code: 200};
 
     var arg = req.body;
@@ -1753,31 +1753,8 @@ router.post('/payTest', function (req, res, next) {
         });
     }
 });
-//获取第三方支付的url
-router.post('/pay', function (request, response, next) {
-    logger.info("进入支付流程");
-    var result = {code: 200};
-    try {
-        //var params = request.query;
-        var params = request.body;
-        var args = {};
-        args.token = params.token || "鉴权信息1";
-        args.ppInfo = params.ppInfo || "鉴权信息2";
-        args.payChannel = params.payChannel || 4;
-        args.userId = params.userId || 2;
-        args.resUrl = params.resUrl || "支付返回的结果";
-        args.resUrl = {orderId: params.orderId || "5780002", exchangeScore: params.exchangeScore || "100"};
 
-        logger.info("query expressOrder params:" + JSON.stringify(args));
-
-        result.payUrl = "支付的url：www.pay.com";
-        response.json(result);
-    } catch (ex) {
-        response.json(result);
-    }
-});
-
-/*申请支付请求*/
+/*申请支付请求 -> 用不着*/
 router.post('/payUrl', function (req, res, next) {
     var result = {code: 200};
 
