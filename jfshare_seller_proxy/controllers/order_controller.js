@@ -60,6 +60,7 @@ router.post('/list', function (request, response, next) {
                                 var orderItem = {
                                     orderId: order.orderId,
                                     sellerId:order.sellerId,
+                                    userId:order.userId,
                                     orderPrice: order.closingPrice,
                                     //添加了应答的数据
                                     postage: order.postage,

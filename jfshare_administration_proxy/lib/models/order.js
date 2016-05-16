@@ -111,7 +111,7 @@ Order.prototype.deliver = function (params, callback) {
 
     var deliverInfo = new order_types.DeliverInfo({
         orderId:params.orderId,
-        sellerComment:params.comment,
+        sellerComment:params.remark,
         expressId:params.expressId,
         expressName: params.expressName,
         expressNo: params.expressNo,

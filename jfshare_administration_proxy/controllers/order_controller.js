@@ -58,6 +58,7 @@ router.post('/list', function (request, response, next) {
                             orderInfo.orderProfileList.forEach(function (order) {
                                 var orderItem = {
                                     orderId: order.orderId,
+                                    userId:order.userId,
                                     orderPrice: order.closingPrice,
                                     //添加了应答的数据
                                     postage: order.postage,
