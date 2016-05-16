@@ -35,7 +35,7 @@ router.get('/imgList', function (request, response, next) {
                 //resContent.slotImageList = slotImageList;
                 var slotImageList = [];
                 var slotImage1 = {
-                    imgKey: "01A5336FC47CDD9BE70524E95AAB38A0.jpg",
+                    imgKey: "7EC68E30C7BDF09CB9D788AD487BAEA0.jpg",
                     jump: "www.baidu.com"
                 };
                 var slotImage2 = {
@@ -43,7 +43,7 @@ router.get('/imgList', function (request, response, next) {
                     jump: "www.baidu.com"
                 };
                 var slotImage3 = {
-                    imgKey: "35699DF511D4D33E81FA7066BF99D552.jpg",
+                    imgKey: "C1948B248013AEC62ADF9B914818A9B7.jpg",
                     jump: "www.baidu.com"
                 };
                 slotImageList = [slotImage1,slotImage2,slotImage3];
