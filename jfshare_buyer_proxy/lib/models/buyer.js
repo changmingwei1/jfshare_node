@@ -24,15 +24,19 @@ function Buyer(){}
 /************************************************现在的****************************************************/
 //获取鉴权信息
 Buyer.prototype.getAuthInfo = function(param,callback){
+
     //参数
     var authInfo = new buyer_types.AuthInfo({
         token:param.token,
         ppInfo:param.ppInfo
     });
     var buyer = new buyer_types.Buyer({
-        userId:param.userId
+        userId:param.userId,
+        mobile:param.mobile
     });
-    var loginLog = new buyer_types.LoginLog(param);
+    var loginLog = new buyer_types.LoginLog({
+        browser:param.browser
+    });
 
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getAuthInfo',[authInfo,buyer,loginLog]);
