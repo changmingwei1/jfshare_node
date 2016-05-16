@@ -38,8 +38,8 @@ Expresss.prototype.queryList = function(params, callback){
 Expresss.prototype.expressQuery = function(params, callback){
 
     var expressParams = new express_types.ExpressParams({
-        orderId:params.orderId||"17870082",
-        num:params.num ||"3305764433295",
+        orderId:params.orderId,
+        num:params.num ,
         comId:3,
         queryType:3
     });

@@ -379,7 +379,7 @@ router.post('/queryexpress', function (request, response, next) {
     try {
         //var params = request.query;
         var params = request.body;
-
+        logger.info("Express.expressQuery params:" + JSON.stringify(params));
         if (params.orderId == null || params.orderId == "" || params.orderId <= 0) {
 
             result.code = 500;
