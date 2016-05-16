@@ -363,7 +363,8 @@ router.post('/getAuthInfo', function (request, response, next) {
                 return;
             }
             var authInfo = data[0].authInfo;
-            resContent.authInfo = authInfo;
+            resContent.token = authInfo.token;
+            resContent.ppInfo = authInfo.ppInfo;
             response.json(resContent);
             logger.info("获取到的信息是：" + JSON.stringify(resContent));
         });
