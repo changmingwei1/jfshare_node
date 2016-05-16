@@ -565,6 +565,7 @@ Product = module.exports.Product = function(args) {
   this.productSnapshootId = null;
   this.storehouseIds = null;
   this.postageId = null;
+  this.thirdExchangeRate = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -640,6 +641,9 @@ Product = module.exports.Product = function(args) {
     }
     if (args.postageId !== undefined) {
       this.postageId = args.postageId;
+    }
+    if (args.thirdExchangeRate !== undefined) {
+      this.thirdExchangeRate = args.thirdExchangeRate;
     }
   }
 };
@@ -833,6 +837,13 @@ Product.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 26:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdExchangeRate = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -967,6 +978,11 @@ Product.prototype.write = function(output) {
   if (this.postageId !== null && this.postageId !== undefined) {
     output.writeFieldBegin('postageId', Thrift.Type.I32, 25);
     output.writeI32(this.postageId);
+    output.writeFieldEnd();
+  }
+  if (this.thirdExchangeRate !== null && this.thirdExchangeRate !== undefined) {
+    output.writeFieldBegin('thirdExchangeRate', Thrift.Type.STRING, 26);
+    output.writeString(this.thirdExchangeRate);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1985,6 +2001,7 @@ ProductCard = module.exports.ProductCard = function(args) {
   this.productId = null;
   this.cardNumber = null;
   this.password = null;
+  this.skuNum = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -1997,6 +2014,9 @@ ProductCard = module.exports.ProductCard = function(args) {
     }
     if (args.password !== undefined) {
       this.password = args.password;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
     }
   }
 };
@@ -2042,6 +2062,13 @@ ProductCard.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2073,6 +2100,11 @@ ProductCard.prototype.write = function(output) {
     output.writeString(this.password);
     output.writeFieldEnd();
   }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 5);
+    output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -2083,6 +2115,7 @@ ProductCardView = module.exports.ProductCardView = function(args) {
   this.cardNumber = null;
   this.password = null;
   this.state = null;
+  this.skuNum = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -2095,6 +2128,9 @@ ProductCardView = module.exports.ProductCardView = function(args) {
     }
     if (args.state !== undefined) {
       this.state = args.state;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
     }
   }
 };
@@ -2140,6 +2176,13 @@ ProductCardView.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2171,6 +2214,11 @@ ProductCardView.prototype.write = function(output) {
     output.writeI32(this.state);
     output.writeFieldEnd();
   }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 5);
+    output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -2181,6 +2229,7 @@ ProductCardViewParam = module.exports.ProductCardViewParam = function(args) {
   this.productId = null;
   this.cardNumber = null;
   this.state = null;
+  this.skuNum = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -2193,6 +2242,9 @@ ProductCardViewParam = module.exports.ProductCardViewParam = function(args) {
     }
     if (args.state !== undefined) {
       this.state = args.state;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
     }
   }
 };
@@ -2238,6 +2290,13 @@ ProductCardViewParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2269,6 +2328,11 @@ ProductCardViewParam.prototype.write = function(output) {
     output.writeI32(this.state);
     output.writeFieldEnd();
   }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 5);
+    output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -2281,6 +2345,7 @@ ProductCardStatistics = module.exports.ProductCardStatistics = function(args) {
   this.usedNum = null;
   this.unusedNum = null;
   this.createTime = null;
+  this.skuNum = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -2299,6 +2364,9 @@ ProductCardStatistics = module.exports.ProductCardStatistics = function(args) {
     }
     if (args.createTime !== undefined) {
       this.createTime = args.createTime;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
     }
   }
 };
@@ -2358,6 +2426,13 @@ ProductCardStatistics.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2397,6 +2472,11 @@ ProductCardStatistics.prototype.write = function(output) {
   if (this.createTime !== null && this.createTime !== undefined) {
     output.writeFieldBegin('createTime', Thrift.Type.STRING, 6);
     output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 7);
+    output.writeString(this.skuNum);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -2474,6 +2554,7 @@ ProductCardParam = module.exports.ProductCardParam = function(args) {
   this.productId = null;
   this.transactionId = null;
   this.num = null;
+  this.skuNum = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -2483,6 +2564,9 @@ ProductCardParam = module.exports.ProductCardParam = function(args) {
     }
     if (args.num !== undefined) {
       this.num = args.num;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
     }
   }
 };
@@ -2521,6 +2605,13 @@ ProductCardParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2545,6 +2636,77 @@ ProductCardParam.prototype.write = function(output) {
   if (this.num !== null && this.num !== undefined) {
     output.writeFieldBegin('num', Thrift.Type.I32, 3);
     output.writeI32(this.num);
+    output.writeFieldEnd();
+  }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 4);
+    output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductCardImportParam = module.exports.ProductCardImportParam = function(args) {
+  this.sellerId = null;
+  this.path = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.path !== undefined) {
+      this.path = args.path;
+    }
+  }
+};
+ProductCardImportParam.prototype = {};
+ProductCardImportParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.path = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductCardImportParam.prototype.write = function(output) {
+  output.writeStructBegin('ProductCardImportParam');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 1);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.path !== null && this.path !== undefined) {
+    output.writeFieldBegin('path', Thrift.Type.STRING, 2);
+    output.writeString(this.path);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

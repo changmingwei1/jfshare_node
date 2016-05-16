@@ -150,7 +150,7 @@ Product.prototype.queryProductSku = function (productId, callback) {
 };
 
 //查询商品指定sku
-Product.prototype.queryHotSKU = function (paramters, callback) {
+Product.prototype.queryHotSKUV1 = function (paramters, callback) {
 
     var param = new product_types.ProductRetParam({
         baseTag: 1,
@@ -158,9 +158,13 @@ Product.prototype.queryHotSKU = function (paramters, callback) {
         skuTag: 1,
         attributeTag: 0
     });
-
+    var params = new product_types.ProductSkuParam({
+        productId: paramters.productId,
+        storehouseId: paramters.storehouseId,
+        skuNum: paramters.skuNum
+    });
     // 获取client
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryHotSKU", [paramters.productId, paramters.skuNum, param]);
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryHotSKUV1", [params, param]);
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
@@ -222,7 +226,7 @@ Product.prototype.getSubTree = function (param, callback) {
     });
 };
 
-
+/*查询sku库存*/
 Product.prototype.getStock = function (productId, callback) {
 
     // 获取client
@@ -260,300 +264,6 @@ Product.prototype.getStockForSku = function (paramters, callback) {
             callback(null, data[0]);
         }
     });
-};
-
-
-Product.prototype.orderProfileQuery = function (param, callback) {
-    var orderQueryConditions = new order_types.OrderQueryConditions({
-        orderState: param.orderStatus || 0, count: param.percount, curPage: param.curpage
-    });
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [param.userType, param.userId, orderQueryConditions]);
-
-    Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("调用orderServ-orderProfileQuery  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-orderProfileQuery失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "查询定单列表失败！";
-            callback(res, null);
-        } else {
-            callback(null, data[0].orderProfilePage);
-        }
-    });
-};
-
-Product.prototype.orderStateQuery = function (param, callback) {
-    var orderQueryConditions = new order_types.OrderQueryConditions({count: param.percount, curPage: param.curpage});
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderStateQuery", [param.userType, param.userId, orderQueryConditions]);
-
-    Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("调用orderServ-orderStateQuery  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-orderStateQuery失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "查询定单列表失败！";
-            callback(res, null);
-        } else {
-            callback(null, data[0].orderCountList);
-        }
-    });
-};
-
-Product.prototype.queryOrderDetail = function (param, callback) {
-
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryOrderDetail", [param.userType, param.userId, param.orderId]);
-
-    Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("调用orderServ-queryOrderDetail  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-queryOrderDetail失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "查询定单明细失败！";
-            callback(res, null);
-        } else {
-            callback(null, data[0].order);
-        }
-    });
-};
-
-Product.prototype.payApply = function (param, callback) {
-    logger.info("Product.prototype.payApply  param:" + JSON.stringify(param));
-    var pay = {payChannel: param.payChannel};
-    if (param.payChannel == 4) {
-        pay.custId = param.openId;
-    }
-    var payChannel = new pay_types.PayChannel(pay);
-
-    var payParam = new order_types.PayParam({
-        userId: param.userId,
-        orderIdList: param.orderIdList,
-        payChannel: payChannel
-    });
-
-    logger.info("call orderServ-payApply args:" + JSON.stringify(payParam));
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "payApply", payParam);
-
-    Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("call orderServ-payApply result:" + JSON.stringify(data[0]));
-        var res = {};
-        if (err || data[0].code == "1") {
-            logger.error("调用orderServ-payApply失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "提交订单失败！";
-            callback(res, null);
-        } else {
-            callback(null, data[0]);
-        }
-    });
-};
-
-Product.prototype.payState = function (param, callback) {
-
-    var statePara = new order_types.PayState({
-        payId: param.payId
-    });
-
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "payState", statePara);
-    Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("call orderSer-payState result:" + JSON.stringify(data));
-        if (err || data[0] == '1') {
-            var res = {};
-            res.code = 500;
-            res.desc = "查询订单状态失败！";
-            callback(res, null);
-        } else {
-            callback(null, data[0].payState);
-        }
-    });
-};
-
-Product.prototype.addCartItem = function (param, callback) {
-
-    var item = new cart_types.Item({
-        productId: param.productId,
-        skuNum: param.skunum || '',
-        count: param.count,
-        price: param.price
-    });
-
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId, item, 2]);
-
-    Lich.wicca.invokeClient(cartServ, function (err, data) {
-        logger.info("调用cartServ-addItem  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("调用cartServ-addItem失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "添加购物车失败！";
-            callback(res, null);
-        } else {
-            logger.info("add cart item:" + JSON.stringify(data[0]));
-            callback(null, data[0].checkList);
-        }
-    });
-};
-
-Product.prototype.deleteCartItem = function (userId, carKeys, callback) {
-    var carKeyList = [];
-    for (var i = 0; i < carKeys.length; i++) {
-        var item = new cart_types.CartKey(carKeys[i]);
-        carKeyList.push(item);
-    }
-
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [userId, carKeyList, 2]);
-
-    Lich.wicca.invokeClient(cartServ, function (err, data) {
-        logger.info("调用cartServ-deleteItem  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].code == "1") {
-            logger.error("调用cartServ-deleteItem失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "添加购物车失败！";
-            callback(res, null);
-        } else {
-            logger.info("add cart item:" + JSON.stringify(data[0]));
-            callback(null, data[0].checkList);
-        }
-    });
-};
-
-Product.prototype.cartListItem = function (userId, callback) {
-
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [userId, 2]);
-
-    Lich.wicca.invokeClient(cartServ, function (err, data) {
-        logger.info("调用cartServ-listItem  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].code == "1") {
-            logger.error("调用cartServ-listItem失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "添加购物车失败！";
-            callback(res, null);
-        } else {
-            logger.info("get cart item list:" + JSON.stringify(data[0]));
-            callback(null, data[0].itemList);
-        }
-    });
-};
-
-Product.prototype.cartCountItem = function (userId, callback) {
-
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "countItem", [userId, 2]);
-
-    Lich.wicca.invokeClient(cartServ, function (err, data) {
-        logger.info("调用cartServ-countItem  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("调用cartServ-countItem失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "购物车商品数失败！";
-            callback(res, null);
-        } else {
-            logger.info("get cart item list:" + JSON.stringify(data[0]));
-            callback(null, data[0].value);
-        }
-    });
-};
-
-Product.prototype.cartUpdateItem = function (param, callback) {
-    var cartKey = new cart_types.CartKey({productId: param.productId, skuNum: param.skunum});
-    var item = new cart_types.Item({
-        productId: param.productId,
-        skuNum: param.skunum,
-        count: param.count,
-        price: param.price || "0",
-        wi: param.wi || null
-    });
-
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "updateItem",
-        [param.userId, null, cartKey, item, 2]);
-
-    Lich.wicca.invokeClient(cartServ, function (err, data) {
-        logger.info("调用cartServ-updateItem result:" + JSON.stringify(data[0]));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("调用cartServ-countItem失败  失败原因 ======" + err);
-            logger.error("错误信息:" + JSON.stringify(data[0].result));
-            res.code = 500;
-            res.desc = "购物车商品数失败！";
-            callback(res, null);
-        } else {
-            callback(null, null);
-        }
-    });
-};
-
-
-Product.prototype.signinThirdParty = function (arg, callback) {
-    var loginLog = new buyer_types.LoginLog();
-    var thirdpartyUser = new buyer_types.ThirdpartyUser({
-        thirdType: "H5_FOSHAN",
-        accountNo: arg.mobile,
-        userName: arg.username || arg.mobile,
-        custId: arg.mobile
-    });
-
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "signinThirdParty", [loginLog, thirdpartyUser]);
-
-    Lich.wicca.invokeClient(buyerServ, function (err, data) {
-        logger.info("调用buyerServ-signinThridParty  result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("调用buyerServ-signinThridParty失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "登录失败！";
-            callback(res, null);
-        } else {
-            callback(null, data[0]);
-        }
-    });
-};
-
-Product.prototype.getOrderStateBuyerEnum = function (orderState) {
-    if (orderState == null) {
-        return "";
-    }
-    var state = Number(orderState);
-    if (state >= 10 && state < 20) {
-        return "待支付";
-    } else if (state >= 20 && state < 40) {
-        return "待发货";
-    } else if (state >= 40 && state < 50) {
-        return "待收货";
-    } else if (state == 50) {
-        return "待评论";
-    } else if (state >= 51 && state < 60) {
-        return "已完成";
-    } else if (state >= 60 && state < 70) {
-        return "已取消";
-    }
-
-    return "";
-};
-
-Product.prototype.getOrderStateIdBuyerEnum = function (orderState) {
-    if (orderState == null) {
-        return 0;
-    }
-    //var state = Number(orderState);
-    if (orderState == "待支付") {
-        return 1;
-    } else if (orderState == "待发货") {
-        return 3;
-    } else if (orderState == "待收货") {
-        return 4;
-    } else if (orderState == "待评论") {
-        return 50;
-    } else if (orderState == "已完成") {
-        return 5;
-    } else if (orderState == "已取消") {
-        return 6;
-    }
-
-    return 0;
 };
 
 //获取物流信息(根据orderId)
