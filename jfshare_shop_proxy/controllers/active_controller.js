@@ -31,19 +31,33 @@ router.get('/imgList', function (request, response, next) {
                 response.json(error);
                 return;
             } else {
-                var slotImageList = data[0].slotImageList;
+                //var slotImageList = data[0].slotImageList;
+                //resContent.slotImageList = slotImageList;
+                var slotImageList = [];
+                var slotImage2 = {
+                    imgKey: "64D7EFCA3C2E067AB1A833B626D848D1.jpg",
+                    jump: "www.baidu.com"
+                };
+                var slotImage3 = {
+                    imgKey: "A70B6E531976F893D02A6322A8BDA981.jpg",
+                    jump: "www.baidu.com"
+                };
+                slotImageList = [slotImage2,slotImage3];
                 resContent.slotImageList = slotImageList;
                 response.json(resContent);
                 logger.info("响应:" + JSON.stringify(resContent));
             }
-        });
-    } catch (ex) {
+        })
+        ;
+    } catch
+        (ex) {
         logger.error("获取信息失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "不能获取信息";
         response.json(resContent);
     }
-});
+})
+;
 
 //获取系统消息列表
 router.get('/messageList', function (request, response, next) {

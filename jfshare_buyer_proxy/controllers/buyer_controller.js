@@ -597,7 +597,7 @@ router.post('/scoreTotal', function (request, response, next) {
     } catch (ex) {
         logger.error("不能获取，原因是:" + ex);
         resContent.code = 500;
-        resContent.desc = "获取用户积分失败，显示测试数据内容为：";
+        resContent.desc = "获取用户积分失败";
         response.json(resContent);
     }
 });
@@ -612,36 +612,36 @@ router.post('/scoreTrade', function (request, response, next) {
 
         logger.info("请求参数信息" + JSON.stringify(arg));
         if(arg.userId == null || arg.userId == "" || arg.userId <= 0){
-            response.code = 400;
-            response.desc = "用户id不能为空";
+            resContent.code = 400;
+            resContent.desc = "用户id不能为空";
             response.json(resContent);
             return;
         }
         if(arg.curPage == null || arg.curPage == ""){
-            response.code = 400;
-            response.desc = "参数错误";
+            resContent.code = 400;
+            resContent.desc = "参数错误";
             response.json(resContent);
             return;
         }
         if(arg.perCount == null || arg.perCount == ""){
-            response.code = 400;
-            response.desc = "参数错误";
+            resContent.code = 400;
+            resContent.desc = "参数错误";
             response.json(resContent);
             return;
         }
-        if(param.token == null || param.token == ""){
+        if(arg.token == null || arg.token == ""){
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
-        if(param.browser == null || param.browser == ""){
+        if(arg.browser == null || arg.browser == ""){
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
-        if(param.ppInfo == null || param.ppInfo == ""){
+        if(arg.ppInfo == null || arg.ppInfo == ""){
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
             response.json(resContent);
