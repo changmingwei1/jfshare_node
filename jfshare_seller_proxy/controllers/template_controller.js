@@ -622,6 +622,7 @@ router.post('/queryStockAndPrice', function (request, response, next) {
                             sku.productId = productStorehouseList[i].productId;
                             sku.sellerId = productStorehouseList[i].sellerId;
                             sku.storehouseId = productStorehouseList[i].storehouseId;
+                            sku.skuNum = productStorehouseList[i].skuNum;
                             var itemList = productstockSkuList[i].stockItems;
                             if (storehouseId == 0) {
                                 productStockAndPriceList.push(sku);
@@ -629,7 +630,7 @@ router.post('/queryStockAndPrice', function (request, response, next) {
                             }
                             for (var j = 0; i < itemList.length; j++) {
                                 if (params.sellerList[i].skuNum == itemList[j].skuNum && itemList[j].storehouseId == productStorehouseList[i].storehouseId) {
-                                    sku.skuNum = params.sellerList[i].skuNum;
+
                                     sku.count = itemList[j].count;
                                     break;
                                 }
