@@ -110,4 +110,23 @@ Common.prototype.validateMsgCaptcha = function(param, callback){
     });
 };
 
+//获取二维码
+Common.prototype.getQRCode = function(id,callback){
+    //获取client
+    var commonServ = new Lich.InvokeBag(Lich.ServiceKey.CommonServer,'getQRCode',id);
+    Lich.wicca.invokeClient(commonServ,function(err,data){
+        logger.info("getCaptcha result: " + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == 1) {
+            logger.error("can't getCaptcha because: ======" + err);
+            res.code = 500;
+            res.desc = "false to getCaptcha";
+            callback(res,null);
+        } else {
+            callback(null,data);
+        }
+    });
+};
+
+
 module.exports = new Common();
