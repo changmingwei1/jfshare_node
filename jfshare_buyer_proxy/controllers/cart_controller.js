@@ -237,94 +237,92 @@ router.post('/list', function (req, res, next) {
                 return;
             }
             var cartList = [];
-                var cartLists = {};
-                /*itemList.forEach(function (a) {
-                    cartLists.sellerId = a.seller.sellerId;
-                    cartLists.sellerName = a.seller.sellerName;
-                    cartLists.remark = "六一儿童节大优惠";
+            var cartLists = {};
+            /*itemList.forEach(function (a) {
+             cartLists.sellerId = a.seller.sellerId;
+             cartLists.sellerName = a.seller.sellerName;
+             cartLists.remark = "六一儿童节大优惠";
+             var productList = [];
+             var itemDetailList = a.itemDetailList;
+             itemDetailList.forEach(function (b) {
+             productList.push({
+             productId: b.product.product.productId,
+             productName: b.product.product.productName,
+             activeState: b.product.product.activeState,
+             storehouseIds: b.product.product.storehouseIds,
+             cartPrice: b.product.cartPrice,
+             skuCount: b.product.skuCount - b.product.lockCount,
+             count: b.product.count,
+             sku: {
+             skuNum: b.product.product.productSku.skuItems[0].skuNum,
+             skuName: b.product.product.productSku.skuItems[0].skuName,
+             weight: b.product.product.productSku.skuItems[0].weight
+             //curPrice: b.product.product.productSku.skuItems[0].curPrice,
+             //orgPrice: b.product.product.productSku.skuItems[0].orgPrice
+             },
+             imgKey: b.product.product.imgKey.split(',')[0]
+             });
+             });
+             cartLists.productList = productList;
+             });*/
+            if (itemList != null) {
+                for (var i = 0; i < itemList.length; i++) {
+                    cartLists.sellerId = itemList[i].seller.sellerId;
+                    cartLists.sellerName = itemList[i].seller.sellerName;
+                    cartLists.remark = "我是写死的字段";
                     var productList = [];
-                    var itemDetailList = a.itemDetailList;
-                    itemDetailList.forEach(function (b) {
+                    var itemDetailList = itemList[i].itemDetailList;
+                    for (var j = 0; j < itemDetailList.length; j++) {
                         productList.push({
-                            productId: b.product.product.productId,
-                            productName: b.product.product.productName,
-                            activeState: b.product.product.activeState,
-                            storehouseIds: b.product.product.storehouseIds,
-                            cartPrice: b.product.cartPrice,
-                            skuCount: b.product.skuCount - b.product.lockCount,
-                            count: b.product.count,
+                            productId: itemDetailList[j].product.product.productId,
+                            productName: itemDetailList[j].product.product.productName,
+                            activeState: itemDetailList[j].product.product.activeState,
+                            storehouseIds: itemDetailList[j].product.product.storehouseIds,
+                            cartPrice: itemDetailList[j].product.cartPrice,
+                            skuCount: itemDetailList[j].product.skuCount,
+                            count: itemDetailList[j].product.count,
                             sku: {
-                                skuNum: b.product.product.productSku.skuItems[0].skuNum,
-                                skuName: b.product.product.productSku.skuItems[0].skuName,
-                                weight: b.product.product.productSku.skuItems[0].weight
-                                //curPrice: b.product.product.productSku.skuItems[0].curPrice,
-                                //orgPrice: b.product.product.productSku.skuItems[0].orgPrice
+                                skuNum: itemDetailList[j].product.product.productSku.skuItems[0].skuNum,
+                                skuName: itemDetailList[j].product.product.productSku.skuItems[0].skuName,
+                                weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
                             },
-                            imgKey: b.product.product.imgKey.split(',')[0]
+                            imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
                         });
-                    });
-                    cartLists.productList = productList;
-                });*/
-                if (itemList != null) {
-                    for (var i = 0; i < itemList.length; i++) {
-                        cartLists.sellerId = itemList[i].seller.sellerId;
-                        cartLists.sellerName = itemList[i].seller.sellerName;
-                        cartLists.remark = "我是写死的字段";
-                        var productList = [];
-                        var itemDetailList = itemList[i].itemDetailList;
-                            for (var j = 0; j < itemDetailList.length; j++) {
-                                var product = {
-                                    productId: itemDetailList[j].product.product.productId,
-                                    productName: itemDetailList[j].product.product.productName,
-                                    activeState: itemDetailList[j].product.product.activeState,
-                                    storehouseIds: itemDetailList[j].product.product.storehouseIds,
-                                    cartPrice: itemDetailList[j].product.cartPrice,
-                                    skuCount: itemDetailList[j].product.skuCount,
-                                    count: itemDetailList[j].product.count,
-                                    sku : {
-                                        skuNum: itemDetailList[j].product.product.productSku.skuItems[0].skuNum,
-                                        skuName: itemDetailList[j].product.product.productSku.skuItems[0].skuName,
-                                        weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
-                                    },
-                                    imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
-                                };
-                            }
-                            productList.push(product);
                     }
                     cartLists.productList = productList;
-                    cartList.push(cartLists);
-                    result.cartList = cartList;
-                    res.json(result);
-                }else{
+                }
+                cartList.push(cartLists);
+                result.cartList = cartList;
+                res.json(result);
+            } else {
                 result.cartList = cartList;
                 res.json(result);
             }
-                /*var count = 0;
-                if (cartList.length > 0) {
-                    cartList.forEach(function (item) {
-                        var param = {productId: item.productId, skunum: item.skunum.skuNum};
-                        Product.getStockForSku(param, function (err, stockInfo) {
-                            if (err) {
-                                //res.json(err);
-                                return;
-                            }
-                            var stock = stockInfo.stockInfo;
-                            var stockItemMap = stockInfo.stockInfo.stockItemMap;
-                            item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
+            /*var count = 0;
+             if (cartList.length > 0) {
+             cartList.forEach(function (item) {
+             var param = {productId: item.productId, skunum: item.skunum.skuNum};
+             Product.getStockForSku(param, function (err, stockInfo) {
+             if (err) {
+             //res.json(err);
+             return;
+             }
+             var stock = stockInfo.stockInfo;
+             var stockItemMap = stockInfo.stockInfo.stockItemMap;
+             item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
 
-                            if (count >= cartList.length - 1) {
-                                result.cartList = cartList;
-                                res.json(result);
-                                logger.info("get cart list response:" + JSON.stringify(result));
-                            }
-                            count = count + 1;
-                        });
-                    });
-                } else {
-                    result.cartList = [];
-                    res.json(result);
-                }*/
-
+             if (count >= cartList.length - 1) {
+             result.cartList = cartList;
+             res.json(result);
+             logger.info("get cart list response:" + JSON.stringify(result));
+             }
+             count = count + 1;
+             });
+             });
+             } else {
+             result.cartList = [];
+             res.json(result);
+             }*/
         });
         //});
     } catch (ex) {
