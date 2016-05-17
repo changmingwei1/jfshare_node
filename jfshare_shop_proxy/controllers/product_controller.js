@@ -355,7 +355,7 @@ router.post('/querystore', function (req, res, next) {
                             callback('error', err);
                         } else {
                             var stockInfo = data[0].stockInfo;
-                            result.total = stockInfo.total;
+                            result.count = stockInfo.total;
                             callback(null, result);
                         }
                     });
