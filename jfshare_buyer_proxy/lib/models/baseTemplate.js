@@ -59,4 +59,79 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
     });
 };
 
+/*查询仓库*/
+BaseTemplate.prototype.queryStorehouse = function(params,callback){
+    var param = new baseTemplate_types.StorehouseQueryParam({
+        sellerId: params.sellerId
+    });
+    //获取client
+    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'queryStorehouse',param);
+    Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
+        logger.info("get BaseTemplate result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == 1) {
+            logger.error("不能获取仓库信息 because: ======" + err);
+            res.code = 500;
+            res.desc = "获取仓库失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+/*获取仓库信息*/
+BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
+
+    //获取client
+    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getStorehouse',storehouseIds);
+
+    Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
+        logger.info("get BaseTemplate result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == 1) {
+            logger.error("不能获取仓库信息 because: ======" + err);
+            res.code = 500;
+            res.desc = "获取仓库失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+/*批量获取商品收货省份对应的发货仓库*/
+BaseTemplate.prototype.getDeliverStorehouse = function(params,calback){
+
+    var productRefProvinceList = [];
+
+    var productRefProvince = new baseTemplate_types.ProductRefProvince({
+        sellerId: params.sellerId,
+        productId: params.productId,
+        storehouseIds: params.storehouseIds,
+        sendToProvince: params.provinceId
+    });
+
+    productRefProvinceList.push(productRefProvince);
+
+    var param = new baseTemplate_types.DeliverStorehouseParam({
+        productRefProvinceList:productRefProvinceList
+    });
+
+    //获取client
+    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getDeliverStorehouse',param);
+    Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
+        logger.info("get BaseTemplate result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == 1) {
+            logger.error("不能获取仓库信息 because: ======" + err);
+            res.code = 500;
+            res.desc = "获取仓库失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new BaseTemplate();

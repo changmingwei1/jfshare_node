@@ -1,7 +1,6 @@
 /**
- * Created by zhaoshenghai on 16/3/20.
+ * @author YinBo 2016/4/12
  */
-
 var log4node = require('../../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
 
@@ -18,34 +17,31 @@ var pay_types = require('../thrift/gen_code/pay_types');
 var trade_types = require('../thrift/gen_code/trade_types');
 var buyer_types = require('../thrift/gen_code/buyer_types');
 var common_types = require('../thrift/gen_code/common_types');
-//var express_types = require('../thrift/gen_code/express_types');
+var stock_types = require('../thrift/gen_code/stock_types');
 
-function Product(){}
+function Stock(){}
 
-/*获取虚拟商品卡密（关键接口）*/
-Product.prototype.getProductCard = function(param, callback){
-
-    var params = new product_types.ProductCardParam({
-        productId: param.productId,
-        transactionId: param.orderId,
-        num: param.num,
-        skuNum: param.skuNum
+/*��ѯ���*/
+Stock.prototype.queryStock = function(params,callback){
+    var param = new stock_types.QueryParam({
+        productId: params.productId,
+        storehouseId: params.storehouseId,
+        skuNum: params.skuNum
     });
-
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "getProductCard", params);
-
-    Lich.wicca.invokeClient(productServ, function(err, data) {
-        logger.info("调用productServ-getProductCard  result:" + JSON.stringify(data));
+    //��ȡclient
+    var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer,'queryStock',param);
+    Lich.wicca.invokeClient(stockServ, function(err, data){
+        logger.info("getStock result:" + JSON.stringify(data));
         var res = {};
-        if(err){
-            logger.error("调用productServ-getProductCard  失败原因 ======" + err);
+        if (err||data[0].result.code == 1) {
+            logger.error("false to getStock , because: ======" + err);
             res.code = 500;
-            res.desc = "查询虚拟商品卡密失败";
+            res.desc = "false to getStock";
             callback(res, null);
         } else {
-            callback(null, data)
+            callback(null, data);
         }
     });
 };
 
-module.exports = new Product();
+module.exports = new Stock();

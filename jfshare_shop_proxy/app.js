@@ -32,14 +32,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/share', index);
-app.use('/share/product', product);
-app.use('/share/class', product);
-app.use('/share/order', order);
-app.use('/share/cart', cart);
-app.use('/share/address', address);
-app.use('/share/captcha',captcha);
-app.use('/share/active',active);
+app.use('/shop', index);
+app.use('/shop/product', product);
+app.use('/shop/class', product);
+app.use('/shop/order', order);
+app.use('/shop/cart', cart);
+app.use('/shop/address', address);
+app.use('/shop/captcha',captcha);
+app.use('/shop/active',active);
 //app.use('/test', test);
 //app.use('/test', tests);
 

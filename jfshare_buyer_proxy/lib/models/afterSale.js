@@ -5,12 +5,9 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var Lich = require('../thrift/Lich.js');
 var thrift = require('thrift');
 var pagination_types = require('../thrift/gen_code/pagination_types');
-
 var afterSale_types = require("../thrift/gen_code/afterSale_types");
 
-
-function AfterSale() {
-}
+function AfterSale() {}
 
 //售后审核
 AfterSale.prototype.auditPass = function (params, callback) {
@@ -110,5 +107,30 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
     }
 
 };
+
+/*查询售后订单*/
+AfterSale.prototype.queryAfterSaleOrder = function (params, callback) {
+
+    var pagination = new pagination_types.Pagination({
+        numPerPage:params.perCount,
+        currentPage:params.curPage
+    });
+
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [1, params.userId,pagination]);
+
+    Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
+        logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("AfterSaleServ-queryAfterSaleOrderList  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询售后订单列表失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
 
 module.exports = new AfterSale();

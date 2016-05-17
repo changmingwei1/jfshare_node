@@ -231,77 +231,6 @@ router.get('/productDetail', function (req, res, next) {
 });
 
 //查询商品指定sku和库存
-router.post('/querystoreTest', function (req, res, next) {
-    logger.info("进入获取商品SKU接口");
-    var result = {code: 200};
-
-    try {
-        var arg = req.body;
-
-        var productId = arg.productId;
-        var provinceId = arg.provinceId;
-        var skuNum = arg.skuNum;
-        var baseTag = 1;
-        var skuTemplateTag = 0;
-        var skuTag = 1;
-        var attributeTag = 0;
-
-        var params = {};
-        params.productId = productId;
-        params.provinceId = provinceId;
-        params.skuNum = skuNum;
-        params.baseTag = baseTag;
-        params.skuTemplateTag = skuTemplateTag;
-        params.skuTag = skuTag;
-        params.attributeTag = attributeTag;
-
-        var detailStockIns = new detailStock();
-
-        async.waterfall([
-                function (callback) {
-                    Product.queryProductSku(productId, function (err, data) {
-                        if (err) {
-                            callback('error', err);
-                        } else {
-                            var productSku = data[0].productSku;
-
-                            detailStockIns.parseProductSku(data[0].productSku);
-                            callback(null, detailStockIns);
-                        }
-                    });
-                },
-                function (productSkuMap, callback) {
-                    logger.info("skumap:" + productSkuMap);
-                    Product.getStock(productId, function (err, data) {
-                        if (err) {
-                            callback('error', err);
-                        } else {
-                            var stockInfo = data[0].stockInfo;
-                            logger.info("stock info:" + stockInfo);
-                            detailStockIns.fillStockSku(data[0].stockInfo);
-                            detailStockIns.initSKU();
-                            result.dimstocks = detailStockIns.dimstocks;
-                            callback(null, result);
-                        }
-                    });
-                }
-            ],
-            function (err, data) {
-                if (err) {
-                    logger.error("get product info fail err:" + err);
-                } else {
-                    res.json(data);
-                    logger.info("get skuitem response:" + JSON.stringify(result));
-                }
-            });
-    } catch (ex) {
-        logger.error("get skuitem error:" + ex);
-        result.code = 500;
-        result.desc = "获取商品ＳＫＵ失败";
-        res.json(result);
-    }
-});
-//查询商品指定sku和库存
 router.post('/querystore', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
@@ -549,6 +478,37 @@ router.post('/subjectList', function (req, res, next) {
         logger.error("get subject child error:" + ex);
         result.code = 500;
         result.desc = "获取子类目失败";
+        res.json(result);
+    }
+});
+
+/*计算邮费*/
+router.post('/freight', function (req, res, next) {
+
+    logger.info("进入获取邮费接口");
+    var result = {code: 200};
+
+    try {
+        var arg = req.body;
+        //if (arg.subjectId == null || arg.subjectId == "" || arg.subjectId < 0) {
+        //    result.code = 400;
+        //    result.desc = "参数错误";
+        //    res.json(result);
+        //    return;
+        //}
+        BaseTemplate.calculatePostage(arg, function (err, data) {
+            if (err) {
+                res.json(err);
+            } else {
+                result.data = data;
+                res.json(result);
+                logger.info("get postage response:" + JSON.stringify(result));
+            }
+        });
+    } catch (ex) {
+        logger.error("get postage error:" + ex);
+        result.code = 500;
+        result.desc = "获取邮费失败";
         res.json(result);
     }
 });
