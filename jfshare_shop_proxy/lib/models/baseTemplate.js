@@ -56,7 +56,7 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
     var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer, "calculatePostage", arg);
 
     Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
-        logger.info("调用邮费计算，  result:" + JSON.stringify(data));
+        logger.info("调用邮费计算，  result:" + JSON.stringify(data[0]));
         var res = {};
         if(err || data[0].result.code == "1"){
             logger.error("调用邮费计算失败  失败原因 ======" + err);
@@ -64,7 +64,7 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
             res.desc = "邮费计算失败！";
             callback(res, null);
         } else {
-            callback(null, null);
+            callback(null, data);
         }
     });
 };

@@ -270,10 +270,10 @@ router.post('/querystore', function (req, res, next) {
                         } else {
                             var skuItems = data.product.productSku.skuItems;
                             result.productId = data.product.productId;
-                            result.curPrice = data.product.productSku.curPrice;
-                            result.orgPrice = data.product.productSku.orgPrice;
-                            //result.storehouseId = skuItems[0].storehouseId;
-                            result.skuNum = data.product.productSku.skuNum;
+                            result.curPrice = skuItems[0].curPrice;
+                            result.orgPrice = skuItems[0].orgPrice;
+                            result.storehouseId = skuItems[0].storehouseId;
+                            result.skuNum = skuItems[0].skuNum;
                             callback(null, result);
                         }
                     });
@@ -500,7 +500,8 @@ router.post('/freight', function (req, res, next) {
             if (err) {
                 res.json(err);
             } else {
-                result.data = data;
+                result.sellerPostageReturnList = data[0].sellerPostageReturnList;
+                result.totalPostage = data[0].totalPostage;
                 res.json(result);
                 logger.info("get postage response:" + JSON.stringify(result));
             }

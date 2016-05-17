@@ -178,7 +178,9 @@ Order.prototype.orderConfirm = function (arg, callback) {
     var deliverInfo;
 
     if (arg.tradeCode == "Z0002" || arg.tradeCode == "Z8002" || arg.tradeCode == "Z8001") {
-        deliverInfo = null;
+        deliverInfo = new order_types.DeliverInfo({
+            receiverMobile: arg.mobile
+        });
     } else {
         deliverInfo = new order_types.DeliverInfo({
             addressId: arg.addressDesc.id,
