@@ -87,7 +87,15 @@ module.exports.ServiceFactory = {
         var obj = new ThriftConfig("120.24.153.155", 1985);
         return obj;
     },
-
+    /**
+     * 库存服务
+     * @returns {ThriftConfig}
+     */
+    stock: function () {
+        var obj = new ThriftConfig("120.24.153.155",1983);
+        // var obj = new ThriftConfig("127.0.0.1", 1983);
+        return obj;
+    },
     /**
      * 消息服务
      * @returns {ThriftConfig}

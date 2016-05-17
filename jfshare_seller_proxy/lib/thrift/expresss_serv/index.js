@@ -1,5 +1,5 @@
 
-var ExpresssServ = require("../gen_code/expressServ.js");
+var ExpresssServ = require("../gen_code/ExpressServ.js");
 
 /*****************************固定引用 直接copy***********************************************************/
 var thrifgtConfig = require("../../../resource/thrift_config.js");
