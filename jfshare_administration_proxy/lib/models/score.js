@@ -43,8 +43,8 @@ Score.prototype.getScoreDetail = function (params, callback) {
         endTime:params.endTime
     });
     var pagination = new pagination_types.Pagination({
-        currentPage: params.curPage,
-        numPerPage: params.perCount
+        currentPage: params.curpage,
+        numPerPage: params.percount
     });
     //获取客户端
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreTrade', [coreTradeQueryParam,pagination]);

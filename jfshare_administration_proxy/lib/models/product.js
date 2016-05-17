@@ -784,6 +784,27 @@ Product.prototype.setProductState = function (params, callback) {
        return callback(null, data);
     });
 };
+//获取虚拟订单的卡密信息
+Product.prototype.queryProductCard = function (params, callback) {
+    //
 
-
+    var ProductCardParam = new product_types.ProductCardParam({
+        transactionId:params.orderId,
+    });
+    logger.info("调用productServ-queryProductCard args:" + JSON.stringify(ProductCardParam));
+    // 获取client//Product ProductServer
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCard", ProductCardParam);
+    // 调用 productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用productServ-queryProductCard result:" + JSON.stringify(data[0]));
+        var ret = {};
+        if (err ||data[0].result.code == 1) {
+            logger.error("调用productServ-queryProductCard  失败原因 ======" + err);
+            ret.code = 500;
+            ret.desc = "查询卡密列表失败！";
+            return callback(ret, null);
+        }
+        return callback(null, data);
+    });
+};
 module.exports = new Product();

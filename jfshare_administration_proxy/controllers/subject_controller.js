@@ -388,19 +388,25 @@ router.post('/addSubjectAttribute', function (request, response, next) {
         var params = request.body;
 
         logger.info("params:" + JSON.stringify(params));
-        if (params.subjectIds == null || params.subjectIds == "") {
+        if (params.subjectId == null || params.subjectId == "") {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-        if (params.brandId == null || params.brandId == "" || params.brandId <= 0) {
+        if (params.value == null || params.value == "" ) {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-        params.subjectList = params.subjectIds.split(",");
+
+        if (params.userId == null || params.userId == "" ) {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
         Subject.addSubjectAttribute(params, function (error, data) {
             if (error) {
@@ -413,8 +419,8 @@ router.post('/addSubjectAttribute', function (request, response, next) {
     } catch (ex) {
         logger.error("获取 error:" + ex);
         result.code = 500;
-        result.desc = "获取品牌关联类目失败";
-        res.json(result);
+        result.desc = "添加属性失败";
+        response.json(result);
     }
 });
 
