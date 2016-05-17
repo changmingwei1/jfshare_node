@@ -231,16 +231,14 @@ router.post('/list', function (req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.cartListItem(param, function (err, data) {
+        Cart.cartListItem(param, function (err, itemList) {
             if (err) {
                 res.json(err);
                 return;
             }
-            var itemList = data[0].itemList;
             var cartList = [];
-            if (itemList) {
                 var cartLists = {};
-                itemList.forEach(function (a) {
+                /*itemList.forEach(function (a) {
                     cartLists.sellerId = a.seller.sellerId;
                     cartLists.sellerName = a.seller.sellerName;
                     cartLists.remark = "六一儿童节大优惠";
@@ -266,8 +264,41 @@ router.post('/list', function (req, res, next) {
                         });
                     });
                     cartLists.productList = productList;
-                });
-
+                });*/
+                if (itemList != null) {
+                    for (var i = 0; i < itemList.length; i++) {
+                        cartLists.sellerId = itemList[i].seller.sellerId;
+                        cartLists.sellerName = itemList[i].seller.sellerName;
+                        cartLists.remark = "我是写死的字段";
+                        var productList = [];
+                        var itemDetailList = itemList[i].itemDetailList;
+                            for (var j = 0; j < itemDetailList.length; j++) {
+                                var product = {
+                                    productId: itemDetailList[j].product.product.productId,
+                                    productName: itemDetailList[j].product.product.productName,
+                                    activeState: itemDetailList[j].product.product.activeState,
+                                    storehouseIds: itemDetailList[j].product.product.storehouseIds,
+                                    cartPrice: itemDetailList[j].product.cartPrice,
+                                    skuCount: itemDetailList[j].product.skuCount,
+                                    count: itemDetailList[j].product.count,
+                                    sku : {
+                                        skuNum: itemDetailList[j].product.product.productSku.skuItems[0].skuNum,
+                                        skuName: itemDetailList[j].product.product.productSku.skuItems[0].skuName,
+                                        weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
+                                    },
+                                    imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
+                                };
+                            }
+                            productList.push(product);
+                    }
+                    cartLists.productList = productList;
+                    cartList.push(cartLists);
+                    result.cartList = cartList;
+                    res.json(result);
+                }else{
+                result.cartList = cartList;
+                res.json(result);
+            }
                 /*var count = 0;
                 if (cartList.length > 0) {
                     cartList.forEach(function (item) {
@@ -293,13 +324,7 @@ router.post('/list', function (req, res, next) {
                     result.cartList = [];
                     res.json(result);
                 }*/
-                cartList.push(cartLists);
-                result.cartList = cartList;
-                res.json(result);
-            } else {
-                result.cartList = [];
-                res.json(result);
-            }
+
         });
         //});
     } catch (ex) {

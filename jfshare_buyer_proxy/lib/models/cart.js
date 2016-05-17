@@ -117,7 +117,7 @@ Cart.prototype.cartListItem = function(param, callback){
             callback(res, null);
         } else {
             logger.info("get cart item list:" + JSON.stringify(data[0]));
-            callback(null, data);
+            callback(null, data[0].itemList);
         }
     });
 };
