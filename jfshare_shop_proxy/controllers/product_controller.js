@@ -125,6 +125,7 @@ router.get('/productInfo', function (req, res, next) {
         res.json(result);
         return;
     }
+    logger.info("请求参数，arg：" + JSON.string(arg));
 
     var productInfo = {};
     async.waterfall([
