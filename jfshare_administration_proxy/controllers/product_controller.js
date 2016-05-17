@@ -13,7 +13,7 @@ var Product = require('../lib/models/product');
 var Subject = require("../lib/models/subject");
 var pagination_types = require('../lib/thrift/gen_code/pagination_types');
 var product_types = require("../lib/thrift/gen_code/product_types");
-
+var Stock = require('../lib/models/stock');
 //商品列表
 router.post('/list', function (request, response, next) {
     logger.info("进入获取商品列表接口");
@@ -40,6 +40,7 @@ router.post('/list', function (request, response, next) {
         }
 
         var dataArr = [];
+        var subjectIdList = [];
         var productIdList = [];
         var subjectName = [];
         var newData;
@@ -49,13 +50,13 @@ router.post('/list', function (request, response, next) {
                         Product.queryProductList(params, function (err, data) {
 
                             if (err) {
-                               callback(1,null);
+                                callback(1, null);
                             } else {
                                 var productSurveyList = data[0].productSurveyList;
 
                                 var pagination = data[0].pagination;
                                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
-                               // logger.info("get product list response:" + JSON.stringify(result));
+                                // logger.info("get product list response:" + JSON.stringify(result));
                                 productSurveyList.forEach(function (a) {
                                     var imgUri = a.imgUrl.split(",")[0];
                                     dataArr.push({
@@ -70,8 +71,11 @@ router.post('/list', function (request, response, next) {
                                         activeState: a.activeState,
                                         crateTime: a.createTime
                                     });
-                                    productIdList.push(
+                                    subjectIdList.push(
                                         a.subjectId
+                                    );
+                                    productIdList.push(
+                                        a.productId
                                     );
                                 });
 
@@ -86,7 +90,7 @@ router.post('/list', function (request, response, next) {
                 },
                 function (callback) {
                     try {
-                        Subject.getBatchSuperTree(productIdList, function (error, data) {
+                        Subject.getBatchSuperTree(subjectIdList, function (error, data) {
                             //logger.info("get product list response:" + JSON.stringify(data));
                             if (error) {
                                 callback(2, null);
@@ -115,13 +119,39 @@ router.post('/list', function (request, response, next) {
 
                                 });
                                 callback(null, subjectName);
-                                // logger.info("------------get subjectName list response-----:" + JSON.stringify(subjectName));
                             }
                         });
 
                     } catch (ex) {
                         logger.info("获取批量类目异常:" + ex);
                         return callback(2, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        Stock.queryProductTotal(productIdList, function (error, data) {
+                            logger.info("get product list response:" + JSON.stringify(data));
+                            if (error) {
+                                return callback(3, null);
+                            } else {
+                                var stockList = data;
+
+                                for (var i = 0; i < dataArr.length; i++) {
+
+
+                                    if (dataArr[i].productId == stockList[i].productId) {
+
+                                        dataArr[i].totalSales = stockList[i].total;
+                                    }
+
+                                }
+                                return callback(null, data);
+                            }
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取库存异常:" + ex);
+                        return callback(3, null);
                     }
                 }
             ],
