@@ -273,7 +273,7 @@ router.post('/list', function (req, res, next) {
                     var productList = [];
                     var itemDetailList = itemList[i].itemDetailList;
                     for (var j = 0; j < itemDetailList.length; j++) {
-                        productList.push({
+                        var product = {
                             productId: itemDetailList[j].product.product.productId,
                             productName: itemDetailList[j].product.product.productName,
                             activeState: itemDetailList[j].product.product.activeState,
@@ -287,10 +287,11 @@ router.post('/list', function (req, res, next) {
                                 weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
                             },
                             imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
-                        });
+                        };
                     }
-                    cartLists.productList = productList;
+                    productList.push(product);
                 }
+                cartLists.productList = productList;
                 cartList.push(cartLists);
                 result.cartList = cartList;
                 res.json(result);
@@ -323,6 +324,7 @@ router.post('/list', function (req, res, next) {
              result.cartList = [];
              res.json(result);
              }*/
+
         });
         //});
     } catch (ex) {
