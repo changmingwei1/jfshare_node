@@ -487,7 +487,7 @@ router.post('/freight', function (req, res, next) {
     var result = {code: 200};
     try {
         var arg = req.body;
-        logger.info("看看是啥："+JSON.parse(arg));
+        logger.info("看看是啥："+arg);
         //if (arg.subjectId == null || arg.subjectId == "" || arg.subjectId < 0) {
         //    result.code = 400;
         //    result.desc = "参数错误";
