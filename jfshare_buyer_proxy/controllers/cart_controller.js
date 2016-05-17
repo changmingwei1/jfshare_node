@@ -290,8 +290,8 @@ router.post('/list', function (req, res, next) {
                         };
                     }
                     productList.push(product);
+                    cartLists.productList = productList;
                 }
-                cartLists.productList = productList;
                 cartList.push(cartLists);
                 result.cartList = cartList;
                 res.json(result);
