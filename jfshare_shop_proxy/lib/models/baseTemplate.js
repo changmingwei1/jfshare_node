@@ -22,36 +22,46 @@ var baseTemplate_types = require('../thrift/gen_code/baseTemplate_types');
 
 function BaseTemplate(){}
 
-/*ÓÊ·Ñ¼ÆËã*/
+/*é‚®è´¹è®¡ç®—*/
 BaseTemplate.prototype.calculatePostage = function(param,  callback) {
 
-    var productPostageBasicList = [];
-    var sellerPostageBasicList = [];
-    var productPostageBasic = ({
-        productId:param.productId,
-        templateId:param.templateId,
-        number:param.number,
-        weight:param.weight,
-        amount:param.amount
+    var sellerList = param.sellerPostageList;
+    var params = [];
+    for(var i = 0 ;i < sellerList.length; i++){
+        var productList = sellerList[i].productPostageList;
+        var list = [];
+        for(var j = 0 ;j < productList.length ; j++){
+            var ppList = new baseTemplate_types.ProductPostageBasic({
+                productId: productList[j].productId,
+                templateId: productList[j].postageId,
+                number: productList[j].count,
+                weight: productList[j].weight,
+                amount: productList[j].amount
+            });
+            list.push(ppList);
+        }
+        var spList = new baseTemplate_types.SellerPostageBasic({
+            sellerId: sellerList[i].sellerId,
+            productPostageBasicList: list
+        });
+        params.push(spList);
+    }
+
+    var arg = new baseTemplate_types.CalculatePostageParam({
+        sendToProvince:param.provinceId,
+        sellerPostageBasicList:params
     });
-    productPostageBasicList.push(productPostageBasic);
-    sellerPostageBasicList.push(productPostageBasicList);
 
-    var params = new baseTemplate_types.CalculatePostageParam({
-        sendToProvince: param.sendToProvince,
-        sellerPostageBasicList:sellerPostageBasicList
-    });
+    logger.info("è°ƒç”¨é‚®è´¹è®¡ç®—ï¼Œ  args:" + JSON.stringify(arg));
+    var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer, "calculatePostage", arg);
 
-    logger.info("µ÷ÓÃÓÊ·Ñ¼ÆËã£¬  args:" + JSON.stringify(params));
-    var addressServ = new Lich.InvokeBag(Lich.ServiceKey.AddressServer, "calculatePostage", params);
-
-    Lich.wicca.invokeClient(addressServ, function(err, data) {
-        logger.info("µ÷ÓÃÓÊ·Ñ¼ÆËã£¬  result:" + JSON.stringify(data));
+    Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
+        logger.info("è°ƒç”¨é‚®è´¹è®¡ç®—ï¼Œ  result:" + JSON.stringify(data));
         var res = {};
         if(err || data[0].result.code == "1"){
-            logger.error("µ÷ÓÃÓÊ·Ñ¼ÆËãÊ§°Ü  Ê§°ÜÔ­Òò ======" + err);
+            logger.error("è°ƒç”¨é‚®è´¹è®¡ç®—å¤±è´¥  å¤±è´¥åŽŸå›  ======" + err);
             res.code = 500;
-            res.desc = "ÓÊ·Ñ¼ÆËãÊ§°Ü£¡";
+            res.desc = "é‚®è´¹è®¡ç®—å¤±è´¥ï¼";
             callback(res, null);
         } else {
             callback(null, null);
@@ -59,20 +69,20 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
     });
 };
 
-/*²éÑ¯²Ö¿â*/
+/*æŸ¥è¯¢ä»“åº“*/
 BaseTemplate.prototype.queryStorehouse = function(params,callback){
     var param = new baseTemplate_types.StorehouseQueryParam({
         sellerId: params.sellerId
     });
-    //»ñÈ¡client
+    //èŽ·å–client
     var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'queryStorehouse',param);
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("²»ÄÜ»ñÈ¡²Ö¿âÐÅÏ¢ because: ======" + err);
+            logger.error("ä¸èƒ½èŽ·å–ä»“åº“ä¿¡æ¯ because: ======" + err);
             res.code = 500;
-            res.desc = "»ñÈ¡²Ö¿âÊ§°Ü";
+            res.desc = "èŽ·å–ä»“åº“å¤±è´¥";
             callback(res, null);
         } else {
             callback(null, data);
@@ -80,19 +90,19 @@ BaseTemplate.prototype.queryStorehouse = function(params,callback){
     });
 };
 
-/*»ñÈ¡²Ö¿âÐÅÏ¢*/
+/*èŽ·å–ä»“åº“ä¿¡æ¯*/
 BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
 
-    //»ñÈ¡client
+    //èŽ·å–client
     var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getStorehouse',storehouseIds);
 
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("²»ÄÜ»ñÈ¡²Ö¿âÐÅÏ¢ because: ======" + err);
+            logger.error("ä¸èƒ½èŽ·å–ä»“åº“ä¿¡æ¯ because: ======" + err);
             res.code = 500;
-            res.desc = "»ñÈ¡²Ö¿âÊ§°Ü";
+            res.desc = "èŽ·å–ä»“åº“å¤±è´¥";
             callback(res, null);
         } else {
             callback(null, data);
@@ -100,7 +110,7 @@ BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
     });
 };
 
-/*ÅúÁ¿»ñÈ¡ÉÌÆ·ÊÕ»õÊ¡·Ý¶ÔÓ¦µÄ·¢»õ²Ö¿â*/
+/*æ‰¹é‡èŽ·å–å•†å“æ”¶è´§çœä»½å¯¹åº”çš„å‘è´§ä»“åº“*/
 BaseTemplate.prototype.getDeliverStorehouse = function(params,callback){
 
     var productRefProvinceList = params.sellerList;
@@ -120,7 +130,7 @@ BaseTemplate.prototype.getDeliverStorehouse = function(params,callback){
         productRefProvinceList:list
     });
 
-    //»ñÈ¡client
+    //èŽ·å–client
     var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getDeliverStorehouse',param);
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("getDeliverStorehouse result:" + JSON.stringify(data[0]));
@@ -128,7 +138,7 @@ BaseTemplate.prototype.getDeliverStorehouse = function(params,callback){
             var res = {};
             logger.error("false to getDeliverStorehouse because: " + err);
             res.code = 500;
-            res.desc = "»ñÈ¡²Ö¿âÁÐ±íÊ§°Ü";
+            res.desc = "èŽ·å–ä»“åº“åˆ—è¡¨å¤±è´¥";
             callback(res, null);
         } else {
             callback(null, data);

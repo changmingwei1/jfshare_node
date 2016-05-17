@@ -17,6 +17,7 @@ var Seller = require('../lib/models/seller');
 var Express = require('../lib/models/express');
 var AfterSale = require('../lib/models/afterSale');
 var Pay = require('../lib/models/pay');
+var BaseTemplate = require('../lib/models/baseTemplate');
 
 var product_types = require("../lib/thrift/gen_code/product_types");
 
@@ -87,39 +88,6 @@ router.get('/previewTest', function (req, res, next) {
         res.json(result);
     }
 });
-
-// 提交订单请求
-/*router.post('/submit', function(req, res, next) {
- var result = {code:200};
-
- try{
- var arg = req.body;
- logger.info("提交订单请求， arg:" + JSON.stringify(arg));
-
- if(arg == null || arg.userId == null || arg.deliverInfo == null ||
- arg.sellerDetailList == null ){
- result.code = 400;
- result.desc = "没有填写用户ＩＤ";
- res.json(result);
- return;
- }
-
- Order.orderConfirm(arg, function (err, orderIdList) {
- if(err){
- res.json(err);
- return;
- }
- result.orderIdList = orderIdList;
- res.json(result);
- });
- } catch(ex) {
- logger.error("submit order error:" + ex);
- result.code = 500;
- result.desc = "提交订单失败";
- res.json(result);
- }
- });*/
-
 //购物车中点击立即结算  ---> 实物
 router.post('/preview', function (request, response, next) {
     logger.info("进入获取物流信息流程");
@@ -222,8 +190,7 @@ router.post('/submit', function (request, response, next) {
         var arg = request.body;
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 
-        if (arg == null || arg.userId == null || arg.addressDesc == null ||
-            arg.sellerDetailList == null) {
+        if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
             response.json(result);
@@ -236,12 +203,13 @@ router.post('/submit', function (request, response, next) {
         *
         * */
 
-        Order.orderConfirm(arg, function (err, orderIdList) {
+        Order.orderConfirm(arg, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            result.orderIdList = orderIdList;
+            result.orderIdList = data[0].orderIdList;
+            result.extend = JSON.parse(data[0].extend);
             response.json(result);
         });
     } catch (ex) {
@@ -988,7 +956,7 @@ router.post('/list', function (request, response, next) {
                             orderInfo.orderProfileList.forEach(function (order) {
                                 var orderItem = {
                                     orderId: order.orderId,
-                                    orderPrice: order.closingPrice,
+                                    closingPrice: order.closingPrice,
                                     //添加了应答的数据
                                     postage: order.postage,
                                     username: order.username,
@@ -1009,7 +977,7 @@ router.post('/list', function (request, response, next) {
                                     exchangeCash: order.exchangeCash,
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
-                                    type: 2
+                                    type: 2   /*type: order.productList[0].type  //5.17测没有type*/
                                 };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
@@ -1018,6 +986,7 @@ router.post('/list', function (request, response, next) {
                                             productId: order.productList[i].productId,
                                             productName: order.productList[i].productName,
                                             skuNum: order.productList[i].skuNum,
+                                            skuName: order.productList[i].skuName,
                                             curPrice: order.productList[i].curPrice,
                                             imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                             count: order.productList[i].count
@@ -1187,11 +1156,11 @@ router.post('/list', function (request, response, next) {
                                 ]
                             };
 
-                            orderList.push(orderList1);
-                            orderList.push(orderList2);
-                            orderList.push(orderList3);
-                            orderList.push(orderList4);
-                            orderList.push(orderList5);
+                            //orderList.push(orderList1);
+                            //orderList.push(orderList2);
+                            //orderList.push(orderList3);
+                            //orderList.push(orderList4);
+                            //orderList.push(orderList5);
                             result.orderList = orderList;
                             /*给出系统当前时间*/
                             result.curTime = new Date().getTime();
@@ -1205,7 +1174,7 @@ router.post('/list', function (request, response, next) {
                     logger.info("订单服务异常:" + ex);
                     return callback(1, null);
                 }
-            },
+            }/*,
             function (callback) {
                 try {
                     if (params.orderState == null || params.orderState == "") {
@@ -1224,7 +1193,7 @@ router.post('/list', function (request, response, next) {
                     logger.info("售后服务异常:" + ex);
                     return callback(2, null);
                 }
-            }
+            }*/
         ],
         function (err, results) {
             if (err == 1) {
@@ -1437,6 +1406,34 @@ router.post('/infoTest', function (request, response, next) {
     ;
 });
 
+/*获取订单中的卡密列表*/
+router.post('/getVirtualCard', function (request, response, next) {
+    logger.info("进入获取订单中的卡密列表");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        if (params.orderId == "" || params.orderId == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        logger.info("进入获取订单中的卡密列表, params:" + JSON.stringify(params));
+        Product.getProductCard(params, function (err, data) {
+            if(err){
+                response.json(err);
+            }else{
+                response.json(data);
+            }
+        });
+    } catch (ex) {
+        logger.error("get virtual-order carlist  error:" + ex);
+        result.code = 500;
+        result.desc = "获取订单中的卡密失败";
+        response.json(result);
+    }
+});
+
 // 查询订单详情--虚拟
 router.post('/info2', function (req, res, next) {
     var result = {code: 200};
@@ -1557,11 +1554,6 @@ router.post('/info2Test', function (req, res, next) {
                 }
                 result.productList = productList;
             }
-
-
-
-
-
             res.json(result);
             logger.info("get order info response:" + JSON.stringify(result));
         });
@@ -1804,14 +1796,6 @@ router.post('/payUrl', function (req, res, next) {
                 res.json(result);
             }
         });
-
-
-
-
-
-
-
-
     } else {
         Pay.payUrl(arg, function (err, data) {
             var urlInfo = JSON.parse(data.value);
@@ -2019,7 +2003,7 @@ router.post('/queryExpressTest', function (request, response, next) {
     }
 });
 
-//根据订单信息获取运费值
+/*计算邮费*/
 router.post('/freight', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
@@ -2049,33 +2033,7 @@ router.post('/freight', function (request, response, next) {
     }
 });
 
-//申请退货
-/*router.post('/refund', function (request, response, next) {
-    logger.info("进入申请退货流程");
-    var result = {code: 200};
-    try {
-        //var params = request.query;
-        var params = request.body;
-        var args = {};
-        args.userId = params.userId || 2;
-        args.token = params.token || "鉴权信息1";
-        args.ppInfo = params.ppInfo || "鉴权信息2";
-        args.productId = params.productId || "ze160407160404000554";
-        args.skuId = params.skuId || 1;
-        args.orderId = params.orderId || "5390002";
-        args.orderStateType = params.orderStateType || "买错了";
-        args.orderStateTypeDesc = params.orderStateTypeDesc || "就是不想要了";
-
-        result.createTime = "2016-04-25 11:40:35";
-
-        logger.info("query expressOrder params:" + JSON.stringify(args));
-
-        response.json(result);
-    } catch (ex) {
-        response.json(result);
-    }
-});*/
-//申请退货
+/*申请退货*/
 router.post('/refund', function (request, response, next) {
     logger.info("进入申请退货流程");
     var result = {code: 200};
@@ -2114,36 +2072,7 @@ router.post('/refund', function (request, response, next) {
     }
 });
 
-//获取售后信息
-/*router.post('/refundDesc', function (request, response, next) {
-    logger.info("进入获取物流信息流程");
-    var result = {code: 200};
-    try {
-        //var params = request.query;
-        var params = request.body;
-        var args = {};
-        args.userId = params.userId || 2;
-        args.token = params.token || "鉴权信息1";
-        args.ppInfo = params.ppInfo || "鉴权信息2";
-        args.productId = params.productId || "ze160407160404000554";
-        args.skuId = params.skuId || 1;
-        args.orderId = params.orderId || "5390002";
-
-        result.createTime = "2016-04-25 11:40:35";
-        result.reviewTime = "2016-04-25 13:40:35";
-        result.reviewState = 2;
-        result.reviewResult = "退货失败";
-        result.reviewDesc = "不许退";
-
-
-        logger.info("query expressOrder params:" + JSON.stringify(args));
-
-        response.json(result);
-    } catch (ex) {
-        response.json(result);
-    }
-});*/
-//获取售后信息
+/*获取售后信息*/
 router.post('/refundDesc', function (request, response, next) {
     logger.info("进入获取售后信息流程");
     var result = {code: 200};
@@ -2190,5 +2119,157 @@ router.post('/refundDesc', function (request, response, next) {
         response.json(result);
     }
 });
+
+//获取售后的订单列表
+router.post('/afterSalelist1', function (request, response, next) {
+    logger.info("进入获取售后的订单列表");
+    var result = {code: 200};
+    var afterOrderList = [];
+    var orderList = [];
+    try {
+        var params = request.body;
+
+        if (params.userId == "" || params.userId == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.perCount == "" || params.perCount == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.curPage == "" || params.curPage == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
+        async.series([
+                function (callback) {
+                    try {
+                        AfterSale.queryAfterSaleOrder(params, function (err, data) {
+                            if (err) {
+                                callback(1, null);
+                                return;
+                            }
+                            afterOrderList = data.afterSaleOrders;
+                            var pagination = {
+                                total: data.pagination.totalCount,
+                                pageCount: data.pagination.pageNumCount
+                            };
+                            result.afterOrderList = afterOrderList;
+                            result.paginaion = pagination;
+                            //response.json(result);
+                            callback(null, 1);
+                            //return;
+                        });
+                    }
+                    catch
+                        (ex) {
+                        logger.info("售后服务异常:" + ex);
+                        return callback(1, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        var orderIdList = [];
+                        for (var i = 0; i < afterOrderList.length; i++) {
+                            orderIdList.push(afterOrderList[i].orderId);
+                        }
+                        params.orderList = orderIdList;
+                        Order.orderProfileQuery(params, function (err, orderInfo) {
+                            if (err) {
+                                logger.error("订单服务异常");
+                                return callback(1, null);
+                            }
+                            var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
+
+                            if (orderInfo.orderProfileList !== null) {
+                                orderInfo.orderProfileList.forEach(function (order) {
+                                    var orderItem = {
+                                        orderId: order.orderId,
+                                        userId: order.userId,
+                                        orderPrice: order.closingPrice,
+                                        //添加了应答的数据
+                                        postage: order.postage,
+                                        username: order.username,
+                                        cancelName: order.cancelName,
+                                        sellerName: order.sellerName,
+                                        sellerId: order.sellerId,
+                                        createTime: order.createTime,
+                                        expressNo: order.expressNo,
+                                        expressName: order.expressName,
+                                        receiverAddress: order.receiverAddress,
+                                        receiverName: order.receiverName,
+                                        receiverMobile: order.receiverMobile,
+                                        receiverTele: order.receiverTele,
+                                        orderState: order.orderState,
+                                        sellerComment: order.sellerComment,
+                                        buyerComment: order.buyerComment,
+                                        deliverTime: order.deliverTime,
+                                        successTime: order.successTime,
+                                        exchangeCash: order.exchangeCash,
+                                        exchangeScore: order.exchangeScore,
+                                        activeState: order.activeState,
+                                        curTime: order.curTime
+                                    };
+                                    var productList = [];
+                                    if (order.productList !== null && order.productList.length > 0) {
+                                        for (var i = 0; i < order.productList.length; i++) {
+                                            var productItem = {
+                                                productId: order.productList[i].productId,
+                                                productName: order.productList[i].productName,
+                                                skunum: order.productList[i].skuNum,
+                                                curPrice: order.productList[i].curPrice,
+                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                count: order.productList[i].count
+                                            };
+                                            orderList.push(productItem);
+                                        }
+                                        orderItem.productList = productList;
+                                        orderList.push(orderItem);
+                                    }
+                                });
+                                result.orderList = orderList;
+                            }
+                            return callback(null, result);
+                        });
+                    } catch (ex) {
+                        logger.info("订单服务异常:" + ex);
+                        return callback(2, null);
+                    }
+
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    result.code = 500;
+                    result.desc = "获取物流商列表";
+                    response.json(result);
+                    return;
+                }else{
+                    if(results[1]!=null){
+                        response.json(results[1]);
+                        return;
+                    }
+                }
+            }
+        );
+    } catch (ex) {
+        logger.error("query expressList error:" + ex);
+        result.code = 500;
+        result.desc = "获取物流商列表";
+        response.json(result);
+    }
+});
+
+
+
+
 
 module.exports = router;

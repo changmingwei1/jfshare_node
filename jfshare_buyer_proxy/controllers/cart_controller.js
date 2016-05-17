@@ -250,12 +250,14 @@ router.post('/list', function (req, res, next) {
                             productId: b.product.product.productId,
                             productName: b.product.product.productName,
                             activeState: b.product.product.activeState,
+                            storehouseIds: b.product.product.storehouseIds,
                             cartPrice: b.product.cartPrice,
                             skuCount: b.product.skuCount - b.product.lockCount,
                             count: b.product.count,
                             sku: {
                                 skuNum: b.product.product.productSku.skuNum,
                                 skuName: b.product.product.productSku.skuName
+                                //weight: b.product.product.productSku.skuItems[0].weight
                             },
                             imgKey: b.product.product.imgKey.split(',')[0]
                         });
