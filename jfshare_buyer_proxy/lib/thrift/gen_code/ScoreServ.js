@@ -581,6 +581,330 @@ ScoreServ_queryScoreUser_result.prototype.write = function(output) {
   return;
 };
 
+ScoreServ_queryCachAmount_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_queryCachAmount_args.prototype = {};
+ScoreServ_queryCachAmount_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.CachAmountQueryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_queryCachAmount_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_queryCachAmount_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_queryCachAmount_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_queryCachAmount_result.prototype = {};
+ScoreServ_queryCachAmount_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.CachAmountResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_queryCachAmount_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_queryCachAmount_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_cachAmountCall_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_cachAmountCall_args.prototype = {};
+ScoreServ_cachAmountCall_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.CachAmountCallParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_cachAmountCall_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_cachAmountCall_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_cachAmountCall_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_cachAmountCall_result.prototype = {};
+ScoreServ_cachAmountCall_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.StatusResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_cachAmountCall_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_cachAmountCall_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_enterAmountCall_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_enterAmountCall_args.prototype = {};
+ScoreServ_enterAmountCall_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ScoreRequestParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_enterAmountCall_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_enterAmountCall_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_enterAmountCall_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_enterAmountCall_result.prototype = {};
+ScoreServ_enterAmountCall_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ResponseScoreResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_enterAmountCall_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_enterAmountCall_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -827,6 +1151,147 @@ ScoreServClient.prototype.recv_queryScoreUser = function(input,mtype,rseqid) {
   }
   return callback('queryScoreUser failed: unknown result');
 };
+ScoreServClient.prototype.queryCachAmount = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCachAmount(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCachAmount(param);
+  }
+};
+
+ScoreServClient.prototype.send_queryCachAmount = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCachAmount', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_queryCachAmount_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_queryCachAmount = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_queryCachAmount_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCachAmount failed: unknown result');
+};
+ScoreServClient.prototype.cachAmountCall = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_cachAmountCall(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_cachAmountCall(param);
+  }
+};
+
+ScoreServClient.prototype.send_cachAmountCall = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('cachAmountCall', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_cachAmountCall_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_cachAmountCall = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_cachAmountCall_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('cachAmountCall failed: unknown result');
+};
+ScoreServClient.prototype.enterAmountCall = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_enterAmountCall(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_enterAmountCall(param);
+  }
+};
+
+ScoreServClient.prototype.send_enterAmountCall = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('enterAmountCall', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_enterAmountCall_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_enterAmountCall = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_enterAmountCall_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('enterAmountCall failed: unknown result');
+};
 ScoreServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -988,6 +1453,96 @@ ScoreServProcessor.prototype.process_queryScoreUser = function(seqid, input, out
     this._handler.queryScoreUser(args.param, args.pagination,  function (err, result) {
       var result = new ScoreServ_queryScoreUser_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryScoreUser", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_queryCachAmount = function(seqid, input, output) {
+  var args = new ScoreServ_queryCachAmount_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCachAmount.length === 1) {
+    Q.fcall(this._handler.queryCachAmount, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_queryCachAmount_result({success: result});
+        output.writeMessageBegin("queryCachAmount", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_queryCachAmount_result(err);
+        output.writeMessageBegin("queryCachAmount", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCachAmount(args.param,  function (err, result) {
+      var result = new ScoreServ_queryCachAmount_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCachAmount", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_cachAmountCall = function(seqid, input, output) {
+  var args = new ScoreServ_cachAmountCall_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.cachAmountCall.length === 1) {
+    Q.fcall(this._handler.cachAmountCall, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_cachAmountCall_result({success: result});
+        output.writeMessageBegin("cachAmountCall", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_cachAmountCall_result(err);
+        output.writeMessageBegin("cachAmountCall", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.cachAmountCall(args.param,  function (err, result) {
+      var result = new ScoreServ_cachAmountCall_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("cachAmountCall", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_enterAmountCall = function(seqid, input, output) {
+  var args = new ScoreServ_enterAmountCall_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.enterAmountCall.length === 1) {
+    Q.fcall(this._handler.enterAmountCall, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_enterAmountCall_result({success: result});
+        output.writeMessageBegin("enterAmountCall", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_enterAmountCall_result(err);
+        output.writeMessageBegin("enterAmountCall", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.enterAmountCall(args.param,  function (err, result) {
+      var result = new ScoreServ_enterAmountCall_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("enterAmountCall", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
