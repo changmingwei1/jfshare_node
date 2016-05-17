@@ -270,10 +270,10 @@ router.post('/querystore', function (req, res, next) {
                         } else {
                             var skuItems = data.product.productSku.skuItems;
                             result.productId = data.product.productId;
-                            result.curPrice = skuItems[0].curPrice;
-                            result.orgPrice = skuItems[0].orgPrice;
-                            result.storehouseId = skuItems[0].storehouseId;
-                            result.skuNum = skuItems[0].skuNum;
+                            result.curPrice = data.product.productSku.curPrice;
+                            result.orgPrice = data.product.productSku.orgPrice;
+                            //result.storehouseId = skuItems[0].storehouseId;
+                            result.skuNum = data.product.productSku.skuNum;
                             callback(null, result);
                         }
                     });
