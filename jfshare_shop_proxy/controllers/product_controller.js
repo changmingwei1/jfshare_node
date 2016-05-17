@@ -142,6 +142,7 @@ router.get('/productInfo', function (req, res, next) {
                     productInfo.sellerId = product.sellerId;
                     productInfo.type = product.type;
                     productInfo.storehouseIds = product.storehouseIds;
+                    productInfo.postageId = product.postageId;
 
                     //添加最高价和最低价    ====   现在的productSku是null
                     //var productSku = product.productSku;
@@ -274,6 +275,7 @@ router.post('/querystore', function (req, res, next) {
                             result.orgPrice = skuItems[0].orgPrice;
                             result.storehouseId = skuItems[0].storehouseId;
                             result.skuNum = skuItems[0].skuNum;
+                            result.weight = skuItems[0].weight;
                             callback(null, result);
                         }
                     });
