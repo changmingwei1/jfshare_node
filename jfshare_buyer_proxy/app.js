@@ -32,12 +32,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/share', index);
-app.use('/share/product', product);
-app.use('/share/class', product);
-app.use('/share/order', order);
-app.use('/share/cart', cart);
-app.use('/share/address', address);
-app.use('/share/buyer',buyer);
+app.use('/buyer/product', product);
+app.use('/buyer/class', product);
+app.use('/buyer/order', order);
+app.use('/buyer/cart', cart);
+app.use('/buyer/address', address);
+app.use('/buyer/buyer',buyer);
 //app.use('/test', test);
 //app.use('/test', tests);
 
