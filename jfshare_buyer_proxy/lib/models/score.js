@@ -72,5 +72,87 @@ Score.prototype.queryScoreTrade = function(param,callback){
     });
 };
 
+//积分兑入
+Score.prototype.enterAmountCall = function(param,callback){
+    var params = new score_types.ScoreRequestParam({
+        AppCode:param.AppCode,
+        RequestDate:param.RequestDate,
+        Sign:param.Sign,
+        SpID:param.SpID,
+        OutOrderID:param.OutOrderID,
+        DeviceNo:param.DeviceNo,
+        DeviceType:param.DeviceType,
+        ProvinceID:param.ProvinceID,
+        CustID:param.CustID,
+        Num:param.Num,
+        Remark:param.Remark,
+        ActiveID:param.ActiveID,
+        ExpTime:param.ExpTime
+    });
+
+    logger.info("Score enterAmountCall params:" + JSON.stringify(params));
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'enterAmountCall',params);
+    Lich.wicca.invokeClient(scoreServ, function(err, data){
+        logger.info("Score enterAmountCall result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == "1") {
+            logger.error("Score enterAmountCall because: ======" + err);
+            res.code = 500;
+            res.desc = "积分兑入错误";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//积分兑出查询
+Score.prototype.queryCachAmount = function(param,callback){
+    var params = new score_types.CachAmountQueryParam({
+        userId:param.userId
+    });
+
+    logger.info("Score queryCachAmount  params:" + JSON.stringify(params));
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'queryCachAmount',params);
+    Lich.wicca.invokeClient(scoreServ, function(err, data){
+        logger.info("Score queryCachAmount result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == "1") {
+            logger.error("Score queryCachAmount because: ======" + err);
+            res.code = 500;
+            res.desc = "兑出积分查询错误";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//积分兑出
+Score.prototype.cachAmountCall = function(param,callback){
+    var params = new score_types.CachAmountCallParam({
+        userId:param.userId,
+        CachAmount:param.CachAmount,
+        mobile:param.mobile
+    });
+
+    logger.info("Score cachAmountCall  params:" + JSON.stringify(params));
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'cachAmountCall',params);
+    Lich.wicca.invokeClient(scoreServ, function(err, data){
+        logger.info("Score cachAmountCall result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == "1") {
+            logger.error("Score cachAmountCall because: ======" + err);
+            res.code = 500;
+            res.desc = "兑出积分错误";
+            callback(res, null);
+        } else {
+            callback(null, null);
+        }
+    });
+};
 
 module.exports = new Score();
