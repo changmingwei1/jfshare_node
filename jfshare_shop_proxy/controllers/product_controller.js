@@ -129,7 +129,7 @@ router.get('/productInfo', function (req, res, next) {
     var productInfo = {};
     async.waterfall([
             function (callback) {
-                Product.queryProduct(productId, 1, 1, 0, 0, function (err, data) {
+                Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
 
                     var product = data[0].product;
 
@@ -145,17 +145,12 @@ router.get('/productInfo', function (req, res, next) {
                     productInfo.postageId = product.postageId;
 
                     //添加最高价和最低价    ====   现在的productSku是null
-                    //var productSku = product.productSku;
-                    //var minCurPrice = productSku.minCurPrice;
-                    //var maxCurPrice = productSku.maxCurPrice;
-                    //var minOrgPrice = productSku.minOrgPrice;
-                    //var maxOrgPrice = productSku.maxOrgPrice;
+                    var productSku = product.productSku;
+                    var minCurPrice = productSku.minCurPrice;
+                    var maxCurPrice = productSku.maxCurPrice;
+                    var minOrgPrice = productSku.minOrgPrice;
+                    var maxOrgPrice = productSku.maxOrgPrice;
 
-                    //logger.info(productSku);
-                    var minCurPrice = 0.01;
-                    var maxCurPrice = 1000;
-                    var minOrgPrice = 0.02;
-                    var maxOrgPrice = 2000;
                     result.minCurPrice = minCurPrice;
                     result.maxCurPrice = maxCurPrice;
                     result.minOrgPrice = minOrgPrice;
