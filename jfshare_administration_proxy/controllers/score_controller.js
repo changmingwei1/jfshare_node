@@ -36,6 +36,10 @@ router.post('/socrelist', function (request, response, next) {
                 return;
             }
             result.scoreList = data[0].scoreUsers;
+            var pagination = data[0].pagination;
+            if(pagination!=null){
+                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+            }
             logger.info("socrelist result:" + JSON.stringify(data));
             response.json(result);
             return;
@@ -65,14 +69,14 @@ router.post('/scoreinfolist', function (request, response, next) {
             return;
         }
 
-        if (params.curPage == null || params.curPage == "" || params.curPage <= 0) {
+        if (params.curpage == null || params.curPage == "" || params.curPage <= 0) {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
 
-        if (params.perCount == null || params.perCount == "" || params.perCount <= 0) {
+        if (params.percount == null || params.perCount == "" || params.perCount <= 0) {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
@@ -97,7 +101,9 @@ router.post('/scoreinfolist', function (request, response, next) {
                     });
                 });
                 var pagination = data[0].pagination;
-                //result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+                if(pagination!=null){
+                    result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+                }
                 logger.info("get product list response:" + JSON.stringify(result));
                 result.scoreList = dataArr;
 

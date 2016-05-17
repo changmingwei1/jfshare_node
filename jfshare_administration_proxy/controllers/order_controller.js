@@ -13,6 +13,7 @@ var Order = require('../lib/models/order');
 var Util = require('../lib/models/util');
 var afterSale = require('../lib/models/afterSale');
 var Express = require('../lib/models/express');
+var Product = require('../lib/models/product');
 // 查询订单列表
 router.post('/list', function (request, response, next) {
     var result = {code: 200};
@@ -43,7 +44,6 @@ router.post('/list', function (request, response, next) {
     var afterSaleList = [];
     result.orderList = [];
     result.afterSaleList = [];
-    var isVirtual = 0;
     async.series([
             function (callback) {
                 try {
@@ -167,6 +167,10 @@ router.post('/info', function (request, response, next) {
 
     //var params = request.query;
     var params = request.body;
+
+
+    var isVirtual = 0;
+
     if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
         result.code = 400;
         result.desc = "参数错误";
@@ -217,9 +221,9 @@ router.post('/info', function (request, response, next) {
                             };
                             result.deliverInfo = deliverInfo;
                         }
-
                         var productList = [];
                         if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
+
                             for (var i = 0; i < orderInfo.productList.length; i++) {
                                 productList.push({
                                     productId: orderInfo.productList[i].productId,
@@ -262,13 +266,12 @@ router.post('/info', function (request, response, next) {
                             return callback(null, afterSaleList);
                         });
                     } else {
-                        return callback(3, null);
+                        return callback(2, null);
                     }
                 } catch (ex) {
                     logger.info("售后服务异常:" + ex);
                     return callback(2, null);
                 }
-
             }
         ],
         function (err, results) {
@@ -873,8 +876,8 @@ router.post('/afterSalelist', function (request, response, next) {
                     result.desc = "获取物流商列表";
                     response.json(result);
                     return;
-                }else{
-                    if(results[1]!=null){
+                } else {
+                    if (results[1] != null) {
                         response.json(results[1]);
                         return;
                     }
@@ -888,5 +891,42 @@ router.post('/afterSalelist', function (request, response, next) {
         response.json(result);
     }
 });
+//获取订单中的卡密列表
+router.post('/carList', function (request, response, next) {
+    logger.info("进入获取订单中的卡密列表");
+    var result = {code: 200};
+    var expressList = [];
+    result.expressList = expressList;
 
+    try {
+        var params = request.body;
+
+        var orderId = params.orderId;
+
+        if (orderId == "" || orderId == null) {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        logger.info("进入获取订单中的卡密列表 params:" + JSON.stringify(params));
+        Product.queryProductCard(params, function (err, data) {
+            if(err){
+                response.json(err);
+            }else{
+                response.json(data);
+            }
+
+        });
+
+
+    } catch (ex) {
+        logger.error("get virtual-order carlist  error:" + ex);
+        result.code = 500;
+        result.desc = "获取订单中的卡密列表失败";
+        response.json(result);
+    }
+});
 module.exports = router;

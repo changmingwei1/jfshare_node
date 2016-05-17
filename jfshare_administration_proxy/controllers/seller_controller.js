@@ -13,36 +13,39 @@ var Seller = require('../lib/models/seller');
 router.post('/add', function (request, response, next) {
     var result = {code: 200};
     try {
+
+        /***
+         *
+         * loginName: params.loginName,
+         sellerName: params.sellerName,
+         pwdEnc: params.pwdEnc,
+         companyName: params.companyName,
+         shopName: params.shopName,
+         contactName: params.contactName,
+         openBank: params.openBank,
+         accountHolder: params.accountHolder,
+         accountNumber: params.accountNumber,
+         remark: params.remark,
+         provinceId: params.provinceId,
+         provinceName: params.provinceName,
+         cityId: params.cityId,
+         cityName: params.cityName,
+         countyId: params.countyId,
+         countyName: params.countyName,
+         address: params.address,
+         mobile: params.mobile,
+         tel: params.tel,
+         email: params.email
+         *
+         *
+         *
+         *
+         *
+         *
+         */
         var params = request.body;
 
-        //----测试参数---------------
-        //var arg = request.body;
-        //var params = {};
-        //
-        //params.loginName = arg.loginName || "卖家测试2号";
-        //params.sellerName = arg.sellerName || "卖家昵称111";
-        //params.pwdEnc = arg.pwdEnc || "123456abc2434";
-        //params.companyName = arg.companyName || "新媒传信";
-        //params.shopName = arg.shopName || "新媒传信shopname";
-        //params.contactName = arg.contactName || "测试联系人名";
-        //params.openBank = arg.openBank || "中国人民银行";
-        //params.accountHolder = arg.accountHolder || "李四2";
-        //params.accountNumber = arg.accountNumber || "1000000000000000";
-        //params.remark = arg.remark || "备注信息";
-        //params.provinceId = arg.provinceId || "110000";
-        //params.provinceName = arg.provinceName || "北京市";
-        //params.cityId = arg.cityId || "110100";
-        //params.cityName = arg.cityName || "北京市";
-        //params.countyId = arg.countyId || "110102";
-        //params.countyName = arg.countyName || "昌平";
-        //params.address = arg.address || "地址";
-        //params.mobile = arg.mobile || "13558731840";
-        //params.tel = arg.tel || "010-88888888";
-        //params.email = arg.email || "123456@qq.com";
-        //-----------------end--------------------
-
         logger.info("SellerServ-signup params:" + JSON.stringify(params));
-
 
         if (params.loginName == null || params.loginName == "") {
             result.code = 500;
@@ -189,32 +192,6 @@ router.post('/update', function (request, response, next) {
 
     try {
         var params = request.body;
-
-        //---------------测试参数-------------------
-        //var arg = request.body;
-        //var params = {};
-        //params.sellerId= arg.id || "16";
-
-        //params.sellerName = arg.sellerName || "卖家昵称111";
-        //params.pwdEnc = arg.pwdEnc || "123456111114";
-        //params.loginName = arg.loginName || "卖家测试2号";
-        //params.companyName = arg.companyName || "新媒传信";
-        //params.shopName = arg.shopName || "新媒传信shopname";
-        //params.contactName = arg.contactName || "333测试联系人名22222";
-        //params.openBank = arg.openBank || "中国人民银行";
-        //params.accountHolder = arg.accountHolder || "李四2";
-        //params.accountNumber = arg.accountNumber || "1000000000000000";
-        //params.remark = arg.remark || "备注信息";
-        //params.provinceId = arg.provinceId || "110000";
-        //params.provinceName = arg.provinceName || "北京市";
-        //params.cityId = arg.cityId || "110100";
-        //params.cityName = arg.cityName || "北京市";
-        //params.countyId = arg.countyId || "110102";
-        //params.countyName = arg.countyName || "昌平";
-        //params.address = arg.address || "地址";
-        //params.mobile = arg.mobile || "13555555555";
-        //params.tel = arg.tel || "010-88888888";
-        //params.email = arg.email || "12345678@qq.com";
 
         logger.info("SellerServ-update params:" + JSON.stringify(params));
 
