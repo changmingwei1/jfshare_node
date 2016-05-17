@@ -12,7 +12,7 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 var Order = require('../lib/models/order');
 var Util = require('../lib/models/util');
 var afterSale = require('../lib/models/afterSale');
-
+var Express = require('../lib/models/express');
 // 查询订单列表
 router.post('/list', function (request, response, next) {
 
@@ -403,10 +403,7 @@ router.post('/queryexpress', function (request, response, next) {
             response.json(result);
             return;
         }
-        result.name = "";
-        result.traceItems = "";
-        //射为默认值
-        params.orderId = "17870082";
+
         Express.expressQuery(params, function (err, data) {
             if (err) {
                 response.json(err);

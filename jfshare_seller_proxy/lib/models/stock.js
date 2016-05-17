@@ -146,6 +146,7 @@ Stock.prototype.createStock = function (params, callback) {
         logger.info("createStock result:" + JSON.stringify(data));
 
         if (err || data[0].code == "1") {
+            var res = {};
             logger.error("can'tcreateStock because: ======" + err);
             res.code = 500;
             res.desc = "创建库存失败";

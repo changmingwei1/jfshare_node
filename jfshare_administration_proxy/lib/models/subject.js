@@ -339,15 +339,13 @@ Subject.prototype.getBatchSuperTree = function (productIdList, callback) {
     });
 
 };
-
-
 //添加属性
 Subject.prototype.addSubjectAttribute = function (params, callback) {
     logger.info("subjectServ-addSubjectAttribute params:" + JSON.stringify(params));
    var subjectAttribute = new subject_types.SubjectAttribute({
             name: "name",
             subjectId: params.subjectId,
-            value: params.value,
+            value: JSON.stringify(params.value),
             isSku: 0,
             creator: params.userId
         });
