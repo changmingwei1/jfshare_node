@@ -231,11 +231,12 @@ router.post('/list', function (req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.cartListItem(param, function (err, itemList) {
+        Cart.cartListItem(param, function (err, data) {
             if (err) {
                 res.json(err);
                 return;
             }
+            var itemList = data[0].itemList;
             var cartList = [];
             if (itemList) {
                 var cartLists = {};
@@ -244,7 +245,7 @@ router.post('/list', function (req, res, next) {
                     cartLists.sellerName = a.seller.sellerName;
                     cartLists.remark = "六一儿童节大优惠";
                     var productList = [];
-                    var itemDetailList = itemList[0].itemDetailList;
+                    var itemDetailList = a.itemDetailList;
                     itemDetailList.forEach(function (b) {
                         productList.push({
                             productId: b.product.product.productId,
