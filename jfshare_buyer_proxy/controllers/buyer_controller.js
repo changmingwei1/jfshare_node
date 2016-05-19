@@ -662,17 +662,19 @@ router.post('/scoreTrade', function (request, response, next) {
                 //resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
 
                 var scoreTrades = data[0].scoreTrades;
-                scoreTrades.forEach(function (a) {
-                    dataArr.push({
-                        userId: a.userId,
-                        type: a.type,
-                        amount: a.amount,
-                        tradeId: a.tradeId,
-                        tradeTime: a.tradeTime,
-                        inOrPut: a.inOrOut,
-                        trader: a.trader
+                if(scoreTrades != null){
+                    scoreTrades.forEach(function (a) {
+                        dataArr.push({
+                            userId: a.userId,
+                            type: a.type,
+                            amount: a.amount,
+                            tradeId: a.tradeId,
+                            tradeTime: a.tradeTime,
+                            inOrPut: a.inOrOut,
+                            trader: a.trader
+                        });
                     });
-                });
+                }
                 resContent.scoreTrades = dataArr;
                 response.json(resContent);
                 logger.info("get buyer's Score response:" + JSON.stringify(resContent));
