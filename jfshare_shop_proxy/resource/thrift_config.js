@@ -87,7 +87,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155",1985);
+        var obj = new ThriftConfig("10.24.190.240",1985);
         return obj;
     },
     /**
@@ -98,7 +98,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.102",1982);
+        var obj = new ThriftConfig("10.24.190.240",1982);
         // var obj = new ThriftConfig("127.0.0.1",1982);
         return obj;
     },
@@ -107,7 +107,7 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     message: function () {
-        var obj = new ThriftConfig("120.24.153.102", 2001);
+        var obj = new ThriftConfig("10.24.190.240", 2001);
         //var obj = new ThriftConfig("127.0.0.1", 2001);
         return obj;
     },
@@ -119,7 +119,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1986);
+        var obj = new ThriftConfig("10.24.190.240", 1986);
         return obj;
     },
     /**
@@ -130,7 +130,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1990);
+        var obj = new ThriftConfig("10.24.190.240", 1990);
         //var obj = new ThriftConfig("127.0.0.1", 1990);
         return obj;
     },
@@ -142,7 +142,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155",1980);
+        var obj = new ThriftConfig("10.24.190.240",1980);
         //var obj = new ThriftConfig("127.0.0.1",1980);
         return obj;
     },
@@ -154,7 +154,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155",1983);
+        var obj = new ThriftConfig("10.24.190.240",1983);
         return obj;
     },
     /**
@@ -165,7 +165,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155",1984);
+        var obj = new ThriftConfig("10.24.190.240",1984);
         //var obj = new ThriftConfig("127.0.0.1",1984);
         return obj;
     },
@@ -177,7 +177,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1987);
+        var obj = new ThriftConfig("10.24.190.240", 1987);
         return obj;
     },
     /**
@@ -188,7 +188,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1992);
+        var obj = new ThriftConfig("10.24.190.240", 1992);
         return obj;
     },
     /**
@@ -199,7 +199,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1991);
+        var obj = new ThriftConfig("10.24.190.240", 1991);
         //var obj = new ThriftConfig("127.0.0.1", 1991);
         return obj;
     },
@@ -211,7 +211,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1988);
+        var obj = new ThriftConfig("10.24.190.240", 1988);
        // var obj = new ThriftConfig("127.0.0.1", 1988);
         return obj;
     },
@@ -223,7 +223,7 @@ module.exports.ServiceFactory  =  {
         //var ip = zookeeper.getData("address_serv_ips");
         //var port = zookeeper.getData("address_port");
         //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("120.24.153.155", 1994);
+        var obj = new ThriftConfig("10.24.190.240", 1994);
         //var obj = new ThriftConfig("127.0.0.1", 1991);
         return obj;
     },
