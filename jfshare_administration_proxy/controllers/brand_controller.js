@@ -17,7 +17,7 @@ router.post('/add', function(request, response, next) {
     var result = {code: 200};
     try{
         var params = request.body;
-
+        logger.info("添加品牌入参， params:" + JSON.stringify(params));
         if(params.name=="" || params.name ==null){
             result.code = 500;
             result.desc = "参数错误";
@@ -42,7 +42,7 @@ router.post('/add', function(request, response, next) {
                 response.json(error);
             } else {
                 result.id = data;
-                logger.info("queryAttributes  result:" + JSON.stringify(result));
+                logger.info("添加品牌，response:" + JSON.stringify(result));
                 response.json(result);
             }
         });
@@ -64,7 +64,7 @@ router.post('/update', function (request, response, next) {
     var result = {code: 200};
     try{
         var params = request.body;
-
+        logger.info("更新品牌入参， params:" + JSON.stringify(params));
         if(params.name=="" || params.name ==null){
             result.code = 500;
             result.desc = "参数错误";
@@ -109,16 +109,11 @@ router.post('/update', function (request, response, next) {
 });
 //获取单个品牌的信息
 router.post('/get', function (request, response, next) {
-
-
-
-
     var result = {code: 200};
-
 
     try{
         var params = request.body;
-
+        logger.info("获取单个品牌的信息入参， params:" + JSON.stringify(params));
         if(params.id=="" || params.id ==null){
             result.code = 500;
             result.desc = "参数错误";
@@ -133,6 +128,8 @@ router.post('/get', function (request, response, next) {
                 result.name = data.name;
                 result.id = data.id;
                 result.imgKey = data.imgKey;
+
+                logger.info("获取单个品牌的信息， result:" + JSON.stringify(result));
                 response.json(result);
             }
         });
@@ -149,7 +146,7 @@ router.post('/list', function(request, response, next) {
     var result = {code: 200};
     try{
         var params = request.body;
-
+        logger.info("获取品牌列表入参， params:" + JSON.stringify(params));
         if(params.perCount=="" || params.perCount ==null || params.perCount <=0){
             result.code = 500;
             result.desc = "参数错误";
@@ -188,6 +185,7 @@ router.post('/list', function(request, response, next) {
 
                 result.page = page;
                 result.brandList = brandList;
+                logger.info("获取品牌列表， response:" + JSON.stringify(result));
                 response.json(result);
             }
         });
@@ -200,30 +198,6 @@ router.post('/list', function(request, response, next) {
     }
 });
 
-//关联品牌的品类
-router.post('/relateSubject', function(req, res, next) {
-
-    var result = {code: 200};
-
-    try{
-        var arg = req.body;
-        var params = {};
-        params.subjectIds = [3001,3002,3003];
-        params.brandId = arg.brandId || 1;
-
-        logger.info("获取商家列表请求， arg:" + JSON.stringify(params));
-
-        res.json(result);
-        logger.info("获取商家列表 response:" + JSON.stringify(result));
-
-    } catch (ex) {
-        logger.error("get 商家 list error:" + ex);
-        result.code = 500;
-        result.desc = "获取商家列表列表失败";
-        res.json(result);
-    }
-});
-
 //查询类目下的品牌
 router.post('/queryBySubject', function(request, response,next) {
     logger.info("进入查询类目品牌流程");
@@ -231,7 +205,7 @@ router.post('/queryBySubject', function(request, response,next) {
 
     try{
         var params = request.body;
-
+        logger.info("查询类目品牌入参， params:" + JSON.stringify(params));
         if(params.id ==null ||params.id ==""){
             result.code = 500;
             result.desc = "参数错误";
@@ -239,7 +213,7 @@ router.post('/queryBySubject', function(request, response,next) {
             return;
         }
         Brand.queryBySubject(params, function(err, data) {
-            logger.info(" brandServ-queryBatch response:" + JSON.stringify(data));
+            logger.info(" 查询类目品牌 response:" + JSON.stringify(data));
             var brandInfo=[];
             if(err){
                 response.json(err);
