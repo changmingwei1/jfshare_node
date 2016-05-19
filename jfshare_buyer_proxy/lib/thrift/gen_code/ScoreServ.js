@@ -767,7 +767,7 @@ ScoreServ_cachAmountCall_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.StatusResult();
+        this.success = new ttypes.ResponseCachResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
