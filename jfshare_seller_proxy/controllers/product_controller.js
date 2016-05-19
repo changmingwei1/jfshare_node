@@ -781,7 +781,7 @@ router.post('/improtTicket', function (request, response, next) {
         logger.error("import  ticketList error:" + ex);
         result.code = 500;
         result.desc = "导入券码列表失败";
-        res.json(result);
+        response.json(result);
     }
 });
 
