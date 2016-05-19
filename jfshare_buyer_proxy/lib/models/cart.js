@@ -57,12 +57,16 @@ Cart.prototype.addCartItem = function(param, callback){
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-addItem  result:" + JSON.stringify(data));
         var res = {};
-        if(err || data[0].result.code == "1"){
+        if(err){
             logger.error("调用cartServ-addItem失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "添加购物车失败！";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             logger.info("add cart item:" + JSON.stringify(data[0]));
             callback(null, data[0].checkList);
         }
