@@ -57,13 +57,13 @@ Address.prototype.getProvinces = function(callback) {
 };
 Address.prototype.getCitys = function(params,callback) {
 
-
+    logger.info("调用commonServer-getCitys  params:" + JSON.stringify(params));
     var commonServer = new Lich.InvokeBag(Lich.ServiceKey.CommonServer, "city",[params.provinceId]);
     Lich.wicca.invokeClient(commonServer, function(err, data) {
         logger.info("commonServer-getCitys  result:" + JSON.stringify(data));
         var res = {};
         if(err||data[0].result.code == 1){
-            logger.error("commonServer-getCitys  失败原因 ======" + err);
+            logger.error("调用commonServer-getCitys  失败原因 ======" + err);
             res.code = 500;
             res.desc = "获取市列表失败！";
             callback(res, null);
@@ -91,13 +91,13 @@ Address.prototype.getCitys = function(params,callback) {
 
 Address.prototype.getCountys = function(params,callback) {
 
-
+    logger.info("调用commonServer-getcountys params:" + JSON.stringify(params));
     var commonServer = new Lich.InvokeBag(Lich.ServiceKey.CommonServer, "county",[params.cityId]);
     Lich.wicca.invokeClient(commonServer, function(err, data) {
-        logger.info("commonServer-getcountys  result:" + JSON.stringify(data));
+        logger.info("调用commonServer-getcountys  result:" + JSON.stringify(data));
         var res = {};
         if(err||data[0].result.code == 1){
-            logger.error("commonServer-getcountys  失败原因 ======" + err);
+            logger.error("调用commonServer-getcountys  失败原因 ======" + err);
             res.code = 500;
             res.desc = "获取乡镇列表失败！";
             callback(res, null);

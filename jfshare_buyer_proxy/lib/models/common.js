@@ -99,12 +99,16 @@ Common.prototype.validateMsgCaptcha = function(param, callback){
     Lich.wicca.invokeClient(commonServ,function(err,data){
         logger.info("getCaptcha result: " + JSON.stringify(data));
         var res = {};
-        if (err||data[0].code == "1") {
+        if (err) {
             logger.error("can't getCaptcha because: ======" + err);
             res.code = 500;
             res.desc = "验证短信验证码失败";
             callback(res,null);
-        } else {
+        } else if(data[0].code == 1){
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
+            callback(res,null);
+        }else{
             callback(null,data);
         }
     });
