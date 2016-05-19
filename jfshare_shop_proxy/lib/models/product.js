@@ -88,17 +88,17 @@ Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, s
             res.code = 500;
             res.desc = "查询商品列表失败";
             callback(res, null);
-        } else {
-            //var result = data[0].result;
-            //if(result.code == 1){
-            //    var
-            //}
-            callback(null, data)
+        } else if(data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
+            callback(null, data);
         }
     });
 };
 
-//查询商品属性
+/*//查询商品属性
 Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, skuTag, attributeTag, callback) {
     var param = new product_types.ProductRetParam({
         baseTag: baseTag,
@@ -124,7 +124,7 @@ Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, s
             callback(null, data)
         }
     });
-};
+};*/
 
 // 查询商品ＳＫＵ
 Product.prototype.queryProductSku = function (productId, callback) {
