@@ -1,5 +1,4 @@
 /**
- * Created by zhaoshenghai on 16/3/22.
  */
 var express = require('express');
 var router = express.Router();
@@ -7,7 +6,6 @@ var router = express.Router();
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
 
-var Product = require('../lib/models/product');
 var Address = require('../lib/models/address');
 
 
@@ -16,7 +14,6 @@ var Address = require('../lib/models/address');
 router.post('/getprovinces', function(req, res, next) {
     var result = {code: 200};
     try{
-
         Address.getProvinces(function(err, data) {
             if(err){
                 res.json(err);

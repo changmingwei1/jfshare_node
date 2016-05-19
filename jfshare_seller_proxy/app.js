@@ -12,13 +12,13 @@ var product=require('./controllers/product_controller');
 var order  = require('./controllers/order_controller');
 var subject = require('./controllers/subject_controller');
 var expressOrder = require('./controllers/express_controller');
-
+var brand =  require('./controllers/brand_controller');
 var stock = require('./controllers/stock_controller');
 var address = require('./controllers/address_controller');
-var app = express();
 
+var zookeeper = require('./resource/zookeeper_util');
 var template = require('./controllers/template_controller');
-
+var app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -33,6 +33,7 @@ app.use('/seller/product',product);
 app.use('/seller/order',order);
 app.use('/seller/address',address);
 app.use('/seller/expressorder',expressOrder);
+app.use('/seller/brand',brand);
 app.use('/seller/stock',stock);
 // error handlers
 
