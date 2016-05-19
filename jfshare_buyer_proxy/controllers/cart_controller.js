@@ -237,7 +237,6 @@ router.post('/list', function (req, res, next) {
                 return;
             }
             var cartList = [];
-            var cartLists = {};
             /*itemList.forEach(function (a) {
              cartLists.sellerId = a.seller.sellerId;
              cartLists.sellerName = a.seller.sellerName;
@@ -267,9 +266,11 @@ router.post('/list', function (req, res, next) {
              });*/
             if (itemList != null) {
                 for (var i = 0; i < itemList.length; i++) {
-                    cartLists.sellerId = itemList[i].seller.sellerId;
-                    cartLists.sellerName = itemList[i].seller.sellerName;
-                    cartLists.remark = "我是写死的字段";
+                    var cartLists = {
+                        sellerId: itemList[i].seller.sellerId,
+                        sellerName: itemList[i].seller.sellerName,
+                        remark: "我是写死的字段"
+                    };
                     var productList = [];
                     var itemDetailList = itemList[i].itemDetailList;
                     for (var j = 0; j < itemDetailList.length; j++) {
@@ -288,11 +289,11 @@ router.post('/list', function (req, res, next) {
                             },
                             imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
                         };
+                        productList.push(product);
                     }
-                    productList.push(product);
                     cartLists.productList = productList;
+                    cartList.push(cartLists);
                 }
-                cartList.push(cartLists);
                 result.cartList = cartList;
                 res.json(result);
             } else {

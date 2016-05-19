@@ -98,33 +98,6 @@ Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, s
     });
 };
 
-/*//查询商品属性
-Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, skuTag, attributeTag, callback) {
-    var param = new product_types.ProductRetParam({
-        baseTag: baseTag,
-        skuTemplateTag: skuTemplateTag,
-        skuTag: skuTag,
-        attributeTag: attributeTag
-    });
-
-    logger.info("get product info args:" + JSON.stringify(param));
-    // 获取client
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProduct", [productId, param]);
-
-    //invite productServ
-    Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("get product info result:" + JSON.stringify(data));
-        var res = {};
-        if (err) {
-            logger.error("调用productServ-queryProductSku查询商品sku失败  失败原因 ======" + err);
-            res.code = 500;
-            res.desc = "查询商品列表失败";
-            callback(res, null);
-        } else {
-            callback(null, data)
-        }
-    });
-};*/
 
 // 查询商品ＳＫＵ
 Product.prototype.queryProductSku = function (productId, callback) {
@@ -154,9 +127,9 @@ Product.prototype.queryHotSKUV1 = function (paramters, callback) {
 
     var param = new product_types.ProductRetParam({
         baseTag: 1,
-        skuTemplateTag: 0,
+        skuTemplateTag: 1,
         skuTag: 1,
-        attributeTag: 0
+        attributeTag: 1
     });
     var params = new product_types.ProductSkuParam({
         productId: paramters.productId,
@@ -170,12 +143,16 @@ Product.prototype.queryHotSKUV1 = function (paramters, callback) {
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("调用productServ-queryHotSku result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "1") {
+        if (err) {
             logger.error("调用productServ-queryHotSku查询商品sku失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "查询商品信息失败！";
+            res.desc = "查询商品sku信息失败！";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data[0]);
         }
     });

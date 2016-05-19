@@ -116,74 +116,74 @@ router.get('/productInfo', function (req, res, next) {
 
     logger.info("进入获取商品详情接口");
     var result = {code: 200};
-
-    var arg = req.query;
-    var productId = arg.productId;
-    if (productId == null || productId == "") {
-        result.code = 400;
-        result.desc = "请求参数错误";
-        res.json(result);
-        return;
-    }
-    var productInfo = {};
-    async.waterfall([
-            function (callback) {
-                Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
-
-                    if(err){
-                        res.json(err);
-                        return;
-                    }
-                    var product = data[0].product;
-                    productInfo.productId = product.productId;
-                    productInfo.productName = product.productName;
-                    productInfo.viceName = product.viceName;
-                    productInfo.imgKey = product.imgKey;
-                    productInfo.productDesc = product.detailContent;
-                    productInfo.skuTemplate = JSON.parse(product.skuTemplate);
-                    productInfo.sellerId = product.sellerId;
-                    productInfo.type = product.type;
-                    productInfo.storehouseIds = product.storehouseIds;
-                    productInfo.postageId = product.postageId;
-
-                    //添加最高价和最低价    ====   现在的productSku是null
-                    var productSku = product.productSku;
-                    var minCurPrice = productSku.minCurPrice;
-                    var maxCurPrice = productSku.maxCurPrice;
-                    var minOrgPrice = productSku.minOrgPrice;
-                    var maxOrgPrice = productSku.maxOrgPrice;
-
-                    result.minCurPrice = minCurPrice;
-                    result.maxCurPrice = maxCurPrice;
-                    result.minOrgPrice = minOrgPrice;
-                    result.maxOrgPrice = maxOrgPrice;
-                    callback(null, result);
-                });
-            },
-            function (result, callback) {
-                Seller.querySeller(productInfo.sellerId, 0, function (err, data) {
-                    if (err) {
-                        callback('error', err);
-                    } else {
-                        productInfo.sellerName = data[0].seller.sellerName;
-                        productInfo.remark = data[0].seller.remark;
-                        result.productInfo = productInfo;
+    try {
+        var arg = req.query;
+        var productId = arg.productId;
+        if (productId == null || productId == "") {
+            result.code = 400;
+            result.desc = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        var productInfo = {};
+        async.waterfall([
+                function (callback) {
+                    Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
+                        if (err) {
+                            res.json(err);
+                            return;
+                        }
+                        var product = data[0].product;
+                        productInfo.productId = product.productId;
+                        productInfo.productName = product.productName;
+                        productInfo.viceName = product.viceName;
+                        productInfo.imgKey = product.imgKey;
+                        productInfo.productDesc = product.detailContent;
+                        productInfo.skuTemplate = JSON.parse(product.skuTemplate);
+                        productInfo.sellerId = product.sellerId;
+                        productInfo.type = product.type;
+                        productInfo.storehouseIds = product.storehouseIds;
+                        productInfo.postageId = product.postageId;
+                        var productSku = product.productSku;
+                        result.minCurPrice = productSku.minCurPrice;
+                        result.maxCurPrice = productSku.maxCurPrice;
+                        result.minOrgPrice = productSku.minOrgPrice;
+                        result.maxOrgPrice = productSku.maxOrgPrice;
                         callback(null, result);
-                    }
-                });
-            }
-        ],
-        function (err, data) {
-            if (err) {
-                logger.error("get product info fail err:" + err);
-                result.code = 500;
-                result.desc = "获取商品详情失败";
-                res.json(result);
-            } else {
-                res.json(result);
-                logger.info("get skuitem response:" + JSON.stringify(result));
-            }
-        });
+                        logger.info("获取到的商品最大值/最小值信息：" + JSON.stringify(result));
+                    });
+                },
+                function (result, callback) {
+                    Seller.querySeller(productInfo.sellerId, 0, function (err, data) {
+                        if (err) {
+                            callback('error', err);
+                        } else {
+                            productInfo.sellerName = data[0].seller.sellerName;
+                            productInfo.remark = data[0].seller.remark;
+                            result.productInfo = productInfo;
+                            callback(null, result);
+                            logger.info("获取到的商品信息：" + JSON.stringify(result));
+                        }
+                    });
+                }
+            ],
+            function (err, data) {
+                if (err) {
+                    logger.error("get product info fail err:" + err);
+                    result.code = 500;
+                    result.desc = "获取商品信息失败";
+                    res.json(result);
+                } else {
+                    res.json(result);
+                    logger.info("get skuitem response:" + JSON.stringify(result));
+                }
+            });
+    } catch (ex) {
+        logger.error("get product info fail err:" + ex);
+        result.code = 500;
+        result.desc = "获取商品信息失败";
+        res.json(result);
+    }
 });
 
 //查询商品详情queryProductDetail
@@ -228,7 +228,7 @@ router.get('/productDetail', function (req, res, next) {
     }
 });
 
-//查询商品指定sku和库存
+/*查询商品指定sku和库存*/
 router.post('/querystore', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
@@ -291,11 +291,11 @@ router.post('/querystore', function (req, res, next) {
             ],
             function (err, data) {
                 if (err) {
-                    res.json(err);
-                    logger.error("get product info fail err:" + err);
+                    res.json(data);
+                    return;
                 } else {
                     res.json(data);
-                    logger.info("get skuitem response:" + JSON.stringify(result));
+                    logger.info("get skuItem response:" + JSON.stringify(result));
                 }
             });
     } catch (ex) {
