@@ -232,7 +232,7 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     baseTemplate: function () {
-        var obj = new ThriftConfig("120.24.153.155", 2004);
+        var obj = new ThriftConfig("10.24.190.240", 2004);
         return obj;
     }
 };
