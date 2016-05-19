@@ -825,14 +825,14 @@ router.post('/queryCachAmount', function (request, response, next) {
     try {
         var param = request.body;
 
+        logger.info("请求参数信息" + JSON.stringify(param));
+
         if (param.userId == null || param.userId == "") {
             resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
             return;
         }
-
-        logger.info("请求参数信息" + JSON.stringify(param));
 
         Score.queryCachAmount(param, function (error, data) {
             if (error) {
@@ -854,19 +854,17 @@ router.post('/queryCachAmount', function (request, response, next) {
 /*兑出积分*/
 router.post('/cachAmountCall', function (request, response, next) {
 
-    logger.info("进出兑入积分调用接口");
+    logger.info("进入兑出积分调用接口流程");
     var resContent = {code: 200};
     try {
         var param = request.body;
-
+        logger.info("请求参数信息" + JSON.stringify(param));
         if (param.userId == null || param.userId == "") {
             resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
             return;
         }
-
-        logger.info("请求参数信息" + JSON.stringify(param));
 
         Score.cachAmountCall(param, function (error, data) {
             if (error) {
@@ -878,9 +876,9 @@ router.post('/cachAmountCall', function (request, response, next) {
             }
         });
     } catch (ex) {
-        logger.error("兑入积分查询异常，原因是======:" + ex);
+        logger.error("兑出积分调用异常，原因是======:" + ex);
         resContent.code = 500;
-        resContent.desc = "兑入积分查询失败";
+        resContent.desc = "兑出积分调用失败";
         response.json(resContent);
     }
 });
@@ -892,7 +890,7 @@ router.post('/enterAmountCall', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.body;
-
+        logger.info("请求参数信息" + JSON.stringify(param));
         if (param.AppCode == null || param.AppCode == "") {
             resContent.code = 400;
             resContent.desc = "参数错误";
@@ -966,8 +964,8 @@ router.post('/enterAmountCall', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                var score = data[0].responseScore;
-                resContent.responseScore = score;
+                //var score = data[0].responseScore;
+                //resContent.responseScore = score;
                 response.json(resContent);
                 logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
             }
