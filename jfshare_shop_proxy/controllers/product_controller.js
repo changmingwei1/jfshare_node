@@ -130,8 +130,11 @@ router.get('/productInfo', function (req, res, next) {
             function (callback) {
                 Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
 
+                    if(err){
+                        res.json(err);
+                        return;
+                    }
                     var product = data[0].product;
-
                     productInfo.productId = product.productId;
                     productInfo.productName = product.productName;
                     productInfo.viceName = product.viceName;
