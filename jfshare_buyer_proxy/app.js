@@ -14,7 +14,7 @@ var cart = require('./controllers/cart_controller');
 var address = require('./controllers/address_controller');
 var buyer = require('./controllers/buyer_controller');
 //var test = require('./controllers/test_controller');
-
+var zookeeper = require('./zookeeper_util');
 //var view_index = require("./view_center/index/view_index");
 
 var app = express();
