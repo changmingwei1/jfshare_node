@@ -145,10 +145,12 @@ router.get('/productInfo', function (req, res, next) {
                         productInfo.storehouseIds = product.storehouseIds;
                         productInfo.postageId = product.postageId;
                         var productSku = product.productSku;
-                        result.minCurPrice = productSku.minCurPrice;
-                        result.maxCurPrice = productSku.maxCurPrice;
-                        result.minOrgPrice = productSku.minOrgPrice;
-                        result.maxOrgPrice = productSku.maxOrgPrice;
+                        if( product.productSku !=null){
+                            result.minCurPrice = productSku.minCurPrice;
+                            result.maxCurPrice = productSku.maxCurPrice;
+                            result.minOrgPrice = productSku.minOrgPrice;
+                            result.maxOrgPrice = productSku.maxOrgPrice;
+                        }
                         callback(null, result);
                         logger.info("获取到的商品最大值/最小值信息：" + JSON.stringify(result));
                     });
@@ -232,9 +234,10 @@ router.get('/productDetail', function (req, res, next) {
 router.post('/querystore', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
-
+    result.count = 0;
     try {
         var arg = req.body;
+
         /*productId = ze160515153359000306*/
         async.waterfall([
                 function (callback) {
@@ -283,7 +286,9 @@ router.post('/querystore', function (req, res, next) {
                             callback('error', err);
                         } else {
                             var stockInfo = data[0].stockInfo;
-                            result.count = stockInfo.total;
+                            if(stockInfo !=null &&stockInfo.total !=null){
+                                result.count = stockInfo.total;
+                            }
                             callback(null, result);
                         }
                     });
