@@ -54,7 +54,7 @@ Product.prototype.queryProductList = function (params, callback) {
             res.json(ret);
             return;
         }
-        callback(null,data);
+        callback(null, data);
     });
 };
 
@@ -68,14 +68,14 @@ Product.prototype.create = function (params, callback) {
         productSkuList.forEach(function (sku) {
             if (sku != null && sku.key != null) {
                 for (var i = 0; i < sku.values.length; i++) {
-                   var productSkuItem = new product_types.ProductSkuItem({
-                        //sellerClassNum: params,
-                        //shelf: sku.values[i].location,
+                    var productSkuItem = new product_types.ProductSkuItem({
+                        sellerClassNum:sku.values[i].num,
+                        shelf: sku.values[i].location,
                         curPrice: sku.values[i].sellprice,//销售价
                         orgPrice: sku.values[i].oriprice,//原价
                         //vPicture: params,
                         skuName: sku.key.name,
-                        weight:sku.values[i].weight,
+                        weight: sku.values[i].weight,
                         refPrice: sku.values[i].setprice,//结算价
                         storehouseId: sku.values[i].storeid,
                         skuNum: sku.key.id
@@ -89,7 +89,7 @@ Product.prototype.create = function (params, callback) {
     }
 
     var productSku = new product_types.ProductSku({
-        skuItems:  productSkuItemList
+        skuItems: productSkuItemList
     });
 
     var product = new product_types.Product({
@@ -102,11 +102,11 @@ Product.prototype.create = function (params, callback) {
         type: params.type,//商品类型 2表示普通商品 3表示虚拟商品
         createUserId: params.sellerId,
         skuTemplate: JSON.stringify(params.skuTemplate),
-        attribute:JSON.stringify(params.attribute),
-        productSku:productSku,
+        attribute: JSON.stringify(params.attribute),
+        productSku: productSku,
         postageId: params.postageId,
-        detailContent:params.detailContent,
-        storehouseIds:params.storehouseIds
+        detailContent: params.detailContent,
+        storehouseIds: params.storehouseIds
     });
 
 
@@ -115,7 +115,7 @@ Product.prototype.create = function (params, callback) {
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("productServ-addProduct  result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result==1) {
+        if (err || data[0].result == 1) {
             logger.error("productServ-addProduct  失败原因 ======" + err);
             res.code = 500;
             res.desc = "创建商品失败";
@@ -138,13 +138,13 @@ Product.prototype.update = function (params, callback) {
             if (sku != null && sku.key != null) {
                 for (var i = 0; i < sku.values.length; i++) {
                     var productSkuItem = new product_types.ProductSkuItem({
-                        //sellerClassNum: params,
-                        //shelf: sku.values[i].location,
+                        sellerClassNum:sku.values[i].num,
+                        shelf: sku.values[i].location,
                         curPrice: sku.values[i].sellprice,//销售价
                         orgPrice: sku.values[i].oriprice,//原价
                         //vPicture: params,
                         skuName: sku.key.name,
-                        weight:sku.values[i].weight,
+                        weight: sku.values[i].weight,
                         refPrice: sku.values[i].setprice,//结算价
                         storehouseId: sku.values[i].storeid,
                         skuNum: sku.key.id
@@ -159,11 +159,11 @@ Product.prototype.update = function (params, callback) {
     }
 
     var productSku = new product_types.ProductSku({
-        skuItems:  productSkuItemList
+        skuItems: productSkuItemList
     });
 
     var product = new product_types.Product({
-        productId:params.productId,
+        productId: params.productId,
         sellerId: params.sellerId,
         productName: params.productName,
         viceName: params.viceName,
@@ -173,11 +173,11 @@ Product.prototype.update = function (params, callback) {
         type: params.type,//商品类型 2表示普通商品 3表示虚拟商品
         createUserId: params.sellerId,
         skuTemplate: JSON.stringify(params.skuTemplate),
-        attribute:JSON.stringify(params.attribute),
-        productSku:productSku,
+        attribute: JSON.stringify(params.attribute),
+        productSku: productSku,
         postageId: params.postageId,
-        detailContent:params.detailContent,
-        storehouseIds:params.storehouseIds
+        detailContent: params.detailContent,
+        storehouseIds: params.storehouseIds
     });
 
 
@@ -265,7 +265,6 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
         cardNumber: params.cardNumber,
         state: params.state
     });
-
     var page = new pagination_types.Pagination({
 
         numPerPage: params.perCount,
@@ -277,7 +276,7 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code ==1) {
+        if (err || data[0].result.code == 1) {
             logger.error("productServ-queryProduct  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询商品失败";
@@ -310,12 +309,10 @@ Product.prototype.queryProductCard = function (params, callback) {
             res.desc = "查询虚拟商品失败";
             return callback(res, null);
         } else {
-           return callback(null, data)
+            return callback(null, data)
         }
     });
 };
-
-
 ////申请上架
 //Product.prototype.setProductState = function (params, callback) {
 //
@@ -344,18 +341,18 @@ Product.prototype.queryProductCard = function (params, callback) {
 //        }
 //    });
 //};
-Product.prototype.queryDetail = function(params, callback){
+Product.prototype.queryDetail = function (params, callback) {
 
     var productDetailParam = new product_types.ProductDetailParam({
-        productId:params.productId,
-        detailKey:params.detailKey
+        productId: params.productId,
+        detailKey: params.detailKey
     });
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductDetail", [productDetailParam]);
 
-    Lich.wicca.invokeClient(productServ, function(err, data) {
+    Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("productServ-queryDetail  result:" + JSON.stringify(data));
         var res = {};
-        if(err || data[0].result.code == "1"){
+        if (err || data[0].result.code == "1") {
             logger.error("productServ-queryDetail  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询详情失败！";
@@ -367,27 +364,27 @@ Product.prototype.queryDetail = function(params, callback){
 };
 
 
-Product.prototype.setProductState = function(params, callback){
+Product.prototype.setProductState = function (params, callback) {
 
     var productOpt = new product_types.ProductOpt({
-        productId:params.productId,
-        curState:params.curState,
-        activeState:params.activeState,
-        operatorId:params.sellerId,
-        operatorType:1
+        productId: params.productId,
+        curState: params.curState,
+        activeState: params.activeState,
+        operatorId: params.sellerId,
+        operatorType: 1
     });
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "setProductState", [productOpt]);
 
-    Lich.wicca.invokeClient(productServ, function(err, data) {
+    Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("productServ-setProductState  result:" + JSON.stringify(data));
         var res = {};
-        if(err || data[0].code == "1"){
+        if (err || data[0].code == "1") {
             logger.error("productServ-setProductState  失败原因 ======" + err);
             res.code = 500;
             res.desc = "申请上架或下架失败！";
             callback(res, null);
         } else {
-            callback(null,null);
+            callback(null, null);
         }
     });
 };

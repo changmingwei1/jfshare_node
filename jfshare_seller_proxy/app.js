@@ -14,6 +14,7 @@ var subject = require('./controllers/subject_controller');
 var expressOrder = require('./controllers/express_controller');
 
 var stock = require('./controllers/stock_controller');
+var address = require('./controllers/address_controller');
 var app = express();
 
 var template = require('./controllers/template_controller');
@@ -30,7 +31,7 @@ app.use('/seller/subject',subject);
 app.use('/seller',user);
 app.use('/seller/product',product);
 app.use('/seller/order',order);
-
+app.use('/seller/address',address);
 app.use('/seller/expressorder',expressOrder);
 app.use('/seller/stock',stock);
 // error handlers
