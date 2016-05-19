@@ -114,7 +114,8 @@ Subject.prototype.query = function (params, callback) {
                 id: subject.id,
                 name: subject.name,
                 imgkey: subject.img_key,
-                isLeaf: subject.isLeaf
+                isLeaf: subject.isLeaf,
+                type:subject.commodity
             });
             subejects.push(subjectNode);
         });
