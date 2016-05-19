@@ -195,6 +195,7 @@ router.post('/getcitys', function(req, res, next) {
 
     //var provinceId = req.query;
     var params = req.body;
+    logger.info("查询省份下的市入参， params:" + JSON.stringify(params));
     if(params.provinceId<=0 || params.provinceId =="" || params.provinceId==null){
         result.code = 500;
         result.desc = "参数错误";
@@ -209,7 +210,7 @@ router.post('/getcitys', function(req, res, next) {
             }
             result.cityList = data;
             res.json(result);
-            logger.info("get cityList response:" + JSON.stringify(result));
+            logger.info("查询省份下的市 response:" + JSON.stringify(result));
         });
     } catch (ex) {
         logger.error("get cityList error:" + ex);
@@ -224,7 +225,7 @@ router.post('/getcountys', function(req, res, next) {
     var result = {code: 200};
 
     var params = req.body;
-
+    logger.info("查询市下面的乡镇入参， params:" + JSON.stringify(params));
     if(params.cityId<=0 || params.cityId =="" || params.cityId==null){
         result.code = 500;
         result.desc = "参数错误";
@@ -239,7 +240,7 @@ router.post('/getcountys', function(req, res, next) {
             }
             result.countyList = data;
             res.json(result);
-            logger.info("get countyList response:" + JSON.stringify(result));
+            logger.info("查询市下面的乡镇 response:" + JSON.stringify(result));
         });
     } catch (ex) {
         logger.error("get countyList error:" + ex);
