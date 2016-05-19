@@ -228,7 +228,7 @@ router.get('/productDetail', function (req, res, next) {
     }
 });
 
-//查询商品指定sku和库存
+/*查询商品指定sku和库存*/
 router.post('/querystore', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
