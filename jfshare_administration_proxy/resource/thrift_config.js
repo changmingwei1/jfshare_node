@@ -84,24 +84,16 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     address: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1985);
+        var obj = new ThriftConfig("10.24.190.240", 1985);
         return obj;
     },
-    /**
-     * 库存服务
-     * @returns {ThriftConfig}
-     */
-    stock: function () {
-        var obj = new ThriftConfig("120.24.153.155",1983);
-        // var obj = new ThriftConfig("127.0.0.1", 1983);
-        return obj;
-    },
+
     /**
      * 消息服务
      * @returns {ThriftConfig}
      */
     message: function () {
-        var obj = new ThriftConfig("120.24.153.102", 2001);
+        var obj = new ThriftConfig("10.24.190.240", 2001);
         //var obj = new ThriftConfig("127.0.0.1", 2001);
         return obj;
     },
@@ -110,7 +102,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     subject: function () {
-        var obj = new ThriftConfig("120.24.153.102",1982);
+        var obj = new ThriftConfig("10.24.190.240",1982);
         //var obj = new ThriftConfig("127.0.0.1", 1982);
         return obj;
     },
@@ -119,7 +111,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     order: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1986);
+        var obj = new ThriftConfig("10.24.190.240", 1986);
         return obj;
     },
     /**
@@ -127,7 +119,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     buyer: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1990);
+        var obj = new ThriftConfig("10.24.190.240", 1990);
         //var obj = new ThriftConfig("127.0.0.1", 1990);
         return obj;
     },
@@ -136,8 +128,8 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     product: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1980);
-        //  var obj = new ThriftConfig("120.24.153.155",1980);
+        var obj = new ThriftConfig("10.24.190.240", 1980);
+        //  var obj = new ThriftConfig("10.24.190.240",1980);
         //var obj = new ThriftConfig("127.0.0.1",1980);
         return obj;
     },
@@ -146,7 +138,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     stock: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1983);
+        var obj = new ThriftConfig("10.24.190.240", 1983);
         return obj;
     },
     /**
@@ -154,7 +146,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     common: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1984);
+        var obj = new ThriftConfig("10.24.190.240", 1984);
         //var obj = new ThriftConfig("127.0.0.1",1984);
         return obj;
     },
@@ -163,7 +155,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     trade: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1987);
+        var obj = new ThriftConfig("10.24.190.240", 1987);
         return obj;
     },
     /**
@@ -171,7 +163,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     cart: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1992);
+        var obj = new ThriftConfig("10.24.190.240", 1992);
         return obj;
     },
     /**
@@ -179,7 +171,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     seller: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1991);
+        var obj = new ThriftConfig("10.24.190.240", 1991);
         //var obj = new ThriftConfig("127.0.0.1", 1991);
         return obj;
     },
@@ -189,7 +181,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     brand: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1981);
+        var obj = new ThriftConfig("10.24.190.240", 1981);
         // var obj = new ThriftConfig("127.0.0.1", 1981);
         return obj;
     },
@@ -200,7 +192,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     afterSale: function () {
-        var obj = new ThriftConfig("120.24.153.102", 2003);
+        var obj = new ThriftConfig("10.24.190.240", 2003);
         //var obj = new ThriftConfig("127.0.0.1", 2003);
         return obj;
     },
@@ -210,7 +202,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     manager: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1988);
+        var obj = new ThriftConfig("10.24.190.240", 1988);
         // var obj = new ThriftConfig("127.0.0.1",1988);
         //return obj;
 
@@ -226,7 +218,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     expresss: function () {
-        var obj = new ThriftConfig("120.24.153.155", 1989);
+        var obj = new ThriftConfig("10.24.190.240", 1989);
         //  var obj = new ThriftConfig("127.0.0.1", 1989);
         return obj;
     },
@@ -236,7 +228,7 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     score: function () {
-        var obj = new ThriftConfig("120.24.153.102", 2002);
+        var obj = new ThriftConfig("10.24.190.240", 2002);
         return obj;
     }
 
