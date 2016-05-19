@@ -341,6 +341,9 @@ router.post('/addStorehouse', function (request, response, next) {
                 response.json(error);
             } else {
                 logger.info("add addStorehouse  response:" + JSON.stringify(data));
+
+                result.id =data[0].value;
+
                 response.json(result);
                 return;
             }
