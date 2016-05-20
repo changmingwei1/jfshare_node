@@ -75,12 +75,17 @@ Common.prototype.sendMsgCaptcha = function(param, callback){
     Lich.wicca.invokeClient(commonServ,function(err,data){
         logger.info("getCaptcha result: " + JSON.stringify(data));
         var res = {};
-        if(err || data[0].code == "1"){
+        if(err){
             logger.error("调用commonServ-sendMsgCaptcha失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "获取短信验证码失败！";
             callback(res, null);
-        } else {
+        } else if(data[0].code == 1){
+            logger.info("调用commonServ-sendMsgCaptcha失败  失败原因 ======" + data[0].failDescList[0].desc);
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
+            callback(res, null);
+        } else{
             callback(null, null);
         }
     });

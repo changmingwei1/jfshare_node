@@ -165,8 +165,8 @@ Score.prototype.queryScoreUser = function (params, callback) {
         amount:params.amount/* 积分值  0:全部   1:0积分  2:0以上积分 */
     });
     var pagination = new pagination_types.Pagination({
-        currentPage: params.curpage,
-        numPerPage: params.percount
+        currentPage: params.curPage,
+        numPerPage: params.perCount
     });
     logger.info("scoreServ.queryScoreUser params:" + JSON.stringify(params));
     //获取客户端

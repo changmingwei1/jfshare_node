@@ -237,9 +237,10 @@ router.post('/querystore', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
     result.count = 0;
+
     try {
         var arg = req.body;
-
+        arg.storehouseId = 0;
         /*productId = ze160515153359000306*/
         async.waterfall([
                 function (callback) {
@@ -249,14 +250,14 @@ router.post('/querystore', function (req, res, next) {
                         } else {
                             var storehouseList = data[0].storehouseList;
                             if (storehouseList != null && storehouseList.length > 0) {
-                                var storehouseId;
                                 for (var i = 0; i < storehouseList.length; i++) {
                                     var supportProvince = storehouseList[i].supportProvince;
                                     if (supportProvince.indexOf(arg.provinceId) != -1) {
-                                        storehouseId = storehouseList[i].id;
+                                        arg.storehouseId = storehouseList[i].id;
+                                        break;
                                     }
                                 }
-                                arg.storehouseId = storehouseId;
+                               // arg.storehouseId = storehouseId;
                                 logger.info("看看仓库信息：" + arg.storehouseId);
                                 callback(null, arg);
                             } else {
@@ -267,33 +268,47 @@ router.post('/querystore', function (req, res, next) {
                 },
                 function (arg, callback) {
                     logger.info("请求参数，arg:" + JSON.stringify(arg));
-                    Product.queryHotSKUV1(arg, function (err, data) {
-                        if (err) {
-                            callback('error', err);
-                        } else {
-                            var skuItems = data.product.productSku.skuItems;
-                            result.productId = data.product.productId;
-                            result.curPrice = skuItems[0].curPrice;
-                            result.orgPrice = skuItems[0].orgPrice;
-                            result.storehouseId = skuItems[0].storehouseId;
-                            result.skuNum = skuItems[0].skuNum;
-                            result.weight = skuItems[0].weight;
-                            callback(null, result);
-                        }
-                    });
+                    if(arg.storehouseId!=0){
+
+                        Product.queryHotSKUV1(arg, function (err, data) {
+                            if (err) {
+                                callback('error', err);
+                                return;
+                            } else {
+                                var skuItems = data.product.productSku.skuItems;
+                                result.productId = data.product.productId;
+                                result.curPrice = skuItems[0].curPrice;
+                                result.orgPrice = skuItems[0].orgPrice;
+                                result.storehouseId = skuItems[0].storehouseId;
+                                result.skuNum = skuItems[0].skuNum;
+                                result.weight = skuItems[0].weight;
+                                callback(null, result);
+                                return;
+                            }
+                        });
+
+                    }
+                    callback(null, result);
+                    return;
                 },
                 function (result, callback) {
-                    Stock.queryStock(result, function (err, data) {
-                        if (err) {
-                            callback('error', err);
-                        } else {
-                            var stockInfo = data[0].stockInfo;
-                            if(stockInfo !=null &&stockInfo.total !=null){
-                                result.count = stockInfo.total;
+                    if(arg.storehouseId!=0) {
+                        Stock.queryStock(result, function (err, data) {
+                            if (err) {
+                                callback('error', err);
+                                return;
+                            } else {
+                                var stockInfo = data[0].stockInfo;
+                                if (stockInfo != null && stockInfo.total != null) {
+                                    result.count = stockInfo.total;
+                                }
+                                callback(null, result);
+                                return;
                             }
-                            callback(null, result);
-                        }
-                    });
+                        });
+                    }
+                    callback(null, result);
+                    return;
                 }
             ],
             function (err, data) {
@@ -301,8 +316,9 @@ router.post('/querystore', function (req, res, next) {
                     res.json(data);
                     return;
                 } else {
-                    res.json(data);
                     logger.info("get skuItem response:" + JSON.stringify(result));
+                    res.json(data);
+
                 }
             });
     } catch (ex) {

@@ -706,14 +706,14 @@ router.post('/socrelist', function (request, response, next) {
         var params = request.body;
         //参数校验
 
-        if(params.percount ==null || params.percount ==""){
+        if(params.perCount ==null || params.perCount ==""){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
 
-        if(params.curpage ==null || params.curpage ==""){
+        if(params.curPage ==null || params.curPage ==""){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
