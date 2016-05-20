@@ -237,10 +237,10 @@ router.post('/querystore', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
     result.count = 0;
-    arg.storehouseId =0;
+
     try {
         var arg = req.body;
-
+        arg.storehouseId =0;
         /*productId = ze160515153359000306*/
         async.waterfall([
                 function (callback) {
