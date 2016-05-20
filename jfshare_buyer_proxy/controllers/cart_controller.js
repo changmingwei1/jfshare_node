@@ -279,6 +279,7 @@ router.post('/list', function (req, res, next) {
                             productName: itemDetailList[j].product.product.productName,
                             activeState: itemDetailList[j].product.product.activeState,
                             storehouseIds: itemDetailList[j].product.product.storehouseIds,
+                            postageId: itemDetailList[j].product.product.postageId,
                             cartPrice: itemDetailList[j].product.cartPrice,
                             skuCount: itemDetailList[j].product.skuCount,
                             count: itemDetailList[j].product.count,

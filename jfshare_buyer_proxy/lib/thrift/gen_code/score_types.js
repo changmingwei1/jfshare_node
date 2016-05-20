@@ -1019,16 +1019,32 @@ CachAmountResult.prototype.write = function(output) {
   return;
 };
 
-Status = module.exports.Status = function(args) {
-  this.status = null;
+ReponseCach = module.exports.ReponseCach = function(args) {
+  this.AppCode = null;
+  this.ResponseDate = null;
+  this.Sign = null;
+  this.ErrCode = null;
+  this.ErrMsg = null;
   if (args) {
-    if (args.status !== undefined) {
-      this.status = args.status;
+    if (args.AppCode !== undefined) {
+      this.AppCode = args.AppCode;
+    }
+    if (args.ResponseDate !== undefined) {
+      this.ResponseDate = args.ResponseDate;
+    }
+    if (args.Sign !== undefined) {
+      this.Sign = args.Sign;
+    }
+    if (args.ErrCode !== undefined) {
+      this.ErrCode = args.ErrCode;
+    }
+    if (args.ErrMsg !== undefined) {
+      this.ErrMsg = args.ErrMsg;
     }
   }
 };
-Status.prototype = {};
-Status.prototype.read = function(input) {
+ReponseCach.prototype = {};
+ReponseCach.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -1043,14 +1059,39 @@ Status.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRING) {
-        this.status = input.readString();
+        this.AppCode = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.ResponseDate = input.readString();
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.Sign = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.ErrCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.ErrMsg = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1060,11 +1101,31 @@ Status.prototype.read = function(input) {
   return;
 };
 
-Status.prototype.write = function(output) {
-  output.writeStructBegin('Status');
-  if (this.status !== null && this.status !== undefined) {
-    output.writeFieldBegin('status', Thrift.Type.STRING, 1);
-    output.writeString(this.status);
+ReponseCach.prototype.write = function(output) {
+  output.writeStructBegin('ReponseCach');
+  if (this.AppCode !== null && this.AppCode !== undefined) {
+    output.writeFieldBegin('AppCode', Thrift.Type.STRING, 1);
+    output.writeString(this.AppCode);
+    output.writeFieldEnd();
+  }
+  if (this.ResponseDate !== null && this.ResponseDate !== undefined) {
+    output.writeFieldBegin('ResponseDate', Thrift.Type.STRING, 2);
+    output.writeString(this.ResponseDate);
+    output.writeFieldEnd();
+  }
+  if (this.Sign !== null && this.Sign !== undefined) {
+    output.writeFieldBegin('Sign', Thrift.Type.STRING, 3);
+    output.writeString(this.Sign);
+    output.writeFieldEnd();
+  }
+  if (this.ErrCode !== null && this.ErrCode !== undefined) {
+    output.writeFieldBegin('ErrCode', Thrift.Type.STRING, 4);
+    output.writeString(this.ErrCode);
+    output.writeFieldEnd();
+  }
+  if (this.ErrMsg !== null && this.ErrMsg !== undefined) {
+    output.writeFieldBegin('ErrMsg', Thrift.Type.STRING, 5);
+    output.writeString(this.ErrMsg);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1154,20 +1215,20 @@ CachAmountCallParam.prototype.write = function(output) {
   return;
 };
 
-StatusResult = module.exports.StatusResult = function(args) {
+ResponseCachResult = module.exports.ResponseCachResult = function(args) {
   this.result = null;
-  this.status = null;
+  this.reponseCach = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
-    if (args.status !== undefined) {
-      this.status = args.status;
+    if (args.reponseCach !== undefined) {
+      this.reponseCach = args.reponseCach;
     }
   }
 };
-StatusResult.prototype = {};
-StatusResult.prototype.read = function(input) {
+ResponseCachResult.prototype = {};
+ResponseCachResult.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -1190,8 +1251,8 @@ StatusResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRUCT) {
-        this.status = new ttypes.Status();
-        this.status.read(input);
+        this.reponseCach = new ttypes.ReponseCach();
+        this.reponseCach.read(input);
       } else {
         input.skip(ftype);
       }
@@ -1205,16 +1266,16 @@ StatusResult.prototype.read = function(input) {
   return;
 };
 
-StatusResult.prototype.write = function(output) {
-  output.writeStructBegin('StatusResult');
+ResponseCachResult.prototype.write = function(output) {
+  output.writeStructBegin('ResponseCachResult');
   if (this.result !== null && this.result !== undefined) {
     output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
     this.result.write(output);
     output.writeFieldEnd();
   }
-  if (this.status !== null && this.status !== undefined) {
-    output.writeFieldBegin('status', Thrift.Type.STRUCT, 2);
-    this.status.write(output);
+  if (this.reponseCach !== null && this.reponseCach !== undefined) {
+    output.writeFieldBegin('reponseCach', Thrift.Type.STRUCT, 2);
+    this.reponseCach.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

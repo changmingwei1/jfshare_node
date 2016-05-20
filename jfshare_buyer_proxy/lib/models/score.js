@@ -155,4 +155,34 @@ Score.prototype.cachAmountCall = function(param,callback){
     });
 };
 
+//查询积分记录
+Score.prototype.queryScoreUser = function (params, callback) {
+    var scoreUserQueryParam = new score_types.ScoreUserQueryParam({
+        userId:params.userId,
+        mobile:params.mobile,
+        startTime:params.startTime,
+        endTime:params.endTime,
+        amount:params.amount/* 积分值  0:全部   1:0积分  2:0以上积分 */
+    });
+    var pagination = new pagination_types.Pagination({
+        currentPage: params.curpage,
+        numPerPage: params.percount
+    });
+    logger.info("scoreServ.queryScoreUser params:" + JSON.stringify(params));
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreUser', [scoreUserQueryParam,pagination]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("scoreServ.queryScoreUser result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.queryScoreUser because: ======" + err);
+            res.code = 500;
+            res.desc = "查询积分错误";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Score();

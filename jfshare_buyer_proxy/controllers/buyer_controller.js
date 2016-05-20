@@ -662,17 +662,19 @@ router.post('/scoreTrade', function (request, response, next) {
                 //resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
 
                 var scoreTrades = data[0].scoreTrades;
-                scoreTrades.forEach(function (a) {
-                    dataArr.push({
-                        userId: a.userId,
-                        type: a.type,
-                        amount: a.amount,
-                        tradeId: a.tradeId,
-                        tradeTime: a.tradeTime,
-                        inOrPut: a.inOrOut,
-                        trader: a.trader
+                if(scoreTrades != null){
+                    scoreTrades.forEach(function (a) {
+                        dataArr.push({
+                            userId: a.userId,
+                            type: a.type,
+                            amount: a.amount,
+                            tradeId: a.tradeId,
+                            tradeTime: a.tradeTime,
+                            inOrOut: a.inOrOut,
+                            trader: a.trader
+                        });
                     });
-                });
+                }
                 resContent.scoreTrades = dataArr;
                 response.json(resContent);
                 logger.info("get buyer's Score response:" + JSON.stringify(resContent));
@@ -684,6 +686,48 @@ router.post('/scoreTrade', function (request, response, next) {
         resContent.code = 500;
         resContent.desc = "获取积分列表失败";
         response.json(resContent);
+    }
+});
+//积分列表
+router.post('/socrelist', function (request, response, next) {
+    logger.info("进入积分列表流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+
+        if(params.percount ==null || params.percount ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if(params.curpage ==null || params.curpage ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Score.queryScoreUser(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.scoreList = data[0].scoreUsers;
+            var pagination = data[0].pagination;
+            if(pagination!=null){
+                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+            }
+            logger.info("socrelist result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("获取积分列表错误:" + ex);
+        result.code = 500;
+        result.desc = "获取积分列表错误";
+        response.json(result);
     }
 });
 

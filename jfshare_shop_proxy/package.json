@@ -28,6 +28,7 @@
     "request":"latest",
     "cookie": "^0.1.2",
     "cookie-signature": "^1.0.6",
-    "on-headers": "^1.0.0"
+    "on-headers": "^1.0.0",
+    "node-zookeeper-client": "latest"
   }
 }

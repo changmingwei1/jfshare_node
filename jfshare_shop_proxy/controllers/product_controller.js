@@ -88,7 +88,9 @@ router.get('/productAttribute', function (req, res, next) {
         var productInfo = {};
 
         var arg = req.query;
-        logger.info("get product list args:" + JSON.stringify(arg));
+        if(arg != null){
+            logger.info("get product list args:" + JSON.stringify(arg));
+        }
         var productId = arg.productId;
 
         Product.queryProduct(productId, 1, 1, 0, 0, function (err, data) {
