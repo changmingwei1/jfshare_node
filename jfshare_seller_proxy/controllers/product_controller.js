@@ -345,15 +345,96 @@ router.post('/get', function (request, response, next) {
         return;
     }
     try {
-        Product.queryProduct(params, function (err,data) {
-            if(err){
-                response.json(err);
+
+        //--------------------------------------------------------
+        //Product.queryProduct(params, function (err,data) {
+        //    if(err){
+        //        response.json(err);
+        //        return;
+        //    }
+        //    result.product = data[0].product;
+        //    response.json(result);
+        //    return;
+        //});
+        //-----------------------------------------------------------------
+
+        //--------------------------------------------------
+        var product;
+        var productDetail;
+        async.series([
+                function (callback) {
+                    try {
+
+                        Product.queryProduct(params, function (err,data) {
+                            if(err){
+                                callback(1, null);
+                            }
+                            product = data[0].product;
+
+                            if(product==null){
+                                callback(1, null);
+                            }else{
+                                result.product=product;
+
+                                callback(null, result.product);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.error("获取商品信息异常:" + ex);
+                        return callback(1, ex);
+                    }
+                },
+                function (callback) {
+                    try {
+
+                        if(product==null||product==""){
+                            callback(2, null);
+                        }
+                        var params={};
+                        params.detailKey=product.detailKey;
+                        params.productId=product.productId;
+                        logger.info("获取商品详情接口参数:" + JSON.stringify(params));
+
+                        Product.queryProductDetail(params, function (err,data) {
+                            //data[0].result.code=="1"
+                            if(err||data.result.code=="1"){
+                                callback(2, err);
+                            }else{
+                                product.detailContent=data.value;
+                                callback(null, data);
+                            }
+
+                        });
+                    } catch (ex) {
+                        logger.info("获取商品信息异常:" + ex);
+                        return callback(2, null);
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err == 1) {
+                    logger.error("获取商品信息---商品服务异常：" + results[0]);
+                    result.code = 500;
+                    result.desc = "获取商品信息失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("获取商品信息失败--商品服务异常：" + err);
+                    response.json(results[1]);
+                    return;
+                }
+                result.product =product;
+                response.json(result);
                 return;
-            }
-            result.product = data[0].product;
-            response.json(result);
-            return;
-        });
+
+            });
+
+
+        //--------------------------------------------
+
+
+
 
     } catch (ex) {
         logger.error("查询失败，原因是:" + ex);

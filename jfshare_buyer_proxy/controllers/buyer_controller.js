@@ -442,7 +442,6 @@ router.post('/query', function (request, response, next) {
             response.json(resContent);
             return;
         }
-
         logger.info("It's test______" + JSON.stringify(param));
 //暂时去掉鉴权信息
 //        Buyer.validAuth(param, function (err, data) {
@@ -456,25 +455,25 @@ router.post('/query', function (request, response, next) {
                 response.json(error);
             } else {
                 var buyer = data[0].buyer;
-                //logger.info(buyer);
-
-                var loginLog = data[0].loginLog;
-                var value = data[0].value;
-                //var thirdUser = data[0].thirdUser;
-
-                resContent.buyer = {
-                    userId: buyer.userId,
-                    userName: buyer.userName,
-                    favImg: buyer.favImg,
-                    birthday: buyer.birthday,
-                    sex: buyer.sex,
-                    mobile: buyer.mobile
-                };
-                resContent.loginLog = loginLog;
-                resContent.value = value;
-                //resContent.thirdUser = thirdUser;
-                response.json(resContent);
-                logger.info("个人用户信息响应:" + JSON.stringify(resContent));
+                if(buyer != null){
+                    resContent.buyer = {
+                        userId: buyer.userId,
+                        userName: buyer.userName,
+                        favImg: buyer.favImg,
+                        birthday: buyer.birthday,
+                        sex: buyer.sex,
+                        mobile: buyer.mobile
+                    };
+                    response.json(resContent);
+                    logger.info("个人用户信息响应:" + JSON.stringify(resContent));
+                    return;
+                }else{
+                    resContent.code = 500;
+                    resContent.desc = "获取用户信息失败";
+                    response.json(resContent);
+                    logger.info("个人用户信息响应:" + JSON.stringify(resContent));
+                    return;
+                }
             }
         });
         //});
