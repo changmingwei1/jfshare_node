@@ -88,11 +88,11 @@ Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, s
             res.code = 500;
             res.desc = "查询商品列表失败";
             callback(res, null);
-        } else if(data[0].result.code == 1){
+        } else if (data[0].result.code == 1) {
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
-        } else{
+        } else {
             callback(null, data);
         }
     });
@@ -141,18 +141,28 @@ Product.prototype.queryHotSKUV1 = function (paramters, callback) {
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("调用productServ-queryHotSku result:" + JSON.stringify(data));
+        logger.info("调用productServ-queryHotSKUV1 result:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("调用productServ-queryHotSku查询商品sku失败  失败原因 ======" + err);
+            logger.error("调用productServ-queryHotSKUV1  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询商品sku信息失败！";
             callback(res, null);
-        } else if(data[0].result.code == 1){
-            res.code = 500;
-            res.desc = data[0].result.failDescList[0].desc;
-            callback(res, null);
-        }else{
+        } else if (data[0].result.code == 1) {
+            if (data[0].result.failDescList[0].failCode == 3001) {
+
+                logger.error("调用productServ-queryHotSKUV1  失败原因 ======" + err);
+                logger.error("如果走到这里----证明是没有对应的仓库,请注意这不是错误" + err);
+                callback(1, null);
+            } else {
+
+
+                res.code = 500;
+                res.desc = data[0].result.failDescList[0].desc;
+                callback(res, null);
+            }
+
+        } else {
             callback(null, data[0]);
         }
     });

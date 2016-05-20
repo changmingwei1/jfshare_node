@@ -299,7 +299,8 @@ router.post('/querystore', function (req, res, next) {
 
                         Product.queryHotSKUV1(params, function (err, data) {
                             if (err) {
-                                callback('error', err);
+                                result.storehouseId =0;
+                                callback(err, null);
                                 return;
                             } else {
                                 var skuItems = data.product.productSku.skuItems;
