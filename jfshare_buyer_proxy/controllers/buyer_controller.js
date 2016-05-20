@@ -442,6 +442,7 @@ router.post('/query', function (request, response, next) {
             response.json(resContent);
             return;
         }
+
         logger.info("It's test______" + JSON.stringify(param));
 //暂时去掉鉴权信息
 //        Buyer.validAuth(param, function (err, data) {
@@ -658,17 +659,7 @@ router.post('/scoreTrade', function (request, response, next) {
                 response.json(error);
             } else {
                 var pagination = data[0].pagination;
-
-                if(pagination==null){
-                    resContent.code = 500;
-                    resContent.desc = "获取积分列表失败";
-                    response.json(resContent);
-                    return;
-                }
-                resContent.page = {
-                    total: pagination.totalCount,
-                    pageCount: pagination.pageNumCount
-                };
+                //resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
 
                 var scoreTrades = data[0].scoreTrades;
                 if(scoreTrades != null){
@@ -705,14 +696,14 @@ router.post('/socrelist', function (request, response, next) {
         var params = request.body;
         //参数校验
 
-        if(params.perCount ==null || params.perCount ==""){
+        if(params.percount ==null || params.percount ==""){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
 
-        if(params.curPage ==null || params.curPage ==""){
+        if(params.curpage ==null || params.curpage ==""){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
