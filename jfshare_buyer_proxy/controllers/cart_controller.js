@@ -369,7 +369,7 @@ router.post('/update', function (req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.cartUpdateItem(arg, function (err, count) {
+        Cart.cartUpdateItem(param, function (err, count) {
             if (err) {
                 res.json(err);
                 return;
