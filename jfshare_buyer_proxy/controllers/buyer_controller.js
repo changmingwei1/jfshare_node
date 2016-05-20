@@ -442,6 +442,7 @@ router.post('/query', function (request, response, next) {
             response.json(resContent);
             return;
         }
+
         logger.info("It's test______" + JSON.stringify(param));
 //暂时去掉鉴权信息
 //        Buyer.validAuth(param, function (err, data) {
@@ -669,7 +670,6 @@ router.post('/scoreTrade', function (request, response, next) {
                     total: pagination.totalCount,
                     pageCount: pagination.pageNumCount
                 };
-
                 var scoreTrades = data[0].scoreTrades;
                 if(scoreTrades != null){
                     scoreTrades.forEach(function (a) {
@@ -705,14 +705,14 @@ router.post('/socrelist', function (request, response, next) {
         var params = request.body;
         //参数校验
 
-        if(params.perCount ==null || params.perCount ==""){
+        if(params.percount ==null || params.percount ==""){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
 
-        if(params.curPage ==null || params.curPage ==""){
+        if(params.curpage ==null || params.curpage ==""){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
