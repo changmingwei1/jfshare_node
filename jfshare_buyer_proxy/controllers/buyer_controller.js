@@ -194,7 +194,6 @@ router.post('/login', function (request, response, next) {
         }
     ], function (err) {
         if (err) {
-            err["result"] = false;
             return response.json(err);
         } else {
             return response.json({result: true});
