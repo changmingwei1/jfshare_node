@@ -188,21 +188,37 @@ router.post('/submit', function (request, response, next) {
     var result = {code: 200};
     try {
         var arg = request.body;
-        logger.info("提交订单请求， arg:" + JSON.stringify(arg));
-
         if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
+            logger.info("提交订单请求， arg:" + JSON.stringify(arg));
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
             response.json(result);
             return;
         }
-
-        /*
-        * 1 根据省份，获取仓库信息storehouseId
-        * 2 根据storehouseId，productId，skuNum查询库存接口【库存数量，锁定数量】
-        *
-        * */
-
+        if (arg.token == "" || arg.token == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (arg.ppInfo == "" || arg.ppInfo == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (arg.browser == "" || arg.browser == null) {
+            result.code = 400;
+            result.desc = "浏览器标识不能为空";
+            res.json(result);
+            return;
+        }
+//暂时去掉鉴权信息
+//    Buyer.validAuth(arg,function(err,data) {
+//        if (err) {
+//            response.json(err);
+//            return;
+//        }
         Order.orderConfirm(arg, function (err, data) {
             if (err) {
                 response.json(err);
@@ -212,6 +228,7 @@ router.post('/submit', function (request, response, next) {
             result.extend = JSON.parse(data[0].extend);
             response.json(result);
         });
+        //});
     } catch (ex) {
         logger.error("submit order error:" + ex);
         result.code = 500;
@@ -279,7 +296,7 @@ router.post('/afterSaleList', function (request, response, next) {
     try {
         var params = request.body;
 
-        if (params.userId == "" || params.userId == null) {
+        if (params == null ||params.userId == "" || params.userId == null) {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
@@ -297,8 +314,30 @@ router.post('/afterSaleList', function (request, response, next) {
             response.json(result);
             return;
         }
-
-        logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
+        if (params.token == "" || params.token == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (params.ppInfo == "" || params.ppInfo == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (params.browser == "" || params.browser == null) {
+            result.code = 400;
+            result.desc = "浏览器标识不能为空";
+            res.json(result);
+            return;
+        }
+//暂时去掉鉴权信息
+//    Buyer.validAuth(arg,function(err,data) {
+//        if (err) {
+//            response.json(err);
+//            return;
+//        }
         async.series([
                 function (callback) {
                     try {
@@ -410,6 +449,7 @@ router.post('/afterSaleList', function (request, response, next) {
                 }
             }
         );
+        //});
     } catch (ex) {
         logger.error("query expressList error:" + ex);
         result.code = 500;
@@ -421,311 +461,274 @@ router.post('/afterSaleList', function (request, response, next) {
 /*查询订单列表*/
 router.post('/list', function (request, response, next) {
 
-    var result = {code: 200};
-    var params = request.body;
-    logger.info("查询订单列表请求参数：" + JSON.stringify(params));
-    if (params.userId == null || params.userId == "" || params.userId <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-    if (params.perCount == null || params.perCount == "" || params.perCount <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-    if (params.curPage == null || params.curPage == "" || params.curPage <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-    var afterSaleList = [];
-    result.orderList = [];
-    result.afterSaleList = [];
-    async.series([
-            function (callback) {
-                try {
-                    Order.orderProfileQuery(params, function (err, orderInfo) {
-                        if (err) {
-                            logger.error("订单服务异常");
-                            return callback(1, null);
-                        }
-                        var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
-                        var orderList = [];
-                        if (orderInfo.orderProfileList !== null) {
-                            orderInfo.orderProfileList.forEach(function (order) {
-                                var orderItem = {
-                                    orderId: order.orderId,
-                                    closingPrice: order.closingPrice,
-                                    //添加了应答的数据
-                                    postage: order.postage,
-                                    username: order.username,
-                                    cancelName: order.cancelName,
-                                    sellerName: order.sellerName,
-                                    createTime: order.createTime,
-                                    expressNo: order.expressNo,
-                                    expressName: order.expressName,
-                                    receiverAddress: order.receiverAddress,
-                                    receiverName: order.receiverName,
-                                    receiverMobile: order.receiverMobile,
-                                    receiverTele: order.receiverTele,
-                                    orderState: order.orderState,
-                                    sellerComment: order.sellerComment,
-                                    buyerComment: order.buyerComment,
-                                    deliverTime: order.deliverTime,
-                                    successTime: order.successTime,
-                                    exchangeCash: order.exchangeCash,
-                                    exchangeScore: order.exchangeScore,
-                                    activeState: order.activeState,
-                                    postage: order.postage,
-                                    type: order.productList[0].type  //5.17测没有type
-                                };
-                                var productList = [];
-                                if (order.productList !== null && order.productList.length > 0) {
-                                    for (var i = 0; i < order.productList.length; i++) {
-                                        var productItem = {
-                                            productId: order.productList[i].productId,
-                                            productName: order.productList[i].productName,
-                                            skuNum: order.productList[i].skuNum,
-                                            skuName: order.productList[i].skuDesc,
-                                            curPrice: order.productList[i].curPrice,
-                                            imgUrl: order.productList[i].imagesUrl.split(',')[0],
-                                            count: order.productList[i].count
-                                        };
-                                        productList.push(productItem);
-                                    }
-                                    orderItem.productList = productList;
-                                    orderList.push(orderItem);
-                                }
-                            });
-
-                            var orderList1 = {
-                                "orderId": "5660002",
-                                "orderPrice": "1.00",
-                                "sellerName": null,
-                                "createTime": "2016-01-04 18:43:46",
-                                "orderState": 10,
-                                "sellerComment": null,
-                                "buyerComment": "",
-                                "deliverTime": "",
-                                "successTime": "",
-                                "exchangeCash": "0.00",
-                                "exchangeScore": 0,
-                                "activeState": 0,
-                                "type": 3,
-                                "productList": [
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    }
-                                ]
-                            };
-                            var orderList2 = {
-                                "orderId": "5660002",
-                                "orderPrice": "1.00",
-                                "sellerName": null,
-                                "createTime": "2016-01-04 18:43:46",
-                                "orderState": 61,
-                                "sellerComment": null,
-                                "buyerComment": "",
-                                "deliverTime": "",
-                                "successTime": "",
-                                "exchangeCash": "0.00",
-                                "exchangeScore": 0,
-                                "activeState": 0,
-                                "type": 3,
-                                "productList": [
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    }
-                                ]
-                            };
-                            var orderList3 = {
-                                "orderId": "5660002",
-                                "orderPrice": "1.00",
-                                "sellerName": null,
-                                "createTime": "2016-01-04 18:43:46",
-                                "orderState": 51,
-                                "sellerComment": null,
-                                "buyerComment": "",
-                                "deliverTime": "",
-                                "successTime": "",
-                                "exchangeCash": "0.00",
-                                "exchangeScore": 0,
-                                "activeState": 0,
-                                "type": 3,
-                                "productList": [
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    }
-                                ]
-                            };
-                            var orderList4 = {
-                                "orderId": "5660002",
-                                "orderPrice": "1.00",
-                                "sellerName": null,
-                                "createTime": "2016-01-04 18:43:46",
-                                "orderState": 51,
-                                "sellerComment": null,
-                                "buyerComment": "",
-                                "deliverTime": "",
-                                "successTime": "",
-                                "exchangeCash": "0.00",
-                                "exchangeScore": 0,
-                                "activeState": 0,
-                                "type": 2,
-                                "productList": [
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    },
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    },
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    }
-                                ]
-                            };
-                            var orderList5 = {
-                                "orderId": "5660002",
-                                "orderPrice": "1.00",
-                                "sellerName": null,
-                                "createTime": "2016-01-04 18:43:46",
-                                "orderState": 41,
-                                "sellerComment": null,
-                                "buyerComment": "",
-                                "deliverTime": "",
-                                "successTime": "",
-                                "exchangeCash": "0.00",
-                                "exchangeScore": 0,
-                                "activeState": 0,
-                                "type": 2,
-                                "productList": [
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    },
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    },
-                                    {
-                                        "productId": "ze151224013609000987",
-                                        "productName": "测试SKU",
-                                        "skuNum": "1-2:100-101",
-                                        "curPrice": "1.00",
-                                        "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                                        "count": 1
-                                    }
-                                ]
-                            };
-
-                            //orderList.push(orderList1);
-                            //orderList.push(orderList2);
-                            //orderList.push(orderList3);
-                            //orderList.push(orderList4);
-                            //orderList.push(orderList5);
-                            result.orderList = orderList;
-                            /*给出系统当前时间*/
-                            result.curTime = new Date().getTime();
-                            result.page = page;
-                        }
-                        logger.info("get order list response:" + JSON.stringify(result));
-                        return callback(null, result);
-                    });
-
-                } catch (ex) {
-                    logger.info("订单服务异常:" + ex);
-                    return callback(1, null);
-                }
-            }/*,
-            function (callback) {
-                try {
-                    if (params.orderState == null || params.orderState == "") {
-                        AfterSale.queryAfterSale(params, function (err, data) {
+    try {
+        var result = {code: 200};
+        var params = request.body;
+        if (params.userId == null || params.userId == "" || params.userId <= 0) {
+            result.code = 400;
+            result.desc = "用户id不能为空";
+            response.json(result);
+            return;
+        }
+        if (params.perCount == null || params.perCount == "" || params.perCount <= 0) {
+            result.code = 400;
+            result.desc = "请输入每页显示数量";
+            response.json(result);
+            return;
+        }
+        result.orderList = [];
+        async.series([
+                function (callback) {
+                    try {
+                        Order.orderProfileQuery(params, function (err, orderInfo) {
                             if (err) {
-                                return callback(2, null);
+                                logger.error("订单服务异常");
+                                return callback(1, null);
+                            }
+                            var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
+                            var orderList = [];
+                            if (orderInfo.orderProfileList !== null) {
+                                orderInfo.orderProfileList.forEach(function (order) {
+                                    var orderItem = {
+                                        orderId: order.orderId,
+                                        closingPrice: order.closingPrice,
+                                        //添加了应答的数据
+                                        postage: order.postage,
+                                        username: order.username,
+                                        cancelName: order.cancelName,
+                                        sellerName: order.sellerName,
+                                        createTime: order.createTime,
+                                        expressNo: order.expressNo,
+                                        expressName: order.expressName,
+                                        receiverAddress: order.receiverAddress,
+                                        receiverName: order.receiverName,
+                                        receiverMobile: order.receiverMobile,
+                                        receiverTele: order.receiverTele,
+                                        orderState: order.orderState,
+                                        sellerComment: order.sellerComment,
+                                        buyerComment: order.buyerComment,
+                                        deliverTime: order.deliverTime,
+                                        successTime: order.successTime,
+                                        exchangeCash: order.exchangeCash,
+                                        exchangeScore: order.exchangeScore,
+                                        activeState: order.activeState,
+                                        postage: order.postage,
+                                        type: order.productList[0].type  //5.17测没有type
+                                    };
+                                    var productList = [];
+                                    if (order.productList !== null && order.productList.length > 0) {
+                                        for (var i = 0; i < order.productList.length; i++) {
+                                            var productItem = {
+                                                productId: order.productList[i].productId,
+                                                productName: order.productList[i].productName,
+                                                skuNum: order.productList[i].skuNum,
+                                                skuName: order.productList[i].skuDesc,
+                                                curPrice: order.productList[i].curPrice,
+                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                count: order.productList[i].count
+                                            };
+                                            productList.push(productItem);
+                                        }
+                                        orderItem.productList = productList;
+                                        orderList.push(orderItem);
+                                    }
+                                });
+                                var orderList1 = {
+                                    "orderId": "5660002",
+                                    "orderPrice": "1.00",
+                                    "sellerName": null,
+                                    "createTime": "2016-01-04 18:43:46",
+                                    "orderState": 10,
+                                    "sellerComment": null,
+                                    "buyerComment": "",
+                                    "deliverTime": "",
+                                    "successTime": "",
+                                    "exchangeCash": "0.00",
+                                    "exchangeScore": 0,
+                                    "activeState": 0,
+                                    "type": 3,
+                                    "productList": [
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        }
+                                    ]
+                                };
+                                var orderList2 = {
+                                    "orderId": "5660002",
+                                    "orderPrice": "1.00",
+                                    "sellerName": null,
+                                    "createTime": "2016-01-04 18:43:46",
+                                    "orderState": 61,
+                                    "sellerComment": null,
+                                    "buyerComment": "",
+                                    "deliverTime": "",
+                                    "successTime": "",
+                                    "exchangeCash": "0.00",
+                                    "exchangeScore": 0,
+                                    "activeState": 0,
+                                    "type": 3,
+                                    "productList": [
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        }
+                                    ]
+                                };
+                                var orderList3 = {
+                                    "orderId": "5660002",
+                                    "orderPrice": "1.00",
+                                    "sellerName": null,
+                                    "createTime": "2016-01-04 18:43:46",
+                                    "orderState": 51,
+                                    "sellerComment": null,
+                                    "buyerComment": "",
+                                    "deliverTime": "",
+                                    "successTime": "",
+                                    "exchangeCash": "0.00",
+                                    "exchangeScore": 0,
+                                    "activeState": 0,
+                                    "type": 3,
+                                    "productList": [
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        }
+                                    ]
+                                };
+                                var orderList4 = {
+                                    "orderId": "5660002",
+                                    "orderPrice": "1.00",
+                                    "sellerName": null,
+                                    "createTime": "2016-01-04 18:43:46",
+                                    "orderState": 51,
+                                    "sellerComment": null,
+                                    "buyerComment": "",
+                                    "deliverTime": "",
+                                    "successTime": "",
+                                    "exchangeCash": "0.00",
+                                    "exchangeScore": 0,
+                                    "activeState": 0,
+                                    "type": 2,
+                                    "productList": [
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        },
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        },
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        }
+                                    ]
+                                };
+                                var orderList5 = {
+                                    "orderId": "5660002",
+                                    "orderPrice": "1.00",
+                                    "sellerName": null,
+                                    "createTime": "2016-01-04 18:43:46",
+                                    "orderState": 41,
+                                    "sellerComment": null,
+                                    "buyerComment": "",
+                                    "deliverTime": "",
+                                    "successTime": "",
+                                    "exchangeCash": "0.00",
+                                    "exchangeScore": 0,
+                                    "activeState": 0,
+                                    "type": 2,
+                                    "productList": [
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        },
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        },
+                                        {
+                                            "productId": "ze151224013609000987",
+                                            "productName": "测试SKU",
+                                            "skuNum": "1-2:100-101",
+                                            "curPrice": "1.00",
+                                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
+                                            "count": 1
+                                        }
+                                    ]
+                                };
+                                //orderList.push(orderList1);
+                                //orderList.push(orderList2);
+                                //orderList.push(orderList3);
+                                //orderList.push(orderList4);
+                                //orderList.push(orderList5);
+                                result.orderList = orderList;
+                                /*给出系统当前时间*/
+                                result.curTime = new Date().getTime();
+                                result.page = page;
                             }
                             logger.info("get order list response:" + JSON.stringify(result));
-                            afterSaleList = data;
-                            return callback(null, afterSaleList);
+                            return callback(null, result);
                         });
-                    } else {
-                        return callback(3, null);
+                    } catch (ex) {
+                        logger.info("订单服务异常:" + ex);
+                        return callback(1, null);
                     }
-                } catch (ex) {
-                    logger.info("售后服务异常:" + ex);
-                    return callback(2, null);
                 }
-            }*/
-        ],
-        function (err, results) {
-            if (err == 1) {
-                logger.error("查询订单列表失败---订单服务异常：" + err);
-                result.code = 500;
-                result.desc = "查询订单失败";
-                response.json(result);
-                return;
-            }
-            if (err == 2) {
-                logger.error("查询售后失败--售后服务异常：" + err);
-                response.json(results[0]);
-                return;
-            }
-            if (err == null && err != 3) {
+            ],
+            function (err, results) {
+                if (err == 1) {
+                    logger.error("查询订单列表失败---订单服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "查询订单失败";
+                    response.json(result);
+                    return;
+                }
                 logger.info("shuju------------->" + JSON.stringify(results));
                 result = results[0];
-                result.afterSaleList = results[1];
                 response.json(result);
                 return;
-            } else {
-                logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
-
-                response.json(result);
-                return;
-            }
-        });
+            });
+    } catch (ex) {
+        logger.error("查询订单列表失败---订单服务异常：" + err);
+        result.code = 500;
+        result.desc = "查询订单失败";
+        response.json(result);
+        return;
+    }
 });
 
 /*查询各订单状态的数量*/
@@ -1105,20 +1108,20 @@ router.post('/info2Test', function (req, res, next) {
 router.post('/info', function (req, res, next) {
     var result = {code: 200};
     try {
-        var arg = req.body;
-        logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
-
-        var params = {};
-        params.userId = arg.userId;
-        params.orderId = arg.orderId;
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
-        if (params.userId == null || params.orderId == null) {
+        var params = req.body;
+        if (params.userId == null || params.orderId == "") {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
             return;
         }
+        if (params.orderId == null || params.orderId == "") {
+            result.code = 400;
+            result.desc = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        logger.info("查询订单祥情请求参数：" + JSON.stringify(params));
         async.series([
                 function (callback) {
                     try {
@@ -1224,7 +1227,6 @@ router.post('/pay', function (req, res, next) {
     var result = {code: 200};
 
     var arg = req.body;
-    logger.info("order pay request:" + JSON.stringify(arg));
 
     if (arg == null || arg.payChannel == null || arg.orderIdList == null || arg.orderIdList.length <= 0) {
         result.code = 400;
@@ -1232,7 +1234,7 @@ router.post('/pay', function (req, res, next) {
         res.json(result);
         return;
     }
-
+    logger.info("order pay request:" + JSON.stringify(arg));
     if (arg.payChannel == 4) {
         Util.getOpenApi(arg, function (err, data) {
             try {
@@ -1267,6 +1269,28 @@ router.post('/pay', function (req, res, next) {
                 result.code = 500;
                 result.desc = "获取支付URL失败";
                 res.json(result);
+            }
+        });
+    } else if(arg.payChannel == 9){
+        Order.payApply(arg, function (err, payUrl) {
+            if (err) {
+                res.json(err);
+                return;
+            }
+            if (payUrl !== null) {
+                var urlInof = JSON.parse(payUrl.value);
+                result.payUrl = {
+                    sign :urlInof.sign,
+                    partnerid :urlInof.partnerid,
+                    appId :urlInof.partnerid,
+                    timeStamp :urlInof.partnerid,
+                    packageInfo :urlInof.package,
+                    prepayid :urlInof.prepayid,
+                    signType :urlInof.signType,
+                    nonceStr :urlInof.nonceStr
+                };
+                res.json(result);
+                logger.info("order pay response:" + JSON.stringify(result));
             }
         });
     } else {
