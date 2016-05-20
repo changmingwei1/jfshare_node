@@ -240,10 +240,11 @@ router.post('/querystore', function (req, res, next) {
     result.storehouseId = 0;
 
     var params = req.body;
+    params.storehouseId = 0;
     result.productId = params.productId;
     result.sellerId = params.sellerId;
     result.skuNum = params.skuNum;
-        async.series([
+    async.series([
             function (callback) {
                 try {
                     BaseTemplate.queryStorehouse(params, function (err, data) {
@@ -255,17 +256,23 @@ router.post('/querystore', function (req, res, next) {
                             if (storehouseList != null && storehouseList.length > 0) {
                                 for (var i = 0; i < storehouseList.length; i++) {
                                     var supportProvince = storehouseList[i].supportProvince;
-                                    if(supportProvince!=null){
+                                    if (supportProvince != null) {
 
                                         var list = supportProvince.split(",");
 
-                                        if(list!=null && list.length>0){
-                                            for(var i=0;i<list.length;i++){
-                                                if(list[i] ==params.provinceId){
-                                                    result.storehouseId = storehouseList[i].id;
+                                        if (list != null && list.length > 0) {
+                                            for (var j = 0; j < list.length; j++) {
+                                                if (list[j] == params.provinceId) {
+                                                    result.storehouseId = storehouseList[j].id;
+                                                    params.storehouseId = storehouseList[j].id;
                                                     break;
                                                 }
                                             }
+                                        }
+
+                                        if(params.storehouseId!=0){
+
+                                            break;
                                         }
                                     }
                                 }
@@ -303,7 +310,7 @@ router.post('/querystore', function (req, res, next) {
                             }
                         });
 
-                    }else{
+                    } else {
                         return callback(null, result);
                     }
 
@@ -326,12 +333,12 @@ router.post('/querystore', function (req, res, next) {
                                 if (stockInfo != null && stockInfo.total != null) {
                                     result.count = stockInfo.total;
                                 }
-                               return callback(null, result);
+                                return callback(null, result);
 
                             }
                         });
 
-                    }else{
+                    } else {
                         callback(null, result);
                         return;
                     }
@@ -351,9 +358,9 @@ router.post('/querystore', function (req, res, next) {
                 res.json(result);
                 return;
             } else {
-                if (results!=null&&results.length>0) {
-                    res.json(results[results.length-1]);
-                }else{
+                if (results != null && results.length > 0) {
+                    res.json(results[results.length - 1]);
+                } else {
                     result.code = 500;
                     result.desc = "获取库存价格失败";
                     res.json(result);
