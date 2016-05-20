@@ -88,7 +88,7 @@ router.get('/productAttribute', function (req, res, next) {
         var productInfo = {};
 
         var arg = req.query;
-        if(arg != null){
+        if (arg != null) {
             logger.info("get product list args:" + JSON.stringify(arg));
         }
         var productId = arg.productId;
@@ -147,7 +147,7 @@ router.get('/productInfo', function (req, res, next) {
                         productInfo.storehouseIds = product.storehouseIds;
                         productInfo.postageId = product.postageId;
                         var productSku = product.productSku;
-                        if( product.productSku !=null){
+                        if (product.productSku != null) {
                             result.minCurPrice = productSku.minCurPrice;
                             result.maxCurPrice = productSku.maxCurPrice;
                             result.minOrgPrice = productSku.minOrgPrice;
@@ -236,97 +236,125 @@ router.get('/productDetail', function (req, res, next) {
 router.post('/querystore', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
-    result.count = 0;
 
-    try {
-        var arg = req.body;
-        arg.storehouseId = 0;
-        /*productId = ze160515153359000306*/
-        async.waterfall([
-                function (callback) {
-                    BaseTemplate.queryStorehouse(arg, function (err, data) {
+    result.storehouseId = 0;
+
+    var params = req.body;
+    result.productId = params.productId;
+    result.sellerId = params.sellerId;
+    result.skuNum = params.skuNum;
+        async.series([
+            function (callback) {
+                try {
+                    BaseTemplate.queryStorehouse(params, function (err, data) {
                         if (err) {
                             callback('error', err);
+                            return;
                         } else {
                             var storehouseList = data[0].storehouseList;
                             if (storehouseList != null && storehouseList.length > 0) {
                                 for (var i = 0; i < storehouseList.length; i++) {
                                     var supportProvince = storehouseList[i].supportProvince;
-                                    if (supportProvince.indexOf(arg.provinceId) != -1) {
-                                        arg.storehouseId = storehouseList[i].id;
+                                    if (supportProvince.indexOf(params.provinceId) != -1) {
+                                        result.storehouseId = storehouseList[i].id;
+                                        params.storehouseId = storehouseList[i].id;
                                         break;
                                     }
                                 }
-                               // arg.storehouseId = storehouseId;
-                                logger.info("看看仓库信息：" + arg.storehouseId);
-                                callback(null, arg);
+                                // arg.storehouseId = storehouseId;
+                                logger.info("看看仓库信息：" + result.storehouseId);
+                                callback(null, result);
+                                return;
                             } else {
-                                callback(null, arg);
+                                callback(null, result);
+                                return;
                             }
                         }
                     });
-                },
-                function (arg, callback) {
-                    logger.info("请求参数，arg:" + JSON.stringify(arg));
-                    if(arg.storehouseId!=0){
+                } catch (ex) {
+                    logger.info("仓库服务异常:" + ex);
+                    return callback(1, null);
+                }
+            }
+            ,
+            function (callback) {
+                try {
+                    logger.info("请求参数，arg:" + JSON.stringify(params));
+                    if (result.storehouseId != 0) {
 
-                        Product.queryHotSKUV1(arg, function (err, data) {
+                        Product.queryHotSKUV1(params, function (err, data) {
                             if (err) {
                                 callback('error', err);
                                 return;
                             } else {
                                 var skuItems = data.product.productSku.skuItems;
-                                result.productId = data.product.productId;
                                 result.curPrice = skuItems[0].curPrice;
                                 result.orgPrice = skuItems[0].orgPrice;
-                                result.storehouseId = skuItems[0].storehouseId;
-                                result.skuNum = skuItems[0].skuNum;
                                 result.weight = skuItems[0].weight;
-                                callback(null, result);
-                                return;
+                                return callback(null, result);
                             }
                         });
 
+                    }else{
+                        return callback(null, result);
                     }
-                    callback(null, result);
-                    return;
-                },
-                function (result, callback) {
-                    if(arg.storehouseId!=0) {
-                        Stock.queryStock(result, function (err, data) {
+
+                } catch (ex) {
+                    logger.info("product服务异常:" + ex);
+                    return callback(2, null);
+                }
+
+            },
+            function (callback) {
+                try {
+                    logger.info("请求参数，arg:" + JSON.stringify(params));
+                    if (result.storehouseId != 0) {
+                        Stock.queryStock(params, function (err, data) {
                             if (err) {
-                                callback('error', err);
+                                callback(3, err);
                                 return;
                             } else {
                                 var stockInfo = data[0].stockInfo;
                                 if (stockInfo != null && stockInfo.total != null) {
                                     result.count = stockInfo.total;
                                 }
-                                callback(null, result);
-                                return;
+                               return callback(null, result);
+
                             }
                         });
-                    }
-                    callback(null, result);
-                    return;
-                }
-            ],
-            function (err, data) {
-                if (err) {
-                    res.json(data);
-                    return;
-                } else {
-                    logger.info("get skuItem response:" + JSON.stringify(result));
-                    res.json(data);
 
+                    }else{
+                        callback(null, result);
+                        return;
+                    }
+
+                } catch (ex) {
+                    logger.info("库存服务异常:" + ex);
+                    return callback(3, null);
                 }
-            });
-    } catch (ex) {
-        logger.error("get skuitem error:" + ex);
-        result.code = 500;
-        result.desc = "查询商品库存失败";
-        res.json(result);
-    }
+
+            }
+
+        ],
+        function (err, results) {
+            if (err) {
+                result.code = 500;
+                result.desc = "获取库存价格失败";
+                res.json(result);
+                return;
+            } else {
+                if (results!=null&&results.length>0) {
+                    res.json(results[results.length-1]);
+                }else{
+                    result.code = 500;
+                    result.desc = "获取库存价格失败";
+                    res.json(result);
+                    return;
+                }
+            }
+        }
+    )
+    ;
 });
 
 /*批量获取指定sku*/
@@ -511,7 +539,7 @@ router.post('/freight', function (req, res, next) {
     var result = {code: 200};
     try {
         var arg = req.body;
-        logger.info("看看是啥："+JSON.stringify(arg));
+        logger.info("看看是啥：" + JSON.stringify(arg));
         //if (arg.subjectId == null || arg.subjectId == "" || arg.subjectId < 0) {
         //    result.code = 400;
         //    result.desc = "参数错误";
