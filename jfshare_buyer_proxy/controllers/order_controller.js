@@ -182,7 +182,7 @@ router.post('/preview2', function (request, response, next) {
     }
 });
 
-//提交订单 --> 实物
+/*提交订单*/
 router.post('/submit', function (request, response, next) {
     logger.info("进入实物提交订单流程");
     var result = {code: 200};
@@ -309,7 +309,7 @@ router.post('/afterSaleList', function (request, response, next) {
                             }
                             afterOrderList = data.afterSaleOrders;
                             var pagination = {
-                                total: data.pagination.totalCount,
+                                total: data.pagination.totalCount,   //totalCount 未定义
                                 pageCount: data.pagination.pageNumCount
                             };
                             result.afterOrderList = afterOrderList;
@@ -1235,12 +1235,12 @@ router.post('/pay', function (req, res, next) {
         });
     } else {
         Order.payApply(arg, function (err, payUrl) {
-            var urlInof = JSON.parse(payUrl.value);
             if (err) {
                 res.json(err);
                 return;
             }
             if (payUrl !== null) {
+                var urlInof = JSON.parse(payUrl.value);
                 result.payUrl = urlInof;
                 res.json(result);
                 logger.info("order pay response:" + JSON.stringify(result));

@@ -114,14 +114,18 @@ Order.prototype.payApply = function (param, callback) {
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "payApply", payParam);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("call orderServ-payApply result:" + JSON.stringify(data[0]));
+        logger.info("call orderServ-payApply result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == "1") {
+        if (err) {
             logger.error("调用orderServ-payApply失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "提交订单失败！";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data[0]);
         }
     });
