@@ -17,8 +17,13 @@ router.post('/count', function (req, res, next) {
     var result = {code: 200};
     try {
         var param = req.body;
-        if (param == null || param.userId == "" || param.userId == null || param.userId <= 0) {
-            logger.info("请求的参数，arg：" + JSON.stringify(param));
+        if (param == null) {
+            result.code = 400;
+            result.desc = "请求参数不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.userId == "" || param.userId == null || param.userId <= 0) {
             result.code = 400;
             result.desc = "参数错误，用户id不能为空";
             res.json(result);
@@ -42,6 +47,7 @@ router.post('/count', function (req, res, next) {
             res.json(result);
             return;
         }
+        logger.info("请求的参数，arg：" + JSON.stringify(param));
 //暂时去掉鉴权信息
 //    Buyer.validAuth(param,function(err,data) {
 //        if (err) {
@@ -72,7 +78,6 @@ router.post('/add', function (req, res, next) {
     try {
         var param = req.body;
         if (param == null) {
-            logger.info("请求的参数，arg：" + JSON.stringify(param));
             result.code = 400;
             result.desc = "请求参数不能为空";
             res.json(result);
@@ -114,6 +119,7 @@ router.post('/add', function (req, res, next) {
             res.json(result);
             return;
         }
+        logger.info("请求的参数，arg：" + JSON.stringify(param));
 //暂时去掉鉴权信息
 //    Buyer.validAuth(param,function(err,data) {
 //        if (err) {
@@ -142,10 +148,15 @@ router.post('/delete', function (req, res, next) {
     var result = {code: 200};
     try {
         var param = req.body;
-        if (param == null || param.userId == null) {
-            logger.info("请求的参数，arg：" + JSON.stringify(param));
+        if (param == null) {
             result.code = 400;
-            result.desc = "请求参数错误";
+            result.desc = "请求参数不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.userId == null || param.userId == "") {
+            result.code = 400;
+            result.desc = "用户id不能为空";
             res.json(result);
             return;
         }
@@ -167,6 +178,7 @@ router.post('/delete', function (req, res, next) {
             res.json(result);
             return;
         }
+        logger.info("请求的参数，arg：" + JSON.stringify(param));
 // 暂时去掉鉴权信息
 //    Buyer.validAuth(param,function(err,data) {
 //        if (err) {
@@ -195,11 +207,15 @@ router.post('/list', function (req, res, next) {
     var result = {code: 200};
     try {
         var param = req.body;
-
-        if (param == null || param.userId == null || param.userId == "") {
-            logger.info("get cart list request:" + JSON.stringify(param));
+        if (param == null) {
             result.code = 400;
-            result.desc = "请求参数错误";
+            result.desc = "请求参数不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.userId == null || param.userId == "") {
+            result.code = 400;
+            result.desc = "用户id不能为空";
             res.json(result);
             return;
         }
@@ -221,8 +237,9 @@ router.post('/list', function (req, res, next) {
             res.json(result);
             return;
         }
+        logger.info("get cart list request:" + JSON.stringify(param));
 //暂时去掉鉴权信息
-//    Buyer.validAuth(args,function(err,data) {
+//    Buyer.validAuth(param,function(err,data) {
 //        if (err) {
 //            response.json(err);
 //            return;
@@ -233,33 +250,6 @@ router.post('/list', function (req, res, next) {
                 return;
             }
             var cartList = [];
-            /*itemList.forEach(function (a) {
-             cartLists.sellerId = a.seller.sellerId;
-             cartLists.sellerName = a.seller.sellerName;
-             cartLists.remark = "六一儿童节大优惠";
-             var productList = [];
-             var itemDetailList = a.itemDetailList;
-             itemDetailList.forEach(function (b) {
-             productList.push({
-             productId: b.product.product.productId,
-             productName: b.product.product.productName,
-             activeState: b.product.product.activeState,
-             storehouseIds: b.product.product.storehouseIds,
-             cartPrice: b.product.cartPrice,
-             skuCount: b.product.skuCount - b.product.lockCount,
-             count: b.product.count,
-             sku: {
-             skuNum: b.product.product.productSku.skuItems[0].skuNum,
-             skuName: b.product.product.productSku.skuItems[0].skuName,
-             weight: b.product.product.productSku.skuItems[0].weight
-             //curPrice: b.product.product.productSku.skuItems[0].curPrice,
-             //orgPrice: b.product.product.productSku.skuItems[0].orgPrice
-             },
-             imgKey: b.product.product.imgKey.split(',')[0]
-             });
-             });
-             cartLists.productList = productList;
-             });*/
             if (itemList != null) {
                 for (var i = 0; i < itemList.length; i++) {
                     var cartLists = {
@@ -322,7 +312,6 @@ router.post('/list', function (req, res, next) {
              result.cartList = [];
              res.json(result);
              }*/
-
         });
         //});
     } catch (ex) {
@@ -339,9 +328,15 @@ router.post('/update', function (req, res, next) {
 
     try {
         var param = req.body;
-        if (param == null || param.userId == null || param.userId == "") {
-            logger.info("get cart list request:" + JSON.stringify(param));
+        if (param == null) {
             result.code = 400;
+            result.desc = "请求参数不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.userId == null || param.userId == "") {
+            result.code = 400;
+            result.desc = "用户id不能为空";
             res.json(result);
             return;
         }
@@ -363,6 +358,7 @@ router.post('/update', function (req, res, next) {
             res.json(result);
             return;
         }
+        logger.info("get cart list request:" + JSON.stringify(param));
 //暂时去掉鉴权信息
 //    Buyer.validAuth(arg,function(err,data) {
 //        if (err) {
