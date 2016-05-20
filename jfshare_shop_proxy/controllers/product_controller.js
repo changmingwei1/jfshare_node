@@ -255,10 +255,18 @@ router.post('/querystore', function (req, res, next) {
                             if (storehouseList != null && storehouseList.length > 0) {
                                 for (var i = 0; i < storehouseList.length; i++) {
                                     var supportProvince = storehouseList[i].supportProvince;
-                                    if (supportProvince.indexOf(params.provinceId) != -1) {
-                                        result.storehouseId = storehouseList[i].id;
-                                        params.storehouseId = storehouseList[i].id;
-                                        break;
+                                    if(supportProvince!=null){
+
+                                        var list = supportProvince.split(",");
+
+                                        if(list!=null && list.length>0){
+                                            for(var i=0;i<list.length;i++){
+                                                if(list[i] ==params.provinceId){
+                                                    result.storehouseId = storehouseList[i].id;
+                                                    break;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 // arg.storehouseId = storehouseId;
