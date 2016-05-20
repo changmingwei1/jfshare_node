@@ -171,7 +171,6 @@ router.get('/list', function(req, res, next) {
 router.post('/getprovinces', function(req, res, next) {
     var result = {code: 200};
     try{
-
         Address.getProvinces(function(err, data) {
             if(err){
                 res.json(err);
