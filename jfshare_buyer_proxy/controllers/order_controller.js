@@ -744,13 +744,6 @@ router.post('/count', function (request, response, next) {
         response.json(resContent);
         return;
     }
-    if (arg.userType == null || arg.userType == "" || arg.userType <= 0) {
-        resContent.code = 400;
-        resContent.desc = "userType 不能为空【1（买家）、2（卖家）、3 (系统)】";
-        response.json(resContent);
-        return;
-    }
-
     logger.info("请求参数信息" + JSON.stringify(arg));
 
     try {
@@ -1003,9 +996,8 @@ router.post('/info2Test', function (req, res, next) {
         logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
 
         var params = {};
-        params.userId = arg.userId || 2;
-        params.orderId = arg.orderId || "5780002";
-        params.userType = arg.userType || 1; // 1:买家 2：卖家 3：系统
+        params.userId = arg.userId;
+        params.orderId = arg.orderId;
         params.token = arg.token || "鉴权信息1";
         params.ppInfo = arg.ppInfo || "鉴权信息2";
         if (params.userId == null || params.orderId == null) {
@@ -1014,54 +1006,93 @@ router.post('/info2Test', function (req, res, next) {
             res.json(result);
             return;
         }
-        Order.queryOrderDetail(params, function (err, orderInfo) {
-            if (err) {
-                res.json(err);
-                return;
-            }
-            if (orderInfo == null) {
-                result.code = 404;
-                result.desc = "未找到订单";
-                res.json(result);
-                return;
-            }
-            result.orderId = orderInfo.orderId;
-            //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
-            result.orderState = orderInfo.orderState;
-            if (orderInfo.deliverInfo !== null) {
-                result.address = orderInfo.deliverInfo.provinceName +
-                    orderInfo.deliverInfo.cityName +
-                    orderInfo.deliverInfo.countyName +
-                    orderInfo.deliverInfo.receiverAddress;
-                result.receiverName = orderInfo.deliverInfo.receiverName;
-                result.mobile = orderInfo.deliverInfo.mobile || "13558731842";
-            }
-            result.curTime = new Date().getTime();
-            result.createTime = orderInfo.createTime || "2016-05-03 10:01:58";
-            result.deliverTime = orderInfo.deliverTime || "2016-05-04 11:01:58"; //卖家发货时间
-            result.successTime = orderInfo.successTime || "2016-05-06 12:01:58"; //确认收货时间
-            result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
-            result.sellerName = "测试商家1";
-            //result.sellerName = orderInfo.sellerName;  /*thrift文件有字段，但是没办法读取*/
-            var productList = [];
-            if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
-                for (var i = 0; i < orderInfo.productList.length; i++) {
-                    productList.push({
-                        productId: orderInfo.productList[i].productId,
-                        productName: orderInfo.productList[i].productName,
-                        sku: {skuNum: orderInfo.productList[i].skuNum, skuName: orderInfo.productList[i].skuDesc},
-                        curPrice: orderInfo.productList[i].curPrice,
-                        orgPrice: orderInfo.productList[i].orgPrice,
-                        imgUrl: orderInfo.productList[i].imagesUrl,
-                        count: orderInfo.productList[i].count
-                    });
-                }
-                result.productList = productList;
-            }
-            res.json(result);
-            logger.info("get order info response:" + JSON.stringify(result));
-        });
+        async.series([
+                function (callback) {
+                    try {
+                        Order.queryOrderDetail(params, function (err, orderInfo) {
+                            if (err) {
+                                callback('error', err);
+                                return;
+                            }
+                            if (orderInfo.orderId == null) {
+                                result.code = 404;
+                                result.desc = "未找到订单";
+                                res.json(result);
+                                return;
+                            }
+                            result.orderId = orderInfo.orderId;
+                            //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+                            result.orderState = orderInfo.orderState;
+                            if (orderInfo.deliverInfo !== null) {
+                                result.mobile = orderInfo.deliverInfo.receiverMobile;
+                            }
+                            result.curTime = new Date().getTime();
+                            result.createTime = orderInfo.createTime;
+                            result.deliverTime = orderInfo.deliverTime; //卖家发货时间
+                            result.successTime = orderInfo.successTime; //确认收货时间
+                            result.comment = orderInfo.buyerComment;
+                            var productList = [];
+                            if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
+                                for (var i = 0; i < orderInfo.productList.length; i++) {
+                                    productList.push({
+                                        productId: orderInfo.productList[i].productId,
+                                        productName: orderInfo.productList[i].productName,
+                                        sku: {
+                                            skuNum: orderInfo.productList[i].skuNum,
+                                            skuName: orderInfo.productList[i].skuDesc
+                                        },
+                                        curPrice: orderInfo.productList[i].curPrice,
+                                        orgPrice: orderInfo.productList[i].orgPrice,
+                                        imgKey: orderInfo.productList[i].imagesUrl,
+                                        count: orderInfo.productList[i].count
+                                    });
+                                }
+                                result.productList = productList;
+                            }
+                            params.sellerId = orderInfo.sellerId;
+                            logger.info("get order info response:" + JSON.stringify(result));
+                            callback(null, result);
+                        });
+                    } catch (ex) {
+                        logger.info("订单服务异常:" + ex);
+                        return callback(1, null);
+                    }
 
+                }, function (callback) {
+                    try {
+                        Seller.querySeller(params.sellerId, 1, function (err, data) {
+                            if (err) {
+                                callback('error', err);
+                                return;
+                            } else {
+                                result.sellerName = data[0].seller.sellerName;
+                                logger.info("获取到的商品信息：" + JSON.stringify(result));
+                                callback(null, result);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("卖家服务异常:" + ex);
+                        return callback(2, null);
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    result.code = 500;
+                    result.desc = "查看商品详情失败";
+                    res.json(result);
+                    return;
+                } else {
+                    if (results != null && results.length > 0) {
+                        res.json(results[results.length - 1]);
+                    } else {
+                        result.code = 500;
+                        result.desc = "查看订单详情失败";
+                        res.json(result);
+                        return;
+                    }
+                }
+            });
     } catch (ex) {
         logger.error("查询订单详情失败：" + ex);
         result.code = 500;
@@ -1078,9 +1109,8 @@ router.post('/info', function (req, res, next) {
         logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
 
         var params = {};
-        params.userId = arg.userId || 2;
-        params.orderId = arg.orderId || "5780002";
-        params.userType = arg.userType || 1; // 1:买家 2：卖家 3：系统
+        params.userId = arg.userId;
+        params.orderId = arg.orderId;
         params.token = arg.token || "鉴权信息1";
         params.ppInfo = arg.ppInfo || "鉴权信息2";
         if (params.userId == null || params.orderId == null) {
@@ -1089,93 +1119,98 @@ router.post('/info', function (req, res, next) {
             res.json(result);
             return;
         }
-        Order.queryOrderDetail(params, function (err, orderInfo) {
-            if (err) {
-                res.json(err);
-                return;
-            }
-            if (orderInfo == null) {
-                result.code = 404;
-                result.desc = "未找到订单";
-                res.json(result);
-                return;
-            }
-            result.orderId = orderInfo.orderId;
-            //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
-            result.orderState = orderInfo.orderState;
-            if (orderInfo.deliverInfo !== null) {
-                result.address = orderInfo.deliverInfo.provinceName +
-                    orderInfo.deliverInfo.cityName +
-                    orderInfo.deliverInfo.countyName +
-                    orderInfo.deliverInfo.receiverAddress;
-                result.receiverName = orderInfo.deliverInfo.receiverName;
-                result.mobile = orderInfo.deliverInfo.mobile || "13558731842";
-            }
-            result.curTime = new Date().getTime();
-            result.createTime = orderInfo.createTime || "2016-05-03 10:01:58";
-            result.deliverTime = orderInfo.deliverTime || "2016-05-04 11:01:58"; //卖家发货时间
-            result.successTime = orderInfo.successTime || "2016-05-06 12:01:58"; //确认收货时间
-            result.comment = orderInfo.buyerComment || "请周一到周五的下午6点后送货";
-            result.sellerName = "测试商家1";
-            //result.sellerName = orderInfo.sellerName;  /*thrift文件有字段，但是没办法读取*/
-            var productList = [];
-            if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
-                for (var i = 0; i < orderInfo.productList.length; i++) {
-                    productList.push({
-                        productId: orderInfo.productList[i].productId,
-                        productName: orderInfo.productList[i].productName,
-                        sku: {skuNum: orderInfo.productList[i].skuNum, skuName: orderInfo.productList[i].skuDesc},
-                        curPrice: orderInfo.productList[i].curPrice,
-                        orgPrice: orderInfo.productList[i].orgPrice,
-                        imgUrl: orderInfo.productList[i].imagesUrl,
-                        count: orderInfo.productList[i].count,
-                        postage: orderInfo.productList[i].postage || "10"
-
-                    });
+        async.series([
+                function (callback) {
+                    try {
+                        Order.queryOrderDetail(params, function (err, orderInfo) {
+                            if (err) {
+                                callback('error', err);
+                                return;
+                            }
+                            if (orderInfo.orderId == null) {
+                                result.code = 404;
+                                result.desc = "未找到订单";
+                                res.json(result);
+                                return;
+                            }
+                            result.orderId = orderInfo.orderId;
+                            //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+                            result.orderState = orderInfo.orderState;
+                            if (orderInfo.deliverInfo !== null) {
+                                result.address = orderInfo.deliverInfo.provinceName +
+                                    orderInfo.deliverInfo.cityName +
+                                    orderInfo.deliverInfo.countyName +
+                                    orderInfo.deliverInfo.receiverAddress;
+                                result.receiverName = orderInfo.deliverInfo.receiverName;
+                                result.mobile = orderInfo.deliverInfo.receiverMobile;
+                            }
+                            result.curTime = new Date().getTime();
+                            result.createTime = orderInfo.createTime;
+                            result.deliverTime = orderInfo.deliverTime; //卖家发货时间
+                            result.successTime = orderInfo.successTime; //确认收货时间
+                            result.comment = orderInfo.buyerComment;
+                            result.postage = orderInfo.postage;
+                            var productList = [];
+                            if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
+                                for (var i = 0; i < orderInfo.productList.length; i++) {
+                                    productList.push({
+                                        productId: orderInfo.productList[i].productId,
+                                        productName: orderInfo.productList[i].productName,
+                                        sku: {
+                                            skuNum: orderInfo.productList[i].skuNum,
+                                            skuName: orderInfo.productList[i].skuDesc
+                                        },
+                                        curPrice: orderInfo.productList[i].curPrice,
+                                        orgPrice: orderInfo.productList[i].orgPrice,
+                                        imgKey: orderInfo.productList[i].imagesUrl,
+                                        count: orderInfo.productList[i].count
+                                    });
+                                }
+                                result.productList = productList;
+                            }
+                            params.sellerId = orderInfo.sellerId;
+                            logger.info("get order info response:" + JSON.stringify(result));
+                            callback(null, result);
+                        });
+                    } catch (ex) {
+                        logger.info("订单服务异常:" + ex);
+                        return callback(1, null);
+                    }
+                }, function (callback) {
+                    try {
+                        Seller.querySeller(params.sellerId, 1, function (err, data) {
+                            if (err) {
+                                callback('error', err);
+                                return;
+                            } else {
+                                result.sellerName = data[0].seller.sellerName;
+                                logger.info("获取到的商品信息：" + JSON.stringify(result));
+                                callback(null, result);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("卖家服务异常:" + ex);
+                        return callback(2, null);
+                    }
                 }
-                var productList2 = {
-                    "productId": "ze151224013609000987",
-                    "productName": "测试SKU",
-                    sku: {"skuNum": "1-2:100-101", "skuName": "颜色-天蓝色:尺码-均码"},
-                    "curPrice": "1.00",
-                    "orgPrice": "2.00",
-                    "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                    "count": 1,
-                    "postage": 10,
-                    "productState": 1
-                };
-                var productList3 = {
-                    "productId": "ze151224013609000987",
-                    "productName": "测试SKU",
-                    sku: {"skuNum": "1-2:100-101", "skuName": "颜色-天蓝色:尺码-均码"},
-                    "curPrice": "1.00",
-                    "orgPrice": "2.00",
-                    "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                    "count": 1,
-                    "postage": 10,
-                    "productState": 2
-                };
-                var productList4 = {
-                    "productId": "ze151224013609000987",
-                    "productName": "测试SKU",
-                    sku: {"skuNum": "1-2:100-101", "skuName": "颜色-天蓝色:尺码-均码"},
-                    "curPrice": "1.00",
-                    "orgPrice": "2.00",
-                    "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                    "count": 1,
-                    "postage": 10,
-                    "productState": 3
-                };
-
-                productList.push(productList2);
-                productList.push(productList3);
-                productList.push(productList4);
-                result.productList = productList;
-            }
-            res.json(result);
-            logger.info("get order info response:" + JSON.stringify(result));
-        });
-
+            ],
+            function (err, results) {
+                if (err) {
+                    result.code = 500;
+                    result.desc = "查看商品详情失败";
+                    res.json(result);
+                    return;
+                } else {
+                    if (results != null && results.length > 0) {
+                        res.json(results[results.length - 1]);
+                    } else {
+                        result.code = 500;
+                        result.desc = "查看订单详情失败";
+                        res.json(result);
+                        return;
+                    }
+                }
+            });
     } catch (ex) {
         logger.error("查询订单详情失败：" + ex);
         result.code = 500;

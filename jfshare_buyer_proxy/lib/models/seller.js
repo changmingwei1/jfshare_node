@@ -21,10 +21,10 @@ var seller_types = require('../thrift/gen_code/seller_types');
 //var soltImage_types = require('../thrift/gen_code/soltImage_types');
 
 function Seller(){}
-//获取个人用户信息
+//获取卖家用户信息
 Seller.prototype.querySeller = function(sellerId,baseTag,callback){
 
-    var param = new buyer_types.SellerRetParam({
+    var param = new seller_types.SellerRetParam({
         baseTag:baseTag || 0  //需要查询出的粒度，0:不需要此信息,1:需要此信息
     });
 
