@@ -388,4 +388,30 @@ Product.prototype.setProductState = function (params, callback) {
         }
     });
 };
+
+//查询商品详情
+Product.prototype.queryProductDetail = function (arg, callback) {
+
+    var param = new product_types.ProductDetailParam({
+        detailKey: arg.detailKey,
+        productId: arg.productId
+    });
+    logger.info("get productDetail info args:" + JSON.stringify(param));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductDetail", param);
+
+    //invite productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用productServ-queryProductDetail result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用productServ-queryProductDetail查询商品详情  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询商品详情失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
 module.exports = new Product();
