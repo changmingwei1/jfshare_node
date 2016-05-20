@@ -480,7 +480,8 @@ router.post('/list', function (request, response, next) {
                                     exchangeCash: order.exchangeCash,
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
-                                    type: 2   /*type: order.productList[0].type  //5.17测没有type*/
+                                    postage: order.postage,
+                                    type: order.productList[0].type  //5.17测没有type
                                 };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
@@ -1214,12 +1215,12 @@ router.post('/pay', function (req, res, next) {
 
                 logger.info("arg:" + JSON.stringify(arg));
                 Order.payApply(arg, function (err, payUrl) {
-                    var urlInof = JSON.parse(payUrl.value);
                     if (err) {
                         res.json(err);
                         return;
                     }
                     if (payUrl !== null) {
+                        var urlInof = JSON.parse(payUrl.value);
                         result.payUrl = urlInof;
                         res.json(result);
                         logger.info("order pay response:" + JSON.stringify(result));
