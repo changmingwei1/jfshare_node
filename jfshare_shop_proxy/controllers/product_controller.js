@@ -240,7 +240,7 @@ router.post('/querystore', function (req, res, next) {
 
     try {
         var arg = req.body;
-        arg.storehouseId =0;
+        arg.storehouseId = 0;
         /*productId = ze160515153359000306*/
         async.waterfall([
                 function (callback) {
@@ -273,6 +273,7 @@ router.post('/querystore', function (req, res, next) {
                         Product.queryHotSKUV1(arg, function (err, data) {
                             if (err) {
                                 callback('error', err);
+                                return;
                             } else {
                                 var skuItems = data.product.productSku.skuItems;
                                 result.productId = data.product.productId;
@@ -282,27 +283,32 @@ router.post('/querystore', function (req, res, next) {
                                 result.skuNum = skuItems[0].skuNum;
                                 result.weight = skuItems[0].weight;
                                 callback(null, result);
+                                return;
                             }
                         });
 
                     }
                     callback(null, result);
+                    return;
                 },
                 function (result, callback) {
                     if(arg.storehouseId!=0) {
                         Stock.queryStock(result, function (err, data) {
                             if (err) {
                                 callback('error', err);
+                                return;
                             } else {
                                 var stockInfo = data[0].stockInfo;
                                 if (stockInfo != null && stockInfo.total != null) {
                                     result.count = stockInfo.total;
                                 }
                                 callback(null, result);
+                                return;
                             }
                         });
                     }
                     callback(null, result);
+                    return;
                 }
             ],
             function (err, data) {
@@ -310,8 +316,9 @@ router.post('/querystore', function (req, res, next) {
                     res.json(data);
                     return;
                 } else {
-                    res.json(data);
                     logger.info("get skuItem response:" + JSON.stringify(result));
+                    res.json(data);
+
                 }
             });
     } catch (ex) {
