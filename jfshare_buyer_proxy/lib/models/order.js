@@ -60,7 +60,7 @@ Order.prototype.orderProfileQuery = function (param, callback) {
 /*查询各订单状态的数量*/
 Order.prototype.orderStateQuery = function (param, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({count: param.percount, curPage: param.curpage});
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderStateQuery", [param.userType, param.userId, orderQueryConditions]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderStateQuery", [1, param.userId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-orderStateQuery  result:" + JSON.stringify(data));
