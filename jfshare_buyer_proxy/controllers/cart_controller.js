@@ -16,50 +16,32 @@ router.post('/count', function (req, res, next) {
     logger.info("进入查询购物车中商品数量的接口...");
     var result = {code: 200};
     try {
-        var arg = req.body;
-        var userId = arg.userId;
-        var token = arg.token;
-        var ppInfo = arg.ppInfo;
-        var source = arg.source;
-        var browser = arg.browser;
-
-        var param = {};
-        param.userId = userId;
-        param.token = token;
-        param.ppInfo = ppInfo;
-        param.source = source;
-        param.browser = browser;
-
-        if (param.userId == "" || param.userId == null || param.userId <= 0) {
+        var param = req.body;
+        if (param == null || param.userId == "" || param.userId == null || param.userId <= 0) {
+            logger.info("请求的参数，arg：" + JSON.stringify(param));
             result.code = 400;
             result.desc = "参数错误，用户id不能为空";
             res.json(result);
             return;
         }
-
         if (param.token == "" || param.token == null) {
             result.code = 400;
-            result.desc = "参数错误";
+            result.desc = "鉴权信息不能为空";
             res.json(result);
             return;
         }
-
         if (param.ppInfo == "" || param.ppInfo == null) {
             result.code = 400;
-            result.desc = "参数错误";
+            result.desc = "鉴权信息不能为空";
             res.json(result);
             return;
         }
-
         if (param.browser == "" || param.browser == null) {
             result.code = 400;
-            result.desc = "参数错误";
+            result.desc = "浏览器标识不能为空";
             res.json(result);
             return;
         }
-
-        logger.info("get cart count request:" + JSON.stringify(param));
-
 //暂时去掉鉴权信息
 //    Buyer.validAuth(param,function(err,data) {
 //        if (err) {
@@ -88,24 +70,14 @@ router.post('/count', function (req, res, next) {
 router.post('/add', function (req, res, next) {
     var result = {code: 200};
     try {
-        var arg = req.body;
-        if (arg == null) {
+        var param = req.body;
+        if (param == null) {
+            logger.info("请求的参数，arg：" + JSON.stringify(param));
             result.code = 400;
+            result.desc = "请求参数不能为空";
             res.json(result);
             return;
         }
-        var param = {};
-        param.userId = arg.userId;
-        param.productId = arg.productId;
-        param.skuNum = arg.skuNum;
-        param.count = arg.count;
-        param.price = arg.price;
-        param.storehouseId = arg.storehouseId;
-        param.source = arg.source;
-        param.token = arg.token || "111";
-        param.ppInfo = arg.ppInfo || "222";
-        param.browser = arg.browser || "1";
-
         if (param.userId == null || param.userId == "" || param.userId <= 0) {
             result.code = 400;
             result.desc = "用户id参数错误";
@@ -142,11 +114,8 @@ router.post('/add', function (req, res, next) {
             res.json(result);
             return;
         }
-
-        logger.info("请求参数：" + JSON.stringify(param));
-
 //暂时去掉鉴权信息
-//    Buyer.validAuth(args,function(err,data) {
+//    Buyer.validAuth(param,function(err,data) {
 //        if (err) {
 //            response.json(err);
 //            return;
@@ -171,26 +140,40 @@ router.post('/add', function (req, res, next) {
 /*删除购物车项目*/
 router.post('/delete', function (req, res, next) {
     var result = {code: 200};
-
     try {
-        var arg = req.body;
-        arg.token = "鉴权信息1";
-        arg.ppInfo = "鉴权信息2";
-        if (arg == null || arg.userId == null) {
+        var param = req.body;
+        if (param == null || param.userId == null) {
+            logger.info("请求的参数，arg：" + JSON.stringify(param));
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
             return;
         }
+        if (param.token == "" || param.token == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.ppInfo == "" || param.ppInfo == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.browser == "" || param.browser == null) {
+            result.code = 400;
+            result.desc = "浏览器标识不能为空";
+            res.json(result);
+            return;
+        }
 // 暂时去掉鉴权信息
-//    Buyer.validAuth(args,function(err,data) {
+//    Buyer.validAuth(param,function(err,data) {
 //        if (err) {
 //            response.json(err);
 //            return;
 //        }
-        logger.info("请求的参数，arg：" + JSON.stringify(arg));
-        //logger.info("请求的参数，arg：" + JSON.stringify(arg));
-        Cart.deleteCartItem(arg, function (err, data) {
+        Cart.deleteCartItem(param, function (err, data) {
             if (err) {
                 res.json(err);
                 return;
@@ -211,17 +194,30 @@ router.post('/delete', function (req, res, next) {
 router.post('/list', function (req, res, next) {
     var result = {code: 200};
     try {
-        var arg = req.body;
-        var param = {};
-        param.userId = arg.userId;
-        param.source = arg.source || 2;
-        param.token = arg.token || "鉴权信息1";
-        param.ppInfo = arg.ppInfo || "鉴权信息2";
+        var param = req.body;
 
-        logger.info("get cart list request:" + JSON.stringify(arg));
         if (param == null || param.userId == null || param.userId == "") {
+            logger.info("get cart list request:" + JSON.stringify(param));
             result.code = 400;
             result.desc = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        if (param.token == "" || param.token == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.ppInfo == "" || param.ppInfo == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.browser == "" || param.browser == null) {
+            result.code = 400;
+            result.desc = "浏览器标识不能为空";
             res.json(result);
             return;
         }
@@ -342,9 +338,28 @@ router.post('/update', function (req, res, next) {
     var result = {code: 200};
 
     try {
-        var arg = req.body;
-        if (arg == null) {
+        var param = req.body;
+        if (param == null || param.userId == null || param.userId == "") {
+            logger.info("get cart list request:" + JSON.stringify(param));
             result.code = 400;
+            res.json(result);
+            return;
+        }
+        if (param.token == "" || param.token == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.ppInfo == "" || param.ppInfo == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (param.browser == "" || param.browser == null) {
+            result.code = 400;
+            result.desc = "浏览器标识不能为空";
             res.json(result);
             return;
         }
