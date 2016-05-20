@@ -219,77 +219,6 @@ router.post('/submit', function (request, response, next) {
         response.json(result);
     }
 });
-//提交订单 --> 虚拟
-/*router.post('/submit', function (request, response, next) {
-    logger.info("进入实物提交订单流程");
-    var result = {code: 200};
-    try {
-        //var params = request.query;
-        var params = request.body;
-        var args = {};
-        args.token = params.token || "鉴权信息1";
-        args.ppInfo = params.ppInfo || "鉴权信息2";
-        args.userId = params.userId || 2;
-
-        var product1 = {
-            productId: "ze160216170722000745",
-            productName: "博纳2D通兑票",
-            skuNum: "1-16",
-            skuName: "节假日通用",
-            count: 2,
-            curPrice: "100",
-            imgUrl: "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-        };
-        var product2 = {
-            productId: "ze160216170722000745",
-            productName: "博纳2D通兑票",
-            skuNum: "1-16",
-            skuName: "节假日通用",
-            count: 2,
-            curPrice: "100",
-            imgUrl: "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-        };
-        var product3 = {
-            productId: "ze160216170722000745",
-            productName: "博纳2D通兑票",
-            skuNum: "1-16",
-            skuName: "节假日通用",
-            count: 2,
-            curPrice: "100",
-            imgUrl: "BBBC6302C54E93780C23DBCECB4F651B.jpg"
-        };
-        var productList1 = [product1, product2, product3];
-        var productList2 = [product1, product2];
-        var productList3 = [product1];
-        var cartList1 = {
-            sellerId: 1,
-            sellerName: "虚拟商品商家1",
-            productList: productList1
-        };
-        var cartList2 = {
-            sellerId: 2,
-            sellerName: "虚拟商品商家2",
-            productList: productList2
-        };
-        var cartList3 = {
-            sellerId: 3,
-            sellerName: "虚拟商品商家3",
-            productList: productList3
-        };
-        params.cartList = [cartList1, cartList2, cartList3];
-
-        args.cartList = params.cartList;
-        args.mobile = params.mobile || "13558731840";
-
-        logger.info(JSON.stringify(args));
-
-        result.orderId = "13110057";
-
-        response.json(result);
-    } catch (ex) {
-        response.json(result);
-    }
-});*/
 
 //取消订单
 router.post('/cancelOrder', function (req, res, next) {
@@ -341,581 +270,155 @@ router.post('/cancelOrder', function (req, res, next) {
     }
 });
 
-// 查询售后订单列表
-router.post('/afterSaleList', function (req, res, next) {
-
-    logger.info("++++++++++++");
+/*获取售后的订单列表*/
+router.post('/afterSaleList', function (request, response, next) {
+    logger.info("进入获取售后的订单列表");
     var result = {code: 200};
+    var afterOrderList = [];
+    var orderList = [];
     try {
-        var arg = req.body;
-        logger.info("查询订单列表请求参数：" + JSON.stringify(arg));
-        var params = {};
-        //userid 改为了userId  2016.4.12
-        params.userId = arg.userId || 2;
-        //params.orderStatus = Order.getOrderStateIdBuyerEnum(arg.orderState);
-        params.orderStatus = arg.orderState || null;
-        params.percount = arg.percount || 20;
-        params.curpage = arg.curpage || 1;
-        params.userType = arg.userType || 1;
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
+        var params = request.body;
 
-        if (params.userId == null) {
+        if (params.userId == "" || params.userId == null) {
             result.code = 400;
-            result.desc = "没有填写用户ＩＤ";
-            res.json(result);
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.perCount == "" || params.perCount == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.curPage == "" || params.curPage == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
             return;
         }
 
-        //Order.orderProfileQuery(params, function (err, orderInfo) {
-        //    if(err){
-        //        res.json(err);
-        //        return;
-        //    }
-        //    var page = {total:orderInfo.total, pageCount: orderInfo.pageCount};
-        //    var orderList = [];
-        //    if(orderInfo.orderProfileList !== null) {
-        //        orderInfo.orderProfileList.forEach(function(order) {
-        //            var orderItem = {
-        //                orderId: order.orderId,
-        //                orderPrice: order.closingPrice,
-        //                username:order.username,
-        //                createName:order.createName,
-        //                postage:order.postage,
-        //                orderState:order.orderState,
-        //                sellerId:order.sellerId,
-        //                sellerName:"聚分享旗舰店",//order.sellerName
-        //                createTime:order.createTime,   //订单创建时间
-        //                deliverTime:order.deliverTime, //卖家发货时间
-        //                successTime:order.successTime  //确认收货时间
-        //            };
-        //            var productList = [];
-        //            if(order.productList !== null && order.productList.length > 0){
-        //
-        //                orderItem.type = 2;
-        //                for(var i=0; i < order.productList.length; i++){
-        //                    var productItem = {
-        //                        productId: order.productList[i].productId,
-        //                        productName:order.productList[i].productName,
-        //                        skuNum: order.productList[i].skuNum,
-        //                        skuName:order.productList[i].skuDesc,//skuName 修改为 skuDesc
-        //                        curPrice: order.productList[i].curPrice,
-        //                        imgUrl: order.productList[i].imagesUrl.split(',')[0],
-        //                        count: order.productList[i].count
-        //                       // type:order.productList[i].type
-        //                    };
-        //                    productList.push(productItem);
-        //                }
-        //                orderItem.productList = productList;
-        //                orderList.push(orderItem);
-        //            }
-        //        });
-        //        result.orderList = orderList;
-        //        result.page = page;
-        //    }
-        //    res.json(result);
-        //    logger.info("get order list response:" + JSON.stringify(result));
-        //});
-        var results = {
-            "code": 200,
-            "orderList": [
-                {
-                    "orderId": "5660002",
-                    "orderPrice": "1.00",
-                    "postage": null,
-                    "orderState": 1,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2016-01-04 18:43:46",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151224013609000987",
-                            "productName": "测试SKU",
-                            "skuNum": "1-2:100-101",
-                            "skuName": "颜色-天蓝色:尺码-均码",
-                            "curPrice": "1.00",
-                            "imgUrl": "22E3C358A1F3979D8907985102550732.jpg",
-                            "count": 1
-                        }
-                    ]
+        logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
+        async.series([
+                function (callback) {
+                    try {
+                        AfterSale.queryAfterSaleOrder(params, function (err, data) {
+                            if (err) {
+                                callback(1, null);
+                                return;
+                            }
+                            afterOrderList = data.afterSaleOrders;
+                            var pagination = {
+                                total: data.pagination.totalCount,
+                                pageCount: data.pagination.pageNumCount
+                            };
+                            result.afterOrderList = afterOrderList;
+                            result.paginaion = pagination;
+                            //response.json(result);
+                            callback(null, 1);
+                            //return;
+                        });
+                    }
+                    catch
+                        (ex) {
+                        logger.info("售后服务异常:" + ex);
+                        return callback(1, null);
+                    }
                 },
-                {
-                    "orderId": "5780002",
-                    "orderPrice": "0.10",
-                    "postage": null,
-                    "orderState": 2,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2016-01-04 17:22:30",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151220001240000950",
-                            "productName": "测试商品－主流程",
-                            "skuNum": "1-1:100-102",
-                            "skuName": "颜色-军绿色:尺码-XXS",
-                            "curPrice": "0.10",
-                            "imgUrl": "31E87669C4FA80B6BB7C08F42E560237.jpg",
-                            "count": 1
+                function (callback) {
+                    try {
+                        var orderIdList = [];
+                        for (var i = 0; i < afterOrderList.length; i++) {
+                            orderIdList.push(afterOrderList[i].orderId);
                         }
-                    ]
-                },
-                {
-                    "orderId": "5650002",
-                    "orderPrice": "1.00",
-                    "postage": null,
-                    "orderState": 3,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2016-01-04 00:17:05",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151224013609000987",
-                            "productName": "测试SKU",
-                            "skuNum": "1-1:100-101",
-                            "skuName": "颜色-军绿色:尺码-均码",
-                            "curPrice": "1.00",
-                            "imgUrl": "FC84964E8C0A36BB4F56C5866BBFB4F7.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5640002",
-                    "orderPrice": "0.01",
-                    "postage": null,
-                    "orderState": 1,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2016-01-04 00:15:59",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151228152841000732",
-                            "productName": "现代 空气净化器 HDJH-5501",
-                            "skuNum": "1-7:100-104",
-                            "skuName": "颜色-贝立安:尺码-S",
-                            "curPrice": "0.01",
-                            "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5610002",
-                    "orderPrice": "0.02",
-                    "postage": null,
-                    "orderState": 2,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-31 15:06:06",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151228152841000732",
-                            "productName": "现代 空气净化器 HDJH-5501",
-                            "skuNum": "1-7:100-105",
-                            "skuName": "颜色-贝立安:尺码-M",
-                            "curPrice": "0.02",
-                            "imgUrl": "9258E4A9FC083140D36383B2A5426A5C.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5490002",
-                    "orderPrice": "0.10",
-                    "postage": null,
-                    "orderState": 3,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-28 16:24:44",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151220001240000950",
-                            "productName": "测试商品－主流程",
-                            "skuNum": "1-6:100-102",
-                            "skuName": "颜色-浅绿色:尺码-XXS",
-                            "curPrice": "0.10",
-                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5480002",
-                    "orderPrice": "0.10",
-                    "postage": null,
-                    "orderState": 1,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-28 16:23:24",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151220001240000950",
-                            "productName": "测试商品－主流程",
-                            "skuNum": "1-6:100-102",
-                            "skuName": "颜色-浅绿色:尺码-XXS",
-                            "curPrice": "0.10",
-                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5470002",
-                    "orderPrice": "0.10",
-                    "postage": null,
-                    "orderState": 1,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-28 16:17:41",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151220001240000950",
-                            "productName": "测试商品－主流程",
-                            "skuNum": "1-6:100-101",
-                            "skuName": "颜色-浅绿色:尺码-均码",
-                            "curPrice": "0.10",
-                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5420002",
-                    "orderPrice": "0.10",
-                    "postage": null,
-                    "orderState": 2,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-28 16:10:47",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151220001240000950",
-                            "productName": "测试商品－主流程",
-                            "skuNum": "1-6:100-101",
-                            "skuName": "颜色-浅绿色:尺码-均码",
-                            "curPrice": "0.10",
-                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5390002",
-                    "orderPrice": "0.10",
-                    "postage": null,
-                    "orderState": 2,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-28 16:05:22",
-                    "deliverTime": "",
-                    "successTime": "2016-05-03 16:47:41",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151220001240000950",
-                            "productName": "测试商品－主流程",
-                            "skuNum": "1-6:100-101",
-                            "skuName": "颜色-浅绿色:尺码-均码",
-                            "curPrice": "0.10",
-                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5380002",
-                    "orderPrice": "0.10",
-                    "postage": null,
-                    "orderState": 2,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-28 16:04:54",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151220001240000950",
-                            "productName": "测试商品－主流程",
-                            "skuNum": "1-6:100-101",
-                            "skuName": "颜色-浅绿色:尺码-均码",
-                            "curPrice": "0.10",
-                            "imgUrl": "B37CC07E0E8EBB7E5E805204FBA22824.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
+                        params.orderList = orderIdList;
+                        Order.orderProfileQuery(params, function (err, orderInfo) {
+                            if (err) {
+                                logger.error("订单服务异常");
+                                return callback(1, null);
+                            }
+                            var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
 
-                {
-                    "orderId": "5260002",
-                    "orderPrice": "0.10",
-                    "postage": null,
-                    "orderState": 1,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-28 11:12:58",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151220001240000950",
-                            "productName": "测试商品－主流程",
-                            "skuNum": "1-1:100-101",
-                            "skuName": "颜色-军绿色:尺码-均码",
-                            "curPrice": "0.10",
-                            "imgUrl": "40923A2995EA7A154A02C3C0D210F1BA.jpg",
-                            "count": 1
-                        }
-                    ]
-                },
-                {
-                    "orderId": "5210002",
-                    "orderPrice": "1.00",
-                    "postage": null,
-                    "orderState": 2,
-                    "sellerId": 1,
-                    "sellerName": "聚分享旗舰店",
-                    "createTime": "2015-12-27 19:54:00",
-                    "deliverTime": "",
-                    "successTime": "",
-                    "type": 2,
-                    "productList": [
-                        {
-                            "productId": "ze151219003508000502",
-                            "productName": "测试商品",
-                            "skuNum": "1-3:100-102",
-                            "skuName": "颜色-黄色:尺码-xxl",
-                            "curPrice": "1.00",
-                            "imgUrl": "E48CA9FA8A023F384962C2FE341366EA.jpg",
-                            "count": 1
-                        }
-                    ]
+                            if (orderInfo.orderProfileList !== null) {
+                                orderInfo.orderProfileList.forEach(function (order) {
+                                    var orderItem = {
+                                        orderId: order.orderId,
+                                        userId: order.userId,
+                                        orderPrice: order.closingPrice,
+                                        //添加了应答的数据
+                                        postage: order.postage,
+                                        username: order.username,
+                                        cancelName: order.cancelName,
+                                        sellerName: order.sellerName,
+                                        sellerId: order.sellerId,
+                                        createTime: order.createTime,
+                                        expressNo: order.expressNo,
+                                        expressName: order.expressName,
+                                        receiverAddress: order.receiverAddress,
+                                        receiverName: order.receiverName,
+                                        receiverMobile: order.receiverMobile,
+                                        receiverTele: order.receiverTele,
+                                        orderState: order.orderState,
+                                        sellerComment: order.sellerComment,
+                                        buyerComment: order.buyerComment,
+                                        deliverTime: order.deliverTime,
+                                        successTime: order.successTime,
+                                        exchangeCash: order.exchangeCash,
+                                        exchangeScore: order.exchangeScore,
+                                        activeState: order.activeState,
+                                        curTime: order.curTime
+                                    };
+                                    var productList = [];
+                                    if (order.productList !== null && order.productList.length > 0) {
+                                        for (var i = 0; i < order.productList.length; i++) {
+                                            var productItem = {
+                                                productId: order.productList[i].productId,
+                                                productName: order.productList[i].productName,
+                                                skunum: order.productList[i].skuNum,
+                                                curPrice: order.productList[i].curPrice,
+                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                count: order.productList[i].count
+                                            };
+                                            orderList.push(productItem);
+                                        }
+                                        orderItem.productList = productList;
+                                        orderList.push(orderItem);
+                                    }
+                                });
+                                result.orderList = orderList;
+                            }
+                            return callback(null, result);
+                        });
+                    } catch (ex) {
+                        logger.info("订单服务异常:" + ex);
+                        return callback(2, null);
+                    }
+
                 }
-
-
             ],
-            "page": {
-                "total": 56,
-                "pageCount": 3
+            function (err, results) {
+                if (err) {
+                    result.code = 500;
+                    result.desc = "获取物流商列表";
+                    response.json(result);
+                    return;
+                }else{
+                    if(results[1]!=null){
+                        response.json(results[1]);
+                        return;
+                    }
+                }
             }
-        };
-        res.json(results);
+        );
     } catch (ex) {
-        logger.error("get order list error:" + ex);
+        logger.error("query expressList error:" + ex);
         result.code = 500;
-        result.desc = "获取订单列表失败";
-        res.json(result);
+        result.desc = "获取物流商列表";
+        response.json(result);
     }
 });
 
-// 查询订单列表
-/*router.post('/list', function (req, res, next) {
-
- logger.info("++++++++++++");
- var result = {code: 200};
- try {
- var arg = req.body;
- logger.info("查询订单列表请求参数：" + JSON.stringify(arg));
- var params = {};
- //userid 改为了userId  2016.4.12
- params.userId = arg.userId || 2;
- params.orderStatus = Order.getOrderStateBuyerEnum(arg.orderState) || null;
- //params.orderStatus = arg.orderState || null;
- params.percount = arg.percount || 20;
- params.curpage = arg.curpage || 1;
- params.userType = arg.userType || 2;
- params.token = arg.token || "鉴权信息1";
- params.ppInfo = arg.ppInfo || "鉴权信息2";
-
- if (params.userId == null) {
- result.code = 400;
- result.desc = "没有填写用户ＩＤ";
- res.json(result);
- return;
- }
-
- Order.orderProfileQuery(params, function (err, orderInfo) {
- if (err) {
- res.json(err);
- return;
- }
- var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
- var orderList = [];
- if (orderInfo.orderProfileList !== null) {
- orderInfo.orderProfileList.forEach(function (order) {
- var orderItem = {
- orderId: order.orderId,
- orderPrice: order.closingPrice,
- username: order.username,
- createName: order.createName,
- postage: order.postage,
- orderState: order.orderState,
- sellerId: order.sellerId,
- sellerName: "聚分享旗舰店",//order.sellerName 现在没有数据
- createTime: order.createTime,   //订单创建时间
- deliverTime: order.deliverTime, //卖家发货时间
- successTime: order.successTime  //确认收货时间
- };
- var productList = [];
- if (order.productList !== null && order.productList.length > 0) {
-
- orderItem.type = 2;
- for (var i = 0; i < order.productList.length; i++) {
- var productItem = {
- productId: order.productList[i].productId,
- productName: order.productList[i].productName,
- skuNum: order.productList[i].skuNum,
- skuName: order.productList[i].skuDesc,//skuName 修改为 skuDesc
- curPrice: order.productList[i].curPrice,
- imgUrl: order.productList[i].imagesUrl.split(',')[0],
- count: order.productList[i].count
- // type:order.productList[i].type
- };
-
- productList.push(productItem);
-
- }
- orderItem.productList = productList;
-
- var orderItem1 = {
- "orderId": "5660004",
- "orderPrice": "1.00",
- "orderState": 10,
- "sellerId": 1,
- "sellerName": "聚分享旗舰店1",
- "createTime": "2016-01-04 18:43:46",
- "deliverTime": "",
- "successTime": "",
- "type": 3,
- "productList": [
- {
- productId: "ze160216170722000745",
- productName: "博纳2D通兑票",
- skuNum: "1-16",
- skuName: "节假日通用",
- count: 2,
- curPrice: "100",
- imgUrl: "BBBC6302C54E93780C23DBCECB4F651B.jpg"
- }
- ]
- };
- var orderItem2 = {
- "orderId": "5660004",
- "orderPrice": "1.00",
- "orderState": 61,
- "sellerId": 2,
- "sellerName": "聚分享旗舰店2",
- "createTime": "2016-01-04 18:43:46",
- "deliverTime": "",
- "successTime": "",
- "type": 3,
- "productList": [
- {
- productId: "ze160216170722000745",
- productName: "博纳2D通兑票",
- skuNum: "1-16",
- skuName: "节假日通用",
- count: 2,
- curPrice: "100",
- imgUrl: "BBBC6302C54E93780C23DBCECB4F651B.jpg"
- }
- ]
- };
- var orderItem3 = {
- "orderId": "5660005",
- "orderPrice": "1.00",
- "orderState": 51,
- "sellerId": 3,
- "sellerName": "聚分享旗舰店3",
- "createTime": "2016-01-04 18:43:46",
- "deliverTime": "",
- "successTime": "",
- "type": 3,
- "productList": [
- {
- productId: "ze160216170722000745",
- productName: "博纳2D通兑票",
- skuNum: "1-16",
- skuName: "节假日通用",
- count: 2,
- curPrice: "100",
- imgUrl: "BBBC6302C54E93780C23DBCECB4F651B.jpg"
- }
- ]
- };
- var orderItem4 = {
- "orderId": "5660005",
- "orderPrice": "1.00",
- "orderState": 40,
- "sellerId": 3,
- "sellerName": "聚分享旗舰店3",
- "createTime": "2016-01-04 18:43:46",
- "deliverTime": "",
- "successTime": "",
- "type": 3,
- "productList": [
- {
- productId: "ze160216170722000745",
- productName: "高压锅",
- skuNum: "1-16",
- skuName: "节假日通用",
- count: 2,
- curPrice: "100",
- imgUrl: "BBBC6302C54E93780C23DBCECB4F651B.jpg"
- }
- ]
- };
- orderList.push(orderItem1);
- orderList.push(orderItem2);
- orderList.push(orderItem3);
- orderList.push(orderItem4);
- orderList.push(orderItem);
- }
- });
-
- result.orderList = orderList;
- result.curTime = new Date().getTime();
- /!*给出系统当前时间*!/
- result.page = page;
- }
- res.json(result);
- logger.info("get order list response:" + JSON.stringify(result));
- });
- } catch (ex) {
- logger.error("get order list error:" + ex);
- result.code = 500;
- result.desc = "获取订单列表失败";
- res.json(result);
- }
- });*/
+/*查询订单列表*/
 router.post('/list', function (request, response, next) {
 
     var result = {code: 200};
@@ -1224,7 +727,7 @@ router.post('/list', function (request, response, next) {
         });
 });
 
-//查询各订单状态的数量
+/*查询各订单状态的数量*/
 router.post('/count', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
@@ -1269,7 +772,7 @@ router.post('/count', function (request, response, next) {
     }
 });
 
-// 查询订单详情
+/*查询订单详情*/
 router.post('/infoTest', function (request, response, next) {
     var result = {code: 200};
     //var params = request.query;
@@ -1434,7 +937,7 @@ router.post('/getVirtualCard', function (request, response, next) {
     }
 });
 
-// 查询订单详情--虚拟
+/*查询订单详情--虚拟*/
 router.post('/info2', function (req, res, next) {
     var result = {code: 200};
     try {
@@ -1491,7 +994,7 @@ router.post('/info2', function (req, res, next) {
         res.json(result);
     }
 });
-// 查询订单详情--虚拟
+/*查询订单详情--虚拟*/
 router.post('/info2Test', function (req, res, next) {
     var result = {code: 200};
     try {
@@ -1566,7 +1069,7 @@ router.post('/info2Test', function (req, res, next) {
     }
 });
 
-// 查询订单详情--实物
+/*查询订单详情--实物*/
 router.post('/info', function (req, res, next) {
     var result = {code: 200};
     try {
@@ -2003,36 +1506,6 @@ router.post('/queryExpressTest', function (request, response, next) {
     }
 });
 
-/*计算邮费*/
-router.post('/freight', function (request, response, next) {
-
-    logger.info("进入获取用户积分接口");
-    var resContent = {code: 200};
-
-    var param = request.body;
-    var token = param.token || "鉴权信息1";
-    var ppInfo = param.ppInfo || "鉴权信息2";
-    var orderId = param.orderId || 1;
-
-    var params = {};
-    params.token = token;
-    params.ppInfo = ppInfo;
-    params.orderId = orderId;
-    logger.info("请求参数信息" + JSON.stringify(params));
-
-    try {
-        var postage = "10";
-        resContent.postage = postage;
-        response.json(resContent);
-        logger.info("响应的信息：" + resContent);
-    } catch (ex) {
-        logger.error("不能获取，原因是:" + ex);
-        resContent.code = 500;
-        resContent.desc = "获取用户积分失败";
-        response.json(resContent);
-    }
-});
-
 /*申请退货*/
 router.post('/refund', function (request, response, next) {
     logger.info("进入申请退货流程");
@@ -2119,155 +1592,6 @@ router.post('/refundDesc', function (request, response, next) {
         response.json(result);
     }
 });
-
-//获取售后的订单列表
-router.post('/afterSalelist1', function (request, response, next) {
-    logger.info("进入获取售后的订单列表");
-    var result = {code: 200};
-    var afterOrderList = [];
-    var orderList = [];
-    try {
-        var params = request.body;
-
-        if (params.userId == "" || params.userId == null) {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.perCount == "" || params.perCount == null) {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.curPage == "" || params.curPage == null) {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-        logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
-        async.series([
-                function (callback) {
-                    try {
-                        AfterSale.queryAfterSaleOrder(params, function (err, data) {
-                            if (err) {
-                                callback(1, null);
-                                return;
-                            }
-                            afterOrderList = data.afterSaleOrders;
-                            var pagination = {
-                                total: data.pagination.totalCount,
-                                pageCount: data.pagination.pageNumCount
-                            };
-                            result.afterOrderList = afterOrderList;
-                            result.paginaion = pagination;
-                            //response.json(result);
-                            callback(null, 1);
-                            //return;
-                        });
-                    }
-                    catch
-                        (ex) {
-                        logger.info("售后服务异常:" + ex);
-                        return callback(1, null);
-                    }
-                },
-                function (callback) {
-                    try {
-                        var orderIdList = [];
-                        for (var i = 0; i < afterOrderList.length; i++) {
-                            orderIdList.push(afterOrderList[i].orderId);
-                        }
-                        params.orderList = orderIdList;
-                        Order.orderProfileQuery(params, function (err, orderInfo) {
-                            if (err) {
-                                logger.error("订单服务异常");
-                                return callback(1, null);
-                            }
-                            var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
-
-                            if (orderInfo.orderProfileList !== null) {
-                                orderInfo.orderProfileList.forEach(function (order) {
-                                    var orderItem = {
-                                        orderId: order.orderId,
-                                        userId: order.userId,
-                                        orderPrice: order.closingPrice,
-                                        //添加了应答的数据
-                                        postage: order.postage,
-                                        username: order.username,
-                                        cancelName: order.cancelName,
-                                        sellerName: order.sellerName,
-                                        sellerId: order.sellerId,
-                                        createTime: order.createTime,
-                                        expressNo: order.expressNo,
-                                        expressName: order.expressName,
-                                        receiverAddress: order.receiverAddress,
-                                        receiverName: order.receiverName,
-                                        receiverMobile: order.receiverMobile,
-                                        receiverTele: order.receiverTele,
-                                        orderState: order.orderState,
-                                        sellerComment: order.sellerComment,
-                                        buyerComment: order.buyerComment,
-                                        deliverTime: order.deliverTime,
-                                        successTime: order.successTime,
-                                        exchangeCash: order.exchangeCash,
-                                        exchangeScore: order.exchangeScore,
-                                        activeState: order.activeState,
-                                        curTime: order.curTime
-                                    };
-                                    var productList = [];
-                                    if (order.productList !== null && order.productList.length > 0) {
-                                        for (var i = 0; i < order.productList.length; i++) {
-                                            var productItem = {
-                                                productId: order.productList[i].productId,
-                                                productName: order.productList[i].productName,
-                                                skunum: order.productList[i].skuNum,
-                                                curPrice: order.productList[i].curPrice,
-                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
-                                                count: order.productList[i].count
-                                            };
-                                            orderList.push(productItem);
-                                        }
-                                        orderItem.productList = productList;
-                                        orderList.push(orderItem);
-                                    }
-                                });
-                                result.orderList = orderList;
-                            }
-                            return callback(null, result);
-                        });
-                    } catch (ex) {
-                        logger.info("订单服务异常:" + ex);
-                        return callback(2, null);
-                    }
-
-                }
-            ],
-            function (err, results) {
-                if (err) {
-                    result.code = 500;
-                    result.desc = "获取物流商列表";
-                    response.json(result);
-                    return;
-                }else{
-                    if(results[1]!=null){
-                        response.json(results[1]);
-                        return;
-                    }
-                }
-            }
-        );
-    } catch (ex) {
-        logger.error("query expressList error:" + ex);
-        result.code = 500;
-        result.desc = "获取物流商列表";
-        response.json(result);
-    }
-});
-
 
 
 
