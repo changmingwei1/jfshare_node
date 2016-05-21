@@ -413,9 +413,9 @@ router.post('/afterSaleList', function (request, response, next) {
                                             var productItem = {
                                                 productId: order.productList[i].productId,
                                                 productName: order.productList[i].productName,
-                                                skunum: order.productList[i].skuNum,
+                                                skuNum: order.productList[i].skuNum,
                                                 curPrice: order.productList[i].curPrice,
-                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                imgKey: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
                                             };
                                             orderList.push(productItem);
@@ -767,143 +767,6 @@ router.post('/count', function (request, response, next) {
         resContent.desc = "获取用户积分失败";
         response.json(resContent);
     }
-});
-
-/*查询订单详情*/
-router.post('/infoTest', function (request, response, next) {
-    var result = {code: 200};
-    //var params = request.query;
-    var params = request.body;
-    if (params.userId == null || params.userId == "" || params.userId <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-    if (params.orderId == null || params.orderId == "") {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-    //订单详情，没有处理3的情况，这里就写2
-    params.userType = 2; // 1:买家 2：卖家 3：系统
-
-    logger.info("查询订单祥情请求参数：" + JSON.stringify(params));
-
-    var afterSaleList = [];
-    async.series([
-            function (callback) {
-                try {
-                    Order.queryOrderDetail(params, function (err, orderInfo) {
-                        if (err) {
-                            logger.error("订单服务异常");
-                            return callback(1, null);
-                        }
-
-                        result.orderId = orderInfo.orderId;
-                        result.postage = orderInfo.postage;
-                        result.postage = orderInfo.postage;
-                        result.exchangeScore = orderInfo.exchangeScore;
-                        result.closingPrice = orderInfo.closingPrice;
-                        result.createTime = orderInfo.deliverTime;
-                        result.comment = orderInfo.buyerComment;
-                        if (orderInfo.deliverInfo !== null) {
-
-                            var deliverInfo = {
-                                receiverName: orderInfo.deliverInfo.receiverName,
-                                receiverMobile: orderInfo.deliverInfo.receiverMobile,
-                                receiverAddress: orderInfo.deliverInfo.receiverAddress,
-                                expressId: orderInfo.deliverInfo.expressId,
-                                expressName: orderInfo.deliverInfo.expressName,
-                                expressNo: orderInfo.deliverInfo.expressNo
-                            };
-                            result.deliverInfo = deliverInfo;
-                        }
-
-                        var productList = [];
-                        if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
-                            for (var i = 0; i < orderInfo.productList.length; i++) {
-                                productList.push({
-                                    productId: orderInfo.productList[i].productId,
-                                    productName: orderInfo.productList[i].productName,
-                                    sku: {
-                                        skuNum: orderInfo.productList[i].skuNum,
-                                        skuName: orderInfo.productList[i].skuDesc
-                                    },
-                                    curPrice: orderInfo.productList[i].curPrice,
-                                    orgPrice: orderInfo.productList[i].orgPrice,
-                                    imgKey: orderInfo.productList[i].imagesUrl,
-                                    count: orderInfo.productList[i].count,
-                                    postage: orderInfo.productList[i].postage,
-                                    type: orderInfo.productList[i].type
-                                });
-                            }
-                            result.productList = productList;
-
-                            logger.info("get order info response:" + JSON.stringify(result));
-                            callback(null, result);
-                        }
-                    });
-                }
-                catch
-                    (ex) {
-                    logger.info("订单服务异常:" + ex);
-                    return callback(1, null);
-                }
-            },
-            function (callback) {
-                try {
-                    if (params.orderState == null || params.orderState == 1) {
-                        AfterSale.queryAfterSale(params, function (err, data) {
-                            if (err) {
-                                return callback(2, null);
-                            }
-                            logger.info("get order list response:" + JSON.stringify(result));
-                            afterSaleList = data;
-                            result.afterSaleList = afterSaleList;
-                            return callback(null, afterSaleList);
-                        });
-                    } else {
-                        return callback(3, null);
-                    }
-                } catch (ex) {
-                    logger.info("售后服务异常:" + ex);
-                    return callback(2, null);
-                }
-
-            }
-        ],
-        function (err, results) {
-            if (err == 1) {
-                logger.error("查询订单列表失败---订单服务异常：" + err);
-                result.code = 500;
-                result.desc = "查询订单失败";
-                response.json(result);
-                return;
-            }
-            if (err == 2) {
-                logger.error("查询售后失败--售后服务异常：" + err);
-                response.json(results[0]);
-                return;
-            }
-
-            if (err == null && err != 3) {
-                logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
-                result.afterSaleList = results[1];
-                response.json(result);
-                return;
-            } else {
-                logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
-
-                response.json(result);
-                return;
-            }
-        }
-    )
-    ;
 });
 
 /*获取订单中的卡密列表*/
