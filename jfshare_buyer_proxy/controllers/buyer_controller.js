@@ -24,8 +24,8 @@ router.get('/getCaptcha', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.query;
-        var id = param.id;
-        Common.getCaptcha(id, function (err, data) {
+        logger.info("获取验证码请求参数id= " + JSON.stringify(param));
+        Common.getCaptcha(param.id, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
@@ -33,10 +33,6 @@ router.get('/getCaptcha', function (request, response, next) {
                 var cb = data[0].captcha.captchaBytes;
                 response.writeHead('200', {'Content-Type': 'image/jpeg'});    //写http头部信息
                 response.write(cb, 'binary');
-                //var id = data[0].captcha.id;
-                //var value = data[0].captcha.value;
-                //resContent.id = id;
-                //resContent.value = value;
                 logger.info("响应的结果:" + JSON.stringify(resContent));
                 response.end();
             }
@@ -55,14 +51,8 @@ router.post('/validateCaptcha', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.body;
-        var id = param.id;
-        var value = param.value;
-
-        var args = {};
-        args.id = id;
-        args.value = value;
-        logger.info(JSON.stringify(args));
-        Common.validateCaptcha(args, function (err, data) {
+        logger.info("验证图形验证码请求参数：" + JSON.stringify(param));
+        Common.validateCaptcha(param, function (err, data) {
             if (err) {
                 response.json(err);
             } else {
@@ -90,6 +80,7 @@ router.get('/sms', function (request, response, next) {
             response.json(resContent);
             return;
         }
+        logger.info("获取短信验证码请求参数：" + JSON.stringify(param));
         Common.sendMsgCaptcha(param, function (err, data) {
             if (err) {
                 response.json(err);
@@ -117,6 +108,7 @@ router.get('/validateMsgCaptcha', function (request, response, next) {
             response.json(resContent);
             return;
         }
+        logger.info("验证短信验证码请求参数：" + JSON.stringify(param));
         Common.validateMsgCaptcha(param, function (err, data) {
             if (err) {
                 response.json(err);
@@ -138,67 +130,68 @@ router.post('/login', function (request, response, next) {
 
     logger.info("进入手机短信登录接口..");
     var resContent = {code: 200};
-    var args = request.body;
-    var mobile = args.mobile;
-    var captchaDesc = args.captchaDesc;
-    var browser = args.browser || null;
-    var param = {};
-    param.mobile = mobile;
-    param.captchaDesc = captchaDesc;
-    param.browser = browser;
-
-    //param.ip = CommonUtil.getIP(response);
-    //console.log(JSON.stringify(param));
-
-    if (param.mobile == null || param.mobile == "") {
-        resContent.code = 500;
-        resContent.desc = "参数错误";
-        response.json(resContent);
-        return;
-    }
-    if (param.captchaDesc == null || param.captchaDesc == "") {
-        resContent.code = 500;
-        resContent.desc = "参数错误";
-        response.json(resContent);
-        return;
-    }
-    logger.info("请求参数：" + JSON.stringify(param));
-
-    async.waterfall([
-        function (callback) {
-            Common.validateMsgCaptcha(param, function (err, data) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null);
-                }
-            });
-        },
-        function (callback) {
-            Buyer.loginBySms(param, function (err, data) {
-                if (err) {
-                    callback(err);
-                } else {
-                    //var loginLog = data[0].loginLog;
-                    var userId = data[0].buyer.userId;
-                    var authInfo = data[0].authInfo;
-                    resContent.loginName = data[0].buyer.mobile;
-                    resContent.ppInfo = authInfo.ppInfo;
-                    resContent.token = authInfo.token;
-                    resContent.userId = userId;
-                    //resContent.loginLog = loginLog;
-                    response.json(resContent);
-                    logger.info("响应的结果:" + JSON.stringify(resContent));
-                }
-            });
+    try {
+        var param = request.body;
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 500;
+            resContent.desc = "手机号不能为空";
+            response.json(resContent);
+            return;
         }
-    ], function (err) {
-        if (err) {
-            return response.json(err);
-        } else {
-            return response.json({result: true});
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 500;
+            resContent.desc = "验证码不能为空";
+            response.json(resContent);
+            return;
         }
-    });
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 500;
+            resContent.desc = "浏览器标识不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数：" + JSON.stringify(param));
+
+        async.waterfall([
+            function (callback) {
+                Common.validateMsgCaptcha(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+            },
+            function (callback) {
+                Buyer.loginBySms(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        //var loginLog = data[0].loginLog;
+                        var userId = data[0].buyer.userId;
+                        var authInfo = data[0].authInfo;
+                        resContent.loginName = data[0].buyer.mobile;
+                        resContent.ppInfo = authInfo.ppInfo;
+                        resContent.token = authInfo.token;
+                        resContent.userId = userId;
+                        response.json(resContent);
+                        logger.info("响应的结果:" + JSON.stringify(resContent));
+                    }
+                });
+            }
+        ], function (err) {
+            if (err) {
+                return response.json(err);
+            } else {
+                return response.json({result: true});
+            }
+        });
+    } catch (ex) {
+        logger.error("登录失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "登录失败";
+        response.json(resContent);
+    }
 });
 
 /*注销*/
@@ -220,123 +213,144 @@ router.post('/logout', function (req, res, next) {
 
 /*手机密码登录*/
 router.post('/login2', function (req, res, next) {
-
+    logger.info("进入账号密码登录接口..");
     var resContent = {code: 200};
-    var args = req.body;
-    var param = {};
-    param.mobile = args.mobile;
-    param.pwdEnc = args.pwdEnc;
-    param.value = args.value;
-    param.id = args.id;
-    param.browser = args.browser;
-    param.type = args.type;
-    //param["ip"] = CommonUtil.getIP(req);
-
-    logger.info("请求的参数: " + JSON.stringify(param));
-    async.waterfall([
-        function (callback) {
-            //快捷登录，跳过验证码
-            if (param.type != null && param.type == 1) {
-
-                callback(null);
-            } else {//否则就是正常登录，需要验证码
-                Common.validateCaptcha(param, function (err, data) {
+    try {
+        var param = req.body;
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 500;
+            resContent.desc = "手机号不能为空";
+            res.json(resContent);
+            return;
+        }
+        if (param.pwdEnc == null || param.pwdEnc == "") {
+            resContent.code = 500;
+            resContent.desc = "密码不能为空";
+            res.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 500;
+            resContent.desc = "浏览器标识不能为空";
+            res.json(resContent);
+            return;
+        }
+        logger.info("请求的参数: " + JSON.stringify(param));
+        async.waterfall([
+            function (callback) {
+                /*快捷登录，跳过验证码*/
+                if (param.type != null && param.type == 1) {
+                    callback(null);
+                } else {
+                    /*否则就是正常登录，需要验证码*/
+                    Common.validateCaptcha(param, function (err, data) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            callback(null);
+                        }
+                    });
+                }
+            },
+            function (callback) {
+                Buyer.newLogin(param, function (err, data) {
                     if (err) {
                         callback(err);
                     } else {
-                        callback(null);
+                        //var loginLog = data[0].loginLog;
+                        var buyer = data[0].buyer;
+                        var authInfo = data[0].authInfo;
+                        resContent.userId = buyer.userId;
+                        resContent.loginName = buyer.mobile;
+                        //resContent.loginLog = loginLog;
+                        resContent.token = authInfo.token;
+                        resContent.ppInfo = authInfo.ppInfo;
+                        res.json(resContent);
                     }
                 });
             }
-        },
-        function (callback) {
-            Buyer.newLogin(param, function (err, data) {
-                if (err) {
-                    callback(err);
-                } else {
-                    //var loginLog = data[0].loginLog;
-                    var buyer = data[0].buyer;
-                    var authInfo = data[0].authInfo;
-                    //var cookieInfo ={
-                    //    tokenId:loginLog["tokenId"],
-                    //    userId:loginLog["userId"],
-                    //    loginName:buyer["loginName"]
-                    //};
-                    //var ssid = CommonUtil.jfxCryptor(cookieInfo, sessionUtil.getKey());
-                    //var options = {
-                    //    path: "/",
-                    //    domain: null,
-                    //    secure: false,
-                    //    httpOnly: true,
-                    //    expires:0
-                    //};
-                    //CommonUtil.setCookie(req, res, "ssid", ssid, options);
-                    resContent.userId = buyer.userId;
-                    resContent.loginName = buyer.mobile;
-                    //resContent.loginLog = loginLog;
-                    resContent.token = authInfo.token;
-                    resContent.ppInfo = authInfo.ppInfo;
-                    res.json(resContent);
-                }
-            });
-        }
-    ], function (err) {
-        if (err) {
-            return res.json(err);
-        } else {
-            return res.json({result: true});
-        }
-    });
+        ], function (err) {
+            if (err) {
+                return res.json(err);
+            } else {
+                return res.json({result: true});
+            }
+        });
+    } catch (ex) {
+        logger.error("登录失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "登录失败";
+        response.json(resContent);
+    }
 });
 
 /*注册*/
 router.post('/regist', function (req, res, next) {
 
-    logger.info("进入注册接口");
+    logger.info("进入注册接口..");
     var resContent = {code: 200};
-
-    var args = req.body;
-
-    var captchaDesc = args.captchaDesc;
-    var mobile = args.mobile;
-    var pwdEnc = args.pwdEnc;
-
-    var param = {};
-    param.captchaDesc = captchaDesc;
-    param.mobile = mobile;
-    param.pwdEnc = pwdEnc;
-    Common.validateMsgCaptcha(param, function (err, data) {
-        if (err) {
-            res.json(err);
+    try {
+        var param = req.body;
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 500;
+            resContent.desc = "手机号不能为空";
+            res.json(resContent);
             return;
         }
-        Buyer.newSignin(param, function (error, data) {
-            if (error) {
-                res.json(error);
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 500;
+            resContent.desc = "验证码不能为空";
+            res.json(resContent);
+            return;
+        }
+        if (param.pwdEnc == null || param.pwdEnc == "") {
+            resContent.code = 500;
+            resContent.desc = "浏览器标识不能为空";
+            res.json(resContent);
+            return;
+        }
+        Common.validateMsgCaptcha(param, function (err, data) {
+            if (err) {
+                res.json(err);
                 return;
             }
-            res.json(resContent);
-            logger.info("响应的结果:" + JSON.stringify(resContent));
+            Buyer.newSignin(param, function (error, data) {
+                if (error) {
+                    res.json(error);
+                    return;
+                }
+                res.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            });
         });
-    });
+    } catch (ex) {
+        logger.error("注册失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "注册失败";
+        response.json(resContent);
+    }
 });
 
 /*判断用户名(手机号)是否已存在*/
 router.get('/exists', function (request, response, next) {
 
-    logger.info("进入接口...");
+    logger.info("进入判断手机号是否存在接口...");
     var resContent = {code: 200};
-
     try {
         var param = request.query;
-        var loginName = param.mobile;
+        if (param == null || param.mobile == null || param.mobile == "") {
+            resContent.code = 500;
+            resContent.desc = "参数错误，手机号不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
         Buyer.buyerIsExist(loginName, function (error, data) {
             if (error) {
                 response.json(error);
             } else {
                 var value = data[0].value;
                 resContent.value = value;
-                resContent.description = "友情提示【 true:已存在，不能注册；false:不存在，可以注册】";
                 response.json(resContent);
                 logger.info("get buyer response:" + JSON.stringify(resContent));
             }
@@ -355,6 +369,42 @@ router.post('/getAuthInfo', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.body;
+        if (param == null) {
+            resContent.code = 500;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 500;
+            resContent.desc = "手机号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.token == null || param.token == "") {
+            resContent.code = 500;
+            resContent.desc = "鉴权信息不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 500;
+            resContent.desc = "浏览器标识不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.ppInfo == null || param.ppInfo == "") {
+            resContent.code = 500;
+            resContent.desc = "鉴权信息不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.userId == null || param.userId == "") {
+            resContent.code = 500;
+            resContent.desc = "用户id不能为空";
+            response.json(resContent);
+            return;
+        }
         logger.info("请求参数：" + JSON.stringify(param));
         Buyer.getAuthInfo(param, function (err, data) {
             if (err) {
@@ -381,19 +431,38 @@ router.post('/validAuth', function (request, response, next) {
     var resContent = {code: 200};
     try {
         var param = request.body;
-        var token = param.token;
-        var ppInfo = param.ppInfo;
-        var userId = param.userId;
-        var browser = param.browser;
-
-        var params = {};
-        params.token = token;
-        params.ppInfo = ppInfo;
-        params.userId = userId;
-        params.browser = browser;
-
-        logger.info("请求参数：" + JSON.stringify(params));
-        Buyer.validAuth(params, function (err, data) {
+        if (param == null) {
+            resContent.code = 500;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.token == null || param.token == "") {
+            resContent.code = 500;
+            resContent.desc = "鉴权信息不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 500;
+            resContent.desc = "浏览器标识不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.ppInfo == null || param.ppInfo == "") {
+            resContent.code = 500;
+            resContent.desc = "鉴权信息不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.userId == null || param.userId == "") {
+            resContent.code = 500;
+            resContent.desc = "用户id不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.validAuth(param, function (err, data) {
             if (err) {
                 response.json(err);
             } else {
@@ -419,30 +488,29 @@ router.post('/query', function (request, response, next) {
         var param = request.body;
         if (param.token == null || param.token == "") {
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "鉴权参数不能为空";
             response.json(resContent);
             return;
         }
         if (param.browser == null || param.browser == "") {
             resContent.code = 400;
-            resContent.desc = "鉴权参数错误";
+            resContent.desc = "浏览器标识不能为空";
             response.json(resContent);
             return;
         }
         if (param.ppInfo == null || param.ppInfo == "") {
             resContent.code = 400;
-            resContent.desc = "鉴权参数错误";
+            resContent.desc = "鉴权参数不能为空";
             response.json(resContent);
             return;
         }
         if (param.userId == null || param.userId == "" || param.userId <= 0) {
             resContent.code = 400;
-            resContent.desc = "鉴权参数错误";
+            resContent.desc = "用户id不能为空";
             response.json(resContent);
             return;
         }
-
-        logger.info("It's test______" + JSON.stringify(param));
+        logger.info("请求参数信息，arg：" + JSON.stringify(param));
 //暂时去掉鉴权信息
 //        Buyer.validAuth(param, function (err, data) {
 //            if (err) {
@@ -455,7 +523,7 @@ router.post('/query', function (request, response, next) {
                 response.json(error);
             } else {
                 var buyer = data[0].buyer;
-                if(buyer != null){
+                if (buyer != null) {
                     resContent.buyer = {
                         userId: buyer.userId,
                         userName: buyer.userName,
@@ -467,7 +535,7 @@ router.post('/query', function (request, response, next) {
                     response.json(resContent);
                     logger.info("个人用户信息响应:" + JSON.stringify(resContent));
                     return;
-                }else{
+                } else {
                     resContent.code = 500;
                     resContent.desc = "获取用户信息失败";
                     response.json(resContent);
@@ -490,10 +558,8 @@ router.post('/update', function (request, response, next) {
 
     logger.info("进入更新用户信息接口");
     var resContent = {code: 200};
-
     try {
         var param = request.body;
-
         if (param.token == null || param.token == "") {
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
@@ -518,8 +584,7 @@ router.post('/update', function (request, response, next) {
             response.json(resContent);
             return;
         }
-
-        logger.info("It's test_____" + JSON.stringify(param));
+        logger.info("请求参数，arg：" + JSON.stringify(param));
 //暂时去掉鉴权
 //        Buyer.validAuth(param, function (err, data) {
 //            if (err) {
@@ -659,7 +724,7 @@ router.post('/scoreTrade', function (request, response, next) {
             } else {
                 var pagination = data[0].pagination;
 
-                if(pagination!==null){
+                if (pagination !== null) {
                     resContent.page = {
                         total: pagination.totalCount,
                         pageCount: pagination.pageNumCount
@@ -667,7 +732,7 @@ router.post('/scoreTrade', function (request, response, next) {
                 }
 
                 var scoreTrades = data[0].scoreTrades;
-                if(scoreTrades != null){
+                if (scoreTrades != null) {
                     scoreTrades.forEach(function (a) {
                         dataArr.push({
                             userId: a.userId,
@@ -701,14 +766,14 @@ router.post('/socrelist', function (request, response, next) {
         var params = request.body;
         //参数校验
 
-        if(params.percount ==null || params.percount ==""){
+        if (params.percount == null || params.percount == "") {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
 
-        if(params.curpage ==null || params.curpage ==""){
+        if (params.curpage == null || params.curpage == "") {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
@@ -721,7 +786,7 @@ router.post('/socrelist', function (request, response, next) {
             }
             result.scoreList = data[0].scoreUsers;
             var pagination = data[0].pagination;
-            if(pagination!=null){
+            if (pagination != null) {
                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             }
             logger.info("socrelist result:" + JSON.stringify(data));
@@ -740,83 +805,22 @@ router.post('/socrelist', function (request, response, next) {
 router.post('/resetPwd', function (request, response, next) {
     logger.info("进入重置密码接口...");
     var resContent = {code: 200};
-
-    var param = request.body;
-    //参数校验
-    if (param.mobile == null || param.newPwd == null || param.mobile == "" || param.newPwd == "") {
-        resContent.code = 400;
-        resContent.desc = "账号密码不能为空";
-        response.json(resContent);
-        return;
-    }
-    if (param.captchaDesc == null || param.captchaDesc == "") {
-        resContent.code = 400;
-        resContent.desc = "验证码不能为空";
-        response.json(resContent);
-        return;
-    }
-    Common.validateMsgCaptcha(param, function (err, data) {
-        if (err) {
-            response.json(err);
-            return;
-        }
-        Buyer.newResetBuyerPwd(param, function (error, data) {
-            if (error) {
-                response.json(error);
-                return;
-            }
+    try {
+        var param = request.body;
+        //参数校验
+        if (param.mobile == null || param.newPwd == null || param.mobile == "" || param.newPwd == "") {
+            resContent.code = 400;
+            resContent.desc = "账号密码不能为空";
             response.json(resContent);
-            logger.info("响应的结果:" + JSON.stringify(resContent));
-        });
-    });
-});
-
-/*修改密码*/
-router.post('/changePwd', function (request, response, next) {
-
-    logger.info("进入修改密码接口...");
-    var resContent = {code: 200};
-
-    var param = request.body;
-
-    //参数校验
-    if (param.userId == null || param.newPwd == null || param.userId == "" || param.newPwd == "") {
-        resContent.code = 400;
-        resContent.desc = "用户id或密码不能为空";
-        response.json(resContent);
-        return;
-    }
-    if (param.captchaDesc == null || param.captchaDesc == "") {
-        resContent.code = 400;
-        resContent.desc = "验证码不能为空";
-        response.json(resContent);
-        return;
-    }
-    if (param.token == null || param.token == "") {
-        resContent.code = 400;
-        resContent.desc = "鉴权参数错误";
-        response.json(resContent);
-        return;
-    }
-    if (param.browser == null || param.browser == "") {
-        resContent.code = 400;
-        resContent.desc = "鉴权参数错误";
-        response.json(resContent);
-        return;
-    }
-    if (param.ppInfo == null || param.ppInfo == "") {
-        resContent.code = 400;
-        resContent.desc = "鉴权参数错误";
-        response.json(resContent);
-        return;
-    }
-    logger.info("参数为: " + JSON.stringify(param));
-//暂时去掉鉴权信息
-    Buyer.validAuth(param, function (err, data) {
-        if (err) {
-            response.json(err);
             return;
         }
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 400;
+            resContent.desc = "验证码不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数，arg：" + JSON.stringify(param));
         Common.validateMsgCaptcha(param, function (err, data) {
             if (err) {
                 response.json(err);
@@ -831,7 +835,80 @@ router.post('/changePwd', function (request, response, next) {
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             });
         });
-    });
+    } catch (ex) {
+        logger.error("重置密码失败，原因:" + ex);
+        result.code = 500;
+        result.desc = "重置密码失败";
+        response.json(result);
+    }
+});
+
+/*修改密码*/
+router.post('/changePwd', function (request, response, next) {
+
+    logger.info("进入修改密码接口...");
+    var resContent = {code: 200};
+    try {
+        var param = request.body;
+        //参数校验
+        if (param.userId == null || param.newPwd == null || param.userId == "" || param.newPwd == "") {
+            resContent.code = 400;
+            resContent.desc = "用户id或密码不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 400;
+            resContent.desc = "验证码不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.token == null || param.token == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.ppInfo == null || param.ppInfo == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        logger.info("参数为: " + JSON.stringify(param));
+//暂时去掉鉴权信息
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            Common.validateMsgCaptcha(param, function (err, data) {
+                if (err) {
+                    response.json(err);
+                    return;
+                }
+                Buyer.newResetBuyerPwd(param, function (error, data) {
+                    if (error) {
+                        response.json(error);
+                        return;
+                    }
+                    response.json(resContent);
+                    logger.info("响应的结果:" + JSON.stringify(resContent));
+                });
+            });
+        });
+    } catch (ex) {
+        logger.error("修改密码失败，原因:" + ex);
+        result.code = 500;
+        result.desc = "修改密码失败";
+        response.json(result);
+    }
 });
 
 /*获取二维码*/
@@ -865,7 +942,6 @@ router.get('/getQRCode', function (request, response, next) {
     }
 });
 
-
 /*兑出积分查询*/
 router.post('/queryCachAmount', function (request, response, next) {
 
@@ -897,7 +973,7 @@ router.post('/queryCachAmount', function (request, response, next) {
         logger.error("兑出积分查询异常，原因是======:" + ex);
         resContent.code = 500;
         resContent.desc = "兑出积分查询失败";
-
+        response.json(resContent);
     }
 });
 /*兑出积分*/
@@ -1026,4 +1102,5 @@ router.post('/enterAmountCall', function (request, response, next) {
         response.json(resContent);
     }
 });
+
 module.exports = router;
