@@ -52,8 +52,6 @@ router.post('/list', function (req, res, next) {
                         type: a.type || 2
                     });
                 });
-
-                dataArr.push(productList);
                 var pagination = data[0].pagination;
                 resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                 resContent.productList = dataArr;
@@ -229,9 +227,7 @@ router.get('/productDetail', function (req, res, next) {
 router.post('/querystore', function (req, res, next) {
     logger.info("进入获取商品SKU接口");
     var result = {code: 200};
-
     result.storehouseId = 0;
-
     var params = req.body;
     params.storehouseId = 0;
     result.productId = params.productId;
@@ -251,21 +247,17 @@ router.post('/querystore', function (req, res, next) {
                                 for (var i = 0; i < storehouseList.length; i++) {
                                     var supportProvince = storehouseList[i].supportProvince;
                                     if (supportProvince != null) {
-
                                         var list = supportProvince.split(",");
-
                                         if (list != null && list.length > 0) {
                                             for (var j = 0; j < list.length; j++) {
                                                 if (list[j] == params.provinceId) {
-                                                    result.storehouseId = storehouseList[j].id;
-                                                    params.storehouseId = storehouseList[j].id;
+                                                    result.storehouseId = storehouseList[i].id;
+                                                    params.storehouseId = storehouseList[i].id;
                                                     break;
                                                 }
                                             }
                                         }
-
                                         if(params.storehouseId!=0){
-
                                             break;
                                         }
                                     }
