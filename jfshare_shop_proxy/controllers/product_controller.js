@@ -52,8 +52,6 @@ router.post('/list', function (req, res, next) {
                         type: a.type || 2
                     });
                 });
-
-                dataArr.push(productList);
                 var pagination = data[0].pagination;
                 resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                 resContent.productList = dataArr;
