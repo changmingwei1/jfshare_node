@@ -22,57 +22,77 @@ var baseTemplate_types = require('../thrift/gen_code/baseTemplate_types');
 
 function BaseTemplate(){}
 
-/*�ʷѼ���*/
-BaseTemplate.prototype.calculatePostage = function(param,  callback) {
+/*查询邮费模板*/
+BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, callback) {
 
-    var productPostageBasicList = [];
-    var sellerPostageBasicList = [];
-    var productPostageBasic = ({
-        productId:param.productId,
-        templateId:param.templateId,
-        number:param.number,
-        weight:param.weight,
-        amount:param.amount
-    });
-    productPostageBasicList.push(productPostageBasic);
-    sellerPostageBasicList.push(productPostageBasicList);
-
-    var params = new baseTemplate_types.CalculatePostageParam({
-        sendToProvince: param.sendToProvince,
-        sellerPostageBasicList:sellerPostageBasicList
+    var params = new baseTemplate_types.PostageTemplateQueryParam({
+        sellerId: sellerId,
+        templateGroup:2
     });
 
-    logger.info("�����ʷѼ��㣬  args:" + JSON.stringify(params));
-    var addressServ = new Lich.InvokeBag(Lich.ServiceKey.AddressServer, "calculatePostage", params);
+    logger.info("调用查询邮费模板信息，args:" + JSON.stringify(params));
+    var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer, "queryPostageTemplate", params);
 
-    Lich.wicca.invokeClient(addressServ, function(err, data) {
-        logger.info("�����ʷѼ��㣬  result:" + JSON.stringify(data));
+    Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
+        logger.info("调用查询邮费模板信息，result:" + JSON.stringify(data));
         var res = {};
-        if(err || data[0].result.code == "1"){
-            logger.error("�����ʷѼ���ʧ��  ʧ��ԭ�� ======" + err);
+        if(err){
+            logger.error("调用查询邮费模板信息失败，失败原因 ======" + err);
             res.code = 500;
-            res.desc = "�ʷѼ���ʧ�ܣ�";
+            res.desc = "查询邮费模板信息失败！";
             callback(res, null);
-        } else {
-            callback(null, null);
+        } else if(data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
+            callback(null, data);
         }
     });
 };
 
-/*��ѯ�ֿ�*/
-BaseTemplate.prototype.queryStorehouse = function(params,callback){
-    var param = new baseTemplate_types.StorehouseQueryParam({
-        sellerId: params.sellerId
+/*邮费计算*/
+BaseTemplate.prototype.calculatePostage = function(param,  callback) {
+
+    logger.info("调用邮费模板信息："+JSON.stringify(param));
+
+    var sellerList = param.sellerPostageList;
+    var params = [];
+    for(var i = 0 ;i < sellerList.length; i++){
+        var productList = sellerList[i].productPostageList;
+        var list = [];
+        for(var j = 0 ;j < productList.length ; j++){
+            var ppList = new baseTemplate_types.ProductPostageBasic({
+                productId: productList[j].productId,
+                templateId: productList[j].postageId,
+                number: productList[j].count,
+                weight: productList[j].weight,
+                amount: productList[j].amount
+            });
+            list.push(ppList);
+        }
+        var spList = new baseTemplate_types.SellerPostageBasic({
+            sellerId: sellerList[i].sellerId,
+            productPostageBasicList: list
+        });
+        params.push(spList);
+    }
+
+    var arg = new baseTemplate_types.CalculatePostageParam({
+        sendToProvince:param.provinceId,
+        sellerPostageBasicList:params
     });
-    //��ȡclient
-    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'queryStorehouse',param);
-    Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
-        logger.info("get BaseTemplate result:" + JSON.stringify(data));
+
+    logger.info("调用邮费计算，  args:" + JSON.stringify(arg));
+    var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer, "calculatePostage", arg);
+
+    Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
+        logger.info("调用邮费计算，  result:" + JSON.stringify(data[0]));
         var res = {};
-        if (err||data[0].result.code == 1) {
-            logger.error("���ܻ�ȡ�ֿ���Ϣ because: ======" + err);
+        if(err || data[0].result.code == "1"){
+            logger.error("调用邮费计算失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "��ȡ�ֿ�ʧ��";
+            res.desc = "邮费计算失败！";
             callback(res, null);
         } else {
             callback(null, data);
@@ -80,19 +100,40 @@ BaseTemplate.prototype.queryStorehouse = function(params,callback){
     });
 };
 
-/*��ȡ�ֿ���Ϣ*/
+/*查询仓库*/
+BaseTemplate.prototype.queryStorehouse = function(params,callback){
+    var param = new baseTemplate_types.StorehouseQueryParam({
+        sellerId: params.sellerId
+    });
+    //获取client
+    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'queryStorehouse',param);
+    Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
+        logger.info("get BaseTemplate result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == 1) {
+            logger.error("不能获取仓库信息 because: ======" + err);
+            res.code = 500;
+            res.desc = "获取仓库失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+/*获取仓库信息*/
 BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
 
-    //��ȡclient
+    //获取client
     var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getStorehouse',storehouseIds);
 
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("���ܻ�ȡ�ֿ���Ϣ because: ======" + err);
+            logger.error("不能获取仓库信息 because: ======" + err);
             res.code = 500;
-            res.desc = "��ȡ�ֿ�ʧ��";
+            res.desc = "获取仓库失败";
             callback(res, null);
         } else {
             callback(null, data);
@@ -100,7 +141,7 @@ BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
     });
 };
 
-/*������ȡ��Ʒ�ջ�ʡ�ݶ�Ӧ�ķ����ֿ�*/
+/*批量获取商品收货省份对应的发货仓库*/
 BaseTemplate.prototype.getDeliverStorehouse = function(params,calback){
 
     var productRefProvinceList = [];
@@ -118,15 +159,15 @@ BaseTemplate.prototype.getDeliverStorehouse = function(params,calback){
         productRefProvinceList:productRefProvinceList
     });
 
-    //��ȡclient
+    //获取client
     var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getDeliverStorehouse',param);
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("���ܻ�ȡ�ֿ���Ϣ because: ======" + err);
+            logger.error("不能获取仓库信息 because: ======" + err);
             res.code = 500;
-            res.desc = "��ȡ�ֿ�ʧ��";
+            res.desc = "获取仓库失败";
             callback(res, null);
         } else {
             callback(null, data);

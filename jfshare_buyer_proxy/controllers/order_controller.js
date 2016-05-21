@@ -184,12 +184,11 @@ router.post('/preview2', function (request, response, next) {
 
 /*提交订单*/
 router.post('/submit', function (request, response, next) {
-    logger.info("进入实物提交订单流程");
+    logger.info("进入提交订单流程..");
     var result = {code: 200};
     try {
         var arg = request.body;
         if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
-            logger.info("提交订单请求， arg:" + JSON.stringify(arg));
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
             response.json(result);
@@ -213,6 +212,7 @@ router.post('/submit', function (request, response, next) {
             res.json(result);
             return;
         }
+        logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息
 //    Buyer.validAuth(arg,function(err,data) {
 //        if (err) {
@@ -295,22 +295,15 @@ router.post('/afterSaleList', function (request, response, next) {
     var orderList = [];
     try {
         var params = request.body;
-
         if (params == null ||params.userId == "" || params.userId == null) {
             result.code = 400;
-            result.desc = "参数错误";
+            result.desc = "参数错误，用户id不能为空";
             response.json(result);
             return;
         }
         if (params.perCount == "" || params.perCount == null) {
             result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.curPage == "" || params.curPage == null) {
-            result.code = 400;
-            result.desc = "参数错误";
+            result.desc = "每页显示条数不能为空";
             response.json(result);
             return;
         }
@@ -332,6 +325,7 @@ router.post('/afterSaleList', function (request, response, next) {
             res.json(result);
             return;
         }
+        logger.info("获取售后订单请求的参数：" + JSON.stringify(params));
 //暂时去掉鉴权信息
 //    Buyer.validAuth(arg,function(err,data) {
 //        if (err) {
@@ -347,12 +341,7 @@ router.post('/afterSaleList', function (request, response, next) {
                                 return;
                             }
                             afterOrderList = data.afterSaleOrders;
-                            var pagination = {
-                                total: data.pagination.totalCount,   //totalCount 未定义
-                                pageCount: data.pagination.pageNumCount
-                            };
                             result.afterOrderList = afterOrderList;
-                            result.paginaion = pagination;
                             //response.json(result);
                             callback(null, 1);
                             //return;
@@ -425,6 +414,7 @@ router.post('/afterSaleList', function (request, response, next) {
                                     }
                                 });
                                 result.orderList = orderList;
+                                result.page = page;
                             }
                             return callback(null, result);
                         });
@@ -476,6 +466,7 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
+        logger.info("提交订单请求参数， arg:" + JSON.stringify(params));
         result.orderList = [];
         async.series([
                 function (callback) {
@@ -743,7 +734,7 @@ router.post('/count', function (request, response, next) {
 
     if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
         resContent.code = 400;
-        resContent.desc = "用户id不能为空且必须大于0";
+        resContent.desc = "用户id不能为空";
         response.json(resContent);
         return;
     }
@@ -797,63 +788,6 @@ router.post('/getVirtualCard', function (request, response, next) {
     }
 });
 
-/*查询订单详情--虚拟*/
-router.post('/info2', function (req, res, next) {
-    var result = {code: 200};
-    try {
-        var arg = req.body;
-        logger.info("查询订单祥情请求参数：" + JSON.stringify(arg));
-
-        var params = {};
-        params.userId = arg.userId || 2;
-        params.orderId = arg.orderId || "5780002";
-        params.userType = arg.userType || 1; // 1:买家 2：卖家 3：系统
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
-        if (params.userId == null || params.orderId == null) {
-            result.code = 400;
-            result.desc = "请求参数错误";
-            res.json(result);
-            return;
-        }
-
-
-        result.orderId = "5780002";
-        result.orderstate = 10;
-        result.mobileNo = "13558731840";
-        result.sellerName = "测试商家";
-        result.curTime = new Date().getTime();
-        result.createTime = "2016-01-20 10:12:34"; //订单创建时间
-        result.deliverTime = "";
-        result.successTime = "";
-        result.comment = "买家留言信息";
-        result.closingPrice = "1";
-        result.exchangeScore = "100";
-        result.payChanel = 1;
-        var couponCode = "序列号：*************     密码：***************"
-        result.couponCode = [couponCode, couponCode];
-
-        var productList = {
-            productId: "ze151220001240000950",
-            productName: "测试商品－主流程",
-            sku: {skuNum: "1-1:100-102", skuDesc: "颜色-军绿色:尺码-XXS"},
-            curPrice: "0.01",
-            imgUrl: "31E87669C4FA80B6BB7C08F42E560237.jpg",
-            count: 2
-        };
-
-        result.productList = productList;
-
-        res.json(result);
-        logger.info("get order info response:" + JSON.stringify(result));
-
-    } catch (ex) {
-        logger.error("查询订单详情失败：" + ex);
-        result.code = 500;
-        result.desc = "查询订单详情失败";
-        res.json(result);
-    }
-});
 /*查询订单详情--虚拟*/
 router.post('/info2Test', function (req, res, next) {
     var result = {code: 200};
@@ -1087,17 +1021,16 @@ router.post('/info', function (req, res, next) {
 
 /*获取支付的url*/
 router.post('/pay', function (req, res, next) {
+    logger.info("进入获取支付url接口..");
     var result = {code: 200};
-
     var arg = req.body;
-
     if (arg == null || arg.payChannel == null || arg.orderIdList == null || arg.orderIdList.length <= 0) {
         result.code = 400;
         result.desc = "请求参数错误";
         res.json(result);
         return;
     }
-    logger.info("order pay request:" + JSON.stringify(arg));
+    logger.info("订单支付请求参数 request:" + JSON.stringify(arg));
     if (arg.payChannel == 4) {
         Util.getOpenApi(arg, function (err, data) {
             try {
@@ -1117,7 +1050,6 @@ router.post('/pay', function (req, res, next) {
                 Order.payApply(arg, function (err, payUrl) {
                     if (err) {
                         res.json(err);
-                        return;
                     }
                     if (payUrl !== null) {
                         var urlInof = JSON.parse(payUrl.value);
@@ -1128,47 +1060,62 @@ router.post('/pay', function (req, res, next) {
                 });
             }
             catch (ex) {
-                logger.error("error:" + ex);
+                logger.error("获取支付信息失败:" + ex);
                 result.code = 500;
                 result.desc = "获取支付URL失败";
                 res.json(result);
-            }
-        });
-    } else if(arg.payChannel == 9){
-        Order.payApply(arg, function (err, payUrl) {
-            if (err) {
-                res.json(err);
                 return;
             }
-            if (payUrl !== null) {
-                var urlInof = JSON.parse(payUrl.value);
-                result.payUrl = {
-                    sign :urlInof.sign,
-                    partnerid :urlInof.partnerid,
-                    appId :urlInof.partnerid,
-                    timeStamp :urlInof.partnerid,
-                    packageInfo :urlInof.package,
-                    prepayid :urlInof.prepayid,
-                    signType :urlInof.signType,
-                    nonceStr :urlInof.nonceStr
-                };
-                res.json(result);
-                logger.info("order pay response:" + JSON.stringify(result));
-            }
         });
+    } else if (arg.payChannel == 9) {
+        try {
+            Order.payApply(arg, function (err, payUrl) {
+                if (err) {
+                    res.json(err);
+                }
+                if (payUrl !== null) {
+                    var urlInof = JSON.parse(payUrl.value);
+                    result.payUrl = {
+                        sign: urlInof.sign,
+                        partnerid: urlInof.partnerid,
+                        appId: urlInof.partnerid,
+                        timeStamp: urlInof.partnerid,
+                        packageInfo: urlInof.package,
+                        prepayid: urlInof.prepayid,
+                        signType: urlInof.signType,
+                        nonceStr: urlInof.nonceStr
+                    };
+                    res.json(result);
+                    logger.info("order pay response:" + JSON.stringify(result));
+                }
+            });
+        } catch (ex) {
+            logger.error("获取支付信息失败：" + ex);
+            result.code = 500;
+            result.desc = "获取支付URL失败";
+            res.json(result);
+            return;
+        }
     } else {
-        Order.payApply(arg, function (err, payUrl) {
-            if (err) {
-                res.json(err);
-                return;
-            }
-            if (payUrl !== null) {
-                var urlInof = JSON.parse(payUrl.value);
-                result.payUrl = urlInof;
-                res.json(result);
-                logger.info("order pay response:" + JSON.stringify(result));
-            }
-        });
+        try {
+            Order.payApply(arg, function (err, payUrl) {
+                if (err) {
+                    res.json(err);
+                }
+                if (payUrl !== null) {
+                    var urlInof = JSON.parse(payUrl.value);
+                    result.payUrl = urlInof;
+                    res.json(result);
+                    logger.info("order pay response:" + JSON.stringify(result));
+                }
+            });
+        } catch (ex) {
+            logger.error("获取支付信息失败：" + ex);
+            result.code = 500;
+            result.desc = "获取支付URL失败";
+            res.json(result);
+            return;
+        }
     }
 });
 
@@ -1241,27 +1188,31 @@ router.post('/payUrl', function (req, res, next) {
 //确认收货
 router.post('/changeState', function (req, res, next) {
     var result = {code: 200};
-
-    var arg = req.body;
-    var params = {};
-
-    params.orderId = arg.orderId || "5390002";
-    params.userId = arg.userId || 2;
-    params.userType = arg.userType || 1;
-    params.token = arg.token || "鉴权信息1";
-    params.ppInfo = arg.ppInfo || "鉴权信息2";
-    logger.info("order pay request:" + JSON.stringify(params));
-
-    Order.confirmReceipt(params, function (err, data) {
-        if (err) {
-            res.json(err);
+    try{
+        var arg = req.body;
+        if (arg == null || arg.orderId == null || arg.userId == null) {
+            result.code = 400;
+            result.desc = "请求参数错误";
+            res.json(result);
             return;
         }
+        logger.info("order pay request:" + JSON.stringify(params));
+
+        Order.confirmReceipt(arg, function (err, data) {
+            if (err) {
+                res.json(err);
+                return;
+            }
+            res.json(result);
+            logger.info("order pay response:" + JSON.stringify(result));
+
+        });
+    } catch(ex){
+        logger.error("收货确认失败：" + ex);
+        result.code = 500;
+        result.desc = "收货确认失败";
         res.json(result);
-        logger.info("order pay response:" + JSON.stringify(result));
-
-    });
-
+    }
 });
 
 //查询支付状态
