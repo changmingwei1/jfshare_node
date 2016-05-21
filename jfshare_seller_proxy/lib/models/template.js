@@ -50,7 +50,7 @@ Template.prototype.addPostageTemplate = function (params, callback) {
     // 调用
     Lich.wicca.invokeClient(templateServer, function (err, data) {
         logger.info("templateServer-addPostageTemplate result:" + JSON.stringify(data[0]));
-        if (err || data[0].code == 1) {
+        if (err || data[0].result.code == 1) {
             logger.error("templateServer-addPostageTemplate  失败原因 ======" + err);
             var result = {};
             result.code = 500;
@@ -66,13 +66,13 @@ Template.prototype.addPostageTemplate = function (params, callback) {
 Template.prototype.updatePostageTemplate = function (params, callback) {
 
     var postageList = [];
-
-    if(params.postageList!=null){
-        for(var i=0;i<params.postageList.length;i++){
+    var list =  JSON.parse(params.postageList);
+    if(list!=null){
+        for(var i=0;i<list.length;i++){
 
             var postage = new baseTemplate_types.Postage({
-                supportProvince: params.postageList[i].supportProvince,
-                rule: JSON.stringify(params.postageList[i].rule)
+                supportProvince: list[i].supportProvince,
+                rule: JSON.stringify(list[i].rule)
             });
 
             postageList.push(postage);
