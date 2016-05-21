@@ -409,7 +409,7 @@ ScoreResult.prototype.write = function(output) {
 ScoreTradeResult = module.exports.ScoreTradeResult = function(args) {
   this.result = null;
   this.scoreTrades = null;
-  this.pageination = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
@@ -417,8 +417,8 @@ ScoreTradeResult = module.exports.ScoreTradeResult = function(args) {
     if (args.scoreTrades !== undefined) {
       this.scoreTrades = args.scoreTrades;
     }
-    if (args.pageination !== undefined) {
-      this.pageination = args.pageination;
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -467,8 +467,8 @@ ScoreTradeResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.STRUCT) {
-        this.pageination = new pagination_ttypes.Pagination();
-        this.pageination.read(input);
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
       } else {
         input.skip(ftype);
       }
@@ -503,9 +503,9 @@ ScoreTradeResult.prototype.write = function(output) {
     output.writeListEnd();
     output.writeFieldEnd();
   }
-  if (this.pageination !== null && this.pageination !== undefined) {
-    output.writeFieldBegin('pageination', Thrift.Type.STRUCT, 3);
-    this.pageination.write(output);
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -728,7 +728,7 @@ ScoreUserQueryParam.prototype.write = function(output) {
 ScoreUserResult = module.exports.ScoreUserResult = function(args) {
   this.result = null;
   this.scoreUsers = null;
-  this.pageination = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
@@ -736,8 +736,8 @@ ScoreUserResult = module.exports.ScoreUserResult = function(args) {
     if (args.scoreUsers !== undefined) {
       this.scoreUsers = args.scoreUsers;
     }
-    if (args.pageination !== undefined) {
-      this.pageination = args.pageination;
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -786,8 +786,8 @@ ScoreUserResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.STRUCT) {
-        this.pageination = new pagination_ttypes.Pagination();
-        this.pageination.read(input);
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
       } else {
         input.skip(ftype);
       }
@@ -822,9 +822,9 @@ ScoreUserResult.prototype.write = function(output) {
     output.writeListEnd();
     output.writeFieldEnd();
   }
-  if (this.pageination !== null && this.pageination !== undefined) {
-    output.writeFieldBegin('pageination', Thrift.Type.STRUCT, 3);
-    this.pageination.write(output);
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
