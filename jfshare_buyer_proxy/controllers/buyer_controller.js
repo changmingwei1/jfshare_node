@@ -659,16 +659,13 @@ router.post('/scoreTrade', function (request, response, next) {
             } else {
                 var pagination = data[0].pagination;
 
-                if(pagination==null){
-                    resContent.code = 500;
-                    resContent.desc = "获取积分列表失败";
-                    response.json(resContent);
-                    return;
+                if(pagination!==null){
+                    resContent.page = {
+                        total: pagination.totalCount,
+                        pageCount: pagination.pageNumCount
+                    };
                 }
-                resContent.page = {
-                    total: pagination.totalCount,
-                    pageCount: pagination.pageNumCount
-                };
+
                 var scoreTrades = data[0].scoreTrades;
                 if(scoreTrades != null){
                     scoreTrades.forEach(function (a) {
