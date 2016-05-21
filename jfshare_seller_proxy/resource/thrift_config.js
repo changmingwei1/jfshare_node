@@ -152,5 +152,14 @@ module.exports.ServiceFactory = {
     },
     template: function () {
         return new ThriftConfig(zookeeper.getData("template_serv_ips"),zookeeper.getData("template_serv_port"));
+    },
+    /**
+     * 品牌服务
+     * @returns {ThriftConfig}
+     */
+    brand: function () {
+        var obj = new ThriftConfig("10.24.190.240", 1981);
+        // var obj = new ThriftConfig("127.0.0.1", 1981);
+        return obj;
     }
 };

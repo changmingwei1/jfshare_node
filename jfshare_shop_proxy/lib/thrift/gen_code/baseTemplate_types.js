@@ -1077,12 +1077,16 @@ ProductPostageBasic.prototype.write = function(output) {
 SellerPostageBasic = module.exports.SellerPostageBasic = function(args) {
   this.sellerId = null;
   this.productPostageBasicList = null;
+  this.orderAmount = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
     }
     if (args.productPostageBasicList !== undefined) {
       this.productPostageBasicList = args.productPostageBasicList;
+    }
+    if (args.orderAmount !== undefined) {
+      this.orderAmount = args.orderAmount;
     }
   }
 };
@@ -1128,6 +1132,13 @@ SellerPostageBasic.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderAmount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1156,6 +1167,11 @@ SellerPostageBasic.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.orderAmount !== null && this.orderAmount !== undefined) {
+    output.writeFieldBegin('orderAmount', Thrift.Type.STRING, 5);
+    output.writeString(this.orderAmount);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

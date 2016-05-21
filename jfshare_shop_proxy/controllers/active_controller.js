@@ -31,19 +31,9 @@ router.get('/imgList', function (request, response, next) {
                 response.json(error);
                 return;
             } else {
-                //var slotImageList = data[0].slotImageList;
-                //resContent.slotImageList = slotImageList;
-                var slotImageList = [];
-                var slotImage2 = {
-                    imgKey: "07B35E4775CB41A6C9CCB44C8F0D1D7F.jpg",
-                    jump: "www.baidu.com"
-                };
-                var slotImage3 = {
-                    imgKey: "6D64AC14C4D153D8D51960B3697AF84C.jpg",
-                    jump: "www.baidu.com"
-                };
-                slotImageList = [slotImage2,slotImage3];
+                var slotImageList = data[0].slotImageList;
                 resContent.slotImageList = slotImageList;
+
                 response.json(resContent);
                 logger.info("响应:" + JSON.stringify(resContent));
             }

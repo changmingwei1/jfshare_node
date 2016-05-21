@@ -25,7 +25,7 @@ function BaseTemplate(){}
 /*邮费计算*/
 BaseTemplate.prototype.calculatePostage = function(param,  callback) {
 
-    logger.info("看看是啥："+JSON.stringify(param));
+    logger.info("请求参数，arg："+JSON.stringify(param));
 
 
     var sellerList = param.sellerPostageList;
