@@ -21,13 +21,13 @@ function Template() {
 Template.prototype.addPostageTemplate = function (params, callback) {
 
     var postageList = [];
-
-    if(params.postageList!=null){
-        for(var i=0;i<params.postageList.length;i++){
+    var list =  JSON.parse(params.postageList);
+    if(list!=null){
+        for(var i=0;i<list.length;i++){
 
             var postage = new baseTemplate_types.Postage({
-                supportProvince: params.postageList[i].supportProvince,
-                rule: JSON.stringify(params.postageList[i].rule)
+                supportProvince: list[i].supportProvince,
+                rule: JSON.stringify(list[i].rule)
             });
 
             postageList.push(postage);
