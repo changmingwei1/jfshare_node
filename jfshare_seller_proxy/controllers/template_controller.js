@@ -27,7 +27,7 @@ router.post('/addPostageTemplate', function (request, response, next) {
 
     try {
         var params = request.body;
-
+        logger.info("add freight params:" + JSON.stringify(params));
         if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
 
             result.code = 500;
@@ -65,8 +65,6 @@ router.post('/addPostageTemplate', function (request, response, next) {
             response.json(result);
             return;
         }
-
-        logger.info("add freight params:" + JSON.stringify(params));
 
         Template.addPostageTemplate(params, function (error, data) {
             if (error) {
