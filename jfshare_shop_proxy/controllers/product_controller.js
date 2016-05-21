@@ -35,6 +35,7 @@ router.post('/list', function (req, res, next) {
             var dataArr = [];
             if (err) {
                 res.json(err);
+                return;
             } else {
                 logger.info("调用productServ-queryProductList result:" + JSON.stringify(data));
                 var productSurveyList = data[0].productSurveyList;
@@ -44,23 +45,14 @@ router.post('/list', function (req, res, next) {
                         productId: a.productId,
                         productName: a.productName,
                         viceName: a.viceName,
-                        curPrice: a.curPrice / 100,
-                        orgPrice: a.orgPrice / 100,
+                        curPrice: (Number(a.curPrice) / 100).toFixed(2) ,
+                        orgPrice: (Number(a.orgPrice) / 100).toFixed(2),
                         //sellerId: a.sellerId,   //测试用,没意义
                         imgKey: imgUri,
                         type: a.type || 2
                     });
                 });
-                var productList = {
-                    productId: "ze160205135801000704",
-                    productName: "测试商品01",
-                    viceName: "优惠大促",
-                    curPrice: "0.01",
-                    orgPrice: "140",
-                    //sellerId: a.sellerId,   //测试用,没意义
-                    imgKey: "9258E4A9FC083140D36383B2A5426A5C.jpg",
-                    type: 3
-                };
+
                 dataArr.push(productList);
                 var pagination = data[0].pagination;
                 resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
@@ -96,6 +88,7 @@ router.get('/productAttribute', function (req, res, next) {
         Product.queryProduct(productId, 1, 1, 0, 0, function (err, data) {
             if (err) {
                 res.json(err);
+                return;
             } else {
                 var product = data[0].product;
 
@@ -244,6 +237,7 @@ router.post('/querystore', function (req, res, next) {
     result.productId = params.productId;
     result.sellerId = params.sellerId;
     result.skuNum = params.skuNum;
+    logger.info("查询库存和sku的请求，arg：" + JSON.stringify(params));
     async.series([
             function (callback) {
                 try {
@@ -316,7 +310,7 @@ router.post('/querystore', function (req, res, next) {
                     }
 
                 } catch (ex) {
-                    logger.info("product服务异常:" + ex);
+                    logger.error("product服务异常:" + ex);
                     return callback(2, null);
                 }
 
@@ -345,7 +339,7 @@ router.post('/querystore', function (req, res, next) {
                     }
 
                 } catch (ex) {
-                    logger.info("库存服务异常:" + ex);
+                    logger.error("库存服务异常:" + ex);
                     return callback(3, null);
                 }
 
@@ -396,7 +390,7 @@ router.post('/querystoreBatch', function (request, response, next) {
                             callback(null, data);
                         });
                     } catch (ex) {
-                        logger.info("获取仓库id异常:" + ex);
+                        logger.error("获取仓库id异常:" + ex);
                         return callback(1, null);
                     }
                 },
@@ -415,7 +409,7 @@ router.post('/querystoreBatch', function (request, response, next) {
                             });
                         }
                     } catch (ex) {
-                        logger.info("queryProductTotal--异常:" + ex);
+                        logger.error("queryProductTotal--异常:" + ex);
                         return callback(2, null);
                     }
                 },
@@ -475,7 +469,7 @@ router.post('/querystoreBatch', function (request, response, next) {
                             }
                         });
                     } catch (ex) {
-                        logger.info("queryProductSKU--异常:" + ex);
+                        logger.error("queryProductSKU--异常:" + ex);
                         return callback(3, null);
                     }
                 }
@@ -518,6 +512,7 @@ router.post('/subjectList', function (req, res, next) {
             res.json(result);
             return;
         }
+        logger.info("请求的参数，arg：" + JSON.stringify(arg));
         Product.getSubTree(arg, function (err, data) {
             if (err) {
                 res.json(err);
@@ -555,7 +550,7 @@ router.post('/freight', function (req, res, next) {
     var result = {code: 200};
     try {
         var arg = req.body;
-        logger.info("看看是啥：" + JSON.stringify(arg));
+        logger.info("请求参数，arg：" + JSON.stringify(arg));
         //if (arg.subjectId == null || arg.subjectId == "" || arg.subjectId < 0) {
         //    result.code = 400;
         //    result.desc = "参数错误";
