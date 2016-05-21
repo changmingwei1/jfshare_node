@@ -235,18 +235,6 @@ router.post('/login2', function (req, res, next) {
             res.json(resContent);
             return;
         }
-        if (param.id == null || param.id == "") {
-            resContent.code = 500;
-            resContent.desc = "图形验证码id为空";
-            res.json(resContent);
-            return;
-        }
-        if (param.value == null || param.value == "") {
-            resContent.code = 500;
-            resContent.desc = "图形验证码不能为空";
-            res.json(resContent);
-            return;
-        }
         logger.info("请求的参数: " + JSON.stringify(param));
         async.waterfall([
             function (callback) {
