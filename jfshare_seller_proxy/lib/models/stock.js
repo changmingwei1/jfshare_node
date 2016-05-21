@@ -33,8 +33,9 @@ function Stock() {
 Stock.prototype.queryProductTotal = function (params, callback) {
 
     var productList = params;
-    var res = {};
+
     if (productList == null || productList.length <= 0) {
+        var res = {};
         res.code = 500;
         res.desc = "产品ID列表不能为空";
         callback(res, null);
@@ -53,10 +54,11 @@ Stock.prototype.queryProductTotal = function (params, callback) {
         logger.info("query stock result:" + JSON.stringify(data));
 
         if (err || data[0].result.code == "1") {
+            var result = {};
             logger.error("can't query stock because: ======" + err);
-            res.code = 500;
-            res.desc = "获取库存失败";
-            callback(res, null);
+            result.code = 500;
+            result.desc = "获取库存失败";
+            callback(result, null);
         } else {
             callback(null, data[0].stockInfos);
         }

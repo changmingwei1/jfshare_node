@@ -216,12 +216,16 @@ Buyer.prototype.getBuyer = function(param,callback){
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("get buyer result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
             logger.error("can't get buyer because: ======" + err);
             res.code = 500;
             res.desc = "false to get buyer";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data);
         }
     });
