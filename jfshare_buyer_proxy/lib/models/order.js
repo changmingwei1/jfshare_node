@@ -287,7 +287,7 @@ Order.prototype.getOrderStateIdBuyerEnum = function (orderState) {
 //确认收货
 Order.prototype.confirmReceipt = function (param, callback) {
 
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "confirmReceipt", [param.userType, param.userId, param.orderId]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "confirmReceipt", [1, param.userId, param.orderId]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("call orderSer-payState result:" + JSON.stringify(data));
         if (err || data[0] == '1') {
@@ -300,30 +300,5 @@ Order.prototype.confirmReceipt = function (param, callback) {
         }
     });
 };
-
-/*获取虚拟商品卡密（关键接口）*/
-Order.prototype.confirmReceipt = function (param, callback) {
-
-    var params = new product_types.ProductCardParam({
-        productId: param.productId,
-        transactionId: param.orderId,
-        num: param.num,
-        skuNum: param.skuNum
-    });
-
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "getProductCard", [params]);
-    Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("call orderSer-payState result:" + JSON.stringify(data));
-        if (err || data[0].result.code == '1') {
-            var res = {};
-            res.code = 500;
-            res.desc = "获取虚拟商品卡密失败！";
-            callback(res, null);
-        } else {
-            callback(null, data);
-        }
-    });
-};
-
 
 module.exports = new Order();
