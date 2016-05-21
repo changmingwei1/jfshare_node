@@ -524,7 +524,7 @@ router.post('/list', function (request, response, next) {
                                                 skuNum: order.productList[i].skuNum,
                                                 skuName: order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
-                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                imgKey: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
                                             };
                                             productList.push(productItem);
@@ -833,7 +833,7 @@ router.post('/infoTest', function (request, response, next) {
                                     },
                                     curPrice: orderInfo.productList[i].curPrice,
                                     orgPrice: orderInfo.productList[i].orgPrice,
-                                    imgUrl: orderInfo.productList[i].imagesUrl,
+                                    imgKey: orderInfo.productList[i].imagesUrl,
                                     count: orderInfo.productList[i].count,
                                     postage: orderInfo.productList[i].postage,
                                     type: orderInfo.productList[i].type
