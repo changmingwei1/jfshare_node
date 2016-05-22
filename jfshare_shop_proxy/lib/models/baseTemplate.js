@@ -90,12 +90,17 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
     Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
         logger.info("调用邮费计算，  result:" + JSON.stringify(data[0]));
         var res = {};
-        if(err || data[0].result.code == "1"){
+        if(err){
             logger.error("调用邮费计算失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "邮费计算失败！";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == 1) {
+            logger.error("调用邮费计算失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data);
         }
     });
