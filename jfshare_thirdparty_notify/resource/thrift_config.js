@@ -84,10 +84,10 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     pay:function(){
-        return new ThriftConfig(zookeeper.getData("pay_serv_ips"),zookeeper.getData("pay_port"));
+        return new ThriftConfig(zk.getData("pay_serv_ips"),zookeeper.getData("pay_port"));
 
     },
     express:function(){
-        return new ThriftConfig(zookeeper.getData("express_serv_ips"),zookeeper.getData("express_port"));
+        return new ThriftConfig(zk.getData("express_serv_ips"),zookeeper.getData("express_port"));
     }
 };
