@@ -7,7 +7,7 @@
  * @constructor
  * ********************************************************************************************************************/
 
-var zk = require('./resource/zookeeper_util.js');
+var zk = require('./zookeeper_util');
   function poolConfig (name,createFn,destroyFn){
     this.name = name;
     this.create = createFn;
