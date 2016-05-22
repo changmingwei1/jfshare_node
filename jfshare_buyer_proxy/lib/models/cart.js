@@ -26,7 +26,7 @@ function Cart(){}
 Cart.prototype.countItem = function(param, callback){
     var source = param.source;
     //获取client
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "countItem", [param.userId, source]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "countItem", [param.userId + "", source]);
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-countItem  result:" + JSON.stringify(data));
         var res = {};
@@ -52,7 +52,7 @@ Cart.prototype.addCartItem = function(param, callback){
         price: param.price
     });
 
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId,item,param.source]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId + "",item,param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-addItem  result:" + JSON.stringify(data));
@@ -89,7 +89,7 @@ Cart.prototype.deleteCartItem = function(param, callback){
         cartKeyList.push(item);
     }
 
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [param.userId, cartKeyList, param.source]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "deleteItem", [param.userId + "", cartKeyList, param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-deleteItem  result:" + JSON.stringify(data));
@@ -109,7 +109,7 @@ Cart.prototype.deleteCartItem = function(param, callback){
 //购物车列表
 Cart.prototype.cartListItem = function(param, callback){
     /*source  0:系统；1：PC；2：无线*/
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [param.userId, param.source]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "listItem", [param.userId + "", param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-listItem  result:" + JSON.stringify(data));
@@ -137,8 +137,7 @@ Cart.prototype.cartUpdateItem = function(param, callback){
         wi: param.wi || null
     });
 
-    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "updateItem",
-        [param.userId, null, cartKey, item, param.source]);
+    var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "updateItem",[param.userId + "", null, cartKey, item, param.source]);
 
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-updateItem result:" + JSON.stringify(data[0]));
