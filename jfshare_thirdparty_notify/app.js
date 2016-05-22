@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 var kuaidi = require('./controllers/kuaidi100_controller');
 var tests = require('./controllers/test_controller');
 var view_index = require("./view_center/index/view_index");
-
+var pay = require("./controllers/pay_controller");
 var app = express();
 
 // view engine setup
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/', routes);
 app.use('/kuaidi', kuaidi);
 app.use('/test', tests);
-
+app.use('/pay',pay);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
