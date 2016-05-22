@@ -205,13 +205,13 @@ router.post('/list', function (request, response, next) {
 router.post('/creat', function (request, response, next) {
     logger.info("进入获取商品详情接口");
     var result = {code: 200};
-    try{
+    try {
         var productInfo = {};
         var params = request.body;
         logger.info("creat product list args:" + JSON.stringify(params));
 
         //参数验证
-        if(params.sellerId == null || params.sellerId == "" ||params.sellerId <= 0){
+        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -220,7 +220,7 @@ router.post('/creat', function (request, response, next) {
         }
 
         //参数验证
-        if(params.brandId == null || params.brandId == "" ||params.brandId <= 0){
+        if (params.brandId == null || params.brandId == "" || params.brandId <= 0) {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -228,7 +228,7 @@ router.post('/creat', function (request, response, next) {
             return;
         }
         //参数验证
-        if(params.subjectId == null || params.subjectId == "" ||params.subjectId <= 0){
+        if (params.subjectId == null || params.subjectId == "" || params.subjectId <= 0) {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -237,7 +237,7 @@ router.post('/creat', function (request, response, next) {
         }
 
         //参数验证
-        if(params.productName == null || params.productName == "" ){
+        if (params.productName == null || params.productName == "") {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -245,7 +245,7 @@ router.post('/creat', function (request, response, next) {
             return;
         }
         //参数验证
-        if(params.viceName == null || params.viceName == "" ){
+        if (params.viceName == null || params.viceName == "") {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -272,19 +272,19 @@ router.post('/creat', function (request, response, next) {
          *
          *
          */
-        if(params.type == null || params.type == "" ){
+        if (params.type == null || params.type == "") {
             result.code = 500;
             result.desc = "请求参数错误";
             response.json(result);
             return;
         }
-        if(params.postageId == null || params.postageId == "" ){
+        if (params.postageId == null || params.postageId == "") {
             result.code = 500;
             result.desc = "请求参数错误";
             response.json(result);
             return;
         }
-        if(params.storehouseIds == null || params.storehouseIds == "" ){
+        if (params.storehouseIds == null || params.storehouseIds == "") {
             result.code = 500;
             result.desc = "请求参数错误";
             response.json(result);
@@ -294,12 +294,12 @@ router.post('/creat', function (request, response, next) {
                 function (callback) {
                     try {
 
-                        Product.create(params,function(err,data){
-                            if(err){
-                                callback(1,err);
-                            }else{
+                        Product.create(params, function (err, data) {
+                            if (err) {
+                                callback(1, err);
+                            } else {
                                 params.productId = data[0].value;
-                                callback(null,params.productId);
+                                callback(null, params.productId);
                             }
                         });
                     } catch (ex) {
@@ -309,13 +309,18 @@ router.post('/creat', function (request, response, next) {
                 },
                 function (callback) {
                     try {
-                        Stock.createStock(params,function(err,data){
-                            if(err){
-                                callback(2,err);
-                            }else{
-                                callback(null,params.productId);
-                            }
-                        });
+                        if (params.productId == null || params.productId == "") {
+                            return callback(1, null);
+                        } else {
+                            Stock.createStock(params, function (err, data) {
+                                if (err) {
+                                    callback(2, err);
+                                } else {
+                                    callback(null, params.productId);
+                                }
+                            });
+                        }
+
                     } catch (ex) {
                         logger.info("创建库存服务异常:" + ex);
                         return callback(2, null);
@@ -339,7 +344,7 @@ router.post('/creat', function (request, response, next) {
                 response.json(result);
 
             });
-    }catch(ex) {
+    } catch (ex) {
         logger.error("create product  error:" + ex);
         result.code = 500;
         result.desc = "创建商品失败";
@@ -361,7 +366,7 @@ router.post('/get', function (request, response, next) {
         response.json(result);
         return;
     }
-    if (params.productStatus==200||params.productStatus==300) {
+    if (params.productStatus == 200 || params.productStatus == 300) {
         result.code = 500;
         result.desc = "此状态下商品不可以编辑";
         response.json(result);
@@ -403,16 +408,16 @@ router.post('/get', function (request, response, next) {
                 function (callback) {
                     try {
 
-                        Product.queryProduct(params, function (err,data) {
-                            if(err){
+                        Product.queryProduct(params, function (err, data) {
+                            if (err) {
                                 callback(1, null);
                             }
                             product = data[0].product;
 
-                            if(product==null){
+                            if (product == null) {
                                 callback(1, null);
-                            }else{
-                                result.product=product;
+                            } else {
+                                result.product = product;
 
                                 callback(null, result.product);
                             }
@@ -425,20 +430,20 @@ router.post('/get', function (request, response, next) {
                 function (callback) {
                     try {
 
-                        if(product==null||product==""){
+                        if (product == null || product == "") {
                             callback(2, null);
                         }
-                        var params={};
-                        params.detailKey=product.detailKey;
-                        params.productId=product.productId;
+                        var params = {};
+                        params.detailKey = product.detailKey;
+                        params.productId = product.productId;
                         logger.info("获取商品详情接口参数:" + JSON.stringify(params));
 
-                        Product.queryProductDetail(params, function (err,data) {
+                        Product.queryProductDetail(params, function (err, data) {
                             //data[0].result.code=="1"
-                            if(err||data.result.code=="1"){
+                            if (err || data.result.code == "1") {
                                 callback(2, err);
-                            }else{
-                                product.detailContent=data.value;
+                            } else {
+                                product.detailContent = data.value;
                                 callback(null, data);
                             }
 
@@ -462,7 +467,7 @@ router.post('/get', function (request, response, next) {
                     response.json(results[1]);
                     return;
                 }
-                result.product =product;
+                result.product = product;
                 response.json(result);
                 return;
 
@@ -470,8 +475,6 @@ router.post('/get', function (request, response, next) {
 
 
         //--------------------------------------------
-
-
 
 
     } catch (ex) {
@@ -543,11 +546,11 @@ router.post('/update', function (request, response, next) {
         async.series([
                 function (callback) {
                     try {
-                        Product.update(params, function (err,data) {
-                            if(err){
-                                callback(1,err);
-                            }else{
-                                callback(null,data);
+                        Product.update(params, function (err, data) {
+                            if (err) {
+                                callback(1, err);
+                            } else {
+                                callback(null, data);
                             }
 
                         });
@@ -558,11 +561,11 @@ router.post('/update', function (request, response, next) {
                 },
                 function (callback) {
                     try {
-                        Stock.updateStock(params,function(err,data){
-                            if(err){
-                                callback(2,err);
-                            }else{
-                                callback(null,data);
+                        Stock.updateStock(params, function (err, data) {
+                            if (err) {
+                                callback(2, err);
+                            } else {
+                                callback(null, data);
                             }
                         });
                     } catch (ex) {
@@ -633,13 +636,13 @@ router.post('/virtualList', function (request, response, next) {
             return;
         }
         Product.queryProductCard(params, function (err, data) {
-            if(err){
+            if (err) {
                 result.code = 500;
                 result.desc = "查看虚拟商品失败";
                 response.json(result);
                 return
             }
-            if(data[0].cardtatisticsList!=null){
+            if (data[0].cardtatisticsList != null) {
                 result.cardtatisticsList = data[0].cardtatisticsList;
             }
             response.json(result);
@@ -705,11 +708,11 @@ router.post('/ticketList', function (request, response, next) {
             return;
         }
         Product.queryProductCardViewList(params, function (err, data) {
-            if(err){
+            if (err) {
                 response.json(err);
                 return
             }
-            if(data[0].cardViewList !=null){
+            if (data[0].cardViewList != null) {
                 result.cardViewList = data[0].cardViewList;
             }
             response.json(result);
@@ -761,7 +764,7 @@ router.post('/queryDetail', function (request, response, next) {
         }
 
         Product.queryDetail(params, function (err, data) {
-            if(err){
+            if (err) {
                 result.code = 500;
                 result.desc = "查看详情失败";
                 response.json(result);
@@ -778,7 +781,6 @@ router.post('/queryDetail', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 
 router.post('/apply', function (request, response, next) {
@@ -826,8 +828,8 @@ router.post('/apply', function (request, response, next) {
         }
 //ENUM商品状态:100 - 199 不可出售的状态，200 - 299 审核中的状态，
 //300 - 399 销售中的状态，100 初始化，101 商家下架，102 审核未通过，103 管理员下架，200 审核中，300 销售中
-        if(params.state==1){// 0：表示申请上架，1：表示下架
-            if(params.curState !=300){
+        if (params.state == 1) {// 0：表示申请上架，1：表示下架
+            if (params.curState != 300) {
                 result.code = 500;
                 result.desc = "商品未处于销售状态中,不用下架";
                 response.json(result);
@@ -835,8 +837,8 @@ router.post('/apply', function (request, response, next) {
             }
             params.activeState = 101;
         }
-        if(params.state==0){// 0：表示申请上架，1：表示下架
-            if(params.curState ==300){
+        if (params.state == 0) {// 0：表示申请上架，1：表示下架
+            if (params.curState == 300) {
                 result.code = 500;
                 result.desc = "商品处于销售状态中,不用申请上架";
                 response.json(result);
@@ -847,7 +849,7 @@ router.post('/apply', function (request, response, next) {
 
 
         Product.setProductState(params, function (err, expressData) {
-            if(err){
+            if (err) {
                 result.code = 500;
                 result.desc = "上架下架失败";
                 response.json(result);

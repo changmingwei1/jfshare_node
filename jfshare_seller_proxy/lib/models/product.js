@@ -63,7 +63,7 @@ Product.prototype.create = function (params, callback) {
     var productSkuItemList = [];
 
     var productSkuList = params.storeinfo;
-    logger.info("productSkuList 长度是---》" + JSON.stringify(productSkuList.length));
+    logger.info("productSkuList " + JSON.stringify(productSkuList));
     if (productSkuList.length > 0) {
         productSkuList.forEach(function (sku) {
             if (sku != null && sku.key != null) {

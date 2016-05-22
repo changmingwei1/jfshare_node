@@ -128,7 +128,7 @@ Stock.prototype.createStock = function (params, callback) {
                         count:sku.values[i].storecount,//storecount
                         storehouseId: sku.values[i].storeid
                     });
-                    total+=sku.values[i].storecount;
+                    total+=Number(sku.values[i].storecount);
                     stockList.push(stockItem);
                 }
             }
