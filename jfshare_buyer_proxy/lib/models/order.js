@@ -107,6 +107,8 @@ Order.prototype.payApply = function (param, callback) {
     var payParam = new order_types.PayParam({
         userId: param.userId,
         orderIdList: param.orderIdList,
+        exchangeScore:param.exchangeScore,
+        exchangeCash:param.exchangeCash,
         payChannel: payChannel
     });
 

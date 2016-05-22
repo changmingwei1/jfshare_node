@@ -38,19 +38,19 @@ OrderServ_createOrder_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size64 = 0;
-        var _rtmp368;
+        var _size72 = 0;
+        var _rtmp376;
         this.orderList = [];
-        var _etype67 = 0;
-        _rtmp368 = input.readListBegin();
-        _etype67 = _rtmp368.etype;
-        _size64 = _rtmp368.size;
-        for (var _i69 = 0; _i69 < _size64; ++_i69)
+        var _etype75 = 0;
+        _rtmp376 = input.readListBegin();
+        _etype75 = _rtmp376.etype;
+        _size72 = _rtmp376.size;
+        for (var _i77 = 0; _i77 < _size72; ++_i77)
         {
-          var elem70 = null;
-          elem70 = new ttypes.Order();
-          elem70.read(input);
-          this.orderList.push(elem70);
+          var elem78 = null;
+          elem78 = new ttypes.Order();
+          elem78.read(input);
+          this.orderList.push(elem78);
         }
         input.readListEnd();
       } else {
@@ -74,12 +74,12 @@ OrderServ_createOrder_args.prototype.write = function(output) {
   if (this.orderList !== null && this.orderList !== undefined) {
     output.writeFieldBegin('orderList', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.orderList.length);
-    for (var iter71 in this.orderList)
+    for (var iter79 in this.orderList)
     {
-      if (this.orderList.hasOwnProperty(iter71))
+      if (this.orderList.hasOwnProperty(iter79))
       {
-        iter71 = this.orderList[iter71];
-        iter71.write(output);
+        iter79 = this.orderList[iter79];
+        iter79.write(output);
       }
     }
     output.writeListEnd();
