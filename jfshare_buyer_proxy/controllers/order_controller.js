@@ -950,6 +950,8 @@ router.post('/info', function (req, res, next) {
                             result.successTime = orderInfo.successTime; //确认收货时间
                             result.comment = orderInfo.buyerComment;
                             result.postage = orderInfo.postage;
+                            result.exchangeScore = orderInfo.exchangeScore; //添加字段
+                            result.exchangeCash = orderInfo.exchangeCash; //添加字段
                             var productList = [];
                             if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
                                 for (var i = 0; i < orderInfo.productList.length; i++) {
