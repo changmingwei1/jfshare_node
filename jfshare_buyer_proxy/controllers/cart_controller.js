@@ -247,8 +247,8 @@ router.post('/list', function (req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        async.series([
-            function(callback){
+//        async.series([
+//            function(callback){
                 Cart.cartListItem(param, function (err, itemList) {
                     if (err) {
                         res.json(err);
@@ -287,63 +287,63 @@ router.post('/list', function (req, res, next) {
                             cartList.push(cartLists);
                         }
                         result.cartList = cartList;
-                        param.cartList = cartList;
-                        callback(null,result);
+                        //param.cartList = cartList;
+                        //callback(null,result);
+                        res.json(result);
                         logger.info("购物车列表信息result：" + JSON.stringify(result));
                         return;
                     } else {
                         result.cartList = cartList;
-                        param.cartList = cartList;
-                        callback(null,result);
+                        //param.cartList = cartList;
+                        //callback(null,result);
+                        res.json(result);
                         logger.info("购物车列表信息result：" + JSON.stringify(result));
                         return;
                     }
                 });
-            },
-            function(callback){
-                logger.info("kankan shi sha:" + JSON.stringify(param.cartList));
-                var cList = result.cartList;
-                for (var i = 0; i < cList.length; i++) {
-                    var sellerId = cList[i].sellerId;
-                    BaseTemplate.queryPostageTemplate(sellerId, 2, function (err, data) {
-                        if (err) {
-                            res.json(err);
-                        } else {
-                            if (data[0].postageTemplateList != null || data[0].postageTemplateList.length > 0) {
-                                param.remark = data[0].postageTemplateList[0].templateDesc;
-                                logger.info("kankan shi sha3333:" + JSON.stringify(param.remark));
-                                callback(null, result);
-                            } else {
-                                param.remark = "";
-                                callback(null, result);
-                            }
-                        }
-                    });
-                    logger.info("kankan shi sha5555:" + param.remark);
-                    cList[i].remark = param.remark;
-                    logger.info("kankan shi 44444444:" + JSON.stringify(cList[i].remark));
-                }
-            }
-        ],function(err,results){
-            if (err == 1) {
-                result.code = 500;
-                result.desc = "获取购物车列表失败";
-                logger.error("获取购物车列表失败，原因:" + err);
-                res.json(result);
-                return;
-            } else if(err == 2){
-                result.code = 500;
-                result.desc = "获取商家运费模板信息失败";
-                logger.error("获取商家运费模板失败，原因:" + err);
-                res.json(result);
-                return;
-            } else {
-                res.json(result);
-                return;
-            }
-        });
-
-
+        //    },
+        //    function(callback){
+        //        logger.info("kankan shi sha:" + JSON.stringify(param.cartList));
+        //        var cList = result.cartList;
+        //        for (var i = 0; i < cList.length; i++) {
+        //            var sellerId = cList[i].sellerId;
+        //            BaseTemplate.queryPostageTemplate(sellerId, 2, function (err, data) {
+        //                if (err) {
+        //                    res.json(err);
+        //                } else {
+        //                    if (data[0].postageTemplateList != null || data[0].postageTemplateList.length > 0) {
+        //                        param.remark = data[0].postageTemplateList[0].templateDesc;
+        //                        logger.info("kankan shi sha3333:" + JSON.stringify(param.remark));
+        //                        callback(null, result);
+        //                    } else {
+        //                        param.remark = "";
+        //                        callback(null, result);
+        //                    }
+        //                }
+        //            });
+        //            logger.info("kankan shi sha5555:" + param.remark);
+        //            cList[i].remark = param.remark;
+        //            logger.info("kankan shi 44444444:" + JSON.stringify(cList[i].remark));
+        //        }
+        //    }
+        //],function(err,results){
+        //    if (err == 1) {
+        //        result.code = 500;
+        //        result.desc = "获取购物车列表失败";
+        //        logger.error("获取购物车列表失败，原因:" + err);
+        //        res.json(result);
+        //        return;
+        //    } else if(err == 2){
+        //        result.code = 500;
+        //        result.desc = "获取商家运费模板信息失败";
+        //        logger.error("获取商家运费模板失败，原因:" + err);
+        //        res.json(result);
+        //        return;
+        //    } else {
+        //        res.json(result);
+        //        return;
+        //    }
+        //});
         //});
     } catch (ex) {
         logger.error("get cart product list error:" + ex);

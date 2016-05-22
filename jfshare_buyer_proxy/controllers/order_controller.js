@@ -197,19 +197,19 @@ router.post('/submit', function (request, response, next) {
         if (arg.token == "" || arg.token == null) {
             result.code = 400;
             result.desc = "鉴权信息不能为空";
-            res.json(result);
+            response.json(result);
             return;
         }
         if (arg.ppInfo == "" || arg.ppInfo == null) {
             result.code = 400;
             result.desc = "鉴权信息不能为空";
-            res.json(result);
+            response.json(result);
             return;
         }
         if (arg.browser == "" || arg.browser == null) {
             result.code = 400;
             result.desc = "浏览器标识不能为空";
-            res.json(result);
+            response.json(result);
             return;
         }
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
