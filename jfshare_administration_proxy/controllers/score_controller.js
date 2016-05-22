@@ -36,7 +36,7 @@ router.post('/socrelist', function (request, response, next) {
                 return;
             }
             result.scoreList = data[0].scoreUsers;
-            var pagination = data[0].pagination;
+            var pagination = data[0].pageination;
             if(pagination!=null){
                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             }
@@ -100,7 +100,7 @@ router.post('/scoreinfolist', function (request, response, next) {
                         remark: score.trader
                     });
                 });
-                var pagination = data[0].pagination;
+                var pagination = data[0].pageination;
                 if(pagination!=null){
                     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                 }

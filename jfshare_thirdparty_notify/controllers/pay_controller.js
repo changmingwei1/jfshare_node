@@ -297,7 +297,11 @@ router.post('/notify/hebaopay', function(req, res, next) {
             ret.status = 200;
             ret.msg = "请求成功";
             //ret.data = data[0].value;
-            res.json(200);
+            //res.json(200);
+
+            res.writeHead(ret.status, {'Content-Type': 'text/html;charset=utf-8"'});
+            var data  = "SUCCESS";
+            res.end(data);
         });
     } catch (err) {
         logger.error("调用payServ-payNotify接收支付通知失败！", err);

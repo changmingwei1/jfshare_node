@@ -252,6 +252,44 @@ router.post('/creat', function (request, response, next) {
             response.json(result);
             return;
         }
+        /***
+         *
+         *
+         *         sellerId: params.sellerId,
+         productName: params.productName,
+         viceName: params.viceName,
+         subjectId: params.subjectId,
+         brandId: params.brandId,
+         imgKey: params.imgKey,
+         type: params.type,//商品类型 2表示普通商品 3表示虚拟商品
+         createUserId: params.sellerId,
+         skuTemplate: JSON.stringify(params.skuTemplate),
+         attribute: JSON.stringify(params.attribute),
+         productSku: productSku,
+         postageId: params.postageId,
+         detailContent: params.detailContent,
+         storehouseIds: params.storehouseIds
+         *
+         *
+         */
+        if(params.type == null || params.type == "" ){
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.postageId == null || params.postageId == "" ){
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.storehouseIds == null || params.storehouseIds == "" ){
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
         async.series([
                 function (callback) {
                     try {

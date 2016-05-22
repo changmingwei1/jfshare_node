@@ -454,6 +454,12 @@ router.post('/cancelOrder', function (request, response, next) {
             return;
         }
 
+        if (params.sellerId == null || params.sellerId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         Order.cancelOrder(params, function (err, data) {
             if (err) {
                 response.json(err);

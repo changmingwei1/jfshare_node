@@ -116,7 +116,8 @@ Stock.prototype.createStock = function (params, callback) {
     var stockList = [];
     var total = 0;
     var productSkuList = params.storeinfo;
-    logger.info("productSkuList 长度是---》" + JSON.stringify(productSkuList.length));
+
+    logger.info("productSkuList 参数" + JSON.stringify(productSkuList));
     if (productSkuList.length > 0) {
         productSkuList.forEach(function (sku) {
             if (sku != null && sku.key != null) {
