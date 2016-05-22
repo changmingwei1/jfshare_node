@@ -20,6 +20,16 @@ app.set('view engine', 'hbs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+
+app.use(function (req, res, next){
+  //console.log("-----------reqUrl===" + req.url);
+  if (req.method !== 'GET' && (req.url === '/pay/notify/alipay' || req.url == '/pay/notify/weixinpay' ||
+      req.url == '/pay/notify/hebaopay')) {
+    req.headers['content-type'] = 'application/x-www-form-urlencoded';
+  }
+  next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
