@@ -293,7 +293,6 @@ router.post('/creat', function (request, response, next) {
         async.series([
                 function (callback) {
                     try {
-
                         Product.create(params, function (err, data) {
                             if (err) {
                                 callback(1, err);
@@ -872,10 +871,8 @@ router.post('/improtTicket', function (request, response, next) {
     var result = {code: 200};
 
     try {
-        // var params = request.query;
         var params = request.body;
-        //var params = request.body;
-        logger.info("商品上架下架:" + params);
+        logger.info("进入导入券码接口--params:" + params);
 
         //参数校验
         //参数验证
@@ -887,7 +884,7 @@ router.post('/improtTicket', function (request, response, next) {
             return;
         }
 
-        if (params.bytes == null || params.bytes == "") {
+        if (params.path == null || params.path == "") {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -895,6 +892,14 @@ router.post('/improtTicket', function (request, response, next) {
             return;
         }
 
+        Product.improtVirtual(params, function (err, expressData) {
+            if (err) {
+                response.json(result);
+                return;
+            }
+            response.json(result);
+            return;
+        });
 
         response.json(result);
 
