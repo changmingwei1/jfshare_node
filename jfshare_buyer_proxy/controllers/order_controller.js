@@ -1122,66 +1122,63 @@ router.post('/pay', function (req, res, next) {
 /*申请支付请求 -> 用不着*/
 router.post('/payUrl', function (req, res, next) {
     var result = {code: 200};
-
     var arg = req.body;
-    logger.info("order pay request:" + JSON.stringify(arg));
-
     if (arg == null || arg.payChannel == null || arg.orderIdList == null || arg.orderIdList.length <= 0) {
         result.code = 400;
         result.desc = "请求参数错误";
         res.json(result);
         return;
     }
-
-    if (arg.payChannel == 4) {
-        Util.getOpenApi(arg, function (err, data) {
-            try {
-                logger.info("get open id response: " + JSON.stringify(data));
-                var jsonData = JSON.parse(data);
-                if (err == 500 || jsonData.openid == undefined) {
-                    logger.error("error:" + err);
-                    result.code = 500;
-                    result.desc = "获取支付URL失败";
+    logger.info("order pay request:" + JSON.stringify(arg));
+    if (arg.payChannel == 9) {
+        try {
+            Pay.payUrl(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                }
+                if (data !== null) {
+                    var urlInof = JSON.parse(data.value);
+                    result.payUrl = {
+                        sign: urlInof.sign,
+                        partnerid: urlInof.partnerid,
+                        appId: urlInof.partnerid,
+                        timeStamp: urlInof.partnerid,
+                        packageInfo: urlInof.package,
+                        prepayid: urlInof.prepayid,
+                        signType: urlInof.signType,
+                        nonceStr: urlInof.nonceStr
+                    };
                     res.json(result);
+                    logger.info("order pay response:" + JSON.stringify(result));
+                }
+            });
+        } catch (ex) {
+            logger.error("获取支付信息失败：" + ex);
+            result.code = 500;
+            result.desc = "获取支付URL失败";
+            res.json(result);
+            return;
+        }
+    } else {
+        try{
+            Pay.payUrl(arg, function (err, data) {
+                var urlInfo = JSON.parse(data.value);
+                if (err) {
+                    res.json(err);
                     return;
                 }
-                logger.info("jsonData:" + JSON.stringify(jsonData));
-                arg.openId = jsonData.openid;
-
-                logger.info("arg:" + JSON.stringify(arg));
-                Pay.payUrl(arg, function (err, data) {
-                    var urlInfo = JSON.parse(data.value);
-                    if (err) {
-                        res.json(err);
-                        return;
-                    }
-                    if (payUrl !== null) {
-                        result.payUrl = urlInfo;
-                        res.json(result);
-                        logger.info("order pay response:" + JSON.stringify(result));
-                    }
-                });
-            }
-            catch (ex) {
-                logger.error("error:" + ex);
-                result.code = 500;
-                result.desc = "获取支付URL失败";
-                res.json(result);
-            }
-        });
-    } else {
-        Pay.payUrl(arg, function (err, data) {
-            var urlInfo = JSON.parse(data.value);
-            if (err) {
-                res.json(err);
-                return;
-            }
-            if (payUrl !== null) {
-                result.payUrl = urlInfo;
-                res.json(result);
-                logger.info("order pay response:" + JSON.stringify(result));
-            }
-        });
+                if (data !== null) {
+                    result.payUrl = urlInfo;
+                    res.json(result);
+                    logger.info("order pay response:" + JSON.stringify(result));
+                }
+            });
+        } catch(ex) {
+            logger.error("获取支付信息失败：" + ex);
+            result.code = 500;
+            result.desc = "获取支付URL失败";
+            res.json(result);
+        }
     }
 });
 
