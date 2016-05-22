@@ -119,7 +119,7 @@ router.get('/productInfo', function (req, res, next) {
             return;
         }
         var productInfo = {};
-        async.waterfall([
+        async.series([
                 function (callback) {
                     Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
                         if (err) {
@@ -134,6 +134,8 @@ router.get('/productInfo', function (req, res, next) {
                         productInfo.productDesc = product.detailContent;
                         productInfo.skuTemplate = JSON.parse(product.skuTemplate);
                         productInfo.sellerId = product.sellerId;
+                        productInfo.subjectId = product.subjectId;
+                        arg.sellerId = product.sellerId;
                         productInfo.type = product.type;
                         productInfo.storehouseIds = product.storehouseIds;
                         productInfo.postageId = product.postageId;
@@ -148,8 +150,8 @@ router.get('/productInfo', function (req, res, next) {
                         logger.info("获取到的商品最大值/最小值信息：" + JSON.stringify(result));
                     });
                 },
-                function (result, callback) {
-                    Seller.querySeller(productInfo.sellerId, 0, function (err, data) {
+                function (callback) {
+                    Seller.querySeller(arg.sellerId, 0, function (err, data) {
                         if (err) {
                             callback('error', err);
                         } else {
@@ -158,6 +160,26 @@ router.get('/productInfo', function (req, res, next) {
                             result.productInfo = productInfo;
                             callback(null, result);
                             logger.info("获取到的商品信息：" + JSON.stringify(result));
+                        }
+                    });
+                },
+                function (callback) {
+                    BaseTemplate.queryPostageTemplate(arg.sellerId, 2, function (err, data) {
+                        var remark;
+                        if (err) {
+                            res.json(err);
+                        } else {
+                            if (data[0].postageTemplateList != null && data[0].postageTemplateList.length > 0) {
+                                remark = data[0].postageTemplateList[0].templateDesc;
+                                result.remark = remark;
+                                logger.info("商家店铺邮费模板信息:" + JSON.stringify(remark));
+                                callback(null, result);
+                                return;
+                            } else {
+                                result.remark = "";
+                                logger.info("商家店铺邮费模板信息:" + JSON.stringify(remark));
+                                callback(null, result);
+                            }
                         }
                     });
                 }
