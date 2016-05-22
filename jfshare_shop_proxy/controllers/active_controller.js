@@ -46,8 +46,7 @@ router.get('/imgList', function (request, response, next) {
         resContent.desc = "不能获取信息";
         response.json(resContent);
     }
-})
-;
+});
 
 //获取系统消息列表
 router.get('/messageList', function (request, response, next) {

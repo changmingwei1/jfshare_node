@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
+var async = require('async');
 
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
@@ -10,6 +11,7 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var Product = require('../lib/models/product');
 var Cart = require('../lib/models/cart');
 var Buyer = require('../lib/models/buyer');
+var BaseTemplate = require('../lib/models/baseTemplate');
 
 /*获取购物车中商品的数量*/
 router.post('/count', function (req, res, next) {
@@ -205,6 +207,7 @@ router.post('/delete', function (req, res, next) {
 /*购物车列表*/
 router.post('/list', function (req, res, next) {
     var result = {code: 200};
+    var remark = null;
     try {
         var param = req.body;
         if (param == null) {
@@ -244,75 +247,103 @@ router.post('/list', function (req, res, next) {
 //            response.json(err);
 //            return;
 //        }
-        Cart.cartListItem(param, function (err, itemList) {
-            if (err) {
-                res.json(err);
+        async.series([
+            function(callback){
+                Cart.cartListItem(param, function (err, itemList) {
+                    if (err) {
+                        res.json(err);
+                        return;
+                    }
+                    var cartList = [];
+                    if (itemList != null) {
+                        for (var i = 0; i < itemList.length; i++) {
+                            var cartLists = {
+                                sellerId: itemList[i].seller.sellerId,
+                                sellerName: itemList[i].seller.sellerName,
+                                remark:remark
+                            };
+                            var productList = [];
+                            var itemDetailList = itemList[i].itemDetailList;
+                            for (var j = 0; j < itemDetailList.length; j++) {
+                                var product = {
+                                    productId: itemDetailList[j].product.product.productId,
+                                    productName: itemDetailList[j].product.product.productName,
+                                    activeState: itemDetailList[j].product.product.activeState,
+                                    storehouseIds: itemDetailList[j].product.product.storehouseIds,
+                                    postageId: itemDetailList[j].product.product.postageId,
+                                    cartPrice: itemDetailList[j].product.cartPrice,
+                                    skuCount: itemDetailList[j].product.skuCount,
+                                    count: itemDetailList[j].product.count,
+                                    sku: {
+                                        skuNum: itemDetailList[j].product.product.productSku.skuItems[0].skuNum,
+                                        skuName: itemDetailList[j].product.product.productSku.skuItems[0].skuName,
+                                        weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
+                                    },
+                                    imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
+                                };
+                                productList.push(product);
+                            }
+                            cartLists.productList = productList;
+                            cartList.push(cartLists);
+                        }
+                        result.cartList = cartList;
+                        param.cartList = cartList;
+                        callback(null,result);
+                        logger.info("购物车列表信息result：" + JSON.stringify(result));
+                        return;
+                    } else {
+                        result.cartList = cartList;
+                        param.cartList = cartList;
+                        callback(null,result);
+                        logger.info("购物车列表信息result：" + JSON.stringify(result));
+                        return;
+                    }
+                });
+            },
+            function(callback){
+                logger.info("kankan shi sha:" + JSON.stringify(param.cartList));
+                var cList = result.cartList;
+                for (var i = 0; i < cList.length; i++) {
+                    var sellerId = cList[i].sellerId;
+                    BaseTemplate.queryPostageTemplate(sellerId, 2, function (err, data) {
+                        if (err) {
+                            res.json(err);
+                        } else {
+                            if (data[0].postageTemplateList != null || data[0].postageTemplateList.length > 0) {
+                                param.remark = data[0].postageTemplateList[0].templateDesc;
+                                logger.info("kankan shi sha3333:" + JSON.stringify(param.remark));
+                                callback(null, result);
+                            } else {
+                                param.remark = "";
+                                callback(null, result);
+                            }
+                        }
+                    });
+                    logger.info("kankan shi sha5555:" + param.remark);
+                    cList[i].remark = param.remark;
+                    logger.info("kankan shi 44444444:" + JSON.stringify(cList[i].remark));
+                }
+            }
+        ],function(err,results){
+            if (err == 1) {
+                result.code = 500;
+                result.desc = "获取购物车列表失败";
+                logger.error("获取购物车列表失败，原因:" + err);
+                res.json(result);
+                return;
+            } else if(err == 2){
+                result.code = 500;
+                result.desc = "获取商家运费模板信息失败";
+                logger.error("获取商家运费模板失败，原因:" + err);
+                res.json(result);
+                return;
+            } else {
+                res.json(result);
                 return;
             }
-            var cartList = [];
-            if (itemList != null) {
-                for (var i = 0; i < itemList.length; i++) {
-                    var cartLists = {
-                        sellerId: itemList[i].seller.sellerId,
-                        sellerName: itemList[i].seller.sellerName,
-                        remark: "我是写死的字段"
-                    };
-                    var productList = [];
-                    var itemDetailList = itemList[i].itemDetailList;
-                    for (var j = 0; j < itemDetailList.length; j++) {
-                        var product = {
-                            productId: itemDetailList[j].product.product.productId,
-                            productName: itemDetailList[j].product.product.productName,
-                            activeState: itemDetailList[j].product.product.activeState,
-                            storehouseIds: itemDetailList[j].product.product.storehouseIds,
-                            postageId: itemDetailList[j].product.product.postageId,
-                            cartPrice: itemDetailList[j].product.cartPrice,
-                            skuCount: itemDetailList[j].product.skuCount,
-                            count: itemDetailList[j].product.count,
-                            sku: {
-                                skuNum: itemDetailList[j].product.product.productSku.skuItems[0].skuNum,
-                                skuName: itemDetailList[j].product.product.productSku.skuItems[0].skuName,
-                                weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
-                            },
-                            imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
-                        };
-                        productList.push(product);
-                    }
-                    cartLists.productList = productList;
-                    cartList.push(cartLists);
-                }
-                result.cartList = cartList;
-                res.json(result);
-            } else {
-                result.cartList = cartList;
-                res.json(result);
-            }
-            /*var count = 0;
-             if (cartList.length > 0) {
-             cartList.forEach(function (item) {
-             var param = {productId: item.productId, skunum: item.skunum.skuNum};
-             Product.getStockForSku(param, function (err, stockInfo) {
-             if (err) {
-             //res.json(err);
-             return;
-             }
-             var stock = stockInfo.stockInfo;
-             var stockItemMap = stockInfo.stockInfo.stockItemMap;
-             item.skuCount = stockItemMap[item.skunum.skuNum].count - stockItemMap[item.skunum.skuNum].lockCount;
-
-             if (count >= cartList.length - 1) {
-             result.cartList = cartList;
-             res.json(result);
-             logger.info("get cart list response:" + JSON.stringify(result));
-             }
-             count = count + 1;
-             });
-             });
-             } else {
-             result.cartList = [];
-             res.json(result);
-             }*/
         });
+
+
         //});
     } catch (ex) {
         logger.error("get cart product list error:" + ex);
