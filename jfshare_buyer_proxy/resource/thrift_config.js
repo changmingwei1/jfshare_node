@@ -112,8 +112,8 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     buyer: function () {
-        logger.info("--------->"+zookeeper.getData("buyer_serv_ips")+"--->"+zookeeper.getData("buyer_port"));
-        return new ThriftConfig(zookeeper.getData("buyer_serv_ips"),zookeeper.getData("buyer_port"));
+        logger.info("--------->"+zookeeper.getData("buyer_ips")+"--->"+zookeeper.getData("buyer_port"));
+        return new ThriftConfig(zookeeper.getData("buyer_ips"),zookeeper.getData("buyer_port"));
     },
     /**
      * 商品服务
@@ -176,16 +176,16 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     manager: function () {
-        logger.info("--------->"+zookeeper.getData("manager_serv_ips")+"--->"+zookeeper.getData("manager_port"));
-        return new ThriftConfig(zookeeper.getData("manager_serv_ips"),zookeeper.getData("manager_port"));
+        logger.info("--------->"+zookeeper.getData("manager_ips")+"--->"+zookeeper.getData("manager_port"));
+        return new ThriftConfig(zookeeper.getData("manager_ips"),zookeeper.getData("manager_port"));
     },
     /**
      * 积分服务
      * @returns {ThriftConfig}
      */
     score: function () {
-        logger.info("--------->"+zookeeper.getData("score_serv_ips")+"--->"+zookeeper.getData("score_port"));
-        return new ThriftConfig(zookeeper.getData("score_serv_ips"),zookeeper.getData("score_port"));
+        logger.info("--------->"+zookeeper.getData("score_serv_ips")+"--->"+zookeeper.getData("score_serv_port"));
+        return new ThriftConfig(zookeeper.getData("score_serv_ips"),zookeeper.getData("score_serv_port"));
     },
     /**
      * 售后服务
@@ -207,8 +207,8 @@ module.exports.ServiceFactory = {
      * 仓库服务
      * @returns {ThriftConfig}
      */
-    baseTemplate: function () {
-        logger.info("--------->"+zookeeper.getData("baseTemplate_serv_ips")+"--->"+zookeeper.getData("baseTemplate_port"));
-        return new ThriftConfig(zookeeper.getData("baseTemplate_serv_ips"),zookeeper.getData("baseTemplate_port"));
+    template: function () {
+        logger.info("--------->"+zookeeper.getData("template_serv_ips")+"--->"+zookeeper.getData("template_serv_port"));
+        return new ThriftConfig(zookeeper.getData("template_serv_ips"),zookeeper.getData("template_serv_port"));
     }
 };
