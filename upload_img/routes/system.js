@@ -27,6 +27,9 @@ var fdfs = new FdfsClient({
     charset: 'utf8'
 });
 
+var redis_host = '120.24.153.155';
+var img_proxy_url = 'http://120.24.153.155/';
+
 /**
  * thrift
  */
@@ -51,7 +54,7 @@ var log = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfi
 
 // redis
 var redis = require("redis");
-var client = redis.createClient(6379,'120.24.153.155');
+var client = redis.createClient(6379, redis_host);
 
 //图片
 var imageinfo = require("imageinfo");
@@ -86,11 +89,11 @@ router.get('/v1/jfs_image/:img_key', function(req, res) {
             //
             var fileId = responseGet;
             var view_fileId = fileId;
-            if( !param_valid.empty(view_size) ){
+            if( !param_valid.empty(view_size) && !param_valid.empty(fileId)){
                 view_fileId = fileId.split(".")[0] + "_" + view_size + "." + fileId.split(".")[1];
             }
 
-            res.redirect('http://120.24.153.155/'+view_fileId);
+            res.redirect(img_proxy_url+view_fileId);
 
             //var md5Data = crypto.createHash('md5').update(img_key).digest('hex').toUpperCase();
             //console.log(md5Data);
@@ -140,7 +143,7 @@ router.post('/upload', function(req, res) {
     form.encoding = "utf-8";        //设置编辑
     //form.uploadDir = "../public" + AVATAR_UPLOAD_FOLDER;     //设置上传目录
     //部署时候，使用的路径
-    form.uploadDir = "/jfshare/nhome/www/img/";
+    form.uploadDir = "/tmp";
     form.keepExtensions = true;     //保留后缀
     form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
 
