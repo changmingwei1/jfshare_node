@@ -23,6 +23,7 @@
     "generic-pool":"latest",
     "crypto":"latest",
     "parseurl": "latest",
-    "path": "latest"
+    "path": "latest",
+    "node-zookeeper-client": "latest"
   }
 }
