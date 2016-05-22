@@ -168,6 +168,7 @@ Order.prototype.orderConfirm = function (arg, callback) {
                 count: product.count,
                 curPrice: product.curPrice,
                 imagesUrl: product.imgUrl,
+                postage:product.postage,
                 storehouseId: product.storehouseId
             }));
         }
