@@ -21,9 +21,9 @@ function Template() {
 Template.prototype.addPostageTemplate = function (params, callback) {
 
     var postageList = [];
-    var list =  JSON.parse(params.postageList);
-    if(list!=null){
-        for(var i=0;i<list.length;i++){
+    var list = JSON.parse(params.postageList);
+    if (list != null) {
+        for (var i = 0; i < list.length; i++) {
 
             var postage = new baseTemplate_types.Postage({
                 supportProvince: list[i].supportProvince,
@@ -46,7 +46,7 @@ Template.prototype.addPostageTemplate = function (params, callback) {
 
     logger.info("调用addPostage:" + JSON.stringify(freight));
     // 获取client
-    var templateServer = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer,"addPostageTemplate", freight);
+    var templateServer = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "addPostageTemplate", freight);
     // 调用
     Lich.wicca.invokeClient(templateServer, function (err, data) {
         logger.info("templateServer-addPostageTemplate result:" + JSON.stringify(data[0]));
@@ -57,18 +57,41 @@ Template.prototype.addPostageTemplate = function (params, callback) {
             result.desc = "添加运费模板失败！";
             callback(result, null);
         }
-        callback(null,data);
+        callback(null, data);
     });
 };
 
+// 设置默认的商家运费模板
+Template.prototype.setDefaultPostageTemplate = function (params, callback) {
 
+    var postageTemplate = new baseTemplate_types.PostageTemplate({
+        id: params.id,
+        sellerId: params.sellerId
+    });
+
+    logger.info("调用setDefaultPostageTemplate params:" + JSON.stringify(freight));
+    // 获取client
+    var templateServer = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "setDefaultPostageTemplate", postageTemplate);
+    // 调用
+    Lich.wicca.invokeClient(templateServer, function (err, data) {
+        logger.info("templateServer-setDefaultPostageTemplate result:" + JSON.stringify(data[0]));
+        if (err || data[0].code == 1) {
+            logger.error("templateServer-setDefaultPostageTemplate  失败原因 ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "设置默认模板失败";
+            callback(result, null);
+        }
+        callback(null, data);
+    });
+};
 //更新运费模板
 Template.prototype.updatePostageTemplate = function (params, callback) {
 
     var postageList = [];
-    var list =  JSON.parse(params.postageList);
-    if(list!=null){
-        for(var i=0;i<list.length;i++){
+    var list = JSON.parse(params.postageList);
+    if (list != null) {
+        for (var i = 0; i < list.length; i++) {
 
             var postage = new baseTemplate_types.Postage({
                 supportProvince: list[i].supportProvince,
@@ -80,7 +103,7 @@ Template.prototype.updatePostageTemplate = function (params, callback) {
     }
 
     var freight = new baseTemplate_types.PostageTemplate({
-        id:params.id,
+        id: params.id,
         sellerId: params.sellerId,
         name: params.name,
         type: params.type,
@@ -153,7 +176,7 @@ Template.prototype.listPostageTemplate = function (params, callback) {
 
     var postageTemplateQueryParam = new baseTemplate_types.PostageTemplateQueryParam({
         sellerId: params.sellerId,
-        templateGroup:params.templateGroup
+        templateGroup: params.templateGroup
     });
     // 获取client
     var freightServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "queryPostageTemplate", postageTemplateQueryParam);
@@ -173,21 +196,21 @@ Template.prototype.listPostageTemplate = function (params, callback) {
     });
 };
 // 添加仓库
-Template.prototype.addStorehouse = function(params, callback){
+Template.prototype.addStorehouse = function (params, callback) {
 
     var storehouse = new baseTemplate_types.Storehouse({
-        sellerId:params.sellerId,
-        name:params.name,
-        supportProvince:params.supportProvince
+        sellerId: params.sellerId,
+        name: params.name,
+        supportProvince: params.supportProvince
     });
 
     logger.info("调用addStorehouse:" + JSON.stringify(storehouse));
     // 获取client
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "addStorehouse",storehouse);
+    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "addStorehouse", storehouse);
     // 调用 storehouseServ
     Lich.wicca.invokeClient(storehouseServ, function (err, data) {
         logger.info("storehouseServ-addStorehouse result:" + JSON.stringify(data[0]));
-        if(err || data[0].result.code == 1){
+        if (err || data[0].result.code == 1) {
             logger.error("storehouseServ-addStorehouse  失败原因 ======" + err);
 
             var result = {};
@@ -198,22 +221,22 @@ Template.prototype.addStorehouse = function(params, callback){
             callback(result, null);
 
         }
-        callback(null,data);
+        callback(null, data);
     });
 };
 
 
 // 获取仓库
-Template.prototype.getStorehouse = function(params, callback){
+Template.prototype.getStorehouse = function (params, callback) {
 
     var list = [];
     list.push(params.id);
     // 获取client
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "getStorehouse",list);
+    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "getStorehouse", list);
     //调用 storehouseServ
     Lich.wicca.invokeClient(storehouseServ, function (err, data) {
         logger.info("storehouseServ-getStorehouse result:" + JSON.stringify(data[0]));
-        if(err || data[0].result.code == 1){
+        if (err || data[0].result.code == 1) {
             logger.error("storehouseServ-getStorehouse失败  失败原因 ======" + err);
             var result = {};
             result.code = 500;
@@ -221,76 +244,76 @@ Template.prototype.getStorehouse = function(params, callback){
             callback(result, null);
             return;
         }
-        callback(null,data);
+        callback(null, data);
         return;
     });
 };
 
 //更新仓库
-Template.prototype.updateStorehouse = function(params, callback){
+Template.prototype.updateStorehouse = function (params, callback) {
 
     var storehouse = new baseTemplate_types.Storehouse({
-        sellerId:params.sellerId,
-        id:params.id,
-        name:params.name,
-        supportProvince:params.supportProvince
+        sellerId: params.sellerId,
+        id: params.id,
+        name: params.name,
+        supportProvince: params.supportProvince
     });
 
     logger.info("updateStorehouse:" + JSON.stringify(storehouse));
     // 获取client
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "updateStorehouse",storehouse);
+    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "updateStorehouse", storehouse);
     // 调用 storehouseServ
     Lich.wicca.invokeClient(storehouseServ, function (err, data) {
         logger.info("storehouseServ-updateStorehouse result:" + JSON.stringify(data[0]));
-        if(err || data[0].code == 1){
+        if (err || data[0].code == 1) {
             logger.error("调用storehouseServ-updateStorehouse失败  失败原因 ======" + err);
             var result = {};
             result.code = 500;
             result.desc = "更新仓库失败！";
-            callback(result,data);
+            callback(result, data);
         }
-        callback(null,data);
+        callback(null, data);
     });
 };
 
 //删除仓库
-Template.prototype.delStorehouse = function(params, callback){
+Template.prototype.delStorehouse = function (params, callback) {
 
     // 获取client
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "deleteStorehouse",[params.sellerId,params.id]);
+    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "deleteStorehouse", [params.sellerId, params.id]);
     // 调用 storehouseServ
     Lich.wicca.invokeClient(storehouseServ, function (err, data) {
         logger.info("storehouseServ-deleteStorehouse result:" + JSON.stringify(data[0]));
-        if(err || data[0].code == 1){
+        if (err || data[0].code == 1) {
             logger.error("调用storehouseServ-deleteStorehouse  失败原因 ======" + err);
             var result = {};
             result.code = 500;
             result.desc = "删除仓库失败！";
-            callback(result,data);
+            callback(result, data);
         }
-        callback(null,data);
+        callback(null, data);
     });
 };
 
 //查询仓库列表
-Template.prototype.listStorehouse = function(params, callback){
+Template.prototype.listStorehouse = function (params, callback) {
     // 获取client
 
     var queryParam = new baseTemplate_types.StorehouseQueryParam({
-        sellerId:params.sellerId
+        sellerId: params.sellerId
     });
 
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "queryStorehouse",queryParam);
+    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "queryStorehouse", queryParam);
     // 调用 storehouseServ
     Lich.wicca.invokeClient(storehouseServ, function (err, data) {
         logger.info("storehouseServ-queryStorehouse result:" + JSON.stringify(data[0]));
-        if(err || data[0].result.code == 1){
+        if (err || data[0].result.code == 1) {
             logger.error("调用storehouseServ-queryStorehouse  失败原因 ======" + err);
             var result = {};
             result.code = 500;
             result.desc = "查询仓库列表失败！";
-            callback(result,null);
-        }else{
+            callback(result, null);
+        } else {
             callback(null, data);
         }
 
@@ -315,36 +338,36 @@ sellerList:[{
  *
  */
 //批量查询仓库
-Template.prototype.getDeliverStorehouse = function(params, callback){
+Template.prototype.getDeliverStorehouse = function (params, callback) {
     var sellerList = params.sellerList;
     // 获取client
     var list = [];
-    if(sellerList!=null){
-        for(var i=0;i<sellerList.length;i++){
+    if (sellerList != null) {
+        for (var i = 0; i < sellerList.length; i++) {
             var productRefProvince = new baseTemplate_types.ProductRefProvince({
-                sellerId:sellerList[i].sellerId,
-                productId:sellerList[i].productId,
-                storehouseIds:sellerList[i].storehouseIds,
-                sendToProvince:sellerList[i].provinceId
+                sellerId: sellerList[i].sellerId,
+                productId: sellerList[i].productId,
+                storehouseIds: sellerList[i].storehouseIds,
+                sendToProvince: sellerList[i].provinceId
             });
             list.push(productRefProvince);
         }
     }
     var queryParam = new baseTemplate_types.DeliverStorehouseParam({
-        productRefProvinceList:list
+        productRefProvinceList: list
     });
 
-    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "getDeliverStorehouse",queryParam);
+    var storehouseServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "getDeliverStorehouse", queryParam);
     // 调用 storehouseServ
     Lich.wicca.invokeClient(storehouseServ, function (err, data) {
         logger.info("storehouseServ-queryStorehouse result:" + JSON.stringify(data[0]));
-        if(err || data[0].result.code == 1){
+        if (err || data[0].result.code == 1) {
             logger.error("调用storehouseServ-queryStorehouse  失败原因 ======" + err);
             var result = {};
             result.code = 500;
             result.desc = "查询仓库列表失败！";
-            callback(result,null);
-        }else{
+            callback(result, null);
+        } else {
             callback(null, data);
         }
     });

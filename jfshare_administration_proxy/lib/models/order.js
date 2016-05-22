@@ -97,7 +97,7 @@ Order.prototype.queryOrderDetail = function (param, callback) {
 //取消订单
 Order.prototype.cancelOrder = function (param, callback) {
     //result.Result cancelOrder(1:i32 userType, 2:i32 userId, 3:string orderId, 4:i32 reason)
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [3, param.userId, param.orderId, 1]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [3, param.sellerId, param.orderId, 1]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-cancelOrder  result:" + JSON.stringify(data));

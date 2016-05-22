@@ -85,6 +85,58 @@ router.post('/addPostageTemplate', function (request, response, next) {
         response.json(result);
     }
 });
+
+
+
+
+//设置默认的商家运费模板
+router.post('/setDefault', function (request, response, next) {
+
+
+    logger.info("进入设置默认商家运费模板流程");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+
+
+        logger.info("setDefault freight params:" + JSON.stringify(params));
+        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.id == null || params.id == "" || params.id <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        Template.setDefaultPostageTemplate(params, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+                logger.info("setDefault freight response:" + JSON.stringify(data));
+                response.json(result);
+                return;
+            }
+        });
+    } catch (ex) {
+        logger.error("设置默认商家运费失败:" + ex);
+        result.code = 500;
+        result.desc = "设置默认商家运费失败";
+
+        response.json(result);
+    }
+});
+
+
+
+
 //更新运费模板
 router.post('/updatePostageTemplate', function (request, response, next) {
     logger.info("进入更新运费模板流程");
@@ -255,7 +307,7 @@ router.post('/listPostageTemplate', function (request, response, next) {
 //get运费模板
 router.post('/getPostageTemplate', function (request, response, next) {
 
-    logger.info("进入更新运费模板流程");
+    logger.info("进入获取运费模板流程");
     var result = {code: 200};
     result.postageTemplateList = [];
     try {
