@@ -1076,14 +1076,13 @@ router.post('/pay', function (req, res, next) {
                 if (payUrl !== null) {
                     var urlInof = JSON.parse(payUrl.value);
                     result.payUrl = {
-                        sign: urlInof.sign,
-                        partnerid: urlInof.partnerid,
-                        appId: urlInof.partnerid,
-                        timeStamp: urlInof.partnerid,
-                        packageInfo: urlInof.package,
                         prepayid: urlInof.prepayid,
-                        signType: urlInof.signType,
-                        nonceStr: urlInof.nonceStr
+                        packageInfo: urlInof.package,
+                        appid: urlInof.appid,
+                        nonceStr: urlInof.nonceStr,
+                        sign: urlInof.sign,
+                        timestamp: urlInof.timestamp,
+                        partnerid: urlInof.partnerid
                     };
                     res.json(result);
                     logger.info("order pay response:" + JSON.stringify(result));
