@@ -118,24 +118,29 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
     });
 
     var page = new pagination_types.Pagination({
-        numPerPage:10,
-        currentPage:1
+        numPerPage: 10,
+        currentPage: 1
     });
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
-        var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [2, params.sellerId,page]);
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [2, params.sellerId, page]);
 
-        Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
-            logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
-            var res = {};
-            if (err || data[0].result.code == "1") {
-                logger.error("AfterSaleServ-queryAfterSaleOrderList  失败原因 ======" + err);
-                res.code = 500;
-                res.desc = "查询售后订单列表失败！";
-                callback(res, null);
+    Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
+        logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("AfterSaleServ-queryAfterSaleOrderList  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询售后订单列表失败！";
+            callback(res, null);
+        } else {
+            if (data[0].pagination == null) {
+                callback(null, 0);
             } else {
                 callback(null, data[0].pagination.totalCount);
             }
-        });
+
+        }
+    });
 
 
 };
