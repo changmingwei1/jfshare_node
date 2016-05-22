@@ -12,7 +12,7 @@ var tests = require('./controllers/test_controller');
 var view_index = require("./view_center/index/view_index");
 var pay = require("./controllers/pay_controller");
 var app = express();
-
+var zk = require('./resource/zookeeper_util.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
