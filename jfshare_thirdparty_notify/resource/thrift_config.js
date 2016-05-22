@@ -7,7 +7,7 @@
  * @constructor
  * ********************************************************************************************************************/
 
-
+var zk = require('./zookeeper_util');
   function poolConfig (name,createFn,destroyFn){
     this.name = name;
     this.create = createFn;
@@ -84,12 +84,10 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     pay:function(){
-        var obj = new ThriftConfig("120.24.153.155", 1993);
-        return obj;
+        return new ThriftConfig(zk.getData("pay_serv_ips"),zk.getData("pay_port"));
+
     },
     express:function(){
-        var obj = new ThriftConfig("120.24.153.155", 1989);
-        //var obj = new ThriftConfig("127.0.0.1", 1989);
-        return obj;
+        return new ThriftConfig(zk.getData("express_serv_ips"),zk.getData("express_port"));
     }
 };
