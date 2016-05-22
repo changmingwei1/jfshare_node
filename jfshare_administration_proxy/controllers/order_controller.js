@@ -448,7 +448,7 @@ router.post('/cancelOrder', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.userId == null || params.userId == "") {
+        if (params.sellerId == null || params.sellerId == "") {
 
             result.code = 500;
             result.desc = "参数错误";
