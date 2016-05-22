@@ -19,7 +19,7 @@ var score = require('./controllers/score_controller');
 var brand = require('./controllers/brand_controller');
 var address = require('./controllers/address_controller');
 var afterSale = require('./controllers/afterSale_controller');
-
+var zookeeper = require('./resource/zookeeper_util');
 var app = express();
 
 
