@@ -22,6 +22,35 @@ var baseTemplate_types = require('../thrift/gen_code/baseTemplate_types');
 
 function BaseTemplate(){}
 
+/*查询邮费模板*/
+BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, callback) {
+
+    var params = new baseTemplate_types.PostageTemplateQueryParam({
+        sellerId: sellerId,
+        templateGroup:2
+    });
+
+    logger.info("调用查询邮费模板信息，args:" + JSON.stringify(params));
+    var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "queryPostageTemplate", params);
+
+    Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
+        logger.info("调用查询邮费模板信息，result:" + JSON.stringify(data));
+        var res = {};
+        if(err){
+            logger.error("调用查询邮费模板信息失败，失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询邮费模板信息失败！";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
+            callback(null, data);
+        }
+    });
+};
+
 /*邮费计算*/
 BaseTemplate.prototype.calculatePostage = function(param,  callback) {
 
@@ -56,7 +85,7 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
     });
 
     logger.info("调用邮费计算，  args:" + JSON.stringify(arg));
-    var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer, "calculatePostage", arg);
+    var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "calculatePostage", arg);
 
     Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
         logger.info("调用邮费计算，  result:" + JSON.stringify(data[0]));
@@ -78,7 +107,7 @@ BaseTemplate.prototype.queryStorehouse = function(params,callback){
         sellerId: params.sellerId
     });
     //获取client
-    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'queryStorehouse',param);
+    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer,'queryStorehouse',param);
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
@@ -97,7 +126,7 @@ BaseTemplate.prototype.queryStorehouse = function(params,callback){
 BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
 
     //获取client
-    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getStorehouse',storehouseIds);
+    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer,'getStorehouse',storehouseIds);
 
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
@@ -134,7 +163,7 @@ BaseTemplate.prototype.getDeliverStorehouse = function(params,callback){
     });
 
     //获取client
-    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer,'getDeliverStorehouse',param);
+    var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer,'getDeliverStorehouse',param);
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         var res = {};
         logger.info("getDeliverStorehouse result:" + JSON.stringify(data[0]));
