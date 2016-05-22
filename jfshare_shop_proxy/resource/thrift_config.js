@@ -1,3 +1,7 @@
+
+var log4node = require('../log4node');
+var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+
 /**********************************************************************************************************************
  *
  * ******************************仅需添加服务*************************************************
@@ -71,7 +75,7 @@ module.exports.getThriftConfig  =   function(url,port){
     return new ThriftConfig(url,port);
 }
 
-
+var zookeeper = require('./zookeeper_util');
 /**********************************************************************************************************************************
  *
  * 所有的都按照下面写，没有的新加
