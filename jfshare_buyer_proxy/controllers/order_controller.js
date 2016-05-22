@@ -1079,7 +1079,7 @@ router.post('/pay', function (req, res, next) {
                         prepayid: urlInof.prepayid,
                         packageInfo: urlInof.package,
                         appid: urlInof.appid,
-                        nonceStr: urlInof.nonceStr,
+                        noncestr: urlInof.noncestr,
                         sign: urlInof.sign,
                         timestamp: urlInof.timestamp,
                         partnerid: urlInof.partnerid
