@@ -906,7 +906,7 @@ router.post('/info', function (req, res, next) {
     var result = {code: 200};
     try {
         var params = req.body;
-        if (params.userId == null || params.orderId == "") {
+        if (params.userId == null || params.userId == "") {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
