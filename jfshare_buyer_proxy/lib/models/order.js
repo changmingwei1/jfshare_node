@@ -167,7 +167,7 @@ Order.prototype.orderConfirm = function (arg, callback) {
                 skuDesc: product.skuName,
                 count: product.count,
                 curPrice: product.curPrice,
-                postage:product.postage,
+                /*postage:product.postage,*/ /*邮费可以不写入，直接在算进了totalSum中*/
                 storehouseId: product.storehouseId
             }));
         }
