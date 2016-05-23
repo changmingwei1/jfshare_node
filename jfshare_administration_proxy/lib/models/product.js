@@ -757,7 +757,7 @@ Product.prototype.setProductState = function (params, callback) {
 
     var productOpt = new product_types.ProductOpt({
        productId:params.productId,
-        curState:100,
+        curState:200,
         activeState:params.activeState,
         operatorId:params.userId,
         operatorType:2
