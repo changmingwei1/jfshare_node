@@ -411,7 +411,7 @@ router.post('/queryVirtualstore', function (request, response, next) {
                             }
                             logger.info("queryProductTotal list response:" + JSON.stringify(data));
                             productStockSkuList = data;
-                            callback(null, data);
+                           return callback(null, data);
                         });
                     } catch (ex) {
                         logger.error("queryProductTotal--异常:" + ex);
