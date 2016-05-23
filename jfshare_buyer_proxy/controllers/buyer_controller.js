@@ -681,18 +681,6 @@ router.post('/scoreTrade', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if (arg.curPage == null || arg.curPage == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        if (arg.perCount == null || arg.perCount == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
         if (arg.token == null || arg.token == "") {
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";

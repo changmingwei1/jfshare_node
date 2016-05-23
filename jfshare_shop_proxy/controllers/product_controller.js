@@ -134,7 +134,7 @@ router.get('/productInfo', function (req, res, next) {
                         productInfo.productDesc = product.detailContent;
                         productInfo.skuTemplate = JSON.parse(product.skuTemplate);
                         productInfo.sellerId = product.sellerId;
-                        productInfo.subjectId = product.subjectId;
+                        productInfo.subjectId = product.subjectId; /*添加subjectId*/
                         arg.sellerId = product.sellerId;
                         productInfo.type = product.type;
                         productInfo.storehouseIds = product.storehouseIds;
@@ -156,7 +156,6 @@ router.get('/productInfo', function (req, res, next) {
                             callback('error', err);
                         } else {
                             productInfo.sellerName = data[0].seller.sellerName;
-                            productInfo.remark = data[0].seller.remark;
                             result.productInfo = productInfo;
                             callback(null, result);
                             logger.info("获取到的商品信息：" + JSON.stringify(result));
@@ -171,12 +170,12 @@ router.get('/productInfo', function (req, res, next) {
                         } else {
                             if (data[0].postageTemplateList != null && data[0].postageTemplateList.length > 0) {
                                 remark = data[0].postageTemplateList[0].templateDesc;
-                                result.remark = remark;
+                                productInfo.remark = remark;
                                 logger.info("商家店铺邮费模板信息:" + JSON.stringify(remark));
                                 callback(null, result);
                                 return;
                             } else {
-                                result.remark = "";
+                                productInfo.remark = "";
                                 logger.info("商家店铺邮费模板信息:" + JSON.stringify(remark));
                                 callback(null, result);
                             }

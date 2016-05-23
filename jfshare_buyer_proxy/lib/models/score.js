@@ -21,19 +21,22 @@ var score_types = require('../thrift/gen_code/score_types');
 
 function Score(){}
 
-/************************************************现在的****************************************************/
 //获取用户积分
-Score.prototype.getScore = function(userId,callback){
+Score.prototype.getScore = function (userId, callback) {
 
     //获取client
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'getScore',userId);
-    Lich.wicca.invokeClient(scoreServ, function(err, data){
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'getScore', userId);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("get buyerScore result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == 1) {
+        if (err) {
             logger.error("can't get buyerScore because: ======" + err);
             res.code = 500;
             res.desc = "获取积分失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
@@ -42,29 +45,33 @@ Score.prototype.getScore = function(userId,callback){
 };
 
 //获取积分交易记录
-Score.prototype.queryScoreTrade = function(param,callback){
+Score.prototype.queryScoreTrade = function (param, callback) {
 
     var thrift_pagination = new pagination_types.Pagination({
-        currentPage:param.curPage,
-        numPerPage:param.perCount
+        currentPage: param.curPage,
+        numPerPage: param.perCount
     });
     var params = new score_types.ScoreTradeQueryParam({
-        userId:param.userId,
-        type:param.type,
-        inOrOut:param.inOrOut,
-        startTime:param.startTime,
-        endTime:param.endTime
+        userId: param.userId,
+        type: param.type,
+        inOrOut: param.inOrOut,
+        startTime: param.startTime,
+        endTime: param.endTime
     });
 
     //获取client
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'queryScoreTrade',[params,thrift_pagination]);
-    Lich.wicca.invokeClient(scoreServ, function(err, data){
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreTrade', [params, thrift_pagination]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("get buyerScoreList result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == 1) {
+        if (err) {
             logger.error("can't get queryScoreTrade because: ======" + err);
             res.code = 500;
             res.desc = "获取积分交易列表失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
@@ -73,33 +80,37 @@ Score.prototype.queryScoreTrade = function(param,callback){
 };
 
 //积分兑入
-Score.prototype.enterAmountCall = function(param,callback){
+Score.prototype.enterAmountCall = function (param, callback) {
     var params = new score_types.ScoreRequestParam({
-        AppCode:param.AppCode,
-        RequestDate:param.RequestDate,
-        Sign:param.Sign,
-        SpID:param.SpID,
-        OutOrderID:param.OutOrderID,
-        DeviceNo:param.DeviceNo,
-        DeviceType:param.DeviceType,
-        ProvinceID:param.ProvinceID,
-        CustID:param.CustID,
-        Num:param.Num,
-        Remark:param.Remark,
-        ActiveID:param.ActiveID,
-        ExpTime:param.ExpTime
+        AppCode: param.AppCode,
+        RequestDate: param.RequestDate,
+        Sign: param.Sign,
+        SpID: param.SpID,
+        OutOrderID: param.OutOrderID,
+        DeviceNo: param.DeviceNo,
+        DeviceType: param.DeviceType,
+        ProvinceID: param.ProvinceID,
+        CustID: param.CustID,
+        Num: param.Num,
+        Remark: param.Remark,
+        ActiveID: param.ActiveID,
+        ExpTime: param.ExpTime
     });
 
     logger.info("Score enterAmountCall params:" + JSON.stringify(params));
     //获取client
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'enterAmountCall',params);
-    Lich.wicca.invokeClient(scoreServ, function(err, data){
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'enterAmountCall', params);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("Score enterAmountCall result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
             logger.error("Score enterAmountCall because: ======" + err);
             res.code = 500;
             res.desc = "积分兑入错误";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
@@ -108,21 +119,25 @@ Score.prototype.enterAmountCall = function(param,callback){
 };
 
 //积分兑出查询
-Score.prototype.queryCachAmount = function(param,callback){
+Score.prototype.queryCachAmount = function (param, callback) {
     var params = new score_types.CachAmountQueryParam({
-        userId:param.userId
+        userId: param.userId
     });
 
     logger.info("Score queryCachAmount  params:" + JSON.stringify(params));
     //获取client
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'queryCachAmount',params);
-    Lich.wicca.invokeClient(scoreServ, function(err, data){
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryCachAmount', params);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("Score queryCachAmount result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
             logger.error("Score queryCachAmount because: ======" + err);
             res.code = 500;
             res.desc = "兑出积分查询错误";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
@@ -131,23 +146,27 @@ Score.prototype.queryCachAmount = function(param,callback){
 };
 
 //积分兑出
-Score.prototype.cachAmountCall = function(param,callback){
+Score.prototype.cachAmountCall = function (param, callback) {
     var params = new score_types.CachAmountCallParam({
-        userId:param.userId,
-        CachAmount:param.CachAmount,
-        mobile:param.mobile
+        userId: param.userId,
+        CachAmount: param.CachAmount,
+        mobile: param.mobile
     });
 
     logger.info("Score cachAmountCall  params:" + JSON.stringify(params));
     //获取client
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer,'cachAmountCall',params);
-    Lich.wicca.invokeClient(scoreServ, function(err, data){
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'cachAmountCall', params);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("Score cachAmountCall result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
             logger.error("Score cachAmountCall because: ======" + err);
             res.code = 500;
             res.desc = "兑出积分错误";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, null);
@@ -158,11 +177,11 @@ Score.prototype.cachAmountCall = function(param,callback){
 //查询积分记录
 Score.prototype.queryScoreUser = function (params, callback) {
     var scoreUserQueryParam = new score_types.ScoreUserQueryParam({
-        userId:params.userId,
-        mobile:params.mobile,
-        startTime:params.startTime,
-        endTime:params.endTime,
-        amount:params.amount/* 积分值  0:全部   1:0积分  2:0以上积分 */
+        userId: params.userId,
+        mobile: params.mobile,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        amount: params.amount/* 积分值  0:全部   1:0积分  2:0以上积分 */
     });
     var pagination = new pagination_types.Pagination({
         currentPage: params.curPage,
@@ -170,11 +189,11 @@ Score.prototype.queryScoreUser = function (params, callback) {
     });
     logger.info("scoreServ.queryScoreUser params:" + JSON.stringify(params));
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreUser', [scoreUserQueryParam,pagination]);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreUser', [scoreUserQueryParam, pagination]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("scoreServ.queryScoreUser result:" + JSON.stringify(data));
         var res = {};
-        if (err|| data[0].result.code == 1) {
+        if (err || data[0].result.code == 1) {
             logger.error("scoreServ.queryScoreUser because: ======" + err);
             res.code = 500;
             res.desc = "查询积分错误";
