@@ -938,13 +938,18 @@ router.post('/info', function (req, res, next) {
                             result.orderId = orderInfo.orderId;
                             //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                             result.orderState = orderInfo.orderState;
-                            if (orderInfo.deliverInfo !== null) {
+                            if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" ||orderInfo.tradeCode == "Z8001" ) {
+                                result.mobile = orderInfo.deliverInfo.receiverMobile;
+                            }else{
                                 result.address = orderInfo.deliverInfo.provinceName +
                                     orderInfo.deliverInfo.cityName +
                                     orderInfo.deliverInfo.countyName +
                                     orderInfo.deliverInfo.receiverAddress;
                                 result.receiverName = orderInfo.deliverInfo.receiverName;
                                 result.mobile = orderInfo.deliverInfo.receiverMobile;
+                            }
+                            if(orderInfo.payInfo != null){
+                                result.payChannel = orderInfo.payInfo.payChannel;
                             }
                             result.curTime = new Date().getTime();
                             result.createTime = orderInfo.createTime;
@@ -1057,8 +1062,8 @@ router.post('/pay', function (req, res, next) {
                         res.json(err);
                     }
                     if (payUrl !== null) {
-                        var urlInof = JSON.parse(payUrl.value);
-                        result.payUrl = urlInof;
+                        var urlInfo = JSON.parse(payUrl.value);
+                        result.payUrl = urlInfo;
                         res.json(result);
                         logger.info("order pay response:" + JSON.stringify(result));
                     }
@@ -1079,15 +1084,15 @@ router.post('/pay', function (req, res, next) {
                     res.json(err);
                 }
                 if (payUrl !== null) {
-                    var urlInof = JSON.parse(payUrl.value);
+                    var urlInfo = JSON.parse(payUrl.value);
                     result.payUrl = {
-                        prepayid: urlInof.prepayid,
-                        packageInfo: urlInof.package,
-                        appid: urlInof.appid,
-                        noncestr: urlInof.noncestr,
-                        sign: urlInof.sign,
-                        timestamp: urlInof.timestamp,
-                        partnerid: urlInof.partnerid
+                        prepayid: urlInfo.prepayid,
+                        packageInfo: urlInfo.package,
+                        appid: urlInfo.appid,
+                        noncestr: urlInfo.noncestr,
+                        sign: urlInfo.sign,
+                        timestamp: urlInfo.timestamp,
+                        partnerid: urlInfo.partnerid
                     };
                     res.json(result);
                     logger.info("order pay response:" + JSON.stringify(result));
@@ -1107,8 +1112,8 @@ router.post('/pay', function (req, res, next) {
                     res.json(err);
                 }
                 if (payUrl !== null) {
-                    var urlInof = JSON.parse(payUrl.value);
-                    result.payUrl = urlInof;
+                    var urlInfo = JSON.parse(payUrl.value);
+                    result.payUrl = urlInfo;
                     res.json(result);
                     logger.info("order pay response:" + JSON.stringify(result));
                 }
