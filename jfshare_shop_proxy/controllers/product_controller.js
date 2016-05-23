@@ -449,16 +449,17 @@ router.post('/querystoreBatch', function (request, response, next) {
                             productStockAndPriceList.push(sku);
                         }
                         params.productStockAndPriceList = productStockAndPriceList;
-                        logger.info("queryProductTotal--params：" + JSON.stringify(params));
+                        logger.info("queryHotSKUBatch--params：" + JSON.stringify(params));
                         Product.queryHotSKUBatch(params, function (err, data) {
                             if (err) {
                                 return callback(3, null);
                             }
 
-                            logger.info("queryProductTotal list response:" + JSON.stringify(data));
+                            logger.info("queryHotSKUBatch list response:" + JSON.stringify(data));
 
                             if (data[0].productList != null) {
                                 var productSkuPriceList = data[0].productList;
+                                var isCheck = 0;
                                 var j = 0;
                                 for (var i = 0; i < productStockAndPriceList.length; i++) {
                                     if (productStockAndPriceList[i].storehouseId != 0) {
@@ -468,9 +469,15 @@ router.post('/querystoreBatch', function (request, response, next) {
                                                 if (productStockAndPriceList[i].skuNum == skuPriceList[h].skuNum && productStockAndPriceList[i].storehouseId == skuPriceList[h].storehouseId) {
                                                     productStockAndPriceList[i].curPrice = skuPriceList[h].curPrice;
                                                     productStockAndPriceList[i].orgPrice = skuPriceList[h].orgPrice;
+                                                    j++;
+                                                    isCheck = 1;
                                                     break;
                                                 }
                                             }
+                                        }
+                                        if(isCheck){
+                                            isCheck = 0;
+                                            continue;
                                         }
                                     } else {
                                         if (j != 0) {
