@@ -803,7 +803,7 @@ router.post('/apply', function (request, response, next) {
         // var params = request.query;
         var params = request.body;
         //var params = request.body;
-        logger.info("商品上架下架:" + params);
+        logger.info("商品上架下架:" + JSON.stringify(params));
 
         //参数校验
         //参数验证
