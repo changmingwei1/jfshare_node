@@ -177,7 +177,7 @@ router.get('/productInfo', function (req, res, next) {
                                 return;
                             } else {
                                 productInfo.remark = "";
-                                logger.info("商家店铺邮费模板信息:" + JSON.stringify(remark));
+                                logger.info("商家店铺邮费模板信息:" + JSON.stringify(productInfo.remark));
                                 callback(null, result);
                             }
                         }
