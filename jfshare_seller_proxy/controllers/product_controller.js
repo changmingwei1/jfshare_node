@@ -641,10 +641,16 @@ router.post('/virtualList', function (request, response, next) {
                 response.json(result);
                 return
             }
+
+            if(data==null){
+               return response.json(result);
+
+            }
+
             if (data[0].cardtatisticsList != null) {
                 result.cardtatisticsList = data[0].cardtatisticsList;
             }
-            response.json(result);
+            return response.json(result);
         });
 
     } catch (ex) {

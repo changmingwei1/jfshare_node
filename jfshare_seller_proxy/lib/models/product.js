@@ -308,7 +308,14 @@ Product.prototype.queryProductCard = function (params, callback) {
             res.code = 500;
             res.desc = "查询虚拟商品失败";
             return callback(res, null);
-        } else {
+        }else if(data==null){
+            return callback(null,null);
+        }else if(data[0].result.code ==1){
+            logger.error("productServ-queryProductCard  失败原因 ======" + data);
+            res.code = 500;
+            res.desc = "查询虚拟商品失败";
+            return callback(res, null);
+        }else {
             return callback(null, data)
         }
     });
