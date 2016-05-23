@@ -654,7 +654,6 @@ router.post('/scoreTotal', function (request, response, next) {
                 var score = data[0].sroce;
                 if(score != null){
                     resContent.amount = score.amount;
-                    response.json(resContent);
                 }
                 resContent.amount = 0;
                 response.json(resContent);
