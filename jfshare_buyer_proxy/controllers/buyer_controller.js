@@ -652,9 +652,9 @@ router.post('/scoreTotal', function (request, response, next) {
                 response.json(error);
             } else {
                 var score = data[0].sroce;
-                if (score != null) {
+                if(score != null){
                     resContent.amount = score.amount;
-                } else {
+                }else{
                     resContent.amount = 0;
                 }
                 response.json(resContent);
@@ -994,26 +994,15 @@ router.post('/cachAmountCall', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if (param.captchaDesc == null || param.captchaDesc == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        Common.validateMsgCaptcha(param, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
-            Score.cachAmountCall(param, function (error, data) {
-                if (error) {
-                    response.json(error);
-                } else {
 
-                    response.json(resContent);
-                    logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
-                }
-            });
+        Score.cachAmountCall(param, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+
+                response.json(resContent);
+                logger.info("Score cachAmountCall response:" + JSON.stringify(resContent));
+            }
         });
     } catch (ex) {
         logger.error("兑出积分调用异常，原因是======:" + ex);
