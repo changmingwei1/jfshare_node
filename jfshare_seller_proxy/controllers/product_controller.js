@@ -807,7 +807,7 @@ router.post('/apply', function (request, response, next) {
 
         //参数校验
         //参数验证
-        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+        if (params.sellerId == null ||  params.sellerId <= 0) {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -815,7 +815,7 @@ router.post('/apply', function (request, response, next) {
             return;
         }
 
-        if (params.productId == null || params.productId == "") {
+        if (params.productId == null ) {
 
             result.code = 500;
             result.desc = "请求参数错误";
@@ -823,14 +823,14 @@ router.post('/apply', function (request, response, next) {
             return;
         }
 
-        if (params.state == null || params.state == "") {
+        if (params.state == null) {
 
             result.code = 500;
             result.desc = "请求参数错误";
             response.json(result);
             return;
         }
-        if (params.curState == null || params.curState == "") {
+        if (params.curState == null) {
 
             result.code = 500;
             result.desc = "请求参数错误";
