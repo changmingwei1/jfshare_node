@@ -27,7 +27,7 @@ router.get('/imgList', function (request, response, next) {
             return;
         }
         /*for PC type=1*/
-        if(param.type = 1) {
+        if(param.type == 1) {
             Active.querySlotImageList(param, function (error, data) {
                 if (error) {
                     response.json(error);
