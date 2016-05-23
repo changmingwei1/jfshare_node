@@ -192,9 +192,6 @@ Address.prototype.getProvinces = function(callback) {
             res.desc = "获取省份列表失败！";
             callback(res, null);
         } else {
-            logger.info(data);
-
-
             var provicnces = data[0].areaInfo;
             var provicnceList = [];
             provicnces.forEach(function(provicnce){

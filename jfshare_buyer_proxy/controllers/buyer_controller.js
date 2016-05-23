@@ -345,7 +345,7 @@ router.get('/exists', function (request, response, next) {
             return;
         }
         logger.info("传参，arg：" + JSON.stringify(param));
-        Buyer.buyerIsExist(loginName, function (error, data) {
+        Buyer.buyerIsExist(param.mobile, function (error, data) {
             if (error) {
                 response.json(error);
             } else {
@@ -654,7 +654,6 @@ router.post('/scoreTotal', function (request, response, next) {
                 var score = data[0].sroce;
                 if(score != null){
                     resContent.amount = score.amount;
-                    response.json(resContent);
                 }
                 resContent.amount = 0;
                 response.json(resContent);

@@ -104,8 +104,8 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     message: function () {
-        logger.info("--------->"+zookeeper.getData("message_serv_ips")+"--->"+zookeeper.getData("message_port"));
-        return new ThriftConfig(zookeeper.getData("message_serv_ips"),zookeeper.getData("message_port"));
+        logger.info("--------->"+zookeeper.getData("message_serv_ips")+"--->"+zookeeper.getData("message_serv_port"));
+        return new ThriftConfig(zookeeper.getData("message_serv_ips"),zookeeper.getData("message_serv_port"));
     },
     /**
      * 订单服务
