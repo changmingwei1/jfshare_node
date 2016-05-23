@@ -936,6 +936,7 @@ router.post('/info', function (req, res, next) {
                                 return;
                             }
                             result.orderId = orderInfo.orderId;
+                            result.closingPrice = orderInfo.closingPrice;
                             //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                             result.orderState = orderInfo.orderState;
                             if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" ||orderInfo.tradeCode == "Z8001" ) {

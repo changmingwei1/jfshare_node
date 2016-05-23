@@ -652,7 +652,11 @@ router.post('/scoreTotal', function (request, response, next) {
                 response.json(error);
             } else {
                 var score = data[0].sroce;
-                resContent.amount = score.amount;
+                if(score != null){
+                    resContent.amount = score.amount;
+                    response.json(resContent);
+                }
+                resContent.amount = 0;
                 response.json(resContent);
                 logger.info("get buyer's Score response:" + JSON.stringify(resContent));
             }
