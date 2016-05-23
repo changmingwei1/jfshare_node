@@ -197,7 +197,6 @@ Order.prototype.orderConfirm = function (arg, callback) {
         });
     }
 
-
     var param = new trade_types.BuyInfo({
         userId: arg.userId,
         userName: arg.userName,
@@ -208,12 +207,8 @@ Order.prototype.orderConfirm = function (arg, callback) {
         fromBatch: arg.fromBatch,
         fromSource: arg.fromSource,
         tradeCode: arg.tradeCode
-        /*
-         fromSource: arg.fromSource,
-         exchangeScore:arg.exchangeScore || 0,
-         exchangeCash:arg.exchangeCash || 0,
-         tradeCode:arg.tradeCode
-         */
+        /*weight: arg.weight,
+        postageExt:arg.postageExt*/ /*运费扩展信息  JSON 现在还不知道怎么用*/
     });
 
     logger.info("调用cartServ-orderConfirm args:" + JSON.stringify(param));
@@ -228,7 +223,7 @@ Order.prototype.orderConfirm = function (arg, callback) {
             res.code = 500;
             res.desc = "提交订单失败！";
             callback(res, null);
-        } else if (data[0].result.code == "1") {
+        } else if (data[0].result.code == 1) {
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
