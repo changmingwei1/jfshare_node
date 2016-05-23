@@ -654,8 +654,9 @@ router.post('/scoreTotal', function (request, response, next) {
                 var score = data[0].sroce;
                 if(score != null){
                     resContent.amount = score.amount;
+                }else{
+                    resContent.amount = 0;
                 }
-                resContent.amount = 0;
                 response.json(resContent);
                 logger.info("get buyer's Score response:" + JSON.stringify(resContent));
             }
