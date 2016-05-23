@@ -40,7 +40,13 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
 
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
         var dataArr = [];
         var subjectIdList = [];
         var productIdList = [];
