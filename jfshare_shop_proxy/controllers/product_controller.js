@@ -391,7 +391,6 @@ router.post('/queryVirtualstore', function (request, response, next) {
         if (sellerList == null || sellerList.length == 0) {
             result.code = 500;
             result.desc = "购买商品信息为空，不能获取商品库存";
-            logger.error("get product stock error:" + err);
             response.json(result);
             return;
         }
@@ -446,8 +445,8 @@ router.post('/queryVirtualstore', function (request, response, next) {
                             if (data[0].productList != null) {
                                 var productSkuPriceList = data[0].productList;
                                 for (var i = 0; i < productStockAndPriceList.length; i++) {
-                                    if (productStockAndPriceList[i].productId == productSkuPriceList[j].productId) {
-                                        var skuPriceList = productSkuPriceList[j].productSku.skuItems;
+                                    if (productStockAndPriceList[i].productId == productSkuPriceList[i].productId) {
+                                        var skuPriceList = productSkuPriceList[i].productSku.skuItems;
                                         for (var h = 0; h < skuPriceList.length; h++) {
                                             if (productStockAndPriceList[i].skuNum == skuPriceList[h].skuNum) {
                                                 productStockAndPriceList[i].curPrice = skuPriceList[h].curPrice;
