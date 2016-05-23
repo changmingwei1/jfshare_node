@@ -310,19 +310,19 @@ router.post('/afterSaleList', function (request, response, next) {
         if (params.token == "" || params.token == null) {
             result.code = 400;
             result.desc = "鉴权信息不能为空";
-            res.json(result);
+            response.json(result);
             return;
         }
         if (params.ppInfo == "" || params.ppInfo == null) {
             result.code = 400;
             result.desc = "鉴权信息不能为空";
-            res.json(result);
+            response.json(result);
             return;
         }
         if (params.browser == "" || params.browser == null) {
             result.code = 400;
             result.desc = "浏览器标识不能为空";
-            res.json(result);
+            response.json(result);
             return;
         }
         logger.info("获取售后订单请求的参数：" + JSON.stringify(params));
@@ -341,9 +341,15 @@ router.post('/afterSaleList', function (request, response, next) {
                                 return;
                             }
                             afterOrderList = data.afterSaleOrders;
-                            result.afterOrderList = afterOrderList;
+                            if(afterOrderList != null && afterOrderList.length > 0){
+                                result.afterOrderList = afterOrderList;
+                                callback(null,result);
+                            }else{
+                                result.afterOrderList = afterOrderList;
+                                callback(3, null);
+                                return;
+                            }
                             //response.json(result);
-                            callback(null, 1);
                             //return;
                         });
                     }
@@ -426,12 +432,16 @@ router.post('/afterSaleList', function (request, response, next) {
                 }
             ],
             function (err, results) {
-                if (err) {
+                if (err < 3) {
                     result.code = 500;
-                    result.desc = "获取物流商列表";
+                    result.desc = "获取售后列表aaaa";
                     response.json(result);
                     return;
-                }else{
+                } else if (err == 3) {
+                    result.code = 200;
+                    response.json(result);
+                    return;
+                } else{
                     if(results[1]!=null){
                         response.json(results[1]);
                         return;
@@ -441,9 +451,9 @@ router.post('/afterSaleList', function (request, response, next) {
         );
         //});
     } catch (ex) {
-        logger.error("query expressList error:" + ex);
+        logger.error("query expressList erroraaaa:" + ex);
         result.code = 500;
-        result.desc = "获取物流商列表";
+        result.desc = "获取售后列表";
         response.json(result);
     }
 });
