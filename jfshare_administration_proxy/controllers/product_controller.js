@@ -226,7 +226,7 @@ router.post('/updateProductState', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.state == null || params.state == "" || params.state < 0 || params.state > 1) {
+        if (params.state == null || params.state < 0 || params.state > 1) {
 
             result.code = 500;
             result.desc = "请求参数错误";
