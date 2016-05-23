@@ -51,7 +51,7 @@ Product.prototype.queryProductList = function (params, callback) {
             logger.error("调用productServ-queryProductList失败  失败原因 ======" + err);
             ret.code = 500;
             ret.desc = "查询商品列表失败！";
-            res.json(ret);
+            callback(null, ret);
             return;
         }
         callback(null, data);
