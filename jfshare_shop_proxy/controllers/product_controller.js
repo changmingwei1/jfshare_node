@@ -45,7 +45,7 @@ router.post('/list', function (req, res, next) {
                         productId: a.productId,
                         productName: a.productName,
                         viceName: a.viceName,
-                        curPrice: (Number(a.curPrice) / 100).toFixed(2) ,
+                        curPrice: (Number(a.curPrice) / 100).toFixed(2),
                         orgPrice: (Number(a.orgPrice) / 100).toFixed(2),
                         //sellerId: a.sellerId,   //测试用,没意义
                         imgKey: imgUri,
@@ -134,7 +134,8 @@ router.get('/productInfo', function (req, res, next) {
                         productInfo.productDesc = product.detailContent;
                         productInfo.skuTemplate = JSON.parse(product.skuTemplate);
                         productInfo.sellerId = product.sellerId;
-                        productInfo.subjectId = product.subjectId; /*添加subjectId*/
+                        productInfo.subjectId = product.subjectId;
+                        /*添加subjectId*/
                         arg.sellerId = product.sellerId;
                         productInfo.type = product.type;
                         productInfo.storehouseIds = product.storehouseIds;
@@ -278,7 +279,7 @@ router.post('/querystore', function (req, res, next) {
                                                 }
                                             }
                                         }
-                                        if(params.storehouseId!=0){
+                                        if (params.storehouseId != 0) {
                                             break;
                                         }
                                     }
@@ -306,7 +307,7 @@ router.post('/querystore', function (req, res, next) {
 
                         Product.queryHotSKUV1(params, function (err, data) {
                             if (err) {
-                                result.storehouseId =0;
+                                result.storehouseId = 0;
                                 callback(err, null);
                                 return;
                             } else {
@@ -376,11 +377,120 @@ router.post('/querystore', function (req, res, next) {
                 }
             }
         }
-    )
-    ;
+    );
 });
 
 /*批量获取指定sku*/
+router.post('/queryVirtualstore', function (request, response, next) {
+    var result = {code: 200};
+    try {
+        var productStockSkuList = [];
+        var productStockAndPriceList = [];
+        var params = request.body;
+        var sellerList = params.sellerList;
+        if (sellerList == null || sellerList.length == 0) {
+            result.code = 500;
+            result.desc = "购买商品信息为空，不能获取商品库存";
+            logger.error("get product stock error:" + err);
+            response.json(result);
+            return;
+        }
+
+        var productList = [];
+        productList.push(params.sellerList[0]);
+        params.productList = productList;
+        async.series([
+
+                function (callback) {
+                    try {
+                        logger.info("queryProductTotal--params：" + JSON.stringify(params));
+
+                        Stock.batchQueryStock(params, function (err, data) {
+                            if (err) {
+                                return callback(2, null);
+                            }
+                            logger.info("queryProductTotal list response:" + JSON.stringify(data));
+                            productStockSkuList = data;
+                            callback(null, data);
+                        });
+                    } catch (ex) {
+                        logger.error("queryProductTotal--异常:" + ex);
+                        return callback(2, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        for (var i = 0; i < params.sellerList.length; i++) {
+                            var sku = {};
+                            sku.productId = sellerList[i].productId;
+                            sku.sellerId = sellerList[i].sellerId;
+                            sku.skuNum = params.sellerList[i].skuNum;
+                            sku.storehouseId = 1;//虚拟商品仓库id为1
+                            var itemList = productStockSkuList[i].stockItems;
+                            for (var j = 0; j < itemList.length; j++) {
+                                if (params.sellerList[i].skuNum == itemList[j].skuNum) {
+                                    sku.count = itemList[j].count;
+                                    break;
+                                }
+                            }
+                            productStockAndPriceList.push(sku);
+                        }
+                        params.productStockAndPriceList = productStockAndPriceList;
+                        logger.info("queryHotSKUBatch--params：" + JSON.stringify(params));
+                        Product.queryHotSKUBatch(params, function (err, data) {
+                            if (err) {
+                                return callback(3, null);
+                            }
+                            logger.info("queryHotSKUBatch list response:" + JSON.stringify(data));
+
+                            if (data[0].productList != null) {
+                                var productSkuPriceList = data[0].productList;
+                                for (var i = 0; i < productStockAndPriceList.length; i++) {
+                                    if (productStockAndPriceList[i].productId == productSkuPriceList[j].productId) {
+                                        var skuPriceList = productSkuPriceList[j].productSku.skuItems;
+                                        for (var h = 0; h < skuPriceList.length; h++) {
+                                            if (productStockAndPriceList[i].skuNum == skuPriceList[h].skuNum) {
+                                                productStockAndPriceList[i].curPrice = skuPriceList[h].curPrice;
+                                                productStockAndPriceList[i].orgPrice = skuPriceList[h].orgPrice;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                callback(null, productStockAndPriceList);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.error("queryProductSKU--异常:" + ex);
+                        return callback(3, null);
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    result.code = 500;
+                    result.desc = "获取商品库存价格信息失败失败";
+                    logger.error("get product stock error:" + err);
+                    response.json(result);
+                    return;
+                } else {
+                    if (results != null && results[1] != null) {
+                        result.skuPriceAndStockList = results[1];
+                        response.json(result);
+                        return;
+                    }
+                }
+            });
+    } catch (ex) {
+        logger.error("get product stock error:" + ex);
+        result.code = 500;
+        result.desc = "获取商品库存失败";
+        response.json(result);
+    }
+});
+
+
+/*批量获取sku价格和库存*/
 router.post('/querystoreBatch', function (request, response, next) {
     var result = {code: 200};
     try {
@@ -475,7 +585,7 @@ router.post('/querystoreBatch', function (request, response, next) {
                                                 }
                                             }
                                         }
-                                        if(isCheck){
+                                        if (isCheck) {
                                             isCheck = 0;
                                             continue;
                                         }
