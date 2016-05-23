@@ -440,7 +440,7 @@ router.post('/querystoreBatch', function (request, response, next) {
                                 productStockAndPriceList.push(sku);
                                 continue;
                             }
-                            for (var j = 0; i < itemList.length; j++) {
+                            for (var j = 0; j < itemList.length; j++) {
                                 if (params.sellerList[i].skuNum == itemList[j].skuNum && itemList[j].storehouseId == productStorehouseList[i].storehouseId) {
                                     sku.count = itemList[j].count;
                                     break;
