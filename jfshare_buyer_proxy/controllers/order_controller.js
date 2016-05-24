@@ -396,7 +396,7 @@ router.post('/list', function (request, response, next) {
                                     return callback(2, null);
                                 }
                                 logger.info("get order list response:" + JSON.stringify(result));
-                                afterSaleList = data.afterSaleOrders
+                                afterSaleList = data.afterSaleOrders;
                                 return callback(null, afterSaleList);
                             });
                         } else {
