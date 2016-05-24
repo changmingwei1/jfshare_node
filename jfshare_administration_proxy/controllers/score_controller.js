@@ -90,16 +90,19 @@ router.post('/scoreinfolist', function (request, response, next) {
             } else {
                 var scoreTradeList = data[0].scoreTrades;
                 var dataArr = [];
-                scoreTradeList.forEach(function (score) {
-                    dataArr.push({
-                        id: score.tradeId,
-                        createtime: score.tradeTime,
-                        type: score.inOrOut,
-                        scoretype: score.type,
-                        value: score.amount,
-                        remark: score.trader
+                if(scoreTradeList!=null &&scoreTradeList.length>0){
+                    scoreTradeList.forEach(function (score) {
+                        dataArr.push({
+                            id: score.tradeId,
+                            createtime: score.tradeTime,
+                            type: score.inOrOut,
+                            scoretype: score.type,
+                            value: score.amount,
+                            remark: score.trader
+                        });
                     });
-                });
+                }
+
                 var pagination = data[0].pageination;
                 if(pagination!=null){
                     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};

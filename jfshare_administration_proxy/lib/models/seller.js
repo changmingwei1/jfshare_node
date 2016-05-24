@@ -241,7 +241,7 @@ Seller.prototype.resetSellerPwd = function (params, callback) {
     });
     logger.info("seller resetSellerPwd seller :" + JSON.stringify(seller));
 //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'resetSellerPwd', [params.newPwd,seller]);
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'updateSeller', [seller]);
     Lich.wicca.invokeClient(sellerServ, function (err, data) {
         logger.info("seller resetSellerPwd result:" + JSON.stringify(data));
         var res = {};
