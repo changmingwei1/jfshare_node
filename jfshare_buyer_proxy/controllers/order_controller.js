@@ -396,7 +396,7 @@ router.post('/list', function (request, response, next) {
                                     return callback(2, null);
                                 }
                                 logger.info("get order list response:" + JSON.stringify(result));
-                                afterSaleList = data.afterSaleOrders
+                                afterSaleList = data.afterSaleOrders;
                                 return callback(null, afterSaleList);
                             });
                         } else {
@@ -723,7 +723,7 @@ router.post('/pay', function (req, res, next) {
                 }
                 if (data !== null) {
                 //    var urlInfo = JSON.parse(payUrl.value);
-                    result.value = data;
+                    result.value = data.value;
                     res.json(result);
                     logger.info("order pay response:" + JSON.stringify(result));
                 }
