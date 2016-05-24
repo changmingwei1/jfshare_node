@@ -1003,7 +1003,7 @@ router.post('/queryOrderCardMsg', function (request, response, next) {
         if (params == null || params.orderId == null) {
             result.code = 400;
             result.desc = "参数错误";
-            res.json(result);
+            response.json(result);
             return;
         }
         Product.queryProductOrderCard(params, function (err, data) {
