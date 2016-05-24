@@ -177,8 +177,9 @@ router.post('/getprovinces', function(req, res, next) {
                 return;
             }
             result.provicnceList = data;
-            res.json(result);
             logger.info("get provinces response:" + JSON.stringify(result));
+            res.json(result);
+
         });
     } catch (ex) {
         logger.error("get provinces error:" + ex);
@@ -208,8 +209,9 @@ router.post('/getcitys', function(req, res, next) {
                 return;
             }
             result.cityList = data;
-            res.json(result);
             logger.info("查询省份下的市 response:" + JSON.stringify(result));
+            res.json(result);
+
         });
     } catch (ex) {
         logger.error("get cityList error:" + ex);
@@ -238,8 +240,9 @@ router.post('/getcountys', function(req, res, next) {
                 return;
             }
             result.countyList = data;
-            res.json(result);
             logger.info("查询市下面的乡镇 response:" + JSON.stringify(result));
+            res.json(result);
+
         });
     } catch (ex) {
         logger.error("get countyList error:" + ex);
