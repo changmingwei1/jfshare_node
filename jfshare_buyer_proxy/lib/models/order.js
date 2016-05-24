@@ -127,7 +127,9 @@ Order.prototype.payApply = function (param, callback) {
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
-        }else{
+        } else if(data[0].result.code == 2){
+            callback(null, data[0]);
+        } else {
             callback(null, data[0]);
         }
     });
