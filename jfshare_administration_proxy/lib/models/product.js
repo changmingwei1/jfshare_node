@@ -756,8 +756,8 @@ Product.prototype.getOrderStateIdBuyerEnum = function (orderState) {
 Product.prototype.setProductState = function (params, callback) {
 
     var productOpt = new product_types.ProductOpt({
-       productId:params.productId,
-        curState:200,
+        productId:params.productId,
+        curState:100,
         activeState:params.activeState,
         operatorId:params.userId,
         operatorType:2
@@ -786,8 +786,6 @@ Product.prototype.setProductState = function (params, callback) {
 };
 //获取虚拟订单的卡密信息
 Product.prototype.queryProductCard = function (params, callback) {
-    //
-
     var ProductCardParam = new product_types.ProductCardParam({
         transactionId:params.orderId,
     });

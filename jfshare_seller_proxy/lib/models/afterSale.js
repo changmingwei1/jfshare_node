@@ -133,12 +133,11 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
             res.desc = "查询售后订单列表失败！";
             callback(res, null);
         } else {
-            if (data[0].pagination == null) {
-                callback(null, 0);
-            } else {
+            if(data[0]==null ||data[0].pagination ==null ||data[0].pagination.totalCount==null){
+                callback(null,0);
+            }else{
                 callback(null, data[0].pagination.totalCount);
             }
-
         }
     });
 
