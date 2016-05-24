@@ -786,8 +786,6 @@ Product.prototype.setProductState = function (params, callback) {
 };
 //获取虚拟订单的卡密信息
 Product.prototype.queryProductCard = function (params, callback) {
-    //
-
     var ProductCardParam = new product_types.ProductCardParam({
         transactionId:params.orderId,
     });
