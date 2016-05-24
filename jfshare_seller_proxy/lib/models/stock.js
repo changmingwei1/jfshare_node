@@ -126,7 +126,7 @@ Stock.prototype.createStock = function (params, callback) {
                         skuNum:sku.key.id,
                         lockCount:0,
                         count:sku.values[i].storecount,//storecount
-                        storehouseId: sku.values[i].storeid
+                        storehouseId: Number(sku.values[i].storeid)
                     });
                     total+=Number(sku.values[i].storecount);
                     stockList.push(stockItem);

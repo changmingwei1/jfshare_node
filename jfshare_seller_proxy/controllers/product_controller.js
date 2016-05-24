@@ -252,7 +252,6 @@ router.post('/creat', function (request, response, next) {
         }
         //参数验证
         if (params.viceName == null || params.viceName == "") {
-
             result.code = 500;
             result.desc = "请求参数错误";
             response.json(result);
@@ -1007,8 +1006,12 @@ router.post('/queryOrderCardMsg', function (request, response, next) {
             return;
         }
         Product.queryProductOrderCard(params, function (err, data) {
-            response.json(data);
+            if(err){
+                return response.json(err);
+            }
             logger.info("查询订单中的卡密信息result" + JSON.stringify(data));
+            response.json(data);
+            return;
         });
     } catch (ex) {
         logger.error("查询订单中的卡密信息失败:" + ex);
