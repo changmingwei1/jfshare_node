@@ -26,35 +26,19 @@ router.get('/imgList', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        /*for PC type=1*/
-        if(param.type == 1) {
-            Active.querySlotImageList(param, function (error, data) {
-                if (error) {
-                    response.json(error);
-                    return;
-                } else {
-                    var slotImageList = data[0].slotImageList;
-                    resContent.slotImageList = slotImageList;
-                    response.json(resContent);
-                    logger.info("响应:" + JSON.stringify(resContent));
-                }
-            });
-        }  else{
-            /*for APP type=2*/
-            Active.querySlotImageList(param, function (error, data) {
-                if (error) {
-                    response.json(error);
-                    return;
-                } else {
-                    var slotImageList = data[0].slotImageList;
-                    resContent.slotImageList = slotImageList;
-                    response.json(resContent);
-                    logger.info("响应:" + JSON.stringify(resContent));
-                }
-            });
-        }
-    } catch
-        (ex) {
+        /*type=1：for APP；type=2：for APP*/
+        Active.querySlotImageList(param, function (error, data) {
+            if (error) {
+                response.json(error);
+                return;
+            } else {
+                var slotImageList = data[0].slotImageList;
+                resContent.slotImageList = slotImageList;
+                response.json(resContent);
+                logger.info("响应:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
         logger.error("获取信息失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "不能获取信息";
@@ -137,6 +121,5 @@ router.get('/getAppUpgradeInfo', function (request, response, next) {
         response.json(resContent);
     }
 });
-
 
 module.exports = router;
