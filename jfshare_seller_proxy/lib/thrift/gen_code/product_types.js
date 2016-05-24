@@ -1327,6 +1327,9 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
   this.createTime = null;
   this.sellerId = null;
   this.type = null;
+  this.clickRate = null;
+  this.storehouseIds = null;
+  this.postageId = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -1369,6 +1372,15 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
     }
     if (args.type !== undefined) {
       this.type = args.type;
+    }
+    if (args.clickRate !== undefined) {
+      this.clickRate = args.clickRate;
+    }
+    if (args.storehouseIds !== undefined) {
+      this.storehouseIds = args.storehouseIds;
+    }
+    if (args.postageId !== undefined) {
+      this.postageId = args.postageId;
     }
   }
 };
@@ -1484,6 +1496,27 @@ ProductSurvey.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 15:
+      if (ftype == Thrift.Type.I64) {
+        this.clickRate = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 16:
+      if (ftype == Thrift.Type.STRING) {
+        this.storehouseIds = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 17:
+      if (ftype == Thrift.Type.I32) {
+        this.postageId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1563,6 +1596,21 @@ ProductSurvey.prototype.write = function(output) {
   if (this.type !== null && this.type !== undefined) {
     output.writeFieldBegin('type', Thrift.Type.I32, 14);
     output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.clickRate !== null && this.clickRate !== undefined) {
+    output.writeFieldBegin('clickRate', Thrift.Type.I64, 15);
+    output.writeI64(this.clickRate);
+    output.writeFieldEnd();
+  }
+  if (this.storehouseIds !== null && this.storehouseIds !== undefined) {
+    output.writeFieldBegin('storehouseIds', Thrift.Type.STRING, 16);
+    output.writeString(this.storehouseIds);
+    output.writeFieldEnd();
+  }
+  if (this.postageId !== null && this.postageId !== undefined) {
+    output.writeFieldBegin('postageId', Thrift.Type.I32, 17);
+    output.writeI32(this.postageId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

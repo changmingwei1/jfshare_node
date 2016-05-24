@@ -991,4 +991,33 @@ router.get('/query', function (req, res, next) {
         res.json(result);
     }
 });
+
+
+//查询订单中的kami信息
+router.post('/queryOrderCardMsg', function (request, response, next) {
+    var result = {code: 200};
+    try {
+        var params = request.query;
+        logger.info("查询订单中的卡密信息:" + JSON.stringify(params));
+
+        if (params == null || params.orderId == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        Product.queryProductOrderCard(params, function (err, data) {
+            response.json(data);
+            logger.info("查询订单中的卡密信息result" + JSON.stringify(data));
+        });
+    } catch (ex) {
+        logger.error("查询订单中的卡密信息失败:" + ex);
+        result.code = 500;
+        result.desc = "查询订单中的卡密信息失败";
+        response.json(result);
+    }
+});
+
+
+
 module.exports = router;
