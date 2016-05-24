@@ -858,7 +858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var logger = {
 	  methodMap: ['debug', 'info', 'warn', 'error'],
-	  level: 'error',
+	  level: 'info',
 
 	  // Maps a given level value to the `methodMap` indexes above.
 	  lookupLevel: function lookupLevel(level) {
