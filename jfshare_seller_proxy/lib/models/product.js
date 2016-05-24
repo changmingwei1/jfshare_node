@@ -448,11 +448,11 @@ Product.prototype.improtVirtual = function (arg, callback) {
 
 
 //查询订单详情页中的kami信息
-Product.prototype.queryProductOrderCard = function (arg, callback) {
+Product.prototype.queryProductOrderCard = function (params, callback) {
     var productCardParam = new product_types.ProductCardParam({
-        transactionId:arg.orderId
+        transactionId:params.orderId
     });
-    logger.info("import virtual product  args:" + JSON.stringify(param));
+    logger.info("import virtual product  args:" + JSON.stringify(params));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCard", productCardParam);
 
