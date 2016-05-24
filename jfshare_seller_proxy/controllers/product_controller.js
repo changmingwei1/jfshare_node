@@ -997,7 +997,7 @@ router.get('/query', function (req, res, next) {
 router.post('/queryOrderCardMsg', function (request, response, next) {
     var result = {code: 200};
     try {
-        var params = request.query;
+        var params = request.body;
         logger.info("查询订单中的卡密信息:" + JSON.stringify(params));
 
         if (params == null || params.orderId == null) {
