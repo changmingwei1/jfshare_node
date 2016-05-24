@@ -776,7 +776,7 @@ router.post('/afterSalelist', function (request, response, next) {
             response.json(result);
             return;
         }
-
+        var isExist = 0;
         logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
         async.series([
                 function (callback) {
@@ -786,10 +786,16 @@ router.post('/afterSalelist', function (request, response, next) {
                                 callback(1, null);
                                 return;
                             }
-                            afterOrderList = data.afterSaleOrders;
-                            page = data.pagination;
-                            callback(null, 1);
-                            return;
+                            if(data==null || data.afterSaleOrders==null){
+                                callback(null,2);
+                                isExist =1;
+                            }else{
+                                afterOrderList = data.afterSaleOrders;
+                                page = data.pagination;
+                                callback(null, 1);
+                                return;
+                            }
+
                         });
                     }
                     catch
@@ -800,7 +806,15 @@ router.post('/afterSalelist', function (request, response, next) {
                 },
                 function (callback) {
                     try {
+                        var page = {total: 0, pageCount: 0};
                         var orderIdList = [];
+                        if(isExist){
+                            result.orderList = orderList;
+                            result.page = page;
+                           return callback(null,2);
+                        }
+
+
                         for (var i = 0; i < afterOrderList.length; i++) {
                             orderIdList.push(afterOrderList[i].orderId);
                         }
@@ -810,8 +824,8 @@ router.post('/afterSalelist', function (request, response, next) {
                                 logger.error("订单服务异常");
                                 return callback(1, null);
                             }
-                            var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
-
+                            page.total = orderInfo.total;
+                            page.pageCount = orderInfo.pageCount;
                             if (orderInfo.orderProfileList !== null) {
                                 orderInfo.orderProfileList.forEach(function (order) {
                                     var orderItem = {
@@ -929,4 +943,8 @@ router.post('/carList', function (request, response, next) {
         response.json(result);
     }
 });
+
+
+
+
 module.exports = router;
