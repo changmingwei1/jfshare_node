@@ -447,4 +447,29 @@ Product.prototype.improtVirtual = function (arg, callback) {
 };
 
 
+//查询订单详情页中的kami信息
+Product.prototype.queryProductOrderCard = function (params, callback) {
+    var productCardParam = new product_types.ProductCardParam({
+        transactionId:params.orderId,
+        productId:params.productId
+    });
+    logger.info("queryProductOrderCard  args:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCard", productCardParam);
+
+    //invite productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用queryProductOrderCard result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用queryProductOrderCard  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查看订单的卡密信息失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
 module.exports = new Product();
