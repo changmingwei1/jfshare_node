@@ -17,8 +17,8 @@
     }
   ],
   "levels":{
-    "productDetailLog":"INFO",
-    "orderLog":"INFO"
+    "productDetailLog":"ERROR",
+    "orderLog":"ERROR"
   },
   "comment":"这里是一个注释 这一行没有起到什么作用 ，只是为了添加一定的注释，需要的注释可以写在这个里面，如果没有特别的配置则",
   "rbac":"关于rbac方面的生成的日志文件在logs的rbacLog目录中，通过时间进行分割，日志会自动输出到console中",
