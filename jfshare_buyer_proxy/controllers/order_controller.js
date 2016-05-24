@@ -391,12 +391,12 @@ router.post('/list', function (request, response, next) {
                 function (callback) {
                     try {
                         if (params.orderState == null) {
-                            AfterSale.queryAfterSale(params, function (err, data) {
+                            AfterSale.queryAfterSaleOrder(params, function (err, data) {
                                 if (err) {
                                     return callback(2, null);
                                 }
                                 logger.info("get order list response:" + JSON.stringify(result));
-                                afterSaleList = data;
+                                afterSaleList = data.afterSaleOrders
                                 return callback(null, afterSaleList);
                             });
                         } else {
