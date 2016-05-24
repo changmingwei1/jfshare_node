@@ -450,7 +450,8 @@ Product.prototype.improtVirtual = function (arg, callback) {
 //查询订单详情页中的kami信息
 Product.prototype.queryProductOrderCard = function (params, callback) {
     var productCardParam = new product_types.ProductCardParam({
-        transactionId:params.orderId
+        transactionId:params.orderId,
+        productId:params.productId
     });
     logger.info("queryProductOrderCard  args:" + JSON.stringify(params));
     // 获取client
