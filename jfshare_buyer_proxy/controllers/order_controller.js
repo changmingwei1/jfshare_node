@@ -723,7 +723,7 @@ router.post('/pay', function (req, res, next) {
                 }
                 if (data !== null) {
                 //    var urlInfo = JSON.parse(payUrl.value);
-                    result.value = data;
+                    result.value = data.value;
                     res.json(result);
                     logger.info("order pay response:" + JSON.stringify(result));
                 }
