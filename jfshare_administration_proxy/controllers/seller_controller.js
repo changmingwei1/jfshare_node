@@ -169,7 +169,7 @@ router.post('/editpwd', function (request, response, next) {
         }
 
         //更新密码与商家更新为同一个方法
-        Seller.updateSeller(params, function (err, data) {
+        Seller.resetSellerPwd(params, function (err, data) {
             logger.info("SellerServ-editpwd response:" + JSON.stringify(data));
             if (err) {
                 response.json(err);
