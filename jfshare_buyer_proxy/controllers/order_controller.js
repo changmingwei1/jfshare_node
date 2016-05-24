@@ -716,14 +716,14 @@ router.post('/pay', function (req, res, next) {
         }
     } else  if(arg.payChannel == 0) {
         try {
-            Order.payApply(arg, function (err, payUrl) {
+            Order.payApply(arg, function (err, data) {
                 if (err) {
                     res.json(err);
                     return;
                 }
-                if (payUrl !== null) {
-                    var urlInfo = JSON.parse(payUrl.value);
-                    result.payUrl = urlInfo;
+                if (data !== null) {
+                //    var urlInfo = JSON.parse(payUrl.value);
+                    result.value = data;
                     res.json(result);
                     logger.info("order pay response:" + JSON.stringify(result));
                 }
