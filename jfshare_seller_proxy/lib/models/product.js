@@ -452,18 +452,18 @@ Product.prototype.queryProductOrderCard = function (params, callback) {
     var productCardParam = new product_types.ProductCardParam({
         transactionId:params.orderId
     });
-    logger.info("import virtual product  args:" + JSON.stringify(params));
+    logger.info("queryProductOrderCard  args:" + JSON.stringify(params));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCard", productCardParam);
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("调用productServ-improtVirtual result:" + JSON.stringify(data));
+        logger.info("调用queryProductOrderCard result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
-            logger.error("调用productServ-improtVirtual  失败原因 ======" + err);
+            logger.error("调用queryProductOrderCard  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "导入虚拟商品失败！";
+            res.desc = "查看订单的卡密信息失败！";
             callback(res, null);
         } else {
             callback(null, data[0]);
