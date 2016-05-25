@@ -34,7 +34,7 @@ User.prototype.login = function(param,callback){
        // browser:"1"
     });
 
-
+    logger.info("调用 isLoginNameExist params:" + JSON.stringify(data));
 
     //获取客户端
     var userServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer,'signin',[User,LoginLog]);
