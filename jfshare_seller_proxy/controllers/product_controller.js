@@ -300,8 +300,7 @@ router.post('/creat', function (request, response, next) {
                     try {
                         Product.create(params, function (err, data) {
                             if (err) {
-                                response.json(err);
-                                return;
+                                callback(1,err);
                             } else {
                                 params.productId = data[0].value;
                                 callback(null, params.productId);
@@ -332,8 +331,8 @@ router.post('/creat', function (request, response, next) {
                 }
             ],
             function (err, results) {
-                if (err == 1) {
-                    logger.error("创建商品失败---商品服务异常：" + results[0]);
+                if (err ==1) {
+                    logger.error("创建商品失败---商品服务异常：" + results);
                     //result.code = 500;
                    // result.desc = "创建商品失败";
                     response.json(results[0]);
