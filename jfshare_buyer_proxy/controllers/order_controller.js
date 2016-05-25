@@ -338,7 +338,7 @@ router.post('/list', function (request, response, next) {
                                         postage: order.postage,
                                         username: order.username,
                                         cancelName: order.cancelName,
-                                        sellerName: order.sellerName,
+                                        sellerId: order.sellerId,
                                         createTime: order.createTime,
                                         expressNo: order.expressNo,
                                         expressName: order.expressName,
@@ -833,7 +833,7 @@ router.post('/changeState', function (req, res, next) {
             res.json(result);
             return;
         }
-        logger.info("order pay request:" + JSON.stringify(params));
+        logger.info("order pay request:" + JSON.stringify(arg));
 
         Order.confirmReceipt(arg, function (err, data) {
             if (err) {
