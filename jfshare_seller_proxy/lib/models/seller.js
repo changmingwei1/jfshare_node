@@ -17,6 +17,7 @@ var pay_types = require('../thrift/gen_code/pay_types');
 var trade_types = require('../thrift/gen_code/trade_types');
 var buyer_types = require('../thrift/gen_code/buyer_types');
 var common_types = require('../thrift/gen_code/common_types');
+var seller_types = require('../thrift/gen_code/seller_types');
 //var soltImage_types = require('../thrift/gen_code/soltImage_types');
 
 function Buyer(){}
@@ -206,6 +207,30 @@ Buyer.prototype.singin = function(param,callback){
             logger.error("不能登录，因为: ======" + err);
             res.code = 500;
             res.desc = "登录失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//会员信息列表
+Buyer.prototype.querySellerVipList = function(param,callback){
+
+    var paginationParms = new pagination_types.Pagination({
+        currentPage:param.curPage,
+        numPerPage:param.perCount
+    });
+    logger.info("调用 sellerServ-querySellerVipList params:" + JSON.stringify(param));
+    //获取client
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer,'querySellerVipList',[param.sellerId,paginationParms]);
+    Lich.wicca.invokeClient(sellerServ, function(err, data){
+        logger.info("会员信息列表信息:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == "1") {
+            logger.error("会员信息列表获取失败，因为: ======" + err);
+            res.code = 500;
+            res.desc = "会员信息列表获取失败";
             callback(res, null);
         } else {
             callback(null, data);

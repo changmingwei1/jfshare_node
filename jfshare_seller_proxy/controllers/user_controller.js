@@ -14,11 +14,11 @@ var User = require('../lib/models/user');
 //登录
 router.post('/login', function(request, respone, next) {
     var result = {code: 200};
-
+    logger.info("进入卖家登录接口");
     try{
         //var arg = request.query;
         var arg = request.body;
-
+        logger.info("卖家登录请求入参，params:" + JSON.stringify(arg));
         //参数验证
         if(arg == null || arg.loginName == null ||arg.loginName == ""){
             result.code = 500;
@@ -35,6 +35,7 @@ router.post('/login', function(request, respone, next) {
 
 
         User.login(arg, function (err, data) {
+            logger.info("卖家登录请求，result:" + JSON.stringify(data));
             if(err){
                 respone.json(err);
                 return;
@@ -48,7 +49,7 @@ router.post('/login', function(request, respone, next) {
                 var loginLog = {tokenId:data[0].loginLog.tokenId};
                 result.seller = seller;
                 result.logionLog = loginLog;
-                logger.info("账号" + JSON.stringify(data));
+                logger.info("卖家登录，response:" + JSON.stringify(data));
                 respone.json(result);
             }
 
@@ -62,7 +63,61 @@ router.post('/login', function(request, respone, next) {
     }
 });
 
+//注销登录
+router.post('/loginOut', function(request, response, next) {
 
+    logger.info("进入注销登录接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("注销登录请求入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.sellerId == null) {
+            result.code = 400;
+            result.desc = "参数错误1";
+            response.json(result);
+            return;
+        }
+        if (params.tokenId== null || params.tokenId == "") {
+            result.code = 400;
+            result.desc = "参数错误2";
+            response.json(result);
+            return;
+        }
+        if (params.ip== null || params.ip == "") {
+            result.code = 400;
+            result.desc = "参数错误3";
+            response.json(result);
+            return;
+        }
+        if (params.browser == null || params.browser == "") {
+            result.code = 400;
+            result.desc = "参数错误4";
+            response.json(result);
+            return;
+        }
+        if (params.fromSource == null || params.fromSource == "") {
+            result.code = 400;
+            result.desc = "参数错误5";
+            response.json(result);
+            return;
+        }
+
+        User.loginOut(params, function (err, data) {
+            if(err||data[0].code==1){
+                return response.json(err);
+            }
+            logger.info("注销登录，response " + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("注销登录失败，=========:" + ex);
+        result.code = 500;
+        result.desc = "注销登录失败";
+        response.json(result);
+    }
+});
 
 
 module.exports = router;

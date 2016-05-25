@@ -186,4 +186,80 @@ router.get('/querySlotImageList', function(request, response, next) {
     }
 });
 
+//获取会员信息列表
+router.post('/querySellerVipList', function(request, response, next) {
+
+    logger.info("进入获取会员信息列表接口");
+    var result = {code:200};
+
+    try{
+        var arg = request.body;
+        logger.info("获取会员信息列表请求入参，params:" + JSON.stringify(arg));
+        if(arg.sellerId==null||arg.sellerId==""){
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (arg.perCount == null || arg.perCount == "" || arg.perCount <= 0) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (arg.curPage == null || arg.curPage == "" || arg.curPage <= 0) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Seller.querySellerVipList(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }else{
+               if(data[0].vipTotal==0||data==null){
+                   result.vipTotal=0;
+                   response.json(result);
+                   return;
+               }
+               var vipTotalParams=data[0].vipTotal;
+
+                result.vipTotal=vipTotalParams;
+
+                var vipListParams=data[0].vipList;
+                var pagination = data[0].pagination;
+                result.page = {
+                    total: pagination.totalCount,
+                    pageCount: pagination.pageNumCount
+                };
+
+                var vipListObj=[];
+                vipListParams.forEach(function (data) {
+
+                    vipListObj.push({
+                        favimg:data.favimg,
+                        username:data.username,
+                        regedate:data.regedate
+                    });
+
+                });
+
+                result.vipList=vipListObj;
+                response.json(result);
+                return
+
+            }
+
+        });
+    }catch(ex){
+        logger.error("获取会员信息列表失败，============:" + ex);
+        resContent.code = 500;
+        resContent.desc = "获取会员信息列表失败";
+        response.json(resContent);
+    }
+});
+
+
 module.exports = router;
