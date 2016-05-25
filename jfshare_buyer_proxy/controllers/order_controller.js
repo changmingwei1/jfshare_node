@@ -497,8 +497,21 @@ router.post('/getVirtualCard', function (request, response, next) {
         Product.getProductCard(params, function (err, data) {
             if(err){
                 response.json(err);
+                return;
             }else{
-                response.json(data);
+                var cList = data[0].cardList;
+                var cardList = []
+                if (cList != null && cList.length > 0) {
+                    cList.forEach(function (a) {
+                        cardList.push({
+                            cardNumber: a.cardNumber,
+                            password: a.password
+                        });
+                    });
+                }
+                result.cardList = cardList;
+                response.json(result);
+                logger.info("get virtual-order carlist response: " + JSON.stringify(result));
             }
         });
     } catch (ex) {

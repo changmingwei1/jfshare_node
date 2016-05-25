@@ -42,8 +42,12 @@ Product.prototype.getProductCard = function(param, callback){
             res.code = 500;
             res.desc = "查询虚拟商品卡密失败";
             callback(res, null);
-        } else {
-            callback(null, data)
+        } else if (data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
+            callback(null, data);
         }
     });
 };
