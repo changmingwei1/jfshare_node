@@ -209,7 +209,7 @@ router.post('/list', function (request, response, next) {
 
 //
 router.post('/creat', function (request, response, next) {
-    logger.info("进入获取商品详情接口");
+    logger.info("进入创建商品接口");
     var result = {code: 200};
     try {
         var productInfo = {};
@@ -300,6 +300,7 @@ router.post('/creat', function (request, response, next) {
                     try {
                         Product.create(params, function (err, data) {
                             if (err) {
+                                logger.error("创建商品服务异常:" + JSON.stringify(err));
                                 callback(1,err);
                             } else {
                                 params.productId = data[0].value;
@@ -307,7 +308,7 @@ router.post('/creat', function (request, response, next) {
                             }
                         });
                     } catch (ex) {
-                        logger.info("创建商品服务异常:" + ex);
+                        logger.error("创建商品服务异常:" + ex);
                         return callback(1, ex);
                     }
                 },
@@ -325,13 +326,13 @@ router.post('/creat', function (request, response, next) {
                             });
                         }
                     } catch (ex) {
-                        logger.info("创建库存服务异常:" + ex);
+                        logger.error("创建库存服务异常:" + ex);
                         return callback(2, null);
                     }
                 }
             ],
             function (err, results) {
-                if (err ==1) {
+                if (err == 1) {
                     logger.error("创建商品失败---商品服务异常：" + results);
                     //result.code = 500;
                    // result.desc = "创建商品失败";
