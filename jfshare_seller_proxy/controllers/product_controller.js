@@ -333,9 +333,7 @@ router.post('/creat', function (request, response, next) {
             ],
             function (err, results) {
                 if (err == 1) {
-                    logger.error("创建商品失败---商品服务异常：" + results);
-                    //result.code = 500;
-                   // result.desc = "创建商品失败";
+                    logger.error("创建商品失败---商品服务异常：" + JSON.stringify(results));
                     response.json(results[0]);
                     return;
                 }
