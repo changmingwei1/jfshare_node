@@ -225,6 +225,9 @@ router.post('/querySellerVipList', function(request, response, next) {
                    return;
                }
                var vipTotalParams=data[0].vipTotal;
+
+                result.vipTotal=vipTotalParams;
+
                 var vipListParams=data[0].vipList;
                 var pagination = data[0].pagination;
                 result.page = {
