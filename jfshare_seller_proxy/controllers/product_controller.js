@@ -324,7 +324,6 @@ router.post('/creat', function (request, response, next) {
                                 }
                             });
                         }
-
                     } catch (ex) {
                         logger.info("创建库存服务异常:" + ex);
                         return callback(2, null);
@@ -334,9 +333,9 @@ router.post('/creat', function (request, response, next) {
             function (err, results) {
                 if (err == 1) {
                     logger.error("创建商品失败---商品服务异常：" + results[0]);
-                    result.code = 500;
-                    result.desc = "创建商品失败";
-                    response.json(result);
+                    //result.code = 500;
+                   // result.desc = "创建商品失败";
+                    response.json(results[0]);
                     return;
                 }
                 if (err == 2) {
