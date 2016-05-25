@@ -44,6 +44,8 @@ router.post('/list', function (request, response, next) {
         var productIdList = [];
         var subjectName = [];
         var newData;
+
+        var isExist = true;
         async.series([
                 function (callback) {
                     try {
@@ -53,7 +55,10 @@ router.post('/list', function (request, response, next) {
                                 callback(1, null);
                             } else {
                                 var productSurveyList = data[0].productSurveyList;
-
+                                if(productSurveyList.length == 0){
+                                    isExist = false;
+                                    return callback(null, dataArr);
+                                }
                                 var pagination = data[0].pagination;
                                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                                 // logger.info("get product list response:" + JSON.stringify(result));
@@ -90,6 +95,9 @@ router.post('/list', function (request, response, next) {
                 },
                 function (callback) {
                     try {
+                        if(!isExist){
+                            return callback(null,dataArr);
+                        }
                         Subject.getBatchSuperTree(subjectIdList, function (error, data) {
                             //logger.info("get product list response:" + JSON.stringify(data));
                             if (error) {
@@ -129,6 +137,9 @@ router.post('/list', function (request, response, next) {
                 },
                 function (callback) {
                     try {
+                        if(!isExist){
+                            return callback(null,dataArr);
+                        }
                         Stock.queryProductTotal(productIdList, function (error, data) {
                             logger.info("get product list response:" + JSON.stringify(data));
                             if (error) {
