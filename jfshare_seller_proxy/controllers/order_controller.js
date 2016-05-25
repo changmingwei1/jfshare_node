@@ -786,4 +786,93 @@ router.post('/afterSalelist', function (request, response, next) {
     }
 });
 
+//查询卖家交易流水
+router.post('/querydealList', function (request, response, next) {
+    logger.info("进入查询交易流水流程");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        logger.info("查询交易流水请求入参，params:" + JSON.stringify(params));
+
+        if (params.sellerId == null || params.sellerId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.beginDate == null || params.beginDate == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.endDate == null || params.endDate == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.perCount == null || params.perCount == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.curPage == null || params.curPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Order.querydealList(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            response.json(result);
+            return
+        });
+
+    } catch (ex) {
+        logger.error("查询交易流水失败，=========：" + ex);
+        result.code = 500;
+        result.desc = "查询交易流水失败";
+        response.json(result);
+    }
+});
+
+//查询卖家交易明细
+router.post('/querydealDetail', function (request, response, next) {
+    logger.info("进入查询卖家交易明细流程");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        logger.info("查询卖家交易明细请求入参，params:" + JSON.stringify(params));
+
+        if (params.productDetId == null || params.productDetId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Order.querydealDetail(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            response.json(result);
+            return
+        });
+
+    } catch (ex) {
+        logger.error("查询卖家交易明细失败，=========：" + ex);
+        result.code = 500;
+        result.desc = "查询卖家交易明细失败";
+        response.json(result);
+    }
+});
 module.exports = router;

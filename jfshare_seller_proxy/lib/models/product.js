@@ -479,4 +479,116 @@ Product.prototype.queryProductOrderCard = function (params, callback) {
     });
 };
 
+//验证虚拟商品兑换码
+Product.prototype.reCaptcha = function (params, callback) {
+    var productCardParam = new product_types.ProductCard({
+        sellerId:params.sellerId,
+        cardNumber:params.cardNumber
+    });
+    logger.info("调用 productServ-reCaptcha 入参:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "useProductCard", productCardParam);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用 productServ-reCaptcha result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用 productServ-reCaptcha  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "调用productServ-reCaptcha失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
+//查询卖家虚拟商品验证列表
+Product.prototype.queryCaptchaList = function (params, callback) {
+
+    var page = new pagination_types.Pagination({
+        numPerPage: params.perCount,
+        currentPage: params.curpage
+    });
+    var captchaQueryParam = new product_types.CaptchaQueryParam({
+        sellerId:params.sellerId,
+        pagination:page
+    });
+    logger.info("调用 productServ-queryCaptchaList 入参:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryCaptchaList", captchaQueryParam);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用 productServ-queryCaptchaList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用 productServ-queryCaptchaList  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "调用productServ-queryCaptchaList 失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
+//查询卖家虚拟商品每月及每天统计
+Product.prototype.queryCaptchaTotalList = function (params, callback) {
+
+    var page = new pagination_types.Pagination({
+        numPerPage: params.perCount,
+        currentPage: params.curpage
+    });
+    var captchaQueryParam = new product_types.CaptchaQueryParam({
+        sellerId:params.sellerId,
+        pagination:page,
+        monthQuery:params.monthQuery
+    });
+    logger.info("调用 productServ-queryCaptchaTotalList 入参:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryCaptchaTotalList", captchaQueryParam);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用 productServ-queryCaptchaTotalList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用 productServ-queryCaptchaTotalList  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "调用productServ-queryCaptchaTotalList 失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
+//卖家虚拟商品验证列表明细
+Product.prototype.queryCaptchaDetails = function (params, callback) {
+
+    var page = new pagination_types.Pagination({
+        numPerPage: params.perCount,
+        currentPage: params.curpage
+    });
+    var captchaQueryParam = new product_types.CaptchaQueryParam({
+        productId:params.productId,
+        pagination:page,
+        monthQuery:params.monthQuery
+    });
+    logger.info("调用 productServ-queryCaptchaDetails 入参:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryCaptchaDetails", captchaQueryParam);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用 productServ-queryCaptchaDetails result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用 productServ-queryCaptchaDetails  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "调用productServ-queryCaptchaDetails 失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
 module.exports = new Product();

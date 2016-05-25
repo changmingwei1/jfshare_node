@@ -83,5 +83,44 @@ Order.prototype.queryOrderDetail = function (param, callback) {
     });
 };
 
+//查询卖家交易流水
+Order.prototype.querydealList = function (param, callback) {
+    //------------------
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "querydealList", [2, param.sellerId, param.orderId]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-querydealList  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用orderServ-querydealList失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询交易流水失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0].order);
+        }
+    });
+};
+
+//查询卖家交易明细
+Order.prototype.querydealDetail = function (param, callback) {
+    //------------------
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "querydealDetail", [2, param.sellerId, param.orderId]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-querydealDetail  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用orderServ-querydealDetail失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询交易明细失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0].order);
+        }
+    });
+};
 
 module.exports = new Order();

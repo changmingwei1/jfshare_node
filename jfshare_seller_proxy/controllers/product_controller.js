@@ -1019,6 +1019,223 @@ router.post('/queryOrderCardMsg', function (request, response, next) {
     }
 });
 
+//验证虚拟商品兑换码
+router.post('/reCaptcha', function(request, response, next) {
 
+    logger.info("进入验证虚拟商品兑换码接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("验证虚拟商品兑换码请求入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.sellerId == null||params.sellerId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.cardNumber== null || params.cardNumber == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Product.reCaptcha(params, function (err, data) {
+            if(err){
+                return response.json(err);
+            }
+            logger.info("验证虚拟商品兑换码 result" + JSON.stringify(data));
+            response.json(data);
+            return;
+        });
+    } catch (ex) {
+        logger.error("验证虚拟商品兑换码失败:" + ex);
+        result.code = 500;
+        result.desc = "验证虚拟商品兑换码失败";
+        response.json(result);
+    }
+});
+
+//验证虚拟商品兑换码
+router.post('/reCaptcha', function(request, response, next) {
+
+    logger.info("进入验证虚拟商品兑换码接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("验证虚拟商品兑换码请求入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.sellerId == null||params.sellerId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.cardNumber== null || params.cardNumber == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Product.reCaptcha(params, function (err, data) {
+            if(err){
+                return response.json(err);
+            }
+            logger.info("验证虚拟商品兑换码 result" + JSON.stringify(data));
+            response.json(data);
+            return;
+        });
+    } catch (ex) {
+        logger.error("验证虚拟商品兑换码失败:" + ex);
+        result.code = 500;
+        result.desc = "验证虚拟商品兑换码失败";
+        response.json(result);
+    }
+});
+
+//查询卖家虚拟商品验证列表
+router.post('/queryCaptchaList', function(request, response, next) {
+
+    logger.info("进入查询卖家虚拟商品验证记录接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("查询卖家虚拟商品验证记录请求入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.sellerId == null||params.sellerId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.perCount== null || params.perCount == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.curPage== null || params.curPage == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Product.queryCaptchaList(params, function (err, data) {
+            if(err){
+                return response.json(err);
+            }
+            logger.info("查询卖家虚拟商品验证记录 result" + JSON.stringify(data));
+            response.json(data);
+            return;
+        });
+    } catch (ex) {
+        logger.error("查询卖家虚拟商品验证记录失败:" + ex);
+        result.code = 500;
+        result.desc = "查询卖家虚拟商品验证记录失败";
+        response.json(result);
+    }
+});
+
+//查询卖家虚拟商品每月及每天统计
+router.post('/queryCaptchaTotalList', function(request, response, next) {
+
+    logger.info("进入卖家虚拟商品验证统计接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("卖家虚拟商品验证统计请求入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.sellerId == null||params.sellerId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.date== null || params.date == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.perCount== null || params.perCount == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.curPage== null || params.curPage == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Product.queryCaptchaTotalList(params, function (err, data) {
+            if(err){
+                return response.json(err);
+            }
+            logger.info("卖家虚拟商品验证统计 result" + JSON.stringify(data));
+            response.json(data);
+            return;
+        });
+    } catch (ex) {
+        logger.error("卖家虚拟商品验证统计失败:" + ex);
+        result.code = 500;
+        result.desc = "卖家虚拟商品验证统计失败";
+        response.json(result);
+    }
+});
+
+//卖家虚拟商品验证列表明细
+router.post('/queryCaptchaDetails', function(request, response, next) {
+
+    logger.info("进入虚拟商品验证明细接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("虚拟商品验证明细请求入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.productId == null||params.productId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.queryDate== null || params.queryDate == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.perCount== null || params.perCount == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.curPage== null || params.curPage == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Product.queryCaptchaDetails(params, function (err, data) {
+            if(err){
+                return response.json(err);
+            }
+            logger.info("虚拟商品验证明细 result" + JSON.stringify(data));
+            response.json(data);
+            return;
+        });
+    } catch (ex) {
+        logger.error("虚拟商品验证明细失败:" + ex);
+        result.code = 500;
+        result.desc = "虚拟商品验证明细失败";
+        response.json(result);
+    }
+});
 
 module.exports = router;
