@@ -300,7 +300,8 @@ router.post('/creat', function (request, response, next) {
                     try {
                         Product.create(params, function (err, data) {
                             if (err) {
-                                callback(1, err);
+                                response.json(err);
+                                return;
                             } else {
                                 params.productId = data[0].value;
                                 callback(null, params.productId);
