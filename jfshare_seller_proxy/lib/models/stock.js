@@ -125,7 +125,7 @@ Stock.prototype.createStock = function (params, callback) {
                     var stockItem = new stock_types.StockItem({
                         skuNum:sku.key.id,
                         lockCount:0,
-                        count:sku.values[i].storecount,//storecount
+                        count:Number(sku.values[i].storecount),//storecount
                         storehouseId: Number(sku.values[i].storeid)
                     });
                     total+=Number(sku.values[i].storecount);
@@ -134,8 +134,6 @@ Stock.prototype.createStock = function (params, callback) {
             }
         });
     }
-
-
     var StockInfo = new stock_types.StockInfo({
         total:total,
         productId:params.productId,
