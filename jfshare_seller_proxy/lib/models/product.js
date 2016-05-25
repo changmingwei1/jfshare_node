@@ -124,7 +124,7 @@ Product.prototype.create = function (params, callback) {
             }else{
                 res.code = 500;
                 res.desc = data[0].result.failDescList[0].desc;
-                logger.info("productServ-addProduct  result:" + JSON.stringify(res.desc));
+                logger.error("productServ-addProduct  result:" + JSON.stringify(res.desc));
                 return callback(res, null);
             }
         } else {
