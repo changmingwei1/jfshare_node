@@ -102,13 +102,12 @@ router.post('/loginOut', function(request, response, next) {
             return;
         }
 
-
         User.loginOut(params, function (err, data) {
-            if(err){
+            if(err||data[0].code==1){
                 return response.json(err);
             }
-            logger.info("注销登录，response" + JSON.stringify(data));
-            response.json(data);
+            logger.info("注销登录，response " + JSON.stringify(data));
+            response.json(result);
             return;
         });
     } catch (ex) {
