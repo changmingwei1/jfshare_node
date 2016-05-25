@@ -438,9 +438,8 @@ router.post('/cancelOrder', function (request, response, next) {
     var result = {code: 200};
 
     try {
-
         var params = request.body;
-
+        logger.info("Express.expressQuery params:" + JSON.stringify(params));
         if (params.orderId == null || params.orderId == "") {
 
             result.code = 500;
@@ -455,12 +454,7 @@ router.post('/cancelOrder', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.account == null || params.account == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
+
 
         Order.cancelOrder(params, function (err, data) {
             if (err) {
