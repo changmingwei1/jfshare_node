@@ -62,7 +62,62 @@ router.post('/login', function(request, respone, next) {
     }
 });
 
+//注销登录
+router.post('/loginOut', function(request, response, next) {
 
+    logger.info("进入注销登录接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("注销登录请求入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.sellerId == null) {
+            result.code = 400;
+            result.desc = "参数错误1";
+            response.json(result);
+            return;
+        }
+        if (params.tokenId== null || params.tokenId == "") {
+            result.code = 400;
+            result.desc = "参数错误2";
+            response.json(result);
+            return;
+        }
+        if (params.ip== null || params.ip == "") {
+            result.code = 400;
+            result.desc = "参数错误3";
+            response.json(result);
+            return;
+        }
+        if (params.browser == null || params.browser == "") {
+            result.code = 400;
+            result.desc = "参数错误4";
+            response.json(result);
+            return;
+        }
+        if (params.fromSource == null || params.fromSource == "") {
+            result.code = 400;
+            result.desc = "参数错误5";
+            response.json(result);
+            return;
+        }
+
+
+        User.loginOut(params, function (err, data) {
+            if(err){
+                return response.json(err);
+            }
+            logger.info("注销登录，response" + JSON.stringify(data));
+            response.json(data);
+            return;
+        });
+    } catch (ex) {
+        logger.error("注销登录失败，=========:" + ex);
+        result.code = 500;
+        result.desc = "注销登录失败";
+        response.json(result);
+    }
+});
 
 
 module.exports = router;

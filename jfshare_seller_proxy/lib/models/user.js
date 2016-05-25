@@ -53,6 +53,35 @@ User.prototype.login = function(param,callback){
     });
 };
 
+//注销登录
+User.prototype.loginOut = function(param,callback){
 
+    var loginLog  =  new seller_types.LoginLog({
+        loginName:param.sellerId,
+        tokenId:param.tokenId,
+        ip:param.ip,
+        browser:param.browser,
+        fromSource:param.fromSource,
+        tokenId:param.tokenId,
+        logoutTime:param.logoutTime
+
+    });
+    logger.info("调用 userServ-signout 入参:" + JSON.stringify(param));
+    //获取客户端
+    var userServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer,'signout',loginLog);
+    Lich.wicca.invokeClient(userServ, function(err, data){
+        logger.info("调用 userServ-signout result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].code == "1") {
+            logger.error("调用 userServ-signout 异常 ，because: ======" + err);
+            res.code = 500;
+            logger.error(data);
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new User();
