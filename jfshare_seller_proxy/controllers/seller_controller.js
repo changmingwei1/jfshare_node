@@ -187,7 +187,7 @@ router.get('/querySlotImageList', function(request, response, next) {
 });
 
 //获取会员信息列表
-router.post('/querySellerList', function(request, response, next) {
+router.post('/querySellerVipList', function(request, response, next) {
 
     logger.info("进入获取会员信息列表接口");
     var result = {code:200};
