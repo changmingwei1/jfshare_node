@@ -300,4 +300,28 @@ Order.prototype.confirmReceipt = function (param, callback) {
     });
 };
 
+/*扫码预生成订单*/
+Order.prototype.orderConfirmResult = function (params, callback) {
+
+    var pagination = new pagination_types.Pagination({
+        numPerPage:params.perCount,
+        currentPage:params.curPage
+    });
+    logger.info("调用 AfterSaleServ-orderConfirmResult  parms:" + JSON.stringify(params));
+    var tradeServ = new Lich.InvokeBag(Lich.ServiceKey.TradeServer, "orderConfirmResult", param);
+
+    Lich.wicca.invokeClient(tradeServ, function (err, data) {
+        logger.info("AfterSaleServ-orderConfirmResult  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("AfterSaleServ-orderConfirmResult  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "扫码预生成订单失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
 module.exports = new Order();

@@ -1117,6 +1117,65 @@ router.post('/refundDesc', function (request, response, next) {
     }
 });
 
+//---------------------------------------------------------
+/*扫码预生成订单*/
+router.post('/orderConfirmResult', function (request, response, next) {
+    logger.info("进入扫码预生成订单");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        logger.info("扫码预生成订单请求入参, args:" + JSON.stringify(arg));
+
+        if (params.userId == null || params.userId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.username == null || params.username == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.sellerId == null || params.sellerId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.sellerName == null || params.sellerName == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.amount == null || params.amount == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.tradeCode == null || params.tradeCode == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+       AfterSale.payOrderCreate(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.value = data[0].value;
+            response.json(result);
+            logger.info("响应的结果:" + JSON.stringify(result));
+        });
+    } catch (ex) {
+        response.json(result);
+    }
+});
 
 
 
