@@ -36,10 +36,9 @@ Score.prototype.getScore = function (params, callback) {
 Score.prototype.getScoreDetail = function (params, callback) {
     var coreTradeQueryParam= new score_types.ScoreTradeQueryParam({
         userId:params.userId,
-        tradeTime:params.tradeTime,
         inOrOut:params.inOrOut,
         type:params.scoreType,
-        beginTime:params.beginTime,
+        startTime:params.beginTime,
         endTime:params.endTime
     });
     var pagination = new pagination_types.Pagination({
