@@ -25,6 +25,7 @@ AfterSale = module.exports.AfterSale = function(args) {
   this.applyTime = null;
   this.approveComment = null;
   this.approveTime = null;
+  this.orderTime = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -61,6 +62,9 @@ AfterSale = module.exports.AfterSale = function(args) {
     }
     if (args.approveTime !== undefined) {
       this.approveTime = args.approveTime;
+    }
+    if (args.orderTime !== undefined) {
+      this.orderTime = args.orderTime;
     }
   }
 };
@@ -162,6 +166,13 @@ AfterSale.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -231,6 +242,11 @@ AfterSale.prototype.write = function(output) {
   if (this.approveTime !== null && this.approveTime !== undefined) {
     output.writeFieldBegin('approveTime', Thrift.Type.STRING, 12);
     output.writeString(this.approveTime);
+    output.writeFieldEnd();
+  }
+  if (this.orderTime !== null && this.orderTime !== undefined) {
+    output.writeFieldBegin('orderTime', Thrift.Type.STRING, 13);
+    output.writeString(this.orderTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -656,6 +672,120 @@ AfterSaleOrderResult.prototype.write = function(output) {
   if (this.pagination !== null && this.pagination !== undefined) {
     output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
     this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AfterSaleOrderParam = module.exports.AfterSaleOrderParam = function(args) {
+  this.userId = null;
+  this.orderId = null;
+  this.sellerId = null;
+  this.startTime = null;
+  this.endTime = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+  }
+};
+AfterSaleOrderParam.prototype = {};
+AfterSaleOrderParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AfterSaleOrderParam.prototype.write = function(output) {
+  output.writeStructBegin('AfterSaleOrderParam');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 2);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 3);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 4);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 5);
+    output.writeString(this.endTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

@@ -339,15 +339,11 @@ AfterSaleServ_queryAfterSale_result.prototype.write = function(output) {
 };
 
 AfterSaleServ_queryAfterSaleOrder_args = function(args) {
-  this.userType = null;
-  this.userId = null;
+  this.param = null;
   this.pagination = null;
   if (args) {
-    if (args.userType !== undefined) {
-      this.userType = args.userType;
-    }
-    if (args.userId !== undefined) {
-      this.userId = args.userId;
+    if (args.param !== undefined) {
+      this.param = args.param;
     }
     if (args.pagination !== undefined) {
       this.pagination = args.pagination;
@@ -369,20 +365,14 @@ AfterSaleServ_queryAfterSaleOrder_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.userType = input.readI32();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.AfterSaleOrderParam();
+        this.param.read(input);
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.userId = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
       if (ftype == Thrift.Type.STRUCT) {
         this.pagination = new pagination_ttypes.Pagination();
         this.pagination.read(input);
@@ -401,18 +391,13 @@ AfterSaleServ_queryAfterSaleOrder_args.prototype.read = function(input) {
 
 AfterSaleServ_queryAfterSaleOrder_args.prototype.write = function(output) {
   output.writeStructBegin('AfterSaleServ_queryAfterSaleOrder_args');
-  if (this.userType !== null && this.userType !== undefined) {
-    output.writeFieldBegin('userType', Thrift.Type.I32, 1);
-    output.writeI32(this.userType);
-    output.writeFieldEnd();
-  }
-  if (this.userId !== null && this.userId !== undefined) {
-    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
-    output.writeI32(this.userId);
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
     output.writeFieldEnd();
   }
   if (this.pagination !== null && this.pagination !== undefined) {
-    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
     this.pagination.write(output);
     output.writeFieldEnd();
   }
@@ -625,7 +610,7 @@ AfterSaleServClient.prototype.recv_queryAfterSale = function(input,mtype,rseqid)
   }
   return callback('queryAfterSale failed: unknown result');
 };
-AfterSaleServClient.prototype.queryAfterSaleOrder = function(userType, userId, pagination, callback) {
+AfterSaleServClient.prototype.queryAfterSaleOrder = function(param, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -636,20 +621,19 @@ AfterSaleServClient.prototype.queryAfterSaleOrder = function(userType, userId, p
         _defer.resolve(result);
       }
     };
-    this.send_queryAfterSaleOrder(userType, userId, pagination);
+    this.send_queryAfterSaleOrder(param, pagination);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_queryAfterSaleOrder(userType, userId, pagination);
+    this.send_queryAfterSaleOrder(param, pagination);
   }
 };
 
-AfterSaleServClient.prototype.send_queryAfterSaleOrder = function(userType, userId, pagination) {
+AfterSaleServClient.prototype.send_queryAfterSaleOrder = function(param, pagination) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('queryAfterSaleOrder', Thrift.MessageType.CALL, this.seqid());
   var args = new AfterSaleServ_queryAfterSaleOrder_args();
-  args.userType = userType;
-  args.userId = userId;
+  args.param = param;
   args.pagination = pagination;
   args.write(output);
   output.writeMessageEnd();
@@ -786,8 +770,8 @@ AfterSaleServProcessor.prototype.process_queryAfterSaleOrder = function(seqid, i
   var args = new AfterSaleServ_queryAfterSaleOrder_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.queryAfterSaleOrder.length === 3) {
-    Q.fcall(this._handler.queryAfterSaleOrder, args.userType, args.userId, args.pagination)
+  if (this._handler.queryAfterSaleOrder.length === 2) {
+    Q.fcall(this._handler.queryAfterSaleOrder, args.param, args.pagination)
       .then(function(result) {
         var result = new AfterSaleServ_queryAfterSaleOrder_result({success: result});
         output.writeMessageBegin("queryAfterSaleOrder", Thrift.MessageType.REPLY, seqid);
@@ -802,7 +786,7 @@ AfterSaleServProcessor.prototype.process_queryAfterSaleOrder = function(seqid, i
         output.flush();
       });
   } else {
-    this._handler.queryAfterSaleOrder(args.userType, args.userId, args.pagination,  function (err, result) {
+    this._handler.queryAfterSaleOrder(args.param, args.pagination,  function (err, result) {
       var result = new AfterSaleServ_queryAfterSaleOrder_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryAfterSaleOrder", Thrift.MessageType.REPLY, seqid);
       result.write(output);

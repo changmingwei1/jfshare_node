@@ -317,6 +317,7 @@ router.post('/list', function (request, response, next) {
         }
         logger.info("提交订单请求参数， arg:" + JSON.stringify(params));
         var afterSaleList = [];
+        var sellerMsgList = [];
         result.orderList = [];
         result.afterSaleList = [];
         async.series([
@@ -337,22 +338,14 @@ router.post('/list', function (request, response, next) {
                                         //添加了应答的数据
                                         postage: order.postage,
                                         username: order.username,
-                                        cancelName: order.cancelName,
+                                        cancelTime: order.cancelTime,
                                         sellerId: order.sellerId,
                                         createTime: order.createTime,
-                                        expressNo: order.expressNo,
-                                        expressName: order.expressName,
-                                        receiverAddress: order.receiverAddress,
-                                        receiverName: order.receiverName,
-                                        mobile: order.receiverMobile,
-                                        receiverTele: order.receiverTele,
                                         orderState: order.orderState,
                                         sellerComment: order.sellerComment,
                                         buyerComment: order.buyerComment,
                                         deliverTime: order.deliverTime,
                                         successTime: order.successTime,
-                                        exchangeCash: order.exchangeCash,
-                                        exchangeScore: order.exchangeScore,
                                         activeState: order.activeState,
                                         postage: order.postage,
                                         type: order.productList[0].type  //5.17测没有type
@@ -375,6 +368,7 @@ router.post('/list', function (request, response, next) {
                                         orderList.push(orderItem);
                                     }
                                 });
+                                params.sellerIdList = orderList;
                                 result.orderList = orderList;
                                 /*给出系统当前时间*/
                                 result.curTime = new Date().getTime();
@@ -391,12 +385,12 @@ router.post('/list', function (request, response, next) {
                 function (callback) {
                     try {
                         if (params.orderState == null) {
-                            AfterSale.queryAfterSaleOrder(params, function (err, data) {
+                            AfterSale.queryAfterSale(params, function (err, data) {
                                 if (err) {
                                     return callback(2, null);
                                 }
                                 logger.info("get order list response:" + JSON.stringify(result));
-                                afterSaleList = data.afterSaleOrders;
+                                afterSaleList = data;
                                 return callback(null, afterSaleList);
                             });
                         } else {
@@ -405,6 +399,28 @@ router.post('/list', function (request, response, next) {
                     } catch (ex) {
                         logger.info("售后服务异常:" + ex);
                         return callback(2, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        Seller.querySellerBatch(params, function (err, data) {
+                            if (err) {
+                                return callback(4, null);
+                            }
+                            var smList = data.sellerMap;
+                            for(var i in smList){
+                                var seller = {
+                                    sellerId: i,
+                                    sellerName: smList[i].seller.sellerName
+                                };
+                                sellerMsgList.push(seller);
+                            }
+                            logger.info("get sellerMsgList response:" + JSON.stringify(sellerMsgList));
+                            return callback(null, sellerMsgList);
+                        });
+                    } catch (ex) {
+                        logger.info("商家服务异常:" + ex);
+                        return callback(4, null);
                     }
                 }
             ],
@@ -418,17 +434,25 @@ router.post('/list', function (request, response, next) {
                 }
                 if (err == 2) {
                     logger.error("查询售后失败--售后服务异常：" + err);
+                    result.sellerList = results[2];
                     response.json(results[0]);
                     return;
                 }
+                if (err == 4) {
+                    logger.error("查询卖家信息失败--卖家服务异常：" + err);
+                    result.afterSaleList = results[1];
+                    result = results[0];
+                    return;
+                }
                 if (err == null && err != 3) {
-                    logger.info("shuju------------->" + JSON.stringify(results));
+                    logger.info("shuju111------------->" + JSON.stringify(results));
                     result = results[0];
                     result.afterSaleList = results[1];
+                    result.sellerList = results[2];
                     response.json(result);
                     return;
                 } else {
-                    logger.info("shuju------------->" + JSON.stringify(results));
+                    logger.info("shuju222------------->" + JSON.stringify(results));
                     result = results[0];
                     response.json(result);
                     return;
@@ -540,6 +564,8 @@ router.post('/info', function (req, res, next) {
             return;
         }
         logger.info("查询订单祥情请求参数：" + JSON.stringify(params));
+        var afterSaleList = [];
+        var sellerName = {};
         async.series([
                 function (callback) {
                     try {
@@ -606,39 +632,68 @@ router.post('/info', function (req, res, next) {
                         logger.info("订单服务异常:" + ex);
                         return callback(1, null);
                     }
-                }, function (callback) {
+                },
+                function (callback) {
                     try {
                         Seller.querySeller(params.sellerId, 1, function (err, data) {
                             if (err) {
                                 callback('error', err);
                                 return;
                             } else {
-                                result.sellerName = data[0].seller.sellerName;
-                                logger.info("获取到的商品信息：" + JSON.stringify(result));
-                                callback(null, result);
+                                sellerName = data[0].seller.sellerName;
+                                logger.info("查询到的卖家名字："+sellerName);
+                                callback(null, sellerName);
                             }
                         });
                     } catch (ex) {
                         logger.info("卖家服务异常:" + ex);
                         return callback(2, null);
                     }
+                },
+                function (callback) {
+                    try {
+                        if (params.orderState == null || params.orderState == 1) {
+                            AfterSale.queryAfterSale(params, function (err, data) {
+                                if (err) {
+                                    return callback(3, null);
+                                }
+                                logger.info("get order list response:" + JSON.stringify(result));
+                                afterSaleList = data;
+                                return callback(null, afterSaleList);
+                            });
+                        } else {
+                            return callback(3, null);
+                        }
+                    } catch (ex) {
+                        logger.info("售后服务异常:" + ex);
+                        return callback(3, null);
+                    }
                 }
             ],
             function (err, results) {
-                if (err) {
+                if (err == 1) {
                     result.code = 500;
                     result.desc = "查看商品详情失败";
                     res.json(result);
                     return;
+                } else if (err == 2) {
+                    logger.error("查询卖家信息失败--卖家服务异常：" + err);
+                    result = results[0];
+                    result.afterSaleList = results[2];
+                    res.json(result);
+                    return;
+                } else if (err == 3) {
+                    logger.error("查询售后信息失败--售后服务异常：" + err);
+                    result = results[0];
+                    result.sellerName = results[1];
+                    res.json(result);
+                    return;
                 } else {
-                    if (results != null && results.length > 0) {
-                        res.json(results[results.length - 1]);
-                    } else {
-                        result.code = 500;
-                        result.desc = "查看订单详情失败";
-                        res.json(result);
-                        return;
-                    }
+                    result = results[0];
+                    result.sellerName = results[1];
+                    result.afterSaleList = results[2];
+                    res.json(result);
+                    return;
                 }
             });
     } catch (ex) {
@@ -1060,7 +1115,6 @@ router.post('/refund', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            result.value = data[0].value;
             response.json(result);
             logger.info("响应的结果:" + JSON.stringify(result));
         });
@@ -1105,7 +1159,16 @@ router.post('/refundDesc', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            result.data = data;
+            var afterSaleDesc;
+            if(data != null){
+                afterSaleDesc.applyTime = data.applyTime;
+                afterSaleDesc.reason = data.reason;
+                afterSaleDesc.userComment = data.userComment;
+                afterSaleDesc.approveComment = data.approveComment;
+                afterSaleDesc.approveTime = data.approveTime;
+                afterSaleDesc.state = data.state;
+            }
+            result.afterSaleDesc = afterSaleDesc;
             response.json(result);
             logger.info("AfterSale.queryAfterSale response:" + JSON.stringify(result));
         });
