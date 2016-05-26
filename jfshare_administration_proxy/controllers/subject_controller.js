@@ -84,10 +84,6 @@ router.post('/add', function (request, response, next) {
 router.post('/update', function (request, response, next) {
 
     var result = {code: 200};
-
-    response.json(result);
-
-    var result = {code: 200};
     try {
         var params = request.body;
 
