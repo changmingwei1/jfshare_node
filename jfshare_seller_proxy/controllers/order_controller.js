@@ -1,7 +1,6 @@
 /**
  * Created by zhaoshenghai on 16/3/21.
  */
-
 var express = require('express');
 var router = express.Router();
 var async = require('async');
