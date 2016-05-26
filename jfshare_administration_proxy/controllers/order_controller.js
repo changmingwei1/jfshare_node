@@ -439,7 +439,7 @@ router.post('/cancelOrder', function (request, response, next) {
 
     try {
         var params = request.body;
-        logger.info("Express.expressQuery params:" + JSON.stringify(params));
+        logger.info("cancelOrder params:" + JSON.stringify(params));
         if (params.orderId == null || params.orderId == "") {
 
             result.code = 500;
