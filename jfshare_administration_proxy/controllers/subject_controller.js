@@ -84,10 +84,6 @@ router.post('/add', function (request, response, next) {
 router.post('/update', function (request, response, next) {
 
     var result = {code: 200};
-
-    response.json(result);
-
-    var result = {code: 200};
     try {
         var params = request.body;
 
@@ -123,8 +119,9 @@ router.post('/update', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                response.json(result);
                 logger.info("update subject  result:" + JSON.stringify(result));
+                response.json(result);
+
             }
         });
     } catch (ex) {
@@ -158,8 +155,9 @@ router.post('/query', function (request, response, next) {
                 response.json(error);
             } else {
                 result.subjectList = data;
-                response.json(result);
                 logger.info("get subject list result:" + JSON.stringify(result));
+                response.json(result);
+
             }
         });
 

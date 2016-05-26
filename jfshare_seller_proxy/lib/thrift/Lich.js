@@ -30,7 +30,8 @@ var ServiceKey = {
     AfterSaleServer: "AfterSale",
     TemplateServer: "Template",
     //ManagerServer:"Manager",
-    ExpresssServer: "Expresss"
+    ExpresssServer: "Expresss",
+    MessageServer:"Message"
 };
 
 /**
