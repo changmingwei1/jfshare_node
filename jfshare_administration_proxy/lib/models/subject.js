@@ -229,7 +229,9 @@ Subject.prototype.querySubjectPath = function (params, callback) {
 
 Subject.prototype.updateAttributes = function (params, callback) {
 
-    //
+    logger.info("subjectServ-updateSubjectAttribute params   ======" +JSON.stringify( params));
+
+    logger.info("subjectServ-updateSubjectAttribute params   ======" +JSON.stringify( params.id)+"--->"+JSON.stringify( params.value));
     var subjectAttribute = new subject_types.SubjectAttribute({
         id: params.id,
         value: JSON.stringify(params.value)
