@@ -159,8 +159,9 @@ router.post('/query', function (request, response, next) {
                 response.json(error);
             } else {
                 result.subjectList = data;
-                response.json(result);
                 logger.info("get subject list result:" + JSON.stringify(result));
+                response.json(result);
+
             }
         });
 

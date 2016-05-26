@@ -129,25 +129,25 @@ Subject.prototype.query = function (params, callback) {
 
 Subject.prototype.list = function (params, callback) {
 
-
-    /*********************һ���ǲ�������****************************/
-    var addressList = [];
-    var storehouse = new storehouse_types.Storehouse({
-        id: 1, sellerId: 5, name: "������",
-        supportProvince: "220000,370000,220000,630000,330000,440000"
-    });
-
-    var storehouse1 = new storehouse_types.Storehouse({
-        id: 2, sellerId: 5, name: "���ϲ�",
-        supportProvince: "460000,210000,220000,620000,330000,440000"
-    });
-
-
-    addressList.push(storehouse);
-    addressList.push(storehouse1);
-
-
-    callback(null, addressList);
+    //
+    ///*********************һ���ǲ�������****************************/
+    //var addressList = [];
+    //var storehouse = new storehouse_types.Storehouse({
+    //    id: 1, sellerId: 5, name: "������",
+    //    supportProvince: "220000,370000,220000,630000,330000,440000"
+    //});
+    //
+    //var storehouse1 = new storehouse_types.Storehouse({
+    //    id: 2, sellerId: 5, name: "���ϲ�",
+    //    supportProvince: "460000,210000,220000,620000,330000,440000"
+    //});
+    //
+    //
+    //addressList.push(storehouse);
+    //addressList.push(storehouse1);
+    //
+    //
+    //callback(null, addressList);
 };
 
 
