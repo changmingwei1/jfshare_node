@@ -40,6 +40,7 @@ Order.prototype.orderProfileQuery = function (param, callback) {
             orderId: param.orderId
         });
     }
+    logger.info("售后列表查询的条件:" + JSON.stringify(orderQueryConditions));
 
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [1, param.userId, orderQueryConditions]);
 

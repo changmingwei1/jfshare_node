@@ -252,7 +252,7 @@ router.post('/afterSaleList', function (request, response, next) {
                                                 imgKey: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
                                             };
-                                            orderList.push(productItem);
+                                            productList.push(productItem);
                                         }
                                         orderItem.productList = productList;
                                         orderList.push(orderItem);
