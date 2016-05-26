@@ -30,7 +30,8 @@ Subject.prototype.add = function (params, callback) {
         level: params.level,
         img_key: params.imgkey,
         creator: params.userId,
-        commodity:params.commodity
+        commodity:params.commodity,
+        isLeaf:params.isLeaf
     });
 
 

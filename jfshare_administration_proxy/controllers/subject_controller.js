@@ -39,7 +39,12 @@ router.post('/add', function (request, response, next) {
             response.json(result);
             return;
         }
-
+        if (params.isLeaf == null || params.isLeaf == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         if (params.userId == null || params.userId == "" || params.userId <= 0) {
             result.code = 500;
             result.desc = "参数错误";
@@ -420,6 +425,7 @@ router.post('/addSubjectAttribute', function (request, response, next) {
                 response.json(result);
             }
         });
+
 
     } catch (ex) {
         logger.error("获取 error:" + ex);
