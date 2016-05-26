@@ -386,6 +386,7 @@ router.post('/getcitys', function(req, res, next) {
         result.code = 500;
         result.desc = "参数错误";
         res.json(result);
+        return;
     }
     try{
 
@@ -416,6 +417,7 @@ router.post('/getcountys', function(req, res, next) {
         result.code = 500;
         result.desc = "参数错误";
         res.json(result);
+        return;
     }
     try{
 
