@@ -373,6 +373,7 @@ router.post('/updateAttributes', function (request, response, next) {
                 response.json(result);
                 return;
             }
+            logger.info("updateAttributes  prams:" + JSON.stringify(params));
             Subject.updateAttributes(params, function (error, data) {
                 if (error) {
                     response.json(error);
