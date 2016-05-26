@@ -327,9 +327,10 @@ router.post('/updateAttributes', function (request, response, next) {
                         } else {
                             logger.info("addsubject---------->" + JSON.stringify(data));
                             attributesId = data[0].id;
+                            return callback(null, attributesId);
                         }
                     });
-                    return callback(null, attributesId);
+
                 },
                 function (callback) {
                     if (subject != null && attributesId != 0) {
