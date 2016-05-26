@@ -16,7 +16,7 @@ router.post('/socrelist', function (request, response, next) {
     try {
         var params = request.body;
         //参数校验
-
+        logger.info("socrelist params:" + JSON.stringify(params));
         if(params.percount ==null || params.percount ==""){
             result.code = 500;
             result.desc = "参数错误";
@@ -30,6 +30,7 @@ router.post('/socrelist', function (request, response, next) {
             response.json(result);
             return;
         }
+
         Score.queryScoreUser(params, function (err, data) {
             if (err) {
                 response.json(err);
