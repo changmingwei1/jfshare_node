@@ -46,6 +46,13 @@ router.post('/add', function (request, response, next) {
             response.json(result);
             return;
         }
+
+        if (params.commodity == null || params.commodity == "" || params.commodity <= 0) {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         //默认每个层级最多不到1000个
         if (params.pid < ((params.level - 1) * 1000) || params.pid > (params.level * 1000)) {
             result.code = 500;
