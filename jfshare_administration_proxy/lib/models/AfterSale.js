@@ -113,8 +113,14 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
 //查询售后的订单list的个数
 AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
 
-    var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
-        sellerId: params.sellerId
+
+    var afterSaleQueryParam = new afterSale_types.AfterSaleOrderParam({
+        sellerId: params.sellerId,
+        userId: params.userId,
+        orderId: params.orderId,
+        sellerId: params.sellerId,
+        startTime: params.startTime,
+        endTime: params.endTime
     });
 
     var page = new pagination_types.Pagination({
@@ -122,7 +128,8 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
         currentPage: params.curpage
     });
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
-    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [2, params.sellerId, page]);
+
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [afterSaleQueryParam, page]);
 
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
@@ -133,7 +140,7 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
             res.desc = "查询售后订单列表失败！";
             callback(res, null);
         } else {
-            if (data[0] == null||data[0].afterSaleOrders==null || data[0].pagination == null || data[0].pagination.totalCount == null) {
+            if (data[0] == null|| data[0].afterSaleOrders==null || data[0].pagination == null || data[0].pagination.totalCount == null) {
                 callback(null, 0);
             } else {
                 callback(null, data[0].pagination.totalCount);
@@ -146,7 +153,7 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
 };
 
 
-//查询售后的订单list的个数
+//查询售后的订单list
 AfterSale.prototype.queryAfterSaleOrderListBySellerId = function (params, callback) {
 
     var afterSaleQueryParam = new afterSale_types.AfterSaleOrderParam({
