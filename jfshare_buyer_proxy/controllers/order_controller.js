@@ -184,12 +184,10 @@ router.post('/afterSaleList', function (request, response, next) {
                                 result.afterOrderList = afterOrderList;
                                 callback(null,result);
                             }else{
-                                result.afterOrderList = afterOrderList;
+                                result.afterOrderList = [];
                                 callback(3, null);
                                 return;
                             }
-                            //response.json(result);
-                            //return;
                         });
                     }
                     catch
@@ -271,13 +269,13 @@ router.post('/afterSaleList', function (request, response, next) {
                 }
             ],
             function (err, results) {
-                if (err < 3) {
-                    result.code = 500;
-                    result.desc = "获取售后列表aaaa";
+                if (err == 3) {
+                    result.code = 200;
                     response.json(result);
                     return;
-                } else if (err == 3) {
-                    result.code = 200;
+                } else if (err) {
+                    result.code = 500;
+                    result.desc = "获取售后列表aaaa";
                     response.json(result);
                     return;
                 } else{
