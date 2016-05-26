@@ -51,11 +51,11 @@ router.post('/count', function (req, res, next) {
         }
         logger.info("请求的参数，arg：" + JSON.stringify(param));
 //暂时去掉鉴权信息
-        Buyer.validAuth(param, function (err, data) {
-            if (err) {
-                res.json(err);
-                return;
-            }
+//        Buyer.validAuth(param, function (err, data) {
+//            if (err) {
+//                res.json(err);
+//                return;
+//            }
             Cart.countItem(param, function (err, count) {
                 if (err) {
                     res.json(err);
@@ -65,7 +65,7 @@ router.post('/count', function (req, res, next) {
                 res.json(result);
                 logger.info("get cart item count response:" + JSON.stringify(result));
             });
-        });
+        //});
     } catch (ex) {
         logger.error("get product count in cart error:" + ex);
         result.code = 500;
@@ -123,11 +123,11 @@ router.post('/add', function (req, res, next) {
         }
         logger.info("请求的参数，arg：" + JSON.stringify(param));
 //暂时去掉鉴权信息
-        Buyer.validAuth(param, function (err, data) {
-            if (err) {
-                res.json(err);
-                return;
-            }
+//        Buyer.validAuth(param, function (err, data) {
+//            if (err) {
+//                res.json(err);
+//                return;
+//            }
             Cart.addCartItem(param, function (err, data) {
                 if (err) {
                     res.json(err);
@@ -136,7 +136,7 @@ router.post('/add', function (req, res, next) {
                 res.json(result);
                 logger.info("add cart item response:" + JSON.stringify(result));
             });
-        });
+        //});
     } catch (ex) {
         logger.error("add product to cart error:" + ex);
         result.code = 500;
@@ -182,11 +182,11 @@ router.post('/delete', function (req, res, next) {
         }
         logger.info("请求的参数，arg：" + JSON.stringify(param));
 // 暂时去掉鉴权信息
-        Buyer.validAuth(param, function (err, data) {
-            if (err) {
-                res.json(err);
-                return;
-            }
+//        Buyer.validAuth(param, function (err, data) {
+//            if (err) {
+//                res.json(err);
+//                return;
+//            }
             Cart.deleteCartItem(param, function (err, data) {
                 if (err) {
                     res.json(err);
@@ -195,7 +195,7 @@ router.post('/delete', function (req, res, next) {
                 res.json(result);
                 logger.info("delete cart item response:" + JSON.stringify(result));
             });
-        });
+        //});
     } catch (ex) {
         logger.error("delete product in cart error:" + ex);
         result.code = 500;
@@ -242,11 +242,11 @@ router.post('/list', function (req, res, next) {
         }
         logger.info("get cart list request:" + JSON.stringify(param));
 //暂时去掉鉴权信息
-        Buyer.validAuth(param, function (err, data) {
-            if (err) {
-                res.json(err);
-                return;
-            }
+//        Buyer.validAuth(param, function (err, data) {
+//            if (err) {
+//                res.json(err);
+//                return;
+//            }
 //        async.series([
 //            function(callback){
             Cart.cartListItem(param, function (err, itemList) {
@@ -344,7 +344,7 @@ router.post('/list', function (req, res, next) {
             //        return;
             //    }
             //});
-        });
+        //});
     } catch (ex) {
         logger.error("get cart product list error:" + ex);
         result.code = 500;
@@ -391,11 +391,11 @@ router.post('/update', function (req, res, next) {
         }
         logger.info("get cart list request:" + JSON.stringify(param));
 //暂时去掉鉴权信息
-        Buyer.validAuth(param, function (err, data) {
-            if (err) {
-                res.json(err);
-                return;
-            }
+//        Buyer.validAuth(param, function (err, data) {
+//            if (err) {
+//                res.json(err);
+//                return;
+//            }
             Cart.cartUpdateItem(param, function (err, count) {
                 if (err) {
                     res.json(err);
@@ -404,7 +404,7 @@ router.post('/update', function (req, res, next) {
                 res.json(result);
                 logger.info("get cart item count response:" + JSON.stringify(result));
             });
-        });
+        //});
     } catch (ex) {
         logger.error("update product in cart error:" + ex);
         result.code = 500;
