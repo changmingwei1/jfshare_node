@@ -512,39 +512,39 @@ router.post('/query', function (request, response, next) {
         }
         logger.info("请求参数信息，arg：" + JSON.stringify(param));
 //暂时去掉鉴权信息
-//        Buyer.validAuth(param, function (err, data) {
-//            if (err) {
-//                response.json(err);
-//                return;
-//            }
-        Buyer.getBuyer(param, function (error, data) {
-
-            if (error) {
-                response.json(error);
-            } else {
-                var buyer = data[0].buyer;
-                if (buyer != null) {
-                    resContent.buyer = {
-                        userId: buyer.userId,
-                        userName: buyer.userName,
-                        favImg: buyer.favImg,
-                        birthday: buyer.birthday,
-                        sex: buyer.sex,
-                        mobile: buyer.mobile
-                    };
-                    response.json(resContent);
-                    logger.info("个人用户信息响应:" + JSON.stringify(resContent));
-                    return;
-                } else {
-                    resContent.code = 500;
-                    resContent.desc = "获取用户信息失败";
-                    response.json(resContent);
-                    logger.info("个人用户信息响应:" + JSON.stringify(resContent));
-                    return;
-                }
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
+            Buyer.getBuyer(param, function (error, data) {
+
+                if (error) {
+                    response.json(error);
+                } else {
+                    var buyer = data[0].buyer;
+                    if (buyer != null) {
+                        resContent.buyer = {
+                            userId: buyer.userId,
+                            userName: buyer.userName,
+                            favImg: buyer.favImg,
+                            birthday: buyer.birthday,
+                            sex: buyer.sex,
+                            mobile: buyer.mobile
+                        };
+                        response.json(resContent);
+                        logger.info("个人用户信息响应:" + JSON.stringify(resContent));
+                        return;
+                    } else {
+                        resContent.code = 500;
+                        resContent.desc = "获取用户信息失败";
+                        response.json(resContent);
+                        logger.info("个人用户信息响应:" + JSON.stringify(resContent));
+                        return;
+                    }
+                }
+            });
         });
-        //});
     } catch (ex) {
         logger.error("获取用户信息失败，because :" + ex);
         resContent.code = 500;
@@ -586,21 +586,21 @@ router.post('/update', function (request, response, next) {
         }
         logger.info("请求参数，arg：" + JSON.stringify(param));
 //暂时去掉鉴权
-//        Buyer.validAuth(param, function (err, data) {
-//            if (err) {
-//                response.json(err);
-//                return;
-//            }
-        Buyer.updateBuyer(param, function (error, data) {
-
-            if (error) {
-                response.json(error);
-            } else {
-                response.json(resContent);
-                logger.info("get buyer response:" + JSON.stringify(resContent));
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
+            Buyer.updateBuyer(param, function (error, data) {
+
+                if (error) {
+                    response.json(error);
+                } else {
+                    response.json(resContent);
+                    logger.info("get buyer response:" + JSON.stringify(resContent));
+                }
+            });
         });
-        //});
     } catch (ex) {
         logger.error("不能更新，原因是:" + ex);
         resContent.code = 500;
@@ -642,25 +642,25 @@ router.post('/scoreTotal', function (request, response, next) {
         }
         logger.info("请求参数信息" + JSON.stringify(param));
 
-        //Buyer.validAuth(param, function (err, data) {
-        //    if (err) {
-        //        response.json(err);
-        //        return;
-        //    }
-        Score.getScore(param.userId, function (error, data) {
-            if (error) {
-                response.json(error);
-            } else {
-                var score = data[0].sroce;
-                if(score != null){
-                    resContent.amount = score.amount;
-                }else{
-                    resContent.amount = 0;
-                }
-                response.json(resContent);
-                logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
-            //});
+            Score.getScore(param.userId, function (error, data) {
+                if (error) {
+                    response.json(error);
+                } else {
+                    var score = data[0].sroce;
+                    if (score != null) {
+                        resContent.amount = score.amount;
+                    } else {
+                        resContent.amount = 0;
+                    }
+                    response.json(resContent);
+                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+                }
+            });
         });
     } catch (ex) {
         logger.error("不能获取，原因是:" + ex);
@@ -704,44 +704,44 @@ router.post('/scoreTrade', function (request, response, next) {
             return;
         }
 
-        //Buyer.validAuth(arg, function (err, data) {
-        //    if (err) {
-        //        response.json(err);
-        //        return;
-        //    }
-        Score.queryScoreTrade(arg, function (error, data) {
-            var dataArr = [];
-            if (error) {
-                response.json(error);
-            } else {
-                var pagination = data[0].pagination;
-
-                if (pagination !== null) {
-                    resContent.page = {
-                        total: pagination.totalCount,
-                        pageCount: pagination.pageNumCount
-                    };
-                }
-
-                var scoreTrades = data[0].scoreTrades;
-                if (scoreTrades != null) {
-                    scoreTrades.forEach(function (a) {
-                        dataArr.push({
-                            userId: a.userId,
-                            type: a.type,
-                            amount: a.amount,
-                            tradeId: a.tradeId,
-                            tradeTime: a.tradeTime,
-                            inOrOut: a.inOrOut,
-                            trader: a.trader
-                        });
-                    });
-                }
-                resContent.scoreTrades = dataArr;
-                response.json(resContent);
-                logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+        Buyer.validAuth(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
-            //});
+            Score.queryScoreTrade(arg, function (error, data) {
+                var dataArr = [];
+                if (error) {
+                    response.json(error);
+                } else {
+                    var pagination = data[0].pagination;
+
+                    if (pagination !== null) {
+                        resContent.page = {
+                            total: pagination.totalCount,
+                            pageCount: pagination.pageNumCount
+                        };
+                    }
+
+                    var scoreTrades = data[0].scoreTrades;
+                    if (scoreTrades != null) {
+                        scoreTrades.forEach(function (a) {
+                            dataArr.push({
+                                userId: a.userId,
+                                type: a.type,
+                                amount: a.amount,
+                                tradeId: a.tradeId,
+                                tradeTime: a.tradeTime,
+                                inOrOut: a.inOrOut,
+                                trader: a.trader
+                            });
+                        });
+                    }
+                    resContent.scoreTrades = dataArr;
+                    response.json(resContent);
+                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+                }
+            });
         });
     } catch (ex) {
         logger.error("获取失败，because: " + ex);
