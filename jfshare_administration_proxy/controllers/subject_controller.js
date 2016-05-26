@@ -310,8 +310,8 @@ router.post('/updateAttributes', function (request, response, next) {
                             if (data[0] != null && data[0].subjectInfo != null) {
                                 subject.id = data[0].subjectInfo.id;
                                 subject.name = data[0].subjectInfo.name;
-                                subject.imgkey = data[0].subjectInfo.imgkey;
-                                subject.userId = data[0].subjectInfo.userId;
+                                subject.imgkey = data[0].subjectInfo.img_key;
+                                subject.userId = data[0].subjectInfo.creator;
                                 logger.info("添加属性构造subject---------->" + JSON.stringify(subject));
                                 return callback(null, subject)
                             } else {
@@ -323,29 +323,31 @@ router.post('/updateAttributes', function (request, response, next) {
                 function (callback) {
                     Subject.addSubjectAttribute(params, function (error, data) {
                         if (error) {
-                            callback(1, error);
+                           return callback(1, error);
                         } else {
                             logger.info("addsubject---------->" + JSON.stringify(data));
                             attributesId = data[0].id;
                         }
                     });
-                    callback(null, attributesId);
+                    return callback(null, attributesId);
                 },
                 function (callback) {
                     if (subject != null && attributesId != 0) {
                         subject.attributes = attributesId;
                         Subject.update(subject, function (error, data) {
                             if (error) {
-                                callback(1, error);
+                               return callback(1, error);
                             } else {
                                 logger.info("addsubject---------->" + JSON.stringify(data));
                                 attributesId = data[0].id;
+                                result.id = attributesId;
+                                return callback(null, attributesId);
                             }
                         });
-                        return callback(null, attributesId);
+
+                    }else{
+                        return callback(2, null);
                     }
-                    result.id = attributesId;
-                    return callback(2, attributesId);
                 }
 
             ], function (err, result) {
