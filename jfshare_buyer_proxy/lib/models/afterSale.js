@@ -42,18 +42,20 @@ AfterSale.prototype.auditPass = function (params, callback) {
 
 //申请审核
 AfterSale.prototype.request = function (params, callback) {
-    var afterSale = new afterSale_types.AfterSale({
-        userId: params.buyerId,
+    var afterSaleParam = new afterSale_types.AfterSale({
+        userId: params.userId,
         sellerId: params.sellerId,
         orderId: params.orderId,
         productId: params.productId,
         type: 1,//申请类型. 1:用户申请， 2:系统申请
-        state: 1, //根据实际情况定义 如 1：新建（待审核） 2：审核通过 3：审核不通过
-        skuNum: params.skuNum
+        skuNum: params.skuNum,
+        orderTime: params.createTime,
+        reason: params.reason,
+        userComment: params.userComment
     });
-    logger.info("AfterSaleServ-request  args:" + JSON.stringify(afterSale));
+    logger.info("AfterSaleServ-request  args:" + JSON.stringify(afterSaleParam));
 
-    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "request", afterSale);
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "request", afterSaleParam);
 
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-request  result:" + JSON.stringify(data));
@@ -73,7 +75,7 @@ AfterSale.prototype.request = function (params, callback) {
     });
 };
 
-//查询审核信息
+//查询售后信息
 AfterSale.prototype.queryAfterSale = function (params, callback) {
 
     var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
@@ -115,8 +117,12 @@ AfterSale.prototype.queryAfterSaleOrder = function (params, callback) {
         numPerPage:params.perCount,
         currentPage:params.curPage
     });
+    var param = new afterSale_types.AfterSaleOrderParam({
+        userId: params.userId,
+        orderId: params.orderId
+    });
 
-    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [1, params.userId,pagination]);
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [param,pagination]);
 
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));

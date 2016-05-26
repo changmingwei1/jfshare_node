@@ -1410,6 +1410,126 @@ SellerServ_resetSellerPwd_result.prototype.write = function(output) {
   return;
 };
 
+SellerServ_insertUserSellerReal_args = function(args) {
+  this.userId = null;
+  this.sellerId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+  }
+};
+SellerServ_insertUserSellerReal_args.prototype = {};
+SellerServ_insertUserSellerReal_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.userId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_insertUserSellerReal_args.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_insertUserSellerReal_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.STRING, 1);
+    output.writeString(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 2);
+    output.writeString(this.sellerId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerServ_insertUserSellerReal_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SellerServ_insertUserSellerReal_result.prototype = {};
+SellerServ_insertUserSellerReal_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_insertUserSellerReal_result.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_insertUserSellerReal_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 SellerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -1989,6 +2109,54 @@ SellerServClient.prototype.recv_resetSellerPwd = function(input,mtype,rseqid) {
   }
   return callback('resetSellerPwd failed: unknown result');
 };
+SellerServClient.prototype.insertUserSellerReal = function(userId, sellerId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_insertUserSellerReal(userId, sellerId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_insertUserSellerReal(userId, sellerId);
+  }
+};
+
+SellerServClient.prototype.send_insertUserSellerReal = function(userId, sellerId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('insertUserSellerReal', Thrift.MessageType.CALL, this.seqid());
+  var args = new SellerServ_insertUserSellerReal_args();
+  args.userId = userId;
+  args.sellerId = sellerId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SellerServClient.prototype.recv_insertUserSellerReal = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SellerServ_insertUserSellerReal_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('insertUserSellerReal failed: unknown result');
+};
 SellerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -2360,6 +2528,36 @@ SellerServProcessor.prototype.process_resetSellerPwd = function(seqid, input, ou
     this._handler.resetSellerPwd(args.newPwd, args.seller,  function (err, result) {
       var result = new SellerServ_resetSellerPwd_result((err != null ? err : {success: result}));
       output.writeMessageBegin("resetSellerPwd", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SellerServProcessor.prototype.process_insertUserSellerReal = function(seqid, input, output) {
+  var args = new SellerServ_insertUserSellerReal_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.insertUserSellerReal.length === 2) {
+    Q.fcall(this._handler.insertUserSellerReal, args.userId, args.sellerId)
+      .then(function(result) {
+        var result = new SellerServ_insertUserSellerReal_result({success: result});
+        output.writeMessageBegin("insertUserSellerReal", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SellerServ_insertUserSellerReal_result(err);
+        output.writeMessageBegin("insertUserSellerReal", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.insertUserSellerReal(args.userId, args.sellerId,  function (err, result) {
+      var result = new SellerServ_insertUserSellerReal_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("insertUserSellerReal", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
