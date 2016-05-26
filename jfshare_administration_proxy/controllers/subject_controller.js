@@ -123,8 +123,9 @@ router.post('/update', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                response.json(result);
                 logger.info("update subject  result:" + JSON.stringify(result));
+                response.json(result);
+
             }
         });
     } catch (ex) {
