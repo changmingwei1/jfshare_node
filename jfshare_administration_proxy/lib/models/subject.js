@@ -29,7 +29,8 @@ Subject.prototype.add = function (params, callback) {
         pid: params.pid,
         level: params.level,
         img_key: params.imgkey,
-        creator: params.userId
+        creator: params.userId,
+        commodity:params.commodity
     });
 
 
