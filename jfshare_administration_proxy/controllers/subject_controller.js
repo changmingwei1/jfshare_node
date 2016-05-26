@@ -253,7 +253,7 @@ router.post('/flushtoAll', function (request, response, next) {
                 response.json(error);
                 return;
             } else {
-                logger.info("updateAttributes  result:" + JSON.stringify(result));
+                logger.info("flushtoAll  result:" + JSON.stringify(result));
                 response.json(result);
 
             }
@@ -275,35 +275,72 @@ router.post('/updateAttributes', function (request, response, next) {
 
     try {
         var params = request.body;
-
         logger.info("params:" + JSON.stringify(params));
-        if (params.id == null || params.id == "" || params.id <= 0) {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
+        //如果属性id为空，那么就走添加类目的属性
+        if (params.id == null || params.id == "") {
 
-        if (params.value == null || params.value == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-
-        Subject.updateAttributes(params, function (error, data) {
-            if (error) {
-                response.json(error);
+            if (params.subjectId == null || params.subjectId == "") {
+                result.code = 500;
+                result.desc = "参数错误";
+                response.json(result);
                 return;
             }
-            logger.info("updateAttributes  result:" + JSON.stringify(data));
-            response.json(result);
-            return;
+            if (params.value == null || params.value == "") {
+                result.code = 500;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
 
-        });
+            if (params.userId == null || params.userId == "") {
+                result.code = 500;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+            var attributesId = 0;
+            async.waterfall([
+                function (callback) {
+                    Subject.getById(params, function (error, data) {
 
+                        logger.info("addsubject---------->" + JSON.stringify(data));
 
+                    });
+                },
+                function (callback) {
+                    Subject.addSubjectAttribute(params, function (error, data) {
+                        if (error) {
+                            callback(1, error);
+                        } else {
+                            logger.info("addsubject---------->" + JSON.stringify(data));
+                            attributesId = data[0].id;
+                        }
+                    });
+                    callback(null, attributesId);
+                }
+
+            ], function (err, result) {
+
+            });
+        } else {
+            //更新属性
+            if (params.value == null || params.value == "") {
+                result.code = 500;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+            Subject.updateAttributes(params, function (error, data) {
+                if (error) {
+                    response.json(error);
+                    return;
+                }
+                logger.info("updateAttributes  result:" + JSON.stringify(data));
+                response.json(result);
+                return;
+            });
+
+        }
     } catch (ex) {
         logger.error("获取 error:" + ex);
         result.code = 500;
@@ -393,46 +430,20 @@ router.post('/updateBrandSubject', function (request, response, next) {
 
 // 添加属性，这个是因为彻底没有属性所以添加属性
 router.post('/addSubjectAttribute', function (request, response, next) {
-    var result = {code: 200};
-    try {
-        var params = request.body;
-
-        logger.info("params:" + JSON.stringify(params));
-        if (params.subjectId == null || params.subjectId == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.value == null || params.value == "" ) {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-        if (params.userId == null || params.userId == "" ) {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-        Subject.addSubjectAttribute(params, function (error, data) {
-            if (error) {
-                response.json(error);
-            } else {
-                response.json(result);
-            }
-        });
-
-
-    } catch (ex) {
-        logger.error("获取 error:" + ex);
-        result.code = 500;
-        result.desc = "添加属性失败";
-        response.json(result);
-    }
+    //var result = {code: 200};
+    //try {
+    //    var params = request.body;
+    //
+    //    logger.info("params:" + JSON.stringify(params));
+    //
+    //
+    //
+    //} catch (ex) {
+    //    logger.error("获取 error:" + ex);
+    //    result.code = 500;
+    //    result.desc = "添加属性失败";
+    //    response.json(result);
+    //}
 });
 
 module.exports = router;

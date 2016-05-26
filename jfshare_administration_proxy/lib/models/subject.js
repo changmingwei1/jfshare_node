@@ -30,8 +30,8 @@ Subject.prototype.add = function (params, callback) {
         level: params.level,
         img_key: params.imgkey,
         creator: params.userId,
-        commodity:params.commodity,
-        isLeaf:params.isLeaf
+        commodity: params.commodity,
+        isLeaf: params.isLeaf
     });
 
 
@@ -105,7 +105,7 @@ Subject.prototype.query = function (params, callback) {
             var result = {};
             result.code = 500;
             result.desc = "查询类目列表失败";
-            callback(result, data);
+            return callback(result, null);
         }
 
         var subjectNodes = data[0].subjectNodes;
@@ -117,13 +117,34 @@ Subject.prototype.query = function (params, callback) {
                 name: subject.name,
                 imgkey: subject.img_key,
                 isLeaf: subject.isLeaf,
-                type:subject.commodity
+                type: subject.commodity
             });
             subejects.push(subjectNode);
         });
 
 
-        callback(null, subejects);
+        return callback(null, subejects);
+    });
+};
+
+
+Subject.prototype.getById = function (params, callback) {
+
+    //获取单个类目信息
+
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getById", [params.subjectId]);
+    //
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-getById result:" + JSON.stringify(data));
+        if (err || data[0].result.code == 1) {
+            logger.error("subjectServ-getById result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "获取类目信息失败";
+            return callback(result, data);
+        }
+
+        return callback(null, data);
     });
 };
 
@@ -345,13 +366,13 @@ Subject.prototype.getBatchSuperTree = function (productIdList, callback) {
 //添加属性
 Subject.prototype.addSubjectAttribute = function (params, callback) {
     logger.info("subjectServ-addSubjectAttribute params:" + JSON.stringify(params));
-   var subjectAttribute = new subject_types.SubjectAttribute({
-            name: "name",
-            subjectId: params.subjectId,
-            value: JSON.stringify(params.value),
-            isSku: 0,
-            creator: params.userId
-        });
+    var subjectAttribute = new subject_types.SubjectAttribute({
+        name: "name",
+        subjectId: params.subjectId,
+        value: JSON.stringify(params.value),
+        isSku: 0,
+        creator: params.userId
+    });
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "addSubjectAttribute", [subjectAttribute]);
 
     Lich.wicca.invokeClient(subjectServ, function (err, data) {
@@ -366,8 +387,7 @@ Subject.prototype.addSubjectAttribute = function (params, callback) {
         return callback(null, data);
     });
 
-}
-;
+};
 
 
 module.exports = new Subject();
