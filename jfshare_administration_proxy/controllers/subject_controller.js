@@ -275,10 +275,12 @@ router.post('/updateAttributes', function (request, response, next) {
 
     try {
         var params = request.body;
-        logger.info("params:" + JSON.stringify(params));
-        //如果属性id为空，那么就走添加类目的属性
-        if (params.id == null || params.id == "") {
 
+
+        logger.info("params:" + JSON.stringify(params));
+        //如果属性id为空，那么就走添加属性
+        if (params.id == null || params.id == "") {
+            var subject = {};
             if (params.subjectId == null || params.subjectId == "") {
                 result.code = 500;
                 result.desc = "参数错误";
@@ -302,9 +304,20 @@ router.post('/updateAttributes', function (request, response, next) {
             async.waterfall([
                 function (callback) {
                     Subject.getById(params, function (error, data) {
-
-                        logger.info("addsubject---------->" + JSON.stringify(data));
-
+                        if (error) {
+                            return callback(1, null);
+                        } else {
+                            if (data[0] != null && data[0].subjectInfo != null) {
+                                subject.id = data[0].subjectInfo.id;
+                                subject.name = data[0].subjectInfo.name;
+                                subject.imgkey = data[0].subjectInfo.imgkey;
+                                subject.userId = data[0].subjectInfo.userId;
+                                logger.info("添加属性构造subject---------->" + JSON.stringify(subject));
+                                return callback(null, subject)
+                            } else {
+                                return callback(1, null)
+                            }
+                        }
                     });
                 },
                 function (callback) {
@@ -317,10 +330,37 @@ router.post('/updateAttributes', function (request, response, next) {
                         }
                     });
                     callback(null, attributesId);
+                },
+                function (callback) {
+                    if (subject != null && attributesId != 0) {
+                        subject.attributes = attributesId;
+                        Subject.update(subject, function (error, data) {
+                            if (error) {
+                                callback(1, error);
+                            } else {
+                                logger.info("addsubject---------->" + JSON.stringify(data));
+                                attributesId = data[0].id;
+                            }
+                        });
+                        return callback(null, attributesId);
+                    }
+                    result.id = attributesId;
+                    return callback(2, attributesId);
                 }
 
             ], function (err, result) {
-
+                if (err ) {
+                    result.code = 500;
+                    result.desc = "更新属性失败";
+                    response.json(result);
+                }
+                if(result[2]!=null){
+                    response.json(result);
+                }else{
+                    result.code = 500;
+                    result.desc = "更新属性失败";
+                    response.json(result);
+                }
             });
         } else {
             //更新属性
