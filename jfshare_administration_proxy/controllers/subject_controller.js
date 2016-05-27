@@ -327,15 +327,15 @@ router.post('/updateAttributes', function (request, response, next) {
                         if (error) {
                             return callback(1, error);
                         } else {
-                            logger.info("addsubject---------->" + JSON.stringify(data));
-                            attributesId = data[0].id;
+                            logger.info("addSubjectAttribute---------->" + JSON.stringify(data));
+                            attributesId = data[0].subjectAttribute.id;
                             return callback(null, attributesId);
                         }
                     });
                 },
                 function (callback) {
 
-                    logger.info("addsubject---------->" + JSON.stringify(subject)+"------>"+attributesId);
+                    logger.info("updatesubject------params---->" + JSON.stringify(subject)+"------>"+attributesId);
 
                     if (subject != null && attributesId != 0) {
                         subject.attributes = attributesId;
@@ -343,7 +343,7 @@ router.post('/updateAttributes', function (request, response, next) {
                             if (error) {
                                return callback(1, error);
                             } else {
-                                logger.info("addsubject---------->" + JSON.stringify(data));
+                                logger.info("updatesubject---result------->" + JSON.stringify(data));
                                 attributesId = data[0].id;
                                 result.id = attributesId;
                                 return callback(null, attributesId);
