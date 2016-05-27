@@ -16,7 +16,7 @@ var brand =  require('./controllers/brand_controller');
 var stock = require('./controllers/stock_controller');
 var address = require('./controllers/address_controller');
 var seller = require('./controllers/seller_controller');
-
+var afterSale = require('./controllers/afterSale_controller');
 var zookeeper = require('./resource/zookeeper_util');
 var template = require('./controllers/template_controller');
 var app = express();
@@ -36,7 +36,8 @@ app.use('/seller/address',address);
 app.use('/seller/expressorder',expressOrder);
 app.use('/seller/brand',brand);
 app.use('/seller/stock',stock);
-app.use('/seller/seller',seller);
+app.use('/seller/afterSale',seller);
+
 // error handlers
 
 // catch 404 and forward to error handler
