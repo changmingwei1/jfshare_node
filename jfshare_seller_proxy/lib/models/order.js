@@ -123,4 +123,24 @@ Order.prototype.querydealDetail = function (param, callback) {
     });
 };
 
+//扫码预生成订单
+Order.prototype.payOrderCreates = function (param, callback) {
+    //------------------
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "payOrderCreates", [2, param.sellerId, param.orderId]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-payOrderCreates  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用orderServ-payOrderCreates  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "扫码预生成订单失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0].order);
+        }
+    });
+};
+
 module.exports = new Order();
