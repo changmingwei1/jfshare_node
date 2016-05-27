@@ -301,7 +301,7 @@ router.post('/updateAttributes', function (request, response, next) {
                 return;
             }
             var attributesId = 0;
-            async.waterfall([
+            async.series([
                 function (callback) {
                     Subject.getById(params, function (error, data) {
                         if (error) {
@@ -323,14 +323,13 @@ router.post('/updateAttributes', function (request, response, next) {
                 function (callback) {
                     Subject.addSubjectAttribute(params, function (error, data) {
                         if (error) {
-                           return callback(1, error);
+                            return callback(1, error);
                         } else {
                             logger.info("addsubject---------->" + JSON.stringify(data));
                             attributesId = data[0].id;
                             return callback(null, attributesId);
                         }
                     });
-
                 },
                 function (callback) {
 
