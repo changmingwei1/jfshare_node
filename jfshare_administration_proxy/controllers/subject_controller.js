@@ -242,7 +242,7 @@ router.post('/flushtoAll', function (request, response, next) {
             return;
         }
 
-        if (params.attributes == null || params.attributes == "") {
+        if (params.id == null || params.id == "") {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
@@ -333,6 +333,9 @@ router.post('/updateAttributes', function (request, response, next) {
 
                 },
                 function (callback) {
+
+                    logger.info("addsubject---------->" + JSON.stringify(subject)+"------>"+attributesId);
+
                     if (subject != null && attributesId != 0) {
                         subject.attributes = attributesId;
                         Subject.update(subject, function (error, data) {
@@ -356,13 +359,16 @@ router.post('/updateAttributes', function (request, response, next) {
                     result.code = 500;
                     result.desc = "更新属性失败";
                     response.json(result);
+                    return;
                 }
                 if(result[2]!=null){
                     response.json(result);
+                    return;
                 }else{
                     result.code = 500;
                     result.desc = "更新属性失败";
                     response.json(result);
+                    return;
                 }
             });
         } else {
