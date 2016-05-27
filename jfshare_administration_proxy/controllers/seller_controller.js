@@ -106,18 +106,59 @@ router.post('/get', function (request, response, next) {
                 response.json(err);
                 return;
             }else{
+                /***********
+                 *  loginName: params.loginName,
+                 sellerName: params.sellerName,
+                 pwdEnc: params.pwdEnc,
+                 companyName: params.companyName,
+                 shopName: params.shopName,
+                 contactName: params.contactName,
+                 openBank: params.openBank,
+                 accountHolder: params.accountHolder,
+                 accountNumber: params.accountNumber,
+                 remark: params.remark,
+                 provinceId: params.provinceId,
+                 provinceName: params.provinceName,
+                 cityId: params.cityId,
+                 cityName: params.cityName,
+                 countyId: params.countyId,
+                 countyName: params.countyName,
+                 address: params.address,
+                 mobile: params.mobile,
+                 tel: params.tel,
+                 email: params.email
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 *
+                 */
+
                 var sellerObject= data[0].seller;
                 var sellerTemp=[];
                 var sellerData = ({
                     sellerId: sellerObject.sellerId,
                     companyName: sellerObject.companyName,
-                    loginName: sellerObject.loginName,
-
-                    userName: sellerObject.sellerName,
+                    sellerName: sellerObject.sellerName,
                     mobile: sellerObject.mobile,
                     tel: sellerObject.tel,
                     email: sellerObject.email,
-
+                    contactName: sellerObject.contactName,
                     provinceId: sellerObject.provinceId,
                     cityId: sellerObject.cityId,
                     countyId: sellerObject.countyId,
@@ -128,7 +169,7 @@ router.post('/get', function (request, response, next) {
                     remark: sellerObject.remark,
                     bank: sellerObject.openBank,
                     account: sellerObject.accountNumber,
-                    accountName: sellerObject.accountHolder
+                    accountHolder: sellerObject.accountHolder
 
                 });
                 sellerTemp.push(sellerData);
