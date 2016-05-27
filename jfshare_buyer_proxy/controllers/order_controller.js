@@ -401,25 +401,6 @@ router.post('/list', function (request, response, next) {
                 },
                 function (callback) {
                     try {
-                        if (params.orderState == null || params.orderState ==50) {
-                            AfterSale.queryAfterSale(params, function (err, data) {
-                                if (err) {
-                                    return callback(2, null);
-                                }
-                                logger.info("get order list response:" + JSON.stringify(result));
-                                afterSaleList = data;
-                                return callback(null, afterSaleList);
-                            });
-                        } else {
-                            return callback(3, null);
-                        }
-                    } catch (ex) {
-                        logger.info("售后服务异常:" + ex);
-                        return callback(2, null);
-                    }
-                },
-                function (callback) {
-                    try {
                         Seller.querySellerBatch(params, function (err, data) {
                             if (err) {
                                 return callback(4, null);
@@ -439,6 +420,24 @@ router.post('/list', function (request, response, next) {
                         logger.info("商家服务异常:" + ex);
                         return callback(4, null);
                     }
+                },
+                function (callback) {
+                    try {
+                        if (params.orderState == null || params.orderState == 51) {
+                            AfterSale.queryAfterSale(params, function (err, data) {
+                                if (err) {
+                                    return callback(2, null);
+                                }
+                                afterSaleList = data;
+                                return callback(null, afterSaleList);
+                            });
+                        } else {
+                            return callback(2, null);
+                        }
+                    } catch (ex) {
+                        logger.info("售后服务异常:" + ex);
+                        return callback(2, null);
+                    }
                 }
             ],
             function (err, results) {
@@ -450,27 +449,21 @@ router.post('/list', function (request, response, next) {
                     return;
                 }
                 if (err == 2) {
-                    logger.error("查询售后失败--售后服务异常：" + err);
-                    result.sellerList = results[2];
-                    response.json(results[0]);
+                    logger.error("查询售后失败--售后服务异常 ===> 这个不是错：" + err);
+                    result.sellerList = results[1];
+                    response.json(result);
                     return;
                 }
                 if (err == 4) {
                     logger.error("查询卖家信息失败--卖家服务异常：" + err);
-                    result.afterSaleList = results[1];
-                    result = results[0];
-                    return;
-                }
-                if (err == null && err != 3) {
-                    logger.info("shuju111------------->" + JSON.stringify(results));
-                    result = results[0];
-                    result.afterSaleList = results[1];
-                    result.sellerList = results[2];
+                    result.afterSaleList = results[2];
                     response.json(result);
                     return;
                 } else {
                     logger.info("shuju222------------->" + JSON.stringify(results));
                     result = results[0];
+                    result.afterSaleList = results[2];
+                    result.sellerList = results[1];
                     response.json(result);
                     return;
                 }
