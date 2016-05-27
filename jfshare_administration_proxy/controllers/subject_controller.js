@@ -360,15 +360,16 @@ router.post('/updateAttributes', function (request, response, next) {
                     }
                 }
 
-            ], function (err, result) {
+            ], function (err, results) {
                 if (err ) {
                     result.code = 500;
                     result.desc = "更新属性失败";
                     response.json(result);
                     return;
                 }
-                if(result[2]!=null){
-                    response.json(result[2]);
+                if(results[2]!=null){
+                    result.id = results[1];
+                    response.json(result);
                     return;
                 }else{
                     result.code = 500;
