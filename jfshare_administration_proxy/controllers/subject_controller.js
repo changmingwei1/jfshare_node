@@ -351,7 +351,7 @@ router.post('/updateAttributes', function (request, response, next) {
                                 logger.info("updatesubject---result------->" + JSON.stringify(data));
                                 attributesId = data[0].id;
                                 result.id = attributesId;
-                                return callback(null, attributesId);
+                                return callback(null, result);
                             }
                         });
 
@@ -368,7 +368,7 @@ router.post('/updateAttributes', function (request, response, next) {
                     return;
                 }
                 if(result[2]!=null){
-                    response.json(result);
+                    response.json(result[2]);
                     return;
                 }else{
                     result.code = 500;
