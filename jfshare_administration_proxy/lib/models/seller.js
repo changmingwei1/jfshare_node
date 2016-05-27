@@ -243,9 +243,10 @@ Seller.prototype.resetSellerPwd = function (params, callback) {
 //获取client
     var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'updateSeller', [seller]);
     Lich.wicca.invokeClient(sellerServ, function (err, data) {
+        //seller resetSellerPwd result:[{"code":0,"failDescList":null}]
         logger.info("seller resetSellerPwd result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "1") {
+        if (err || data[0].code == "1") {
             logger.error("can't seller resetSellerPwd result because: ======" + err);
             res.code = 500;
             res.desc = "密码修改失败";
