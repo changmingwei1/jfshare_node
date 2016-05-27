@@ -65,16 +65,12 @@ Subject.prototype.update = function (params, callback) {
         name: params.name,
         img_key: params.imgkey,
         updater: params.userId,
-        id: params.id,
-        pid:params.pid,
-        level:params.level,
-        isLeaf:params.isLeaf,
-        commodity:params.commodity,
+        id: Numberparams.id,
         attributes:params.attributes
     });
 
-
-    if( params.imgkey==null ||params.imgkey ==""){
+    logger.info("img_key------->:" + JSON.stringify(subject.img_key));
+    if( subject.img_key==null ||subject.img_key ==""){
         subject.img_key = "0B7F87D81F368E62D93E0F9B14F67B3A.png";
     }
 
