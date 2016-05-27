@@ -325,4 +325,21 @@ Order.prototype.orderConfirmResult = function (params, callback) {
     });
 };
 
+/*取消订单*/
+Order.prototype.cancelOrder = function (param, callback) {
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [1, param.userId, param.orderId, param.reason]);
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-cancelOrder  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用orderServ-cancelOrder  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "取消订单失败！";
+            callback(res, null);
+        } else {
+            callback(null, null);
+        }
+    });
+};
+
 module.exports = new Order();

@@ -110,11 +110,11 @@ router.post('/cancelOrder', function (req, res, next) {
             return;
         }
 
-        logger.info("请求参数，arg：" + arg);
-
-        Order.cancelOrder(arg, function (err, data) {
+        logger.info("请求参数，arg：" + JSON.stringify(arg));
+        Order.cancelOrder(arg,function(err, data){
             if (err) {
                 res.json(err);
+                return;
             }
             res.json(result);
         });
