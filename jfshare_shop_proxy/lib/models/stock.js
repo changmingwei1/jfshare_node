@@ -63,9 +63,12 @@ Stock.prototype.batchQueryStock = function (params, callback) {
         queryType: "total"
     });
     //»ñÈ¡client
+
+    logger.info("query stock --batchQueryParam--- params---------->:" + JSON.stringify(batchQueryParam));
+
     var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, 'batchQueryStock', [batchQueryParam]);
     Lich.wicca.invokeClient(stockServ, function (err, data) {
-        logger.info("query stock result:" + JSON.stringify(data));
+        logger.info("query stock result---------->:" + JSON.stringify(data));
 
         if (err || data[0].result.code == "1") {
             logger.error("can't query stock because: ======" + err);

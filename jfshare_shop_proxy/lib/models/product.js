@@ -220,7 +220,7 @@ Product.prototype.queryHotSKUBatch = function (params, callback) {
     });
     var list = [];
     var skuList = params.productStockAndPriceList;
-    logger.info("批量查询库存和价格参数111111：" + JSON.stringify(skuList));
+   // logger.info("批量查询库存和价格参数111111：" + JSON.stringify(skuList));
     for (var i = 0; i < skuList.length; i++) {
         if (skuList[i].storehouseId != 0) {
             var ProductSkuParam = new product_types.ProductSkuParam({
@@ -243,12 +243,12 @@ Product.prototype.queryHotSKUBatch = function (params, callback) {
     var productSkuBatchParam = new product_types.ProductSkuBatchParam({
         productSkuParams: list
     });
-    logger.info("批量查询库存和价格参数：" + JSON.stringify(productSkuBatchParam));
+    //logger.info("批量查询库存和价格参数：" + JSON.stringify(productSkuBatchParam));
 
     //获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, 'queryHotSKUBatch', [productSkuBatchParam, productRetParam]);
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("queryHotSKUBatch result:" + JSON.stringify(data));
+        logger.info("queryHotSKUBatch-----------------> result:" + JSON.stringify(data));
 
         if (err || data[0].result.code == "1") {
             var res = {};

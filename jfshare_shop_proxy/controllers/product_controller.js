@@ -501,7 +501,7 @@ router.post('/querystoreBatch', function (request, response, next) {
         async.series([
                 function (callback) {
                     try {
-                        logger.info("getDeliverStorehousea--params：" + JSON.stringify(params));
+                       // logger.info("getDeliverStorehousea--params：" + JSON.stringify(params));
                         //先获取仓库id
                         BaseTemplate.getDeliverStorehouse(params, function (err, data) {
                             if (err) {
@@ -519,14 +519,14 @@ router.post('/querystoreBatch', function (request, response, next) {
                 },
                 function (callback) {
                     try {
-                        logger.info("queryProductTotal--params：" + JSON.stringify(params));
+                       logger.info("batchQueryStock--params：" + JSON.stringify(params));
                         if (productStorehouseList != null && productStorehouseList.length > 0) {
                             params.productList = productStorehouseList;
                             Stock.batchQueryStock(params, function (err, data) {
                                 if (err) {
                                     return callback(2, null);
                                 }
-                                logger.info("queryProductTotal list response:" + JSON.stringify(data));
+                                //logger.info("queryProductTotal list response:" + JSON.stringify(data));
                                 productStockSkuList = data;
                                 callback(null, data);
                             });
@@ -545,28 +545,30 @@ router.post('/querystoreBatch', function (request, response, next) {
                             sku.sellerId = productStorehouseList[i].sellerId;
                             sku.skuNum = params.sellerList[i].skuNum;
                             sku.storehouseId = productStorehouseList[i].storehouseId;
-                            var itemList = productStockSkuList[i].stockItems;
                             if (storehouseId == 0) {
                                 productStockAndPriceList.push(sku);
                                 continue;
                             }
-                            for (var j = 0; j < itemList.length; j++) {
-                                if (params.sellerList[i].skuNum == itemList[j].skuNum && itemList[j].storehouseId == productStorehouseList[i].storehouseId) {
-                                    sku.count = itemList[j].count;
-                                    break;
+                            for(var h=0;h<productStockSkuList.length;h++){
+                                if( sku.productId == productStockSkuList[h].productId){
+                                    var itemList = productStockSkuList[h].stockItems;
+                                    for (var j = 0; j < itemList.length; j++) {
+                                        if (params.sellerList[i].skuNum == itemList[j].skuNum && itemList[j].storehouseId == productStorehouseList[i].storehouseId) {
+                                            sku.count = itemList[j].count;
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                             productStockAndPriceList.push(sku);
                         }
                         params.productStockAndPriceList = productStockAndPriceList;
-                        logger.info("queryHotSKUBatch--params：" + JSON.stringify(params));
+                      //  logger.info("queryHotSKUBatch--params：" + JSON.stringify(params));
                         Product.queryHotSKUBatch(params, function (err, data) {
                             if (err) {
                                 return callback(3, null);
                             }
-
-                            logger.info("queryHotSKUBatch list response:" + JSON.stringify(data));
-
+                          //  logger.info("queryHotSKUBatch list response:" + JSON.stringify(data));
                             if (data[0].productList != null) {
                                 var productSkuPriceList = data[0].productList;
                                 var isCheck = 0;
