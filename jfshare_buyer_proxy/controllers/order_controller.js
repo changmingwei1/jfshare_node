@@ -411,7 +411,7 @@ router.post('/list', function (request, response, next) {
                                 return callback(null, afterSaleList);
                             });
                         } else {
-                            return callback(3, null);
+                            return callback(2, null);
                         }
                     } catch (ex) {
                         logger.info("售后服务异常:" + ex);
