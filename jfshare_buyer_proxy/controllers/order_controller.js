@@ -460,14 +460,6 @@ router.post('/list', function (request, response, next) {
                     result.afterSaleList = results[1];
                     result = results[0];
                     return;
-                }
-                if (err == null && err != 3) {
-                    logger.info("shuju111------------->" + JSON.stringify(results));
-                    result = results[0];
-                    result.afterSaleList = results[1];
-                    result.sellerList = results[2];
-                    response.json(result);
-                    return;
                 } else {
                     logger.info("shuju222------------->" + JSON.stringify(results));
                     result = results[0];
