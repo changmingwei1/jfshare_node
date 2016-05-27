@@ -66,7 +66,7 @@ Subject.prototype.update = function (params, callback) {
         img_key: params.imgkey,
         updater: params.userId,
         id: params.id,
-        attributes:params.attributes
+        attributes:params.attributes.toString()
     });
 
     logger.info("img_key------->:" + JSON.stringify(subject.img_key));
