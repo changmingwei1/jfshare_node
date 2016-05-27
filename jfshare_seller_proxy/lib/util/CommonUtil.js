@@ -146,4 +146,11 @@ CommonUtil.prototype.setCookie = function (request, response, name, val, options
     //}
 };
 
+CommonUtil.prototype.sgetDays = function(year, month) {
+    // month 取自然值，从 1-12 而不是从 0 开始
+    return new Date(year, month, 0).getDate()
+
+    // 如果 month 按 javascript 的定义从 0 开始的话就是
+    // return new Date(year, month + 1, 0).getDate()
+}
 module.exports = new CommonUtil();

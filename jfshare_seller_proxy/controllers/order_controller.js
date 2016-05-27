@@ -785,6 +785,7 @@ router.post('/afterSalelist', function (request, response, next) {
     }
 });
 
+
 //查询卖家交易流水
 router.post('/querydealList', function (request, response, next) {
     logger.info("进入查询交易流水流程");
@@ -800,18 +801,13 @@ router.post('/querydealList', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.beginDate == null || params.beginDate == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.endDate == null || params.endDate == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
+        //if (params.date == null || params.date == "") {
+        //    result.code = 500;
+        //    result.desc = "参数错误";
+        //    response.json(result);
+        //    return;
+        //}
+
         if (params.perCount == null || params.perCount == "") {
             result.code = 500;
             result.desc = "参数错误";
@@ -824,6 +820,26 @@ router.post('/querydealList', function (request, response, next) {
             response.json(result);
             return;
         }
+
+        //-------------------------前台测试数据-----------------------------------
+        result.count=3,
+            result.perice="44.54",
+            result.page = {
+                total:1,
+                pageCount:1
+            };
+        var productDeatilList=[];
+        productDeatilList.push({
+            productDetId:2,
+            date:"2016-05-27",
+            type:"收款",
+            paymode:"积分+和包",
+            perice:"20"
+        });
+        result.productDeatilList=productDeatilList;
+        response.json(result);
+        return;
+        //------------------------------------------------------------------
 
         Order.querydealList(params, function (err, data) {
             if (err) {
@@ -858,6 +874,23 @@ router.post('/querydealDetail', function (request, response, next) {
             return;
         }
 
+        //------------------------前台测试数据--------------------------------
+        var productDetail={};
+        productDetail=({
+            type:2,
+            payprice:"22.73",
+            orderId:"234s234fwef43",
+            mobile:"13211111111",
+            nickname:"测试：nick名",
+            paymode:"微信",
+            dealdate:"2016-05-25 12:22:35"
+
+        });
+        result.productDetail=productDetail;
+        response.json(result);
+        return;
+        //---------------------------------------------------------------
+
         Order.querydealDetail(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -871,6 +904,78 @@ router.post('/querydealDetail', function (request, response, next) {
         logger.error("查询卖家交易明细失败，=========：" + ex);
         result.code = 500;
         result.desc = "查询卖家交易明细失败";
+        response.json(result);
+    }
+});
+/*扫码预生成订单*/
+router.post('/payOrderCreates', function (request, response, next) {
+    logger.info("进入扫码预生成订单");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        logger.info("扫码预生成订单请求入参, args:" + JSON.stringify(params));
+
+        if (params.userId == null || params.userId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.username == null || params.username == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.sellerId == null || params.sellerId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.sellerName == null || params.sellerName == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.amount == null || params.amount == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.tradeCode == null || params.tradeCode == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        //----------------------------------------------------------------
+        result.extend="33.28";
+        var orderIdList=[];
+        orderIdList.push({
+            orderId:2
+        })
+        orderIdList.push({
+            orderId:3
+        });
+        result.orderIdList=orderIdList;
+        response.json(result);
+        return;
+        //---------------------------------------------------------------------
+
+        Order.payOrderCreates(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.value = data[0].value;
+            response.json(result);
+            logger.info("响应的结果:" + JSON.stringify(result));
+        });
+    } catch (ex) {
         response.json(result);
     }
 });
