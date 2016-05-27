@@ -834,10 +834,10 @@ router.post('/querydealList', function (request, response, next) {
             for(var i=1;i<=20;i++){
                 productDeatilList.push({
                     productDetId:i,
-                    date:params.date,
+                    date:"13:25:14",
                     type:"收款",
                     paymode:"积分+和包",
-                    perice:"20"
+                    perice:"20.45"
                 });
             }
         }else{
@@ -848,10 +848,10 @@ router.post('/querydealList', function (request, response, next) {
             for(var i=1;i<=params.perCount;i++){
                 productDeatilList.push({
                     productDetId:i,
-                    date:"2016-05-27",
+                    date:"12:28:35",
                     type:"收款",
                     paymode:"积分+和包",
-                    perice:"20"
+                    perice:"12.47"
                 });
             }
         }

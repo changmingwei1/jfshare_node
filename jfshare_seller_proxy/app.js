@@ -37,6 +37,7 @@ app.use('/seller/expressorder',expressOrder);
 app.use('/seller/brand',brand);
 app.use('/seller/stock',stock);
 app.use('/seller/afterSale',afterSale);
+app.use('/seller/seller',seller);
 
 // error handlers
 
