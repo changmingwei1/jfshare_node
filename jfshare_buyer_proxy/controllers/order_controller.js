@@ -132,6 +132,7 @@ router.post('/afterSaleList', function (request, response, next) {
     var result = {code: 200};
     var afterOrderList = [];
     var orderList = [];
+    var sellerMsgList = [];
     try {
         var params = request.body;
         if (params == null ||params.userId == "" || params.userId == null) {
@@ -188,7 +189,7 @@ router.post('/afterSaleList', function (request, response, next) {
                                 callback(null,result);
                             }else{
                                 result.afterOrderList = [];
-                                callback(3, null);
+                                callback(5, null);
                                 return;
                             }
                         });
@@ -209,7 +210,7 @@ router.post('/afterSaleList', function (request, response, next) {
                         Order.orderProfileQuery(params, function (err, orderInfo) {
                             if (err) {
                                 logger.error("订单服务异常");
-                                return callback(1, null);
+                                return callback(2, null);
                             }
                             //var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                             //result.page = page;
@@ -260,6 +261,7 @@ router.post('/afterSaleList', function (request, response, next) {
                                     }
                                 });
                                 result.orderList = orderList;
+                                params.sellerIdList = orderList;
                             }
                             return callback(null, result);
                         });
@@ -268,6 +270,29 @@ router.post('/afterSaleList', function (request, response, next) {
                         return callback(2, null);
                     }
 
+                },
+                function (callback) {
+                    try {
+                        Seller.querySellerBatch(params, function (err, data) {
+                            if (err) {
+                                return callback(3, null);
+                            }
+                            var smList = data.sellerMap;
+                            for(var i in smList){
+                                var seller = {
+                                    sellerId: i,
+                                    sellerName: smList[i].seller.sellerName
+                                };
+                                sellerMsgList.push(seller);
+                            }
+                            result.sellerList = sellerMsgList;
+                            logger.info("get sellerMsgList response:" + JSON.stringify(sellerMsgList));
+                            return callback(null, result);
+                        });
+                    } catch (ex) {
+                        logger.info("商家服务异常:" + ex);
+                        return callback(3, null);
+                    }
                 },
                 function (callback) {
                     try {
@@ -288,13 +313,13 @@ router.post('/afterSaleList', function (request, response, next) {
                 }
             ],
             function (err, results) {
-                if (err == 3) {
+                if (err == 5) {
                     result.code = 200;
                     response.json(result);
                     return;
                 } else if (err) {
                     result.code = 500;
-                    result.desc = "获取售后列表aaaa";
+                    result.desc = "获取售后列表失败";
                     response.json(result);
                     return;
                 } else{
