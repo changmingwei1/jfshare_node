@@ -822,10 +822,10 @@ router.post('/querydealList', function (request, response, next) {
         }
 
         //-------------------------前台测试数据-----------------------------------
-        result.count=3;
         result.perice="44.54";
         var productDeatilList=[];
         if(params.date=="2016-02-17"||params.date=="2015-11-28"||params.date=="2016-05-27"||params.date=="2016-05-28"){
+            result.count=60;
             result.page = {
                 total:60,
                 pageCount:3
@@ -841,11 +841,12 @@ router.post('/querydealList', function (request, response, next) {
                 });
             }
         }else{
+            result.count=1;
             result.page = {
                 total:1,
                 pageCount:1
             };
-            for(var i=1;i<=params.perCount;i++){
+            for(var i=1;i<=1;i++){
                 productDeatilList.push({
                     productDetId:i,
                     date:"12:28:35",
