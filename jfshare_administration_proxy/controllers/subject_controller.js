@@ -342,7 +342,8 @@ router.post('/updateAttributes', function (request, response, next) {
                     logger.info("updatesubject------params---->" + JSON.stringify(subject)+"------>"+attributesId);
 
                     if (subject != null && attributesId != 0) {
-                        subject.attributes = attributesId;
+                        subject.attributes = attributesId+"";
+                        subject.userId = params.userId;
                         Subject.update(subject, function (error, data) {
                             if (error) {
                                return callback(1, error);
@@ -350,7 +351,7 @@ router.post('/updateAttributes', function (request, response, next) {
                                 logger.info("updatesubject---result------->" + JSON.stringify(data));
                                 attributesId = data[0].id;
                                 result.id = attributesId;
-                                return callback(null, attributesId);
+                                return callback(null, result);
                             }
                         });
 
@@ -359,14 +360,15 @@ router.post('/updateAttributes', function (request, response, next) {
                     }
                 }
 
-            ], function (err, result) {
+            ], function (err, results) {
                 if (err ) {
                     result.code = 500;
                     result.desc = "更新属性失败";
                     response.json(result);
                     return;
                 }
-                if(result[2]!=null){
+                if(results[2]!=null){
+                    result.id = results[1];
                     response.json(result);
                     return;
                 }else{

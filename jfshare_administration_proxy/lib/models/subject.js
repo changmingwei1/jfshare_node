@@ -61,13 +61,18 @@ Subject.prototype.add = function (params, callback) {
 
 Subject.prototype.update = function (params, callback) {
 
+
     var subject = new subject_types.SubjectInfo({
         name: params.name,
         img_key: params.imgkey,
         updater: params.userId,
-        id: params.id,
-        attributes:params.attributes.toString()
+        id: params.id
     });
+
+    if(params.attributes!=null && params.attributes!=""){
+        subject.attributes = params.attributes;
+    }
+
 
     logger.info("img_key------->:" + JSON.stringify(subject.img_key));
     if( subject.img_key==null ||subject.img_key ==""){
@@ -239,7 +244,7 @@ Subject.prototype.updateAttributes = function (params, callback) {
     logger.info("subjectServ-updateSubjectAttribute params   ======" +JSON.stringify( params.id)+"--->"+JSON.stringify( params.value));
     var subjectAttribute = new subject_types.SubjectAttribute({
         id: params.id,
-        value: JSON.stringify(params.value)
+        value: params.value.toString()
     });
 
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "updateSubjectAttribute", [subjectAttribute]);

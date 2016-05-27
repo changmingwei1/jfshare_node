@@ -785,7 +785,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                 callback(1, null);
                                 return;
                             }
-                            if(data==null || data.afterSaleOrders==null){
+                            if(data==null || data.afterSaleOrders==null ||data.afterSaleOrders.length ==0){
                                 callback(null,2);
                                 isExist =1;
                             }else{
