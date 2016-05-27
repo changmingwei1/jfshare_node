@@ -168,7 +168,8 @@ router.post('/get', function (request, response, next) {
                     address: sellerObject.address,
                     bank: sellerObject.openBank,
                     accountNumber: sellerObject.accountNumber,
-                    accountHolder: sellerObject.accountHolder
+                    accountHolder: sellerObject.accountHolder,
+                    remark:sellerObject.remark
 
                 });
                 sellerTemp.push(sellerData);
