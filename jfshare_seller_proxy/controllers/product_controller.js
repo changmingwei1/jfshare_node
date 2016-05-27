@@ -140,16 +140,14 @@ router.post('/list', function (request, response, next) {
                                 return callback(3, null);
                             } else {
                                 var stockList = data;
-
-
                                 for (var i = 0; i < dataArr.length; i++) {
+                                    for(var j=0;j<stockList.length;j++){
+                                        if (dataArr[i].productId == stockList[j].productId) {
+                                            dataArr[i].totalSales = stockList[j].total;
+                                            break;
+                                        }
 
-
-                                    if (dataArr[i].productId == stockList[i].productId) {
-
-                                        dataArr[i].totalSales = stockList[i].total;
                                     }
-
                                 }
                                 return callback(null, data);
                             }

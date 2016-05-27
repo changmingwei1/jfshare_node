@@ -34,10 +34,7 @@ Product.prototype.queryProductList = function (params, callback) {
     thrift_params.productName = params.productName;
     thrift_params.activeState = params.activeState;
     thrift_params.productId = params.productId;
-    thrift_params.subjectId = 0;//默认是获取所有商品
     thrift_params.sort = "create_time DESC";
-
-
     //判断卖家id是否为空
 
     logger.info("调用productServ-queryProductList args:" + JSON.stringify(thrift_params));
