@@ -136,9 +136,6 @@ Seller.prototype.updateSeller = function (params, callback) {
 
     var seller = new seller_types.Seller({
         sellerId: params.sellerId,
-        loginName: params.loginName,
-        //sellerName: params.sellerName,
-        pwdEnc: params.pwdEnc,
         companyName: params.companyName,
         shopName: params.shopName,
         contactName: params.contactName,
