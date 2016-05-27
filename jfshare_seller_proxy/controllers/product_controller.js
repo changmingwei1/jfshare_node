@@ -64,7 +64,6 @@ router.post('/list', function (request, response, next) {
 
                                 var pagination = data[0].pagination;
                                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
-                                // logger.info("get product list response:" + JSON.stringify(result));
                                 productSurveyList.forEach(function (a) {
                                     var imgUri = a.imgUrl.split(",")[0];
                                     dataArr.push({
@@ -99,7 +98,6 @@ router.post('/list', function (request, response, next) {
                 function (callback) {
                     try {
                         Subject.getBatchSuperTree(subjectIdList, function (error, data) {
-                            //logger.info("get product list response:" + JSON.stringify(data));
                             if (error) {
                                 callback(2, null);
                             } else {
@@ -108,7 +106,6 @@ router.post('/list', function (request, response, next) {
                                 var subjectNodeTrees = data[0].subjectNodeTrees;
 
                                 subjectNodeTrees.forEach(function (subjectList) {
-                                    //logger.info("get subjectList list response-----:" + JSON.stringify(subjectList));
                                     if (subjectList != null) {
                                         var subjectpath = "";
                                         for (var i = 0; i < subjectList.length; i++) {
@@ -138,7 +135,7 @@ router.post('/list', function (request, response, next) {
                 function (callback) {
                     try {
                         Stock.queryProductTotal(productIdList, function (error, data) {
-                            logger.info("get product list response:" + JSON.stringify(data));
+                            logger.info("queryProductStockTotal response:" + JSON.stringify(data));
                             if (error) {
                                 return callback(3, null);
                             } else {
