@@ -65,9 +65,14 @@ Subject.prototype.update = function (params, callback) {
         name: params.name,
         img_key: params.imgkey,
         updater: params.userId,
-        id: params.id
+        id: params.id,
+        attributes:params.attributes.toString()
     });
 
+    logger.info("img_key------->:" + JSON.stringify(subject.img_key));
+    if( subject.img_key==null ||subject.img_key ==""){
+        subject.img_key = "0B7F87D81F368E62D93E0F9B14F67B3A.png";
+    }
 
     logger.info("updateSubject:" + JSON.stringify(subject));
 
@@ -229,7 +234,9 @@ Subject.prototype.querySubjectPath = function (params, callback) {
 
 Subject.prototype.updateAttributes = function (params, callback) {
 
-    //
+    logger.info("subjectServ-updateSubjectAttribute params   ======" +JSON.stringify( params));
+
+    logger.info("subjectServ-updateSubjectAttribute params   ======" +JSON.stringify( params.id)+"--->"+JSON.stringify( params.value));
     var subjectAttribute = new subject_types.SubjectAttribute({
         id: params.id,
         value: JSON.stringify(params.value)
@@ -246,8 +253,6 @@ Subject.prototype.updateAttributes = function (params, callback) {
             result.desc = "更新类目属性失败";
             return callback(result, null);
         }
-
-
         return callback(null, data);
     });
 };
@@ -258,7 +263,7 @@ Subject.prototype.flushtoAll = function (params, callback) {
     //参数需要修改
     var subjectInfo = new subject_types.SubjectInfo({
         pid: params.pid,
-        attributes: params.attributes
+        attributes: params.id
     });
 
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "applyAttributeToSuperAll", [subjectInfo]);
