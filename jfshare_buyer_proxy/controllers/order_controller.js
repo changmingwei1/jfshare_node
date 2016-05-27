@@ -182,6 +182,9 @@ router.post('/afterSaleList', function (request, response, next) {
                             afterOrderList = data.afterSaleOrders;
                             if(afterOrderList != null && afterOrderList.length > 0){
                                 result.afterOrderList = afterOrderList;
+                                var pagination = data.pagination;
+                                var page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+                                result.page = page;
                                 callback(null,result);
                             }else{
                                 result.afterOrderList = [];
@@ -208,14 +211,14 @@ router.post('/afterSaleList', function (request, response, next) {
                                 logger.error("订单服务异常");
                                 return callback(1, null);
                             }
-                            var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
-
+                            //var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
+                            //result.page = page;
                             if (orderInfo.orderProfileList !== null) {
                                 orderInfo.orderProfileList.forEach(function (order) {
                                     var orderItem = {
                                         orderId: order.orderId,
                                         userId: order.userId,
-                                        orderPrice: order.closingPrice,
+                                        closingPrice: order.closingPrice,
                                         //添加了应答的数据
                                         postage: order.postage,
                                         username: order.username,
@@ -236,7 +239,6 @@ router.post('/afterSaleList', function (request, response, next) {
                                         successTime: order.successTime,
                                         exchangeCash: order.exchangeCash,
                                         exchangeScore: order.exchangeScore,
-                                        activeState: order.activeState,
                                         curTime: order.curTime
                                     };
                                     var productList = [];
@@ -246,6 +248,7 @@ router.post('/afterSaleList', function (request, response, next) {
                                                 productId: order.productList[i].productId,
                                                 productName: order.productList[i].productName,
                                                 skuNum: order.productList[i].skuNum,
+                                                skuName:order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
                                                 imgKey: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
@@ -257,7 +260,6 @@ router.post('/afterSaleList', function (request, response, next) {
                                     }
                                 });
                                 result.orderList = orderList;
-                                result.page = page;
                             }
                             return callback(null, result);
                         });
@@ -266,6 +268,23 @@ router.post('/afterSaleList', function (request, response, next) {
                         return callback(2, null);
                     }
 
+                },
+                function (callback) {
+                    try {
+                        logger.info("++++++++++++++" + JSON.stringify(params));
+                        AfterSale.queryAfterSale(params, function (err, data) {
+                            if (err) {
+                                return callback(4, null);
+                            }
+                            logger.info("get order list response:" + JSON.stringify(result));
+                            var afterSaleList = data;
+                            result.afterSaleList = afterSaleList;
+                            return callback(null, result    );
+                        });
+                    } catch (ex) {
+                        logger.info("售后服务异常:" + ex);
+                        return callback(4, null);
+                    }
                 }
             ],
             function (err, results) {
@@ -601,6 +620,7 @@ router.post('/info', function (req, res, next) {
                             result.successTime = orderInfo.successTime; //确认收货时间
                             result.comment = orderInfo.buyerComment;
                             result.postage = orderInfo.postage;
+                            result.sellerId = orderInfo.sellerId;
                             /*result.postageExt = orderInfo.postageExt; */     /*运费扩展信息  JSON*/
                             result.exchangeScore = orderInfo.exchangeScore; //添加字段
                             result.exchangeCash = orderInfo.exchangeCash; //添加字段
