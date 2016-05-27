@@ -65,7 +65,12 @@ Subject.prototype.update = function (params, callback) {
         name: params.name,
         img_key: params.imgkey,
         updater: params.userId,
-        id: params.id
+        id: params.id,
+        pid:params.pid,
+        level:params.level,
+        isLeaf:params.isLeaf,
+        commodity:params.commodity,
+        attributes:params.attributes
     });
 
 

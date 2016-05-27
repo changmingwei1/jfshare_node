@@ -314,6 +314,11 @@ router.post('/updateAttributes', function (request, response, next) {
                                 subject.name = data[0].subjectInfo.name;
                                 subject.imgkey = data[0].subjectInfo.img_key;
                                 subject.userId = data[0].subjectInfo.creator;
+                                subject.level = data[0].subjectInfo.level;
+                                subject.pid = data[0].subjectInfo.pid;
+                                subject.isLeaf = data[0].subjectInfo.isLeaf;
+                                subject.isLeaf = data[0].subjectInfo.isLeaf;
+                                subject.commodity = data[0].subjectInfo.commodity;
                                 logger.info("添加属性构造subject---------->" + JSON.stringify(subject));
                                 return callback(null, subject)
                             } else {
