@@ -342,7 +342,7 @@ router.post('/updateAttributes', function (request, response, next) {
                     logger.info("updatesubject------params---->" + JSON.stringify(subject)+"------>"+attributesId);
 
                     if (subject != null && attributesId != 0) {
-                        subject.attributes = attributesId;
+                        subject.attributes = attributesId+"";
                         Subject.update(subject, function (error, data) {
                             if (error) {
                                return callback(1, error);
