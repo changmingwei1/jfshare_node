@@ -280,6 +280,8 @@ router.post('/updateAttributes', function (request, response, next) {
         logger.info("params:" + JSON.stringify(params));
         //如果属性id为空，那么就走添加属性
         if (params.id == null || params.id == "") {
+            logger.info("现在进入添加属性流程--->params:" + JSON.stringify(params));
+
             var subject = {};
             if (params.subjectId == null || params.subjectId == "") {
                 result.code = 500;
@@ -378,7 +380,7 @@ router.post('/updateAttributes', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            logger.info("updateAttributes  prams:" + JSON.stringify(params));
+            logger.info("现在进入更新属性流程--->params:" + JSON.stringify(params));
             Subject.updateAttributes(params, function (error, data) {
                 if (error) {
                     response.json(error);
