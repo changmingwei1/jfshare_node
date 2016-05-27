@@ -69,6 +69,10 @@ Subject.prototype.update = function (params, callback) {
     });
 
 
+    if( params.imgkey==null ||params.imgkey ==""){
+        subject.img_key = "0B7F87D81F368E62D93E0F9B14F67B3A.png";
+    }
+
     logger.info("updateSubject:" + JSON.stringify(subject));
 
     var subjectServer = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "update", subject);
@@ -248,8 +252,6 @@ Subject.prototype.updateAttributes = function (params, callback) {
             result.desc = "更新类目属性失败";
             return callback(result, null);
         }
-
-
         return callback(null, data);
     });
 };
@@ -260,7 +262,7 @@ Subject.prototype.flushtoAll = function (params, callback) {
     //参数需要修改
     var subjectInfo = new subject_types.SubjectInfo({
         pid: params.pid,
-        attributes: params.attributes
+        attributes: params.id
     });
 
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "applyAttributeToSuperAll", [subjectInfo]);

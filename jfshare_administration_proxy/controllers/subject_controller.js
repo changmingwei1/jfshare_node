@@ -105,12 +105,12 @@ router.post('/update', function (request, response, next) {
             return;
         }
 
-        if (params.imgkey == null || params.imgkey == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
+        //if (params.imgkey == null || params.imgkey == "") {
+        //    result.code = 500;
+        //    result.desc = "参数错误";
+        //    response.json(result);
+        //    return;
+        //}
 
         if (params.userId == null || params.userId == "" || params.userId <= 0) {
             result.code = 500;
