@@ -688,18 +688,14 @@ router.post('/info', function (req, res, next) {
                 },
                 function (callback) {
                     try {
-                        if (params.orderState == null || params.orderState == 1) {
-                            AfterSale.queryAfterSale(params, function (err, data) {
-                                if (err) {
-                                    return callback(3, null);
-                                }
-                                logger.info("get order list response:" + JSON.stringify(result));
-                                afterSaleList = data;
-                                return callback(null, afterSaleList);
-                            });
-                        } else {
-                            return callback(3, null);
-                        }
+                        AfterSale.queryAfterSale(params, function (err, data) {
+                            if (err) {
+                                return callback(3, null);
+                            }
+                            logger.info("get order list response:" + JSON.stringify(result));
+                            afterSaleList = data;
+                            return callback(null, afterSaleList);
+                        });
                     } catch (ex) {
                         logger.info("售后服务异常:" + ex);
                         return callback(3, null);
