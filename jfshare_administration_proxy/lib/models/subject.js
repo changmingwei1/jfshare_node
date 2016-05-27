@@ -65,7 +65,7 @@ Subject.prototype.update = function (params, callback) {
         name: params.name,
         img_key: params.imgkey,
         updater: params.userId,
-        id: Numberparams.id,
+        id: params.id,
         attributes:params.attributes
     });
 
