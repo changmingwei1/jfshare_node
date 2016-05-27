@@ -471,6 +471,8 @@ router.post('/list', function (request, response, next) {
                 } else {
                     logger.info("shuju222------------->" + JSON.stringify(results));
                     result = results[0];
+                    result.afterSaleList = results[1];
+                    result.sellerList = results[2];
                     response.json(result);
                     return;
                 }
