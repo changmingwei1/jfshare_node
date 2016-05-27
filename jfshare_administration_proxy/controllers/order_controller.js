@@ -898,9 +898,9 @@ router.post('/afterSalelist', function (request, response, next) {
             }
         );
     } catch (ex) {
-        logger.error("query expressList error:" + ex);
+        logger.error("query 售后失败:" + ex);
         result.code = 500;
-        result.desc = "获取物流商列表";
+        result.desc = "查询售后订单列表";
         response.json(result);
     }
 });
