@@ -166,7 +166,6 @@ router.post('/get', function (request, response, next) {
                     cityName: sellerObject.cityName,
                     countyName: sellerObject.countyName,
                     address: sellerObject.address,
-                    remark: sellerObject.remark,
                     bank: sellerObject.openBank,
                     accountNumber: sellerObject.accountNumber,
                     accountHolder: sellerObject.accountHolder
