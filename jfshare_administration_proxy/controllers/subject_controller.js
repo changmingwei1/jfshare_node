@@ -343,6 +343,7 @@ router.post('/updateAttributes', function (request, response, next) {
 
                     if (subject != null && attributesId != 0) {
                         subject.attributes = attributesId+"";
+                        subject.userId = params.userId;
                         Subject.update(subject, function (error, data) {
                             if (error) {
                                return callback(1, error);
