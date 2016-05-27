@@ -48,6 +48,7 @@ AfterSale.prototype.request = function (params, callback) {
         orderId: params.orderId,
         productId: params.productId,
         type: 1,//申请类型. 1:用户申请， 2:系统申请
+        state: 1,
         skuNum: params.skuNum,
         orderTime: params.createTime,
         reason: params.reason,
