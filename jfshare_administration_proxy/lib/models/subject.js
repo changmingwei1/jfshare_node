@@ -244,7 +244,7 @@ Subject.prototype.updateAttributes = function (params, callback) {
     logger.info("subjectServ-updateSubjectAttribute params   ======" +JSON.stringify( params.id)+"--->"+JSON.stringify( params.value));
     var subjectAttribute = new subject_types.SubjectAttribute({
         id: params.id,
-        value: JSON.stringify(params.value)
+        value: params.value
     });
 
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "updateSubjectAttribute", [subjectAttribute]);
