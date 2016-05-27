@@ -10,30 +10,30 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 
 var AfterSale = require('../lib/models/afterSale');
 
-//ÉóºËĞÅÏ¢²éÑ¯
+//å®¡æ ¸ä¿¡æ¯æŸ¥è¯¢
 router.post('/toReview', function(request, response, next) {
     var result = {code: 200};
 
     try{
         var params = request.body;
-        logger.info("ÉóºËĞÅÏ¢²éÑ¯£¬ arg:" + JSON.stringify(params));
+        logger.info("å®¡æ ¸ä¿¡æ¯æŸ¥è¯¢ï¼Œ arg:" + JSON.stringify(params));
 
         if(params.productId == null || params.productId == ""){
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
         if(params.orderId == null || params.orderId == ""){
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
 
         if(params.skuNum == null || params.skuNum == ""){
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
@@ -48,7 +48,7 @@ router.post('/toReview', function(request, response, next) {
     } catch (ex) {
         logger.error("AfterSale.queryAfterSale error:" + ex);
         result.code = 500;
-        result.desc = "²éÑ¯ÉóºËĞÅÏ¢Ê§°Ü";
+        result.desc = "æŸ¥è¯¢å®¡æ ¸ä¿¡æ¯å¤±è´¥";
         response.json(result);
     }
 });
