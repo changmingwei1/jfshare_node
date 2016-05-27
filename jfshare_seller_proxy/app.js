@@ -36,7 +36,7 @@ app.use('/seller/address',address);
 app.use('/seller/expressorder',expressOrder);
 app.use('/seller/brand',brand);
 app.use('/seller/stock',stock);
-app.use('/seller/afterSale',seller);
+app.use('/seller/afterSale',afterSale);
 
 // error handlers
 
