@@ -325,7 +325,7 @@ Subject.prototype.updateBrandSubject = function (params, callback) {
         bId: params.brandId,
         Subjects: list
     });
-    logger.info("subjectServ-updateBrandSubject params   ======" + brandSubjectParam);
+    logger.info("subjectServ-updateBrandSubject params   ======" + JSON.stringify(brandSubjectParam));
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "updateBrandSubject", [brandSubjectParam]);
     //
     Lich.wicca.invokeClient(subjectServ, function (err, data) {
