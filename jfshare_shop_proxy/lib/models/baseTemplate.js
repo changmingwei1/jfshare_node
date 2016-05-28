@@ -55,22 +55,39 @@ BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, c
 BaseTemplate.prototype.calculatePostage = function(param,  callback) {
 
     logger.info("请求参数，arg："+JSON.stringify(param));
-
-
     var sellerList = param.sellerPostageList;
     var params = [];
     for(var i = 0 ;i < sellerList.length; i++){
         var productList = sellerList[i].productPostageList;
         var list = [];
         for(var j = 0 ;j < productList.length ; j++){
+            var isExist = false;
             var ppList = new baseTemplate_types.ProductPostageBasic({
                 productId: productList[j].productId,
                 templateId: productList[j].postageId,
-                number: productList[j].count,
-                weight: productList[j].weight,
-                amount: productList[j].amount
+                number: Number(productList[j].count),
+                weight: Number(productList[j].weight),
+                amount: Number(productList[j].amount)
             });
-            list.push(ppList);
+            if(list.length ==0){
+                ppList.amount = ppList.amount.toString();
+                list.push(ppList);
+            }else{
+                for(var h=0;h<list.length;h++){
+                    if(list[h].productId ==ppList.productId){
+                        list[h].number+=Number(ppList.number);
+                        list[h].weight+=Number(ppList.weight);
+                        var amount = Number(list[h].amount);
+                        amount+=Number(ppList.amount);
+                        list[h].amount = amount.toString();
+                        isExist = true;
+                        break;
+                    }
+                    if(h == list.length-1 && !isExist){
+                        list.push(ppList);
+                    }
+                }
+            }
         }
         var spList = new baseTemplate_types.SellerPostageBasic({
             sellerId: sellerList[i].sellerId,
@@ -78,7 +95,6 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
         });
         params.push(spList);
     }
-
     var arg = new baseTemplate_types.CalculatePostageParam({
         sendToProvince:param.provinceId,
         sellerPostageBasicList:params
