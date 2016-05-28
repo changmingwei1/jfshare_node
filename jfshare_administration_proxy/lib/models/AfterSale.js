@@ -23,7 +23,8 @@ AfterSale.prototype.auditPass = function (params, callback) {
         orderId: params.orderId,
         productId: params.productId,
         state: params.state, //根据实际情况定义 如 1：新建（待审核） 2：审核通过 3：审核不通过
-        skuNum: params.skuNum
+        skuNum: params.skuNum,
+        approveComment:params.approveComment
     });
 
     logger.info("AfterSaleServ-auditPass  args:" + JSON.stringify(afterSale));
@@ -33,7 +34,7 @@ AfterSale.prototype.auditPass = function (params, callback) {
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-auditPass  result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "1") {
+        if (err || data[0].code == "1") {
             logger.error("AfterSaleServ-auditPass  失败原因 ======" + err);
             res.code = 500;
             res.desc = "审核失败！";
