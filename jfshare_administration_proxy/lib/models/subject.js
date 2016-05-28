@@ -316,9 +316,9 @@ Subject.prototype.updateBrandSubject = function (params, callback) {
 
     var list = [];
 
-    for(var i=0;i<params.subjectIds.length;i++){
+    for(var i=0;i<JSON.parse(params.subjectIds).length;i++){
 
-        list.push(params.subjectIds[i]);
+        list.push(JSON.parse(params.subjectIds[i]));
     }
 
     var brandSubjectParam = new subject_types.BrandSubjectParam({
