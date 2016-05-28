@@ -1090,17 +1090,21 @@ router.post('/queryCaptchaList', function(request, response, next) {
         result.thmonNum=48;
 
         result.page = {
-            total:1,
-            pageCount:1
+            total:60,
+            pageCount:3
         };
 
         var productList=[];
-        productList.push({
-            productId:20,
-            productName:"测试数据：测试的商品名",
-            aldsold:5,
-            aldCaptcha:22
-        });
+
+        for(var i=1;i<=20;i++){
+            productList.push({
+                productId:i,
+                productName:"测试数据：测试的商品名",
+                aldsold:5,
+                aldCaptcha:22
+            });
+        }
+
         result.productList=productList;
         response.json(result);
         return;
