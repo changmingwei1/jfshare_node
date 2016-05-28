@@ -252,7 +252,8 @@ router.post('/list', function (req, res, next) {
             //    function (callback) {
             Cart.cartListItem(param, function (err, itemList) {
                 if (err) {
-                    return callback(1, null);
+                    //return callback(1, null);
+                    res.json(err);
                 }
                 var cartList = [];
                 if (itemList != null) {
@@ -286,15 +287,15 @@ router.post('/list', function (req, res, next) {
                         cartList.push(cartLists);
                     }
                     result.cartList = cartList;
-                    callback(null, result);
-                    //res.json(result);
+                    //callback(null, result);
+                    res.json(result);
                     logger.info("购物车列表信息result：" + JSON.stringify(result));
                     return;
                 } else {
                     result.cartList = cartList;
                     //param.cartList = cartList;
-                    callback(null, result);
-                    //res.json(result);
+                    //callback(null, result);
+                    res.json(result);
                     logger.info("购物车列表信息result：" + JSON.stringify(result));
                     return;
                 }
