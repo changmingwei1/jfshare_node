@@ -975,12 +975,8 @@ router.post('/payOrderCreates', function (request, response, next) {
         //----------------------------------------------------------------
         result.extend="33.28";
         var orderIdList=[];
-        orderIdList.push({
-            orderId:2
-        })
-        orderIdList.push({
-            orderId:3
-        });
+        orderIdList.push(2);
+        orderIdList.push(3);
         result.orderIdList=orderIdList;
         response.json(result);
         return;
