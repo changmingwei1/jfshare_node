@@ -812,7 +812,7 @@ router.post('/afterSalelist', function (request, response, next) {
                         if (isExist) {
                             result.orderList = orderList;
                             result.page = page;
-                            return callback(null, 2);
+                            return callback(null, result);
                         }
 
 
