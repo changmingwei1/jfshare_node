@@ -51,11 +51,11 @@ router.post('/count', function (req, res, next) {
         }
         logger.info("请求的参数，arg：" + JSON.stringify(param));
 //暂时去掉鉴权信息
-//        Buyer.validAuth(param, function (err, data) {
-//            if (err) {
-//                res.json(err);
-//                return;
-//            }
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                res.json(err);
+                return;
+            }
             Cart.countItem(param, function (err, count) {
                 if (err) {
                     res.json(err);
@@ -65,7 +65,7 @@ router.post('/count', function (req, res, next) {
                 res.json(result);
                 logger.info("get cart item count response:" + JSON.stringify(result));
             });
-        //});
+        });
     } catch (ex) {
         logger.error("get product count in cart error:" + ex);
         result.code = 500;
@@ -182,11 +182,11 @@ router.post('/delete', function (req, res, next) {
         }
         logger.info("请求的参数，arg：" + JSON.stringify(param));
 // 暂时去掉鉴权信息
-//        Buyer.validAuth(param, function (err, data) {
-//            if (err) {
-//                res.json(err);
-//                return;
-//            }
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                res.json(err);
+                return;
+            }
             Cart.deleteCartItem(param, function (err, data) {
                 if (err) {
                     res.json(err);
@@ -195,7 +195,7 @@ router.post('/delete', function (req, res, next) {
                 res.json(result);
                 logger.info("delete cart item response:" + JSON.stringify(result));
             });
-        //});
+        });
     } catch (ex) {
         logger.error("delete product in cart error:" + ex);
         result.code = 500;
@@ -241,111 +241,111 @@ router.post('/list', function (req, res, next) {
         }
         logger.info("get cart list request:" + JSON.stringify(param));
 //暂时去掉鉴权信息
-//        Buyer.validAuth(param, function (err, data) {
-//            if (err) {
-//                res.json(err);
-//                return;
-//            }
-        var remark;
-        var postageId;
-        async.series([
-            function (callback) {
-                Cart.cartListItem(param, function (err, itemList) {
-                    if (err) {
-                        return callback(1,null);
-                    }
-                    var cartList = [];
-                    if (itemList != null) {
-                        for (var i = 0; i < itemList.length; i++) {
-                            var cartLists = {
-                                sellerId: itemList[i].seller.sellerId,
-                                sellerName: itemList[i].seller.sellerName,
-                            };
-                            var productList = [];
-                            var itemDetailList = itemList[i].itemDetailList;
-                            for (var j = 0; j < itemDetailList.length; j++) {
-                                var product = {
-                                    productId: itemDetailList[j].product.product.productId,
-                                    productName: itemDetailList[j].product.product.productName,
-                                    activeState: itemDetailList[j].product.product.activeState,
-                                    storehouseIds: itemDetailList[j].product.product.storehouseIds,
-                                    postageId: itemDetailList[j].product.product.postageId,
-                                    cartPrice: itemDetailList[j].product.cartPrice,
-                                    skuCount: itemDetailList[j].product.skuCount,
-                                    count: itemDetailList[j].product.count,
-                                    sku: {
-                                        skuNum: itemDetailList[j].product.product.productSku.skuItems[0].skuNum,
-                                        skuName: itemDetailList[j].product.product.productSku.skuItems[0].skuName,
-                                        weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
-                                    },
-                                    imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                res.json(err);
+                return;
+            }
+            var remark;
+            var postageId;
+            async.series([
+                function (callback) {
+                    Cart.cartListItem(param, function (err, itemList) {
+                        if (err) {
+                            return callback(1, null);
+                        }
+                        var cartList = [];
+                        if (itemList != null) {
+                            for (var i = 0; i < itemList.length; i++) {
+                                var cartLists = {
+                                    sellerId: itemList[i].seller.sellerId,
+                                    sellerName: itemList[i].seller.sellerName,
                                 };
-                                productList.push(product);
+                                var productList = [];
+                                var itemDetailList = itemList[i].itemDetailList;
+                                for (var j = 0; j < itemDetailList.length; j++) {
+                                    var product = {
+                                        productId: itemDetailList[j].product.product.productId,
+                                        productName: itemDetailList[j].product.product.productName,
+                                        activeState: itemDetailList[j].product.product.activeState,
+                                        storehouseIds: itemDetailList[j].product.product.storehouseIds,
+                                        postageId: itemDetailList[j].product.product.postageId,
+                                        cartPrice: itemDetailList[j].product.cartPrice,
+                                        skuCount: itemDetailList[j].product.skuCount,
+                                        count: itemDetailList[j].product.count,
+                                        sku: {
+                                            skuNum: itemDetailList[j].product.product.productSku.skuItems[0].skuNum,
+                                            skuName: itemDetailList[j].product.product.productSku.skuItems[0].skuName,
+                                            weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
+                                        },
+                                        imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
+                                    };
+                                    productList.push(product);
+                                }
+                                cartLists.productList = productList;
+                                cartList.push(cartLists);
                             }
-                            cartLists.productList = productList;
-                            cartList.push(cartLists);
+                            result.cartList = cartList;
+                            callback(null, result);
+                            //res.json(result);
+                            logger.info("购物车列表信息result：" + JSON.stringify(result));
+                            return;
+                        } else {
+                            result.cartList = cartList;
+                            //param.cartList = cartList;
+                            callback(null, result);
+                            //res.json(result);
+                            logger.info("购物车列表信息result：" + JSON.stringify(result));
+                            return;
                         }
-                        result.cartList = cartList;
-                        callback(null,result);
-                        //res.json(result);
-                        logger.info("购物车列表信息result：" + JSON.stringify(result));
-                        return;
-                    } else {
-                        result.cartList = cartList;
-                        //param.cartList = cartList;
-                        callback(null,result);
-                        //res.json(result);
-                        logger.info("购物车列表信息result：" + JSON.stringify(result));
-                        return;
+                    });
+                },
+                function (callback) {
+                    var cList = result.cartList;
+                    var sellerIds = [];
+                    for (var i = 0; i < cList.length; i++) {
+                        var sellerId = cList[i].sellerId;
+                        sellerIds.push(sellerId);
                     }
-                });
-            },
-            function (callback) {
-                var cList = result.cartList;
-                var sellerIds = [];
-                for (var i = 0; i < cList.length; i++) {
-                    var sellerId = cList[i].sellerId;
-                    sellerIds.push(sellerId);
+                    BaseTemplate.getSellerPostageTemplate(sellerIds, function (err, data) {
+                        var sellerPostageTemplate = [];
+                        if (err) {
+                            return callback(2, null);
+                        } else {
+                            if (data[0].postageTemplateList != null && data[0].postageTemplateList.length > 0) {
+                                remark = data[0].postageTemplateList[0].templateDesc;
+                                postageId = data[0].postageTemplateList[0].id;
+                                for (var i = 0; i < data[0].postageTemplateList.length; i++) {
+                                    sellerPostageTemplate.push({
+                                        sellerId: data[0].postageTemplateList[i].sellerId,
+                                        postageId: data[0].postageTemplateList[i].id,
+                                        remark: data[0].postageTemplateList[i].templateDesc
+                                    });
+                                }
+                            }
+                            logger.info("kankan shi ====批量邮费模板信息:" + JSON.stringify(sellerPostageTemplate));
+                            result.sellerPostageTemplate = sellerPostageTemplate;
+                            callback(null, result);
+                        }
+                    });
                 }
-                BaseTemplate.getSellerPostageTemplate(sellerIds, function (err, data) {
-                    var sellerPostageTemplate = [];
-                    if (err) {
-                        return callback(2,null);
-                    } else {
-                        if (data[0].postageTemplateList != null && data[0].postageTemplateList.length > 0) {
-                            remark = data[0].postageTemplateList[0].templateDesc;
-                            postageId = data[0].postageTemplateList[0].id;
-                            for(var i = 0 ; i < data[0].postageTemplateList.length ; i++){
-                                sellerPostageTemplate.push({
-                                    sellerId: data[0].postageTemplateList[i].sellerId,
-                                    postageId: data[0].postageTemplateList[i].id,
-                                    remark: data[0].postageTemplateList[i].templateDesc
-                                });
-                            }
-                        }
-                        logger.info("kankan shi ====批量邮费模板信息:" + JSON.stringify(sellerPostageTemplate));
-                        result.sellerPostageTemplate = sellerPostageTemplate;
-                        callback(null, result);
-                    }
-                });
-            }
-        ], function (err, results) {
-            if (err == 1) {
-                result.code = 500;
-                result.desc = "获取购物车列表失败";
-                logger.error("获取购物车列表失败，原因:" + err);
-                res.json(result);
-                return;
-            } else if (err == 2) {
-                logger.error("获取商家运费模板失败，原因:" + err);
-                res.json(result);
-                return;
-            } else {
-                res.json(result);
-                return;
-            }
+            ], function (err, results) {
+                if (err == 1) {
+                    result.code = 500;
+                    result.desc = "获取购物车列表失败";
+                    logger.error("获取购物车列表失败，原因:" + err);
+                    res.json(result);
+                    return;
+                } else if (err == 2) {
+                    logger.error("获取商家运费模板失败，原因:" + err);
+                    res.json(result);
+                    return;
+                } else {
+                    res.json(result);
+                    return;
+                }
+            });
         });
-        //});
     } catch (ex) {
         logger.error("get cart product list error:" + ex);
         result.code = 500;
@@ -392,11 +392,11 @@ router.post('/update', function (req, res, next) {
         }
         logger.info("get cart list request:" + JSON.stringify(param));
 //暂时去掉鉴权信息
-//        Buyer.validAuth(param, function (err, data) {
-//            if (err) {
-//                res.json(err);
-//                return;
-//            }
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                res.json(err);
+                return;
+            }
             Cart.cartUpdateItem(param, function (err, count) {
                 if (err) {
                     res.json(err);
@@ -405,7 +405,7 @@ router.post('/update', function (req, res, next) {
                 res.json(result);
                 logger.info("get cart item count response:" + JSON.stringify(result));
             });
-        //});
+        });
     } catch (ex) {
         logger.error("update product in cart error:" + ex);
         result.code = 500;
