@@ -17,6 +17,7 @@ var Seller = require('../lib/models/seller');
 var Express = require('../lib/models/express');
 var AfterSale = require('../lib/models/afterSale');
 var Pay = require('../lib/models/pay');
+var Buyer = require('../lib/models/buyer');
 var BaseTemplate = require('../lib/models/baseTemplate');
 
 var product_types = require("../lib/thrift/gen_code/product_types");
@@ -53,21 +54,21 @@ router.post('/submit', function (request, response, next) {
         }
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息
-//    Buyer.validAuth(arg,function(err,data) {
-//        if (err) {
-//            response.json(err);
-//            return;
-//        }
-        Order.orderConfirm(arg, function (err, data) {
+        Buyer.validAuth(arg, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            result.orderIdList = data[0].orderIdList;
-            result.extend = JSON.parse(data[0].extend);
-            response.json(result);
+            Order.orderConfirm(arg, function (err, data) {
+                if (err) {
+                    response.json(err);
+                    return;
+                }
+                result.orderIdList = data[0].orderIdList;
+                //result.extend = JSON.parse(data[0].extend);
+                response.json(result);
+            });
         });
-        //});
     } catch (ex) {
         logger.error("submit order error:" + ex);
         result.code = 500;
@@ -269,7 +270,6 @@ router.post('/afterSaleList', function (request, response, next) {
                         logger.info("订单服务异常:" + ex);
                         return callback(2, null);
                     }
-
                 },
                 function (callback) {
                     try {
