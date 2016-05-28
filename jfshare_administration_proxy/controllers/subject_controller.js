@@ -466,7 +466,7 @@ router.post('/updateBrandSubject', function (request, response, next) {
             response.json(result);
             return;
         }
-        params.subjectList = params.subjectIds.split(",");
+       // params.subjectList = params.subjectIds.split(",");
 
 
         Subject.updateBrandSubject(params, function (error, data) {
