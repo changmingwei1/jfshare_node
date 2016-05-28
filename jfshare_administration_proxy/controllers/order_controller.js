@@ -261,31 +261,7 @@ router.post('/info', function (request, response, next) {
                                 return callback(2, null);
                             }
                             logger.info("get order list response:" + JSON.stringify(result));
-                            //afterSaleList = data;
-                            var productList = result.productList;
-                            //遍历产品列表
-                            for (var i = 0; i < productList.length; i++) {
-                                //过滤产品的最终售后状态
-                                for (var j = 0; j < data.length; j++) {
-                                    var level = 0;
-                                    var afterSaleMsg = {};
-                                    if (productList[i].productId == data[j].productId && productList[i].skunum.skuNum == data[j].skuNum) {
-                                        if(afterSaleMsg == null){
-                                            afterSaleMsg = data[j];
-                                        }else{
-                                            if(afterSaleMsg.type < data[j].type){
-                                                afterSaleMsg = data[j];
-                                            }
-                                        }
-                                        if(i == data.length-1){
-                                            if(afterSaleMsg!=null){
-                                                afterSaleList.push(afterSaleMsg);
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
+                            afterSaleList = data;
                             result.afterSaleList = afterSaleList;
                             return callback(null, afterSaleList);
                         });
