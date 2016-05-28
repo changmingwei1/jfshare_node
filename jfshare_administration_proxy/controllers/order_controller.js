@@ -799,7 +799,7 @@ router.post('/afterSalelist', function (request, response, next) {
                     }
                     catch
                         (ex) {
-                        logger.info("售后服务异常:" + ex);
+                        logger.error("售后服务异常:" + ex);
                         return callback(1, null);
                     }
                 },
@@ -807,6 +807,7 @@ router.post('/afterSalelist', function (request, response, next) {
                     try {
                         var page = {total: 0, pageCount: 0};
                         var orderIdList = [];
+                        logger.info("------isExist------:" + isExist);
                         if (isExist) {
                             result.orderList = orderList;
                             result.page = page;
