@@ -53,11 +53,11 @@ router.post('/review', function(request, response, next) {
             response.json(result);
             return;
         }
-        //表示拒绝
-        if(params.reviewResult == "1"){
+
+        if(params.reviewResult == "1"){ //表示拒绝
             params.state = 3;
-        }else if(params.reviewResult == "0"){
-         //表示同意
+        }else if(params.reviewResult == "0"){ //表示同意
+
             params.state = 2; //根据实际情况定义 如 1：新建（待审核） 2：审核通过 3：审核不通过
         }else{
             result.code = 400;
