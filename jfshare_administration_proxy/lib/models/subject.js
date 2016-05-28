@@ -314,9 +314,16 @@ Subject.prototype.getListforBrand = function (params, callback) {
 
 Subject.prototype.updateBrandSubject = function (params, callback) {
 
+    var list = {};
+
+    for(var i=0;i<params.subjectIds.length;i++){
+
+        list.push(params.subjectIds[i]);
+    }
+
     var brandSubjectParam = new subject_types.BrandSubjectParam({
         bId: params.brandId,
-        Subjects: params.subjectIds
+        Subjects: params.list
     });
 
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "updateBrandSubject", [brandSubjectParam]);
