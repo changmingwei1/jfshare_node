@@ -352,19 +352,6 @@ router.post('/get', function (request, response, next) {
     var result = {code: 200};
     var params = request.body;
     logger.info("编辑获取商品--编辑--接口参数:" + JSON.stringify(params));
-
-    if (params.productStatus == null || params.productStatus == "" || params.productStatus <= 0) {
-        result.code = 500;
-        result.desc = "请求参数错误";
-        response.json(result);
-        return;
-    }
-    if (params.productStatus == 200 || params.productStatus == 300) {
-        result.code = 500;
-        result.desc = "此状态下商品不可以编辑";
-        response.json(result);
-        return;
-    }
     //参数验证
     if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
         result.code = 500;
