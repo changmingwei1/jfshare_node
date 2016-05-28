@@ -453,7 +453,7 @@ router.post('/updateBrandSubject', function (request, response, next) {
     try {
         var params = request.body;
 
-        logger.info("params:" + JSON.stringify(params));
+        logger.info("params:" + JSON.parse(params));
         if (params.subjectIds == null || params.subjectIds == "") {
             result.code = 500;
             result.desc = "参数错误";
@@ -466,10 +466,8 @@ router.post('/updateBrandSubject', function (request, response, next) {
             response.json(result);
             return;
         }
-       // params.subjectList = params.subjectIds.split(",");
 
-
-        Subject.updateBrandSubject(params, function (error, data) {
+        Subject.updateBrandSubject(JSON.parse(params), function (error, data) {
             if (error) {
                 response.json(error);
             } else {

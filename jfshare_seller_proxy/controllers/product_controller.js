@@ -409,6 +409,29 @@ router.post('/get', function (request, response, next) {
                 },
                 function (callback) {
                     try {
+                        if (product == null || product == "") {
+                            callback(3, null);
+                        }
+                        var params = {};
+                        var productList = [];
+                        productList.push(product.productId);
+                        Stock.queryProductTotal(productList, function (err, data) {
+                            //data[0].result.code=="1"
+                            if (err || data ==null) {
+                                callback(3, err);
+                            } else {
+                                product.stockInfo = data;
+                                callback(null, data);
+                            }
+
+                        });
+                    } catch (ex) {
+                        logger.info("获取商品仓库异常:" + ex);
+                        return callback(2, null);
+                    }
+                },
+                function (callback) {
+                    try {
 
                         if (product == null || product == "") {
                             callback(2, null);
