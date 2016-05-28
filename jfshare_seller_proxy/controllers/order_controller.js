@@ -44,6 +44,7 @@ router.post('/list', function (request, response, next) {
     }
 
     var afterSaleList = [];
+    var productList = [];
     async.series([
             function (callback) {
                 try {
@@ -665,10 +666,11 @@ router.post('/afterSalelist', function (request, response, next) {
                                 callback(1, null);
                                 return;
                             }
-                            if(data==null || data.afterSaleOrders==null){
-                                callback(null,2);
-                                isExist =1;
-                            }else{
+                            if (data == null || data.afterSaleOrders == null || data.afterSaleOrders.length == 0) {
+                                isExist = 1;
+                                return callback(null, 2);
+
+                            } else {
                                 afterOrderList = data.afterSaleOrders;
                                 page = data.pagination;
                                 callback(null, 1);
@@ -679,7 +681,7 @@ router.post('/afterSalelist', function (request, response, next) {
                     }
                     catch
                         (ex) {
-                        logger.info("售后服务异常:" + ex);
+                        logger.error("售后服务异常:" + ex);
                         return callback(1, null);
                     }
                 },
@@ -687,10 +689,11 @@ router.post('/afterSalelist', function (request, response, next) {
                     try {
                         var page = {total: 0, pageCount: 0};
                         var orderIdList = [];
-                        if(isExist){
+                        logger.info("------isExist------:" + isExist);
+                        if (isExist) {
                             result.orderList = orderList;
                             result.page = page;
-                            return callback(null,2);
+                            return callback(null, result);
                         }
 
 
@@ -745,7 +748,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
                                             };
-                                            orderList.push(productItem);
+                                            productList.push(productItem);
                                         }
                                         orderItem.productList = productList;
                                         orderList.push(orderItem);
@@ -778,9 +781,9 @@ router.post('/afterSalelist', function (request, response, next) {
             }
         );
     } catch (ex) {
-        logger.error("query expressList error:" + ex);
+        logger.error("query 售后失败:" + ex);
         result.code = 500;
-        result.desc = "获取物流商列表";
+        result.desc = "查询售后订单列表";
         response.json(result);
     }
 });
