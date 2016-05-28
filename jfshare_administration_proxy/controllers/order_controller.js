@@ -262,7 +262,7 @@ router.post('/info', function (request, response, next) {
                             }
                             logger.info("get order list response:" + JSON.stringify(result));
                             afterSaleList = data;
-                            result.afterSaleList = afterSaleList;
+                           // result.afterSaleList = afterSaleList;
                             return callback(null, afterSaleList);
                         });
                     } else {
