@@ -642,6 +642,7 @@ router.post('/info', function (req, res, next) {
                             /*result.postageExt = orderInfo.postageExt; */     /*运费扩展信息  JSON*/
                             result.exchangeScore = orderInfo.exchangeScore; //添加字段
                             result.exchangeCash = orderInfo.exchangeCash; //添加字段
+                            result.type = orderInfo.productList[0].type;
                             var productList = [];
                             if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
                                 for (var i = 0; i < orderInfo.productList.length; i++) {
