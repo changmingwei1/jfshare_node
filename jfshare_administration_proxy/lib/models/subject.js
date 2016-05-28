@@ -314,7 +314,7 @@ Subject.prototype.getListforBrand = function (params, callback) {
 
 Subject.prototype.updateBrandSubject = function (params, callback) {
 
-    var list = {};
+    var list = [];
 
     for(var i=0;i<params.subjectIds.length;i++){
 
