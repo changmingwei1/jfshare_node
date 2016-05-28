@@ -822,20 +822,40 @@ router.post('/querydealList', function (request, response, next) {
         }
 
         //-------------------------前台测试数据-----------------------------------
-        result.count=3,
-            result.perice="44.54",
+        result.perice="44.54";
+        var productDeatilList=[];
+        if(params.date=="2016-02-17"||params.date=="2015-11-28"||params.date=="2016-05-27"||params.date=="2016-05-28"){
+            result.count=60;
+            result.page = {
+                total:60,
+                pageCount:3
+            };
+
+            for(var i=1;i<=20;i++){
+                productDeatilList.push({
+                    productDetId:i,
+                    date:"13:25:14",
+                    type:"收款",
+                    paymode:"积分+和包",
+                    perice:"20.45"
+                });
+            }
+        }else{
+            result.count=1;
             result.page = {
                 total:1,
                 pageCount:1
             };
-        var productDeatilList=[];
-        productDeatilList.push({
-            productDetId:2,
-            date:"2016-05-27",
-            type:"收款",
-            paymode:"积分+和包",
-            perice:"20"
-        });
+            for(var i=1;i<=1;i++){
+                productDeatilList.push({
+                    productDetId:i,
+                    date:"12:28:35",
+                    type:"收款",
+                    paymode:"积分+和包",
+                    perice:"12.47"
+                });
+            }
+        }
         result.productDeatilList=productDeatilList;
         response.json(result);
         return;
