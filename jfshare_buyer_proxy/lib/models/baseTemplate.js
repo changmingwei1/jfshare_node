@@ -51,6 +51,34 @@ BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, c
     });
 };
 
+/*获取商家邮费模板，批量获取*/
+BaseTemplate.prototype.getSellerPostageTemplate = function(sellerIds, callback) {
+
+    var params = new baseTemplate_types.SellerPostageTemplateParam({
+        sellerIds: sellerIds
+    });
+
+    logger.info("调用查询邮费模板信息，args:" + JSON.stringify(params));
+    var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "getSellerPostageTemplate", params);
+
+    Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
+        logger.info("调用查询邮费模板信息，result:" + JSON.stringify(data));
+        var res = {};
+        if(err){
+            logger.error("调用查询邮费模板信息失败，失败原因，server中还没有完成批量查找店铺邮费模板的方法 ======》" + err);
+            res.code = 500;
+            res.desc = "查询邮费模板信息失败！";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
+            callback(null, data);
+        }
+    });
+};
+
 /*邮费计算*/
 BaseTemplate.prototype.calculatePostage = function(param,  callback) {
 

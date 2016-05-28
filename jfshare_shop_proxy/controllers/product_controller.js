@@ -171,7 +171,8 @@ router.get('/productInfo', function (req, res, next) {
                         } else {
                             if (data[0].postageTemplateList != null && data[0].postageTemplateList.length > 0) {
                                 remark = data[0].postageTemplateList[0].templateDesc;
-                                productInfo.postageId = data[0].postageTemplateList[0].id;
+                                /*商家优惠模板id，提交订单计算的邮费是与商品挂钩，所以暂时先注掉*/
+                                //productInfo.postageId = data[0].postageTemplateList[0].id;
                                 productInfo.remark = remark;
                                 logger.info("商家店铺邮费模板信息1:" + JSON.stringify(remark));
                                 callback(null, result);
@@ -509,7 +510,7 @@ router.post('/querystoreBatch', function (request, response, next) {
                             }
                             productStorehouseList = data[0].productStorehouseList;
                             params.productList = productStorehouseList;
-                            logger.info("get order list response:" + JSON.stringify(result));
+                            logger.info("get order list response:" + JSON.stringify(params));
                             callback(null, data);
                         });
                     } catch (ex) {
