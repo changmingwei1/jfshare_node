@@ -138,7 +138,6 @@ Brand.prototype.list = function (params, callback) {
             result.desc = "查询品牌列表失败";
             callback(result, data);
         }
-
         if(data[0].result.code ==0){
             callback(null, data);
         }

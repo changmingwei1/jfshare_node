@@ -786,8 +786,9 @@ router.post('/afterSalelist', function (request, response, next) {
                                 return;
                             }
                             if (data == null || data.afterSaleOrders == null || data.afterSaleOrders.length == 0) {
-                                callback(null, 2);
                                 isExist = 1;
+                                return callback(null, 2);
+
                             } else {
                                 afterOrderList = data.afterSaleOrders;
                                 page = data.pagination;
@@ -811,7 +812,7 @@ router.post('/afterSalelist', function (request, response, next) {
                         if (isExist) {
                             result.orderList = orderList;
                             result.page = page;
-                            return callback(null, 2);
+                            return callback(null, result);
                         }
 
 
