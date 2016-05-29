@@ -5,7 +5,6 @@
 var express = require('express');
 var router = express.Router();
 var async = require('async');
-
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 
@@ -34,6 +33,21 @@ router.post('/list', function (request, response, next) {
         return;
     }
 
+    if (params.startTime == null || params.startTime == "") {
+        result.code = 400;
+        result.desc = "参数错误";
+        response.json(result);
+        return;
+    }
+
+    if (params.endTime == null || params.endTime == "" ) {
+        result.code = 400;
+        result.desc = "参数错误";
+        response.json(result);
+        return;
+    }
+
+    console.log("--------------->"+data.toLocaleDateString());
     var afterSaleList = [];
     result.orderList = [];
     result.afterSaleList = [];
