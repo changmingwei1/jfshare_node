@@ -174,6 +174,8 @@ router.post('/login', function (request, response, next) {
                         resContent.ppInfo = authInfo.ppInfo;
                         resContent.token = authInfo.token;
                         resContent.userId = userId;
+                        /*给出系统当前时间*/
+                        resContent.curTime = new Date().getTime();
                         response.json(resContent);
                         logger.info("响应的结果:" + JSON.stringify(resContent));
                     }
@@ -265,6 +267,8 @@ router.post('/login2', function (req, res, next) {
                         //resContent.loginLog = loginLog;
                         resContent.token = authInfo.token;
                         resContent.ppInfo = authInfo.ppInfo;
+                        /*给出系统当前时间*/
+                        resContent.curTime = new Date().getTime();
                         res.json(resContent);
                     }
                 });
@@ -414,6 +418,8 @@ router.post('/getAuthInfo', function (request, response, next) {
             var authInfo = data[0].authInfo;
             resContent.token = authInfo.token;
             resContent.ppInfo = authInfo.ppInfo;
+            /*给出系统当前时间*/
+            resContent.curTime = new Date().getTime();
             response.json(resContent);
             logger.info("获取到的信息是：" + JSON.stringify(resContent));
         });
