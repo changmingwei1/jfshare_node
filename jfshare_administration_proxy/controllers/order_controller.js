@@ -46,8 +46,6 @@ router.post('/list', function (request, response, next) {
         response.json(result);
         return;
     }
-
-    console.log("--------------->"+data.toLocaleDateString());
     var afterSaleList = [];
     result.orderList = [];
     result.afterSaleList = [];
