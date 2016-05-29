@@ -20,13 +20,6 @@ router.post('/list', function (request, response, next) {
     var params = request.body;
     logger.info("查询订单列表请求参数：" + JSON.stringify(params));
 
-    if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-
     if (params.percount == null || params.percount == "" || params.percount <= 0) {
         result.code = 400;
         result.desc = "参数错误";
