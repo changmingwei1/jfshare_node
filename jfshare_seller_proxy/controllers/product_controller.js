@@ -420,7 +420,14 @@ router.post('/get', function (request, response, next) {
                             if (err || data ==null) {
                                 callback(3, err);
                             } else {
-                                product.stockInfo = data;
+                               // product.stockInfo = data;
+
+                                if(data!=null && data[0]!=null && data[0].stockItems!=null){
+                                    product.stockItems =  data[0].stockItems;
+                                }else{
+                                    product.stockItems = null;
+                                }
+
                                 callback(null, data);
                             }
 
@@ -473,7 +480,6 @@ router.post('/get', function (request, response, next) {
                 result.product = product;
                 response.json(result);
                 return;
-
             });
 
 
