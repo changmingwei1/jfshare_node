@@ -20,13 +20,6 @@ router.post('/list', function (request, response, next) {
     var params = request.body;
     logger.info("查询订单列表请求参数：" + JSON.stringify(params));
 
-    if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-
     if (params.percount == null || params.percount == "" || params.percount <= 0) {
         result.code = 400;
         result.desc = "参数错误";
@@ -757,12 +750,6 @@ router.post('/afterSalelist', function (request, response, next) {
     try {
         var params = request.body;
 
-        if (params.sellerId == "" || params.sellerId == null) {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
         if (params.percount == "" || params.percount == null) {
             result.code = 400;
             result.desc = "参数错误";
@@ -944,6 +931,4 @@ router.post('/carList', function (request, response, next) {
         response.json(result);
     }
 });
-
-
 module.exports = router;

@@ -428,12 +428,17 @@ Product.prototype.queryProductDetail = function (arg, callback) {
 
 
 //导入虚拟商品
-Product.prototype.improtVirtual = function (arg, callback) {
+Product.prototype.improtVirtual = function (param, callback) {
+
+    var ProductCardImportParam = new product_types.ProductCardImportParam({
+        sellerId:param.sellerId,
+        path:param.path
+    });
 
 
     logger.info("import virtual product  args:" + JSON.stringify(param));
     // 获取client
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductDetail", param);
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "importProductCard", ProductCardImportParam);
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
@@ -445,7 +450,7 @@ Product.prototype.improtVirtual = function (arg, callback) {
             res.desc = "导入虚拟商品失败！";
             callback(res, null);
         } else {
-            callback(null, data[0]);
+            callback(null, data);
         }
     });
 };

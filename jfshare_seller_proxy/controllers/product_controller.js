@@ -420,7 +420,14 @@ router.post('/get', function (request, response, next) {
                             if (err || data ==null) {
                                 callback(3, err);
                             } else {
-                                product.stockInfo = data;
+                               // product.stockInfo = data;
+
+                                if(data!=null && data[0]!=null && data[0].stockItems!=null){
+                                    product.stockItems =  data[0].stockItems;
+                                }else{
+                                    product.stockItems = null;
+                                }
+
                                 callback(null, data);
                             }
 
@@ -473,7 +480,6 @@ router.post('/get', function (request, response, next) {
                 result.product = product;
                 response.json(result);
                 return;
-
             });
 
 
@@ -1229,18 +1235,43 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
         }
         //---------------------前台测试数据-----------------------------
 
-        result.page = {
-            total:1,
-            pageCount:1
-        };
+
         var productDetailList=[];
-        productDetailList.push({
-            productName:"测试：商品名称test",
-            date:"2016-05-26",
-            consumeNum:"af23wsdsf233",
-            mobile:"13211111111",
-            nickName:"测试：昵称test"
-        });
+
+        if(params.queryDate=="2016-04"||params.queryDate=="2016-05"){
+            result.page = {
+                total:60,
+                pageCount:3
+            };
+            for(var i=0;i<20;i++){
+                productDetailList.push({
+                    productName:"测试：商品名称test",
+                    date:"2016-05-26",
+                    consumeNum:"af23wsdsf233",
+                    mobile:"13211111111",
+                    nickName:"测试：昵称test"
+                });
+            }
+
+        }else if(params.queryDate=="2016-01"){
+            result.page = {
+                total:0,
+                pageCount:1
+            };
+        }else{
+            result.page = {
+                total:1,
+                pageCount:1
+            };
+            productDetailList.push({
+                productName:"测试：商品名称test",
+                date:"2016-05-26",
+                consumeNum:"af23wsdsf233",
+                mobile:"13211111111",
+                nickName:"测试：昵称test"
+            });
+        }
+
         result.productDetailList=productDetailList;
         response.json(result);
         return;

@@ -26,31 +26,26 @@ function Order() {
 
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
-    var orderQueryConditions = null;
-    if(params.orderList !=null ){
-        orderQueryConditions = new order_types.OrderQueryConditions({
-            orderIds:params.orderList
-        });
-    }else{
-        orderQueryConditions = new order_types.OrderQueryConditions({
-            orderState: params.orderStatus || 0,
-            count: params.percount,
-            curPage: params.curpage,
-            orderState: params.orderState,
-            startTime: params.startTime,
-            endTime: params.endTime
-        });
-    }
 
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2, params.sellerId, orderQueryConditions]);
+    var orderQueryConditions = new order_types.OrderQueryConditions({
+        orderState: params.orderStatus || 0,
+        count: params.percount,
+        curPage: params.curpage,
+        orderState: params.orderState,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        orderIds: params.orderList
+    });
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("调用orderServ-orderProfileQuery  result:" + JSON.stringify(data));
+        logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-orderProfileQuery失败  失败原因 ======" + err);
+            logger.error("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "查询定单列表失败！";
+            res.desc = "查询订单列表失败！";
             callback(res, null);
         } else {
             callback(null, data[0].orderProfilePage);
@@ -116,15 +111,15 @@ Order.prototype.cancelOrder = function (param, callback) {
 Order.prototype.deliver = function (params, callback) {
 
     var deliverInfo = new order_types.DeliverInfo({
-        orderId:params.orderId,
-        sellerComment:params.remark,
-        expressId:params.expressId,
+        orderId: params.orderId,
+        sellerComment: params.remark,
+        expressId: params.expressId,
         expressName: params.expressName,
         expressNo: params.expressNo,
-        userId:params.userId
+        userId: params.userId
     });
     logger.info("调用orderServ-deliver  params:" + JSON.stringify(deliverInfo));
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId,deliverInfo]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId, deliverInfo]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-deliver  result:" + JSON.stringify(data));
@@ -160,4 +155,29 @@ Order.prototype.updateExpressInfo = function (params, callback) {
         }
     });
 };
+
+
+Order.prototype.queryExportOrderInfo = function (params, callback) {
+
+    var OrderQueryConditions = new order_types.OrderQueryConditions({
+
+    });
+
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryExportOrderInfo", [params.sellerId,OrderQueryConditions]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-OrderQueryConditions  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用orderServ-OrderQueryConditions  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "下载订单失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Order();

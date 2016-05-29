@@ -316,11 +316,11 @@ Subject.prototype.updateBrandSubject = function (params, callback) {
 
     var list = [];
 
-    for(var i=0;i<JSON.parse(params.subjectIds).length;i++){
+    var subjectIds = JSON.parse(params.subjectIds);
 
-        list.push(JSON.parse(params.subjectIds[i]));
+    for(var i=0;i<subjectIds.length;i++){
+        list.push(subjectIds[i]);
     }
-
     var brandSubjectParam = new subject_types.BrandSubjectParam({
         bId: params.brandId,
         Subjects: list

@@ -143,4 +143,27 @@ Order.prototype.payOrderCreates = function (param, callback) {
     });
 };
 
+//导出订单
+Order.prototype.batchExportOrder = function (params, callback) {
+    var orderQueryConditions = new order_types.OrderQueryConditions({
+        startTime: params.startTime,
+        endTime: params.endTime,
+        orderState: params.orderStatus
+    });
+
+    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions)+"-----sellerId---->"+params.sellerId);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrder", [params.sellerId, orderQueryConditions]);
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-queryExportOrderInfo  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用orderServ-queryExportOrderInfo  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "到处订单失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0].orderProfilePage);
+        }
+    });
+};
 module.exports = new Order();

@@ -476,40 +476,6 @@ router.post('/cancelOrder', function (request, response, next) {
         response.json(result);
     }
 });
-//导出订单
-router.post('/queryExportOrderInfo', function (request, response, next) {
-    logger.info("进入取消订单流程");
-    var result = {code: 200};
-
-    try {
-
-        var params = request.body;
-
-        if (params.sellerId == null || params.sellerId == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-
-        Order.queryExportOrderInfo(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
-            response.json(result);
-            return
-        });
-
-    } catch (ex) {
-        logger.error("查询物流信息失败：" + ex);
-        result.code = 500;
-        result.desc = "查询物流信息失败";
-        response.json(result);
-    }
-});
 
 
 //更新物流单
@@ -666,11 +632,10 @@ router.post('/afterSalelist', function (request, response, next) {
                                 callback(1, null);
                                 return;
                             }
-                            if (data == null || data.afterSaleOrders == null || data.afterSaleOrders.length == 0) {
-                                isExist = 1;
-                                return callback(null, 2);
-
-                            } else {
+                            if(data==null || data.afterSaleOrders==null){
+                                callback(null,2);
+                                isExist =1;
+                            }else{
                                 afterOrderList = data.afterSaleOrders;
                                 page = data.pagination;
                                 callback(null, 1);
@@ -681,7 +646,7 @@ router.post('/afterSalelist', function (request, response, next) {
                     }
                     catch
                         (ex) {
-                        logger.error("售后服务异常:" + ex);
+                        logger.info("售后服务异常:" + ex);
                         return callback(1, null);
                     }
                 },
@@ -689,11 +654,11 @@ router.post('/afterSalelist', function (request, response, next) {
                     try {
                         var page = {total: 0, pageCount: 0};
                         var orderIdList = [];
-                        logger.info("------isExist------:" + isExist);
-                        if (isExist) {
+                        logger.info("-----isExist------:" + isExist);
+                        if(isExist){
                             result.orderList = orderList;
                             result.page = page;
-                            return callback(null, result);
+                            return callback(null,2);
                         }
 
 
@@ -748,7 +713,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
                                             };
-                                            productList.push(productItem);
+                                            orderList.push(productItem);
                                         }
                                         orderItem.productList = productList;
                                         orderList.push(orderItem);
@@ -760,7 +725,7 @@ router.post('/afterSalelist', function (request, response, next) {
                             return callback(null, result);
                         });
                     } catch (ex) {
-                        logger.info("订单服务异常:" + ex);
+                        logger.error("订单服务异常:" + ex);
                         return callback(2, null);
                     }
 
@@ -781,9 +746,9 @@ router.post('/afterSalelist', function (request, response, next) {
             }
         );
     } catch (ex) {
-        logger.error("query 售后失败:" + ex);
+        logger.error("query expressList error:" + ex);
         result.code = 500;
-        result.desc = "查询售后订单列表";
+        result.desc = "获取物流商列表";
         response.json(result);
     }
 });
@@ -998,4 +963,179 @@ router.post('/payOrderCreates', function (request, response, next) {
         response.json(result);
     }
 });
+
+
+/*扫码预生成订单*/
+router.post('/payOrderCreates', function (request, response, next) {
+    logger.info("进入扫码预生成订单");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        logger.info("扫码预生成订单请求入参, args:" + JSON.stringify(params));
+
+        if (params.userId == null || params.userId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.username == null || params.username == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.sellerId == null || params.sellerId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.sellerName == null || params.sellerName == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.amount == null || params.amount == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.tradeCode == null || params.tradeCode == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        //----------------------------------------------------------------
+        result.extend="33.28";
+        var orderIdList=[];
+        orderIdList.push("2");
+        orderIdList.push("3");
+        result.orderIdList=orderIdList;
+        response.json(result);
+        return;
+        //---------------------------------------------------------------------
+
+        Order.payOrderCreates(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.value = data[0].value;
+            response.json(result);
+            logger.info("响应的结果:" + JSON.stringify(result));
+        });
+    } catch (ex) {
+        response.json(result);
+    }
+});
+
+
+router.post('/queryExportOrderInfo', function (request, response, next) {
+    logger.info("进入导出订单的流程");
+    var result = {code: 200};
+
+    try {
+
+        var params = request.body;
+
+        if (params.sellerId == null || params.sellerId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.startTime == null || params.startTime == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.endTime == null || params.endTime == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Order.batchExportOrder(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }else{
+                response.json(data);
+            }
+
+        });
+
+    } catch (ex) {
+        logger.error("导出订单失败：" + ex);
+        result.code = 500;
+        result.desc = "导出订单失败";
+        response.json(result);
+    }
+});
+
+/*提交订单*/
+router.post('/submit', function (request, response, next) {
+    logger.info("进入提交订单流程..");
+    var result = {code: 200};
+    try {
+        var arg = request.body;
+        if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
+            result.code = 400;
+            result.desc = "没有填写用户ＩＤ";
+            response.json(result);
+            return;
+        }
+        if (arg.token == "" || arg.token == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            response.json(result);
+            return;
+        }
+        if (arg.ppInfo == "" || arg.ppInfo == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            response.json(result);
+            return;
+        }
+        if (arg.browser == "" || arg.browser == null) {
+            result.code = 400;
+            result.desc = "浏览器标识不能为空";
+            response.json(result);
+            return;
+        }
+        logger.info("提交订单请求， arg:" + JSON.stringify(arg));
+//暂时去掉鉴权信息
+        Buyer.validAuth(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            Order.orderConfirm(arg, function (err, data) {
+                if (err) {
+                    response.json(err);
+                    return;
+                }
+                result.orderIdList = data[0].orderIdList;
+                //result.extend = JSON.parse(data[0].extend);
+                response.json(result);
+            });
+        });
+    } catch (ex) {
+        logger.error("submit order error:" + ex);
+        result.code = 500;
+        result.desc = "提交订单失败";
+        response.json(result);
+    }
+});
+
 module.exports = router;
