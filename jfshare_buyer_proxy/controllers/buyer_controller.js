@@ -432,31 +432,31 @@ router.post('/validAuth', function (request, response, next) {
     try {
         var param = request.body;
         if (param == null) {
-            resContent.code = 500;
+            resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
             return;
         }
         if (param.token == null || param.token == "") {
-            resContent.code = 500;
+            resContent.code = 400;
             resContent.desc = "鉴权信息不能为空";
             response.json(resContent);
             return;
         }
         if (param.browser == null || param.browser == "") {
-            resContent.code = 500;
+            resContent.code = 400;
             resContent.desc = "浏览器标识不能为空";
             response.json(resContent);
             return;
         }
         if (param.ppInfo == null || param.ppInfo == "") {
-            resContent.code = 500;
+            resContent.code = 400;
             resContent.desc = "鉴权信息不能为空";
             response.json(resContent);
             return;
         }
         if (param.userId == null || param.userId == "") {
-            resContent.code = 500;
+            resContent.code = 400;
             resContent.desc = "用户id不能为空";
             response.json(resContent);
             return;
@@ -472,7 +472,7 @@ router.post('/validAuth', function (request, response, next) {
         });
     } catch (ex) {
         logger.error("验证失败，because :" + ex);
-        resContent.code = 500;
+        resContent.code = 501;
         resContent.desc = "验证失败";
         response.json(resContent);
     }
