@@ -86,8 +86,14 @@ Order.prototype.queryOrderDetail = function (param, callback) {
 //查询卖家交易流水
 Order.prototype.querydealList = function (param, callback) {
     //------------------
+    logger.info("调用orderServ-querydealList  入参:" + JSON.stringify(param));
+    var orderQueryConditions = new order_types.OrderQueryConditions({
+        count: param.percount,
+        curPage: param.curpage,
+        startTime:param.date
+    });
 
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "querydealList", [2, param.sellerId, param.orderId]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryOffline", [2, param.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-querydealList  result:" + JSON.stringify(data));
@@ -98,7 +104,7 @@ Order.prototype.querydealList = function (param, callback) {
             res.desc = "查询交易流水失败！";
             callback(res, null);
         } else {
-            callback(null, data[0].order);
+            callback(null, data);
         }
     });
 };
@@ -107,7 +113,7 @@ Order.prototype.querydealList = function (param, callback) {
 Order.prototype.querydealDetail = function (param, callback) {
     //------------------
 
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "querydealDetail", [2, param.sellerId, param.orderId]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryOrderDetailOffline", [2, param.sellerId, param.productDetId]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-querydealDetail  result:" + JSON.stringify(data));
@@ -118,7 +124,7 @@ Order.prototype.querydealDetail = function (param, callback) {
             res.desc = "查询交易明细失败！";
             callback(res, null);
         } else {
-            callback(null, data[0].order);
+            callback(null, data);
         }
     });
 };
