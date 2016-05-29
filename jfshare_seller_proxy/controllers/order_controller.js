@@ -1067,7 +1067,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
         }
         Order.batchExportOrder(params, function (err, data) {
             if (err) {
-                response.json(error);
+                response.json(err);
                 return;
             }else{
                 response.json(data);
