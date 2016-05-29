@@ -257,45 +257,76 @@ router.post('/querystore', function (req, res, next) {
     result.productId = params.productId;
     result.sellerId = params.sellerId;
     result.skuNum = params.skuNum;
+
+    var storehouseId = 0;
+
     logger.info("查询库存和sku的请求，arg：" + JSON.stringify(params));
     async.series([
             function (callback) {
                 try {
-                    BaseTemplate.queryStorehouse(params, function (err, data) {
-                        if (err) {
+                    Product.queryProduct(params.productId, 1, 1, 1, 1, function (err, data) {
+                        if(err){
                             callback('error', err);
                             return;
-                        } else {
-                            var storehouseList = data[0].storehouseList;
-                            if (storehouseList != null && storehouseList.length > 0) {
-                                for (var i = 0; i < storehouseList.length; i++) {
-                                    var supportProvince = storehouseList[i].supportProvince;
-                                    if (supportProvince != null) {
-                                        var list = supportProvince.split(",");
-                                        if (list != null && list.length > 0) {
-                                            for (var j = 0; j < list.length; j++) {
-                                                if (list[j] == params.provinceId) {
-                                                    result.storehouseId = storehouseList[i].id;
-                                                    params.storehouseId = storehouseList[i].id;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        if (params.storehouseId != 0) {
-                                            break;
-                                        }
-                                    }
-                                }
-                                // arg.storehouseId = storehouseId;
-                                logger.info("看看仓库信息：" + result.storehouseId);
-                                callback(null, result);
-                                return;
-                            } else {
-                                callback(null, result);
-                                return;
-                            }
+                        }else{
+                            storehouseId = data[0].product.storehouseIds;
+                            return callback(null,storehouseId);
                         }
                     });
+                } catch (ex) {
+                    logger.info("仓库服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                try {
+                    if(storehouseId == "1"){
+
+                        result.storehouseId =1;
+                        params.storehouseId = 1;
+                        callback(null, result);
+                        return;
+                    }else{
+
+
+                        BaseTemplate.queryStorehouse(params, function (err, data) {
+                            if (err) {
+                                callback('error', err);
+                                return;
+                            } else {
+                                var storehouseList = data[0].storehouseList;
+                                if (storehouseList != null && storehouseList.length > 0) {
+                                    for (var i = 0; i < storehouseList.length; i++) {
+                                        var supportProvince = storehouseList[i].supportProvince;
+                                        if (supportProvince != null) {
+                                            var list = supportProvince.split(",");
+                                            if (list != null && list.length > 0) {
+                                                for (var j = 0; j < list.length; j++) {
+                                                    if (list[j] == params.provinceId) {
+                                                        result.storehouseId = storehouseList[i].id;
+                                                        params.storehouseId = storehouseList[i].id;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            if (params.storehouseId != 0) {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    // arg.storehouseId = storehouseId;
+                                    logger.info("看看仓库信息：" + result.storehouseId);
+                                    callback(null, result);
+                                    return;
+                                } else {
+                                    callback(null, result);
+                                    return;
+                                }
+                            }
+                        });
+
+                    }
+
                 } catch (ex) {
                     logger.info("仓库服务异常:" + ex);
                     return callback(1, null);
