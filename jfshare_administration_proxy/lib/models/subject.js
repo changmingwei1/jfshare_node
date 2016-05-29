@@ -315,8 +315,11 @@ Subject.prototype.getListforBrand = function (params, callback) {
 Subject.prototype.updateBrandSubject = function (params, callback) {
 
     var list = [];
-    for(var i=0;i<params.subejctIds.length;i++){
-        list.push(subejctIds[i]);
+
+    var subjectIds = JSON.parse(params.subjectIds);
+
+    for(var i=0;i<subjectIds.length;i++){
+        list.push(subjectIds[i]);
     }
     var brandSubjectParam = new subject_types.BrandSubjectParam({
         bId: params.brandId,

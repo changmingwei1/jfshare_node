@@ -453,7 +453,6 @@ router.post('/updateBrandSubject', function (request, response, next) {
     try {
         var params = request.body;
 
-        logger.info("params:" + JSON.parse(params));
         if (params.subjectIds == null || params.subjectIds == "") {
             result.code = 500;
             result.desc = "参数错误";
@@ -467,7 +466,7 @@ router.post('/updateBrandSubject', function (request, response, next) {
             return;
         }
 
-        Subject.updateBrandSubject(JSON.parse(params), function (error, data) {
+        Subject.updateBrandSubject(params, function (error, data) {
             if (error) {
                 response.json(error);
             } else {
@@ -479,7 +478,7 @@ router.post('/updateBrandSubject', function (request, response, next) {
         logger.error("获取 error:" + ex);
         result.code = 500;
         result.desc = "获取品牌关联类目失败";
-        res.json(result);
+        response.json(result);
     }
 });
 
