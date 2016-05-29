@@ -107,14 +107,10 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
         res.desc = "查询审核信息失败！";
         callback(res, null);
     }
-
 };
-
 
 //查询售后的订单list的个数
 AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
-
-
     var afterSaleQueryParam = new afterSale_types.AfterSaleOrderParam({
         sellerId: params.sellerId,
         userId: params.userId,

@@ -931,6 +931,4 @@ router.post('/carList', function (request, response, next) {
         response.json(result);
     }
 });
-
-
 module.exports = router;

@@ -155,4 +155,29 @@ Order.prototype.updateExpressInfo = function (params, callback) {
         }
     });
 };
+
+
+Order.prototype.queryExportOrderInfo = function (params, callback) {
+
+    var OrderQueryConditions = new order_types.OrderQueryConditions({
+
+    });
+
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryExportOrderInfo", [params.sellerId,OrderQueryConditions]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-OrderQueryConditions  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用orderServ-OrderQueryConditions  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "下载订单失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Order();
