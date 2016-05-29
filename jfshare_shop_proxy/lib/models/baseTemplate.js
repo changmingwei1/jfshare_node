@@ -52,15 +52,15 @@ BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, c
 };
 
 /*邮费计算*/
-BaseTemplate.prototype.calculatePostage = function(param,  callback) {
+BaseTemplate.prototype.calculatePostage = function (param, callback) {
 
-    logger.info("请求参数，arg："+JSON.stringify(param));
+    logger.info("请求参数，arg：" + JSON.stringify(param));
     var sellerList = param.sellerPostageList;
     var params = [];
-    for(var i = 0 ;i < sellerList.length; i++){
+    for (var i = 0; i < sellerList.length; i++) {
         var productList = sellerList[i].productPostageList;
         var list = [];
-        for(var j = 0 ;j < productList.length ; j++){
+        for (var j = 0; j < productList.length; j++) {
             var isExist = false;
             var ppList = new baseTemplate_types.ProductPostageBasic({
                 productId: productList[j].productId,
@@ -69,21 +69,21 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
                 weight: Number(productList[j].weight),
                 amount: Number(productList[j].amount)
             });
-            if(list.length ==0){
+            if (list.length == 0) {
                 ppList.amount = ppList.amount.toString();
                 list.push(ppList);
-            }else{
-                for(var h=0;h<list.length;h++){
-                    if(list[h].productId ==ppList.productId){
-                        list[h].number+=Number(ppList.number);
-                        list[h].weight+=Number(ppList.weight);
+            } else {
+                for (var h = 0; h < list.length; h++) {
+                    if (list[h].productId == ppList.productId) {
+                        list[h].number += Number(ppList.number);
+                        list[h].weight += Number(ppList.weight);
                         var amount = Number(list[h].amount);
-                        amount+=Number(ppList.amount);
+                        amount += Number(ppList.amount);
                         list[h].amount = amount.toString();
                         isExist = true;
                         break;
                     }
-                    if(h == list.length-1 && !isExist){
+                    if (h == list.length - 1 && !isExist) {
                         list.push(ppList);
                     }
                 }
@@ -96,27 +96,27 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
         params.push(spList);
     }
     var arg = new baseTemplate_types.CalculatePostageParam({
-        sendToProvince:param.provinceId,
-        sellerPostageBasicList:params
+        sendToProvince: param.provinceId,
+        sellerPostageBasicList: params
     });
 
     logger.info("调用邮费计算，  args:" + JSON.stringify(arg));
     var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "calculatePostage", arg);
 
-    Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
+    Lich.wicca.invokeClient(baseTemplateServ, function (err, data) {
         logger.info("调用邮费计算，  result:" + JSON.stringify(data[0]));
         var res = {};
-        if(err){
+        if (err) {
             logger.error("调用邮费计算失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = "邮费计算失败！";
             callback(res, null);
-        } else if(data[0].result.code == 1) {
+        } else if (data[0].result.code == 1) {
             logger.error("调用邮费计算失败  失败原因 ======" + err);
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
-        }else{
+        } else {
             callback(null, data);
         }
     });
