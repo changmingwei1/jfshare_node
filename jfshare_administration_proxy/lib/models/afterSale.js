@@ -115,7 +115,6 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
         sellerId: params.sellerId,
         userId: params.userId,
         orderId: params.orderId,
-        sellerId: params.sellerId,
         startTime: params.startTime,
         endTime: params.endTime
     });
