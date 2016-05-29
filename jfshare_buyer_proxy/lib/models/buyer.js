@@ -72,8 +72,8 @@ Buyer.prototype.validAuth = function(param, callback){
         var res = {};
         if (err||data[0].code == "1") {
             logger.error("can't validAuth because: ======" + err);
-            res.code = 500;
-            res.desc = "false to validAuth";
+            res.code = 501;
+            res.desc = "鉴权失败";
             callback(res,null);
         } else {
             callback(null,data);
