@@ -750,12 +750,6 @@ router.post('/afterSalelist', function (request, response, next) {
     try {
         var params = request.body;
 
-        if (params.sellerId == "" || params.sellerId == null) {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
         if (params.percount == "" || params.percount == null) {
             result.code = 400;
             result.desc = "参数错误";
