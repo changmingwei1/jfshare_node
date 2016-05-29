@@ -1172,13 +1172,24 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
             thCaptcha:20
 
         });
+        productDayList.push({
+            productId:21,
+            productName:"测试：测试商品m",
+            thsoldNum:22,
+            thCaptcha:22
+
+        });
 
         productTotalList.push({
             data:"2016-05-26",
             thDayNum:20,
             productDayList:productDayList
         });
-
+        productTotalList.push({
+            data:"2016-05-27",
+            thDayNum:20,
+            productDayList:productDayList
+        });
         result.productTotalList=productTotalList;
         response.json(result);
         return;
