@@ -26,23 +26,18 @@ function Order() {
 
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
-    var orderQueryConditions = null;
-    if(params.orderList !=null ){
-        orderQueryConditions = new order_types.OrderQueryConditions({
-            orderIds:params.orderList
-        });
-    }else{
-        orderQueryConditions = new order_types.OrderQueryConditions({
-            orderState: params.orderStatus || 0,
-            count: params.percount,
-            curPage: params.curpage,
-            orderState: params.orderState,
-            startTime: params.startTime,
-            endTime: params.endTime
-        });
-    }
 
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2, params.sellerId, orderQueryConditions]);
+    var orderQueryConditions = new order_types.OrderQueryConditions({
+        orderState: params.orderStatus || 0,
+        count: params.percount,
+        curPage: params.curpage,
+        orderState: params.orderState,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        orderIds: params.orderList
+    });
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderQueryConditions", [orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-orderProfileQuery  result:" + JSON.stringify(data));
@@ -116,15 +111,15 @@ Order.prototype.cancelOrder = function (param, callback) {
 Order.prototype.deliver = function (params, callback) {
 
     var deliverInfo = new order_types.DeliverInfo({
-        orderId:params.orderId,
-        sellerComment:params.remark,
-        expressId:params.expressId,
+        orderId: params.orderId,
+        sellerComment: params.remark,
+        expressId: params.expressId,
         expressName: params.expressName,
         expressNo: params.expressNo,
-        userId:params.userId
+        userId: params.userId
     });
     logger.info("调用orderServ-deliver  params:" + JSON.stringify(deliverInfo));
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId,deliverInfo]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId, deliverInfo]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-deliver  result:" + JSON.stringify(data));
