@@ -56,7 +56,6 @@ router.post('/list', function (request, response, next) {
                 function (callback) {
                     try {
                         Product.queryProductList(params, function (err, data) {
-
                             if (err) {
                                 callback(1, null);
                             } else {
@@ -181,14 +180,11 @@ router.post('/list', function (request, response, next) {
                     logger.info("shuju------------->" + JSON.stringify(results));
                     for (var i = 0; i < results[0].length; i++) {
                         results[0][i].subjectName = results[1][i];
-                        logger.info("get product list response:" + JSON.stringify(dataArr));
-                        logger.info("get product list response:" + JSON.stringify(subjectName));
                     }
                     result.productList = results[0];
                     response.json(result);
                     return;
                 } else {
-                    logger.info("shuju------------->" + JSON.stringify(results));
                     result = results[0];
                     response.json(result);
                     return;
@@ -356,19 +352,6 @@ router.post('/get', function (request, response, next) {
     var result = {code: 200};
     var params = request.body;
     logger.info("编辑获取商品--编辑--接口参数:" + JSON.stringify(params));
-
-    if (params.productStatus == null || params.productStatus == "" || params.productStatus <= 0) {
-        result.code = 500;
-        result.desc = "请求参数错误";
-        response.json(result);
-        return;
-    }
-    if (params.productStatus == 200 || params.productStatus == 300) {
-        result.code = 500;
-        result.desc = "此状态下商品不可以编辑";
-        response.json(result);
-        return;
-    }
     //参数验证
     if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
         result.code = 500;
@@ -422,6 +405,29 @@ router.post('/get', function (request, response, next) {
                     } catch (ex) {
                         logger.error("获取商品信息异常:" + ex);
                         return callback(1, ex);
+                    }
+                },
+                function (callback) {
+                    try {
+                        if (product == null || product == "") {
+                            callback(3, null);
+                        }
+                        var params = {};
+                        var productList = [];
+                        productList.push(product.productId);
+                        Stock.queryProductTotal(productList, function (err, data) {
+                            //data[0].result.code=="1"
+                            if (err || data ==null) {
+                                callback(3, err);
+                            } else {
+                                product.stockInfo = data;
+                                callback(null, data);
+                            }
+
+                        });
+                    } catch (ex) {
+                        logger.info("获取商品仓库异常:" + ex);
+                        return callback(2, null);
                     }
                 },
                 function (callback) {
@@ -822,31 +828,14 @@ router.post('/apply', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.curState == null) {
 
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
 //ENUM商品状态:100 - 199 不可出售的状态，200 - 299 审核中的状态，
 //300 - 399 销售中的状态，100 初始化，101 商家下架，102 审核未通过，103 管理员下架，200 审核中，300 销售中
         if (params.state == 1) {// 0：表示申请上架，1：表示下架
-            if (params.curState != 300) {
-                result.code = 500;
-                result.desc = "商品未处于销售状态中,不用下架";
-                response.json(result);
-                return;
-            }
+
             params.activeState = 101;
         }
         if (params.state == 0) {// 0：表示申请上架，1：表示下架
-            if (params.curState == 300) {
-                result.code = 500;
-                result.desc = "商品处于销售状态中,不用申请上架";
-                response.json(result);
-                return;
-            }
             params.activeState = 200;
         }
 
