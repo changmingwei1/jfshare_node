@@ -40,12 +40,12 @@ Order.prototype.orderProfileQuery = function (params, callback) {
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("调用orderServ-orderProfileQuery  result:" + JSON.stringify(data));
+        logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-orderProfileQuery失败  失败原因 ======" + err);
+            logger.error("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "查询定单列表失败！";
+            res.desc = "查询订单列表失败！";
             callback(res, null);
         } else {
             callback(null, data[0].orderProfilePage);
