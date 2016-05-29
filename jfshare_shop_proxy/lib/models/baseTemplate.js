@@ -66,24 +66,29 @@ BaseTemplate.prototype.calculatePostage = function (param, callback) {
                 productId: productList[j].productId,
                 templateId: productList[j].postageId,
                 number: Number(productList[j].count),
-                weight: Number(productList[j].weight),
-                amount: Number(productList[j].amount)
+                weight: Number(productList[j].weight) * Number(productList[j].count),
+                amount: productList[j].amount.toString()
             });
             if (list.length == 0) {
                 ppList.amount = ppList.amount.toString();
                 list.push(ppList);
             } else {
                 for (var h = 0; h < list.length; h++) {
-                    if (list[h].productId == ppList.productId) {
-                        list[h].number += Number(ppList.number);
-                        list[h].weight += Number(ppList.weight);
-                        var amount = Number(list[h].amount);
-                        amount += Number(ppList.amount);
-                        list[h].amount = amount.toString();
-                        isExist = true;
-                        break;
+                    if(!isExist){
+                        if (list[h].productId == ppList.productId) {
+                            list[h].number += Number(ppList.number);
+                            var weight = Number(list[h].weight);
+
+                            list[h].weight = weight+ Number(ppList.weight);
+                            var amount = Number(list[h].amount);
+                            amount += Number(ppList.amount);
+                            list[h].amount = amount.toString();
+                            isExist = true;
+                            break;
+                        }
                     }
-                    if (h == list.length - 1 && !isExist) {
+                    if (h == (list.length - 1) && !isExist) {
+                        isExist = true;
                         list.push(ppList);
                     }
                 }

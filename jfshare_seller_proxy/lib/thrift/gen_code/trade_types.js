@@ -490,3 +490,673 @@ OrderConfirmResult.prototype.write = function(output) {
   return;
 };
 
+ExchangeProduct = module.exports.ExchangeProduct = function(args) {
+  this.productId = null;
+  this.skuNum = null;
+  this.price = null;
+  if (args) {
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
+    }
+    if (args.price !== undefined) {
+      this.price = args.price;
+    }
+  }
+};
+ExchangeProduct.prototype = {};
+ExchangeProduct.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.price = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExchangeProduct.prototype.write = function(output) {
+  output.writeStructBegin('ExchangeProduct');
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 2);
+    output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.STRING, 3);
+    output.writeString(this.price);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExchangeRule = module.exports.ExchangeRule = function(args) {
+  this.percent = null;
+  this.score = null;
+  this.cash = null;
+  this.maxExchangeCash = null;
+  if (args) {
+    if (args.percent !== undefined) {
+      this.percent = args.percent;
+    }
+    if (args.score !== undefined) {
+      this.score = args.score;
+    }
+    if (args.cash !== undefined) {
+      this.cash = args.cash;
+    }
+    if (args.maxExchangeCash !== undefined) {
+      this.maxExchangeCash = args.maxExchangeCash;
+    }
+  }
+};
+ExchangeRule.prototype = {};
+ExchangeRule.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.percent = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.score = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.cash = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.maxExchangeCash = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExchangeRule.prototype.write = function(output) {
+  output.writeStructBegin('ExchangeRule');
+  if (this.percent !== null && this.percent !== undefined) {
+    output.writeFieldBegin('percent', Thrift.Type.STRING, 1);
+    output.writeString(this.percent);
+    output.writeFieldEnd();
+  }
+  if (this.score !== null && this.score !== undefined) {
+    output.writeFieldBegin('score', Thrift.Type.STRING, 2);
+    output.writeString(this.score);
+    output.writeFieldEnd();
+  }
+  if (this.cash !== null && this.cash !== undefined) {
+    output.writeFieldBegin('cash', Thrift.Type.STRING, 3);
+    output.writeString(this.cash);
+    output.writeFieldEnd();
+  }
+  if (this.maxExchangeCash !== null && this.maxExchangeCash !== undefined) {
+    output.writeFieldBegin('maxExchangeCash', Thrift.Type.STRING, 4);
+    output.writeString(this.maxExchangeCash);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExchangeParam = module.exports.ExchangeParam = function(args) {
+  this.userId = null;
+  this.productList = null;
+  this.amount = null;
+  this.score = null;
+  this.tradeCode = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.productList !== undefined) {
+      this.productList = args.productList;
+    }
+    if (args.amount !== undefined) {
+      this.amount = args.amount;
+    }
+    if (args.score !== undefined) {
+      this.score = args.score;
+    }
+    if (args.tradeCode !== undefined) {
+      this.tradeCode = args.tradeCode;
+    }
+  }
+};
+ExchangeParam.prototype = {};
+ExchangeParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size24 = 0;
+        var _rtmp328;
+        this.productList = [];
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        {
+          var elem30 = null;
+          elem30 = new ttypes.ExchangeProduct();
+          elem30.read(input);
+          this.productList.push(elem30);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.amount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.score = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.tradeCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExchangeParam.prototype.write = function(output) {
+  output.writeStructBegin('ExchangeParam');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.productList !== null && this.productList !== undefined) {
+    output.writeFieldBegin('productList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productList.length);
+    for (var iter31 in this.productList)
+    {
+      if (this.productList.hasOwnProperty(iter31))
+      {
+        iter31 = this.productList[iter31];
+        iter31.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.amount !== null && this.amount !== undefined) {
+    output.writeFieldBegin('amount', Thrift.Type.STRING, 3);
+    output.writeString(this.amount);
+    output.writeFieldEnd();
+  }
+  if (this.score !== null && this.score !== undefined) {
+    output.writeFieldBegin('score', Thrift.Type.STRING, 4);
+    output.writeString(this.score);
+    output.writeFieldEnd();
+  }
+  if (this.tradeCode !== null && this.tradeCode !== undefined) {
+    output.writeFieldBegin('tradeCode', Thrift.Type.STRING, 5);
+    output.writeString(this.tradeCode);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExchangeDetail = module.exports.ExchangeDetail = function(args) {
+  this.productId = null;
+  this.skuNum = null;
+  this.price = null;
+  this.count = null;
+  this.score = null;
+  this.amount = null;
+  this.rule = null;
+  if (args) {
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
+    }
+    if (args.price !== undefined) {
+      this.price = args.price;
+    }
+    if (args.count !== undefined) {
+      this.count = args.count;
+    }
+    if (args.score !== undefined) {
+      this.score = args.score;
+    }
+    if (args.amount !== undefined) {
+      this.amount = args.amount;
+    }
+    if (args.rule !== undefined) {
+      this.rule = args.rule;
+    }
+  }
+};
+ExchangeDetail.prototype = {};
+ExchangeDetail.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.price = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.count = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.score = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.amount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.rule = new ttypes.ExchangeRule();
+        this.rule.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExchangeDetail.prototype.write = function(output) {
+  output.writeStructBegin('ExchangeDetail');
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 2);
+    output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.STRING, 3);
+    output.writeString(this.price);
+    output.writeFieldEnd();
+  }
+  if (this.count !== null && this.count !== undefined) {
+    output.writeFieldBegin('count', Thrift.Type.I32, 4);
+    output.writeI32(this.count);
+    output.writeFieldEnd();
+  }
+  if (this.score !== null && this.score !== undefined) {
+    output.writeFieldBegin('score', Thrift.Type.STRING, 5);
+    output.writeString(this.score);
+    output.writeFieldEnd();
+  }
+  if (this.amount !== null && this.amount !== undefined) {
+    output.writeFieldBegin('amount', Thrift.Type.STRING, 6);
+    output.writeString(this.amount);
+    output.writeFieldEnd();
+  }
+  if (this.rule !== null && this.rule !== undefined) {
+    output.writeFieldBegin('rule', Thrift.Type.STRUCT, 7);
+    this.rule.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExchangeResult = module.exports.ExchangeResult = function(args) {
+  this.result = null;
+  this.totalScore = null;
+  this.exchangeScore = null;
+  this.amount = null;
+  this.exchangeDetailList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.totalScore !== undefined) {
+      this.totalScore = args.totalScore;
+    }
+    if (args.exchangeScore !== undefined) {
+      this.exchangeScore = args.exchangeScore;
+    }
+    if (args.amount !== undefined) {
+      this.amount = args.amount;
+    }
+    if (args.exchangeDetailList !== undefined) {
+      this.exchangeDetailList = args.exchangeDetailList;
+    }
+  }
+};
+ExchangeResult.prototype = {};
+ExchangeResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.totalScore = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.exchangeScore = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.amount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.LIST) {
+        var _size32 = 0;
+        var _rtmp336;
+        this.exchangeDetailList = [];
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        {
+          var elem38 = null;
+          elem38 = new ttypes.ExchangeDetail();
+          elem38.read(input);
+          this.exchangeDetailList.push(elem38);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExchangeResult.prototype.write = function(output) {
+  output.writeStructBegin('ExchangeResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.totalScore !== null && this.totalScore !== undefined) {
+    output.writeFieldBegin('totalScore', Thrift.Type.STRING, 2);
+    output.writeString(this.totalScore);
+    output.writeFieldEnd();
+  }
+  if (this.exchangeScore !== null && this.exchangeScore !== undefined) {
+    output.writeFieldBegin('exchangeScore', Thrift.Type.STRING, 3);
+    output.writeString(this.exchangeScore);
+    output.writeFieldEnd();
+  }
+  if (this.amount !== null && this.amount !== undefined) {
+    output.writeFieldBegin('amount', Thrift.Type.STRING, 4);
+    output.writeString(this.amount);
+    output.writeFieldEnd();
+  }
+  if (this.exchangeDetailList !== null && this.exchangeDetailList !== undefined) {
+    output.writeFieldBegin('exchangeDetailList', Thrift.Type.LIST, 5);
+    output.writeListBegin(Thrift.Type.STRUCT, this.exchangeDetailList.length);
+    for (var iter39 in this.exchangeDetailList)
+    {
+      if (this.exchangeDetailList.hasOwnProperty(iter39))
+      {
+        iter39 = this.exchangeDetailList[iter39];
+        iter39.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExchangeRuleResult = module.exports.ExchangeRuleResult = function(args) {
+  this.result = null;
+  this.exchangeRule = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.exchangeRule !== undefined) {
+      this.exchangeRule = args.exchangeRule;
+    }
+  }
+};
+ExchangeRuleResult.prototype = {};
+ExchangeRuleResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.exchangeRule = new ttypes.ExchangeRule();
+        this.exchangeRule.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExchangeRuleResult.prototype.write = function(output) {
+  output.writeStructBegin('ExchangeRuleResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.exchangeRule !== null && this.exchangeRule !== undefined) {
+    output.writeFieldBegin('exchangeRule', Thrift.Type.STRUCT, 2);
+    this.exchangeRule.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
