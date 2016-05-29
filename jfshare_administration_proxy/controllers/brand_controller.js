@@ -114,7 +114,7 @@ router.post('/get', function (request, response, next) {
     try{
         var params = request.body;
         logger.info("获取单个品牌的信息入参， params:" + JSON.stringify(params));
-        if(params.id=="" || params.id ==null){
+        if(params.id=="" || params.id == null){
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);

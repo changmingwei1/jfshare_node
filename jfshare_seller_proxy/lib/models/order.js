@@ -166,4 +166,86 @@ Order.prototype.batchExportOrder = function (params, callback) {
         }
     });
 };
+
+/*提交订单*/
+Order.prototype.orderConfirm = function (arg, callback) {
+
+    var sellerDetailList = [];
+    for (var i = 0; i < arg.sellerDetailList.length; i++) {
+        var productList = [];
+        for (var j = 0; j < arg.sellerDetailList[i].productList.length; j++) {
+            var product = arg.sellerDetailList[i].productList[j];
+            productList.push(new order_types.OrderInfo({
+                productId: product.productId,
+                productName: product.productName,
+                skuNum: product.skuNum,
+                skuDesc: product.skuName,
+                count: product.count,
+                curPrice: product.curPrice,
+                /*postage:product.postage,*/ /*邮费可以不写入，直接在算进了totalSum中*/
+                storehouseId: product.storehouseId
+            }));
+        }
+        sellerDetailList.push(new trade_types.BuySellerDetail({
+            sellerId: arg.sellerDetailList[i].sellerId,
+            sellerName: arg.sellerDetailList[i].sellerName,
+            buyerComment: arg.sellerDetailList[i].buyerComment,
+            productList: productList
+        }));
+    }
+
+    var deliverInfo;
+
+    if (arg.tradeCode == "Z0002" || arg.tradeCode == "Z8002" || arg.tradeCode == "Z8001") {
+        deliverInfo = new order_types.DeliverInfo({
+            receiverMobile: arg.mobile
+        });
+    } else {
+        deliverInfo = new order_types.DeliverInfo({
+            addressId: arg.addressDesc.id,
+            provinceName: arg.addressDesc.provinceName,
+            cityName: arg.addressDesc.cityName,
+            countyName: arg.addressDesc.countyName,
+            receiverAddress: arg.addressDesc.address
+        });
+    }
+
+    var param = new trade_types.BuyInfo({
+        userId: arg.userId,
+        userName: arg.userName,
+        amount: arg.totalSum,
+        //payChannel: new pay_types.PayChannel({payChannel:arg.payChannel}),
+        deliverInfo: deliverInfo,
+        sellerDetailList: sellerDetailList,
+        fromBatch: arg.fromBatch,
+        fromSource: arg.fromSource,
+        tradeCode: "Z0010"
+        /*weight: arg.weight,
+         postageExt:arg.postageExt*/ /*运费扩展信息  JSON 现在还不知道怎么用*/
+    });
+
+    logger.info("调用cartServ-orderConfirmOffline args:" + JSON.stringify(param));
+    var tradeServ = new Lich.InvokeBag(Lich.ServiceKey.TradeServer, "orderConfirmOffline", param);
+
+    Lich.wicca.invokeClient(tradeServ, function (err, data) {
+        logger.info("调用cartServ-orderConfirmOffline result:" + JSON.stringify(data[0]));
+        var res = {};
+        if (err) {
+            logger.error("调用cartServ-orderConfirmOffline失败  失败原因 ======" + err);
+            //logger.error("错误信息:" + JSON.stringify(data[0].result));
+            res.code = 500;
+            res.desc = "提交订单失败！";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }
+        else {
+            logger.info("orderConfirmOffline response:" + JSON.stringify(data[0]));
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Order();

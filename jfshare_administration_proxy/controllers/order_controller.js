@@ -762,6 +762,18 @@ router.post('/afterSalelist', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.startTime == "" || params.startTime == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.endTime == "" || params.endTime == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         var isExist = 0;
         logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
         async.series([

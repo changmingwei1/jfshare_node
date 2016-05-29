@@ -1095,31 +1095,31 @@ router.post('/submit', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (arg.token == "" || arg.token == null) {
-            result.code = 400;
-            result.desc = "鉴权信息不能为空";
-            response.json(result);
-            return;
-        }
-        if (arg.ppInfo == "" || arg.ppInfo == null) {
-            result.code = 400;
-            result.desc = "鉴权信息不能为空";
-            response.json(result);
-            return;
-        }
-        if (arg.browser == "" || arg.browser == null) {
-            result.code = 400;
-            result.desc = "浏览器标识不能为空";
-            response.json(result);
-            return;
-        }
+        //if (arg.token == "" || arg.token == null) {
+        //    result.code = 400;
+        //    result.desc = "鉴权信息不能为空";
+        //    response.json(result);
+        //    return;
+        //}
+        //if (arg.ppInfo == "" || arg.ppInfo == null) {
+        //    result.code = 400;
+        //    result.desc = "鉴权信息不能为空";
+        //    response.json(result);
+        //    return;
+        //}
+        //if (arg.browser == "" || arg.browser == null) {
+        //    result.code = 400;
+        //    result.desc = "浏览器标识不能为空";
+        //    response.json(result);
+        //    return;
+        //}
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息
-        Buyer.validAuth(arg, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
+//        Buyer.validAuth(arg, function (err, data) {
+//            if (err) {
+//                response.json(err);
+//                return;
+//            }
             Order.orderConfirm(arg, function (err, data) {
                 if (err) {
                     response.json(err);
@@ -1129,7 +1129,7 @@ router.post('/submit', function (request, response, next) {
                 //result.extend = JSON.parse(data[0].extend);
                 response.json(result);
             });
-        });
+        //});
     } catch (ex) {
         logger.error("submit order error:" + ex);
         result.code = 500;

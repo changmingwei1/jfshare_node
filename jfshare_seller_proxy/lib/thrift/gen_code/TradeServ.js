@@ -123,6 +123,114 @@ TradeServ_orderConfirm_result.prototype.write = function(output) {
   return;
 };
 
+TradeServ_orderConfirmOffline_args = function(args) {
+  this.buyInfo = null;
+  if (args) {
+    if (args.buyInfo !== undefined) {
+      this.buyInfo = args.buyInfo;
+    }
+  }
+};
+TradeServ_orderConfirmOffline_args.prototype = {};
+TradeServ_orderConfirmOffline_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.buyInfo = new ttypes.BuyInfo();
+        this.buyInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_orderConfirmOffline_args.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_orderConfirmOffline_args');
+  if (this.buyInfo !== null && this.buyInfo !== undefined) {
+    output.writeFieldBegin('buyInfo', Thrift.Type.STRUCT, 1);
+    this.buyInfo.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TradeServ_orderConfirmOffline_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+TradeServ_orderConfirmOffline_result.prototype = {};
+TradeServ_orderConfirmOffline_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.OrderConfirmResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_orderConfirmOffline_result.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_orderConfirmOffline_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 TradeServ_buyCount_args = function(args) {
   this.userId = null;
   this.productId = null;
@@ -243,6 +351,304 @@ TradeServ_buyCount_result.prototype.write = function(output) {
   return;
 };
 
+TradeServ_getExchangeRule_args = function(args) {
+};
+TradeServ_getExchangeRule_args.prototype = {};
+TradeServ_getExchangeRule_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    input.skip(ftype);
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_getExchangeRule_args.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_getExchangeRule_args');
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TradeServ_getExchangeRule_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+TradeServ_getExchangeRule_result.prototype = {};
+TradeServ_getExchangeRule_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExchangeRuleResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_getExchangeRule_result.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_getExchangeRule_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TradeServ_getExchangeScore_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+TradeServ_getExchangeScore_args.prototype = {};
+TradeServ_getExchangeScore_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ExchangeParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_getExchangeScore_args.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_getExchangeScore_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TradeServ_getExchangeScore_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+TradeServ_getExchangeScore_result.prototype = {};
+TradeServ_getExchangeScore_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExchangeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_getExchangeScore_result.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_getExchangeScore_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TradeServ_score2cash_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+TradeServ_score2cash_args.prototype = {};
+TradeServ_score2cash_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ExchangeParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_score2cash_args.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_score2cash_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TradeServ_score2cash_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+TradeServ_score2cash_result.prototype = {};
+TradeServ_score2cash_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExchangeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_score2cash_result.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_score2cash_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 TradeServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -299,6 +705,53 @@ TradeServClient.prototype.recv_orderConfirm = function(input,mtype,rseqid) {
   }
   return callback('orderConfirm failed: unknown result');
 };
+TradeServClient.prototype.orderConfirmOffline = function(buyInfo, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_orderConfirmOffline(buyInfo);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_orderConfirmOffline(buyInfo);
+  }
+};
+
+TradeServClient.prototype.send_orderConfirmOffline = function(buyInfo) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('orderConfirmOffline', Thrift.MessageType.CALL, this.seqid());
+  var args = new TradeServ_orderConfirmOffline_args();
+  args.buyInfo = buyInfo;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+TradeServClient.prototype.recv_orderConfirmOffline = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new TradeServ_orderConfirmOffline_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('orderConfirmOffline failed: unknown result');
+};
 TradeServClient.prototype.buyCount = function(userId, productId, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -346,6 +799,146 @@ TradeServClient.prototype.recv_buyCount = function(input,mtype,rseqid) {
     return callback(null, result.success);
   }
   return callback('buyCount failed: unknown result');
+};
+TradeServClient.prototype.getExchangeRule = function(callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getExchangeRule();
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getExchangeRule();
+  }
+};
+
+TradeServClient.prototype.send_getExchangeRule = function() {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getExchangeRule', Thrift.MessageType.CALL, this.seqid());
+  var args = new TradeServ_getExchangeRule_args();
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+TradeServClient.prototype.recv_getExchangeRule = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new TradeServ_getExchangeRule_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getExchangeRule failed: unknown result');
+};
+TradeServClient.prototype.getExchangeScore = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getExchangeScore(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getExchangeScore(param);
+  }
+};
+
+TradeServClient.prototype.send_getExchangeScore = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getExchangeScore', Thrift.MessageType.CALL, this.seqid());
+  var args = new TradeServ_getExchangeScore_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+TradeServClient.prototype.recv_getExchangeScore = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new TradeServ_getExchangeScore_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getExchangeScore failed: unknown result');
+};
+TradeServClient.prototype.score2cash = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_score2cash(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_score2cash(param);
+  }
+};
+
+TradeServClient.prototype.send_score2cash = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('score2cash', Thrift.MessageType.CALL, this.seqid());
+  var args = new TradeServ_score2cash_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+TradeServClient.prototype.recv_score2cash = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new TradeServ_score2cash_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('score2cash failed: unknown result');
 };
 TradeServProcessor = exports.Processor = function(handler) {
   this._handler = handler
@@ -395,6 +988,36 @@ TradeServProcessor.prototype.process_orderConfirm = function(seqid, input, outpu
   }
 }
 
+TradeServProcessor.prototype.process_orderConfirmOffline = function(seqid, input, output) {
+  var args = new TradeServ_orderConfirmOffline_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.orderConfirmOffline.length === 1) {
+    Q.fcall(this._handler.orderConfirmOffline, args.buyInfo)
+      .then(function(result) {
+        var result = new TradeServ_orderConfirmOffline_result({success: result});
+        output.writeMessageBegin("orderConfirmOffline", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new TradeServ_orderConfirmOffline_result(err);
+        output.writeMessageBegin("orderConfirmOffline", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.orderConfirmOffline(args.buyInfo,  function (err, result) {
+      var result = new TradeServ_orderConfirmOffline_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("orderConfirmOffline", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
 TradeServProcessor.prototype.process_buyCount = function(seqid, input, output) {
   var args = new TradeServ_buyCount_args();
   args.read(input);
@@ -418,6 +1041,96 @@ TradeServProcessor.prototype.process_buyCount = function(seqid, input, output) {
     this._handler.buyCount(args.userId, args.productId,  function (err, result) {
       var result = new TradeServ_buyCount_result((err != null ? err : {success: result}));
       output.writeMessageBegin("buyCount", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+TradeServProcessor.prototype.process_getExchangeRule = function(seqid, input, output) {
+  var args = new TradeServ_getExchangeRule_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getExchangeRule.length === 0) {
+    Q.fcall(this._handler.getExchangeRule)
+      .then(function(result) {
+        var result = new TradeServ_getExchangeRule_result({success: result});
+        output.writeMessageBegin("getExchangeRule", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new TradeServ_getExchangeRule_result(err);
+        output.writeMessageBegin("getExchangeRule", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getExchangeRule( function (err, result) {
+      var result = new TradeServ_getExchangeRule_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getExchangeRule", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+TradeServProcessor.prototype.process_getExchangeScore = function(seqid, input, output) {
+  var args = new TradeServ_getExchangeScore_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getExchangeScore.length === 1) {
+    Q.fcall(this._handler.getExchangeScore, args.param)
+      .then(function(result) {
+        var result = new TradeServ_getExchangeScore_result({success: result});
+        output.writeMessageBegin("getExchangeScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new TradeServ_getExchangeScore_result(err);
+        output.writeMessageBegin("getExchangeScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getExchangeScore(args.param,  function (err, result) {
+      var result = new TradeServ_getExchangeScore_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getExchangeScore", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+TradeServProcessor.prototype.process_score2cash = function(seqid, input, output) {
+  var args = new TradeServ_score2cash_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.score2cash.length === 1) {
+    Q.fcall(this._handler.score2cash, args.param)
+      .then(function(result) {
+        var result = new TradeServ_score2cash_result({success: result});
+        output.writeMessageBegin("score2cash", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new TradeServ_score2cash_result(err);
+        output.writeMessageBegin("score2cash", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.score2cash(args.param,  function (err, result) {
+      var result = new TradeServ_score2cash_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("score2cash", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
