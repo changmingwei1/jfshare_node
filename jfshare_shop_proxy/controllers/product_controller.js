@@ -540,7 +540,37 @@ router.post('/querystoreBatch', function (request, response, next) {
                                 return callback(1, null);
                             }
                             productStorehouseList = data[0].productStorehouseList;
+                         //   for(){}
                             params.productList = productStorehouseList;
+                            for(var i=0;i<productStorehouseList.length;i++){
+
+                                if(productStorehouseList[i].storehouseId ==0){
+
+                                    for(var j=0;j<params.sellerList.length;j++){
+
+                                        if(productStorehouseList[i].sellerId.toString() ==params.sellerList[j].sellerId){
+
+
+                                            if(productStorehouseList[i].productId ==params.sellerList[j].productId){
+
+                                                if(params.sellerList[j].storehouseIds =="1"){
+
+                                                    productStorehouseList[i].storehouseId = 1;
+
+                                                }
+
+
+
+                                            }
+
+                                        }
+
+
+                                    }
+
+                                }
+
+                            }
                             logger.info("get order list response:" + JSON.stringify(params));
                             callback(null, data);
                         });
