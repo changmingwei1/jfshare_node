@@ -37,7 +37,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
         orderIds: params.orderList
     });
 
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderQueryConditions", [orderQueryConditions]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-orderProfileQuery  result:" + JSON.stringify(data));
