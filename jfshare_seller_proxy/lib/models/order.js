@@ -150,6 +150,8 @@ Order.prototype.batchExportOrder = function (params, callback) {
         endTime: params.endTime,
         orderState: params.orderStatus
     });
+
+    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions)+"-----sellerId---->"+params.sellerId);
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrder", [params.sellerId, orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-queryExportOrderInfo  result:" + JSON.stringify(data));
