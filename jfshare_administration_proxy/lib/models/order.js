@@ -34,7 +34,8 @@ Order.prototype.orderProfileQuery = function (params, callback) {
         orderState: params.orderState,
         startTime: params.startTime,
         endTime: params.endTime,
-        orderIds: params.orderList
+        orderIds: params.orderList,
+        sellerId:params.sellerId
     });
 
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
