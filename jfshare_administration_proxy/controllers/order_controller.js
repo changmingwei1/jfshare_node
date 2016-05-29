@@ -25,21 +25,18 @@ router.post('/list', function (request, response, next) {
         response.json(result);
         return;
     }
-
     if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
         result.code = 400;
         result.desc = "参数错误";
         response.json(result);
         return;
     }
-
     if (params.startTime == null || params.startTime == "") {
         result.code = 400;
         result.desc = "参数错误";
         response.json(result);
         return;
     }
-
     if (params.endTime == null || params.endTime == "" ) {
         result.code = 400;
         result.desc = "参数错误";
