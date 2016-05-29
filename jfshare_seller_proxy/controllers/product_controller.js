@@ -1253,6 +1253,11 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                 });
             }
 
+        }else if(params.queryDate=="2016-01"){
+            result.page = {
+                total:0,
+                pageCount:1
+            };
         }else{
             result.page = {
                 total:1,
