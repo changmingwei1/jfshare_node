@@ -144,10 +144,11 @@ Order.prototype.payOrderCreates = function (param, callback) {
 };
 
 //导出订单
-Order.prototype.queryExportOrderInfo = function (params, callback) {
+Order.prototype.batchExportOrder = function (params, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
         startTime: params.startTime,
-        endTime: params.endTime
+        endTime: params.endTime,
+        orderState: params.orderStatus
     });
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrder", [params.sellerId, orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
