@@ -1082,4 +1082,36 @@ router.post('/submit', function (request, response, next) {
     }
 });
 
+/*批量发货*/
+router.post('/batchDeliverOrder', function (request, response, next) {
+    logger.info("进入批量发货流程..");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+
+        if (params.sellerId == "" || params.sellerId == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        logger.info("进入批量发货流程params:" + JSON.stringify(params));
+        Order.batchDeliverOrder(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            response.json(data);
+        });
+        //});
+    } catch (ex) {
+        logger.error("批量发货 error:" + ex);
+        result.code = 500;
+        result.desc = "批量发货失败";
+        response.json(result);
+    }
+});
+
+
+
 module.exports = router;
