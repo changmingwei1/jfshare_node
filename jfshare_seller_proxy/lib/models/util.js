@@ -66,4 +66,15 @@ Util.prototype.getCode = function(param, callback){
 //    });
 //};
 
+
+//数组求和函数
+Util.prototype.sum = function(){
+    var sum = 0;
+    for(var i = 0;i<this.length;i++)
+    {
+        sum += Number(this[i]);
+    }
+    return sum;
+}
+
 module.exports = new Util();
