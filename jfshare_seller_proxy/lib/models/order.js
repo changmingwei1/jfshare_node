@@ -29,8 +29,14 @@ Order.prototype.orderProfileQuery = function (params, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
         orderState: params.orderStatus || 0,
         count: params.percount,
-        curPage: params.curpage
+        curPage: params.curpage,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        orderIds: params.orderList,
+        sellerId: params.sellerId
     });
+
+
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2, params.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
@@ -90,7 +96,7 @@ Order.prototype.querydealList = function (param, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
         count: param.percount,
         curPage: param.curpage,
-        startTime:param.date
+        startTime: param.date
     });
 
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryOffline", [2, param.sellerId, orderQueryConditions]);
@@ -157,7 +163,7 @@ Order.prototype.batchExportOrder = function (params, callback) {
         orderState: params.orderStatus
     });
 
-    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions)+"-----sellerId---->"+params.sellerId);
+    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrder", [params.sellerId, orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-queryExportOrderInfo  result:" + JSON.stringify(data));
@@ -165,10 +171,10 @@ Order.prototype.batchExportOrder = function (params, callback) {
         if (err || data[0].result.code == "1") {
             logger.error("调用orderServ-queryExportOrderInfo  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "到处订单失败！";
+            res.desc = "导出订单失败！";
             callback(res, null);
         } else {
-            callback(null, data[0].orderProfilePage);
+            callback(null, data);
         }
     });
 };
@@ -249,6 +255,40 @@ Order.prototype.orderConfirm = function (arg, callback) {
         }
         else {
             logger.info("orderConfirmOffline response:" + JSON.stringify(data[0]));
+            callback(null, data);
+        }
+    });
+};
+
+//BatchDeliverResult batchDeliverOrder(1:i32 sellerId, 2:BatchDeliverParam param);
+
+
+//批量发货
+Order.prototype.batchDeliverOrder = function (params, callback) {
+    var deliverInfo = new order_types.DeliverInfo({
+        expressName:"韵达",
+        ExpressNo:"3907200391763"
+    });
+    var order = new order_types.Order({
+        orderId:params.orderId,
+        deliverInfo:params.deliverInfo
+    });
+    list.push(order);
+    var batchDeliverParam = new order_types.BatchDeliverParam({
+        orderList: list
+    });
+
+    logger.info("调用orderServ-batchDeliverParam  params:" + JSON.stringify(batchDeliverParam));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchDeliverOrder", [params.sellerId, batchDeliverParam]);
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-batchDeliverParam  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用orderServ-batchDeliverParam  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "批量发货失败！";
+            callback(res, null);
+        } else {
             callback(null, data);
         }
     });
