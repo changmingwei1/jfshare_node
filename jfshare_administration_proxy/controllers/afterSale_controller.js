@@ -47,13 +47,6 @@ router.post('/review', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.reviewResult == null || params.reviewResult == "") {
-            result.code = 400;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-
         if (params.reviewResult == "1") { //表示拒绝
             params.state = 3;
         } else if (params.reviewResult == "0") { //表示同意
