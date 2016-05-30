@@ -5,88 +5,87 @@ var express = require('express');
 var router = express.Router();
 
 var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 
 var Product = require('../lib/models/product');
 var Address = require('../lib/models/address');
+var Buyer = require('../lib/models/buyer');
 
 
 //新增收货地址
-router.post('/add', function(req, res, next) {
+router.post('/add', function (req, res, next) {
     var result = {code: 200};
 
-    try{
+    try {
         var arg = req.body;
-        if(arg == null) {
+        if (arg == null) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
             return;
         }
-        arg.token = "鉴权信息1";
-        arg.ppInfo = "鉴权信息2";
-
-        if( arg.userId==null ||arg.userId =="" || arg.userId <=0){
+        if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if( arg.mobile==null ||arg.mobile ==""){
+        if (arg.mobile == null || arg.mobile == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if( arg.receiverName==null ||arg.receiverName ==""){
+        if (arg.receiverName == null || arg.receiverName == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if( arg.address==null ||arg.address ==""){
+        if (arg.address == null || arg.address == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.provinceId==null ||arg.provinceId ==""){
+        if (arg.provinceId == null || arg.provinceId == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.provinceName==null ||arg.provinceName ==""){
+        if (arg.provinceName == null || arg.provinceName == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.cityId==null ||arg.cityId ==""){
+        if (arg.cityId == null || arg.cityId == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.cityName==null ||arg.cityName ==""){
-            result.code = 400;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }/*
-        if(arg.countyId==null ||arg.countyId ==""){
+        if (arg.cityName == null || arg.cityName == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.countyName==null ||arg.countyName ==""){
-            result.code = 400;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }*/
-        if(arg.postCode==null ||arg.postCode ==""){
+        /*
+         if(arg.countyId==null ||arg.countyId ==""){
+         result.code = 400;
+         result.desc = "参数错误";
+         res.json(result);
+         return;
+         }
+         if(arg.countyName==null ||arg.countyName ==""){
+         result.code = 400;
+         result.desc = "参数错误";
+         res.json(result);
+         return;
+         }*/
+        if (arg.postCode == null || arg.postCode == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
@@ -94,14 +93,20 @@ router.post('/add', function(req, res, next) {
         }
 
         logger.info("新增收货地址请求， arg:" + JSON.stringify(arg));
-        Address.addAddress(arg, function(err, data) {
-            if(err){
+        Buyer.validAuth(arg, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
-            result.addressId = data[0].value;
-            res.json(result);
-            logger.info("add address response:" + JSON.stringify(result));
+            Address.addAddress(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                result.addressId = data[0].value;
+                res.json(result);
+                logger.info("add address response:" + JSON.stringify(result));
+            });
         });
     } catch (ex) {
         logger.error("add address error:" + ex);
@@ -112,35 +117,37 @@ router.post('/add', function(req, res, next) {
 });
 
 //删除收货地址
-router.post('/delete', function(req, res, next) {
+router.post('/delete', function (req, res, next) {
     var result = {code: 200};
 
-    try{
+    try {
         var arg = req.body;
-
-        arg.token = "鉴权信息1";
-        arg.ppInfo = "鉴权信息2";
-        arg.browser = "asddf";
-        if(arg.userId == null || arg.userId == "" || arg.userId <= 0){
+        if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
             return;
         }
-        if(arg.addrId == null || arg.addrId == "" || arg.addrId <= 0){
+        if (arg.addrId == null || arg.addrId == "" || arg.addrId <= 0) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
             return;
         }
         logger.info("请求参数：" + JSON.stringify(arg));
-        Address.delAddress(arg, function(err, data) {
-            if(err){
+        Buyer.validAuth(arg, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
-            res.json(result);
-            logger.info("delete address response:" + JSON.stringify(result));
+            Address.delAddress(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                res.json(result);
+                logger.info("delete address response:" + JSON.stringify(result));
+            });
         });
     } catch (ex) {
         logger.error("delete address error:" + ex);
@@ -156,83 +163,79 @@ router.post('/update', function (req, res, next) {
 
     try {
         var arg = req.body;
-        if(arg == null) {
+        if (arg == null) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
             return;
         }
-        arg.token = "鉴权信息1";
-        arg.ppInfo = "鉴权信息2";
-        arg.browser = "asdfasf";
-
-        if( arg.userId==null ||arg.userId =="" || arg.userId <=0){
+        if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if( arg.addrId==null ||arg.addrId =="" || arg.addrId <=0){
+        if (arg.addrId == null || arg.addrId == "" || arg.addrId <= 0) {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if( arg.mobile==null ||arg.mobile ==""){
+        if (arg.mobile == null || arg.mobile == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if( arg.receiverName==null ||arg.receiverName ==""){
+        if (arg.receiverName == null || arg.receiverName == "") {
             result.code = 500;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if( arg.address==null ||arg.address ==""){
+        if (arg.address == null || arg.address == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.provinceId==null ||arg.provinceId ==""){
+        if (arg.provinceId == null || arg.provinceId == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.provinceName==null ||arg.provinceName ==""){
+        if (arg.provinceName == null || arg.provinceName == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.cityId==null ||arg.cityId ==""){
+        if (arg.cityId == null || arg.cityId == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.cityName==null ||arg.cityName ==""){
+        if (arg.cityName == null || arg.cityName == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.countyId==null ||arg.countyId ==""){
+        if (arg.countyId == null || arg.countyId == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.countyName==null ||arg.countyName ==""){
+        if (arg.countyName == null || arg.countyName == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if(arg.postCode==null ||arg.postCode ==""){
+        if (arg.postCode == null || arg.postCode == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
@@ -240,14 +243,19 @@ router.post('/update', function (req, res, next) {
         }
 
         logger.info("修改收货地址请求， arg:" + JSON.stringify(arg));
-
-        Address.updateAddress(arg, function(err, data) {
-            if(err){
+        Buyer.validAuth(arg, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
-            res.json(result);
-            logger.info("update address response:" + JSON.stringify(result));
+            Address.updateAddress(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                res.json(result);
+                logger.info("update address response:" + JSON.stringify(result));
+            });
         });
     } catch (ex) {
         logger.error("update address error:" + ex);
@@ -258,49 +266,51 @@ router.post('/update', function (req, res, next) {
 });
 
 //查询收货地址列表
-router.post('/list', function(req, res, next) {
+router.post('/list', function (req, res, next) {
     var result = {code: 200};
 
-    try{
+    try {
         var arg = req.body;
-        if(arg == null || arg.userId == null || arg.userId == "" || arg.userId <= 0 ){
+        if (arg == null || arg.userId == null || arg.userId == "" || arg.userId <= 0) {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        arg.token = "鉴权信息1";
-        arg.ppInfo = "鉴权信息2";
-        arg.browser = "asdfas";
-
-        Address.queryAddress(arg, function(err, addressList) {
-            if(err) {
+        Buyer.validAuth(arg, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
-            var addressInfoList = [];
-            if(addressList !== null && addressList.length >0){
-                addressList.forEach(function(address) {
-                    addressInfoList.push({
-                        id: address.id,
-                        receiverName: address.receiverName,
-                        mobile: address.mobile,
-                        provinceId: address.provinceId,
-                        provinceName: address.provinceName,
-                        cityId: address.cityId,
-                        cityName: address.cityName,
-                        countyId: address.countyId,
-                        countyName: address.countyName,
-                        address: address.address,
-                        postcode: address.postCode,
-                        isDefault: address.isDefault
+            Address.queryAddress(arg, function (err, addressList) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                var addressInfoList = [];
+                if (addressList !== null && addressList.length > 0) {
+                    addressList.forEach(function (address) {
+                        addressInfoList.push({
+                            id: address.id,
+                            receiverName: address.receiverName,
+                            mobile: address.mobile,
+                            provinceId: address.provinceId,
+                            provinceName: address.provinceName,
+                            cityId: address.cityId,
+                            cityName: address.cityName,
+                            countyId: address.countyId,
+                            countyName: address.countyName,
+                            address: address.address,
+                            postcode: address.postCode,
+                            isDefault: address.isDefault
+                        });
                     });
-                });
-                result.addressInfoList = addressInfoList;
-            }
+                    result.addressInfoList = addressInfoList;
+                }
 
-            res.json(result);
-            logger.info("get address list response:" + JSON.stringify(result));
+                res.json(result);
+                logger.info("get address list response:" + JSON.stringify(result));
+            });
         });
     } catch (ex) {
         logger.error("get address list error:" + ex);
@@ -316,7 +326,7 @@ router.post('/setDefaultAddress', function (req, res, next) {
 
     try {
         var arg = req.body;
-        if(arg == null) {
+        if (arg == null) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
@@ -325,27 +335,22 @@ router.post('/setDefaultAddress', function (req, res, next) {
         var params = {};
         params.userId = arg.userId;
         params.addressId = arg.id;
-
-        params.token = arg.token || "鉴权信息1";
-        params.ppInfo = arg.ppInfo || "鉴权信息2";
-        params.browser = arg.browser || "1";
-
         logger.info("设为默认地址请求， arg:" + JSON.stringify(params));
 //暂时去掉鉴权信息
-//    Buyer.validAuth(args,function(err,data) {
-//        if (err) {
-//            response.json(err);
-//            return;
-//        }
-        Address.setDefaultAddress(params, function(err, data) {
-            if(err){
+        Buyer.validAuth(params, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
-            res.json(result);
-            logger.info("setDefaultAddress response:" + JSON.stringify(result));
+            Address.setDefaultAddress(params, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                res.json(result);
+                logger.info("setDefaultAddress response:" + JSON.stringify(result));
+            });
         });
-        //});
     } catch (ex) {
         logger.error("setDefaultAddress error:" + ex);
         result.code = 500;
@@ -355,12 +360,12 @@ router.post('/setDefaultAddress', function (req, res, next) {
 });
 
 //查询全国省份列表
-router.post('/getprovinces', function(req, res, next) {
+router.post('/getprovinces', function (req, res, next) {
     var result = {code: 200};
-    try{
+    try {
 
-        Address.getProvinces(function(err, data) {
-            if(err){
+        Address.getProvinces(function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
@@ -377,21 +382,21 @@ router.post('/getprovinces', function(req, res, next) {
 });
 
 //查询省份下的市
-router.post('/getcitys', function(req, res, next) {
+router.post('/getcitys', function (req, res, next) {
     var result = {code: 200};
 
     //var provinceId = req.query;
     var params = req.body;
-    if(params.provinceId<=0 || params.provinceId =="" || params.provinceId==null){
+    if (params.provinceId <= 0 || params.provinceId == "" || params.provinceId == null) {
         result.code = 500;
         result.desc = "参数错误";
         res.json(result);
         return;
     }
-    try{
+    try {
 
-        Address.getCitys(params,function(err, data) {
-            if(err){
+        Address.getCitys(params, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
@@ -408,21 +413,21 @@ router.post('/getcitys', function(req, res, next) {
 });
 
 //查询市下面的乡镇
-router.post('/getcountys', function(req, res, next) {
+router.post('/getcountys', function (req, res, next) {
     var result = {code: 200};
 
     var params = req.body;
 
-    if(params.cityId<=0 || params.cityId =="" || params.cityId==null){
+    if (params.cityId <= 0 || params.cityId == "" || params.cityId == null) {
         result.code = 500;
         result.desc = "参数错误";
         res.json(result);
         return;
     }
-    try{
+    try {
 
-        Address.getCountys(params,function(err, data) {
-            if(err){
+        Address.getCountys(params, function (err, data) {
+            if (err) {
                 res.json(err);
                 return;
             }
