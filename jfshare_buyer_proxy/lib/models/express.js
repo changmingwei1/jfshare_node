@@ -14,9 +14,9 @@ function Expresss(){}
 Expresss.prototype.queryExpress = function(params, callback){
 
     var expressParams = new express_types.ExpressParams({
-       orderId:params.orderId||"17870082",
-        num:params.num ||"3305764433295",
-        queryType:2
+       orderId:params.orderId,
+        num:params.num,
+        queryType:2   /*1:查快递信息，2：查物流跟踪信息，3：包含1、2*/
     });
     // 获取client
     var expressOrderServ = new Lich.InvokeBag(Lich.ServiceKey.ExpresssServer, "expressQuery",expressParams);
