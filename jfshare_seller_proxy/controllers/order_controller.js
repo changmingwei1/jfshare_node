@@ -863,7 +863,21 @@ router.post('/querydealList', function (request, response, next) {
                     });
                     sumPerice.push(order.closingPrice);
                 });
-
+                for(var i=0;i<productDeatilList.length;i++){
+                    if(productDeatilList[i].paymode=="1"){
+                        productDeatilList[i].paymode ="天翼";
+                    }else if(productDeatilList[i].paymode=="2"){
+                        productDeatilList[i].paymode ="支付宝";
+                    }else if(productDeatilList[i].paymode=="3"||productDeatilList[i].paymode=="4"||productDeatilList[i].paymode=="9"){
+                        productDeatilList[i].paymode ="微信";
+                    }else if(productDeatilList[i].paymode=="5"||productDeatilList[i].paymode=="7"){
+                        productDeatilList[i].paymode ="支付宝";
+                    }else if(productDeatilList[i].paymode=="6"||productDeatilList[i].paymode=="8"){
+                        productDeatilList[i].paymode ="和包";
+                    }else{
+                        productDeatilList[i].paymode ="积分";
+                    }
+                }
                 var sum = 0;
                 for(var i = 0;i<sumPerice.length;i++)
                 {
@@ -873,7 +887,7 @@ router.post('/querydealList', function (request, response, next) {
                 count = productDeatilList.length;
                 result.count = count;
 
-                result.perice = sum;
+                result.perice = sum.toFixed(2);
                 result.productDeatilList = productDeatilList;
 
                 var page = {
@@ -952,7 +966,19 @@ router.post('/querydealDetail', function (request, response, next) {
                 if(order.payInfo==null){
                     orderDetail.paymode="";
                 }else{
-                    orderDetail.paymode = order.payInfo.payChannel;
+                    if(order.payInfo.payChannel=="1"){
+                        orderDetail.paymode ="天翼";
+                    }else if(order.payInfo.payChannel=="2"){
+                        orderDetail.paymode ="支付宝";
+                    }else if(order.payInfo.payChannel=="3"||order.payInfo.payChannel=="4"||order.payInfo.payChannel=="9"){
+                        orderDetail.paymode ="微信";
+                    }else if(order.payInfo.payChannel=="5"||order.payInfo.payChannel=="7"){
+                        orderDetail.paymode ="支付宝";
+                    }else if(order.payInfo.payChannel=="6"||order.payInfo.payChannel=="8"){
+                        orderDetail.paymode ="和包";
+                    }else{
+                        orderDetail.paymode ="积分";
+                    }
                 }
 
                 orderDetail.type = "收款";
