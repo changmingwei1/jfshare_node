@@ -106,7 +106,7 @@ router.post('/toReview', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            result.message = data;
+            result.message = data[0];
             logger.info("AfterSale.queryAfterSale response:" + JSON.stringify(result));
             return response.json(result);
 
