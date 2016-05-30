@@ -44,7 +44,8 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             curPage: params.curpage,
             startTime: params.startTime,
             endTime: params.endTime,
-            sellerId: params.sellerId
+            sellerId: params.sellerId,
+            orderId:params.orderId
         });
     }
 
