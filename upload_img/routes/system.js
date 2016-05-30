@@ -59,7 +59,7 @@ var client = redis.createClient(6379, redis_host);
 //图片
 var imageinfo = require("imageinfo");
 
-client.auth("jfsharedis",function(){
+client.auth("JFshare#0328",function(){
     console.log('redis认证通过');
 });
 
