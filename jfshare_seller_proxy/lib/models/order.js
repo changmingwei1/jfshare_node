@@ -236,8 +236,9 @@ Order.prototype.batchDeliverOrder = function (params, callback) {
     var list = [];
     var deliverInfo = new order_types.DeliverInfo({
         expressName:"韵达",
-        ExpressNo:"3907200391763"
+        expressNo:"3907200391763"
     });
+
     var order = new order_types.Order({
         orderId:params.orderId,
         deliverInfo:deliverInfo
