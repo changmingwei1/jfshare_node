@@ -31,11 +31,11 @@ Order.prototype.orderProfileQuery = function (params, callback) {
         orderState: params.orderStatus || 0,
         count: params.percount,
         curPage: params.curpage,
-        orderState: params.orderState,
         startTime: params.startTime,
         endTime: params.endTime,
         orderIds: params.orderList,
-        sellerId:params.sellerId
+        sellerId:params.sellerId,
+        orderId:params.orderId
     });
     logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);

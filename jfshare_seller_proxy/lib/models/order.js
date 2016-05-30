@@ -208,11 +208,11 @@ Order.prototype.orderConfirm = function (arg, callback) {
         });
     } else {
         deliverInfo = new order_types.DeliverInfo({
-            addressId: arg.addressDesc.id,
-            provinceName: arg.addressDesc.provinceName,
-            cityName: arg.addressDesc.cityName,
-            countyName: arg.addressDesc.countyName,
-            receiverAddress: arg.addressDesc.address
+            //addressId: arg.addressDesc.id,
+            //provinceName: arg.addressDesc.provinceName,
+            //cityName: arg.addressDesc.cityName,
+            //countyName: arg.addressDesc.countyName,
+            //receiverAddress: arg.addressDesc.address
         });
     }
 
@@ -221,7 +221,7 @@ Order.prototype.orderConfirm = function (arg, callback) {
         userName: arg.userName,
         amount: arg.totalSum,
         //payChannel: new pay_types.PayChannel({payChannel:arg.payChannel}),
-        deliverInfo: deliverInfo,
+        //deliverInfo: deliverInfo,
         sellerDetailList: sellerDetailList,
         fromBatch: arg.fromBatch,
         fromSource: arg.fromSource,

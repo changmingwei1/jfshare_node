@@ -783,6 +783,7 @@ router.post('/afterSalelist', function (request, response, next) {
             response.json(result);
             return;
         }
+        var page = {total: 0, pageCount: 0};
         var isExist = 0;
         logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
         async.series([
@@ -796,10 +797,10 @@ router.post('/afterSalelist', function (request, response, next) {
                             if (data == null || data.afterSaleOrders == null || data.afterSaleOrders.length == 0) {
                                 isExist = 1;
                                 return callback(null, 2);
-
                             } else {
                                 afterOrderList = data.afterSaleOrders;
-                                page = data.pagination;
+                                page.total = data.pagination.totalCount;
+                                page.pageCount = data.pagination.pageNumCount;
                                 callback(null, 1);
                                 return;
                             }
@@ -814,7 +815,7 @@ router.post('/afterSalelist', function (request, response, next) {
                 },
                 function (callback) {
                     try {
-                        var page = {total: 0, pageCount: 0};
+
                         var orderIdList = [];
                         logger.info("------isExist------:" + isExist);
                         if (isExist) {
@@ -833,8 +834,8 @@ router.post('/afterSalelist', function (request, response, next) {
                                 logger.error("订单服务异常");
                                 return callback(1, null);
                             }
-                            page.total = orderInfo.total;
-                            page.pageCount = orderInfo.pageCount;
+                           // page.total = orderInfo.total;
+                           // page.pageCount = orderInfo.pageCount;
                             if (orderInfo.orderProfileList !== null) {
                                 orderInfo.orderProfileList.forEach(function (order) {
                                     var orderItem = {
