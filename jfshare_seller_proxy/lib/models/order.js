@@ -240,7 +240,7 @@ Order.prototype.batchDeliverOrder = function (params, callback) {
     });
     var order = new order_types.Order({
         orderId:params.orderId,
-        deliverInfo:params.deliverInfo
+        deliverInfo:deliverInfo
     });
     list.push(order);
     var batchDeliverParam = new order_types.BatchDeliverParam({
