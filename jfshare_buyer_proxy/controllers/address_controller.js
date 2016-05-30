@@ -332,17 +332,14 @@ router.post('/setDefaultAddress', function (req, res, next) {
             res.json(result);
             return;
         }
-        var params = {};
-        params.userId = arg.userId;
-        params.addressId = arg.id;
-        logger.info("设为默认地址请求， arg:" + JSON.stringify(params));
+        logger.info("设为默认地址请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息
-        Buyer.validAuth(params, function (err, data) {
+        Buyer.validAuth(arg, function (err, data) {
             if (err) {
                 res.json(err);
                 return;
             }
-            Address.setDefaultAddress(params, function (err, data) {
+            Address.setDefaultAddress(arg, function (err, data) {
                 if (err) {
                     res.json(err);
                     return;
