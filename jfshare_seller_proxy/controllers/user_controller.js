@@ -43,7 +43,8 @@ router.post('/login', function(request, respone, next) {
                 var seller = {
                         sellerId:data[0].seller.sellerId,
                         loginName:data[0].seller.loginName,
-                        sellerName:data[0].seller.sellerName
+                        sellerName:data[0].seller.sellerName,
+                        createTime:data[0].seller.createTime
                 };
 
                 var loginLog = {tokenId:data[0].loginLog.tokenId};
