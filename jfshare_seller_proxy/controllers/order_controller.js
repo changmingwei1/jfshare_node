@@ -1059,7 +1059,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
 });
 
 /*提交订单*/
-router.post('/submit', function (request, response, next) {
+router.post('/payOrderCreates', function (request, response, next) {
     logger.info("进入提交订单流程..");
     var result = {code: 200};
     try {

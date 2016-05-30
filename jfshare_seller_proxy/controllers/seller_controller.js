@@ -256,9 +256,9 @@ router.post('/querySellerVipList', function(request, response, next) {
         });
     }catch(ex){
         logger.error("获取会员信息列表失败，============:" + ex);
-        resContent.code = 500;
-        resContent.desc = "获取会员信息列表失败";
-        response.json(resContent);
+        result.code = 500;
+        result.desc = "获取会员信息列表失败";
+        response.json(result);
     }
 });
 
