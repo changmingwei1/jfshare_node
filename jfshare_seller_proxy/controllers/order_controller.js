@@ -868,24 +868,16 @@ router.post('/querydealList', function (request, response, next) {
                     sumPerice.push(order.closingPrice);
                 });
 
-                //for(var i=0 ; i < orderProfileList.length ; i++){
-                //    var orderDesc = {
-                //        productDetId: orderProfileList[i].orderId,
-                //        type: "收款",
-                //        date: orderProfileList[i].createTime,
-                //        paymode: orderProfileList[i].payInfo.payChannel,
-                //        perice: orderProfileList[i].closingPrice
-                //    };
-                //    var sumPerice;
-                //    sumPerice += Number(orderDesc.perice);
-                //    logger.info("sumPerice===" + sumPerice);
-                //    logger.info("orderDesc.perice===" + orderDesc.perice);
-                //    productDeatilList.push(orderDesc);
-                //}
+                var sum = 0;
+                for(var i = 0;i<sumPerice.length;i++)
+                {
+                    sum += Number(sumPerice[i]);
+                }
+
                 count = productDeatilList.length;
                 result.count = count;
 
-                result.perice = sumPerice.sum();
+                result.perice = sum;
                 result.productDeatilList = productDeatilList;
 
                 var page = {
@@ -895,7 +887,6 @@ router.post('/querydealList', function (request, response, next) {
                 result.page = page;
                 response.json(result);
                 return
-
             }
 
         });
