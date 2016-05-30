@@ -855,8 +855,8 @@ router.post('/querydealList', function (request, response, next) {
                 }
 
                 var count;
-                var sumPerice;
                 var productDeatilList = [];
+                var sumPerice=[];
                 orderProfileList.forEach(function (order) {
                     productDeatilList.push({
                         productDetId: order.orderId,
@@ -865,13 +865,27 @@ router.post('/querydealList', function (request, response, next) {
                         paymode: order.payInfo.payChannel,
                         perice: order.closingPrice
                     });
-                    sumPerice += Number(order.closingPrice);
+                    sumPerice.push(order.closingPrice);
                 });
 
+                //for(var i=0 ; i < orderProfileList.length ; i++){
+                //    var orderDesc = {
+                //        productDetId: orderProfileList[i].orderId,
+                //        type: "收款",
+                //        date: orderProfileList[i].createTime,
+                //        paymode: orderProfileList[i].payInfo.payChannel,
+                //        perice: orderProfileList[i].closingPrice
+                //    };
+                //    var sumPerice;
+                //    sumPerice += Number(orderDesc.perice);
+                //    logger.info("sumPerice===" + sumPerice);
+                //    logger.info("orderDesc.perice===" + orderDesc.perice);
+                //    productDeatilList.push(orderDesc);
+                //}
                 count = productDeatilList.length;
                 result.count = count;
 
-                result.perice = sumPerice;
+                result.perice = sumPerice.sum();
                 result.productDeatilList = productDeatilList;
 
                 var page = {

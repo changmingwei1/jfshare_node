@@ -1156,43 +1156,56 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
         }
 
         //---------------------前台测试用---------------------------------------------
-        result.thsoldNum=50;
-        result.thmonNum=33;
-        result.page = {
-            total:1,
-            pageCount:1
-        };
+
         var productTotalList=[];
         var productDayList=[];
-
+    if(params.date=="2016-01"||params.date=="2016-02"||params.date=="2016-03"){
+        result.thsoldNum=50;
+        result.thmonNum=33;
+    result.page = {
+        total:60,
+        pageCount:3
+    };
+    for(var i=0;i<20;i++){
         productDayList.push({
             productId:20,
             productName:"测试：测试商品m",
             thsoldNum:20,
             thCaptcha:20
-
         });
+    }
+    productTotalList.push({
+        data:"2016-05-27",
+        thDayNum:20,
+        productDayList:productDayList
+    });
+}else if(params.date=="2016-03"){
+        result.thsoldNum=50;
+        result.thmonNum=33;
+    result.page = {
+        total:3,
+        pageCount:1
+    };
+    for(var i=0;i<3;i++){
         productDayList.push({
-            productId:21,
+            productId:20,
             productName:"测试：测试商品m",
-            thsoldNum:22,
-            thCaptcha:22
+            thsoldNum:20,
+            thCaptcha:20
+        });
+    }
+    productTotalList.push({
+        data:"2016-05-26",
+        thDayNum:20,
+        productDayList:productDayList
+    });
+}else{
 
-        });
-
-        productTotalList.push({
-            data:"2016-05-26",
-            thDayNum:20,
-            productDayList:productDayList
-        });
-        productTotalList.push({
-            data:"2016-05-27",
-            thDayNum:20,
-            productDayList:productDayList
-        });
+}
         result.productTotalList=productTotalList;
         response.json(result);
         return;
+
 
         //-------------------------------------------------------------------
         Product.queryCaptchaTotalList(params, function (err, data) {
