@@ -12,11 +12,10 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 
 var Product = require('../lib/models/product');
 var Seller = require('../lib/models/seller');
-var detailStock = require('../lib/models/detail_stock');
 var BaseTemplate = require('../lib/models/baseTemplate');
 var Stock = require('../lib/models/stock');
 
-//查询商品列表
+/*查询商品列表*/
 router.post('/list', function (req, res, next) {
     logger.info("进入获取商品列表接口");
     var resContent = {code: 200};
@@ -68,7 +67,7 @@ router.post('/list', function (req, res, next) {
     }
 });
 
-//查询商品属性信息
+/*查询商品属性信息*/
 router.get('/productAttribute', function (req, res, next) {
 
     logger.info("进入获取商品详情接口");
@@ -104,7 +103,7 @@ router.get('/productAttribute', function (req, res, next) {
     }
 });
 
-//查询商品
+/*查询商品*/
 router.get('/productInfo', function (req, res, next) {
 
     logger.info("进入获取商品详情接口");
@@ -205,7 +204,7 @@ router.get('/productInfo', function (req, res, next) {
     }
 });
 
-//查询商品详情queryProductDetail
+/*查询商品详情queryProductDetail*/
 router.get('/productDetail', function (req, res, next) {
 
     logger.info("进入查询商品详情接口");
@@ -257,7 +256,6 @@ router.post('/querystore', function (req, res, next) {
     result.productId = params.productId;
     result.sellerId = params.sellerId;
     result.skuNum = params.skuNum;
-
     var storehouseId = 0;
 
     logger.info("查询库存和sku的请求，arg：" + JSON.stringify(params));
@@ -281,14 +279,11 @@ router.post('/querystore', function (req, res, next) {
             function (callback) {
                 try {
                     if(storehouseId == "1"){
-
                         result.storehouseId =1;
                         params.storehouseId = 1;
                         callback(null, result);
                         return;
                     }else{
-
-
                         BaseTemplate.queryStorehouse(params, function (err, data) {
                             if (err) {
                                 callback('error', err);
@@ -324,20 +319,16 @@ router.post('/querystore', function (req, res, next) {
                                 }
                             }
                         });
-
                     }
-
                 } catch (ex) {
                     logger.info("仓库服务异常:" + ex);
                     return callback(1, null);
                 }
-            }
-            ,
+            },
             function (callback) {
                 try {
                     logger.info("请求参数，arg:" + JSON.stringify(params));
                     if (result.storehouseId != 0) {
-
                         Product.queryHotSKUV1(params, function (err, data) {
                             if (err) {
                                 result.storehouseId = 0;
@@ -355,12 +346,10 @@ router.post('/querystore', function (req, res, next) {
                     } else {
                         return callback(null, result);
                     }
-
                 } catch (ex) {
                     logger.error("product服务异常:" + ex);
                     return callback(2, null);
                 }
-
             },
             function (callback) {
                 try {
@@ -376,22 +365,17 @@ router.post('/querystore', function (req, res, next) {
                                     result.count = stockInfo.total;
                                 }
                                 return callback(null, result);
-
                             }
                         });
-
                     } else {
                         callback(null, result);
                         return;
                     }
-
                 } catch (ex) {
                     logger.error("库存服务异常:" + ex);
                     return callback(3, null);
                 }
-
             }
-
         ],
         function (err, results) {
             if (err) {
@@ -413,7 +397,7 @@ router.post('/querystore', function (req, res, next) {
     );
 });
 
-/*批量获取指定sku*/
+/*批量获取虚拟：sku、价格和库存*/
 router.post('/queryVirtualstore', function (request, response, next) {
     var result = {code: 200};
     try {
@@ -521,8 +505,7 @@ router.post('/queryVirtualstore', function (request, response, next) {
     }
 });
 
-
-/*批量获取sku价格和库存*/
+/*批量获取实物：sku、价格和库存*/
 router.post('/querystoreBatch', function (request, response, next) {
     var result = {code: 200};
     try {
@@ -540,36 +523,19 @@ router.post('/querystoreBatch', function (request, response, next) {
                                 return callback(1, null);
                             }
                             productStorehouseList = data[0].productStorehouseList;
-                         //   for(){}
                             params.productList = productStorehouseList;
                             for(var i=0;i<productStorehouseList.length;i++){
-
                                 if(productStorehouseList[i].storehouseId ==0){
-
                                     for(var j=0;j<params.sellerList.length;j++){
-
                                         if(productStorehouseList[i].sellerId.toString() ==params.sellerList[j].sellerId){
-
-
                                             if(productStorehouseList[i].productId ==params.sellerList[j].productId){
-
-                                                if(params.sellerList[j].storehouseIds =="1"){
-
+                                                if(params.sellerList[j].storehouseIds == "1"){
                                                     productStorehouseList[i].storehouseId = 1;
-
                                                 }
-
-
-
                                             }
-
                                         }
-
-
                                     }
-
                                 }
-
                             }
                             logger.info("get order list response:" + JSON.stringify(params));
                             callback(null, data);
@@ -691,7 +657,7 @@ router.post('/querystoreBatch', function (request, response, next) {
     }
 });
 
-//获取类目列表
+/*获取类目列表*/
 router.post('/subjectList', function (req, res, next) {
 
     logger.info("进入获取子分类接口");
