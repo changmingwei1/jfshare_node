@@ -196,58 +196,54 @@ router.post('/info', function (request, response, next) {
     async.series([
             function (callback) {
                 try {
-
-                    Order.queryOrderDetail(params, function (err, orderInfo) {
-                        if (err) {
-                            logger.error("订单服务异常");
-                            return callback(1, null);
+                    result.orderId = orderInfo.orderId;
+                    result.closingPrice = orderInfo.closingPrice;
+                    //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+                    result.orderState = orderInfo.orderState;
+                    if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
+                        result.mobile = orderInfo.deliverInfo.receiverMobile;
+                    } else {
+                        result.address = orderInfo.deliverInfo.provinceName +
+                            orderInfo.deliverInfo.cityName +
+                            orderInfo.deliverInfo.countyName +
+                            orderInfo.deliverInfo.receiverAddress;
+                        result.receiverName = orderInfo.deliverInfo.receiverName;
+                        result.mobile = orderInfo.deliverInfo.receiverMobile;
+                    }
+                    if (orderInfo.payInfo != null) {
+                        result.payChannel = orderInfo.payInfo.payChannel;
+                    }
+                    result.curTime = new Date().getTime();
+                    result.createTime = orderInfo.createTime;
+                    result.deliverTime = orderInfo.deliverTime; //卖家发货时间
+                    result.successTime = orderInfo.successTime; //确认收货时间
+                    result.comment = orderInfo.buyerComment;
+                    result.postage = orderInfo.postage;
+                    result.sellerId = orderInfo.sellerId;
+                    /*result.postageExt = orderInfo.postageExt; */
+                    /*运费扩展信息  JSON*/
+                    result.exchangeScore = orderInfo.exchangeScore; //添加字段
+                    result.exchangeCash = orderInfo.exchangeCash; //添加字段
+                    result.type = orderInfo.productList[0].type;
+                    var productList = [];
+                    if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
+                        for (var i = 0; i < orderInfo.productList.length; i++) {
+                            productList.push({
+                                productId: orderInfo.productList[i].productId,
+                                productName: orderInfo.productList[i].productName,
+                                sku: {
+                                    skuNum: orderInfo.productList[i].skuNum,
+                                    skuName: orderInfo.productList[i].skuDesc
+                                },
+                                curPrice: orderInfo.productList[i].curPrice,
+                                orgPrice: orderInfo.productList[i].orgPrice,
+                                imgKey: orderInfo.productList[i].imagesUrl,
+                                count: orderInfo.productList[i].count
+                            });
                         }
-                        logger.info(orderInfo);
-                        result.orderid = orderInfo.orderId;
-                        result.sellerId = orderInfo.sellerId;
-                        result.postage = orderInfo.postage;
-                        result.postage = orderInfo.postage;
-                        result.exchangeScore = orderInfo.exchangeScore;
-                        result.closingPrice = orderInfo.closingPrice;
-                        result.createTime = orderInfo.deliverTime;
-                        result.comment = orderInfo.buyerComment;
-                        if (orderInfo.deliverInfo !== null) {
-
-                            var deliverInfo = {
-                                receiverName: orderInfo.deliverInfo.receiverName,
-                                receiverMobile: orderInfo.deliverInfo.receiverMobile,
-                                receiverAddress: orderInfo.deliverInfo.receiverAddress,
-                                expressId: orderInfo.deliverInfo.expressId,
-                                expressName: orderInfo.deliverInfo.expressName,
-                                expressNo: orderInfo.deliverInfo.expressNo
-                            };
-                            result.deliverInfo = deliverInfo;
-                        }
-                        var productList = [];
-                        if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
-
-                            for (var i = 0; i < orderInfo.productList.length; i++) {
-                                productList.push({
-                                    productId: orderInfo.productList[i].productId,
-                                    productName: orderInfo.productList[i].productName,
-                                    skunum: {
-                                        skuNum: orderInfo.productList[i].skuNum,
-                                        skuDesc: orderInfo.productList[i].skuDesc
-                                    },
-                                    curPrice: orderInfo.productList[i].curPrice,
-                                    orgPrice: orderInfo.productList[i].orgPrice,
-                                    imgUrl: orderInfo.productList[i].imagesUrl,
-                                    count: orderInfo.productList[i].count,
-                                    postage: orderInfo.productList[i].postage,
-                                    type: orderInfo.productList[i].type
-                                });
-                            }
-                            result.productList = productList;
-
-                            logger.info("get order info response:" + JSON.stringify(result));
-                            callback(null, result);
-                        }
-                    });
+                        result.productList = productList;
+                    }
+                    params.sellerId = orderInfo.sellerId;
                 }
                 catch
                     (ex) {
