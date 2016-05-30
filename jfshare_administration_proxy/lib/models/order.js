@@ -27,16 +27,32 @@ function Order() {
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
 
-    var orderQueryConditions = new order_types.OrderQueryConditions({
-        orderState: params.orderStatus || 0,
-        count: params.percount,
-        curPage: params.curpage,
-        startTime: params.startTime,
-        endTime: params.endTime,
-        orderIds: params.orderList,
-        sellerId:params.sellerId,
-        orderId:params.orderId
-    });
+    var orderQueryConditions = "";
+    if(params.orderList!=null && params.orderList!=""){
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderState: params.orderStatus || 0,
+            startTime: params.startTime,
+            endTime: params.endTime,
+            orderIds: params.orderList,
+            sellerId:params.sellerId,
+            orderId:params.orderId
+        });
+
+    }else{
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderState: params.orderStatus || 0,
+            count: params.percount,
+            curPage: params.curpage,
+            startTime: params.startTime,
+            endTime: params.endTime,
+            sellerId:params.sellerId,
+            orderId:params.orderId
+        });
+    }
+
+
+
+
     logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
 

@@ -897,7 +897,7 @@ router.post('/afterSalelist', function (request, response, next) {
             function (err, results) {
                 if (err) {
                     result.code = 500;
-                    result.desc = "获取物流商列表";
+                    result.desc = "查询售后订单列表失败";
                     response.json(result);
                     return;
                 } else {
@@ -911,7 +911,7 @@ router.post('/afterSalelist', function (request, response, next) {
     } catch (ex) {
         logger.error("query 售后失败:" + ex);
         result.code = 500;
-        result.desc = "查询售后订单列表";
+        result.desc = "查询售后订单列表失败";
         response.json(result);
     }
 });
