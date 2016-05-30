@@ -247,7 +247,6 @@ Order.prototype.batchDeliverOrder = function (params, callback) {
     var batchDeliverParam = new order_types.BatchDeliverParam({
         orderList: list
     });
-
     logger.info("调用orderServ-batchDeliverParam  params:" + JSON.stringify(batchDeliverParam));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchDeliverOrder", [params.sellerId, batchDeliverParam]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
