@@ -1327,21 +1327,55 @@ router.post('/paystate', function (req, res, next) {
 });
 
 //支付完成通知接口
+router.get('/notify/alipay', function (request, response, next) {
+    logger.info("进入获取物流信息流程");
+    var result = {code: 200};
+    try {
+        var params = request.query;
+
+        logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
+
+        result.url = JSON.stringify(params);
+
+        response.json(result);
+
+    } catch (ex) {
+        response.json(result);
+    }
+});
+
 router.post('/notify/alipay', function (request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code: 200};
     try {
-        //var params = request.query;
         var params = request.body;
-        var args = {};
-        args.token = params.token || "鉴权信息1";
-        args.ppInfo = params.ppInfo || "鉴权信息2";
-        args.payChannel = params.payChannel || 1;
-        args.resUrl = params.resUrl || "支付返回的结果";
 
-        logger.info("query expressOrder params:" + JSON.stringify(args));
+        logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
+
+        result.url = JSON.stringify(params);
 
         response.json(result);
+
+    } catch (ex) {
+        response.json(result);
+    }
+});
+
+
+
+router.get('/payNotify/alipay', function (request, response, next) {
+    logger.info("进入获取物流信息流程");
+    var result = {code: 200};
+    try {
+        var param = request.query;
+
+
+        var string = redirect(pathname, redirectHandle);
+
+        response.writeHead(200,{"Content-Type":"text/plain"});
+        response.write(string);
+        response.end();
+
     } catch (ex) {
         response.json(result);
     }
