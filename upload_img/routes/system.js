@@ -18,7 +18,7 @@ var FdfsClient = require('../lib/fdfs');
 var fdfs = new FdfsClient({
     trackers: [
         {
-            host: '120.24.153.102',
+            host: '101.201.39.63',
             port: 22122
         }
     ],
@@ -27,8 +27,8 @@ var fdfs = new FdfsClient({
     charset: 'utf8'
 });
 
-var redis_host = '120.24.153.155';
-var img_proxy_url = 'http://120.24.153.155/';
+var redis_host = '101.201.39.63';
+var img_proxy_url = 'http://101.201.39.63/';
 
 /**
  * thrift
