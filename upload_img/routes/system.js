@@ -122,6 +122,12 @@ router.post('/upload', function(req, res) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
 */
 
+    var req_origin = req.headers.origin || "*";
+    res.setHeader('Access-Control-Allow-Origin', req_origin);
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
+
 
     // 此参数中携带了一些对上传文件的限定条件
     var originalUrl = req.originalUrl;
@@ -272,6 +278,61 @@ router.post('/upload', function(req, res) {
     //res.render('index', { title: TITLE  });
 
 });
+
+/* 处理post请求，上传逻辑 */
+router.post('/uploadFile', function(req, res) {
+
+    var req_origin = req.headers.origin || "*";
+    res.setHeader('Access-Control-Allow-Origin', req_origin);
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
+
+
+    var originalUrl = req.originalUrl;
+    console.log("originalUrl" + originalUrl);
+
+    var form = new formidable.IncomingForm();
+    form.encoding = "utf-8";
+
+    form.uploadDir = "/tmp";
+    form.keepExtensions = true;
+    form.maxFieldsSize = 10 * 1024 * 1024;
+
+    form.parse(req, function(err, fields, files) {
+
+        if (err) {
+            res.locals.error = err;
+            res.json( {result:false, title:'失败', failDesc:'表单解析失败'});
+            return;
+        }
+
+        console.log("size" + files.Filedata.size);
+
+        var data = fs.readFileSync(files.Filedata.path);
+        var md5Data = crypto.createHash('md5').update(data).digest('hex').toUpperCase();
+        var filename = md5Data;
+
+        var image_info = imageinfo(data);
+
+        var extName = "xls";
+
+        fdfs.upload(data, {ext: extName}, function(err, fileId) {
+
+            console.log("err : " + err);
+
+            if(fileId){
+                savefileNameMapped(filename+"."+extName, fileId);
+            }
+
+            res.json( {result:true, title: filename+"."+extName  });
+            console.log("fileId : " + fileId);
+        });
+    });
+
+    res.locals.success = "上传成功";
+});
+
 
 
 
