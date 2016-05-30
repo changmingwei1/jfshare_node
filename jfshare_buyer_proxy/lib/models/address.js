@@ -104,7 +104,7 @@ Address.prototype.updateAddress = function(param,  callback) {
 Address.prototype.setDefaultAddress = function(param,callback) {
 
     var userId = param.userId;
-    var addressId = param.addressId;
+    var addressId = param.id;
 
     var addressServ = new Lich.InvokeBag(Lich.ServiceKey.AddressServer, "setDefaultAddress", [userId,addressId]);
 
