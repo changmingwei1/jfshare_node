@@ -621,7 +621,7 @@ router.post('/list', function (request, response, next) {
                     },
                     function (callback) {
                         try {
-                            if (params.orderState == null || params.orderState == 51) {
+                            if (params.orderState == null ) {
                                 AfterSale.queryAfterSale(params, function (err, data) {
                                     if (err) {
                                         return callback(2, null);
