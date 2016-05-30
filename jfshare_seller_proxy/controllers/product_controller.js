@@ -1032,8 +1032,8 @@ router.post('/reCaptcha', function(request, response, next) {
         }
 
         //-------------------前台测试数据--------------------------------------------
-        response.json(result);
-        return;
+        //response.json(result);
+        //return;
         //--------------------------------------------------------------
 
         Product.reCaptcha(params, function (err, data) {

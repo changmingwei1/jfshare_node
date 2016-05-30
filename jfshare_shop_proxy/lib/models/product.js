@@ -20,8 +20,7 @@ var buyer_types = require('../thrift/gen_code/buyer_types');
 var common_types = require('../thrift/gen_code/common_types');
 //var express_types = require('../thrift/gen_code/express_types');
 
-function Product() {
-}
+function Product() {}
 
 // 查询商品列表，包含带条件查询：类目、卖家id
 Product.prototype.queryProductList = function (params, callback) {
@@ -97,7 +96,6 @@ Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, s
         }
     });
 };
-
 
 // 查询商品ＳＫＵ
 Product.prototype.queryProductSku = function (productId, callback) {
