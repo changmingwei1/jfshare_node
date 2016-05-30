@@ -34,6 +34,7 @@ Seller = module.exports.Seller = function(args) {
   this.mobile = null;
   this.tel = null;
   this.email = null;
+  this.createTime = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -97,6 +98,9 @@ Seller = module.exports.Seller = function(args) {
     }
     if (args.email !== undefined) {
       this.email = args.email;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
     }
   }
 };
@@ -261,6 +265,13 @@ Seller.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 22:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -375,6 +386,11 @@ Seller.prototype.write = function(output) {
   if (this.email !== null && this.email !== undefined) {
     output.writeFieldBegin('email', Thrift.Type.STRING, 21);
     output.writeString(this.email);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 22);
+    output.writeString(this.createTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
