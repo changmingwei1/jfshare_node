@@ -196,54 +196,72 @@ router.post('/info', function (request, response, next) {
     async.series([
             function (callback) {
                 try {
-                    result.orderId = orderInfo.orderId;
-                    result.closingPrice = orderInfo.closingPrice;
-                    //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
-                    result.orderState = orderInfo.orderState;
-                    if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
-                        result.mobile = orderInfo.deliverInfo.receiverMobile;
-                    } else {
-                        result.address = orderInfo.deliverInfo.provinceName +
-                            orderInfo.deliverInfo.cityName +
-                            orderInfo.deliverInfo.countyName +
-                            orderInfo.deliverInfo.receiverAddress;
-                        result.receiverName = orderInfo.deliverInfo.receiverName;
-                        result.mobile = orderInfo.deliverInfo.receiverMobile;
-                    }
-                    if (orderInfo.payInfo != null) {
-                        result.payChannel = orderInfo.payInfo.payChannel;
-                    }
-                    result.curTime = new Date().getTime();
-                    result.createTime = orderInfo.createTime;
-                    result.deliverTime = orderInfo.deliverTime; //卖家发货时间
-                    result.successTime = orderInfo.successTime; //确认收货时间
-                    result.comment = orderInfo.buyerComment;
-                    result.postage = orderInfo.postage;
-                    result.sellerId = orderInfo.sellerId;
-                    /*result.postageExt = orderInfo.postageExt; */
-                    /*运费扩展信息  JSON*/
-                    result.exchangeScore = orderInfo.exchangeScore; //添加字段
-                    result.exchangeCash = orderInfo.exchangeCash; //添加字段
-                    result.type = orderInfo.productList[0].type;
-                    var productList = [];
-                    if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
-                        for (var i = 0; i < orderInfo.productList.length; i++) {
-                            productList.push({
-                                productId: orderInfo.productList[i].productId,
-                                productName: orderInfo.productList[i].productName,
-                                sku: {
-                                    skuNum: orderInfo.productList[i].skuNum,
-                                    skuName: orderInfo.productList[i].skuDesc
-                                },
-                                curPrice: orderInfo.productList[i].curPrice,
-                                orgPrice: orderInfo.productList[i].orgPrice,
-                                imgKey: orderInfo.productList[i].imagesUrl,
-                                count: orderInfo.productList[i].count
-                            });
+
+                    Order.queryOrderDetail(params, function (err, orderInfo) {
+                        result.orderId = orderInfo.orderId;
+                        result.closingPrice = orderInfo.closingPrice;
+                        //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
+                        result.orderState = orderInfo.orderState;
+                        if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
+                            result.mobile = orderInfo.deliverInfo.receiverMobile;
+                        } else {
+                            result.address = orderInfo.deliverInfo.provinceName +
+                                orderInfo.deliverInfo.cityName +
+                                orderInfo.deliverInfo.countyName +
+                                orderInfo.deliverInfo.receiverAddress;
+                            result.receiverName = orderInfo.deliverInfo.receiverName;
+                            result.mobile = orderInfo.deliverInfo.receiverMobile;
                         }
-                        result.productList = productList;
-                    }
-                    params.sellerId = orderInfo.sellerId;
+                        if (orderInfo.payInfo != null) {
+                            result.payChannel = orderInfo.payInfo.payChannel;
+                        }
+                        result.curTime = new Date().getTime();
+                        result.createTime = orderInfo.createTime;
+                        result.deliverTime = orderInfo.deliverTime; //卖家发货时间
+                        result.successTime = orderInfo.successTime; //确认收货时间
+                        result.comment = orderInfo.buyerComment;
+                        result.postage = orderInfo.postage;
+                        result.sellerId = orderInfo.sellerId;
+
+                        if (orderInfo.deliverInfo !== null) {
+
+                            var deliverInfo = {
+                                receiverName: orderInfo.deliverInfo.receiverName,
+                                receiverMobile: orderInfo.deliverInfo.receiverMobile,
+                                receiverAddress: orderInfo.deliverInfo.receiverAddress,
+                                expressId: orderInfo.deliverInfo.expressId,
+                                expressName: orderInfo.deliverInfo.expressName,
+                                expressNo: orderInfo.deliverInfo.expressNo
+                            };
+                            result.deliverInfo = deliverInfo;
+                        }
+
+                        /*result.postageExt = orderInfo.postageExt; */
+                        /*运费扩展信息  JSON*/
+                        result.exchangeScore = orderInfo.exchangeScore; //添加字段
+                        result.exchangeCash = orderInfo.exchangeCash; //添加字段
+                        result.type = orderInfo.productList[0].type;
+                        var productList = [];
+                        if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
+                            for (var i = 0; i < orderInfo.productList.length; i++) {
+                                productList.push({
+                                    productId: orderInfo.productList[i].productId,
+                                    productName: orderInfo.productList[i].productName,
+                                    sku: {
+                                        skuNum: orderInfo.productList[i].skuNum,
+                                        skuName: orderInfo.productList[i].skuDesc
+                                    },
+                                    curPrice: orderInfo.productList[i].curPrice,
+                                    orgPrice: orderInfo.productList[i].orgPrice,
+                                    imgKey: orderInfo.productList[i].imagesUrl,
+                                    count: orderInfo.productList[i].count
+                                });
+                            }
+                            result.productList = productList;
+                        }
+                        params.sellerId = orderInfo.sellerId;
+                        callback(null,result);
+                    });
                 }
                 catch
                     (ex) {
