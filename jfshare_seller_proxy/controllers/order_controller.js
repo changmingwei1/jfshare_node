@@ -302,8 +302,7 @@ router.post('/info', function (request, response, next) {
         }
     )
     ;
-})
-;
+});
 
 
 //查询售后的订单个数
