@@ -187,7 +187,7 @@ Order.prototype.batchExportOrder = function (params, callback) {
             res.desc = "导出订单失败！";
             callback(res, null);
         } else {
-            callback(null, data.value);
+            callback(null, data[0].value);
         }
     });
 };
