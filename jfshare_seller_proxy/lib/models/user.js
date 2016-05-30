@@ -31,7 +31,7 @@ User.prototype.login = function(param,callback){
     });
     //如果校验可能需要修改
     var LoginLog = new seller_types.LoginLog({
-       // browser:"1"
+        browser:param.browser
     });
 
     logger.info("调用 isLoginNameExist params:" + JSON.stringify(param));

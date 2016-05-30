@@ -26,17 +26,27 @@ function Order() {
 
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
-    var orderQueryConditions = new order_types.OrderQueryConditions({
-        orderState: params.orderStatus || 0,
-        count: params.percount,
-        curPage: params.curpage,
-        startTime: params.startTime,
-        endTime: params.endTime,
-        orderIds: params.orderList,
-        sellerId: params.sellerId
-    });
+    var orderQueryConditions = ""
+    if(params.orderList!=null &&params.orderList!=""){
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderState: params.orderState || 0,
+            startTime: params.startTime,
+            endTime: params.endTime,
+            orderIds: params.orderList,
+            sellerId: params.sellerId
+        });
+    }else{
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderState: params.orderState || 0,
+            count: params.percount,
+            curPage: params.curpage,
+            startTime: params.startTime,
+            endTime: params.endTime,
+            sellerId: params.sellerId
+        });
+    }
 
-
+    logger.info("调用orderServ-orderProfileQuery  params:" + JSON.stringify(orderQueryConditions)+"sellerId--------->"+params.sellerId);
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2, params.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
@@ -247,7 +257,6 @@ Order.prototype.batchDeliverOrder = function (params, callback) {
     var batchDeliverParam = new order_types.BatchDeliverParam({
         orderList: list
     });
-
     logger.info("调用orderServ-batchDeliverParam  params:" + JSON.stringify(batchDeliverParam));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchDeliverOrder", [params.sellerId, batchDeliverParam]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
