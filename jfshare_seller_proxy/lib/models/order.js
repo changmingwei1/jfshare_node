@@ -26,14 +26,16 @@ function Order() {
 
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
-    var orderQueryConditions = ""
+    var orderQueryConditions = "";
     if(params.orderList!=null &&params.orderList!=""){
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderState || 0,
             startTime: params.startTime,
             endTime: params.endTime,
             orderIds: params.orderList,
-            sellerId: params.sellerId
+            sellerId: params.sellerId,
+            count:params.orderList.length,
+            curPage: 1
         });
     }else{
         orderQueryConditions = new order_types.OrderQueryConditions({
@@ -42,7 +44,8 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             curPage: params.curpage,
             startTime: params.startTime,
             endTime: params.endTime,
-            sellerId: params.sellerId
+            sellerId: params.sellerId,
+            orderId:params.orderId
         });
     }
 
@@ -170,7 +173,7 @@ Order.prototype.batchExportOrder = function (params, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
         startTime: params.startTime,
         endTime: params.endTime,
-        orderState: params.orderStatus
+        orderState: params.orderState || 0
     });
 
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
@@ -184,7 +187,7 @@ Order.prototype.batchExportOrder = function (params, callback) {
             res.desc = "导出订单失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            callback(null, data[0].value);
         }
     });
 };
@@ -209,7 +212,7 @@ Order.prototype.orderConfirm = function (arg, callback) {
         sellerDetailList: sellerDetailList,
         //fromBatch: arg.fromBatch,
         //fromSource: arg.fromSource,
-        tradeCode: "Z0010"
+        tradeCode: arg.tradeCode
         /*weight: arg.weight,
          postageExt:arg.postageExt*/ /*运费扩展信息  JSON 现在还不知道怎么用*/
     });
