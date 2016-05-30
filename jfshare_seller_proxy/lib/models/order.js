@@ -209,7 +209,7 @@ Order.prototype.orderConfirm = function (arg, callback) {
         sellerDetailList: sellerDetailList,
         //fromBatch: arg.fromBatch,
         //fromSource: arg.fromSource,
-        tradeCode: "Z0010"
+        tradeCode: arg.tradeCode
         /*weight: arg.weight,
          postageExt:arg.postageExt*/ /*运费扩展信息  JSON 现在还不知道怎么用*/
     });
