@@ -81,6 +81,18 @@ router.post('/list', function (request, response, next) {
                                     activeState: order.activeState,
                                     curTime: order.curTime
                                 };
+                                if (orderInfo.deliverInfo !== null) {
+
+                                    var deliverInfo = {
+                                        receiverName: orderInfo.deliverInfo.receiverName,
+                                        receiverMobile: orderInfo.deliverInfo.receiverMobile,
+                                        receiverAddress: orderInfo.deliverInfo.receiverAddress,
+                                        expressId: orderInfo.deliverInfo.expressId,
+                                        expressName: orderInfo.deliverInfo.expressName,
+                                        expressNo: orderInfo.deliverInfo.expressNo
+                                    };
+                                    result.deliverInfo = deliverInfo;
+                                }
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
                                     for (var i = 0; i < order.productList.length; i++) {
