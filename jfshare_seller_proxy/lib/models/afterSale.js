@@ -53,18 +53,22 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
 
 
 //查询售后的订单list
-AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
+AfterSale.prototype.queryAfterSaleOrderListBySellerId = function (params, callback) {
 
-    var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
-        sellerId: params.sellerId
+    var afterSaleQueryParam = new afterSale_types.AfterSaleOrderParam({
+        sellerId: params.sellerId,
+        orderId: params.orderId,
+        startTime: params.startTime,
+        endTime: params.endTime
     });
 
     var page = new pagination_types.Pagination({
-        numPerPage: 10,
-        currentPage: 1
+        numPerPage: params.percount,
+        currentPage: params.curpage
     });
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
-    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [2, params.sellerId, page]);
+
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [afterSaleQueryParam, page]);
 
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
@@ -75,14 +79,8 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
             res.desc = "查询售后订单列表失败！";
             callback(res, null);
         } else {
-            if(data[0]==null ||data[0].pagination ==null ||data[0].pagination.totalCount==null){
-                callback(null,0);
-            }else{
-                callback(null, data[0].pagination.totalCount);
-            }
+            callback(null, data[0]);
         }
     });
-
-
 };
 module.exports = new AfterSale();
