@@ -233,6 +233,7 @@ Order.prototype.orderConfirm = function (arg, callback) {
 
 //批量发货
 Order.prototype.batchDeliverOrder = function (params, callback) {
+    var list = [];
     var deliverInfo = new order_types.DeliverInfo({
         expressName:"韵达",
         ExpressNo:"3907200391763"
