@@ -26,7 +26,7 @@ function Order() {
 
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
-    var orderQueryConditions = ""
+    var orderQueryConditions = "";
     if(params.orderList!=null &&params.orderList!=""){
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderState || 0,

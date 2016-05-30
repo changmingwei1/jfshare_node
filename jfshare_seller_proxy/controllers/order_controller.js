@@ -14,10 +14,7 @@ var afterSale = require('../lib/models/afterSale');
 var Express = require('../lib/models/express');
 // 查询订单列表
 router.post('/list', function (request, response, next) {
-
     var result = {code: 200};
-
-
     var params = request.body;
     logger.info("查询订单列表请求参数：" + JSON.stringify(params));
 
@@ -1104,6 +1101,197 @@ router.post('/batchDeliverOrder', function (request, response, next) {
         logger.error("批量发货 error:" + ex);
         result.code = 500;
         result.desc = "批量发货失败";
+        response.json(result);
+    }
+});
+
+
+//添加物流单-发货
+router.post('/deliver', function (request, response, next) {
+    logger.info("进入添加物流单流程");
+    var result = {code: 200};
+
+    try {
+
+        var params = request.body;
+
+        if (params.sellerId == null || params.sellerId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.orderId == null || params.orderId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        //params.expressId,params.expressNo,params.expressName
+        if (params.expressId == null || params.expressId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.expressNo == null || params.expressNo == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.expressName == null || params.expressName == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.userId == null || params.userId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Order.deliver(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            response.json(result);
+            return
+        });
+
+    } catch (ex) {
+        logger.error("发货失败：" + ex);
+        result.code = 500;
+        result.desc = "发货信息失败";
+        response.json(result);
+    }
+});
+//更新物流单
+router.post('/updateExpressInfo', function (request, response, next) {
+    logger.info("进入更新物流单流程");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        logger.info("进入更新物流单流程---params" + JSON.stringify(params));
+        if (params.sellerId == null || params.sellerId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.orderId == null || params.orderId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.expressId == null || params.expressId == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.expressNo == null || params.expressNo == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.expressName == null || params.expressName == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Order.updateExpressInfo(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            response.json(result);
+            return
+        });
+
+    } catch (ex) {
+        logger.error("更新物流单失败：" + ex);
+        result.code = 500;
+        result.desc = "更新物流单失败";
+        response.json(result);
+    }
+});
+
+
+//获取物流单
+router.post('/getExpressInfo', function (request, response, next) {
+    logger.info("进入获取物流订单流程");
+    var result = {code: 200};
+
+    try {
+
+        var params = request.body;
+        logger.info("进入获取物流单流程" + JSON.stringify(params));
+        //卖家
+        params.userType = 2;
+        if (params.sellerId == null || params.sellerId == "") {
+
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.orderId == null || params.orderId == "") {
+
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+
+        Order.queryOrderDetail(params, function (err, orderInfo) {
+            if (err) {
+                response.json(error);
+                return;
+            }
+
+            result.OrderId = orderInfo.orderId;
+
+            result.comment = orderInfo.sellerComment;
+            logger.info(orderInfo.deliverInfo);
+            if (orderInfo.deliverInfo != null) {
+                result.expressId = orderInfo.deliverInfo.expressId;
+                result.expressName = orderInfo.deliverInfo.expressName;
+                result.expressNo = orderInfo.deliverInfo.expressNo;
+            }
+            response.json(result);
+        });
+
+    } catch (ex) {
+        logger.error("查询物流信息失败：" + ex);
+        result.code = 500;
+        result.desc = "查询物流信息失败";
         response.json(result);
     }
 });
