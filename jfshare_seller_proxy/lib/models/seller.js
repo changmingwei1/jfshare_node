@@ -223,7 +223,7 @@ Buyer.prototype.querySellerVipList = function(param,callback){
     });
     logger.info("调用 sellerServ-querySellerVipList params:" + JSON.stringify(param));
     //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer,'querySellerVipList',[param.sellerId,paginationParms]);
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer,'querySellerVipList',[param.sellerId+"",paginationParms]);
     Lich.wicca.invokeClient(sellerServ, function(err, data){
         logger.info("会员信息列表信息:" + JSON.stringify(data));
         var res = {};

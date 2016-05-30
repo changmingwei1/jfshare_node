@@ -33,7 +33,9 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             startTime: params.startTime,
             endTime: params.endTime,
             orderIds: params.orderList,
-            sellerId: params.sellerId
+            sellerId: params.sellerId,
+            count:params.orderList.length,
+            curPage: 1
         });
     }else{
         orderQueryConditions = new order_types.OrderQueryConditions({
@@ -42,7 +44,8 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             curPage: params.curpage,
             startTime: params.startTime,
             endTime: params.endTime,
-            sellerId: params.sellerId
+            sellerId: params.sellerId,
+            orderId:params.orderId
         });
     }
 
@@ -170,7 +173,7 @@ Order.prototype.batchExportOrder = function (params, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
         startTime: params.startTime,
         endTime: params.endTime,
-        orderState: params.orderStatus
+        orderState: params.orderState || 0
     });
 
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
@@ -184,7 +187,7 @@ Order.prototype.batchExportOrder = function (params, callback) {
             res.desc = "导出订单失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            callback(null, data[0].value);
         }
     });
 };

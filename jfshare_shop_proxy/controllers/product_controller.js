@@ -291,7 +291,12 @@ router.post('/querystore', function (req, res, next) {
                             } else {
                                 var storehouseList = data[0].storehouseList;
                                 if (storehouseList != null && storehouseList.length > 0) {
+
                                     for (var i = 0; i < storehouseList.length; i++) {
+
+                                        if(storehouseList[i].id ==1){
+                                            continue;
+                                        }
                                         var supportProvince = storehouseList[i].supportProvince;
                                         if (supportProvince != null) {
                                             var list = supportProvince.split(",");

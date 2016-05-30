@@ -81,6 +81,7 @@ router.post('/list', function (request, response, next) {
                                     activeState: order.activeState,
                                     curTime: order.curTime
                                 };
+
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
                                     for (var i = 0; i < order.productList.length; i++) {
@@ -1014,26 +1015,13 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
             return;
         }
 
-        if (params.startTime == null || params.startTime == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.endTime == null || params.endTime == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
         Order.batchExportOrder(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             } else {
-                response.json(data);
+                result.url = "http://101.201.39.63/"+data;
+                response.json(result);
             }
 
         });
@@ -1047,7 +1035,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
 });
 
 /*提交订单*/
-router.post('/submit', function (request, response, next) {
+router.post('/payOrderCreates', function (request, response, next) {
     logger.info("进入提交订单流程..");
     var result = {code: 200};
     try {
