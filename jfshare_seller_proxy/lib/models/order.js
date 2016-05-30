@@ -33,7 +33,9 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             startTime: params.startTime,
             endTime: params.endTime,
             orderIds: params.orderList,
-            sellerId: params.sellerId
+            sellerId: params.sellerId,
+            count:params.orderList.length,
+            curPage: 1
         });
     }else{
         orderQueryConditions = new order_types.OrderQueryConditions({
