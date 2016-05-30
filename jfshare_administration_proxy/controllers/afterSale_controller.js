@@ -113,8 +113,9 @@ router.post('/toReview', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            logger.info("AfterSale.queryAfterSale response:" + JSON.stringify(result));
-            return response.json(data);
+            result.message = data;
+            logger.info("AfterSale.queryAfterSale response:" + JSON.stringify(message));
+            return response.json(result);
 
         });
     } catch (ex) {

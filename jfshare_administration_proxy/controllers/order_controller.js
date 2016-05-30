@@ -102,6 +102,9 @@ router.post('/list', function (request, response, next) {
                                     orderList.push(orderItem);
                                 }
                             });
+
+
+
                             result.orderList = orderList;
                             result.page = page;
                         }
@@ -215,7 +218,7 @@ router.post('/info', function (request, response, next) {
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
                         }
-                        result.curTime = new Date().getTime();
+                       // result.curTime = new Date().getTime();
                         result.createTime = orderInfo.createTime;
                         result.deliverTime = orderInfo.deliverTime; //卖家发货时间
                         result.successTime = orderInfo.successTime; //确认收货时间
