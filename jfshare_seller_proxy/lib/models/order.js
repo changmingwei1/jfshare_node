@@ -173,7 +173,7 @@ Order.prototype.batchExportOrder = function (params, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
         startTime: params.startTime,
         endTime: params.endTime,
-        orderState: params.orderStatus
+        orderState: params.orderState || 0
     });
 
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
@@ -187,7 +187,7 @@ Order.prototype.batchExportOrder = function (params, callback) {
             res.desc = "导出订单失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            callback(null, data.value);
         }
     });
 };

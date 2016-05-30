@@ -1015,26 +1015,13 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
             return;
         }
 
-        if (params.startTime == null || params.startTime == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.endTime == null || params.endTime == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
         Order.batchExportOrder(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             } else {
-                response.json(data);
+                result.url = "http://101.201.39.63/"+data;
+                response.json(result);
             }
 
         });
