@@ -5,6 +5,7 @@
 var express = require('express');
 var router = express.Router();
 var async = require('async');
+var urlencode = require('urlencode');
 
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
@@ -1332,13 +1333,18 @@ router.get('/notify/alipay', function (request, response, next) {
     var result = {code: 200};
     try {
         var params = request.query;
-
-        logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
-
-        result.url = JSON.stringify(params);
-
-        response.json(result);
-
+        if(params != null && params != ""){
+            response.redirect('http://101.201.39.61/jfShare/html/pay_2.success.html?body=' + params.body +
+                '&buyer_email' + params.buyer_email + '&exterface' + params.exterface +
+                '&is_success' + params.is_success + '&notify_id' + params.notify_id +
+                '&notify_time' + params.notify_time + '&notify_type' + params.notify_type +
+                '&out_trade_no' + params.out_trade_no + '&payment_type' + params.payment_type +
+                '&seller_email' + params.seller_email + '&seller_id' + params.seller_id +
+                '&subject' + params.subject + '&total_fee' + params.total_fee +
+                '&trade_no' + params.trade_no + '&trade_status' + params.trade_status +
+                '&sign' + params.sign + '&sign_type' + params.sign_type);
+            logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
+        }
     } catch (ex) {
         response.json(result);
     }
@@ -1349,13 +1355,30 @@ router.post('/notify/alipay', function (request, response, next) {
     var result = {code: 200};
     try {
         var params = request.body;
-
-        logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
-
-        result.url = JSON.stringify(params);
-
-        response.json(result);
-
+        if(params != null && params != ""){
+            response.redirect('http://101.201.39.61/jfShare/html/pay_2.success.html?body=' + params.body +
+            '&buyer_email' + params.buyer_email + '&exterface' + params.exterface +
+            '&is_success' + params.is_success + '&notify_id' + params.notify_id +
+            '&notify_time' + params.notify_time + '&notify_type' + params.notify_type +
+            '&out_trade_no' + params.out_trade_no + '&payment_type' + params.payment_type +
+            '&seller_email' + params.seller_email + '&seller_id' + params.seller_id +
+            '&subject' + params.subject + '&total_fee' + params.total_fee +
+            '&trade_no' + params.trade_no + '&trade_status' + params.trade_status +
+            '&sign' + params.sign + '&sign_type' + params.sign_type);
+            logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
+        }
+        //if(params != null && params != ""){
+        //    response.redirect('http://101.201.39.61/jfShare/html/pay_2.success.html?body=' + params.body +
+        //        '&buyer_email' + params.buyer_email + '&exterface' + params.exterface +
+        //        '&is_success' + params.is_success + '&notify_id' + params.notify_id +
+        //        '&notify_time' + params.notify_time + '&notify_type' + params.notify_type +
+        //        '&out_trade_no' + params.out_trade_no + '&payment_type' + params.payment_type +
+        //        '&seller_email' + params.seller_email + '&seller_id' + params.seller_id +
+        //        '&subject' + params.subject + '&total_fee' + params.total_fee +
+        //        '&trade_no' + params.trade_no + '&trade_status' + params.trade_status +
+        //        '&sign' + params.sign + '&sign_type' + params.sign_type);
+        //    logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
+        //}
     } catch (ex) {
         response.json(result);
     }
