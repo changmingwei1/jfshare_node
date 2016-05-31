@@ -1144,11 +1144,11 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                                     if (sheetData.data[i].length >= 3) {
                                         var deliverInfo = new order_types.DeliverInfo({
                                             expressName: sheetData.data[i][2],
-                                            expressNo: sheetData.data[i][1]
+                                            expressNo: sheetData.data[i][1]+""
                                         });
 
                                         var order = new order_types.Order({
-                                            orderId: sheetData.data[i][0],
+                                            orderId: sheetData.data[i][0]+"",
                                             deliverInfo: deliverInfo
                                         });
                                         list.push(order);
