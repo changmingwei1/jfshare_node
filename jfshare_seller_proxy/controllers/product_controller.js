@@ -15,6 +15,8 @@ var pagination_types = require('../lib/thrift/gen_code/pagination_types');
 var Subject = require('../lib/models/subject');
 var product_types = require("../lib/thrift/gen_code/product_types");
 var Stock = require('../lib/models/stock');
+var CommonUtil = require('../lib/util/CommonUtil');
+var Util = require('../lib/models/util');
 //商品列表
 router.post('/list', function (request, response, next) {
 
@@ -895,12 +897,12 @@ router.post('/improtTicket', function (request, response, next) {
             if (err) {
                 response.json(result);
                 return;
+            }else{
+                response.json(result);
+                return;
             }
-            response.json(result);
-            return;
-        });
 
-        response.json(result);
+        });
 
     } catch (ex) {
         logger.error("import  ticketList error:" + ex);
@@ -1081,37 +1083,62 @@ router.post('/queryCaptchaList', function(request, response, next) {
         }
 
         //--------------------前台测试数据--------------
-        result.yedNum=1;
-        result.thmonNum=48;
-
-        result.page = {
-            total:60,
-            pageCount:3
-        };
-
-        var productList=[];
-
-        for(var i=1;i<=20;i++){
-            productList.push({
-                productId:i,
-                productName:"测试数据：测试的商品名",
-                aldsold:5,
-                aldCaptcha:22
-            });
-        }
-
-        result.productList=productList;
-        response.json(result);
-        return;
+        //result.yedNum=1;
+        //result.thmonNum=48;
+        //
+        //result.page = {
+        //    total:60,
+        //    pageCount:3
+        //};
+        //
+        //var productList=[];
+        //
+        //for(var i=1;i<=20;i++){
+        //    productList.push({
+        //        productId:i,
+        //        productName:"测试数据：测试的商品名",
+        //        aldsold:5,
+        //        aldCaptcha:22
+        //    });
+        //}
+        //
+        //result.productList=productList;
+        //response.json(result);
+        //return;
         //--------------------------------------
 
         Product.queryCaptchaList(params, function (err, data) {
             if(err){
                 return response.json(err);
+            }else{
+                //if(data.pagination.totalCount==0||data.pagination.itemList==null){
+                //    return response.json(result);
+                //}
+                var pagination = data.pagination;
+                result.page = {
+                    total: pagination.totalCount,
+                    pageCount: pagination.pageNumCount
+                };
+                var itemList=data.itemList;
+
+                var products=[];
+                itemList.forEach(function(item){
+                    products.push({
+                        productId:item.productId,
+                        productName:item.productName,
+                        aldsold:item.aldsold,
+                        aldCaptcha:item.aldCaptcha
+                    });
+                });
+                result.yedNum=data.yedNum;
+                result.thmonNum=data.thmonNum;
+                result.productList=products;
+
+                logger.info("查询卖家虚拟商品验证记录 result" + JSON.stringify(data));
+                response.json(result);
+                return;
             }
-            logger.info("查询卖家虚拟商品验证记录 result" + JSON.stringify(data));
-            response.json(data);
-            return;
+
         });
     } catch (ex) {
         logger.error("查询卖家虚拟商品验证记录失败:" + ex);
@@ -1136,12 +1163,12 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
             response.json(result);
             return;
         }
-        //if (params.date== null || params.date == "") {
-        //    result.code = 400;
-        //    result.desc = "参数错误";
-        //    response.json(result);
-        //    return;
-        //}
+        if (params.date== null || params.date == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         if (params.perCount== null || params.perCount == "") {
             result.code = 400;
             result.desc = "参数错误";
@@ -1157,64 +1184,125 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
 
         //---------------------前台测试用---------------------------------------------
 
-        var productTotalList=[];
-        var productDayList=[];
-    if(params.date=="2016-01"||params.date=="2016-02"||params.date=="2016-03"){
-        result.thsoldNum=50;
-        result.thmonNum=33;
-    result.page = {
-        total:60,
-        pageCount:3
-    };
-    for(var i=0;i<20;i++){
-        productDayList.push({
-            productId:20,
-            productName:"测试：测试商品m",
-            thsoldNum:20,
-            thCaptcha:20
-        });
-    }
-    productTotalList.push({
-        data:"2016-05-27",
-        thDayNum:20,
-        productDayList:productDayList
-    });
-}else if(params.date=="2016-03"){
-        result.thsoldNum=50;
-        result.thmonNum=33;
-    result.page = {
-        total:3,
-        pageCount:1
-    };
-    for(var i=0;i<3;i++){
-        productDayList.push({
-            productId:20,
-            productName:"测试：测试商品m",
-            thsoldNum:20,
-            thCaptcha:20
-        });
-    }
-    productTotalList.push({
-        data:"2016-05-26",
-        thDayNum:20,
-        productDayList:productDayList
-    });
-}else{
-
-}
-        result.productTotalList=productTotalList;
-        response.json(result);
-        return;
+//        var productTotalList=[];
+//        var productDayList=[];
+//    if(params.date=="2016-01"||params.date=="2016-02"||params.date=="2016-03"){
+//        result.thsoldNum=50;
+//        result.thmonNum=33;
+//    result.page = {
+//        total:60,
+//        pageCount:3
+//    };
+//    for(var i=0;i<20;i++){
+//        productDayList.push({
+//            productId:20,
+//            productName:"测试：测试商品m",
+//            thsoldNum:20,
+//            thCaptcha:20
+//        });
+//    }
+//    productTotalList.push({
+//        data:"2016-05-27",
+//        thDayNum:20,
+//        productDayList:productDayList
+//    });
+//}else if(params.date=="2016-03"){
+//        result.thsoldNum=50;
+//        result.thmonNum=33;
+//    result.page = {
+//        total:3,
+//        pageCount:1
+//    };
+//    for(var i=0;i<3;i++){
+//        productDayList.push({
+//            productId:20,
+//            productName:"测试：测试商品m",
+//            thsoldNum:20,
+//            thCaptcha:20
+//        });
+//    }
+//    productTotalList.push({
+//        data:"2016-05-26",
+//        thDayNum:20,
+//        productDayList:productDayList
+//    });
+//}else{
+//
+//}
+//        result.productTotalList=productTotalList;
+//        response.json(result);
+//        return;
 
 
         //-------------------------------------------------------------------
         Product.queryCaptchaTotalList(params, function (err, data) {
             if(err){
                 return response.json(err);
+            }else{
+                var str=params.date.split("-");
+                var dayNum= CommonUtil.sgetDays(str[0],str[1]);
+
+                if(data.itemList!=null){
+                    var monAca=[];
+                    var monAst=[];
+                    var tempObj=[];
+                    for(var i=1;i<=dayNum;i++){
+                        var theday;
+                        if(i<10){
+                            theday="0"+i;
+                        }else{
+                            theday=i;
+                        }
+                        var theDate=params.date+"-"+theday;
+                        var itemListObj=data.itemList;
+                        var temp=[];
+                        var aldsoldTotal=[];
+                        var aldCaptchaTotal=[];
+                        for(var j=0;j<itemListObj.length;j++){
+                            if(itemListObj[j].date==theDate){
+                                temp.push(itemListObj[j]);
+                                aldsoldTotal.push(itemListObj[j].aldsold);
+                                aldCaptchaTotal.push(itemListObj[j].aldCaptcha);
+                            }
+                        }
+
+
+                        if(temp!=null&&temp!=""&&aldCaptchaTotal!=null&&aldCaptchaTotal!=""){
+                            var aca=Util.sum(aldCaptchaTotal);
+                            var ast=Util.sum(aldsoldTotal);
+
+                            monAca.push(aca);
+                            monAst.push(ast);
+
+                            tempObj.push({
+                                data:theDate,
+                                aldCaptcha:aca,
+                                productDayList:temp
+                            });
+                        }
+
+
+                    }
+
+                    //var acaMon=Util.sum(monAca);
+                    //var astMon=Util.sum(monAst);
+
+                    result.page = {
+                        total: data.pagination.totalCount,
+                        pageCount: data.pagination.pageNumCount
+                    };
+
+                    result.thmonNum=data.thmonNum;
+                    result.thsoldNum=data.thsoldNum;
+                    result.productTotalList=tempObj;
+
+
+                }
+                logger.info("卖家虚拟商品验证统计 result" + JSON.stringify(data));
+                response.json(result);
+                return;
             }
-            logger.info("卖家虚拟商品验证统计 result" + JSON.stringify(data));
-            response.json(data);
-            return;
+
         });
     } catch (ex) {
         logger.error("卖家虚拟商品验证统计失败:" + ex);
@@ -1260,55 +1348,72 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
         //---------------------前台测试数据-----------------------------
 
 
-        var productDetailList=[];
-
-        if(params.queryDate=="2016-04"||params.queryDate=="2016-05"){
-            result.page = {
-                total:60,
-                pageCount:3
-            };
-            for(var i=0;i<20;i++){
-                productDetailList.push({
-                    productName:"测试：商品名称test",
-                    date:"2016-05-26",
-                    consumeNum:"af23wsdsf233",
-                    mobile:"13211111111",
-                    nickName:"测试：昵称test"
-                });
-            }
-
-        }else if(params.queryDate=="2016-01"){
-            result.page = {
-                total:0,
-                pageCount:1
-            };
-        }else{
-            result.page = {
-                total:1,
-                pageCount:1
-            };
-            productDetailList.push({
-                productName:"测试：商品名称test",
-                date:"2016-05-26",
-                consumeNum:"af23wsdsf233",
-                mobile:"13211111111",
-                nickName:"测试：昵称test"
-            });
-        }
-
-        result.productDetailList=productDetailList;
-        response.json(result);
-        return;
+        //var productDetailList=[];
+        //
+        //if(params.queryDate=="2016-04"||params.queryDate=="2016-05"){
+        //    result.page = {
+        //        total:60,
+        //        pageCount:3
+        //    };
+        //    for(var i=0;i<20;i++){
+        //        productDetailList.push({
+        //            productName:"测试：商品名称test",
+        //            date:"2016-05-26",
+        //            consumeNum:"af23wsdsf233",
+        //            mobile:"13211111111",
+        //            nickName:"测试：昵称test"
+        //        });
+        //    }
+        //
+        //}else if(params.queryDate=="2016-01"){
+        //    result.page = {
+        //        total:0,
+        //        pageCount:1
+        //    };
+        //}else{
+        //    result.page = {
+        //        total:1,
+        //        pageCount:1
+        //    };
+        //    productDetailList.push({
+        //        productName:"测试：商品名称test",
+        //        date:"2016-05-26",
+        //        consumeNum:"af23wsdsf233",
+        //        mobile:"13211111111",
+        //        nickName:"测试：昵称test"
+        //    });
+        //}
+        //
+        //result.productDetailList=productDetailList;
+        //response.json(result);
+        //return;
         //------------------------------------------------------------------
-
 
         Product.queryCaptchaDetails(params, function (err, data) {
             if(err){
                 return response.json(err);
+            }else{
+                if(data!=null&&data!=""){
+                    result.productName=data.productName;
+                    var captchaDetals=data.captchaDetals;
+                    var captObj=[];
+                    captchaDetals.forEach(function(item){
+                        captObj.push({
+                            productName:data.productName,
+                            date:item.captchaDate,
+                            consumeNum:item.card,
+                            mobile:item.mobile,
+                            nickName:item.nikeName
+                        });
+                    });
+                    result.productDetailList=captObj;
+                }
+
+                logger.info("虚拟商品验证明细 result" + JSON.stringify(result));
+                response.json(result);
+                return;
             }
-            logger.info("虚拟商品验证明细 result" + JSON.stringify(data));
-            response.json(data);
-            return;
+
         });
     } catch (ex) {
         logger.error("虚拟商品验证明细失败:" + ex);
