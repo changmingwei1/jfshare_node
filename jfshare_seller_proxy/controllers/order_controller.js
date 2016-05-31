@@ -4,10 +4,11 @@
 var express = require('express');
 var router = express.Router();
 var async = require('async');
-
+var xlsx = require('node-xlsx');
+var fs = require('fs');
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
-
+var order_types = require('../lib/thrift/gen_code/order_types');
 var Order = require('../lib/models/order');
 var Util = require('../lib/models/util');
 var afterSale = require('../lib/models/afterSale');
@@ -56,8 +57,8 @@ router.post('/list', function (request, response, next) {
                             orderInfo.orderProfileList.forEach(function (order) {
                                 var orderItem = {
                                     orderId: order.orderId,
-                                    sellerId:order.sellerId,
-                                    userId:order.userId,
+                                    sellerId: order.sellerId,
+                                    userId: order.userId,
                                     orderPrice: order.closingPrice,
                                     //添加了应答的数据
                                     postage: order.postage,
@@ -200,7 +201,7 @@ router.post('/info', function (request, response, next) {
                         result.orderid = orderInfo.orderId;
                         result.postage = orderInfo.postage;
                         result.postage = orderInfo.postage;
-                        result. exchangeScore = orderInfo.exchangeScore;
+                        result.exchangeScore = orderInfo.exchangeScore;
                         result.closingPrice = orderInfo.closingPrice;
                         result.createTime = orderInfo.deliverTime;
                         result.comment = orderInfo.buyerComment;
@@ -231,8 +232,8 @@ router.post('/info', function (request, response, next) {
                                     orgPrice: orderInfo.productList[i].orgPrice,
                                     imgUrl: orderInfo.productList[i].imagesUrl,
                                     count: orderInfo.productList[i].count,
-                                    postage:orderInfo.productList[i].postage,
-                                    type:orderInfo.productList[i].postage
+                                    postage: orderInfo.productList[i].postage,
+                                    type: orderInfo.productList[i].postage
                                 });
                             }
                             result.productList = productList;
@@ -334,7 +335,7 @@ router.post('/queryafterSaleOrder', function (request, response, next) {
     }
 });
 // 查询订单状态个数
-router.post('/queryOrder', function (request, response,next) {
+router.post('/queryOrder', function (request, response, next) {
     var result = {code: 200};
     try {
         var params = request.body;
@@ -355,7 +356,7 @@ router.post('/queryOrder', function (request, response,next) {
             }
             logger.info("Order.orderStateQuery response:" + JSON.stringify(data));
 
-            result.orderCountList  = data;
+            result.orderCountList = data;
             response.json(result);
             return
         });
@@ -850,7 +851,7 @@ router.post('/querydealList', function (request, response, next) {
 
                 var count;
                 var productDeatilList = [];
-                var sumPerice=[];
+                var sumPerice = [];
                 orderProfileList.forEach(function (order) {
                     productDeatilList.push({
                         productDetId: order.orderId,
@@ -861,24 +862,23 @@ router.post('/querydealList', function (request, response, next) {
                     });
                     sumPerice.push(order.closingPrice);
                 });
-                for(var i=0;i<productDeatilList.length;i++){
-                    if(productDeatilList[i].paymode=="1"){
-                        productDeatilList[i].paymode ="天翼";
-                    }else if(productDeatilList[i].paymode=="2"){
-                        productDeatilList[i].paymode ="支付宝";
-                    }else if(productDeatilList[i].paymode=="3"||productDeatilList[i].paymode=="4"||productDeatilList[i].paymode=="9"){
-                        productDeatilList[i].paymode ="微信";
-                    }else if(productDeatilList[i].paymode=="5"||productDeatilList[i].paymode=="7"){
-                        productDeatilList[i].paymode ="支付宝";
-                    }else if(productDeatilList[i].paymode=="6"||productDeatilList[i].paymode=="8"){
-                        productDeatilList[i].paymode ="和包";
-                    }else{
-                        productDeatilList[i].paymode ="积分";
+                for (var i = 0; i < productDeatilList.length; i++) {
+                    if (productDeatilList[i].paymode == "1") {
+                        productDeatilList[i].paymode = "天翼";
+                    } else if (productDeatilList[i].paymode == "2") {
+                        productDeatilList[i].paymode = "支付宝";
+                    } else if (productDeatilList[i].paymode == "3" || productDeatilList[i].paymode == "4" || productDeatilList[i].paymode == "9") {
+                        productDeatilList[i].paymode = "微信";
+                    } else if (productDeatilList[i].paymode == "5" || productDeatilList[i].paymode == "7") {
+                        productDeatilList[i].paymode = "支付宝";
+                    } else if (productDeatilList[i].paymode == "6" || productDeatilList[i].paymode == "8") {
+                        productDeatilList[i].paymode = "和包";
+                    } else {
+                        productDeatilList[i].paymode = "积分";
                     }
                 }
                 var sum = 0;
-                for(var i = 0;i<sumPerice.length;i++)
-                {
+                for (var i = 0; i < sumPerice.length; i++) {
                     sum += Number(sumPerice[i]);
                 }
 
@@ -946,7 +946,7 @@ router.post('/querydealDetail', function (request, response, next) {
                 return;
             } else {
                 var order = data[0].order;
-                var orderDetail={};
+                var orderDetail = {};
 
                 if (order == null) {
                     result.code = 500;
@@ -955,27 +955,27 @@ router.post('/querydealDetail', function (request, response, next) {
                     return;
                 }
 
-                if(order.deliverInfo==null){
-                    orderDetail.mobile ="";
-                }else{
+                if (order.deliverInfo == null) {
+                    orderDetail.mobile = "";
+                } else {
                     orderDetail.mobile = order.deliverInfo.receiverMobile;
                 }
 
-                if(order.payInfo==null){
-                    orderDetail.paymode="";
-                }else{
-                    if(order.payInfo.payChannel=="1"){
-                        orderDetail.paymode ="天翼";
-                    }else if(order.payInfo.payChannel=="2"){
-                        orderDetail.paymode ="支付宝";
-                    }else if(order.payInfo.payChannel=="3"||order.payInfo.payChannel=="4"||order.payInfo.payChannel=="9"){
-                        orderDetail.paymode ="微信";
-                    }else if(order.payInfo.payChannel=="5"||order.payInfo.payChannel=="7"){
-                        orderDetail.paymode ="支付宝";
-                    }else if(order.payInfo.payChannel=="6"||order.payInfo.payChannel=="8"){
-                        orderDetail.paymode ="和包";
-                    }else{
-                        orderDetail.paymode ="积分";
+                if (order.payInfo == null) {
+                    orderDetail.paymode = "";
+                } else {
+                    if (order.payInfo.payChannel == "1") {
+                        orderDetail.paymode = "天翼";
+                    } else if (order.payInfo.payChannel == "2") {
+                        orderDetail.paymode = "支付宝";
+                    } else if (order.payInfo.payChannel == "3" || order.payInfo.payChannel == "4" || order.payInfo.payChannel == "9") {
+                        orderDetail.paymode = "微信";
+                    } else if (order.payInfo.payChannel == "5" || order.payInfo.payChannel == "7") {
+                        orderDetail.paymode = "支付宝";
+                    } else if (order.payInfo.payChannel == "6" || order.payInfo.payChannel == "8") {
+                        orderDetail.paymode = "和包";
+                    } else {
+                        orderDetail.paymode = "积分";
                     }
                 }
 
@@ -984,7 +984,7 @@ router.post('/querydealDetail', function (request, response, next) {
                 orderDetail.orderId = order.orderId;
                 orderDetail.nickname = order.userName;
                 orderDetail.dealdate = order.createTime;
-                result.productDetail=orderDetail;
+                result.productDetail = orderDetail;
                 response.json(result);
                 return
             }
@@ -1020,7 +1020,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
                 response.json(err);
                 return;
             } else {
-                result.url = "http://101.201.39.63/"+data;
+                result.url = "http://101.201.39.63/" + data;
                 response.json(result);
             }
 
@@ -1088,28 +1088,109 @@ router.post('/payOrderCreates', function (request, response, next) {
         response.json(result);
     }
 });
-
+var http = require('http');
 /*批量发货*/
 router.post('/batchDeliverOrder', function (request, response, next) {
     logger.info("进入批量发货流程..");
     var result = {code: 200};
     try {
         var params = request.body;
-
+        logger.info("进入批量发货流程params:" + JSON.stringify(params));
         if (params.sellerId == "" || params.sellerId == null) {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-        logger.info("进入批量发货流程params:" + JSON.stringify(params));
-        Order.batchDeliverOrder(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
-            response.json(data);
-        });
+        if (params.path == "" || params.path == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        var isDownLoad = false;
+        async.series([
+                function (callback) {
+                    try {
+                        Order.downLoad(params, function (err, data) {
+                            if (err) {
+                              return callback(1,null);
+                            } else {
+                                isDownLoad=true;
+                               return callback(null,isDownLoad);
+                            }
+                        });
+
+                    } catch (ex) {
+                        logger.info("下载物流单失败:" + ex);
+                        return callback(1, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        if(!isDownLoad){
+                            return callback(3,null);
+                        }
+                        var json = xlsx.parse("../excel/excel.xlsx");
+                       // console.log(json);
+                        var list = [];
+                        if (json != null && json.length > 0) {
+
+                            var sheetData = json[0];
+
+                            if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
+
+                                for (var i = 1; i < sheetData.data.length; i++) {
+                                    if (sheetData.data[i].length >= 3) {
+                                        var deliverInfo = new order_types.DeliverInfo({
+                                            expressName: sheetData.data[i][2],
+                                            expressNo: sheetData.data[i][1]
+                                        });
+
+                                        var order = new order_types.Order({
+                                            orderId: sheetData.data[i][0],
+                                            deliverInfo: deliverInfo
+                                        });
+                                        list.push(order);
+                                    }
+
+                                }
+                            }
+                        }
+                        params.list = list;
+                        if (list.length >= 0) {
+                            Order.batchDeliverOrder(params, function (err, data) {
+                                if (err) {
+                                    return callback(2,null);
+                                }
+                                return callback(null,data);
+                            });
+                        } else {
+                            callback(2,null);
+                        }
+
+                    } catch (ex) {
+                        logger.info("批量发货失败:" + ex);
+                        return callback(2, null);
+                    }
+
+                }
+            ],
+            function (err, results) {
+                if(err){
+                    result.code = 500;
+                    result.desc = "批量发货失败";
+                    response.json(result);
+                }else{
+                    response.json(result);
+                }
+            });
+
+
+
+
+
+
         //});
     } catch (ex) {
         logger.error("批量发货 error:" + ex);
@@ -1309,7 +1390,6 @@ router.post('/getExpressInfo', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 
 module.exports = router;
