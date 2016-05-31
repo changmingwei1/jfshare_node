@@ -895,12 +895,12 @@ router.post('/improtTicket', function (request, response, next) {
             if (err) {
                 response.json(result);
                 return;
+            }else{
+                response.json(result);
+                return;
             }
-            response.json(result);
-            return;
-        });
 
-        response.json(result);
+        });
 
     } catch (ex) {
         logger.error("import  ticketList error:" + ex);
