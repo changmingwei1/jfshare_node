@@ -505,7 +505,14 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
 
         var params = request.body;
 
-        if (params.sellerId == null || params.sellerId == "") {
+        if (params.startTime == null || params.startTime == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.endTime == null || params.endTime == "") {
 
             result.code = 500;
             result.desc = "参数错误";
