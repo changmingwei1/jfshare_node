@@ -271,7 +271,7 @@ Order.prototype.downLoad = function (params, callback) {
     var http = require('follow-redirects').http;
     var fs = require('fs');
     var url = require('url');
-    var html = '../excel/excel.xlsx';
+    var html = '../../excel/excel.xlsx';
     var file = fs.createWriteStream(html);//将文件流写入文件
     var datas = "";
     try {
