@@ -30,8 +30,9 @@ Expresss.prototype.queryExpress = function(params, callback){
             ret.code = 500;
             ret.desc = "查询物流失败！";
             callback(ret,null);
+        }else{
+            callback(null,data[0]);
         }
-        callback(null,data);
     });
 };
 
