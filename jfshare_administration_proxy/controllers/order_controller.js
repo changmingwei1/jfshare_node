@@ -498,7 +498,7 @@ router.post('/cancelOrder', function (request, response, next) {
 });
 //导出订单
 router.post('/queryExportOrderInfo', function (request, response, next) {
-    logger.info("进入取消订单流程");
+    logger.info("进入导出订单流程");
     var result = {code: 200};
 
     try {
