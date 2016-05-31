@@ -566,6 +566,10 @@ router.post('/list', function (request, response, next) {
                                             postage: order.postage,
                                             type: order.productList[0].type  //5.17测没有type
                                         };
+                                        if(order.deliverInfo != null ){
+                                            orderItem.expressId = order.deliverInfo.expressId;
+                                            orderItem.expressNo = order.deliverInfo.expressNo;
+                                        }
                                         var productList = [];
                                         if (order.productList !== null && order.productList.length > 0) {
                                             for (var i = 0; i < order.productList.length; i++) {
