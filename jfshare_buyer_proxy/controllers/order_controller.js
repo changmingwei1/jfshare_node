@@ -1426,11 +1426,11 @@ router.post('/queryExpress', function (request, response, next) {
             return;
         }
         logger.info("query expressOrder params:" + JSON.stringify(params));
-        //Buyer.validAuth(params, function (err, data) {
-        //    if (err) {
-        //        response.json(err);
-        //        return;
-        //    }
+        Buyer.validAuth(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
             Express.queryExpress(params, function (err, data) {
                 if (err) {
                     response.json(err);
@@ -1446,7 +1446,7 @@ router.post('/queryExpress', function (request, response, next) {
                 logger.info("Express.expressQuery response:" + JSON.stringify(result));
                 return;
             });
-        //});
+        });
     } catch (ex) {
         result.code = 500;
         result.desc = "查询物流信息失败";
