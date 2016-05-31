@@ -30,7 +30,7 @@
     "cookie-signature": "^1.0.6",
     "on-headers": "^1.0.0",
     "node-zookeeper-client": "latest",
-    "node-xlsx":"latest",
+    "node-xlsx":"0.7.1",
     "fs":"latest",
     "url":"latest",
     "follow-redirects":"latest"
