@@ -27,17 +27,17 @@ function Order() {
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
     var orderQueryConditions = "";
-    if(params.orderList!=null &&params.orderList!=""){
+    if (params.orderList != null && params.orderList != "") {
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderState || 0,
             startTime: params.startTime,
             endTime: params.endTime,
             orderIds: params.orderList,
             sellerId: params.sellerId,
-            count:params.orderList.length,
+            count: params.orderList.length,
             curPage: 1
         });
-    }else{
+    } else {
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderState || 0,
             count: params.percount,
@@ -45,11 +45,11 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             startTime: params.startTime,
             endTime: params.endTime,
             sellerId: params.sellerId,
-            orderId:params.orderId
+            orderId: params.orderId
         });
     }
 
-    logger.info("调用orderServ-orderProfileQuery  params:" + JSON.stringify(orderQueryConditions)+"sellerId--------->"+params.sellerId);
+    logger.info("调用orderServ-orderProfileQuery  params:" + JSON.stringify(orderQueryConditions) + "sellerId--------->" + params.sellerId);
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQuery", [2, params.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
@@ -246,19 +246,9 @@ Order.prototype.orderConfirm = function (arg, callback) {
 
 //批量发货
 Order.prototype.batchDeliverOrder = function (params, callback) {
-    var list = [];
-    var deliverInfo = new order_types.DeliverInfo({
-        expressName:"韵达",
-        expressNo:"3907200391763"
-    });
 
-    var order = new order_types.Order({
-        orderId:params.orderId,
-        deliverInfo:deliverInfo
-    });
-    list.push(order);
     var batchDeliverParam = new order_types.BatchDeliverParam({
-        orderList: list
+        orderList: params.list
     });
     logger.info("调用orderServ-batchDeliverParam  params:" + JSON.stringify(batchDeliverParam));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchDeliverOrder", [params.sellerId, batchDeliverParam]);
@@ -268,12 +258,36 @@ Order.prototype.batchDeliverOrder = function (params, callback) {
         if (err || data[0].result.code == "1") {
             logger.error("调用orderServ-batchDeliverParam  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "批量发货失败！";
+            res.desc = data[0].failInfo;
             callback(res, null);
         } else {
             callback(null, data);
         }
     });
 };
+
+
+Order.prototype.downLoad = function (params, callback) {
+    var http = require('follow-redirects').http;
+    var fs = require('fs');
+    var url = require('url');
+    var html = '../excel/excel.xlsx';
+    var file = fs.createWriteStream(html);//将文件流写入文件
+    var datas = "";
+    try {
+        http.get(params.path, function (res) {
+            res.on('data', function (data) {
+               file.write(data);
+            }).on('end', function () {
+                file.end();
+                callback(null, '');
+            });
+        });
+    } catch (ex) {
+        logger.error("解析物流单出错"+ex);
+    }
+
+};
+
 
 module.exports = new Order();

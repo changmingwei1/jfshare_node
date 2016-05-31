@@ -176,25 +176,26 @@ Order.prototype.updateExpressInfo = function (params, callback) {
 };
 
 
-Order.prototype.queryExportOrderInfo = function (params, callback) {
-
-    var OrderQueryConditions = new order_types.OrderQueryConditions({
-
+//导出订单
+Order.prototype.batchExportOrderFull = function (params, callback) {
+    var orderQueryConditions = new order_types.OrderQueryConditions({
+        startTime: params.startTime,
+        endTime: params.endTime,
+        orderState: params.orderState || 0,
+        sellerId:params.sellerId
     });
-
-
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "queryExportOrderInfo", [params.sellerId,OrderQueryConditions]);
-
+    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFull", [orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("调用orderServ-OrderQueryConditions  result:" + JSON.stringify(data));
+        logger.info("调用orderServ-batchExportOrderFull  result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == "1") {
-            logger.error("调用orderServ-OrderQueryConditions  失败原因 ======" + err);
+        if (err || data[0].result.code == "1"){
+            logger.error("调用orderServ-batchExportOrderFull  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "下载订单失败";
+            res.desc = "导出订单失败！";
             callback(res, null);
         } else {
-            callback(null, data);
+            callback(null, data[0].value);
         }
     });
 };
