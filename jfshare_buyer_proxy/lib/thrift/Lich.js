@@ -28,7 +28,7 @@ var ServiceKey = {
     CartServer: "Cart",
     SellerServer: "Seller",
     ManagerServer:"Manager",
-    ExpressServer:"Express",
+    ExpresssServer:"Express",
     ScoreServer:"Score",
     TemplateServer:"template",
     AfterSaleServer:"AfterSale"

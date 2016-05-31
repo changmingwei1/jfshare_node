@@ -16,6 +16,7 @@ Expresss.prototype.queryExpress = function(params, callback){
     var expressParams = new express_types.ExpressParams({
        orderId:params.orderId,
         num:params.num,
+        comId:params.comId,
         queryType:2   /*1:查快递信息，2：查物流跟踪信息，3：包含1、2*/
     });
     // 获取client

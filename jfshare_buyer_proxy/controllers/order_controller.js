@@ -5,6 +5,7 @@
 var express = require('express');
 var router = express.Router();
 var async = require('async');
+var urlencode = require('urlencode');
 
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
@@ -1332,122 +1333,57 @@ router.get('/notify/alipay', function (request, response, next) {
     var result = {code: 200};
     try {
         var params = request.query;
-
-        logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
-
-        result.url = JSON.stringify(params);
-
-        response.json(result);
-
+        if(params != null && params != ""){
+            response.redirect('http://101.201.39.61/jfShare/html/pay_2.success.html?body=' + params.body +
+                '&buyer_email=' + params.buyer_email + '&exterface=' + params.exterface +
+                '&is_success=' + params.is_success + '&notify_id=' + params.notify_id +
+                '&notify_time=' + params.notify_time + '&notify_type=' + params.notify_type +
+                '&out_trade_no=' + params.out_trade_no + '&payment_type=' + params.payment_type +
+                '&seller_email=' + params.seller_email + '&seller_id=' + params.seller_id +
+                '&subject=' + params.subject + '&total_fee=' + params.total_fee +
+                '&trade_no=' + params.trade_no + '&trade_status=' + params.trade_status +
+                '&sign=' + params.sign + '&sign_type=' + params.sign_type);
+            logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
+        }
     } catch (ex) {
         response.json(result);
     }
 });
-
 router.post('/notify/alipay', function (request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code: 200};
     try {
         var params = request.body;
-
-        logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
-
-        result.url = JSON.stringify(params);
-
-        response.json(result);
-
-    } catch (ex) {
-        response.json(result);
-    }
-});
-
-
-
-router.get('/payNotify/alipay', function (request, response, next) {
-    logger.info("进入获取物流信息流程");
-    var result = {code: 200};
-    try {
-        var param = request.query;
-
-
-        var string = redirect(pathname, redirectHandle);
-
-        response.writeHead(200,{"Content-Type":"text/plain"});
-        response.write(string);
-        response.end();
-
-    } catch (ex) {
-        response.json(result);
-    }
-});
-
-//获取物流信息
-/*router.post('/queryExpress', function (request, response, next) {
-    logger.info("进入获取物流信息流程");
-    var result = {code: 200};
-    try {
-        //var params = request.query;
-        var params = request.body;
-        if (params.orderId == null || params.orderId == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
+        if(params != null && params != ""){
+            response.redirect('http://101.201.39.61/jfShare/html/pay_2.success.html?body=' + params.body +
+            '&buyer_email=' + params.buyer_email + '&exterface=' + params.exterface +
+            '&is_success=' + params.is_success + '&notify_id=' + params.notify_id +
+            '&notify_time=' + params.notify_time + '&notify_type=' + params.notify_type +
+            '&out_trade_no=' + params.out_trade_no + '&payment_type=' + params.payment_type +
+            '&seller_email=' + params.seller_email + '&seller_id=' + params.seller_id +
+            '&subject=' + params.subject + '&total_fee=' + params.total_fee +
+            '&trade_no=' + params.trade_no + '&trade_status=' + params.trade_status +
+            '&sign=' + params.sign + '&sign_type=' + params.sign_type);
+            logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
         }
-        var expressInfo = [{
-            "time": "2016-02-22 13:37:26",
-            "ftime": "2016-02-22 13:37:26",
-            "context": "快件已签收,签收人是草签，签收网点是北京市朝阳安华桥"
-        }, {
-            "time": "2016-02-22 07:51:50",
-            "ftime": "2016-02-22 07:51:50",
-            "context": "北京市朝阳安华桥的牛鹏超18518350628正在派件"
-        }, {
-            "time": "2016-02-22 07:02:10",
-            "ftime": "2016-02-22 07:02:10",
-            "context": "快件到达北京市朝阳安华桥，上一站是北京集散，扫描员是张彪18519292322"
-        }, {
-            "time": "2016-02-22 01:40:35",
-            "ftime": "2016-02-22 01:40:35",
-            "context": "快件由北京集散发往北京市朝阳安华桥"
-        }, {
-            "time": "2016-02-20 22:42:14",
-            "ftime": "2016-02-20 22:42:14",
-            "context": "快件由温州分拨中心发往北京集散"
-        }, {
-            "time": "2016-02-20 19:56:29",
-            "ftime": "2016-02-20 19:56:29",
-            "context": "快件由苍南(0577-59905999)发往温州分拨中心"
-        }, {
-            "time": "2016-02-20 19:50:09",
-            "ftime": "2016-02-20 19:50:09",
-            "context": "快件由苍南(0577-59905999)发往北京(010-53703166转8039或8010)"
-        }, {
-            "time": "2016-02-20 19:50:08",
-            "ftime": "2016-02-20 19:50:08",
-            "context": "苍南(0577-59905999)已进行装袋扫描"
-        }, {
-            "time": "2016-02-20 19:46:22",
-            "ftime": "2016-02-20 19:46:22",
-            "context": "苍南(0577-59905999)的龙港公司已收件，扫描员是龙港公司"
-        }];
-        result.id = 100001;
-        result.name = "顺丰";
-        result.productName = "超能洗衣液";
-        result.traceJson = expressInfo;
-        result.remark = "";
-
-        logger.info("query expressOrder params:" + JSON.stringify(params));
-
-        response.json(result);
-
+        //if(params != null && params != ""){
+        //    response.redirect('http://101.201.39.61/jfShare/html/pay_2.success.html?body=' + params.body +
+        //        '&buyer_email' + params.buyer_email + '&exterface' + params.exterface +
+        //        '&is_success' + params.is_success + '&notify_id' + params.notify_id +
+        //        '&notify_time' + params.notify_time + '&notify_type' + params.notify_type +
+        //        '&out_trade_no' + params.out_trade_no + '&payment_type' + params.payment_type +
+        //        '&seller_email' + params.seller_email + '&seller_id' + params.seller_id +
+        //        '&subject' + params.subject + '&total_fee' + params.total_fee +
+        //        '&trade_no' + params.trade_no + '&trade_status' + params.trade_status +
+        //        '&sign' + params.sign + '&sign_type' + params.sign_type);
+        //    logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
+        //}
     } catch (ex) {
-
-
         response.json(result);
     }
-});*/
-//获取物流信息
+});
+
+/*获取物流信息*/
 router.post('/queryExpress', function (request, response, next) {
     logger.info("进入获取物流信息流程");
     var result = {code: 200};
@@ -1495,8 +1431,15 @@ router.post('/queryExpress', function (request, response, next) {
                     response.json(err);
                     return;
                 }
-                result.data = data;
+                if (data.expressInfo != null) {
+                    result.name = data.expressInfo.name;
+                }
+                if (data.expressTrace != null) {
+                    result.traceItems = data.expressTrace.traceItems;
+                }
                 response.json(result);
+                logger.info("Express.expressQuery response:" + JSON.stringify(result));
+                return;
             });
         });
     } catch (ex) {
