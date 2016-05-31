@@ -1439,7 +1439,7 @@ router.post('/queryExpress', function (request, response, next) {
                 }
                 response.json(result);
                 logger.info("Express.expressQuery response:" + JSON.stringify(result));
-                return
+                return;
             });
         });
     } catch (ex) {
