@@ -84,7 +84,7 @@ module.exports.ServiceFactory  =  {
      * @returns {ThriftConfig}
      */
     fileNameMapped_serv: function(){
-        var obj = new ThriftConfig("120.24.153.155",19890);
+        var obj = new ThriftConfig("101.201.38.182",19890);
         //var obj = new ThriftConfig("127.0.0.1",19890);
         return obj;
     }

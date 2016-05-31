@@ -18,7 +18,7 @@ var FdfsClient = require('../lib/fdfs');
 var fdfs = new FdfsClient({
     trackers: [
         {
-            host: '120.24.153.102',
+            host: '101.201.39.63',
             port: 22122
         }
     ],
@@ -27,8 +27,8 @@ var fdfs = new FdfsClient({
     charset: 'utf8'
 });
 
-var redis_host = '120.24.153.155';
-var img_proxy_url = 'http://120.24.153.155/';
+var redis_host = '101.201.39.63';
+var img_proxy_url = 'http://101.201.39.63/';
 
 /**
  * thrift
@@ -59,7 +59,7 @@ var client = redis.createClient(6379, redis_host);
 //图片
 var imageinfo = require("imageinfo");
 
-client.auth("jfsharedis",function(){
+client.auth("JFshare#0328",function(){
     console.log('redis认证通过');
 });
 
@@ -332,6 +332,62 @@ router.post('/uploadFile', function(req, res) {
 
     res.locals.success = "上传成功";
 });
+
+
+/* 处理post请求，上传逻辑 */
+router.post('/uploadFiles', function(req, res) {
+
+    var req_origin = req.headers.origin || "*";
+    res.setHeader('Access-Control-Allow-Origin', req_origin);
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
+
+
+    var originalUrl = req.originalUrl;
+    console.log("originalUrl" + originalUrl);
+
+    var form = new formidable.IncomingForm();
+    form.encoding = "utf-8";
+
+    form.uploadDir = "/tmp";
+    form.keepExtensions = true;
+    form.maxFieldsSize = 10 * 1024 * 1024;
+
+    form.parse(req, function(err, fields, files) {
+
+        if (err) {
+            res.locals.error = err;
+            res.json( {result:false, title:'失败', failDesc:'表单解析失败'});
+            return;
+        }
+
+        console.log("size" + files.Filedata.size);
+
+        var data = fs.readFileSync(files.Filedata.path);
+        var md5Data = crypto.createHash('md5').update(data).digest('hex').toUpperCase();
+        var filename = md5Data;
+
+        var image_info = imageinfo(data);
+
+        var extName = "xlsx";
+
+        fdfs.upload(data, {ext: extName}, function(err, fileId) {
+
+            console.log("err : " + err);
+
+            if(fileId){
+                savefileNameMapped(filename+"."+extName, fileId);
+            }
+
+            res.json( {result:true, title: filename+"."+extName  });
+            console.log("fileId : " + fileId);
+        });
+    });
+
+    res.locals.success = "上传成功";
+});
+
 
 
 
