@@ -1131,7 +1131,7 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                         if(!isDownLoad){
                             return callback(3,null);
                         }
-                        var json = xlsx.parse("../excel/excel.xlsx");
+                        var json = xlsx.parse("/data/run/jfshare_node/jfshare_seller_proxy/excel/excel.xlsx");
                        // console.log(json);
                         var list = [];
                         if (json != null && json.length > 0) {
