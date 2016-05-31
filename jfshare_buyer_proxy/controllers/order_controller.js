@@ -874,6 +874,9 @@ router.post('/info', function (req, res, next) {
                                         orderInfo.deliverInfo.receiverAddress;
                                     result.receiverName = orderInfo.deliverInfo.receiverName;
                                     result.mobile = orderInfo.deliverInfo.receiverMobile;
+                                    result.expressId = orderInfo.deliverInfo.expressId;
+                                    result.expressNo = orderInfo.deliverInfo.expressNo;
+                                    result.expressName = orderInfo.deliverInfo.expressName;
                                 }
                                 if (orderInfo.payInfo != null) {
                                     result.payChannel = orderInfo.payInfo.payChannel;
@@ -884,6 +887,8 @@ router.post('/info', function (req, res, next) {
                                 result.successTime = orderInfo.successTime; //确认收货时间
                                 result.comment = orderInfo.buyerComment;
                                 result.postage = orderInfo.postage;
+                                result.payId = orderInfo.payId;
+                                result.tradePayId = orderInfo.tradePayId;
                                 result.sellerId = orderInfo.sellerId;
                                 /*result.postageExt = orderInfo.postageExt; */
                                 /*运费扩展信息  JSON*/
@@ -1446,6 +1451,7 @@ router.post('/queryExpress', function (request, response, next) {
         result.code = 500;
         result.desc = "查询物流信息失败";
         response.json(result);
+        return;
     }
 });
 
