@@ -970,4 +970,48 @@ router.post('/carList', function (request, response, next) {
         response.json(result);
     }
 });
+
+router.post('/queryExportOrderInfo', function (request, response, next) {
+    logger.info("进入导出订单的流程");
+    var result = {code: 200};
+
+    try {
+
+        var params = request.body;
+
+        if (params.startTime == "" || params.startTime == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.endTime == "" || params.endTime == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Order.batchExportOrder(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            } else {
+                result.url = "http://101.201.39.63/"+data;
+                response.json(result);
+            }
+
+        });
+
+    } catch (ex) {
+        logger.error("导出订单失败：" + ex);
+        result.code = 500;
+        result.desc = "导出订单失败";
+        response.json(result);
+    }
+});
+
+
+
+
 module.exports = router;
