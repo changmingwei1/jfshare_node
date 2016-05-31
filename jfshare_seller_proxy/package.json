@@ -32,6 +32,7 @@
     "node-zookeeper-client": "latest",
     "node-xlsx":"latest",
     "fs":"latest",
-    "url":"latest"
+    "url":"latest",
+    "follow-redirects":"latest"
   }
 }
