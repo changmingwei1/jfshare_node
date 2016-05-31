@@ -992,7 +992,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
             return;
         }
 
-        Order.batchExportOrder(params, function (err, data) {
+        Order.batchExportOrderFull(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
