@@ -514,7 +514,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
         }
 
 
-        Order.queryExportOrderInfo(params, function (err, data) {
+        Order.batchExportOrderFull(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
@@ -991,7 +991,6 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
             response.json(result);
             return;
         }
-
         Order.batchExportOrderFull(params, function (err, data) {
             if (err) {
                 response.json(err);
