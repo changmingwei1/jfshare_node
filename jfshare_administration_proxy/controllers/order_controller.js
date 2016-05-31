@@ -519,6 +519,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
                 response.json(err);
                 return;
             }
+            result.url = "http://101.201.39.63/" + data;
             response.json(result);
             return
         });
