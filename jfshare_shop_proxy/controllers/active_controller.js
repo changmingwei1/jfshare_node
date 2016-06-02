@@ -11,7 +11,7 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var Active = require('../lib/models/active');
 var Message = require('../lib/models/message');
 
-//获取首页轮播图列表
+/*获取首页轮播图列表*/
 router.get('/imgList', function (request, response, next) {
 
     logger.info("进入首页轮播图列表接口...");
@@ -46,7 +46,7 @@ router.get('/imgList', function (request, response, next) {
     }
 });
 
-//获取系统消息列表
+/*获取系统消息列表*/
 router.get('/messageList', function (request, response, next) {
 
     logger.info("进入获取系统消息列表接口...");
@@ -81,7 +81,7 @@ router.get('/messageList', function (request, response, next) {
     }
 });
 
-//查询升级信息
+/*查询升级信息*/
 router.get('/getAppUpgradeInfo', function (request, response, next) {
 
     logger.info("进入升级版本接口...");
@@ -121,5 +121,15 @@ router.get('/getAppUpgradeInfo', function (request, response, next) {
         response.json(resContent);
     }
 });
+
+/*电信跳转链接*/
+router.get('/toExchangeDianXin',function(request,response,next){
+    var result = {code:200};
+    //var param = request.query;
+    result.url = "http://buy.jfshare.com/android/comesoon.html";
+    response.json(result);
+    return;
+});
+
 
 module.exports = router;
