@@ -126,7 +126,7 @@ router.get('/getAppUpgradeInfo', function (request, response, next) {
 router.get('/toExchangeDianXin',function(request,response,next){
     var result = {code:200};
     //var param = request.query;
-    result.url = "http://101.201.39.61/android/comesoon.html";
+    result.url = "http://buy.jfshare.com/android/comesoon.html";
     response.json(result);
     return;
 });
