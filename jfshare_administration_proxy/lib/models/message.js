@@ -93,11 +93,11 @@ Message.prototype.update = function(params,callback){
 //删除系统消息
 Message.prototype.del = function(params,callback){
 
-    logger.info("del message params:" + JSON.stringify(params));
+    logger.info("sendPush params:" + JSON.stringify(params));
     //获取client
-    var messageServ = new Lich.InvokeBag(Lich.ServiceKey.MessageServer,'deleteSystemMessage',[params.id]);
+    var messageServ = new Lich.InvokeBag(Lich.ServiceKey.MessageServer,'sendPush',[params.id]);
     Lich.wicca.invokeClient(messageServ, function(err, data){
-        logger.info("get message result:" + JSON.stringify(data));
+        logger.info("sendPush result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].code == "1") {
             res.code = 500;
