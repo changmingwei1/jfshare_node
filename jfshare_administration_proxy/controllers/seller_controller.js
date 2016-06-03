@@ -294,7 +294,7 @@ router.post('/list', function (request, response, next) {
                 var sellerList = [];
 
                 var sellerAllList = data[0].sellerList;
-                if(data[0].total!=0) {
+                if(data[0].total!=0 && sellerAllList!=null && sellerAllList.length>0) {
                     sellerAllList.forEach(function (sellerData) {
                         var sellerTemp = ({
                             sellerId: sellerData.sellerId,

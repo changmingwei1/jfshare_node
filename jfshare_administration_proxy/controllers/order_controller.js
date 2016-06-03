@@ -56,7 +56,7 @@ router.post('/list', function (request, response, next) {
                         }
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
-                        if (orderInfo.orderProfileList !== null) {
+                        if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length>0) {
                             orderInfo.orderProfileList.forEach(function (order) {
                                 var orderItem = {
                                     orderId: order.orderId,
@@ -93,9 +93,12 @@ router.post('/list', function (request, response, next) {
                                             productName: order.productList[i].productName,
                                             skunum: order.productList[i].skuNum,
                                             curPrice: order.productList[i].curPrice,
-                                            imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                            imgUrl: "",
                                             count: order.productList[i].count
                                         };
+                                        if(order.productList[i].imagesUrl!=null){
+                                            productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
+                                        }
                                         productList.push(productItem);
                                     }
                                     orderItem.productList = productList;
