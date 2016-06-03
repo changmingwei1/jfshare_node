@@ -384,7 +384,7 @@ Subject.prototype.addSubjectAttribute = function (params, callback) {
     var subjectAttribute = new subject_types.SubjectAttribute({
         name: "name",
         subjectId: params.subjectId,
-        value: JSON.stringify(params.value),
+        value: params.value.toString(),
         isSku: 0,
         creator: params.userId
     });
