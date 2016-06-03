@@ -8,7 +8,7 @@ var options = {
     retries: 3
 };
 //var url = '120.24.153.155:2181';
-var url = '101.201.39.63';
+var url = '101.201.48.101,101.201.39.63,101.201.39.38';
 var client = undefined;
 //var path = process.argv[2];
 var path = "/.ridge/jfx_public_client";
