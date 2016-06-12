@@ -369,10 +369,11 @@ router.get('/exists', function (request, response, next) {
 
 /*获取鉴权信息*/
 router.post('/getAuthInfo', function (request, response, next) {
-    logger.info("进入获取验证码接口");
+    logger.info("进入获取鉴权信息接口");
     var resContent = {code: 200};
     try {
         var param = request.body;
+        logger.info("请求参数：" + JSON.stringify(param));
         if (param == null) {
             resContent.code = 500;
             resContent.desc = "参数错误";
@@ -409,7 +410,7 @@ router.post('/getAuthInfo', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        logger.info("请求参数：" + JSON.stringify(param));
+
         Buyer.getAuthInfo(param, function (err, data) {
             if (err) {
                 response.json(err);
