@@ -1061,10 +1061,11 @@ router.post('/reCaptcha', function(request, response, next) {
         Product.reCaptcha(params, function (err, data) {
             if(err){
                 return response.json(err);
+            }else{
+                logger.info("验证虚拟商品兑换码 result" + JSON.stringify(data));
+                response.json(result);
+                return;
             }
-            logger.info("验证虚拟商品兑换码 result" + JSON.stringify(data));
-            response.json(data);
-            return;
         });
     } catch (ex) {
         logger.error("验证虚拟商品兑换码失败:" + ex);
