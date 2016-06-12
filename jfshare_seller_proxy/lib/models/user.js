@@ -34,17 +34,16 @@ User.prototype.login = function(param,callback){
         browser:param.browser
     });
 
-    logger.info("调用 isLoginNameExist params:" + JSON.stringify(param));
+    logger.info("调用 login params:" + JSON.stringify(param));
 
     //获取客户端
     var userServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer,'signin',[User,LoginLog]);
     Lich.wicca.invokeClient(userServ, function(err, data){
-        logger.info("isLoginNameExist result:" + JSON.stringify(data));
+        logger.info("login result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
-            logger.error("signin fail because: ======" + err);
+        if (err||data[0].result.code == 1) {
+           // logger.error("signin fail because: ======" + err);
             res.code = 500;
-            logger.error(data);
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
