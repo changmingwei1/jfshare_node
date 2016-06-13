@@ -478,7 +478,7 @@ router.post('/queryexpress', function (request, response, next) {
 
 //更新物流单
 router.post('/updateExpressInfo', function (request, response, next) {
-    logger.info("进入取消订单流程");
+    logger.info("进入更新物流单流程");
     var result = {code: 200};
 
     try {
@@ -545,7 +545,7 @@ router.post('/updateExpressInfo', function (request, response, next) {
 
 //获取物流单单号
 router.post('/getExpressInfo', function (request, response, next) {
-    logger.info("进入取消订单流程");
+    logger.info("进入获取物流单信息流程");
     var result = {code: 200};
 
     try {
