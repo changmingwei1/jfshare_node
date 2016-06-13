@@ -11,6 +11,140 @@ var result_ttypes = require('./result_types')
 
 
 var ttypes = module.exports = {};
+AuthInfo = module.exports.AuthInfo = function(args) {
+  this.token = null;
+  this.ppInfo = null;
+  if (args) {
+    if (args.token !== undefined) {
+      this.token = args.token;
+    }
+    if (args.ppInfo !== undefined) {
+      this.ppInfo = args.ppInfo;
+    }
+  }
+};
+AuthInfo.prototype = {};
+AuthInfo.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.token = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.ppInfo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AuthInfo.prototype.write = function(output) {
+  output.writeStructBegin('AuthInfo');
+  if (this.token !== null && this.token !== undefined) {
+    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
+    output.writeString(this.token);
+    output.writeFieldEnd();
+  }
+  if (this.ppInfo !== null && this.ppInfo !== undefined) {
+    output.writeFieldBegin('ppInfo', Thrift.Type.STRING, 2);
+    output.writeString(this.ppInfo);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AuthInfoResult = module.exports.AuthInfoResult = function(args) {
+  this.result = null;
+  this.authInfo = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.authInfo !== undefined) {
+      this.authInfo = args.authInfo;
+    }
+  }
+};
+AuthInfoResult.prototype = {};
+AuthInfoResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.authInfo = new ttypes.AuthInfo();
+        this.authInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AuthInfoResult.prototype.write = function(output) {
+  output.writeStructBegin('AuthInfoResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.authInfo !== null && this.authInfo !== undefined) {
+    output.writeFieldBegin('authInfo', Thrift.Type.STRUCT, 2);
+    this.authInfo.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ThirdpartyUser = module.exports.ThirdpartyUser = function(args) {
   this.signinName = null;
   this.userName = null;
@@ -584,6 +718,8 @@ LoginLog = module.exports.LoginLog = function(args) {
   this.loginAuto = null;
   this.loginTime = null;
   this.logoutTime = null;
+  this.clientType = null;
+  this.version = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -608,6 +744,12 @@ LoginLog = module.exports.LoginLog = function(args) {
     }
     if (args.logoutTime !== undefined) {
       this.logoutTime = args.logoutTime;
+    }
+    if (args.clientType !== undefined) {
+      this.clientType = args.clientType;
+    }
+    if (args.version !== undefined) {
+      this.version = args.version;
     }
   }
 };
@@ -681,6 +823,20 @@ LoginLog.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 9:
+      if (ftype == Thrift.Type.I32) {
+        this.clientType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.version = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -732,6 +888,16 @@ LoginLog.prototype.write = function(output) {
     output.writeString(this.logoutTime);
     output.writeFieldEnd();
   }
+  if (this.clientType !== null && this.clientType !== undefined) {
+    output.writeFieldBegin('clientType', Thrift.Type.I32, 9);
+    output.writeI32(this.clientType);
+    output.writeFieldEnd();
+  }
+  if (this.version !== null && this.version !== undefined) {
+    output.writeFieldBegin('version', Thrift.Type.STRING, 10);
+    output.writeString(this.version);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -743,6 +909,7 @@ BuyerResult = module.exports.BuyerResult = function(args) {
   this.loginLog = null;
   this.value = null;
   this.thirdUser = null;
+  this.authInfo = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
@@ -758,6 +925,9 @@ BuyerResult = module.exports.BuyerResult = function(args) {
     }
     if (args.thirdUser !== undefined) {
       this.thirdUser = args.thirdUser;
+    }
+    if (args.authInfo !== undefined) {
+      this.authInfo = args.authInfo;
     }
   }
 };
@@ -814,6 +984,14 @@ BuyerResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.authInfo = new ttypes.AuthInfo();
+        this.authInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -848,6 +1026,11 @@ BuyerResult.prototype.write = function(output) {
   if (this.thirdUser !== null && this.thirdUser !== undefined) {
     output.writeFieldBegin('thirdUser', Thrift.Type.STRUCT, 5);
     this.thirdUser.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.authInfo !== null && this.authInfo !== undefined) {
+    output.writeFieldBegin('authInfo', Thrift.Type.STRUCT, 6);
+    this.authInfo.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
