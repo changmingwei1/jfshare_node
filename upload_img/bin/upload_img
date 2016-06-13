@@ -15,25 +15,7 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/********解决跨域问题**********/
-var enableCORS = function(request,response, next){
- response.header('Access-Control-Allow-Origin', '*');
- response.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
- response.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-
-     Length, X-Requested-With' ) ;
 
-
- // 拦截OPTIONS方法
- if ('OPTIONS' ==request.method){
-  response.send(204);
- }
- else {
-  next();
- }
-} ;
-
-// 在表达式中使用跨域资源共享
-app. use ( enableCORS ) ;
 
 
 /**
