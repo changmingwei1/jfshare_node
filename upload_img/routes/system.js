@@ -113,14 +113,14 @@ router.get('/v1/jfs_image/:img_key', function(req, res) {
 
 });
 
-/* 处理post请求，上传逻辑 */
-router.options('/upload', function(req, res,next) {
+/* 处理跨域options请求，上传逻辑 */
+/*router.options('/upload', function(req, res,next) {
 
-    /*
+    /!*
      res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
      res.setHeader('Access-Control-Allow-Credentials', true);
      res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-     */
+     *!/
 
     var req_origin = "*";
     res.setHeader('Access-Control-Allow-Origin', req_origin);
@@ -129,7 +129,7 @@ router.options('/upload', function(req, res,next) {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
 
 
-    /*res.header("Access-Control-Allow-Origin", "*");
+    /!*res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Headers", "X-Requested-With");
      res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
      res.header("X-Powered-By",' 3.2.1')
@@ -139,7 +139,7 @@ router.options('/upload', function(req, res,next) {
      } else {
      next();
      }
-     */
+     *!/
 
 
     // 此参数中携带了一些对上传文件的限定条件
@@ -243,7 +243,7 @@ router.options('/upload', function(req, res,next) {
         //console.log(md5Data);
 
 
-        /*
+        /!*
 
          //后缀名字校验
          var extName = "";  //后缀名
@@ -267,10 +267,10 @@ router.options('/upload', function(req, res,next) {
          res.render('index', { title: TITLE });
          return;
          }
-         */
+         *!/
 
         //设置上传图片的新名字
-        /*
+        /!*
          var avatarName = md5Data + "." + files.Filedata.name.split('.')[1] ;
          var newPath = form.uploadDir + avatarName;
 
@@ -282,7 +282,7 @@ router.options('/upload', function(req, res,next) {
          if(!newImg){
          fs.renameSync(files.Filedata.path, newPath);  //重命名
          }
-         */
+         *!/
 
 
     });
@@ -290,7 +290,7 @@ router.options('/upload', function(req, res,next) {
     res.locals.success = "上传成功";
     //res.render('index', { title: TITLE  });
 
-});
+});*/
 
 /* 处理post请求，上传逻辑 */
 router.post('/upload', function(req, res) {
