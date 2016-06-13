@@ -704,8 +704,6 @@ router.post('/getExpressInfo', function (request, response, next) {
             response.json(result);
             return;
         }
-
-
         Order.queryOrderDetail(params, function (err, orderInfo) {
             if (err) {
                 response.json(error);
@@ -714,7 +712,7 @@ router.post('/getExpressInfo', function (request, response, next) {
 
             result.OrderId = orderInfo.orderId;
 
-            result.comment = orderInfo.sellerComment;
+            result.remark = orderInfo.sellerComment;
             logger.info(orderInfo.deliverInfo);
             if (orderInfo.deliverInfo != null) {
                 result.expressId = orderInfo.deliverInfo.expressId;
