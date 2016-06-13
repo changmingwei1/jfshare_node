@@ -122,11 +122,19 @@ router.post('/upload', function(req, res) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
 */
 
-    var req_origin = "*";
+    /*var req_origin = "*";
     res.setHeader('Access-Control-Allow-Origin', req_origin);
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS'); //POST, GET, PUT, DELETE, OPTIONS
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");*/
+
+
+
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+     res.header("X-Powered-By",' 3.2.1')
+     res.header("Content-Type", "application/json;charset=utf-8");
 
 
     // 此参数中携带了一些对上传文件的限定条件
