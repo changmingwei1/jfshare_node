@@ -64,7 +64,8 @@ Buyer.prototype.validAuth = function(param, callback){
     });
     var loginLog = new buyer_types.LoginLog({
         browser:param.browser,
-        userId :param.userId
+        userId :param.userId,
+        fromSource:param.fromSource
     });
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'validAuth',[loginLog,authInfo]);
