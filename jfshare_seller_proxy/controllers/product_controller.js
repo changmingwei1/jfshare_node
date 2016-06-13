@@ -42,6 +42,7 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
+
         if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
 
             result.code = 500;
@@ -49,22 +50,30 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
+
         var dataArr = [];
         var subjectIdList = [];
         var productIdList = [];
         var subjectName = [];
         var newData;
+
+        var isExist = true;
         async.series([
                 function (callback) {
                     try {
                         Product.queryProductList(params, function (err, data) {
+
                             if (err) {
                                 callback(1, null);
                             } else {
                                 var productSurveyList = data[0].productSurveyList;
-
+                                if(productSurveyList.length == 0){
+                                    isExist = false;
+                                    return callback(null, dataArr);
+                                }
                                 var pagination = data[0].pagination;
                                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+                                // logger.info("get product list response:" + JSON.stringify(result));
                                 productSurveyList.forEach(function (a) {
                                     var imgUri = a.imgUrl.split(",")[0];
                                     dataArr.push({
@@ -98,7 +107,11 @@ router.post('/list', function (request, response, next) {
                 },
                 function (callback) {
                     try {
+                        if(!isExist){
+                            return callback(null,dataArr);
+                        }
                         Subject.getBatchSuperTree(subjectIdList, function (error, data) {
+                            //logger.info("get product list response:" + JSON.stringify(data));
                             if (error) {
                                 callback(2, null);
                             } else {
@@ -107,6 +120,7 @@ router.post('/list', function (request, response, next) {
                                 var subjectNodeTrees = data[0].subjectNodeTrees;
 
                                 subjectNodeTrees.forEach(function (subjectList) {
+                                    //logger.info("get subjectList list response-----:" + JSON.stringify(subjectList));
                                     if (subjectList != null) {
                                         var subjectpath = "";
                                         for (var i = 0; i < subjectList.length; i++) {
@@ -135,8 +149,11 @@ router.post('/list', function (request, response, next) {
                 },
                 function (callback) {
                     try {
+                        if(!isExist){
+                            return callback(null,dataArr);
+                        }
                         Stock.queryProductTotal(productIdList, function (error, data) {
-                            logger.info("queryProductStockTotal response:" + JSON.stringify(data));
+                            logger.info("get product list response:" + JSON.stringify(data));
                             if (error) {
                                 return callback(3, null);
                             } else {
@@ -182,11 +199,14 @@ router.post('/list', function (request, response, next) {
                     logger.info("shuju------------->" + JSON.stringify(results));
                     for (var i = 0; i < results[0].length; i++) {
                         results[0][i].subjectName = results[1][i];
+                        logger.info("get product list response:" + JSON.stringify(dataArr));
+                        logger.info("get product list response:" + JSON.stringify(subjectName));
                     }
                     result.productList = results[0];
                     response.json(result);
                     return;
                 } else {
+                    logger.info("shuju------------->" + JSON.stringify(results));
                     result = results[0];
                     response.json(result);
                     return;
@@ -1041,10 +1061,11 @@ router.post('/reCaptcha', function(request, response, next) {
         Product.reCaptcha(params, function (err, data) {
             if(err){
                 return response.json(err);
+            }else{
+                logger.info("验证虚拟商品兑换码 result" + JSON.stringify(data));
+                response.json(result);
+                return;
             }
-            logger.info("验证虚拟商品兑换码 result" + JSON.stringify(data));
-            response.json(data);
-            return;
         });
     } catch (ex) {
         logger.error("验证虚拟商品兑换码失败:" + ex);

@@ -485,7 +485,7 @@ Product.prototype.queryProductOrderCard = function (params, callback) {
 Product.prototype.reCaptcha = function (params, callback) {
     var productCardParam = new product_types.ProductCard({
         sellerId:params.sellerId,
-        cardNumber:params.cardNumber
+        cardNumber:params.captchaNum
     });
     logger.info("调用 productServ-reCaptcha 入参:" + JSON.stringify(params));
     // 获取client
@@ -494,10 +494,15 @@ Product.prototype.reCaptcha = function (params, callback) {
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("调用 productServ-reCaptcha result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == "1") {
+        if (err) {
             logger.error("调用 productServ-reCaptcha  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "调用productServ-reCaptcha失败！";
+            res.desc = "券码验证失败";
+            callback(res, null);
+        }else if(data[0].code == "1"){
+            logger.error("调用 productServ-reCaptcha 失败code=1");
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data[0]);

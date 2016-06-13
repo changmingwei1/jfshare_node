@@ -893,6 +893,9 @@ router.post('/querydealList', function (request, response, next) {
                     pageCount: orderProfilePage.pageCount
                 };
                 result.page = page;
+
+                logger.info("查询交易流水，response:" + JSON.stringify(result));
+
                 response.json(result);
                 return
             }

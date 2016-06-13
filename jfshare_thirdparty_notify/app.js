@@ -24,7 +24,8 @@ app.use(logger('dev'));
 app.use(function (req, res, next){
   //console.log("-----------reqUrl===" + req.url);
   if (req.method !== 'GET' && (req.url === '/pay/notify/alipay' || req.url == '/pay/notify/weixinpay' ||
-      req.url == '/pay/notify/hebaopay')) {
+      req.url == '/pay/notify/hebaopay' || req.url == '/pay/notify/weixinwap' ||
+      req.url == '/pay/notify/weixinapp')) {
     req.headers['content-type'] = 'application/x-www-form-urlencoded';
   }
   next();
