@@ -28,31 +28,29 @@ function Order() {
 Order.prototype.orderProfileQuery = function (params, callback) {
 
     var orderQueryConditions = "";
-    if(params.orderList!=null && params.orderList!=""){
+    if (params.orderList != null && params.orderList != "") {
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderStatus || 0,
             startTime: params.startTime,
             endTime: params.endTime,
             orderIds: params.orderList,
-            sellerId:params.sellerId,
-            orderId:params.orderId,
-            count:params.orderList.length,
+            sellerId: params.sellerId,
+            orderId: params.orderId,
+            count: params.orderList.length,
             curPage: 1
         });
 
-    }else{
+    } else {
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderStatus || 0,
             count: params.percount,
             curPage: params.curpage,
             startTime: params.startTime,
             endTime: params.endTime,
-            sellerId:params.sellerId,
-            orderId:params.orderId
+            sellerId: params.sellerId,
+            orderId: params.orderId
         });
     }
-
-
 
 
     logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(orderQueryConditions));
@@ -158,8 +156,15 @@ Order.prototype.deliver = function (params, callback) {
 
 //更新物流单
 Order.prototype.updateExpressInfo = function (params, callback) {
-
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "updateExpressInfo", [params.sellerId, params.orderId, params.expressId, params.expressNo, params.expressName]);
+    var deliverInfo = new order_types.DeliverInfo({
+        orderId: params.orderId,
+        sellerComment: params.remark,
+        expressId: params.expressId,
+        expressName: params.expressName,
+        expressNo: params.expressNo
+    });
+    //params.orderId, params.expressId, params.expressNo, params.expressName
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "updateDeliverInfo", [2, params.sellerId,deliverInfo]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-updateExpressInfo  result:" + JSON.stringify(data));
@@ -182,14 +187,14 @@ Order.prototype.batchExportOrderFull = function (params, callback) {
         startTime: params.startTime,
         endTime: params.endTime,
         orderState: params.orderState || 0,
-        sellerId:params.sellerId
+        sellerId: params.sellerId
     });
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFull", [orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-batchExportOrderFull  result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "1"){
+        if (err || data[0].result.code == "1") {
             logger.error("调用orderServ-batchExportOrderFull  失败原因 ======" + err);
             res.code = 500;
             res.desc = "导出订单失败！";
