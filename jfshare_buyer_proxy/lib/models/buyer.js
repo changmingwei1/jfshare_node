@@ -35,7 +35,8 @@ Buyer.prototype.getAuthInfo = function(param,callback){
         mobile:param.mobile
     });
     var loginLog = new buyer_types.LoginLog({
-        browser:param.browser
+        browser:param.browser,
+        fromSource: param.fromSource
     });
 
     //获取client
@@ -90,7 +91,8 @@ Buyer.prototype.newLogin = function(param,callback){
     });
     //需要的字段可以继续增加
     var thrift_loginLog = new buyer_types.LoginLog({
-        browser:param.browser
+        browser: param.browser,
+        fromSource: param.fromSource
     });
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'newLogin',[thrift_buyer,thrift_loginLog]);
@@ -120,7 +122,8 @@ Buyer.prototype.loginBySms = function(param,callback){
     });
     //需要的字段可以继续增加
     var thrift_loginLog = new buyer_types.LoginLog({
-        browser:param.browser
+        browser:param.browser,
+        fromSource: param.fromSource
     });
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'smsLogin',[thrift_buyer,thrift_loginLog]);
