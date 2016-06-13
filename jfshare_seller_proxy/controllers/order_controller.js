@@ -428,52 +428,52 @@ router.post('/queryexpress', function (request, response, next) {
         response.json(result);
     }
 });
-//取消订单
-router.post('/cancelOrder', function (request, response, next) {
-    logger.info("进入取消订单流程");
-    var result = {code: 200};
-
-    try {
-
-        var params = request.body;
-
-        if (params.orderId == null || params.orderId == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-        if (params.account == null || params.account == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-        if (params.sellerId == null || params.sellerId == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        Order.cancelOrder(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
-            response.json(result);
-            return
-        });
-
-    } catch (ex) {
-        logger.error("查询物流信息失败：" + ex);
-        result.code = 500;
-        result.desc = "查询物流信息失败";
-        response.json(result);
-    }
-});
+////取消订单
+//router.post('/cancelOrder', function (request, response, next) {
+//    logger.info("进入取消订单流程");
+//    var result = {code: 200};
+//
+//    try {
+//
+//        var params = request.body;
+//
+//        if (params.orderId == null || params.orderId == "") {
+//
+//            result.code = 500;
+//            result.desc = "参数错误";
+//            response.json(result);
+//            return;
+//        }
+//
+//        if (params.account == null || params.account == "") {
+//            result.code = 500;
+//            result.desc = "参数错误";
+//            response.json(result);
+//            return;
+//        }
+//
+//        if (params.sellerId == null || params.sellerId == "") {
+//            result.code = 500;
+//            result.desc = "参数错误";
+//            response.json(result);
+//            return;
+//        }
+//        Order.cancelOrder(params, function (err, data) {
+//            if (err) {
+//                response.json(err);
+//                return;
+//            }
+//            response.json(result);
+//            return
+//        });
+//
+//    } catch (ex) {
+//        logger.error("查询物流信息失败：" + ex);
+//        result.code = 500;
+//        result.desc = "查询物流信息失败";
+//        response.json(result);
+//    }
+//});
 
 
 //更新物流单
@@ -577,7 +577,7 @@ router.post('/getExpressInfo', function (request, response, next) {
 
             result.OrderId = orderInfo.orderId;
 
-            result.comment = orderInfo.sellerComment;
+            result.remark = orderInfo.sellerComment;
             if (orderInfo.deliverInfo !== null) {
                 result.expressId = orderInfo.deliverInfo.expressId;
                 result.expressName = orderInfo.deliverInfo.expressName;
