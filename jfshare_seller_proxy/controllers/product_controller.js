@@ -1009,7 +1009,7 @@ router.post('/queryOrderCardMsg', function (request, response, next) {
         var params = request.body;
         logger.info("查询订单中的卡密信息:" + JSON.stringify(params));
 
-        if (params == null || params.orderId == null) {
+        if (params == null || params.orderId == null || params.productId==null) {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
