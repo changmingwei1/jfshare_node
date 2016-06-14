@@ -716,12 +716,13 @@ router.post('/getExpressInfo', function (request, response, next) {
 
             result.OrderId = orderInfo.orderId;
 
-            result.remark = orderInfo.sellerComment;
+
             logger.info(orderInfo.deliverInfo);
             if (orderInfo.deliverInfo != null) {
                 result.expressId = orderInfo.deliverInfo.expressId;
                 result.expressName = orderInfo.deliverInfo.expressName;
                 result.expressNo = orderInfo.deliverInfo.expressNo;
+                result.remark = orderInfo.deliverInfo.sellerComment;
             }
             response.json(result);
         });
