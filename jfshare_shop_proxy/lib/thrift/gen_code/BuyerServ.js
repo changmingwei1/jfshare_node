@@ -228,6 +228,114 @@ BuyerServ_signin_result.prototype.write = function(output) {
   return;
 };
 
+BuyerServ_newSignin_args = function(args) {
+  this.buyer = null;
+  if (args) {
+    if (args.buyer !== undefined) {
+      this.buyer = args.buyer;
+    }
+  }
+};
+BuyerServ_newSignin_args.prototype = {};
+BuyerServ_newSignin_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.buyer = new ttypes.Buyer();
+        this.buyer.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_newSignin_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_newSignin_args');
+  if (this.buyer !== null && this.buyer !== undefined) {
+    output.writeFieldBegin('buyer', Thrift.Type.STRUCT, 1);
+    this.buyer.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_newSignin_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_newSignin_result.prototype = {};
+BuyerServ_newSignin_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_newSignin_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_newSignin_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 BuyerServ_login_args = function(args) {
   this.buyer = null;
   this.loginLog = null;
@@ -340,6 +448,250 @@ BuyerServ_login_result.prototype.read = function(input) {
 
 BuyerServ_login_result.prototype.write = function(output) {
   output.writeStructBegin('BuyerServ_login_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_newLogin_args = function(args) {
+  this.buyer = null;
+  this.loginLog = null;
+  if (args) {
+    if (args.buyer !== undefined) {
+      this.buyer = args.buyer;
+    }
+    if (args.loginLog !== undefined) {
+      this.loginLog = args.loginLog;
+    }
+  }
+};
+BuyerServ_newLogin_args.prototype = {};
+BuyerServ_newLogin_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.buyer = new ttypes.Buyer();
+        this.buyer.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.loginLog = new ttypes.LoginLog();
+        this.loginLog.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_newLogin_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_newLogin_args');
+  if (this.buyer !== null && this.buyer !== undefined) {
+    output.writeFieldBegin('buyer', Thrift.Type.STRUCT, 1);
+    this.buyer.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.loginLog !== null && this.loginLog !== undefined) {
+    output.writeFieldBegin('loginLog', Thrift.Type.STRUCT, 2);
+    this.loginLog.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_newLogin_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_newLogin_result.prototype = {};
+BuyerServ_newLogin_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.BuyerResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_newLogin_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_newLogin_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_smsLogin_args = function(args) {
+  this.buyer = null;
+  this.loginLog = null;
+  if (args) {
+    if (args.buyer !== undefined) {
+      this.buyer = args.buyer;
+    }
+    if (args.loginLog !== undefined) {
+      this.loginLog = args.loginLog;
+    }
+  }
+};
+BuyerServ_smsLogin_args.prototype = {};
+BuyerServ_smsLogin_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.buyer = new ttypes.Buyer();
+        this.buyer.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.loginLog = new ttypes.LoginLog();
+        this.loginLog.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_smsLogin_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_smsLogin_args');
+  if (this.buyer !== null && this.buyer !== undefined) {
+    output.writeFieldBegin('buyer', Thrift.Type.STRUCT, 1);
+    this.buyer.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.loginLog !== null && this.loginLog !== undefined) {
+    output.writeFieldBegin('loginLog', Thrift.Type.STRUCT, 2);
+    this.loginLog.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_smsLogin_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_smsLogin_result.prototype = {};
+BuyerServ_smsLogin_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.BuyerResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_smsLogin_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_smsLogin_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -1131,6 +1483,127 @@ BuyerServ_resetBuyerPwd_result.prototype.write = function(output) {
   return;
 };
 
+BuyerServ_newResetBuyerPwd_args = function(args) {
+  this.newPwd = null;
+  this.buyer = null;
+  if (args) {
+    if (args.newPwd !== undefined) {
+      this.newPwd = args.newPwd;
+    }
+    if (args.buyer !== undefined) {
+      this.buyer = args.buyer;
+    }
+  }
+};
+BuyerServ_newResetBuyerPwd_args.prototype = {};
+BuyerServ_newResetBuyerPwd_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.newPwd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.buyer = new ttypes.Buyer();
+        this.buyer.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_newResetBuyerPwd_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_newResetBuyerPwd_args');
+  if (this.newPwd !== null && this.newPwd !== undefined) {
+    output.writeFieldBegin('newPwd', Thrift.Type.STRING, 1);
+    output.writeString(this.newPwd);
+    output.writeFieldEnd();
+  }
+  if (this.buyer !== null && this.buyer !== undefined) {
+    output.writeFieldBegin('buyer', Thrift.Type.STRUCT, 2);
+    this.buyer.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_newResetBuyerPwd_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_newResetBuyerPwd_result.prototype = {};
+BuyerServ_newResetBuyerPwd_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_newResetBuyerPwd_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_newResetBuyerPwd_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 BuyerServ_signinThirdParty_args = function(args) {
   this.loginLog = null;
   this.thirdUser = null;
@@ -1374,6 +1847,267 @@ BuyerServ_isBindThirdParty_result.prototype.write = function(output) {
   return;
 };
 
+BuyerServ_getAuthInfo_args = function(args) {
+  this.authInfo = null;
+  this.buyer = null;
+  this.loginLog = null;
+  if (args) {
+    if (args.authInfo !== undefined) {
+      this.authInfo = args.authInfo;
+    }
+    if (args.buyer !== undefined) {
+      this.buyer = args.buyer;
+    }
+    if (args.loginLog !== undefined) {
+      this.loginLog = args.loginLog;
+    }
+  }
+};
+BuyerServ_getAuthInfo_args.prototype = {};
+BuyerServ_getAuthInfo_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.authInfo = new ttypes.AuthInfo();
+        this.authInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.buyer = new ttypes.Buyer();
+        this.buyer.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.loginLog = new ttypes.LoginLog();
+        this.loginLog.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_getAuthInfo_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getAuthInfo_args');
+  if (this.authInfo !== null && this.authInfo !== undefined) {
+    output.writeFieldBegin('authInfo', Thrift.Type.STRUCT, 1);
+    this.authInfo.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.buyer !== null && this.buyer !== undefined) {
+    output.writeFieldBegin('buyer', Thrift.Type.STRUCT, 2);
+    this.buyer.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.loginLog !== null && this.loginLog !== undefined) {
+    output.writeFieldBegin('loginLog', Thrift.Type.STRUCT, 3);
+    this.loginLog.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_getAuthInfo_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_getAuthInfo_result.prototype = {};
+BuyerServ_getAuthInfo_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.AuthInfoResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_getAuthInfo_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getAuthInfo_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_validAuth_args = function(args) {
+  this.loginLog = null;
+  this.authInfo = null;
+  if (args) {
+    if (args.loginLog !== undefined) {
+      this.loginLog = args.loginLog;
+    }
+    if (args.authInfo !== undefined) {
+      this.authInfo = args.authInfo;
+    }
+  }
+};
+BuyerServ_validAuth_args.prototype = {};
+BuyerServ_validAuth_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.loginLog = new ttypes.LoginLog();
+        this.loginLog.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.authInfo = new ttypes.AuthInfo();
+        this.authInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_validAuth_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_validAuth_args');
+  if (this.loginLog !== null && this.loginLog !== undefined) {
+    output.writeFieldBegin('loginLog', Thrift.Type.STRUCT, 1);
+    this.loginLog.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.authInfo !== null && this.authInfo !== undefined) {
+    output.writeFieldBegin('authInfo', Thrift.Type.STRUCT, 2);
+    this.authInfo.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_validAuth_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_validAuth_result.prototype = {};
+BuyerServ_validAuth_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_validAuth_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_validAuth_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 BuyerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -1477,6 +2211,53 @@ BuyerServClient.prototype.recv_signin = function(input,mtype,rseqid) {
   }
   return callback('signin failed: unknown result');
 };
+BuyerServClient.prototype.newSignin = function(buyer, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_newSignin(buyer);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_newSignin(buyer);
+  }
+};
+
+BuyerServClient.prototype.send_newSignin = function(buyer) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('newSignin', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_newSignin_args();
+  args.buyer = buyer;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_newSignin = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_newSignin_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('newSignin failed: unknown result');
+};
 BuyerServClient.prototype.login = function(buyer, loginLog, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -1524,6 +2305,102 @@ BuyerServClient.prototype.recv_login = function(input,mtype,rseqid) {
     return callback(null, result.success);
   }
   return callback('login failed: unknown result');
+};
+BuyerServClient.prototype.newLogin = function(buyer, loginLog, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_newLogin(buyer, loginLog);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_newLogin(buyer, loginLog);
+  }
+};
+
+BuyerServClient.prototype.send_newLogin = function(buyer, loginLog) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('newLogin', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_newLogin_args();
+  args.buyer = buyer;
+  args.loginLog = loginLog;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_newLogin = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_newLogin_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('newLogin failed: unknown result');
+};
+BuyerServClient.prototype.smsLogin = function(buyer, loginLog, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_smsLogin(buyer, loginLog);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_smsLogin(buyer, loginLog);
+  }
+};
+
+BuyerServClient.prototype.send_smsLogin = function(buyer, loginLog) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('smsLogin', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_smsLogin_args();
+  args.buyer = buyer;
+  args.loginLog = loginLog;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_smsLogin = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_smsLogin_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('smsLogin failed: unknown result');
 };
 BuyerServClient.prototype.logout = function(loginLog, callback) {
   this._seqid = this.new_seqid();
@@ -1856,6 +2733,54 @@ BuyerServClient.prototype.recv_resetBuyerPwd = function(input,mtype,rseqid) {
   }
   return callback('resetBuyerPwd failed: unknown result');
 };
+BuyerServClient.prototype.newResetBuyerPwd = function(newPwd, buyer, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_newResetBuyerPwd(newPwd, buyer);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_newResetBuyerPwd(newPwd, buyer);
+  }
+};
+
+BuyerServClient.prototype.send_newResetBuyerPwd = function(newPwd, buyer) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('newResetBuyerPwd', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_newResetBuyerPwd_args();
+  args.newPwd = newPwd;
+  args.buyer = buyer;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_newResetBuyerPwd = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_newResetBuyerPwd_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('newResetBuyerPwd failed: unknown result');
+};
 BuyerServClient.prototype.signinThirdParty = function(loginLog, thirdUser, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -1952,6 +2877,103 @@ BuyerServClient.prototype.recv_isBindThirdParty = function(input,mtype,rseqid) {
   }
   return callback('isBindThirdParty failed: unknown result');
 };
+BuyerServClient.prototype.getAuthInfo = function(authInfo, buyer, loginLog, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getAuthInfo(authInfo, buyer, loginLog);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getAuthInfo(authInfo, buyer, loginLog);
+  }
+};
+
+BuyerServClient.prototype.send_getAuthInfo = function(authInfo, buyer, loginLog) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getAuthInfo', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_getAuthInfo_args();
+  args.authInfo = authInfo;
+  args.buyer = buyer;
+  args.loginLog = loginLog;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_getAuthInfo = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_getAuthInfo_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getAuthInfo failed: unknown result');
+};
+BuyerServClient.prototype.validAuth = function(loginLog, authInfo, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_validAuth(loginLog, authInfo);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_validAuth(loginLog, authInfo);
+  }
+};
+
+BuyerServClient.prototype.send_validAuth = function(loginLog, authInfo) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('validAuth', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_validAuth_args();
+  args.loginLog = loginLog;
+  args.authInfo = authInfo;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_validAuth = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_validAuth_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('validAuth failed: unknown result');
+};
 BuyerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -2030,6 +3052,36 @@ BuyerServProcessor.prototype.process_signin = function(seqid, input, output) {
   }
 }
 
+BuyerServProcessor.prototype.process_newSignin = function(seqid, input, output) {
+  var args = new BuyerServ_newSignin_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.newSignin.length === 1) {
+    Q.fcall(this._handler.newSignin, args.buyer)
+      .then(function(result) {
+        var result = new BuyerServ_newSignin_result({success: result});
+        output.writeMessageBegin("newSignin", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_newSignin_result(err);
+        output.writeMessageBegin("newSignin", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.newSignin(args.buyer,  function (err, result) {
+      var result = new BuyerServ_newSignin_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("newSignin", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
 BuyerServProcessor.prototype.process_login = function(seqid, input, output) {
   var args = new BuyerServ_login_args();
   args.read(input);
@@ -2053,6 +3105,66 @@ BuyerServProcessor.prototype.process_login = function(seqid, input, output) {
     this._handler.login(args.buyer, args.loginLog,  function (err, result) {
       var result = new BuyerServ_login_result((err != null ? err : {success: result}));
       output.writeMessageBegin("login", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_newLogin = function(seqid, input, output) {
+  var args = new BuyerServ_newLogin_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.newLogin.length === 2) {
+    Q.fcall(this._handler.newLogin, args.buyer, args.loginLog)
+      .then(function(result) {
+        var result = new BuyerServ_newLogin_result({success: result});
+        output.writeMessageBegin("newLogin", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_newLogin_result(err);
+        output.writeMessageBegin("newLogin", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.newLogin(args.buyer, args.loginLog,  function (err, result) {
+      var result = new BuyerServ_newLogin_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("newLogin", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_smsLogin = function(seqid, input, output) {
+  var args = new BuyerServ_smsLogin_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.smsLogin.length === 2) {
+    Q.fcall(this._handler.smsLogin, args.buyer, args.loginLog)
+      .then(function(result) {
+        var result = new BuyerServ_smsLogin_result({success: result});
+        output.writeMessageBegin("smsLogin", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_smsLogin_result(err);
+        output.writeMessageBegin("smsLogin", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.smsLogin(args.buyer, args.loginLog,  function (err, result) {
+      var result = new BuyerServ_smsLogin_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("smsLogin", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -2270,6 +3382,36 @@ BuyerServProcessor.prototype.process_resetBuyerPwd = function(seqid, input, outp
   }
 }
 
+BuyerServProcessor.prototype.process_newResetBuyerPwd = function(seqid, input, output) {
+  var args = new BuyerServ_newResetBuyerPwd_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.newResetBuyerPwd.length === 2) {
+    Q.fcall(this._handler.newResetBuyerPwd, args.newPwd, args.buyer)
+      .then(function(result) {
+        var result = new BuyerServ_newResetBuyerPwd_result({success: result});
+        output.writeMessageBegin("newResetBuyerPwd", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_newResetBuyerPwd_result(err);
+        output.writeMessageBegin("newResetBuyerPwd", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.newResetBuyerPwd(args.newPwd, args.buyer,  function (err, result) {
+      var result = new BuyerServ_newResetBuyerPwd_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("newResetBuyerPwd", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
 BuyerServProcessor.prototype.process_signinThirdParty = function(seqid, input, output) {
   var args = new BuyerServ_signinThirdParty_args();
   args.read(input);
@@ -2323,6 +3465,66 @@ BuyerServProcessor.prototype.process_isBindThirdParty = function(seqid, input, o
     this._handler.isBindThirdParty(args.thirdType, args.loginLog,  function (err, result) {
       var result = new BuyerServ_isBindThirdParty_result((err != null ? err : {success: result}));
       output.writeMessageBegin("isBindThirdParty", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_getAuthInfo = function(seqid, input, output) {
+  var args = new BuyerServ_getAuthInfo_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getAuthInfo.length === 3) {
+    Q.fcall(this._handler.getAuthInfo, args.authInfo, args.buyer, args.loginLog)
+      .then(function(result) {
+        var result = new BuyerServ_getAuthInfo_result({success: result});
+        output.writeMessageBegin("getAuthInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_getAuthInfo_result(err);
+        output.writeMessageBegin("getAuthInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getAuthInfo(args.authInfo, args.buyer, args.loginLog,  function (err, result) {
+      var result = new BuyerServ_getAuthInfo_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getAuthInfo", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_validAuth = function(seqid, input, output) {
+  var args = new BuyerServ_validAuth_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.validAuth.length === 2) {
+    Q.fcall(this._handler.validAuth, args.loginLog, args.authInfo)
+      .then(function(result) {
+        var result = new BuyerServ_validAuth_result({success: result});
+        output.writeMessageBegin("validAuth", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_validAuth_result(err);
+        output.writeMessageBegin("validAuth", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.validAuth(args.loginLog, args.authInfo,  function (err, result) {
+      var result = new BuyerServ_validAuth_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("validAuth", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

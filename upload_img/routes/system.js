@@ -113,6 +113,185 @@ router.get('/v1/jfs_image/:img_key', function(req, res) {
 
 });
 
+/* 处理跨域options请求，上传逻辑 */
+/*router.options('/upload', function(req, res,next) {
+
+    /!*
+     res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+     res.setHeader('Access-Control-Allow-Credentials', true);
+     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+     *!/
+
+    var req_origin = "*";
+    res.setHeader('Access-Control-Allow-Origin', req_origin);
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS'); //POST, GET, PUT, DELETE, OPTIONS
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
+
+
+    /!*res.header("Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+     res.header("X-Powered-By",' 3.2.1')
+     res.header("Content-Type", "application/json;charset=utf-8");
+     if (req.method == 'OPTIONS') {
+     res.send(200);
+     } else {
+     next();
+     }
+     *!/
+
+
+    // 此参数中携带了一些对上传文件的限定条件
+    var originalUrl = req.originalUrl;
+    console.log("originalUrl" + originalUrl);
+    var limitParam = originalUrl.split("?")[1];
+    var minw = 0;
+    var maxw = 2000;
+    var minh = 0;
+    var maxh = 2000;
+    if( !param_valid.empty(limitParam) && !param_valid.empty(limitParam.split("=")[1]) ){
+        var allParam = limitParam.split("=")[1];
+        minw = allParam.split("f")[0] || 0;
+        maxw = allParam.split("f")[1] || 2000;
+        minh = allParam.split("f")[2] || 0;
+        maxh = allParam.split("f")[3] || 2000;
+    }
+    console.log(minw+","+maxw+","+minh+","+maxh);
+    var form = new formidable.IncomingForm();   //创建上传表单
+    form.encoding = "utf-8";        //设置编辑
+    //form.uploadDir = "../public" + AVATAR_UPLOAD_FOLDER;     //设置上传目录
+    //部署时候，使用的路径
+    form.uploadDir = "/tmp";
+    form.keepExtensions = true;     //保留后缀
+    form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+
+    form.parse(req, function(err, fields, files) {
+        // form表单解析错误
+        if (err) {
+            res.locals.error = err;
+            //res.render('index', { title: TITLE });
+            res.json( {result:false, title:'失败', failDesc:'表单解析失败'});
+            return;
+        }
+
+        console.log("size" + files.Filedata.size);
+
+        if(files.Filedata.size  > form.maxFieldsSize){
+            res.json( {result:false, title:'失败', failDesc:'图片超过2M'});
+            return;
+        }
+
+
+        var data = fs.readFileSync(files.Filedata.path);
+        var md5Data = crypto.createHash('md5').update(data).digest('hex').toUpperCase();
+        var filename = md5Data;
+
+
+        //图片
+        var image_info = imageinfo(data);
+
+        console.log("width:" + image_info.width);
+        if (image_info.width < minw  || image_info.width > maxw){
+            //console.log("width:" + image_info.width);
+            res.json( {result:false, title:'失败', failDesc:'宽度错误，实际宽度='+image_info.width + "，宽度范围应在"+minw+"px-"+maxw+"px内"});
+            return;
+        }
+
+        console.log("height:" + image_info.height);
+        if (image_info.height < minh || image_info.height > maxh){
+            //console.log("height:" + image_info.height);
+            res.json( {result:false, title:'失败', failDesc:'高度错误，实际高度='+image_info.height + "，高度范围应在"+minh+"px-"+maxh+"px内"});
+            return;
+        }
+
+        //上传到fastdfs
+        //files.Filedata.type
+        var extName = "jpg";  //后缀名
+        switch (files.Filedata.type) {
+            case 'image/pjpeg':
+                extName = 'jpg';
+                break;
+            case 'image/jpeg':
+                extName = 'jpg';
+                break;
+
+            case 'image/png':
+                extName = 'png';
+                break;
+            case 'image/x-png':
+                extName = 'png';
+                break;
+        }
+
+        fdfs.upload(data, {ext: extName}, function(err, fileId) {
+
+            console.log("err : " + err);
+
+            if(fileId){
+                //thrift 保存映射关系
+                savefileNameMapped(filename+"."+extName, fileId);
+            }
+
+            res.json( {result:true, title: filename+"."+extName  });
+            console.log("fileId : " + fileId);
+
+        });
+
+
+        //var md5Data = crypto.createHash('md5').update(data).digest('hex').toUpperCase();
+        //console.log(md5Data);
+
+
+        /!*
+
+         //后缀名字校验
+         var extName = "";  //后缀名
+         switch (files.Filedata.type) {
+         case 'image/pjpeg':
+         extName = 'jpg';
+         break;
+         case 'image/jpeg':
+         extName = 'jpg';
+         break;
+         case 'image/png':
+         extName = 'png';
+         break;
+         case 'image/x-png':
+         extName = 'png';
+         break;
+         }
+
+         if(extName.length == 0){
+         res.locals.error = '只支持png和jpg格式图片';
+         res.render('index', { title: TITLE });
+         return;
+         }
+         *!/
+
+        //设置上传图片的新名字
+        /!*
+         var avatarName = md5Data + "." + files.Filedata.name.split('.')[1] ;
+         var newPath = form.uploadDir + avatarName;
+
+         // res.render('index', { title: avatarName  });
+         res.json( { title: avatarName  });
+         console.log(newPath);
+
+         var newImg = fs.readFileSync(newPath);
+         if(!newImg){
+         fs.renameSync(files.Filedata.path, newPath);  //重命名
+         }
+         *!/
+
+
+    });
+
+    res.locals.success = "上传成功";
+    //res.render('index', { title: TITLE  });
+
+});*/
+
 /* 处理post请求，上传逻辑 */
 router.post('/upload', function(req, res) {
 
@@ -122,19 +301,24 @@ router.post('/upload', function(req, res) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
 */
 
-    var req_origin = "*";
+    /*var req_origin = "http://buyer.jfshare.com/";
     res.setHeader('Access-Control-Allow-Origin', req_origin);
     res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS'); //POST, GET, PUT, DELETE, OPTIONS
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS'); //POST, GET, PUT, DELETE, OPTIONS
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
-
-
+*/
 
      /*res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Headers", "X-Requested-With");
      res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
      res.header("X-Powered-By",' 3.2.1')
-     res.header("Content-Type", "application/json;charset=utf-8");*/
+     res.header("Content-Type", "application/json;charset=utf-8");
+     if (req.method == 'OPTIONS') {
+       res.send(200);
+     } else {
+       next();
+     }
+     */
 
 
     // 此参数中携带了一些对上传文件的限定条件
@@ -340,7 +524,6 @@ router.post('/uploadFile', function(req, res) {
 
     res.locals.success = "上传成功";
 });
-
 
 /* 处理post请求，上传逻辑 */
 router.post('/uploadFiles', function(req, res) {

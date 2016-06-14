@@ -718,6 +718,8 @@ LoginLog = module.exports.LoginLog = function(args) {
   this.loginAuto = null;
   this.loginTime = null;
   this.logoutTime = null;
+  this.clientType = null;
+  this.version = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -742,6 +744,12 @@ LoginLog = module.exports.LoginLog = function(args) {
     }
     if (args.logoutTime !== undefined) {
       this.logoutTime = args.logoutTime;
+    }
+    if (args.clientType !== undefined) {
+      this.clientType = args.clientType;
+    }
+    if (args.version !== undefined) {
+      this.version = args.version;
     }
   }
 };
@@ -815,6 +823,20 @@ LoginLog.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 9:
+      if (ftype == Thrift.Type.I32) {
+        this.clientType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.version = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -864,6 +886,16 @@ LoginLog.prototype.write = function(output) {
   if (this.logoutTime !== null && this.logoutTime !== undefined) {
     output.writeFieldBegin('logoutTime', Thrift.Type.STRING, 8);
     output.writeString(this.logoutTime);
+    output.writeFieldEnd();
+  }
+  if (this.clientType !== null && this.clientType !== undefined) {
+    output.writeFieldBegin('clientType', Thrift.Type.I32, 9);
+    output.writeI32(this.clientType);
+    output.writeFieldEnd();
+  }
+  if (this.version !== null && this.version !== undefined) {
+    output.writeFieldBegin('version', Thrift.Type.STRING, 10);
+    output.writeString(this.version);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
