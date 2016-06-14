@@ -335,12 +335,12 @@ router.post('/queryafterSaleOrder', function (request, response, next) {
     try {
         var params = request.body;
         logger.info("查询订单状态个数请求参数：" + JSON.stringify(params));
-        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
+        //if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+        //    result.code = 400;
+        //    result.desc = "参数错误";
+        //    response.json(result);
+        //    return;
+        //}
         afterSale.queryAfterSaleOrderList(params, function (err, data) {
             if (err) {
                 response.json(err);
