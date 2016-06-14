@@ -597,6 +597,10 @@ router.post('/deliver', function (request, response, next) {
             response.json(result);
             return;
         }
+
+
+        logger.info("调用orderServ-deliver  params:" + JSON.stringify(params));
+
         Order.deliver(params, function (err, data) {
             if (err) {
                 response.json(err);
