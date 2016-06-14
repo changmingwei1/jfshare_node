@@ -785,23 +785,31 @@ Product.prototype.setProductState = function (params, callback) {
 };
 //获取虚拟订单的卡密信息
 Product.prototype.queryProductCard = function (params, callback) {
-    var ProductCardParam = new product_types.ProductCardParam({
-        transactionId:params.orderId
+    var productCardParam = new product_types.ProductCardParam({
+        transactionId:params.orderId,
+        productId:params.productId
     });
-    logger.info("调用productServ-queryProductCard args:" + JSON.stringify(ProductCardParam));
-    // 获取client//Product ProductServer
-    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCard", ProductCardParam);
-    // 调用 productServ
+    logger.info("queryProductOrderCard  args:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCard", productCardParam);
+
+    //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("调用productServ-queryProductCard result:" + JSON.stringify(data[0]));
-        var ret = {};
-        if (err ||data[0].result.code == 1) {
-            logger.error("调用productServ-queryProductCard  失败原因 ======" + err);
-            ret.code = 500;
-            ret.desc = "查询卡密列表失败！";
-            return callback(ret, null);
+        logger.info("调用queryProductOrderCard result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用queryProductOrderCard  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查看订单的卡密信息失败！";
+            callback(res, null);
+        } else {
+            if(data[0]!=null&&data[0].cardList!=null){
+                callback(null, data[0].cardList);
+            }else{
+                callback(null, null);
+            }
+
         }
-        return callback(null, data);
     });
 };
 module.exports = new Product();

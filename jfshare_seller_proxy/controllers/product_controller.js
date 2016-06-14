@@ -1019,8 +1019,9 @@ router.post('/queryOrderCardMsg', function (request, response, next) {
             if(err){
                 return response.json(err);
             }
-            logger.info("查询订单中的卡密信息result" + JSON.stringify(data));
-            response.json(data);
+            result.cardList= data;
+            logger.info("查询订单中的卡密信息result" + JSON.stringify(result));
+            response.json(result);
             return;
         });
     } catch (ex) {

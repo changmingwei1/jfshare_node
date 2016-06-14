@@ -945,9 +945,6 @@ router.post('/afterSalelist', function (request, response, next) {
 router.post('/carList', function (request, response, next) {
     logger.info("进入获取订单中的卡密列表");
     var result = {code: 200};
-    var expressList = [];
-    result.expressList = expressList;
-
     try {
         var params = request.body;
 
@@ -960,15 +957,22 @@ router.post('/carList', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.productId == "" || params.productId == null) {
 
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         logger.info("进入获取订单中的卡密列表 params:" + JSON.stringify(params));
         Product.queryProductCard(params, function (err, data) {
-            if (err) {
-                response.json(err);
-            } else {
-                response.json(data);
+            if(err){
+                return response.json(err);
             }
-
+            result.cardList= data;
+            logger.info("查询订单中的卡密信息result" + JSON.stringify(result));
+            response.json(result);
+            return;
         });
 
 
