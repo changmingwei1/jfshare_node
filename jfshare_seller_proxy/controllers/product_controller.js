@@ -857,15 +857,21 @@ router.post('/apply', function (request, response, next) {
             return;
         }
 
-//ENUM商品状态:100 - 199 不可出售的状态，200 - 299 审核中的状态，
-//300 - 399 销售中的状态，100 初始化，101 商家下架，102 审核未通过，103 管理员下架，200 审核中，300 销售中
-        if (params.state == 1) {// 0：表示申请上架，1：表示下架
+        //ENUM商品状态:100 - 199 不可出售的状态，200 - 299 审核中的状态，
+        //300 - 399 销售中的状态，100 初始化，101 商家下架，102 审核未通过，103 管理员下架，200 审核中，300 销售中
+        if (params.state == 1) {// 0：表示申请上架，1：表示下架 2 撤销审核
 
             params.activeState = 101;
         }
-        if (params.state == 0) {// 0：表示申请上架，1：表示下架
+        if (params.state == 0) {// 0：表示申请上架，1：表示下架 2 撤销审核
             params.activeState = 200;
         }
+
+        if (params.state == 2) {// 0：表示申请上架，1：表示下架 2 撤销审核
+
+            params.activeState = 100;
+        }
+
 
 
         Product.setProductState(params, function (err, expressData) {
