@@ -53,6 +53,7 @@ router.post('/login', function(request, response, next) {
                 result.code = 500;
                 result.desc = data[0].result.failDescList[0].desc;
             }
+            logger.info("user.longin response:" + JSON.stringify(result));
             response.json(result);
             return
         });
