@@ -66,8 +66,7 @@ router.post('/submit', function (request, response, next) {
                         var productId = arg.sellerDetailList[0].productList[0].productId;
                         Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
                             if (err) {
-                                response.json(err);
-                                return;
+                                return callback(1,null);
                             }
                             var product = data[0].product;
                             arg.subjectId = product.subjectId;
@@ -78,8 +77,7 @@ router.post('/submit', function (request, response, next) {
                     function(callback){
                         Product.getById4dis(arg, function(err,data){
                             if(err){
-                                response.json(err);
-                                return;
+                                return callback(2,null);
                             } else {
                                 var displaySubjectInfo = data[0].displaySubjectInfo;
                                 var commodity = displaySubjectInfo.commodity;
@@ -99,8 +97,7 @@ router.post('/submit', function (request, response, next) {
                     function(callback){
                         Order.orderConfirm(arg, function (err, data) {
                             if (err) {
-                                response.json(err);
-                                return;
+                                return callback(3,null);
                             }
                             result.orderIdList = data[0].orderIdList;
                             //result.extend = JSON.parse(data[0].extend);
@@ -109,20 +106,21 @@ router.post('/submit', function (request, response, next) {
                     }
                 ],
                 function (err, results) {
-                    if (err == 5) {
-                        result.code = 200;
-                        response.json(result);
-                        return;
-                    } else if (err) {
+                    if (err == 1) {
                         result.code = 500;
-                        result.desc = "获取售后列表失败";
+                        result.desc = "查询商品类目失败";
                         response.json(result);
                         return;
-                    } else {
-                        if (results[1] != null) {
-                            response.json(results[1]);
-                            return;
-                        }
+                    } else if (err == 2) {
+                        result.code = 500;
+                        result.desc = "查询商品类型失败";
+                        response.json(result);
+                        return;
+                    } else if (err == 3) {
+                        result.code = 500;
+                        result.desc = "提交订单失败";
+                        response.json(result);
+                        return;
                     }
             });
         });
