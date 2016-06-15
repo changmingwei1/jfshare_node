@@ -70,7 +70,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
     });
 };
 //订单状态数量查询 --还需要查询退货中的订单状态
-Order.prototype.orderStateQuery = function (param, callback) {
+Order.prototype.orderStateQuery = function (params, callback) {
 
 
     var orderQueryConditions = new order_types.OrderQueryConditions({
