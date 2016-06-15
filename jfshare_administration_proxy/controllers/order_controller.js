@@ -37,7 +37,7 @@ router.post('/list', function (request, response, next) {
         response.json(result);
         return;
     }
-    if (params.endTime == null || params.endTime == "" ) {
+    if (params.endTime == null || params.endTime == "") {
         result.code = 400;
         result.desc = "参数错误";
         response.json(result);
@@ -56,7 +56,7 @@ router.post('/list', function (request, response, next) {
                         }
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
-                        if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length>0) {
+                        if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
                             orderInfo.orderProfileList.forEach(function (order) {
                                 var orderItem = {
                                     orderId: order.orderId,
@@ -96,7 +96,7 @@ router.post('/list', function (request, response, next) {
                                             imgUrl: "",
                                             count: order.productList[i].count
                                         };
-                                        if(order.productList[i].imagesUrl!=null){
+                                        if (order.productList[i].imagesUrl != null) {
                                             productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
                                         }
                                         productList.push(productItem);
@@ -105,7 +105,6 @@ router.post('/list', function (request, response, next) {
                                     orderList.push(orderItem);
                                 }
                             });
-
 
 
                             result.orderList = orderList;
@@ -221,7 +220,7 @@ router.post('/info', function (request, response, next) {
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
                         }
-                       // result.curTime = new Date().getTime();
+                        // result.curTime = new Date().getTime();
                         result.createTime = orderInfo.createTime;
                         result.deliverTime = orderInfo.deliverTime; //卖家发货时间
                         result.successTime = orderInfo.successTime; //确认收货时间
@@ -266,7 +265,7 @@ router.post('/info', function (request, response, next) {
                             result.productList = productList;
                         }
                         params.sellerId = orderInfo.sellerId;
-                        callback(null,result);
+                        callback(null, result);
                     });
                 }
                 catch
@@ -284,7 +283,7 @@ router.post('/info', function (request, response, next) {
                             }
                             logger.info("get order list response:" + JSON.stringify(result));
                             afterSaleList = data;
-                           // result.afterSaleList = afterSaleList;
+                            // result.afterSaleList = afterSaleList;
                             return callback(null, afterSaleList);
                         });
                     } else {
@@ -865,8 +864,8 @@ router.post('/afterSalelist', function (request, response, next) {
                                 logger.error("订单服务异常");
                                 return callback(1, null);
                             }
-                           // page.total = orderInfo.total;
-                           // page.pageCount = orderInfo.pageCount;
+                            // page.total = orderInfo.total;
+                            // page.pageCount = orderInfo.pageCount;
                             if (orderInfo.orderProfileList !== null) {
                                 orderInfo.orderProfileList.forEach(function (order) {
                                     var orderItem = {
@@ -971,10 +970,10 @@ router.post('/carList', function (request, response, next) {
         }
         logger.info("进入获取订单中的卡密列表 params:" + JSON.stringify(params));
         Product.queryProductCard(params, function (err, data) {
-            if(err){
+            if (err) {
                 return response.json(err);
             }
-            result.cardList= data;
+            result.cardList = data;
             logger.info("查询订单中的卡密信息result" + JSON.stringify(result));
             response.json(result);
             return;
@@ -1014,7 +1013,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
                 response.json(err);
                 return;
             } else {
-                result.url = "http://101.201.39.63/"+data;
+                result.url = "http://101.201.39.63/" + data;
                 response.json(result);
             }
 
@@ -1027,8 +1026,6 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
         response.json(result);
     }
 });
-
-
 
 
 module.exports = router;
