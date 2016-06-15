@@ -60,14 +60,70 @@ router.post('/submit', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            Order.orderConfirm(arg, function (err, data) {
-                if (err) {
-                    response.json(err);
-                    return;
-                }
-                result.orderIdList = data[0].orderIdList;
-                //result.extend = JSON.parse(data[0].extend);
-                response.json(result);
+            async.series([
+                    /*根据商品id查找类目id*/
+                    function(callback){
+                        var productId = arg.sellerDetailList[0].productList[0].productId;
+                        Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
+                            if (err) {
+                                response.json(err);
+                                return;
+                            }
+                            var product = data[0].product;
+                            arg.subjectId = product.subjectId;
+                            callback(null, result);
+                        });
+                    },
+                    /*根据类目id,得到商品类型commodity*/
+                    function(callback){
+                        Product.getById4dis(arg, function(err,data){
+                            if(err){
+                                response.json(err);
+                                return;
+                            } else {
+                                var displaySubjectInfo = data[0].displaySubjectInfo;
+                                var commodity = displaySubjectInfo.commodity;
+                                var tradeCode;
+                                if(commodity == 1){
+                                    tradeCode = "Z0003";
+                                }
+                                if(commodity == 2){
+                                    tradeCode = "Z8001";
+                                }
+                                arg.tradeCode = tradeCode;
+                                logger.info("tradeCode的值为：" + arg.tradeCode);
+                                callback(null,result);
+                            }
+                        });
+                    },
+                    function(callback){
+                        Order.orderConfirm(arg, function (err, data) {
+                            if (err) {
+                                response.json(err);
+                                return;
+                            }
+                            result.orderIdList = data[0].orderIdList;
+                            //result.extend = JSON.parse(data[0].extend);
+                            response.json(result);
+                        });
+                    }
+                ],
+                function (err, results) {
+                    if (err == 5) {
+                        result.code = 200;
+                        response.json(result);
+                        return;
+                    } else if (err) {
+                        result.code = 500;
+                        result.desc = "获取售后列表失败";
+                        response.json(result);
+                        return;
+                    } else {
+                        if (results[1] != null) {
+                            response.json(results[1]);
+                            return;
+                        }
+                    }
             });
         });
     } catch (ex) {
