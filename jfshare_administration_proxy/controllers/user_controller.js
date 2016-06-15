@@ -49,6 +49,11 @@ router.post('/login', function(request, response, next) {
                 result.cs = cs;
                 result.loginLog = loginLog;
             }
+            if(data[0].result.code ==1){
+                result.code = 500;
+                result.desc = data[0].result.failDescList[0].desc;
+            }
+            logger.info("user.longin response:" + JSON.stringify(result));
             response.json(result);
             return
         });
@@ -57,7 +62,7 @@ router.post('/login', function(request, response, next) {
     } catch (ex) {
         logger.error("login error:" + ex);
         result.code = 500;
-        result.desc = "请求参数错误";
+        result.desc = "登录异常";
         response.json(result);
 
     }
@@ -101,7 +106,7 @@ router.post('/loginOut', function(request, response, next) {
     } catch (ex) {
         logger.error("login error:" + ex);
         result.code = 500;
-        result.desc = "请求参数错误";
+        result.desc = "注销异常";
         response.json(result);
 
     }

@@ -288,6 +288,61 @@ Order.prototype.downLoad = function (params, callback) {
     }
 
 };
+//发货，其实就是添加物流单
+Order.prototype.deliver = function (params, callback) {
+
+    var deliverInfo = new order_types.DeliverInfo({
+        orderId: params.orderId,
+        sellerComment: params.remark,
+        expressId: params.expressId,
+        expressName: params.expressName,
+        expressNo: params.expressNo,
+        userId: params.userId
+    });
+    logger.info("调用orderServ-deliver  params:" + JSON.stringify(deliverInfo));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "deliver", [params.sellerId, deliverInfo]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-deliver  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用orderServ-deliver  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "发货失败！";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//result.Result updateExpressInfo(1:i32 sellerId, 2:string orderId, 3:string expressId, 4:string expressNo, 5:string expressName)
+
+//更新物流单
+Order.prototype.updateExpressInfo = function (params, callback) {
+    var deliverInfo = new order_types.DeliverInfo({
+        orderId: params.orderId,
+        sellerComment: params.remark,
+        expressId: params.expressId,
+        expressName: params.expressName,
+        expressNo: params.expressNo
+    });
+    //params.orderId, params.expressId, params.expressNo, params.expressName
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "updateDeliverInfo", [2, params.sellerId,deliverInfo]);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-updateExpressInfo  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用orderServ-updateExpressInfo  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "更新物流单失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 
 module.exports = new Order();

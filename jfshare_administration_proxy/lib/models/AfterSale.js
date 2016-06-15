@@ -112,11 +112,11 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
 //查询售后的订单list的个数
 AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
     var afterSaleQueryParam = new afterSale_types.AfterSaleOrderParam({
-        sellerId: params.sellerId,
-        userId: params.userId,
-        orderId: params.orderId,
-        startTime: params.startTime,
-        endTime: params.endTime
+        //sellerId: params.sellerId,
+       // userId: params.userId,
+        //orderId: params.orderId,
+        //startTime: params.startTime,
+       // endTime: params.endTime
     });
 
     var page = new pagination_types.Pagination({
