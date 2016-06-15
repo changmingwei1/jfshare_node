@@ -632,7 +632,12 @@ router.post('/afterSalelist', function (request, response, next) {
             response.json(result);
             return;
         }
-
+        if (params.sellerId == "" || params.sellerId == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         var page = {total: 0, pageCount: 0};
         var isExist = 0;
         logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
