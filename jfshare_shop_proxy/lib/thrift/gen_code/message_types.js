@@ -20,6 +20,8 @@ SystemMessage = module.exports.SystemMessage = function(args) {
   this.status = null;
   this.pushTarget = null;
   this.createTime = null;
+  this.msgType = null;
+  this.alert = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -44,6 +46,12 @@ SystemMessage = module.exports.SystemMessage = function(args) {
     }
     if (args.createTime !== undefined) {
       this.createTime = args.createTime;
+    }
+    if (args.msgType !== undefined) {
+      this.msgType = args.msgType;
+    }
+    if (args.alert !== undefined) {
+      this.alert = args.alert;
     }
   }
 };
@@ -117,6 +125,20 @@ SystemMessage.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 9:
+      if (ftype == Thrift.Type.I32) {
+        this.msgType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.alert = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -166,6 +188,16 @@ SystemMessage.prototype.write = function(output) {
   if (this.createTime !== null && this.createTime !== undefined) {
     output.writeFieldBegin('createTime', Thrift.Type.STRING, 8);
     output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.msgType !== null && this.msgType !== undefined) {
+    output.writeFieldBegin('msgType', Thrift.Type.I32, 9);
+    output.writeI32(this.msgType);
+    output.writeFieldEnd();
+  }
+  if (this.alert !== null && this.alert !== undefined) {
+    output.writeFieldBegin('alert', Thrift.Type.STRING, 10);
+    output.writeString(this.alert);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -266,7 +298,8 @@ SystemMessageResult.prototype.write = function(output) {
 PushMessage = module.exports.PushMessage = function(args) {
   this.title = null;
   this.content = null;
-  this.contentType = null;
+  this.objType = null;
+  this.alert = null;
   if (args) {
     if (args.title !== undefined) {
       this.title = args.title;
@@ -274,8 +307,11 @@ PushMessage = module.exports.PushMessage = function(args) {
     if (args.content !== undefined) {
       this.content = args.content;
     }
-    if (args.contentType !== undefined) {
-      this.contentType = args.contentType;
+    if (args.objType !== undefined) {
+      this.objType = args.objType;
+    }
+    if (args.alert !== undefined) {
+      this.alert = args.alert;
     }
   }
 };
@@ -308,8 +344,15 @@ PushMessage.prototype.read = function(input) {
       }
       break;
       case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.objType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
       if (ftype == Thrift.Type.STRING) {
-        this.contentType = input.readString();
+        this.alert = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -335,9 +378,14 @@ PushMessage.prototype.write = function(output) {
     output.writeString(this.content);
     output.writeFieldEnd();
   }
-  if (this.contentType !== null && this.contentType !== undefined) {
-    output.writeFieldBegin('contentType', Thrift.Type.STRING, 3);
-    output.writeString(this.contentType);
+  if (this.objType !== null && this.objType !== undefined) {
+    output.writeFieldBegin('objType', Thrift.Type.I32, 3);
+    output.writeI32(this.objType);
+    output.writeFieldEnd();
+  }
+  if (this.alert !== null && this.alert !== undefined) {
+    output.writeFieldBegin('alert', Thrift.Type.STRING, 4);
+    output.writeString(this.alert);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -491,6 +539,152 @@ AppUpgradeInfo.prototype.write = function(output) {
   return;
 };
 
+AppUpgradeInfoStr = module.exports.AppUpgradeInfoStr = function(args) {
+  this.appType = null;
+  this.version = null;
+  this.minVersion = null;
+  this.maxVersion = null;
+  this.upgradeType = null;
+  this.url = null;
+  this.upgradeDesc = null;
+  if (args) {
+    if (args.appType !== undefined) {
+      this.appType = args.appType;
+    }
+    if (args.version !== undefined) {
+      this.version = args.version;
+    }
+    if (args.minVersion !== undefined) {
+      this.minVersion = args.minVersion;
+    }
+    if (args.maxVersion !== undefined) {
+      this.maxVersion = args.maxVersion;
+    }
+    if (args.upgradeType !== undefined) {
+      this.upgradeType = args.upgradeType;
+    }
+    if (args.url !== undefined) {
+      this.url = args.url;
+    }
+    if (args.upgradeDesc !== undefined) {
+      this.upgradeDesc = args.upgradeDesc;
+    }
+  }
+};
+AppUpgradeInfoStr.prototype = {};
+AppUpgradeInfoStr.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.appType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.version = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.minVersion = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.maxVersion = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.upgradeType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.upgradeDesc = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AppUpgradeInfoStr.prototype.write = function(output) {
+  output.writeStructBegin('AppUpgradeInfoStr');
+  if (this.appType !== null && this.appType !== undefined) {
+    output.writeFieldBegin('appType', Thrift.Type.I32, 1);
+    output.writeI32(this.appType);
+    output.writeFieldEnd();
+  }
+  if (this.version !== null && this.version !== undefined) {
+    output.writeFieldBegin('version', Thrift.Type.STRING, 2);
+    output.writeString(this.version);
+    output.writeFieldEnd();
+  }
+  if (this.minVersion !== null && this.minVersion !== undefined) {
+    output.writeFieldBegin('minVersion', Thrift.Type.STRING, 3);
+    output.writeString(this.minVersion);
+    output.writeFieldEnd();
+  }
+  if (this.maxVersion !== null && this.maxVersion !== undefined) {
+    output.writeFieldBegin('maxVersion', Thrift.Type.STRING, 4);
+    output.writeString(this.maxVersion);
+    output.writeFieldEnd();
+  }
+  if (this.upgradeType !== null && this.upgradeType !== undefined) {
+    output.writeFieldBegin('upgradeType', Thrift.Type.I32, 5);
+    output.writeI32(this.upgradeType);
+    output.writeFieldEnd();
+  }
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 6);
+    output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  if (this.upgradeDesc !== null && this.upgradeDesc !== undefined) {
+    output.writeFieldBegin('upgradeDesc', Thrift.Type.STRING, 7);
+    output.writeString(this.upgradeDesc);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 GetUpgradeParam = module.exports.GetUpgradeParam = function(args) {
   this.appType = null;
   this.version = null;
@@ -557,6 +751,72 @@ GetUpgradeParam.prototype.write = function(output) {
   return;
 };
 
+GetUpgradeParamStr = module.exports.GetUpgradeParamStr = function(args) {
+  this.appType = null;
+  this.version = null;
+  if (args) {
+    if (args.appType !== undefined) {
+      this.appType = args.appType;
+    }
+    if (args.version !== undefined) {
+      this.version = args.version;
+    }
+  }
+};
+GetUpgradeParamStr.prototype = {};
+GetUpgradeParamStr.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.appType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.version = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+GetUpgradeParamStr.prototype.write = function(output) {
+  output.writeStructBegin('GetUpgradeParamStr');
+  if (this.appType !== null && this.appType !== undefined) {
+    output.writeFieldBegin('appType', Thrift.Type.I32, 1);
+    output.writeI32(this.appType);
+    output.writeFieldEnd();
+  }
+  if (this.version !== null && this.version !== undefined) {
+    output.writeFieldBegin('version', Thrift.Type.STRING, 2);
+    output.writeString(this.version);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 AppUpgradeResult = module.exports.AppUpgradeResult = function(args) {
   this.result = null;
   this.upgradeInfo = null;
@@ -610,6 +870,74 @@ AppUpgradeResult.prototype.read = function(input) {
 
 AppUpgradeResult.prototype.write = function(output) {
   output.writeStructBegin('AppUpgradeResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.upgradeInfo !== null && this.upgradeInfo !== undefined) {
+    output.writeFieldBegin('upgradeInfo', Thrift.Type.STRUCT, 2);
+    this.upgradeInfo.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AppUpgradeResultStr = module.exports.AppUpgradeResultStr = function(args) {
+  this.result = null;
+  this.upgradeInfo = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.upgradeInfo !== undefined) {
+      this.upgradeInfo = args.upgradeInfo;
+    }
+  }
+};
+AppUpgradeResultStr.prototype = {};
+AppUpgradeResultStr.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.upgradeInfo = new ttypes.AppUpgradeInfoStr();
+        this.upgradeInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AppUpgradeResultStr.prototype.write = function(output) {
+  output.writeStructBegin('AppUpgradeResultStr');
   if (this.result !== null && this.result !== undefined) {
     output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
     this.result.write(output);
