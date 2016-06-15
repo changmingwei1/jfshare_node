@@ -501,6 +501,128 @@ ProductServ_queryHotSKUV1_result.prototype.write = function(output) {
   return;
 };
 
+ProductServ_queryHotSKUBatch_args = function(args) {
+  this.skuParam = null;
+  this.param = null;
+  if (args) {
+    if (args.skuParam !== undefined) {
+      this.skuParam = args.skuParam;
+    }
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ProductServ_queryHotSKUBatch_args.prototype = {};
+ProductServ_queryHotSKUBatch_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.skuParam = new ttypes.ProductSkuBatchParam();
+        this.skuParam.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ProductRetParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryHotSKUBatch_args.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryHotSKUBatch_args');
+  if (this.skuParam !== null && this.skuParam !== undefined) {
+    output.writeFieldBegin('skuParam', Thrift.Type.STRUCT, 1);
+    this.skuParam.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 2);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryHotSKUBatch_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ProductServ_queryHotSKUBatch_result.prototype = {};
+ProductServ_queryHotSKUBatch_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ProductBatchResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryHotSKUBatch_result.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryHotSKUBatch_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ProductServ_queryProductDetail_args = function(args) {
   this.param = null;
   if (args) {
@@ -2269,6 +2391,330 @@ ProductServ_useProductCard_result.prototype.write = function(output) {
   return;
 };
 
+ProductServ_queryCaptchaList_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ProductServ_queryCaptchaList_args.prototype = {};
+ProductServ_queryCaptchaList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.CaptchaQueryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaList_args.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryCaptchaList_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ProductServ_queryCaptchaList_result.prototype = {};
+ProductServ_queryCaptchaList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.CaptchaListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaList_result.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryCaptchaList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaTotalList_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ProductServ_queryCaptchaTotalList_args.prototype = {};
+ProductServ_queryCaptchaTotalList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.CaptchaQueryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaTotalList_args.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryCaptchaTotalList_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaTotalList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ProductServ_queryCaptchaTotalList_result.prototype = {};
+ProductServ_queryCaptchaTotalList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.DayCaptchaListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaTotalList_result.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryCaptchaTotalList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaDetails_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ProductServ_queryCaptchaDetails_args.prototype = {};
+ProductServ_queryCaptchaDetails_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.CaptchaQueryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaDetails_args.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryCaptchaDetails_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaDetails_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ProductServ_queryCaptchaDetails_result.prototype = {};
+ProductServ_queryCaptchaDetails_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.CaptchaDetailResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaDetails_result.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryCaptchaDetails_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ProductServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -2469,6 +2915,54 @@ ProductServClient.prototype.recv_queryHotSKUV1 = function(input,mtype,rseqid) {
     return callback(null, result.success);
   }
   return callback('queryHotSKUV1 failed: unknown result');
+};
+ProductServClient.prototype.queryHotSKUBatch = function(skuParam, param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryHotSKUBatch(skuParam, param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryHotSKUBatch(skuParam, param);
+  }
+};
+
+ProductServClient.prototype.send_queryHotSKUBatch = function(skuParam, param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryHotSKUBatch', Thrift.MessageType.CALL, this.seqid());
+  var args = new ProductServ_queryHotSKUBatch_args();
+  args.skuParam = skuParam;
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ProductServClient.prototype.recv_queryHotSKUBatch = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ProductServ_queryHotSKUBatch_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryHotSKUBatch failed: unknown result');
 };
 ProductServClient.prototype.queryProductDetail = function(param, callback) {
   this._seqid = this.new_seqid();
@@ -3225,6 +3719,147 @@ ProductServClient.prototype.recv_useProductCard = function(input,mtype,rseqid) {
   }
   return callback('useProductCard failed: unknown result');
 };
+ProductServClient.prototype.queryCaptchaList = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCaptchaList(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCaptchaList(param);
+  }
+};
+
+ProductServClient.prototype.send_queryCaptchaList = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCaptchaList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ProductServ_queryCaptchaList_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ProductServClient.prototype.recv_queryCaptchaList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ProductServ_queryCaptchaList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCaptchaList failed: unknown result');
+};
+ProductServClient.prototype.queryCaptchaTotalList = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCaptchaTotalList(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCaptchaTotalList(param);
+  }
+};
+
+ProductServClient.prototype.send_queryCaptchaTotalList = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCaptchaTotalList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ProductServ_queryCaptchaTotalList_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ProductServClient.prototype.recv_queryCaptchaTotalList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ProductServ_queryCaptchaTotalList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCaptchaTotalList failed: unknown result');
+};
+ProductServClient.prototype.queryCaptchaDetails = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCaptchaDetails(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCaptchaDetails(param);
+  }
+};
+
+ProductServClient.prototype.send_queryCaptchaDetails = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCaptchaDetails', Thrift.MessageType.CALL, this.seqid());
+  var args = new ProductServ_queryCaptchaDetails_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ProductServClient.prototype.recv_queryCaptchaDetails = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ProductServ_queryCaptchaDetails_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCaptchaDetails failed: unknown result');
+};
 ProductServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -3356,6 +3991,36 @@ ProductServProcessor.prototype.process_queryHotSKUV1 = function(seqid, input, ou
     this._handler.queryHotSKUV1(args.skuParam, args.param,  function (err, result) {
       var result = new ProductServ_queryHotSKUV1_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryHotSKUV1", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ProductServProcessor.prototype.process_queryHotSKUBatch = function(seqid, input, output) {
+  var args = new ProductServ_queryHotSKUBatch_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryHotSKUBatch.length === 2) {
+    Q.fcall(this._handler.queryHotSKUBatch, args.skuParam, args.param)
+      .then(function(result) {
+        var result = new ProductServ_queryHotSKUBatch_result({success: result});
+        output.writeMessageBegin("queryHotSKUBatch", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ProductServ_queryHotSKUBatch_result(err);
+        output.writeMessageBegin("queryHotSKUBatch", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryHotSKUBatch(args.skuParam, args.param,  function (err, result) {
+      var result = new ProductServ_queryHotSKUBatch_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryHotSKUBatch", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -3836,6 +4501,96 @@ ProductServProcessor.prototype.process_useProductCard = function(seqid, input, o
     this._handler.useProductCard(args.productCard,  function (err, result) {
       var result = new ProductServ_useProductCard_result((err != null ? err : {success: result}));
       output.writeMessageBegin("useProductCard", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ProductServProcessor.prototype.process_queryCaptchaList = function(seqid, input, output) {
+  var args = new ProductServ_queryCaptchaList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCaptchaList.length === 1) {
+    Q.fcall(this._handler.queryCaptchaList, args.param)
+      .then(function(result) {
+        var result = new ProductServ_queryCaptchaList_result({success: result});
+        output.writeMessageBegin("queryCaptchaList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ProductServ_queryCaptchaList_result(err);
+        output.writeMessageBegin("queryCaptchaList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCaptchaList(args.param,  function (err, result) {
+      var result = new ProductServ_queryCaptchaList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCaptchaList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ProductServProcessor.prototype.process_queryCaptchaTotalList = function(seqid, input, output) {
+  var args = new ProductServ_queryCaptchaTotalList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCaptchaTotalList.length === 1) {
+    Q.fcall(this._handler.queryCaptchaTotalList, args.param)
+      .then(function(result) {
+        var result = new ProductServ_queryCaptchaTotalList_result({success: result});
+        output.writeMessageBegin("queryCaptchaTotalList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ProductServ_queryCaptchaTotalList_result(err);
+        output.writeMessageBegin("queryCaptchaTotalList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCaptchaTotalList(args.param,  function (err, result) {
+      var result = new ProductServ_queryCaptchaTotalList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCaptchaTotalList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ProductServProcessor.prototype.process_queryCaptchaDetails = function(seqid, input, output) {
+  var args = new ProductServ_queryCaptchaDetails_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCaptchaDetails.length === 1) {
+    Q.fcall(this._handler.queryCaptchaDetails, args.param)
+      .then(function(result) {
+        var result = new ProductServ_queryCaptchaDetails_result({success: result});
+        output.writeMessageBegin("queryCaptchaDetails", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ProductServ_queryCaptchaDetails_result(err);
+        output.writeMessageBegin("queryCaptchaDetails", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCaptchaDetails(args.param,  function (err, result) {
+      var result = new ProductServ_queryCaptchaDetails_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCaptchaDetails", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

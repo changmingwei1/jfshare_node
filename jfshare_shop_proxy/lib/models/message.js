@@ -151,5 +151,31 @@ Message.prototype.getAppUpgradeInfo = function (params, callback) {
     });
 };
 
+/* 查询升级信息 - new */
+Message.prototype.getAppUpgradeInfoStr = function (params, callback) {
+
+    var param = new message_types.GetUpgradeParamStr({
+        appType: params.appType, /* 类型：1,android buyer  2,android seller  3, ios */
+        version: params.version     /* 当前客户端版本号 */
+    });
+
+    logger.info("list message params:" + JSON.stringify(params));
+    //获取client
+    var messageServ = new Lich.InvokeBag(Lich.ServiceKey.MessageServer, 'getAppUpgradeInfoStr', [param]);
+    Lich.wicca.invokeClient(messageServ, function (err, data) {
+        logger.info("list messageList result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            res.code = 500;
+            res.desc = "查询版本号失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result;
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new Message();

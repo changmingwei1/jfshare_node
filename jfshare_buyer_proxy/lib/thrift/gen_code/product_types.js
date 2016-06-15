@@ -1058,6 +1058,96 @@ ProductResult.prototype.write = function(output) {
   return;
 };
 
+ProductBatchResult = module.exports.ProductBatchResult = function(args) {
+  this.result = null;
+  this.productList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.productList !== undefined) {
+      this.productList = args.productList;
+    }
+  }
+};
+ProductBatchResult.prototype = {};
+ProductBatchResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size8 = 0;
+        var _rtmp312;
+        this.productList = [];
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        {
+          var elem14 = null;
+          elem14 = new ttypes.Product();
+          elem14.read(input);
+          this.productList.push(elem14);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductBatchResult.prototype.write = function(output) {
+  output.writeStructBegin('ProductBatchResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.productList !== null && this.productList !== undefined) {
+    output.writeFieldBegin('productList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productList.length);
+    for (var iter15 in this.productList)
+    {
+      if (this.productList.hasOwnProperty(iter15))
+      {
+        iter15 = this.productList[iter15];
+        iter15.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ProductDetailParam = module.exports.ProductDetailParam = function(args) {
   this.detailKey = null;
   this.productId = null;
@@ -1237,6 +1327,9 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
   this.createTime = null;
   this.sellerId = null;
   this.type = null;
+  this.clickRate = null;
+  this.storehouseIds = null;
+  this.postageId = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -1279,6 +1372,15 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
     }
     if (args.type !== undefined) {
       this.type = args.type;
+    }
+    if (args.clickRate !== undefined) {
+      this.clickRate = args.clickRate;
+    }
+    if (args.storehouseIds !== undefined) {
+      this.storehouseIds = args.storehouseIds;
+    }
+    if (args.postageId !== undefined) {
+      this.postageId = args.postageId;
     }
   }
 };
@@ -1394,6 +1496,27 @@ ProductSurvey.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 15:
+      if (ftype == Thrift.Type.I64) {
+        this.clickRate = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 16:
+      if (ftype == Thrift.Type.STRING) {
+        this.storehouseIds = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 17:
+      if (ftype == Thrift.Type.I32) {
+        this.postageId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1473,6 +1596,21 @@ ProductSurvey.prototype.write = function(output) {
   if (this.type !== null && this.type !== undefined) {
     output.writeFieldBegin('type', Thrift.Type.I32, 14);
     output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.clickRate !== null && this.clickRate !== undefined) {
+    output.writeFieldBegin('clickRate', Thrift.Type.I64, 15);
+    output.writeI64(this.clickRate);
+    output.writeFieldEnd();
+  }
+  if (this.storehouseIds !== null && this.storehouseIds !== undefined) {
+    output.writeFieldBegin('storehouseIds', Thrift.Type.STRING, 16);
+    output.writeString(this.storehouseIds);
+    output.writeFieldEnd();
+  }
+  if (this.postageId !== null && this.postageId !== undefined) {
+    output.writeFieldBegin('postageId', Thrift.Type.I32, 17);
+    output.writeI32(this.postageId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1597,18 +1735,18 @@ ProductSurveyQueryParam.prototype.read = function(input) {
       break;
       case 9:
       if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
+        var _size16 = 0;
+        var _rtmp320;
         this.subjectIdList = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
         {
-          var elem14 = null;
-          elem14 = input.readI32();
-          this.subjectIdList.push(elem14);
+          var elem22 = null;
+          elem22 = input.readI32();
+          this.subjectIdList.push(elem22);
         }
         input.readListEnd();
       } else {
@@ -1617,18 +1755,18 @@ ProductSurveyQueryParam.prototype.read = function(input) {
       break;
       case 10:
       if (ftype == Thrift.Type.LIST) {
-        var _size15 = 0;
-        var _rtmp319;
+        var _size23 = 0;
+        var _rtmp327;
         this.productIdList = [];
-        var _etype18 = 0;
-        _rtmp319 = input.readListBegin();
-        _etype18 = _rtmp319.etype;
-        _size15 = _rtmp319.size;
-        for (var _i20 = 0; _i20 < _size15; ++_i20)
+        var _etype26 = 0;
+        _rtmp327 = input.readListBegin();
+        _etype26 = _rtmp327.etype;
+        _size23 = _rtmp327.size;
+        for (var _i28 = 0; _i28 < _size23; ++_i28)
         {
-          var elem21 = null;
-          elem21 = input.readString();
-          this.productIdList.push(elem21);
+          var elem29 = null;
+          elem29 = input.readString();
+          this.productIdList.push(elem29);
         }
         input.readListEnd();
       } else {
@@ -1689,12 +1827,12 @@ ProductSurveyQueryParam.prototype.write = function(output) {
   if (this.subjectIdList !== null && this.subjectIdList !== undefined) {
     output.writeFieldBegin('subjectIdList', Thrift.Type.LIST, 9);
     output.writeListBegin(Thrift.Type.I32, this.subjectIdList.length);
-    for (var iter22 in this.subjectIdList)
+    for (var iter30 in this.subjectIdList)
     {
-      if (this.subjectIdList.hasOwnProperty(iter22))
+      if (this.subjectIdList.hasOwnProperty(iter30))
       {
-        iter22 = this.subjectIdList[iter22];
-        output.writeI32(iter22);
+        iter30 = this.subjectIdList[iter30];
+        output.writeI32(iter30);
       }
     }
     output.writeListEnd();
@@ -1703,12 +1841,12 @@ ProductSurveyQueryParam.prototype.write = function(output) {
   if (this.productIdList !== null && this.productIdList !== undefined) {
     output.writeFieldBegin('productIdList', Thrift.Type.LIST, 10);
     output.writeListBegin(Thrift.Type.STRING, this.productIdList.length);
-    for (var iter23 in this.productIdList)
+    for (var iter31 in this.productIdList)
     {
-      if (this.productIdList.hasOwnProperty(iter23))
+      if (this.productIdList.hasOwnProperty(iter31))
       {
-        iter23 = this.productIdList[iter23];
-        output.writeString(iter23);
+        iter31 = this.productIdList[iter31];
+        output.writeString(iter31);
       }
     }
     output.writeListEnd();
@@ -1747,18 +1885,18 @@ ProductSurveyQueryBatchParam.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
+        var _size32 = 0;
+        var _rtmp336;
         this.productIds = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
         {
-          var elem30 = null;
-          elem30 = input.readString();
-          this.productIds.push(elem30);
+          var elem38 = null;
+          elem38 = input.readString();
+          this.productIds.push(elem38);
         }
         input.readListEnd();
       } else {
@@ -1786,12 +1924,12 @@ ProductSurveyQueryBatchParam.prototype.write = function(output) {
   if (this.productIds !== null && this.productIds !== undefined) {
     output.writeFieldBegin('productIds', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRING, this.productIds.length);
-    for (var iter31 in this.productIds)
+    for (var iter39 in this.productIds)
     {
-      if (this.productIds.hasOwnProperty(iter31))
+      if (this.productIds.hasOwnProperty(iter39))
       {
-        iter31 = this.productIds[iter31];
-        output.writeString(iter31);
+        iter39 = this.productIds[iter39];
+        output.writeString(iter39);
       }
     }
     output.writeListEnd();
@@ -1889,6 +2027,82 @@ ProductSkuParam.prototype.write = function(output) {
   return;
 };
 
+ProductSkuBatchParam = module.exports.ProductSkuBatchParam = function(args) {
+  this.productSkuParams = null;
+  if (args) {
+    if (args.productSkuParams !== undefined) {
+      this.productSkuParams = args.productSkuParams;
+    }
+  }
+};
+ProductSkuBatchParam.prototype = {};
+ProductSkuBatchParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size40 = 0;
+        var _rtmp344;
+        this.productSkuParams = [];
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        {
+          var elem46 = null;
+          elem46 = new ttypes.ProductSkuParam();
+          elem46.read(input);
+          this.productSkuParams.push(elem46);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductSkuBatchParam.prototype.write = function(output) {
+  output.writeStructBegin('ProductSkuBatchParam');
+  if (this.productSkuParams !== null && this.productSkuParams !== undefined) {
+    output.writeFieldBegin('productSkuParams', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productSkuParams.length);
+    for (var iter47 in this.productSkuParams)
+    {
+      if (this.productSkuParams.hasOwnProperty(iter47))
+      {
+        iter47 = this.productSkuParams[iter47];
+        iter47.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ProductSurveyResult = module.exports.ProductSurveyResult = function(args) {
   this.result = null;
   this.pagination = null;
@@ -1937,19 +2151,19 @@ ProductSurveyResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size32 = 0;
-        var _rtmp336;
+        var _size48 = 0;
+        var _rtmp352;
         this.productSurveyList = [];
-        var _etype35 = 0;
-        _rtmp336 = input.readListBegin();
-        _etype35 = _rtmp336.etype;
-        _size32 = _rtmp336.size;
-        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
         {
-          var elem38 = null;
-          elem38 = new ttypes.ProductSurvey();
-          elem38.read(input);
-          this.productSurveyList.push(elem38);
+          var elem54 = null;
+          elem54 = new ttypes.ProductSurvey();
+          elem54.read(input);
+          this.productSurveyList.push(elem54);
         }
         input.readListEnd();
       } else {
@@ -1980,12 +2194,12 @@ ProductSurveyResult.prototype.write = function(output) {
   if (this.productSurveyList !== null && this.productSurveyList !== undefined) {
     output.writeFieldBegin('productSurveyList', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.productSurveyList.length);
-    for (var iter39 in this.productSurveyList)
+    for (var iter55 in this.productSurveyList)
     {
-      if (this.productSurveyList.hasOwnProperty(iter39))
+      if (this.productSurveyList.hasOwnProperty(iter55))
       {
-        iter39 = this.productSurveyList[iter39];
-        iter39.write(output);
+        iter55 = this.productSurveyList[iter55];
+        iter55.write(output);
       }
     }
     output.writeListEnd();
@@ -2002,6 +2216,8 @@ ProductCard = module.exports.ProductCard = function(args) {
   this.cardNumber = null;
   this.password = null;
   this.skuNum = null;
+  this.buyerId = null;
+  this.checkTime = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -2017,6 +2233,12 @@ ProductCard = module.exports.ProductCard = function(args) {
     }
     if (args.skuNum !== undefined) {
       this.skuNum = args.skuNum;
+    }
+    if (args.buyerId !== undefined) {
+      this.buyerId = args.buyerId;
+    }
+    if (args.checkTime !== undefined) {
+      this.checkTime = args.checkTime;
     }
   }
 };
@@ -2069,6 +2291,20 @@ ProductCard.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.buyerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.checkTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2103,6 +2339,16 @@ ProductCard.prototype.write = function(output) {
   if (this.skuNum !== null && this.skuNum !== undefined) {
     output.writeFieldBegin('skuNum', Thrift.Type.STRING, 5);
     output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
+  if (this.buyerId !== null && this.buyerId !== undefined) {
+    output.writeFieldBegin('buyerId', Thrift.Type.I32, 6);
+    output.writeI32(this.buyerId);
+    output.writeFieldEnd();
+  }
+  if (this.checkTime !== null && this.checkTime !== undefined) {
+    output.writeFieldBegin('checkTime', Thrift.Type.STRING, 7);
+    output.writeString(this.checkTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -2555,6 +2801,7 @@ ProductCardParam = module.exports.ProductCardParam = function(args) {
   this.transactionId = null;
   this.num = null;
   this.skuNum = null;
+  this.buyerId = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -2567,6 +2814,9 @@ ProductCardParam = module.exports.ProductCardParam = function(args) {
     }
     if (args.skuNum !== undefined) {
       this.skuNum = args.skuNum;
+    }
+    if (args.buyerId !== undefined) {
+      this.buyerId = args.buyerId;
     }
   }
 };
@@ -2612,6 +2862,13 @@ ProductCardParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.buyerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2641,6 +2898,11 @@ ProductCardParam.prototype.write = function(output) {
   if (this.skuNum !== null && this.skuNum !== undefined) {
     output.writeFieldBegin('skuNum', Thrift.Type.STRING, 4);
     output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
+  if (this.buyerId !== null && this.buyerId !== undefined) {
+    output.writeFieldBegin('buyerId', Thrift.Type.I32, 5);
+    output.writeI32(this.buyerId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -2750,19 +3012,19 @@ ProductCardResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size40 = 0;
-        var _rtmp344;
+        var _size56 = 0;
+        var _rtmp360;
         this.cardList = [];
-        var _etype43 = 0;
-        _rtmp344 = input.readListBegin();
-        _etype43 = _rtmp344.etype;
-        _size40 = _rtmp344.size;
-        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        var _etype59 = 0;
+        _rtmp360 = input.readListBegin();
+        _etype59 = _rtmp360.etype;
+        _size56 = _rtmp360.size;
+        for (var _i61 = 0; _i61 < _size56; ++_i61)
         {
-          var elem46 = null;
-          elem46 = new ttypes.ProductCard();
-          elem46.read(input);
-          this.cardList.push(elem46);
+          var elem62 = null;
+          elem62 = new ttypes.ProductCard();
+          elem62.read(input);
+          this.cardList.push(elem62);
         }
         input.readListEnd();
       } else {
@@ -2788,12 +3050,12 @@ ProductCardResult.prototype.write = function(output) {
   if (this.cardList !== null && this.cardList !== undefined) {
     output.writeFieldBegin('cardList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardList.length);
-    for (var iter47 in this.cardList)
+    for (var iter63 in this.cardList)
     {
-      if (this.cardList.hasOwnProperty(iter47))
+      if (this.cardList.hasOwnProperty(iter63))
       {
-        iter47 = this.cardList[iter47];
-        iter47.write(output);
+        iter63 = this.cardList[iter63];
+        iter63.write(output);
       }
     }
     output.writeListEnd();
@@ -2844,19 +3106,19 @@ ProductCardViewListResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size48 = 0;
-        var _rtmp352;
+        var _size64 = 0;
+        var _rtmp368;
         this.cardViewList = [];
-        var _etype51 = 0;
-        _rtmp352 = input.readListBegin();
-        _etype51 = _rtmp352.etype;
-        _size48 = _rtmp352.size;
-        for (var _i53 = 0; _i53 < _size48; ++_i53)
+        var _etype67 = 0;
+        _rtmp368 = input.readListBegin();
+        _etype67 = _rtmp368.etype;
+        _size64 = _rtmp368.size;
+        for (var _i69 = 0; _i69 < _size64; ++_i69)
         {
-          var elem54 = null;
-          elem54 = new ttypes.ProductCardView();
-          elem54.read(input);
-          this.cardViewList.push(elem54);
+          var elem70 = null;
+          elem70 = new ttypes.ProductCardView();
+          elem70.read(input);
+          this.cardViewList.push(elem70);
         }
         input.readListEnd();
       } else {
@@ -2890,12 +3152,12 @@ ProductCardViewListResult.prototype.write = function(output) {
   if (this.cardViewList !== null && this.cardViewList !== undefined) {
     output.writeFieldBegin('cardViewList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardViewList.length);
-    for (var iter55 in this.cardViewList)
+    for (var iter71 in this.cardViewList)
     {
-      if (this.cardViewList.hasOwnProperty(iter55))
+      if (this.cardViewList.hasOwnProperty(iter71))
       {
-        iter55 = this.cardViewList[iter55];
-        iter55.write(output);
+        iter71 = this.cardViewList[iter71];
+        iter71.write(output);
       }
     }
     output.writeListEnd();
@@ -2951,19 +3213,19 @@ ProductCardStatisticsResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size56 = 0;
-        var _rtmp360;
+        var _size72 = 0;
+        var _rtmp376;
         this.cardtatisticsList = [];
-        var _etype59 = 0;
-        _rtmp360 = input.readListBegin();
-        _etype59 = _rtmp360.etype;
-        _size56 = _rtmp360.size;
-        for (var _i61 = 0; _i61 < _size56; ++_i61)
+        var _etype75 = 0;
+        _rtmp376 = input.readListBegin();
+        _etype75 = _rtmp376.etype;
+        _size72 = _rtmp376.size;
+        for (var _i77 = 0; _i77 < _size72; ++_i77)
         {
-          var elem62 = null;
-          elem62 = new ttypes.ProductCardStatistics();
-          elem62.read(input);
-          this.cardtatisticsList.push(elem62);
+          var elem78 = null;
+          elem78 = new ttypes.ProductCardStatistics();
+          elem78.read(input);
+          this.cardtatisticsList.push(elem78);
         }
         input.readListEnd();
       } else {
@@ -2997,12 +3259,12 @@ ProductCardStatisticsResult.prototype.write = function(output) {
   if (this.cardtatisticsList !== null && this.cardtatisticsList !== undefined) {
     output.writeFieldBegin('cardtatisticsList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardtatisticsList.length);
-    for (var iter63 in this.cardtatisticsList)
+    for (var iter79 in this.cardtatisticsList)
     {
-      if (this.cardtatisticsList.hasOwnProperty(iter63))
+      if (this.cardtatisticsList.hasOwnProperty(iter79))
       {
-        iter63 = this.cardtatisticsList[iter63];
-        iter63.write(output);
+        iter79 = this.cardtatisticsList[iter79];
+        iter79.write(output);
       }
     }
     output.writeListEnd();
@@ -3157,6 +3419,701 @@ ProductOpt.prototype.write = function(output) {
   if (this.createTime !== null && this.createTime !== undefined) {
     output.writeFieldBegin('createTime', Thrift.Type.STRING, 7);
     output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CaptchaQueryParam = module.exports.CaptchaQueryParam = function(args) {
+  this.sellerId = null;
+  this.pagination = null;
+  this.monthQuery = null;
+  this.productId = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.monthQuery !== undefined) {
+      this.monthQuery = args.monthQuery;
+    }
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+  }
+};
+CaptchaQueryParam.prototype = {};
+CaptchaQueryParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.monthQuery = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CaptchaQueryParam.prototype.write = function(output) {
+  output.writeStructBegin('CaptchaQueryParam');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 1);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.monthQuery !== null && this.monthQuery !== undefined) {
+    output.writeFieldBegin('monthQuery', Thrift.Type.STRING, 3);
+    output.writeString(this.monthQuery);
+    output.writeFieldEnd();
+  }
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 4);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AldCaptchaItem = module.exports.AldCaptchaItem = function(args) {
+  this.productId = null;
+  this.productName = null;
+  this.aldSold = null;
+  this.aldCaptcha = null;
+  if (args) {
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.productName !== undefined) {
+      this.productName = args.productName;
+    }
+    if (args.aldSold !== undefined) {
+      this.aldSold = args.aldSold;
+    }
+    if (args.aldCaptcha !== undefined) {
+      this.aldCaptcha = args.aldCaptcha;
+    }
+  }
+};
+AldCaptchaItem.prototype = {};
+AldCaptchaItem.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.productName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.aldSold = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.aldCaptcha = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AldCaptchaItem.prototype.write = function(output) {
+  output.writeStructBegin('AldCaptchaItem');
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.productName !== null && this.productName !== undefined) {
+    output.writeFieldBegin('productName', Thrift.Type.STRING, 2);
+    output.writeString(this.productName);
+    output.writeFieldEnd();
+  }
+  if (this.aldSold !== null && this.aldSold !== undefined) {
+    output.writeFieldBegin('aldSold', Thrift.Type.I32, 3);
+    output.writeI32(this.aldSold);
+    output.writeFieldEnd();
+  }
+  if (this.aldCaptcha !== null && this.aldCaptcha !== undefined) {
+    output.writeFieldBegin('aldCaptcha', Thrift.Type.I32, 4);
+    output.writeI32(this.aldCaptcha);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+DayAldCaptchaItem = module.exports.DayAldCaptchaItem = function(args) {
+  this.productId = null;
+  this.productName = null;
+  this.aldSold = null;
+  this.aldCaptcha = null;
+  this.date = null;
+  if (args) {
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.productName !== undefined) {
+      this.productName = args.productName;
+    }
+    if (args.aldSold !== undefined) {
+      this.aldSold = args.aldSold;
+    }
+    if (args.aldCaptcha !== undefined) {
+      this.aldCaptcha = args.aldCaptcha;
+    }
+    if (args.date !== undefined) {
+      this.date = args.date;
+    }
+  }
+};
+DayAldCaptchaItem.prototype = {};
+DayAldCaptchaItem.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.productName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.aldSold = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.aldCaptcha = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.date = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+DayAldCaptchaItem.prototype.write = function(output) {
+  output.writeStructBegin('DayAldCaptchaItem');
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.productName !== null && this.productName !== undefined) {
+    output.writeFieldBegin('productName', Thrift.Type.STRING, 2);
+    output.writeString(this.productName);
+    output.writeFieldEnd();
+  }
+  if (this.aldSold !== null && this.aldSold !== undefined) {
+    output.writeFieldBegin('aldSold', Thrift.Type.I32, 3);
+    output.writeI32(this.aldSold);
+    output.writeFieldEnd();
+  }
+  if (this.aldCaptcha !== null && this.aldCaptcha !== undefined) {
+    output.writeFieldBegin('aldCaptcha', Thrift.Type.I32, 4);
+    output.writeI32(this.aldCaptcha);
+    output.writeFieldEnd();
+  }
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.STRING, 5);
+    output.writeString(this.date);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CaptchaListResult = module.exports.CaptchaListResult = function(args) {
+  this.result = null;
+  this.yedNum = null;
+  this.monNum = null;
+  this.pagination = null;
+  this.itemList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.yedNum !== undefined) {
+      this.yedNum = args.yedNum;
+    }
+    if (args.monNum !== undefined) {
+      this.monNum = args.monNum;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.itemList !== undefined) {
+      this.itemList = args.itemList;
+    }
+  }
+};
+CaptchaListResult.prototype = {};
+CaptchaListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.yedNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.monNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.LIST) {
+        var _size80 = 0;
+        var _rtmp384;
+        this.itemList = [];
+        var _etype83 = 0;
+        _rtmp384 = input.readListBegin();
+        _etype83 = _rtmp384.etype;
+        _size80 = _rtmp384.size;
+        for (var _i85 = 0; _i85 < _size80; ++_i85)
+        {
+          var elem86 = null;
+          elem86 = new ttypes.AldCaptchaItem();
+          elem86.read(input);
+          this.itemList.push(elem86);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CaptchaListResult.prototype.write = function(output) {
+  output.writeStructBegin('CaptchaListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.yedNum !== null && this.yedNum !== undefined) {
+    output.writeFieldBegin('yedNum', Thrift.Type.I32, 2);
+    output.writeI32(this.yedNum);
+    output.writeFieldEnd();
+  }
+  if (this.monNum !== null && this.monNum !== undefined) {
+    output.writeFieldBegin('monNum', Thrift.Type.I32, 3);
+    output.writeI32(this.monNum);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 4);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.itemList !== null && this.itemList !== undefined) {
+    output.writeFieldBegin('itemList', Thrift.Type.LIST, 5);
+    output.writeListBegin(Thrift.Type.STRUCT, this.itemList.length);
+    for (var iter87 in this.itemList)
+    {
+      if (this.itemList.hasOwnProperty(iter87))
+      {
+        iter87 = this.itemList[iter87];
+        iter87.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+DayCaptchaListResult = module.exports.DayCaptchaListResult = function(args) {
+  this.result = null;
+  this.soldNum = null;
+  this.checkedNum = null;
+  this.pagination = null;
+  this.itemList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.soldNum !== undefined) {
+      this.soldNum = args.soldNum;
+    }
+    if (args.checkedNum !== undefined) {
+      this.checkedNum = args.checkedNum;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.itemList !== undefined) {
+      this.itemList = args.itemList;
+    }
+  }
+};
+DayCaptchaListResult.prototype = {};
+DayCaptchaListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.soldNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.checkedNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.LIST) {
+        var _size88 = 0;
+        var _rtmp392;
+        this.itemList = [];
+        var _etype91 = 0;
+        _rtmp392 = input.readListBegin();
+        _etype91 = _rtmp392.etype;
+        _size88 = _rtmp392.size;
+        for (var _i93 = 0; _i93 < _size88; ++_i93)
+        {
+          var elem94 = null;
+          elem94 = new ttypes.DayAldCaptchaItem();
+          elem94.read(input);
+          this.itemList.push(elem94);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+DayCaptchaListResult.prototype.write = function(output) {
+  output.writeStructBegin('DayCaptchaListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.soldNum !== null && this.soldNum !== undefined) {
+    output.writeFieldBegin('soldNum', Thrift.Type.I32, 2);
+    output.writeI32(this.soldNum);
+    output.writeFieldEnd();
+  }
+  if (this.checkedNum !== null && this.checkedNum !== undefined) {
+    output.writeFieldBegin('checkedNum', Thrift.Type.I32, 3);
+    output.writeI32(this.checkedNum);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 4);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.itemList !== null && this.itemList !== undefined) {
+    output.writeFieldBegin('itemList', Thrift.Type.LIST, 5);
+    output.writeListBegin(Thrift.Type.STRUCT, this.itemList.length);
+    for (var iter95 in this.itemList)
+    {
+      if (this.itemList.hasOwnProperty(iter95))
+      {
+        iter95 = this.itemList[iter95];
+        iter95.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CaptchaDetailResult = module.exports.CaptchaDetailResult = function(args) {
+  this.result = null;
+  this.productName = null;
+  this.productCards = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.productName !== undefined) {
+      this.productName = args.productName;
+    }
+    if (args.productCards !== undefined) {
+      this.productCards = args.productCards;
+    }
+  }
+};
+CaptchaDetailResult.prototype = {};
+CaptchaDetailResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.productName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size96 = 0;
+        var _rtmp3100;
+        this.productCards = [];
+        var _etype99 = 0;
+        _rtmp3100 = input.readListBegin();
+        _etype99 = _rtmp3100.etype;
+        _size96 = _rtmp3100.size;
+        for (var _i101 = 0; _i101 < _size96; ++_i101)
+        {
+          var elem102 = null;
+          elem102 = new ttypes.ProductCard();
+          elem102.read(input);
+          this.productCards.push(elem102);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CaptchaDetailResult.prototype.write = function(output) {
+  output.writeStructBegin('CaptchaDetailResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.productName !== null && this.productName !== undefined) {
+    output.writeFieldBegin('productName', Thrift.Type.STRING, 2);
+    output.writeString(this.productName);
+    output.writeFieldEnd();
+  }
+  if (this.productCards !== null && this.productCards !== undefined) {
+    output.writeFieldBegin('productCards', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productCards.length);
+    for (var iter103 in this.productCards)
+    {
+      if (this.productCards.hasOwnProperty(iter103))
+      {
+        iter103 = this.productCards[iter103];
+        iter103.write(output);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   output.writeFieldStop();
