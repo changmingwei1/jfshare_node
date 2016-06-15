@@ -365,8 +365,16 @@ router.post('/queryOrder', function (request, response, next) {
     try {
         var params = request.body;
 
-        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-            result.code = 400;
+        if (params.startTime == null || params.startTime == "") {
+
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.endTime == null || params.endTime == "") {
+
+            result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
@@ -380,10 +388,9 @@ router.post('/queryOrder', function (request, response, next) {
                 return;
             }
             logger.info("Order.orderStateQuery response:" + JSON.stringify(data));
-
-            result.orderCountList = data;
+            result.count = data;
             response.json(result);
-            return
+            return;
         });
 
     } catch (ex) {

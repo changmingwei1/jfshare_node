@@ -71,19 +71,40 @@ Order.prototype.orderProfileQuery = function (params, callback) {
 };
 //订单状态数量查询 --还需要查询退货中的订单状态
 Order.prototype.orderStateQuery = function (param, callback) {
-    var orderQueryConditions = new order_types.OrderQueryConditions({count: param.percount, curPage: param.curpage});
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderStateQuery", [2, param.sellerId, orderQueryConditions]);
+
+
+    var orderQueryConditions = new order_types.OrderQueryConditions({
+        orderState:30,
+        count: 1,
+        curPage: 1,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        sellerId: params.sellerId
+    });
+
+
+    logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(orderQueryConditions));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("调用orderServ-orderStateQuery  result:" + JSON.stringify(data));
+        logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-orderStateQuery失败  失败原因 ======" + err);
+            logger.error("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "查询定单列表失败！";
+            res.desc = "查询订单列表失败！";
             callback(res, null);
         } else {
-            callback(null, data[0].orderCountList);
+            //orderProfilePage.total
+            if(data[0]!=null &&data[0].orderProfilePage!=null &&data[0].orderProfilePage.total!=null){
+
+                callback(null, data[0].orderProfilePage.total);
+
+            }else{
+
+                callback(null,0);
+            }
+
         }
     });
 };
@@ -164,7 +185,7 @@ Order.prototype.updateExpressInfo = function (params, callback) {
         expressNo: params.expressNo
     });
     //params.orderId, params.expressId, params.expressNo, params.expressName
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "updateDeliverInfo", [2, params.sellerId,deliverInfo]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "updateDeliverInfo", [2, params.sellerId, deliverInfo]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-updateExpressInfo  result:" + JSON.stringify(data));
