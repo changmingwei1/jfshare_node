@@ -97,7 +97,8 @@ router.post('/submit', function (request, response, next) {
                     function(callback){
                         Order.orderConfirm(arg, function (err, data) {
                             if (err) {
-                                return callback(3,null);
+                                response.json(err);
+                                return;
                             }
                             result.orderIdList = data[0].orderIdList;
                             //result.extend = JSON.parse(data[0].extend);
@@ -114,11 +115,6 @@ router.post('/submit', function (request, response, next) {
                     } else if (err == 2) {
                         result.code = 500;
                         result.desc = "查询商品类型失败";
-                        response.json(result);
-                        return;
-                    } else if (err == 3) {
-                        result.code = 500;
-                        result.desc = "提交订单失败";
                         response.json(result);
                         return;
                     }
