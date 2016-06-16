@@ -17,14 +17,22 @@ function AfterSale() {
 //查询审核信息
 AfterSale.prototype.queryAfterSale = function (params, callback) {
 
-    var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
-        userId: params.userId,
-        sellerId: params.sellerId,
-        orderId: params.orderId,
-        productId: params.productId,
-        skuNum: params.skuNum
-        //加上sku
-    });
+    var afterSaleQueryParam = null;
+    if (params.orderIdList == null) {
+        afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
+            userId: params.userId,
+            sellerId: params.sellerId,
+            orderId: params.orderId,
+            productId: params.productId,
+            skuNum: params.skuNum
+            //加上sku
+        });
+    } else {
+
+        afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
+            orderIdList:params.orderIdList
+        });
+    }
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
     try {
         var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSale", afterSaleQueryParam);
