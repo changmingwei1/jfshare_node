@@ -10,8 +10,8 @@ var Q = thrift.Q;
 var result_ttypes = require('./result_types')
 var pagination_ttypes = require('./pagination_types')
 
-S
-var ttypes = require('./afterale_types');
+
+var ttypes = require('./afterSale_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
 AfterSaleServ_request_args = function(args) {
