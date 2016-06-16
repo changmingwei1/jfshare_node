@@ -60,7 +60,9 @@ router.post('/list', function (request, response, next) {
                         if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
                             for(var i=0;i<orderInfo.orderProfileList.length;i++) {
                                 var order = orderInfo.orderProfileList[i];
-                                orderIdList.push(order.orderId);
+                                if(order.orderState>=50){
+                                    orderIdList.push(order.orderId);
+                                }
                                 var orderItem = {
                                     orderId: order.orderId,
                                     userId: order.userId,
