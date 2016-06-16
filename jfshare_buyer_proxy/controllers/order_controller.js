@@ -1537,6 +1537,7 @@ router.post('/queryExpress', function (request, response, next) {
                 }
                 if (data.expressInfo != null) {
                     result.name = data.expressInfo.name;
+                    result.remark = data.expressInfo.comment;
                 }
                 if (data.expressTrace != null) {
                     result.traceItems = data.expressTrace.traceItems;
