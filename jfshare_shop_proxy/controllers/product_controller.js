@@ -134,6 +134,7 @@ router.get('/productInfo', function (req, res, next) {
                         productInfo.skuTemplate = JSON.parse(product.skuTemplate);
                         productInfo.sellerId = product.sellerId;
                         productInfo.subjectId = product.subjectId;
+                        productInfo.activeState = product.activeState;
                         /*添加subjectId*/
                         arg.sellerId = product.sellerId;
                         productInfo.type = product.type;
