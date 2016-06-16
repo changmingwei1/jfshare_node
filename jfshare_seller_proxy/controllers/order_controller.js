@@ -43,6 +43,7 @@ router.post('/list', function (request, response, next) {
 
     var afterSaleList = [];
     var productList = [];
+    var orderIdList = [];
     async.series([
             function (callback) {
                 try {
@@ -53,11 +54,14 @@ router.post('/list', function (request, response, next) {
                         }
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
-                        if (orderInfo.orderProfileList !== null) {
-                            orderInfo.orderProfileList.forEach(function (order) {
+                        if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
+                            for(var j=0;j<orderInfo.orderProfileList.length;j++) {
+                                var order = orderInfo.orderProfileList[j];
+                                if(order.orderState>=50){
+                                    orderIdList.push(order.orderId);
+                                }
                                 var orderItem = {
                                     orderId: order.orderId,
-                                    sellerId: order.sellerId,
                                     userId: order.userId,
                                     orderPrice: order.closingPrice,
                                     //添加了应答的数据
@@ -65,6 +69,7 @@ router.post('/list', function (request, response, next) {
                                     username: order.username,
                                     cancelName: order.cancelName,
                                     sellerName: order.sellerName,
+                                    sellerId: order.sellerId,
                                     createTime: order.createTime,
                                     expressNo: order.expressNo,
                                     expressName: order.expressName,
@@ -82,7 +87,35 @@ router.post('/list', function (request, response, next) {
                                     activeState: order.activeState,
                                     curTime: order.curTime
                                 };
-
+                                // }
+                                //orderInfo.orderProfileList.forEach(function (order) {
+                                //    var orderItem = {
+                                //        orderId: order.orderId,
+                                //        userId: order.userId,
+                                //        orderPrice: order.closingPrice,
+                                //        //添加了应答的数据
+                                //        postage: order.postage,
+                                //        username: order.username,
+                                //        cancelName: order.cancelName,
+                                //        sellerName: order.sellerName,
+                                //        sellerId: order.sellerId,
+                                //        createTime: order.createTime,
+                                //        expressNo: order.expressNo,
+                                //        expressName: order.expressName,
+                                //        receiverAddress: order.receiverAddress,
+                                //        receiverName: order.receiverName,
+                                //        receiverMobile: order.receiverMobile,
+                                //        receiverTele: order.receiverTele,
+                                //        orderState: order.orderState,
+                                //        sellerComment: order.sellerComment,
+                                //        buyerComment: order.buyerComment,
+                                //        deliverTime: order.deliverTime,
+                                //        successTime: order.successTime,
+                                //        exchangeCash: order.exchangeCash,
+                                //        exchangeScore: order.exchangeScore,
+                                //        activeState: order.activeState,
+                                //        curTime: order.curTime
+                                //    };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
                                     for (var i = 0; i < order.productList.length; i++) {
@@ -91,17 +124,23 @@ router.post('/list', function (request, response, next) {
                                             productName: order.productList[i].productName,
                                             skunum: order.productList[i].skuNum,
                                             curPrice: order.productList[i].curPrice,
-                                            imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                            imgUrl: "",
                                             count: order.productList[i].count
                                         };
+                                        if (order.productList[i].imagesUrl != null) {
+                                            productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
+                                        }
                                         productList.push(productItem);
                                     }
                                     orderItem.productList = productList;
                                     orderList.push(orderItem);
                                 }
-                            });
+                                //});
+                            }
+
                             result.orderList = orderList;
                             result.page = page;
+                            params.orderIdList = orderIdList;
                         }
                         logger.info("get order list response:" + JSON.stringify(result));
                         return callback(null, result);
@@ -114,7 +153,7 @@ router.post('/list', function (request, response, next) {
             },
             function (callback) {
                 try {
-                    if (params.orderState == null || params.orderState == 1) {
+                    if (params.orderState == null &&params.orderIdList!=null && params.orderIdList.length>0) {
                         afterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
                                 return callback(2, null);
