@@ -582,11 +582,11 @@ router.post('/list', function (request, response, next) {
         var orderIdList = [];
         result.orderList = [];
         result.afterSaleList = [];
-        //Buyer.validAuth(params, function (err, data) {
-        //    if (err) {
-        //        response.json(err);
-        //        return;
-        //    }
+        Buyer.validAuth(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
             async.series([
                     function (callback) {
                         try {
@@ -727,7 +727,7 @@ router.post('/list', function (request, response, next) {
                         return;
                     }
                 });
-        //});
+        });
     } catch (ex) {
         logger.error("查询订单列表失败---订单服务异常：" + err);
         result.code = 500;
