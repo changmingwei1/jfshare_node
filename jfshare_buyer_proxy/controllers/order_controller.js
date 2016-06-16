@@ -579,13 +579,14 @@ router.post('/list', function (request, response, next) {
         logger.info("提交订单请求参数， arg:" + JSON.stringify(params));
         var afterSaleList = [];
         var sellerMsgList = [];
+        var orderIdList = [];
         result.orderList = [];
         result.afterSaleList = [];
-        Buyer.validAuth(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
+        //Buyer.validAuth(params, function (err, data) {
+        //    if (err) {
+        //        response.json(err);
+        //        return;
+        //    }
             async.series([
                     function (callback) {
                         try {
@@ -596,8 +597,12 @@ router.post('/list', function (request, response, next) {
                                 }
                                 var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                                 var orderList = [];
-                                if (orderInfo.orderProfileList !== null) {
-                                    orderInfo.orderProfileList.forEach(function (order) {
+                                if (orderInfo.orderProfileList !== null  && orderInfo.orderProfileList.length > 0) {
+                                    for(var j=0;j<orderInfo.orderProfileList.length;j++) {
+                                        var order = orderInfo.orderProfileList[j];
+                                        if(order.orderState>=50){
+                                            orderIdList.push(order.orderId);
+                                        }
                                         var orderItem = {
                                             orderId: order.orderId,
                                             closingPrice: order.closingPrice,
@@ -637,8 +642,9 @@ router.post('/list', function (request, response, next) {
                                             orderItem.productList = productList;
                                             orderList.push(orderItem);
                                         }
-                                    });
+                                    }
                                     params.sellerIdList = orderList;
+                                    params.orderIdList = orderIdList;
                                     result.orderList = orderList;
                                     /*给出系统当前时间*/
                                     result.curTime = new Date().getTime();
@@ -676,7 +682,7 @@ router.post('/list', function (request, response, next) {
                     },
                     function (callback) {
                         try {
-                            if (params.orderState == null ) {
+                            if (params.orderState == null && params.orderIdList!=null && params.orderIdList.length > 0) {
                                 AfterSale.queryAfterSale(params, function (err, data) {
                                     if (err) {
                                         return callback(2, null);
@@ -721,7 +727,7 @@ router.post('/list', function (request, response, next) {
                         return;
                     }
                 });
-        });
+        //});
     } catch (ex) {
         logger.error("查询订单列表失败---订单服务异常：" + err);
         result.code = 500;
