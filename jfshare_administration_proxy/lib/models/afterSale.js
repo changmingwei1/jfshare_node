@@ -86,6 +86,7 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
             //加上sku
         });
     } else {
+
         afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
             orderIdList:params.orderIdList
         });
