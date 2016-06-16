@@ -156,7 +156,7 @@ router.post('/list', function (request, response, next) {
             },
             function (callback) {
                 try {
-                    if (params.orderState == null) {
+                    if (params.orderState == null &&params.orderIdList!=null && params.orderIdList.length>0) {
                         afterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
                                 return callback(2, null);
@@ -166,7 +166,7 @@ router.post('/list', function (request, response, next) {
                             return callback(null, afterSaleList);
                         });
                     } else {
-                        return callback(3, null);
+                        return callback(null, afterSaleList);
                     }
                 } catch (ex) {
                     logger.info("售后服务异常:" + ex);
