@@ -24,7 +24,7 @@ AfterSale.prototype.auditPass = function (params, callback) {
         productId: params.productId,
         state: params.state, //根据实际情况定义 如 1：新建（待审核） 2：审核通过 3：审核不通过
         skuNum: params.skuNum,
-        approveComment:params.approveComment
+        approveComment: params.approveComment
     });
 
     logger.info("AfterSaleServ-auditPass  args:" + JSON.stringify(afterSale));
@@ -75,15 +75,23 @@ AfterSale.prototype.request = function (params, callback) {
 };
 //查询审核信息
 AfterSale.prototype.queryAfterSale = function (params, callback) {
+    var afterSaleQueryParam = null;
+    if (params.orderIdList == null) {
+        afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
+            userId: params.userId,
+            sellerId: params.sellerId,
+            orderId: params.orderId,
+            productId: params.productId,
+            skuNum: params.skuNum
+            //加上sku
+        });
+    } else {
 
-    var afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
-        userId: params.userId,
-        sellerId: params.sellerId,
-        orderId: params.orderId,
-        productId: params.productId,
-        skuNum: params.skuNum
-        //加上sku
-    });
+        afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
+            orderIdList:params.orderIdList
+        });
+    }
+
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
     try {
         var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSale", afterSaleQueryParam);
@@ -113,10 +121,10 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
 AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
     var afterSaleQueryParam = new afterSale_types.AfterSaleOrderParam({
         //sellerId: params.sellerId,
-       // userId: params.userId,
+        // userId: params.userId,
         //orderId: params.orderId,
         //startTime: params.startTime,
-       // endTime: params.endTime
+        // endTime: params.endTime
     });
 
     var page = new pagination_types.Pagination({
@@ -136,7 +144,7 @@ AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
             res.desc = "查询售后订单列表失败！";
             callback(res, null);
         } else {
-            if (data[0] == null|| data[0].afterSaleOrders==null || data[0].pagination == null || data[0].pagination.totalCount == null) {
+            if (data[0] == null || data[0].afterSaleOrders == null || data[0].pagination == null || data[0].pagination.totalCount == null) {
                 callback(null, 0);
             } else {
                 callback(null, data[0].pagination.totalCount);

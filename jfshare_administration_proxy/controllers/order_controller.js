@@ -44,6 +44,7 @@ router.post('/list', function (request, response, next) {
         return;
     }
     var afterSaleList = [];
+    var orderIdList = [];
     result.orderList = [];
     result.afterSaleList = [];
     async.series([
@@ -57,7 +58,11 @@ router.post('/list', function (request, response, next) {
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
                         if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
-                            orderInfo.orderProfileList.forEach(function (order) {
+                            for(var i=0;i<orderInfo.orderProfileList.length;i++) {
+                                var order = orderInfo.orderProfileList[i];
+                                if(order.orderState>=50){
+                                    orderIdList.push(order.orderId);
+                                }
                                 var orderItem = {
                                     orderId: order.orderId,
                                     userId: order.userId,
@@ -85,6 +90,35 @@ router.post('/list', function (request, response, next) {
                                     activeState: order.activeState,
                                     curTime: order.curTime
                                 };
+                                // }
+                                //orderInfo.orderProfileList.forEach(function (order) {
+                                //    var orderItem = {
+                                //        orderId: order.orderId,
+                                //        userId: order.userId,
+                                //        orderPrice: order.closingPrice,
+                                //        //添加了应答的数据
+                                //        postage: order.postage,
+                                //        username: order.username,
+                                //        cancelName: order.cancelName,
+                                //        sellerName: order.sellerName,
+                                //        sellerId: order.sellerId,
+                                //        createTime: order.createTime,
+                                //        expressNo: order.expressNo,
+                                //        expressName: order.expressName,
+                                //        receiverAddress: order.receiverAddress,
+                                //        receiverName: order.receiverName,
+                                //        receiverMobile: order.receiverMobile,
+                                //        receiverTele: order.receiverTele,
+                                //        orderState: order.orderState,
+                                //        sellerComment: order.sellerComment,
+                                //        buyerComment: order.buyerComment,
+                                //        deliverTime: order.deliverTime,
+                                //        successTime: order.successTime,
+                                //        exchangeCash: order.exchangeCash,
+                                //        exchangeScore: order.exchangeScore,
+                                //        activeState: order.activeState,
+                                //        curTime: order.curTime
+                                //    };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
                                     for (var i = 0; i < order.productList.length; i++) {
@@ -104,11 +138,12 @@ router.post('/list', function (request, response, next) {
                                     orderItem.productList = productList;
                                     orderList.push(orderItem);
                                 }
-                            });
-
+                                //});
+                            }
 
                             result.orderList = orderList;
                             result.page = page;
+                            params.orderIdList = orderIdList;
                         }
                         logger.info("get order list response:" + JSON.stringify(result));
                         return callback(null, result);
