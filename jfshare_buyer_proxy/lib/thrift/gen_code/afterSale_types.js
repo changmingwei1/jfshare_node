@@ -262,6 +262,7 @@ AfterSaleQueryParam = module.exports.AfterSaleQueryParam = function(args) {
   this.type = null;
   this.state = null;
   this.skuNum = null;
+  this.orderIdList = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -283,6 +284,9 @@ AfterSaleQueryParam = module.exports.AfterSaleQueryParam = function(args) {
     }
     if (args.skuNum !== undefined) {
       this.skuNum = args.skuNum;
+    }
+    if (args.orderIdList !== undefined) {
+      this.orderIdList = args.orderIdList;
     }
   }
 };
@@ -349,6 +353,26 @@ AfterSaleQueryParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 8:
+      if (ftype == Thrift.Type.LIST) {
+        var _size0 = 0;
+        var _rtmp34;
+        this.orderIdList = [];
+        var _etype3 = 0;
+        _rtmp34 = input.readListBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        {
+          var elem6 = null;
+          elem6 = input.readString();
+          this.orderIdList.push(elem6);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -395,6 +419,20 @@ AfterSaleQueryParam.prototype.write = function(output) {
     output.writeString(this.skuNum);
     output.writeFieldEnd();
   }
+  if (this.orderIdList !== null && this.orderIdList !== undefined) {
+    output.writeFieldBegin('orderIdList', Thrift.Type.LIST, 8);
+    output.writeListBegin(Thrift.Type.STRING, this.orderIdList.length);
+    for (var iter7 in this.orderIdList)
+    {
+      if (this.orderIdList.hasOwnProperty(iter7))
+      {
+        iter7 = this.orderIdList[iter7];
+        output.writeString(iter7);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -436,19 +474,19 @@ AfterSaleResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size0 = 0;
-        var _rtmp34;
+        var _size8 = 0;
+        var _rtmp312;
         this.afterSaleList = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readListBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
         {
-          var elem6 = null;
-          elem6 = new ttypes.AfterSale();
-          elem6.read(input);
-          this.afterSaleList.push(elem6);
+          var elem14 = null;
+          elem14 = new ttypes.AfterSale();
+          elem14.read(input);
+          this.afterSaleList.push(elem14);
         }
         input.readListEnd();
       } else {
@@ -474,12 +512,12 @@ AfterSaleResult.prototype.write = function(output) {
   if (this.afterSaleList !== null && this.afterSaleList !== undefined) {
     output.writeFieldBegin('afterSaleList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.afterSaleList.length);
-    for (var iter7 in this.afterSaleList)
+    for (var iter15 in this.afterSaleList)
     {
-      if (this.afterSaleList.hasOwnProperty(iter7))
+      if (this.afterSaleList.hasOwnProperty(iter15))
       {
-        iter7 = this.afterSaleList[iter7];
-        iter7.write(output);
+        iter15 = this.afterSaleList[iter15];
+        iter15.write(output);
       }
     }
     output.writeListEnd();
@@ -612,19 +650,19 @@ AfterSaleOrderResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
+        var _size16 = 0;
+        var _rtmp320;
         this.afterSaleOrders = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
         {
-          var elem14 = null;
-          elem14 = new ttypes.AfterSaleOrder();
-          elem14.read(input);
-          this.afterSaleOrders.push(elem14);
+          var elem22 = null;
+          elem22 = new ttypes.AfterSaleOrder();
+          elem22.read(input);
+          this.afterSaleOrders.push(elem22);
         }
         input.readListEnd();
       } else {
@@ -658,12 +696,12 @@ AfterSaleOrderResult.prototype.write = function(output) {
   if (this.afterSaleOrders !== null && this.afterSaleOrders !== undefined) {
     output.writeFieldBegin('afterSaleOrders', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.afterSaleOrders.length);
-    for (var iter15 in this.afterSaleOrders)
+    for (var iter23 in this.afterSaleOrders)
     {
-      if (this.afterSaleOrders.hasOwnProperty(iter15))
+      if (this.afterSaleOrders.hasOwnProperty(iter23))
       {
-        iter15 = this.afterSaleOrders[iter15];
-        iter15.write(output);
+        iter23 = this.afterSaleOrders[iter23];
+        iter23.write(output);
       }
     }
     output.writeListEnd();
