@@ -58,9 +58,8 @@ router.post('/list', function (request, response, next) {
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
                         if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
-                            for(var i=0;i<orderInfo.orderProfileList.length;i++) {
-                                var order = orderInfo.orderProfileList[i];
-                                logger.info("get order list response:" + JSON.stringify(orderInfo.orderProfileList.length)+"----->"+JSON.stringify(order));
+                            for(var j=0;j<orderInfo.orderProfileList.length;j++) {
+                                var order = orderInfo.orderProfileList[j];
                                 if(order.orderState>=50){
                                     orderIdList.push(order.orderId);
                                 }
