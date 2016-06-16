@@ -1425,6 +1425,13 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                     result.productName=data.productName;
                     var captchaDetals=data.captchaDetals;
                     var captObj=[];
+                    if(captchaDetals==null||captchaDetals==""){
+                        result.code = 500;
+                        result.desc = "查询虚拟商品验证明细失败";
+                        response.json(result);
+                        return;
+                    }
+
                     captchaDetals.forEach(function(item){
                         captObj.push({
                             productName:data.productName,
