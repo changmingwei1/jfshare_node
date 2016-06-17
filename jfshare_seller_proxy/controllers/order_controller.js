@@ -305,7 +305,7 @@ router.post('/info', function (request, response, next) {
                                     count: orderInfo.productList[i].count
                                 });
                                 if(result.payChannel==1 &&thirdExchangeRate >0){
-                                    curPrice =(Number(Number(orderInfo.productList[i].curPrice)*100-orderInfo.productList[i].thirdExchangeRate)/100).toFixed(2);
+                                    curPrice =(Number(orderInfo.productList[i].curPrice*100-orderInfo.productList[i].thirdExchangeRate)/100).toFixed(2);
                                 }
                             }
                             result.productList = productList;
@@ -314,14 +314,14 @@ router.post('/info', function (request, response, next) {
                         if(result.payChannel==1){
                             if(thirdExchangeRate>0){
                                 result.exchangeScore = orderInfo.thirdScore;
-                                result.exchangeCash  = (Number(Number(orderInfo.closingPrice)*100-thirdExchangeRate-result.exchangeScore) / 100).toFixed(2);
+                                result.exchangeCash  = (Number(orderInfo.closingPrice*100-thirdExchangeRate-result.exchangeScore) / 100).toFixed(2);
                             }else{
                                 result.exchangeScore = orderInfo.thirdScore;
-                                result.exchangeCash  = (Number(Number(orderInfo.closingPrice)*100-result.exchangeScore)/100).toFixed(2);
+                                result.exchangeCash  = (Number(orderInfo.closingPrice*100-result.exchangeScore)/100).toFixed(2);
                             }
                         }else{
                             result.exchangeScore = orderInfo.exchangeScore; //添加字段
-                            result.exchangeCash = (Number(Number(orderInfo.closingPrice)*100-orderInfo.exchangeCash)/100).toFixed(2);
+                            result.exchangeCash = (Number(orderInfo.closingPrice*100-orderInfo.exchangeCash)/100).toFixed(2);
                         }
                         params.sellerId = orderInfo.sellerId;
                         callback(null,result);
