@@ -125,7 +125,8 @@ router.post('/list', function (request, response, next) {
                                             skunum: order.productList[i].skuNum,
                                             curPrice: order.productList[i].curPrice,
                                             imgUrl: "",
-                                            count: order.productList[i].count
+                                            count: order.productList[i].count,
+                                            thirdExchangeRate:order.productList[i].thirdExchangeRate
                                         };
                                         if (order.productList[i].imagesUrl != null) {
                                             productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
