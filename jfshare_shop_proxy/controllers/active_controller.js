@@ -175,25 +175,23 @@ router.get('/toExchangeDianXin',function(request,response,next){
 
 /*压力测试*/
 router.post('/jmeterTest',function(request,response,next){
-    logger.info("进入获取商品列表接口");
-    var resContent = {code: 200};
+    logger.info("进入获取子分类接口");
+    var result = {code: 200};
     try {
         var arg = request.body;
-        arg.perCount = 10;
-        Product.queryProductList(arg, function (err, data) {
-            var dataArr = [];
+        arg.subjectId = 0;
+        Product.getSubTree(arg, function (err, data) {
             if (err) {
                 response.json(err);
-                return;
             } else {
-                response.json(resContent);
+                response.json(result);
             }
         });
     } catch (ex) {
-        logger.error("获取商品列表失败:" + ex);
-        resContent.code = 500;
-        resContent.desc = "获取商品列表失败";
-        res.json(resContent);
+        logger.error("get subject child error:" + ex);
+        result.code = 500;
+        result.desc = "获取子类目失败";
+        res.json(result);
     }
 });
 
