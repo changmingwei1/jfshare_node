@@ -253,6 +253,9 @@ router.post('/info', function (request, response, next) {
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
                         }
+
+
+
                         // result.curTime = new Date().getTime();
                         result.createTime = orderInfo.createTime;
                         result.deliverTime = orderInfo.deliverTime; //卖家发货时间
@@ -280,8 +283,14 @@ router.post('/info', function (request, response, next) {
                         result.exchangeCash = orderInfo.exchangeCash; //添加字段
                         result.type = orderInfo.productList[0].type;
                         var productList = [];
+                        var thirdExchangeRate = 0;
                         if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
+
                             for (var i = 0; i < orderInfo.productList.length; i++) {
+
+                                if(result.payChannel==1){
+                                    thirdExchangeRate+=orderInfo.productList[i].thirdExchangeRate;
+                                }
                                 productList.push({
                                     productId: orderInfo.productList[i].productId,
                                     productName: orderInfo.productList[i].productName,
@@ -292,10 +301,27 @@ router.post('/info', function (request, response, next) {
                                     curPrice: orderInfo.productList[i].curPrice,
                                     orgPrice: orderInfo.productList[i].orgPrice,
                                     imgKey: orderInfo.productList[i].imagesUrl,
+                                    thirdExchangeRate:orderInfo.productList[i].thirdExchangeRate,
                                     count: orderInfo.productList[i].count
                                 });
+                                if(result.payChannel==1 &&thirdExchangeRate >0){
+                                    curPrice =(Number(Number(orderInfo.productList[i].curPrice)*100-orderInfo.productList[i].thirdExchangeRate)/100).toFixed(2);
+                                }
                             }
                             result.productList = productList;
+                        }
+
+                        if(result.payChannel==1){
+                            if(thirdExchangeRate>0){
+                                result.exchangeScore = orderInfo.thirdScore;
+                                result.exchangeCash  = (Number(Number(orderInfo.closingPrice)*100-thirdExchangeRate-result.exchangeScore) / 100).toFixed(2);
+                            }else{
+                                result.exchangeScore = orderInfo.thirdScore;
+                                result.exchangeCash  = (Number(Number(orderInfo.closingPrice)*100-result.exchangeScore)/100).toFixed(2);
+                            }
+                        }else{
+                            result.exchangeScore = orderInfo.exchangeScore; //添加字段
+                            result.exchangeCash = (Number(Number(orderInfo.closingPrice)*100-orderInfo.exchangeCash)/100).toFixed(2);
                         }
                         params.sellerId = orderInfo.sellerId;
                         callback(null,result);
