@@ -172,5 +172,45 @@ router.get('/toExchangeDianXin',function(request,response,next){
     return;
 });
 
+/*压力测试*/
+router.get('/jmeterTest',function(request,response,next){
+
+    logger.info("进入升级版本接口...");
+
+    var resContent = {code: 200};
+    try {
+        var param = request.query;
+        if (param.appType == null || param.appType == "") {
+            resContent.code = 400;
+            resContent.desc = "请输入类型";
+            response.json(resContent);
+            return;
+        }
+        if (param.version == null || param.version == "") {
+            resContent.code = 400;
+            resContent.desc = "当前客户端版本号不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("It's test______" + JSON.stringify(param));
+
+        Message.getAppUpgradeInfoStr(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            //var upgradeInfo = data[0].upgradeInfo;
+            //resContent.upgradeInfo = upgradeInfo;
+            response.json(resContent);
+            logger.info("响应的结果:" + JSON.stringify(resContent));
+        });
+
+    } catch (ex) {
+        logger.error("获取版本号失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能获取到版本号";
+        response.json(resContent);
+    }
+});
 
 module.exports = router;
