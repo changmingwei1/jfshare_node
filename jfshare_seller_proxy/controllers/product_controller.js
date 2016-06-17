@@ -296,6 +296,12 @@ router.post('/creat', function (request, response, next) {
             response.json(result);
             return;
         }
+        if(params.type !=2 && params.type !=3){
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
         if (params.postageId == null || params.postageId == "") {
             result.code = 500;
             result.desc = "请求参数错误";

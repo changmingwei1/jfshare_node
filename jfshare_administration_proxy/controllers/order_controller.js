@@ -88,8 +88,12 @@ router.post('/list', function (request, response, next) {
                                     exchangeCash: order.exchangeCash,
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
-                                    curTime: order.curTime
+                                    curTime: order.curTime,
+                                    payChannel:""
                                 };
+                                if (order.payInfo != null) {
+                                    orderItem.payChannel = order.payInfo.payChannel;
+                                }
                                 // }
                                 //orderInfo.orderProfileList.forEach(function (order) {
                                 //    var orderItem = {
@@ -128,7 +132,8 @@ router.post('/list', function (request, response, next) {
                                             skunum: order.productList[i].skuNum,
                                             curPrice: order.productList[i].curPrice,
                                             imgUrl: "",
-                                            count: order.productList[i].count
+                                            count: order.productList[i].count,
+                                            thirdExchangeRate:order.productList[i].thirdExchangeRate
                                         };
                                         if (order.productList[i].imagesUrl != null) {
                                             productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
@@ -294,7 +299,8 @@ router.post('/info', function (request, response, next) {
                                     curPrice: orderInfo.productList[i].curPrice,
                                     orgPrice: orderInfo.productList[i].orgPrice,
                                     imgKey: orderInfo.productList[i].imagesUrl,
-                                    count: orderInfo.productList[i].count
+                                    count: orderInfo.productList[i].count,
+                                    thirdExchangeRate:orderInfo.productList[i].thirdExchangeRate
                                 });
                             }
                             result.productList = productList;
