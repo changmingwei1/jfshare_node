@@ -82,7 +82,8 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
             sellerId: params.sellerId,
             orderId: params.orderId,
             productId: params.productId,
-            skuNum: params.skuNum
+            skuNum: params.skuNum,
+            orderIdList:[]
             //加上sku
         });
     } else {
