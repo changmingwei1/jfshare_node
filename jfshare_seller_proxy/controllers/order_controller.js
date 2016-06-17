@@ -85,8 +85,12 @@ router.post('/list', function (request, response, next) {
                                     exchangeCash: order.exchangeCash,
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
-                                    curTime: order.curTime
+                                    curTime: order.curTime,
+                                    payChannel:""
                                 };
+                                if (order.payInfo != null) {
+                                    orderItem.payChannel = order.payInfo.payChannel;
+                                }
                                 // }
                                 //orderInfo.orderProfileList.forEach(function (order) {
                                 //    var orderItem = {
