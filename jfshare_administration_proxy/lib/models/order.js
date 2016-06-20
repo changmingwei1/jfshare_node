@@ -230,4 +230,23 @@ Order.prototype.batchExportOrderFull = function (params, callback) {
     });
 };
 
+
+//查询导出 订单的结果
+Order.prototype.getExportOrderResult = function (params, callback) {
+
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "getExportOrderResult", [params.queryKey]);
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-getExportOrderResult  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用orderServ-getExportOrderResult  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询导出结果失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0].value);
+        }
+    });
+};
+
 module.exports = new Order();

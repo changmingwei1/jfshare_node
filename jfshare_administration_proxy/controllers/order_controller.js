@@ -1067,6 +1067,41 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
                 response.json(err);
                 return;
             } else {
+               // result.url = "http://101.201.39.63/" + data;
+                response.json(data);
+            }
+
+        });
+
+    } catch (ex) {
+        logger.error("导出订单失败：" + ex);
+        result.code = 500;
+        result.desc = "导出订单失败";
+        response.json(result);
+    }
+});
+
+
+router.post('/getExportOrderResult', function (request, response, next) {
+    logger.info("查询导出订单的进度");
+    var result = {code: 200};
+
+    try {
+
+        var params = request.body;
+
+        if (params.queryKey == "" || params.queryKey == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        logger.info("查询导出订单的进度  params:" + JSON.stringify(params));
+        Order.getExportOrderResult(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            } else {
                 result.url = "http://101.201.39.63/" + data;
                 response.json(result);
             }
