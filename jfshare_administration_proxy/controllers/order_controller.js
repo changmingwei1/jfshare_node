@@ -1067,8 +1067,8 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
                 response.json(err);
                 return;
             } else {
-               // result.url = "http://101.201.39.63/" + data;
-                response.json(data);
+                result.queryKey = data;
+                response.json(result);
             }
 
         });
@@ -1085,7 +1085,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
 router.post('/getExportOrderResult', function (request, response, next) {
     logger.info("查询导出订单的进度");
     var result = {code: 200};
-
+    var value = {};
     try {
 
         var params = request.body;
@@ -1102,7 +1102,19 @@ router.post('/getExportOrderResult', function (request, response, next) {
                 response.json(err);
                 return;
             } else {
-                result.url = "http://101.201.39.63/" + data;
+
+                if(data.code == "1"){
+                    value.code =1 ;
+                    value.desc =  "http://101.201.39.63/"+data.desc;
+                }else if(data.code == "0"){
+                    value.code =0 ;
+                    value.desc =  "订单正在导出";
+                }else if(data.code =="-1"){
+                    value.code = -1 ;
+                    value.desc = "导出订单异常";
+                }
+
+                result.value = value;
                 response.json(result);
             }
 
