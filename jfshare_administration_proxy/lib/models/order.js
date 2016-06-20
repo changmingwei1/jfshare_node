@@ -214,7 +214,7 @@ Order.prototype.batchExportOrderFull = function (params, callback) {
         orderState: params.orderState || 0,
         sellerId: params.sellerId
     });
-    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
+    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFull", [orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-batchExportOrderFull  result:" + JSON.stringify(data));
