@@ -1106,7 +1106,7 @@ router.post('/getExportOrderResult', function (request, response, next) {
 
                 if((JSON.parse(data)).code == "1"){
                     value.code =1 ;
-                    value.desc =  "http://101.201.39.63/"+data.desc;
+                    value.desc =  "http://101.201.39.63/"+(JSON.parse(data)).desc;
                 }else if((JSON.parse(data)).code == "0"){
                     value.code =0 ;
                     value.desc =  "订单正在导出";
