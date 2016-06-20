@@ -1928,6 +1928,113 @@ OrderServ_batchExportOrderFull_result.prototype.write = function(output) {
   return;
 };
 
+OrderServ_getExportOrderResult_args = function(args) {
+  this.queryKey = null;
+  if (args) {
+    if (args.queryKey !== undefined) {
+      this.queryKey = args.queryKey;
+    }
+  }
+};
+OrderServ_getExportOrderResult_args.prototype = {};
+OrderServ_getExportOrderResult_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.queryKey = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_getExportOrderResult_args.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_getExportOrderResult_args');
+  if (this.queryKey !== null && this.queryKey !== undefined) {
+    output.writeFieldBegin('queryKey', Thrift.Type.STRING, 1);
+    output.writeString(this.queryKey);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OrderServ_getExportOrderResult_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+OrderServ_getExportOrderResult_result.prototype = {};
+OrderServ_getExportOrderResult_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_getExportOrderResult_result.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_getExportOrderResult_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 OrderServ_batchDeliverOrder_args = function(args) {
   this.sellerId = null;
   this.param = null;
@@ -3163,6 +3270,53 @@ OrderServClient.prototype.recv_batchExportOrderFull = function(input,mtype,rseqi
   }
   return callback('batchExportOrderFull failed: unknown result');
 };
+OrderServClient.prototype.getExportOrderResult = function(queryKey, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getExportOrderResult(queryKey);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getExportOrderResult(queryKey);
+  }
+};
+
+OrderServClient.prototype.send_getExportOrderResult = function(queryKey) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getExportOrderResult', Thrift.MessageType.CALL, this.seqid());
+  var args = new OrderServ_getExportOrderResult_args();
+  args.queryKey = queryKey;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+OrderServClient.prototype.recv_getExportOrderResult = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new OrderServ_getExportOrderResult_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getExportOrderResult failed: unknown result');
+};
 OrderServClient.prototype.batchDeliverOrder = function(sellerId, param, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -3817,6 +3971,36 @@ OrderServProcessor.prototype.process_batchExportOrderFull = function(seqid, inpu
     this._handler.batchExportOrderFull(args.conditions,  function (err, result) {
       var result = new OrderServ_batchExportOrderFull_result((err != null ? err : {success: result}));
       output.writeMessageBegin("batchExportOrderFull", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+OrderServProcessor.prototype.process_getExportOrderResult = function(seqid, input, output) {
+  var args = new OrderServ_getExportOrderResult_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getExportOrderResult.length === 1) {
+    Q.fcall(this._handler.getExportOrderResult, args.queryKey)
+      .then(function(result) {
+        var result = new OrderServ_getExportOrderResult_result({success: result});
+        output.writeMessageBegin("getExportOrderResult", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new OrderServ_getExportOrderResult_result(err);
+        output.writeMessageBegin("getExportOrderResult", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getExportOrderResult(args.queryKey,  function (err, result) {
+      var result = new OrderServ_getExportOrderResult_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getExportOrderResult", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

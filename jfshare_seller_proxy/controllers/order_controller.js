@@ -1217,10 +1217,11 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                             if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
 
                                 for (var i = 1; i < sheetData.data.length; i++) {
-                                    if (sheetData.data[i].length >= 3) {
+                                    if (sheetData.data[i].length >= 4) {
                                         var deliverInfo = new order_types.DeliverInfo({
                                             expressName: sheetData.data[i][2],
-                                            expressNo: sheetData.data[i][1]+""
+                                            expressNo: sheetData.data[i][1]+"",
+                                            sellerComment:sheetData.data[i][3]
                                         });
 
                                         var order = new order_types.Order({

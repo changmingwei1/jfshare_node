@@ -19,30 +19,36 @@ router.post('/list', function (request, response, next) {
     var params = request.body;
     logger.info("查询订单列表请求参数：" + JSON.stringify(params));
 
-    if (params.percount == null || params.percount == "" || params.percount <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
+    if (params.orderId != null && params.orderId != "") {
+        logger.info("根据订单号查询：-----------");
+    } else {
+        if (params.percount == null || params.percount == "" || params.percount <= 0) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.startTime == null || params.startTime == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.endTime == null || params.endTime == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
     }
-    if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-    if (params.startTime == null || params.startTime == "") {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-    if (params.endTime == null || params.endTime == "") {
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
+
+
     var afterSaleList = [];
     var orderIdList = [];
     result.orderList = [];
@@ -58,9 +64,9 @@ router.post('/list', function (request, response, next) {
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
                         if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
-                            for(var j=0;j<orderInfo.orderProfileList.length;j++) {
+                            for (var j = 0; j < orderInfo.orderProfileList.length; j++) {
                                 var order = orderInfo.orderProfileList[j];
-                                if(order.orderState>=50){
+                                if (order.orderState >= 50) {
                                     orderIdList.push(order.orderId);
                                 }
                                 var orderItem = {
@@ -89,7 +95,7 @@ router.post('/list', function (request, response, next) {
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
                                     curTime: order.curTime,
-                                    payChannel:""
+                                    payChannel: ""
                                 };
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
@@ -133,7 +139,7 @@ router.post('/list', function (request, response, next) {
                                             curPrice: order.productList[i].curPrice,
                                             imgUrl: "",
                                             count: order.productList[i].count,
-                                            thirdExchangeRate:order.productList[i].thirdExchangeRate
+                                            thirdExchangeRate: order.productList[i].thirdExchangeRate
                                         };
                                         if (order.productList[i].imagesUrl != null) {
                                             productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
@@ -161,7 +167,7 @@ router.post('/list', function (request, response, next) {
             },
             function (callback) {
                 try {
-                    if (params.orderState == null &&params.orderIdList!=null && params.orderIdList.length>0) {
+                    if (params.orderState == null && params.orderIdList != null && params.orderIdList.length > 0) {
                         afterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
                                 return callback(2, null);
@@ -300,7 +306,7 @@ router.post('/info', function (request, response, next) {
                                     orgPrice: orderInfo.productList[i].orgPrice,
                                     imgKey: orderInfo.productList[i].imagesUrl,
                                     count: orderInfo.productList[i].count,
-                                    thirdExchangeRate:orderInfo.productList[i].thirdExchangeRate
+                                    thirdExchangeRate: orderInfo.productList[i].thirdExchangeRate
                                 });
                             }
                             result.productList = productList;

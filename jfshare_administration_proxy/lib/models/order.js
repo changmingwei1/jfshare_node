@@ -40,7 +40,11 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             curPage: 1
         });
 
-    } else {
+    }else if(params.orderId != null && params.orderId != ""){
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderId: params.orderId
+        });
+    }else {
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderStatus || 0,
             count: params.percount,
