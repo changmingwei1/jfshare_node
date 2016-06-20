@@ -69,7 +69,7 @@ Template.prototype.setDefaultPostageTemplate = function (params, callback) {
         sellerId: params.sellerId
     });
 
-    logger.info("调用setDefaultPostageTemplate params:" + JSON.stringify(freight));
+    logger.info("调用setDefaultPostageTemplate params:" + JSON.stringify(postageTemplate));
     // 获取client
     var templateServer = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "setDefaultPostageTemplate", postageTemplate);
     // 调用
