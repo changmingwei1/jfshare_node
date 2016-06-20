@@ -1102,7 +1102,7 @@ router.post('/getExportOrderResult', function (request, response, next) {
                 response.json(err);
                 return;
             } else {
-
+                logger.info("查询导出订单的进度  data:" + JSON.stringify(data));
                 if(data.code == "1"){
                     value.code =1 ;
                     value.desc =  "http://101.201.39.63/"+data.desc;
