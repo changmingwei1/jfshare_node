@@ -1421,7 +1421,7 @@ router.post('/notify/alipay', function (request, response, next) {
     try {
         var params = request.body;
         if(params != null && params != ""){
-            response.redirect('http://buy.jfshare.com/jfShare/html/pay_2.success.html?body=' + params.body +
+            response.redirect('http://buy.jfshare.com/html/pay_2.success.html?body=' + params.body +
             '&buyer_email=' + params.buyer_email + '&exterface=' + params.exterface +
             '&is_success=' + params.is_success + '&notify_id=' + params.notify_id +
             '&notify_time=' + params.notify_time + '&notify_type=' + params.notify_type +
