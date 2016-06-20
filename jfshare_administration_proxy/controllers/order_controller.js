@@ -19,7 +19,6 @@ router.post('/list', function (request, response, next) {
     var params = request.body;
     logger.info("查询订单列表请求参数：" + JSON.stringify(params));
 
-
     if (params.orderId != null && params.orderId != "") {
         logger.info("根据订单号查询：-----------");
     } else {
