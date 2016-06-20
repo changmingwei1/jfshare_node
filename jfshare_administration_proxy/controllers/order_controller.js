@@ -552,48 +552,48 @@ router.post('/cancelOrder', function (request, response, next) {
         response.json(result);
     }
 });
-//导出订单
-router.post('/queryExportOrderInfo', function (request, response, next) {
-    logger.info("进入导出订单流程");
-    var result = {code: 200};
-
-    try {
-
-        var params = request.body;
-
-        if (params.startTime == null || params.startTime == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.endTime == null || params.endTime == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-
-        Order.batchExportOrderFull(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
-            result.url = "http://101.201.39.63/" + data;
-            response.json(result);
-            return
-        });
-
-    } catch (ex) {
-        logger.error("查询物流信息失败：" + ex);
-        result.code = 500;
-        result.desc = "查询物流信息失败";
-        response.json(result);
-    }
-});
+////导出订单
+//router.post('/queryExportOrderInfo', function (request, response, next) {
+//    logger.info("进入导出订单流程");
+//    var result = {code: 200};
+//
+//    try {
+//
+//        var params = request.body;
+//
+//        if (params.startTime == null || params.startTime == "") {
+//
+//            result.code = 500;
+//            result.desc = "参数错误";
+//            response.json(result);
+//            return;
+//        }
+//        if (params.endTime == null || params.endTime == "") {
+//
+//            result.code = 500;
+//            result.desc = "参数错误";
+//            response.json(result);
+//            return;
+//        }
+//
+//
+//        Order.batchExportOrderFull(params, function (err, data) {
+//            if (err) {
+//                response.json(err);
+//                return;
+//            }
+//            result.url = "http://101.201.39.63/" + data;
+//            response.json(result);
+//            return
+//        });
+//
+//    } catch (ex) {
+//        logger.error("查询物流信息失败：" + ex);
+//        result.code = 500;
+//        result.desc = "查询物流信息失败";
+//        response.json(result);
+//    }
+//});
 
 //添加物流单-发货
 router.post('/deliver', function (request, response, next) {
