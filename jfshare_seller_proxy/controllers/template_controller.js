@@ -87,8 +87,6 @@ router.post('/addPostageTemplate', function (request, response, next) {
 });
 
 
-
-
 //设置默认的商家运费模板
 router.post('/setDefault', function (request, response, next) {
 
@@ -133,8 +131,6 @@ router.post('/setDefault', function (request, response, next) {
         response.json(result);
     }
 });
-
-
 
 
 //更新运费模板
@@ -392,7 +388,7 @@ router.post('/addStorehouse', function (request, response, next) {
             } else {
                 logger.info("add addStorehouse  response:" + JSON.stringify(data));
 
-                result.id =data[0].value;
+                result.id = data[0].value;
 
                 response.json(result);
                 return;
@@ -511,9 +507,11 @@ router.post('/delStorehouse', function (request, response, next) {
 });
 //listStorehouse
 router.post('/listStorehouse', function (request, response, next) {
-    logger.info("进入查询运费模板流程");
+    logger.info("进入仓库列表流程");
     var result = {code: 200};
-    result.storehouseList = [];
+
+    var storehouseList = [];
+
     try {
         // var params = request.query;
         var params = request.body;
@@ -537,11 +535,20 @@ router.post('/listStorehouse', function (request, response, next) {
             } else {
                 logger.info("list freight info response:" + JSON.stringify(result));
                 if (data[0].storehouseList != null) {
-                    result.storehouseList = data[0].storehouseList;
-                    response.json(result);
-                    return;
-                }
+                    //result.storehouseList = data[0].storehouseList;
+                    {
+                        for (var i = 0; i < data[0].storehouseList.length; i++) {
+                            var store = data[0].storehouseList[i];
+                            if (store.sellerId != 0) {
+                                storehouseList.push(data[0].storehouseList[i]);
+                            }
 
+                        }
+                    }
+                }
+                result.storehouseList = storehouseList;
+                response.json(result);
+                return;
             }
         });
     } catch (ex) {
@@ -722,13 +729,13 @@ router.post('/queryStockAndPrice', function (request, response, next) {
 
                                         }
                                     } else {
-                                        if(j!=0){
+                                        if (j != 0) {
                                             j = i - 1;
                                         }
 
                                     }
                                 }
-                                callback(null,productStockAndPriceList);
+                                callback(null, productStockAndPriceList);
                             }
                         });
 
@@ -745,8 +752,8 @@ router.post('/queryStockAndPrice', function (request, response, next) {
                     logger.error("get product stock error:" + err);
                     response.json(result);
                     return;
-                }else{
-                    if(results!=null && results[2]!=null){
+                } else {
+                    if (results != null && results[2] != null) {
 
                         result.skuPriceAndStockList = results[2];
                         response.json(result);
