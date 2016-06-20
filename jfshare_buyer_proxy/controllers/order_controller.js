@@ -937,6 +937,8 @@ router.post('/info', function (req, res, next) {
                                     result.expressId = orderInfo.deliverInfo.expressId;
                                     result.expressNo = orderInfo.deliverInfo.expressNo;
                                     result.expressName = orderInfo.deliverInfo.expressName;
+                                    result.sellerComment = orderInfo.deliverInfo.sellerComment;
+                                    result.comment = orderInfo.deliverInfo.buyerComment;
                                 }
                                 if (orderInfo.payInfo != null) {
                                     result.payChannel = orderInfo.payInfo.payChannel;
@@ -945,7 +947,6 @@ router.post('/info', function (req, res, next) {
                                 result.createTime = orderInfo.createTime;
                                 result.deliverTime = orderInfo.deliverTime; //卖家发货时间
                                 result.successTime = orderInfo.successTime; //确认收货时间
-                                result.comment = orderInfo.buyerComment;
                                 result.postage = orderInfo.postage;
                                 result.payId = orderInfo.payId;
                                 result.tradePayId = orderInfo.tradePayId;
@@ -1543,7 +1544,6 @@ router.post('/queryExpress', function (request, response, next) {
                 }
                 if (data.expressInfo != null) {
                     result.name = data.expressInfo.name;
-                    result.remark = data.expressInfo.comment;
                 }
                 if (data.expressTrace != null) {
                     result.traceItems = data.expressTrace.traceItems;
