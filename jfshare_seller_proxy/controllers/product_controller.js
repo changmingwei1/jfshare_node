@@ -296,7 +296,7 @@ router.post('/creat', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.postageId == null || params.postageId == "") {
+        if (params.postageId == null || params.postageId == "" ||params.postageId==0) {
             result.code = 500;
             result.desc = "请求参数错误";
             response.json(result);
@@ -580,7 +580,12 @@ router.post('/update', function (request, response, next) {
             response.json(result);
             return;
         }
-
+        if (params.postageId == null || params.postageId == "" ||params.postageId==0) {
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
 
         async.series([
                 function (callback) {
