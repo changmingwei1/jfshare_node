@@ -271,7 +271,8 @@ router.post('/info', function (request, response, next) {
                         result.sellerId = orderInfo.sellerId;
 
                         if (orderInfo.deliverInfo !== null) {
-
+                            result.sellerComment = orderInfo.deliverInfo.sellerComment;
+                            result.buyerComment = orderInfo.deliverInfo.buyerComment;
                             var deliverInfo = {
                                 receiverName: orderInfo.deliverInfo.receiverName,
                                 receiverMobile: orderInfo.deliverInfo.receiverMobile,
