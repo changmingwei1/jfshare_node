@@ -273,7 +273,7 @@ router.post('/info', function (request, response, next) {
                         result.cancelTime = orderInfo.cancelTime;
 
                         if(orderInfo.orderState == 61){
-
+                            result.cancelDesc = "其他原因";
                             if(orderInfo.orderStateType ==1){
                                 result.cancelDesc = "用户主动要求取消"
                             }
@@ -281,9 +281,6 @@ router.post('/info', function (request, response, next) {
                                 result.cancelDesc = "卖家缺货"
                             }
 
-                            if(orderInfo.orderStateType ==6){
-                                result.cancelDesc = "其他原因"
-                            }
                         }
 
                         if (orderInfo.deliverInfo !== null) {
