@@ -612,57 +612,7 @@ router.post('/updateExpressInfo', function (request, response, next) {
 });
 
 
-//获取物流单单号
-router.post('/getExpressInfo', function (request, response, next) {
-    logger.info("进入获取物流单信息流程");
-    var result = {code: 200};
 
-    try {
-
-        var params = request.body;
-
-        if (params.sellerId == null || params.sellerId == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-        if (params.orderId == null || params.orderId == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
-
-        Order.queryOrderDetail(params, function (err, orderInfo) {
-            if (err) {
-                response.json(error);
-                return;
-            }
-
-            result.OrderId = orderInfo.orderId;
-
-            result.remark = orderInfo.sellerComment;
-            if (orderInfo.deliverInfo !== null) {
-                result.expressId = orderInfo.deliverInfo.expressId;
-                result.expressName = orderInfo.deliverInfo.expressName;
-                result.expressNo = orderInfo.deliverInfo.expressNo;
-                result.remark = orderInfo.deliverInfo.sellerComment;
-            }
-            response.json(result);
-        });
-
-    } catch (ex) {
-        logger.error("查询物流信息失败：" + ex);
-        result.code = 500;
-        result.desc = "查询物流信息失败";
-        response.json(result);
-    }
-});
 //获取售后的订单列表
 router.post('/afterSalelist', function (request, response, next) {
     logger.info("进入获取售后的订单列表");
