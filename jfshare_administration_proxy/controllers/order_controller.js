@@ -136,7 +136,7 @@ router.post('/list', function (request, response, next) {
                                             productId: order.productList[i].productId,
                                             productName: order.productList[i].productName,
                                             skunum: order.productList[i].skuNum,
-                                            skuDesc:order.productList[i].skuDesc,
+                                            skuDesc: order.productList[i].skuDesc,
                                             curPrice: order.productList[i].curPrice,
                                             imgUrl: "",
                                             count: order.productList[i].count,
@@ -271,7 +271,7 @@ router.post('/info', function (request, response, next) {
                         result.createTime = orderInfo.createTime;
                         result.deliverTime = orderInfo.deliverTime; //卖家发货时间
                         result.successTime = orderInfo.successTime; //确认收货时间
-                        result.comment = orderInfo.buyerComment;
+                        // result.comment = orderInfo.buyerComment;
                         result.postage = orderInfo.postage;
                         result.sellerId = orderInfo.sellerId;
 
@@ -841,6 +841,7 @@ router.post('/afterSalelist', function (request, response, next) {
     logger.info("进入获取售后的订单列表");
     var result = {code: 200};
     var afterOrderList = [];
+    var afterSaleList = [];
     var orderList = [];
     try {
         var params = request.body;
@@ -915,6 +916,7 @@ router.post('/afterSalelist', function (request, response, next) {
                             orderIdList.push(afterOrderList[i].orderId);
                         }
                         params.orderList = orderIdList;
+                        params.orderIdList = orderIdList;
                         Order.orderProfileQuery(params, function (err, orderInfo) {
                             if (err) {
                                 logger.error("订单服务异常");
@@ -958,7 +960,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 productId: order.productList[i].productId,
                                                 productName: order.productList[i].productName,
                                                 skunum: order.productList[i].skuNum,
-                                                skuDesc:order.productList[i].skuDesc,
+                                                skuDesc: order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
                                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
@@ -979,6 +981,23 @@ router.post('/afterSalelist', function (request, response, next) {
                         return callback(2, null);
                     }
 
+                },
+                function (callback) {
+                    try {
+
+                        afterSale.queryAfterSale(params, function (err, data) {
+                            if (err) {
+                                return callback(2, null);
+                            }
+                            logger.info("get order list response:" + JSON.stringify(result));
+                            afterSaleList = data;
+                            result.afterSaleList = afterSaleList;
+                            return callback(null, result);
+                        });
+                    } catch (ex) {
+                        logger.info("售后服务异常:" + ex);
+                        return callback(3, null);
+                    }
                 }
             ],
             function (err, results) {
@@ -988,8 +1007,8 @@ router.post('/afterSalelist', function (request, response, next) {
                     response.json(result);
                     return;
                 } else {
-                    if (results[1] != null) {
-                        response.json(results[1]);
+                    if (results[2] != null) {
+                        response.json(results[2]);
                         return;
                     }
                 }
@@ -1107,14 +1126,14 @@ router.post('/getExportOrderResult', function (request, response, next) {
             } else {
                 logger.info("查询导出订单的进度  data:" + JSON.stringify(data));
 
-                if((JSON.parse(data)).code == "1"){
-                    value.code =1 ;
-                    value.desc =  "http://101.201.39.63/"+(JSON.parse(data)).desc;
-                }else if((JSON.parse(data)).code == "0"){
-                    value.code =0 ;
-                    value.desc =  "订单正在导出";
-                }else if((JSON.parse(data)).code =="-1"){
-                    value.code = -1 ;
+                if ((JSON.parse(data)).code == "1") {
+                    value.code = 1;
+                    value.desc = "http://101.201.39.63/" + (JSON.parse(data)).desc;
+                } else if ((JSON.parse(data)).code == "0") {
+                    value.code = 0;
+                    value.desc = "订单正在导出";
+                } else if ((JSON.parse(data)).code == "-1") {
+                    value.code = -1;
                     value.desc = "导出订单异常";
                 }
 
