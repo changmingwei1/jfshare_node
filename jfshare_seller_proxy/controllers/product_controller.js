@@ -581,6 +581,8 @@ router.post('/update', function (request, response, next) {
             response.json(result);
             return;
         }
+
+
         async.series([
                 function (callback) {
                     try {
