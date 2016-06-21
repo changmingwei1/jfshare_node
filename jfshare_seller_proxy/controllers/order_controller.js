@@ -1177,7 +1177,7 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                 function (callback) {
                     try {
                         if(!isDownLoad){
-                            return callback(3,null);
+                            return callback(1,null);
                         }
                         var json = xlsx.parse("/data/run/jfshare_node/jfshare_seller_proxy/excel/excel.xlsx");
                        // console.log(json);
@@ -1227,9 +1227,14 @@ router.post('/batchDeliverOrder', function (request, response, next) {
             ],
             function (err, results) {
                 if(err){
-                   // result.code = 500;
-                   // result.desc = "批量发货失败";
-                    response.json(err);
+                    if(err ==1 || err ==2){
+                        result.code = 500;
+                        result.desc = "批量发货失败";
+                        response.json(err);
+                    }else{
+                        response.json(err);
+                    }
+
                 }else{
                     response.json(result);
                 }
