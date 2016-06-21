@@ -249,12 +249,14 @@ router.post('/info', function (request, response, next) {
                         if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
                             result.mobile = orderInfo.deliverInfo.receiverMobile;
                         } else {
-                            result.address = orderInfo.deliverInfo.provinceName +
-                                orderInfo.deliverInfo.cityName +
-                                orderInfo.deliverInfo.countyName +
-                                orderInfo.deliverInfo.receiverAddress;
-                            result.receiverName = orderInfo.deliverInfo.receiverName;
-                            result.mobile = orderInfo.deliverInfo.receiverMobile;
+                            if(orderInfo.deliverInfo!=null){
+                                result.address = orderInfo.deliverInfo.provinceName +
+                                    orderInfo.deliverInfo.cityName +
+                                    orderInfo.deliverInfo.countyName +
+                                    orderInfo.deliverInfo.receiverAddress;
+                                result.receiverName = orderInfo.deliverInfo.receiverName;
+                                result.mobile = orderInfo.deliverInfo.receiverMobile;
+                            }
                         }
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
@@ -271,7 +273,7 @@ router.post('/info', function (request, response, next) {
                         result.cancelTime = orderInfo.cancelTime;
 
                         if(orderInfo.orderState == 61){
-
+                            result.cancelDesc = "其他原因";
                             if(orderInfo.orderStateType ==1){
                                 result.cancelDesc = "用户主动要求取消"
                             }
@@ -279,9 +281,6 @@ router.post('/info', function (request, response, next) {
                                 result.cancelDesc = "卖家缺货"
                             }
 
-                            if(orderInfo.orderStateType ==6){
-                                result.cancelDesc = "其他原因"
-                            }
                         }
 
                         if (orderInfo.deliverInfo !== null) {
