@@ -1210,7 +1210,7 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                         if (list.length >= 0) {
                             Order.batchDeliverOrder(params, function (err, data) {
                                 if (err) {
-                                    return callback(2,null);
+                                    return callback(err,err);
                                 }
                                 return callback(null,data);
                             });
@@ -1227,9 +1227,9 @@ router.post('/batchDeliverOrder', function (request, response, next) {
             ],
             function (err, results) {
                 if(err){
-                    result.code = 500;
-                    result.desc = "批量发货失败";
-                    response.json(result);
+                   // result.code = 500;
+                   // result.desc = "批量发货失败";
+                    response.json(err);
                 }else{
                     response.json(result);
                 }
