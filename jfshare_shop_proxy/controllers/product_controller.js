@@ -384,7 +384,11 @@ router.post('/querystore', function (req, res, next) {
             }
         ],
         function (err, results) {
-            if (err) {
+            if (err == 3) {
+                result.code = 200;
+                res.json(result);
+                return;
+            } else if(err) {
                 result.code = 500;
                 result.desc = "获取库存价格失败";
                 res.json(result);
