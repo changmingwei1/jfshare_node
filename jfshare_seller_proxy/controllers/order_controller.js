@@ -1230,7 +1230,7 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                     if(err ==1 || err ==2){
                         result.code = 500;
                         result.desc = "批量发货失败";
-                        response.json(err);
+                        response.json(result);
                     }else{
                         response.json(err);
                     }
