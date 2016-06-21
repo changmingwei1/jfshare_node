@@ -190,10 +190,14 @@ Product.prototype.update = function (params, callback) {
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("productServ-updateProduct  result:" + JSON.stringify(data));
         var res = {};
-        if (err) {
+        //[{"result":{"code":1,"failDescList":[{"name":"product","failCode":"3101","desc":"商品价格校验失败，价格应大于0，原价不可低于现价"}]},"value":null}]
+        if (err ||data[0].result.code == 1) {
             logger.error("productServ-updateProduct  失败原因 ======" + err);
             res.code = 500;
             res.desc = "更新商品失败";
+            if(data[0].result.failDescList[0].failCode>0){
+                res.desc = data[0].result.failDescList[0].desc;
+            }
             callback(res, null);
         } else {
             callback(null, data)
