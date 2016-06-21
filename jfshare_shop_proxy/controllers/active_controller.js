@@ -25,6 +25,7 @@ router.post('/jmeterTest',function(request,response,next){
             if (err) {
                 response.json(err);
             } else {
+                result.data = data[0];
                 response.json(result);
             }
         });
