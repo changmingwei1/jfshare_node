@@ -777,7 +777,7 @@ router.post('/getExpressInfo', function (request, response, next) {
                 result.expressId = orderInfo.deliverInfo.expressId;
                 result.expressName = orderInfo.deliverInfo.expressName;
                 result.expressNo = orderInfo.deliverInfo.expressNo;
-                result.remark = orderInfo.deliverInfo.sellerComment;
+                result.sellerComment = orderInfo.deliverInfo.sellerComment;
                 result.buyerComment = orderInfo.deliverInfo.buyerComment;
             }
             response.json(result);
