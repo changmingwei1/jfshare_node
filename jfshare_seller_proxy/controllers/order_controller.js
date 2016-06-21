@@ -1219,7 +1219,7 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                             }
                         }
                         params.list = list;
-                        if (list.length >= 0) {
+                        if (list.length > 0) {
                             Order.batchDeliverOrder(params, function (err, data) {
                                 if (err) {
                                     return callback(err, err);
