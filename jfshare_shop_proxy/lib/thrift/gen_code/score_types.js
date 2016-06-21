@@ -225,12 +225,20 @@ ScoreTrade.prototype.write = function(output) {
 };
 
 ScoreTradeQueryParam = module.exports.ScoreTradeQueryParam = function(args) {
-  this.tradeTime = null;
+  this.userId = null;
+  this.startTime = null;
+  this.endTime = null;
   this.inOrOut = null;
   this.type = null;
   if (args) {
-    if (args.tradeTime !== undefined) {
-      this.tradeTime = args.tradeTime;
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
     }
     if (args.inOrOut !== undefined) {
       this.inOrOut = args.inOrOut;
@@ -255,20 +263,34 @@ ScoreTradeQueryParam.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.tradeTime = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
       if (ftype == Thrift.Type.I32) {
         this.inOrOut = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 3:
+      case 5:
       if (ftype == Thrift.Type.I32) {
         this.type = input.readI32();
       } else {
@@ -286,18 +308,28 @@ ScoreTradeQueryParam.prototype.read = function(input) {
 
 ScoreTradeQueryParam.prototype.write = function(output) {
   output.writeStructBegin('ScoreTradeQueryParam');
-  if (this.tradeTime !== null && this.tradeTime !== undefined) {
-    output.writeFieldBegin('tradeTime', Thrift.Type.STRING, 1);
-    output.writeString(this.tradeTime);
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 2);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 3);
+    output.writeString(this.endTime);
     output.writeFieldEnd();
   }
   if (this.inOrOut !== null && this.inOrOut !== undefined) {
-    output.writeFieldBegin('inOrOut', Thrift.Type.I32, 2);
+    output.writeFieldBegin('inOrOut', Thrift.Type.I32, 4);
     output.writeI32(this.inOrOut);
     output.writeFieldEnd();
   }
   if (this.type !== null && this.type !== undefined) {
-    output.writeFieldBegin('type', Thrift.Type.I32, 3);
+    output.writeFieldBegin('type', Thrift.Type.I32, 5);
     output.writeI32(this.type);
     output.writeFieldEnd();
   }
@@ -377,7 +409,7 @@ ScoreResult.prototype.write = function(output) {
 ScoreTradeResult = module.exports.ScoreTradeResult = function(args) {
   this.result = null;
   this.scoreTrades = null;
-  this.pageination = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
@@ -385,8 +417,8 @@ ScoreTradeResult = module.exports.ScoreTradeResult = function(args) {
     if (args.scoreTrades !== undefined) {
       this.scoreTrades = args.scoreTrades;
     }
-    if (args.pageination !== undefined) {
-      this.pageination = args.pageination;
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -435,8 +467,8 @@ ScoreTradeResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.STRUCT) {
-        this.pageination = new pagination_ttypes.Pagination();
-        this.pageination.read(input);
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
       } else {
         input.skip(ftype);
       }
@@ -471,9 +503,1203 @@ ScoreTradeResult.prototype.write = function(output) {
     output.writeListEnd();
     output.writeFieldEnd();
   }
-  if (this.pageination !== null && this.pageination !== undefined) {
-    output.writeFieldBegin('pageination', Thrift.Type.STRUCT, 3);
-    this.pageination.write(output);
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreUser = module.exports.ScoreUser = function(args) {
+  this.userId = null;
+  this.mobile = null;
+  this.createTime = null;
+  this.amount = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.amount !== undefined) {
+      this.amount = args.amount;
+    }
+  }
+};
+ScoreUser.prototype = {};
+ScoreUser.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.amount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreUser.prototype.write = function(output) {
+  output.writeStructBegin('ScoreUser');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 3);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.amount !== null && this.amount !== undefined) {
+    output.writeFieldBegin('amount', Thrift.Type.I32, 4);
+    output.writeI32(this.amount);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreUserQueryParam = module.exports.ScoreUserQueryParam = function(args) {
+  this.userId = null;
+  this.mobile = null;
+  this.startTime = null;
+  this.endTime = null;
+  this.amount = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+    if (args.amount !== undefined) {
+      this.amount = args.amount;
+    }
+  }
+};
+ScoreUserQueryParam.prototype = {};
+ScoreUserQueryParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.amount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreUserQueryParam.prototype.write = function(output) {
+  output.writeStructBegin('ScoreUserQueryParam');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 3);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 4);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  if (this.amount !== null && this.amount !== undefined) {
+    output.writeFieldBegin('amount', Thrift.Type.I32, 5);
+    output.writeI32(this.amount);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreUserResult = module.exports.ScoreUserResult = function(args) {
+  this.result = null;
+  this.scoreUsers = null;
+  this.pagination = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.scoreUsers !== undefined) {
+      this.scoreUsers = args.scoreUsers;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ScoreUserResult.prototype = {};
+ScoreUserResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size8 = 0;
+        var _rtmp312;
+        this.scoreUsers = [];
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        {
+          var elem14 = null;
+          elem14 = new ttypes.ScoreUser();
+          elem14.read(input);
+          this.scoreUsers.push(elem14);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreUserResult.prototype.write = function(output) {
+  output.writeStructBegin('ScoreUserResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.scoreUsers !== null && this.scoreUsers !== undefined) {
+    output.writeFieldBegin('scoreUsers', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.scoreUsers.length);
+    for (var iter15 in this.scoreUsers)
+    {
+      if (this.scoreUsers.hasOwnProperty(iter15))
+      {
+        iter15 = this.scoreUsers[iter15];
+        iter15.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CachAmount = module.exports.CachAmount = function(args) {
+  this.totalAmount = null;
+  this.CachAmount = null;
+  if (args) {
+    if (args.totalAmount !== undefined) {
+      this.totalAmount = args.totalAmount;
+    }
+    if (args.CachAmount !== undefined) {
+      this.CachAmount = args.CachAmount;
+    }
+  }
+};
+CachAmount.prototype = {};
+CachAmount.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.totalAmount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.CachAmount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CachAmount.prototype.write = function(output) {
+  output.writeStructBegin('CachAmount');
+  if (this.totalAmount !== null && this.totalAmount !== undefined) {
+    output.writeFieldBegin('totalAmount', Thrift.Type.I32, 1);
+    output.writeI32(this.totalAmount);
+    output.writeFieldEnd();
+  }
+  if (this.CachAmount !== null && this.CachAmount !== undefined) {
+    output.writeFieldBegin('CachAmount', Thrift.Type.I32, 2);
+    output.writeI32(this.CachAmount);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CachAmountQueryParam = module.exports.CachAmountQueryParam = function(args) {
+  this.userId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+  }
+};
+CachAmountQueryParam.prototype = {};
+CachAmountQueryParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CachAmountQueryParam.prototype.write = function(output) {
+  output.writeStructBegin('CachAmountQueryParam');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CachAmountResult = module.exports.CachAmountResult = function(args) {
+  this.result = null;
+  this.cachAmount = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.cachAmount !== undefined) {
+      this.cachAmount = args.cachAmount;
+    }
+  }
+};
+CachAmountResult.prototype = {};
+CachAmountResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.cachAmount = new ttypes.CachAmount();
+        this.cachAmount.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CachAmountResult.prototype.write = function(output) {
+  output.writeStructBegin('CachAmountResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.cachAmount !== null && this.cachAmount !== undefined) {
+    output.writeFieldBegin('cachAmount', Thrift.Type.STRUCT, 2);
+    this.cachAmount.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ReponseCach = module.exports.ReponseCach = function(args) {
+  this.AppCode = null;
+  this.ResponseDate = null;
+  this.Sign = null;
+  this.ErrCode = null;
+  this.ErrMsg = null;
+  if (args) {
+    if (args.AppCode !== undefined) {
+      this.AppCode = args.AppCode;
+    }
+    if (args.ResponseDate !== undefined) {
+      this.ResponseDate = args.ResponseDate;
+    }
+    if (args.Sign !== undefined) {
+      this.Sign = args.Sign;
+    }
+    if (args.ErrCode !== undefined) {
+      this.ErrCode = args.ErrCode;
+    }
+    if (args.ErrMsg !== undefined) {
+      this.ErrMsg = args.ErrMsg;
+    }
+  }
+};
+ReponseCach.prototype = {};
+ReponseCach.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.AppCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.ResponseDate = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.Sign = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.ErrCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.ErrMsg = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ReponseCach.prototype.write = function(output) {
+  output.writeStructBegin('ReponseCach');
+  if (this.AppCode !== null && this.AppCode !== undefined) {
+    output.writeFieldBegin('AppCode', Thrift.Type.STRING, 1);
+    output.writeString(this.AppCode);
+    output.writeFieldEnd();
+  }
+  if (this.ResponseDate !== null && this.ResponseDate !== undefined) {
+    output.writeFieldBegin('ResponseDate', Thrift.Type.STRING, 2);
+    output.writeString(this.ResponseDate);
+    output.writeFieldEnd();
+  }
+  if (this.Sign !== null && this.Sign !== undefined) {
+    output.writeFieldBegin('Sign', Thrift.Type.STRING, 3);
+    output.writeString(this.Sign);
+    output.writeFieldEnd();
+  }
+  if (this.ErrCode !== null && this.ErrCode !== undefined) {
+    output.writeFieldBegin('ErrCode', Thrift.Type.STRING, 4);
+    output.writeString(this.ErrCode);
+    output.writeFieldEnd();
+  }
+  if (this.ErrMsg !== null && this.ErrMsg !== undefined) {
+    output.writeFieldBegin('ErrMsg', Thrift.Type.STRING, 5);
+    output.writeString(this.ErrMsg);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CachAmountCallParam = module.exports.CachAmountCallParam = function(args) {
+  this.userId = null;
+  this.CachAmount = null;
+  this.mobile = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.CachAmount !== undefined) {
+      this.CachAmount = args.CachAmount;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+  }
+};
+CachAmountCallParam.prototype = {};
+CachAmountCallParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.CachAmount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CachAmountCallParam.prototype.write = function(output) {
+  output.writeStructBegin('CachAmountCallParam');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.CachAmount !== null && this.CachAmount !== undefined) {
+    output.writeFieldBegin('CachAmount', Thrift.Type.I32, 2);
+    output.writeI32(this.CachAmount);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 3);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ResponseCachResult = module.exports.ResponseCachResult = function(args) {
+  this.result = null;
+  this.reponseCach = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.reponseCach !== undefined) {
+      this.reponseCach = args.reponseCach;
+    }
+  }
+};
+ResponseCachResult.prototype = {};
+ResponseCachResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.reponseCach = new ttypes.ReponseCach();
+        this.reponseCach.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ResponseCachResult.prototype.write = function(output) {
+  output.writeStructBegin('ResponseCachResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.reponseCach !== null && this.reponseCach !== undefined) {
+    output.writeFieldBegin('reponseCach', Thrift.Type.STRUCT, 2);
+    this.reponseCach.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ResponseScore = module.exports.ResponseScore = function(args) {
+  this.AppCode = null;
+  this.ResponseDate = null;
+  this.Sign = null;
+  this.ErrCode = null;
+  this.ErrMsg = null;
+  if (args) {
+    if (args.AppCode !== undefined) {
+      this.AppCode = args.AppCode;
+    }
+    if (args.ResponseDate !== undefined) {
+      this.ResponseDate = args.ResponseDate;
+    }
+    if (args.Sign !== undefined) {
+      this.Sign = args.Sign;
+    }
+    if (args.ErrCode !== undefined) {
+      this.ErrCode = args.ErrCode;
+    }
+    if (args.ErrMsg !== undefined) {
+      this.ErrMsg = args.ErrMsg;
+    }
+  }
+};
+ResponseScore.prototype = {};
+ResponseScore.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.AppCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.ResponseDate = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.Sign = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.ErrCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.ErrMsg = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ResponseScore.prototype.write = function(output) {
+  output.writeStructBegin('ResponseScore');
+  if (this.AppCode !== null && this.AppCode !== undefined) {
+    output.writeFieldBegin('AppCode', Thrift.Type.STRING, 1);
+    output.writeString(this.AppCode);
+    output.writeFieldEnd();
+  }
+  if (this.ResponseDate !== null && this.ResponseDate !== undefined) {
+    output.writeFieldBegin('ResponseDate', Thrift.Type.STRING, 2);
+    output.writeString(this.ResponseDate);
+    output.writeFieldEnd();
+  }
+  if (this.Sign !== null && this.Sign !== undefined) {
+    output.writeFieldBegin('Sign', Thrift.Type.STRING, 3);
+    output.writeString(this.Sign);
+    output.writeFieldEnd();
+  }
+  if (this.ErrCode !== null && this.ErrCode !== undefined) {
+    output.writeFieldBegin('ErrCode', Thrift.Type.STRING, 4);
+    output.writeString(this.ErrCode);
+    output.writeFieldEnd();
+  }
+  if (this.ErrMsg !== null && this.ErrMsg !== undefined) {
+    output.writeFieldBegin('ErrMsg', Thrift.Type.STRING, 5);
+    output.writeString(this.ErrMsg);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreRequestParam = module.exports.ScoreRequestParam = function(args) {
+  this.AppCode = null;
+  this.RequestDate = null;
+  this.Sign = null;
+  this.SpID = null;
+  this.OutOrderID = null;
+  this.DeviceNo = null;
+  this.DeviceType = null;
+  this.ProvinceID = null;
+  this.CustID = null;
+  this.Num = null;
+  this.Remark = null;
+  this.ActiveID = null;
+  this.ExpTime = null;
+  if (args) {
+    if (args.AppCode !== undefined) {
+      this.AppCode = args.AppCode;
+    }
+    if (args.RequestDate !== undefined) {
+      this.RequestDate = args.RequestDate;
+    }
+    if (args.Sign !== undefined) {
+      this.Sign = args.Sign;
+    }
+    if (args.SpID !== undefined) {
+      this.SpID = args.SpID;
+    }
+    if (args.OutOrderID !== undefined) {
+      this.OutOrderID = args.OutOrderID;
+    }
+    if (args.DeviceNo !== undefined) {
+      this.DeviceNo = args.DeviceNo;
+    }
+    if (args.DeviceType !== undefined) {
+      this.DeviceType = args.DeviceType;
+    }
+    if (args.ProvinceID !== undefined) {
+      this.ProvinceID = args.ProvinceID;
+    }
+    if (args.CustID !== undefined) {
+      this.CustID = args.CustID;
+    }
+    if (args.Num !== undefined) {
+      this.Num = args.Num;
+    }
+    if (args.Remark !== undefined) {
+      this.Remark = args.Remark;
+    }
+    if (args.ActiveID !== undefined) {
+      this.ActiveID = args.ActiveID;
+    }
+    if (args.ExpTime !== undefined) {
+      this.ExpTime = args.ExpTime;
+    }
+  }
+};
+ScoreRequestParam.prototype = {};
+ScoreRequestParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.AppCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.RequestDate = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.Sign = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.SpID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.OutOrderID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.DeviceNo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.DeviceType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.ProvinceID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.CustID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.Num = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.Remark = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.ActiveID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.ExpTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreRequestParam.prototype.write = function(output) {
+  output.writeStructBegin('ScoreRequestParam');
+  if (this.AppCode !== null && this.AppCode !== undefined) {
+    output.writeFieldBegin('AppCode', Thrift.Type.STRING, 1);
+    output.writeString(this.AppCode);
+    output.writeFieldEnd();
+  }
+  if (this.RequestDate !== null && this.RequestDate !== undefined) {
+    output.writeFieldBegin('RequestDate', Thrift.Type.STRING, 2);
+    output.writeString(this.RequestDate);
+    output.writeFieldEnd();
+  }
+  if (this.Sign !== null && this.Sign !== undefined) {
+    output.writeFieldBegin('Sign', Thrift.Type.STRING, 3);
+    output.writeString(this.Sign);
+    output.writeFieldEnd();
+  }
+  if (this.SpID !== null && this.SpID !== undefined) {
+    output.writeFieldBegin('SpID', Thrift.Type.STRING, 4);
+    output.writeString(this.SpID);
+    output.writeFieldEnd();
+  }
+  if (this.OutOrderID !== null && this.OutOrderID !== undefined) {
+    output.writeFieldBegin('OutOrderID', Thrift.Type.STRING, 5);
+    output.writeString(this.OutOrderID);
+    output.writeFieldEnd();
+  }
+  if (this.DeviceNo !== null && this.DeviceNo !== undefined) {
+    output.writeFieldBegin('DeviceNo', Thrift.Type.STRING, 6);
+    output.writeString(this.DeviceNo);
+    output.writeFieldEnd();
+  }
+  if (this.DeviceType !== null && this.DeviceType !== undefined) {
+    output.writeFieldBegin('DeviceType', Thrift.Type.STRING, 7);
+    output.writeString(this.DeviceType);
+    output.writeFieldEnd();
+  }
+  if (this.ProvinceID !== null && this.ProvinceID !== undefined) {
+    output.writeFieldBegin('ProvinceID', Thrift.Type.STRING, 8);
+    output.writeString(this.ProvinceID);
+    output.writeFieldEnd();
+  }
+  if (this.CustID !== null && this.CustID !== undefined) {
+    output.writeFieldBegin('CustID', Thrift.Type.STRING, 9);
+    output.writeString(this.CustID);
+    output.writeFieldEnd();
+  }
+  if (this.Num !== null && this.Num !== undefined) {
+    output.writeFieldBegin('Num', Thrift.Type.STRING, 10);
+    output.writeString(this.Num);
+    output.writeFieldEnd();
+  }
+  if (this.Remark !== null && this.Remark !== undefined) {
+    output.writeFieldBegin('Remark', Thrift.Type.STRING, 11);
+    output.writeString(this.Remark);
+    output.writeFieldEnd();
+  }
+  if (this.ActiveID !== null && this.ActiveID !== undefined) {
+    output.writeFieldBegin('ActiveID', Thrift.Type.STRING, 12);
+    output.writeString(this.ActiveID);
+    output.writeFieldEnd();
+  }
+  if (this.ExpTime !== null && this.ExpTime !== undefined) {
+    output.writeFieldBegin('ExpTime', Thrift.Type.STRING, 13);
+    output.writeString(this.ExpTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ResponseScoreResult = module.exports.ResponseScoreResult = function(args) {
+  this.result = null;
+  this.responseScore = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.responseScore !== undefined) {
+      this.responseScore = args.responseScore;
+    }
+  }
+};
+ResponseScoreResult.prototype = {};
+ResponseScoreResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.responseScore = new ttypes.ResponseScore();
+        this.responseScore.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ResponseScoreResult.prototype.write = function(output) {
+  output.writeStructBegin('ResponseScoreResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.responseScore !== null && this.responseScore !== undefined) {
+    output.writeFieldBegin('responseScore', Thrift.Type.STRUCT, 2);
+    this.responseScore.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

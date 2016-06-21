@@ -11,6 +11,35 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var Active = require('../lib/models/active');
 var Message = require('../lib/models/message');
 var Product = require('../lib/models/product');
+var Score = require('../lib/models/score');
+
+
+/*压力测试*/
+router.post('/jmeterTest',function(request,response,next){
+    logger.info("进入获取子分类接口");
+    var result = {code: 200};
+    try {
+        var arg = request.body;
+        arg.key = "user:token:timestamp:103Mobile";
+        arg.count = 1000;
+        Score.getRedisbyKey(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                response.json(result);
+            }
+        });
+    } catch (ex) {
+        logger.error("get subject child error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        response.json(result);
+    }
+});
+
+
+
+
 
 /*获取首页轮播图列表*/
 router.get('/imgList', function (request, response, next) {
@@ -171,28 +200,6 @@ router.get('/toExchangeDianXin',function(request,response,next){
     result.url = "http://buy.jfshare.com/android/comesoon.html";
     response.json(result);
     return;
-});
-
-/*压力测试*/
-router.post('/jmeterTest',function(request,response,next){
-    logger.info("进入获取子分类接口");
-    var result = {code: 200};
-    try {
-        var arg = request.body;
-        arg.subjectId = 0;
-        Product.getSubTree(arg, function (err, data) {
-            if (err) {
-                response.json(err);
-            } else {
-                response.json(result);
-            }
-        });
-    } catch (ex) {
-        logger.error("get subject child error:" + ex);
-        result.code = 500;
-        result.desc = "获取子类目失败";
-        res.json(result);
-    }
 });
 
 module.exports = router;
