@@ -927,6 +927,8 @@ router.post('/info', function (req, res, next) {
                                 result.orderState = orderInfo.orderState;
                                 if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
                                     result.mobile = orderInfo.deliverInfo.receiverMobile;
+                                    result.sellerComment = orderInfo.deliverInfo.sellerComment;
+                                    result.comment = orderInfo.deliverInfo.buyerComment;
                                 } else {
                                     result.address = orderInfo.deliverInfo.provinceName +
                                         orderInfo.deliverInfo.cityName +
