@@ -764,8 +764,8 @@ router.post('/afterSalelist', function (request, response, next) {
                                         receiverMobile: order.receiverMobile,
                                         receiverTele: order.receiverTele,
                                         orderState: order.orderState,
-                                        sellerComment: order.sellerComment,
-                                        buyerComment: order.buyerComment,
+                                       // sellerComment: order.sellerComment,
+                                      //  buyerComment: order.buyerComment,
                                         deliverTime: order.deliverTime,
                                         successTime: order.successTime,
                                         exchangeCash: order.exchangeCash,
@@ -1473,6 +1473,7 @@ router.post('/getExpressInfo', function (request, response, next) {
             result.OrderId = orderInfo.orderId;
 
             result.comment = orderInfo.sellerComment;
+            result.buyerComment = orderInfo.buyerComment;
             logger.info(orderInfo.deliverInfo);
             if (orderInfo.deliverInfo != null) {
                 result.expressId = orderInfo.deliverInfo.expressId;
