@@ -290,13 +290,13 @@ router.post('/creat', function (request, response, next) {
          *
          *
          */
-        if (params.type == null || params.type == "" ||params.type == 1) {
+        if (params.type !=2 && params.type !=3) {
             result.code = 500;
             result.desc = "请求参数错误";
             response.json(result);
             return;
         }
-
+u
         if (params.postageId == null || params.postageId == "") {
             result.code = 500;
             result.desc = "请求参数错误";
@@ -575,13 +575,14 @@ router.post('/update', function (request, response, next) {
             return;
         }
         //参数验证
-        if (params.type == 1) {
-
+        if (params.type !=2 && params.type !=3) {
             result.code = 500;
             result.desc = "请求参数错误";
             response.json(result);
             return;
         }
+
+
         async.series([
                 function (callback) {
                     try {
@@ -616,13 +617,15 @@ router.post('/update', function (request, response, next) {
             ],
             function (err, results) {
                 if (err == 1) {
-                    logger.error("更新商品失败---商品服务异常：" + results[0]);
-                    result.code = 500;
-                    result.desc = "更新商品失败";
-                    response.json(result);
+                   // logger.error("更新商品失败---商品服务异常：" + results[0]);
+                   // result.code = 500;
+                    //result.desc = "更新商品失败";
+                    response.json(result[0]);
                     return;
                 }
                 if (err == 2) {
+                    result.code = 500;
+                    result.desc = "更新商品失败";
                     logger.error("更新商品库存失败--商品库存服务异常：" + err);
                     response.json(result);
                     return;

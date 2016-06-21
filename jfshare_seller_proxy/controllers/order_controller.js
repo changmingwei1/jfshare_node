@@ -271,7 +271,8 @@ router.post('/info', function (request, response, next) {
                         result.sellerId = orderInfo.sellerId;
 
                         if (orderInfo.deliverInfo !== null) {
-
+                            result.sellerComment = orderInfo.deliverInfo.sellerComment;
+                            result.buyerComment = orderInfo.deliverInfo.buyerComment;
                             var deliverInfo = {
                                 receiverName: orderInfo.deliverInfo.receiverName,
                                 receiverMobile: orderInfo.deliverInfo.receiverMobile,
@@ -691,6 +692,7 @@ router.post('/afterSalelist', function (request, response, next) {
         }
         var page = {total: 0, pageCount: 0};
         var isExist = 0;
+        var afterSaleList = [];
         logger.info("进入获取售后的订单列表--params" + JSON.stringify(params));
         async.series([
                 function (callback) {
@@ -799,6 +801,24 @@ router.post('/afterSalelist', function (request, response, next) {
                         return callback(2, null);
                     }
 
+                },
+
+                function (callback) {
+                    try {
+
+                        afterSale.queryAfterSale(params, function (err, data) {
+                            if (err) {
+                                return callback(3, null);
+                            }
+                            logger.info("get order list response:" + JSON.stringify(result));
+                            afterSaleList = data;
+                            result.afterSaleList = afterSaleList;
+                            return callback(null, result);
+                        });
+                    } catch (ex) {
+                        logger.info("售后服务异常:" + ex);
+                        return callback(3, null);
+                    }
                 }
             ],
             function (err, results) {
@@ -808,8 +828,8 @@ router.post('/afterSalelist', function (request, response, next) {
                     response.json(result);
                     return;
                 } else {
-                    if (results[1] != null) {
-                        response.json(results[1]);
+                    if (results[2] != null) {
+                        response.json(results[2]);
                         return;
                     }
                 }
