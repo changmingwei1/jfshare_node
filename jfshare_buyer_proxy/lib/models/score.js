@@ -204,4 +204,26 @@ Score.prototype.queryScoreUser = function (params, callback) {
     });
 };
 
+
+//测试redis
+Score.prototype.getRedisbyKey = function (arg, callback) {
+    logger.info(JSON.stringify(arg));
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'getRedisbyKey', [arg.key,arg.count]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get scoreRedis result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("can't get scoreRedis because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get scoreRedis";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
+
 module.exports = new Score();
