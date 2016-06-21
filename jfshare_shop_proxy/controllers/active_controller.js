@@ -21,7 +21,6 @@ router.post('/jmeterTest',function(request,response,next){
     try {
         var arg = request.body;
         arg.key = "user:token:timestamp:103Mobile";
-        arg.count = 1000;
         Score.getRedisbyKey(arg, function (err, data) {
             if (err) {
                 response.json(err);
