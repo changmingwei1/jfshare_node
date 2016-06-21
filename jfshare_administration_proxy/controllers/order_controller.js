@@ -274,7 +274,21 @@ router.post('/info', function (request, response, next) {
                         // result.comment = orderInfo.buyerComment;
                         result.postage = orderInfo.postage;
                         result.sellerId = orderInfo.sellerId;
+                        result.cancelTime = orderInfo.cancelTime;
 
+                        if(orderInfo.orderState == 61){
+
+                            if(orderInfo.orderStateType ==1){
+                                result.cancelDesc = "用户主动要求取消"
+                            }
+                            if(orderInfo.orderStateType ==4){
+                                result.cancelDesc = "卖家缺货"
+                            }
+
+                            if(orderInfo.orderStateType ==6){
+                                result.cancelDesc = "其他原因"
+                            }
+                        }
                         if (orderInfo.deliverInfo !== null) {
                             result.sellerComment = orderInfo.deliverInfo.sellerComment;
                             result.buyerComment = orderInfo.deliverInfo.buyerComment;
@@ -769,7 +783,7 @@ router.post('/getExpressInfo', function (request, response, next) {
                 return;
             }
 
-            result.OrderId = orderInfo.orderId;
+            result.orderId = orderInfo.orderId;
 
 
             logger.info(orderInfo.deliverInfo);
@@ -777,7 +791,8 @@ router.post('/getExpressInfo', function (request, response, next) {
                 result.expressId = orderInfo.deliverInfo.expressId;
                 result.expressName = orderInfo.deliverInfo.expressName;
                 result.expressNo = orderInfo.deliverInfo.expressNo;
-                result.remark = orderInfo.deliverInfo.sellerComment;
+                result.sellerComment = orderInfo.deliverInfo.sellerComment;
+                result.buyerComment = orderInfo.deliverInfo.buyerComment;
             }
             response.json(result);
         });

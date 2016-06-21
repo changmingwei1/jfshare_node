@@ -153,11 +153,8 @@ Product.prototype.update = function (params, callback) {
                         storehouseId: sku.values[i].storeid,
                         skuNum: sku.key.id
                     });
-
                     productSkuItemList.push(productSkuItem);
                 }
-
-
             }
         });
     }
@@ -195,7 +192,8 @@ Product.prototype.update = function (params, callback) {
             logger.error("productServ-updateProduct  失败原因 ======" + err);
             res.code = 500;
             res.desc = "更新商品失败";
-            if(data[0].result.failDescList[0].failCode>0){
+
+            if(data[0].result.code == 1 && data[0].result.failDescList[0].failCode){
                 res.desc = data[0].result.failDescList[0].desc;
             }
             callback(res, null);
