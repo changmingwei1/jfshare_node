@@ -249,12 +249,14 @@ router.post('/info', function (request, response, next) {
                         if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
                             result.mobile = orderInfo.deliverInfo.receiverMobile;
                         } else {
-                            result.address = orderInfo.deliverInfo.provinceName +
-                                orderInfo.deliverInfo.cityName +
-                                orderInfo.deliverInfo.countyName +
-                                orderInfo.deliverInfo.receiverAddress;
-                            result.receiverName = orderInfo.deliverInfo.receiverName;
-                            result.mobile = orderInfo.deliverInfo.receiverMobile;
+                            if(orderInfo.deliverInfo!=null){
+                                result.address = orderInfo.deliverInfo.provinceName +
+                                    orderInfo.deliverInfo.cityName +
+                                    orderInfo.deliverInfo.countyName +
+                                    orderInfo.deliverInfo.receiverAddress;
+                                result.receiverName = orderInfo.deliverInfo.receiverName;
+                                result.mobile = orderInfo.deliverInfo.receiverMobile;
+                            }
                         }
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
