@@ -127,6 +127,7 @@ router.post('/list', function (request, response, next) {
                                             productId: order.productList[i].productId,
                                             productName: order.productList[i].productName,
                                             skunum: order.productList[i].skuNum,
+                                            skuDesc:order.productList[i].skuDesc,
                                             curPrice: order.productList[i].curPrice,
                                             imgUrl: "",
                                             count: order.productList[i].count,
@@ -777,6 +778,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 productId: order.productList[i].productId,
                                                 productName: order.productList[i].productName,
                                                 skunum: order.productList[i].skuNum,
+                                                skuDesc:order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
                                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
