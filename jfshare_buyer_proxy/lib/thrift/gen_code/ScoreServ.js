@@ -905,6 +905,126 @@ ScoreServ_enterAmountCall_result.prototype.write = function(output) {
   return;
 };
 
+ScoreServ_getRedisbyKey_args = function(args) {
+  this.key = null;
+  this.count = null;
+  if (args) {
+    if (args.key !== undefined) {
+      this.key = args.key;
+    }
+    if (args.count !== undefined) {
+      this.count = args.count;
+    }
+  }
+};
+ScoreServ_getRedisbyKey_args.prototype = {};
+ScoreServ_getRedisbyKey_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.key = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.count = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_getRedisbyKey_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_getRedisbyKey_args');
+  if (this.key !== null && this.key !== undefined) {
+    output.writeFieldBegin('key', Thrift.Type.STRING, 1);
+    output.writeString(this.key);
+    output.writeFieldEnd();
+  }
+  if (this.count !== null && this.count !== undefined) {
+    output.writeFieldBegin('count', Thrift.Type.I32, 2);
+    output.writeI32(this.count);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_getRedisbyKey_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_getRedisbyKey_result.prototype = {};
+ScoreServ_getRedisbyKey_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_getRedisbyKey_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_getRedisbyKey_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -1292,6 +1412,54 @@ ScoreServClient.prototype.recv_enterAmountCall = function(input,mtype,rseqid) {
   }
   return callback('enterAmountCall failed: unknown result');
 };
+ScoreServClient.prototype.getRedisbyKey = function(key, count, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getRedisbyKey(key, count);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getRedisbyKey(key, count);
+  }
+};
+
+ScoreServClient.prototype.send_getRedisbyKey = function(key, count) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getRedisbyKey', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_getRedisbyKey_args();
+  args.key = key;
+  args.count = count;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_getRedisbyKey = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_getRedisbyKey_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getRedisbyKey failed: unknown result');
+};
 ScoreServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -1543,6 +1711,36 @@ ScoreServProcessor.prototype.process_enterAmountCall = function(seqid, input, ou
     this._handler.enterAmountCall(args.param,  function (err, result) {
       var result = new ScoreServ_enterAmountCall_result((err != null ? err : {success: result}));
       output.writeMessageBegin("enterAmountCall", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_getRedisbyKey = function(seqid, input, output) {
+  var args = new ScoreServ_getRedisbyKey_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getRedisbyKey.length === 2) {
+    Q.fcall(this._handler.getRedisbyKey, args.key, args.count)
+      .then(function(result) {
+        var result = new ScoreServ_getRedisbyKey_result({success: result});
+        output.writeMessageBegin("getRedisbyKey", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_getRedisbyKey_result(err);
+        output.writeMessageBegin("getRedisbyKey", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getRedisbyKey(args.key, args.count,  function (err, result) {
+      var result = new ScoreServ_getRedisbyKey_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getRedisbyKey", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

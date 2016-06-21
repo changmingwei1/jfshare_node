@@ -1114,4 +1114,28 @@ router.post('/enterAmountCall', function (request, response, next) {
     }
 });
 
+
+/*压力测试*/
+router.post('/jmeterTest',function(request,response,next){
+    logger.info("进入获取子分类接口");
+    var result = {code: 200};
+    try {
+        var arg = request.body;
+        arg.key = "user:token:timestamp:103Mobile";
+        arg.count = 1000;
+        Score.getRedisbyKey(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                response.json(result);
+            }
+        });
+    } catch (ex) {
+        logger.error("get subject child error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        response.json(result);
+    }
+});
+
 module.exports = router;
