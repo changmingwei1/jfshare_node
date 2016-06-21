@@ -769,7 +769,7 @@ router.post('/getExpressInfo', function (request, response, next) {
                 return;
             }
 
-            result.OrderId = orderInfo.orderId;
+            result.orderId = orderInfo.orderId;
 
 
             logger.info(orderInfo.deliverInfo);
