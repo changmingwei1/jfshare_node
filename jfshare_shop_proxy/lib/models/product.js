@@ -151,7 +151,7 @@ Product.prototype.queryHotSKUV1 = function (paramters, callback) {
 
                 logger.error("调用productServ-queryHotSKUV1  失败原因 ======" + err);
                 logger.error("如果走到这里----证明是没有对应的仓库,请注意这不是错误" + err);
-                callback(1, null);
+                callback(3, null);
             } else {
 
 
