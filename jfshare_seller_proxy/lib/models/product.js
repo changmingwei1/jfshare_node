@@ -183,7 +183,7 @@ Product.prototype.update = function (params, callback) {
         detailContent: params.detailContent,
         storehouseIds: params.storehouseIds
     });
-
+    logger.info("productServ-updateProduct  params:" + JSON.stringify(product));
 
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "updateProduct", product);
 
