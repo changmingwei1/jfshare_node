@@ -55,9 +55,9 @@ router.post('/list', function (request, response, next) {
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
                         if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
-                            for(var j=0;j<orderInfo.orderProfileList.length;j++) {
+                            for (var j = 0; j < orderInfo.orderProfileList.length; j++) {
                                 var order = orderInfo.orderProfileList[j];
-                                if(order.orderState>=50){
+                                if (order.orderState >= 50) {
                                     orderIdList.push(order.orderId);
                                 }
                                 var orderItem = {
@@ -86,7 +86,7 @@ router.post('/list', function (request, response, next) {
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
                                     curTime: order.curTime,
-                                    payChannel:""
+                                    payChannel: ""
                                 };
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
@@ -127,11 +127,11 @@ router.post('/list', function (request, response, next) {
                                             productId: order.productList[i].productId,
                                             productName: order.productList[i].productName,
                                             skunum: order.productList[i].skuNum,
-                                            skuDesc:order.productList[i].skuDesc,
+                                            skuDesc: order.productList[i].skuDesc,
                                             curPrice: order.productList[i].curPrice,
                                             imgUrl: "",
                                             count: order.productList[i].count,
-                                            thirdExchangeRate:order.productList[i].thirdExchangeRate
+                                            thirdExchangeRate: order.productList[i].thirdExchangeRate
                                         };
                                         if (order.productList[i].imagesUrl != null) {
                                             productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
@@ -159,7 +159,7 @@ router.post('/list', function (request, response, next) {
             },
             function (callback) {
                 try {
-                    if (params.orderState == null &&params.orderIdList!=null && params.orderIdList.length>0) {
+                    if (params.orderState == null && params.orderIdList != null && params.orderIdList.length > 0) {
                         afterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
                                 return callback(2, null);
@@ -261,7 +261,6 @@ router.post('/info', function (request, response, next) {
                         }
 
 
-
                         // result.curTime = new Date().getTime();
                         result.createTime = orderInfo.createTime;
                         result.deliverTime = orderInfo.deliverTime; //卖家发货时间
@@ -269,6 +268,21 @@ router.post('/info', function (request, response, next) {
                         result.comment = orderInfo.buyerComment;
                         result.postage = orderInfo.postage;
                         result.sellerId = orderInfo.sellerId;
+                        result.cancelTime = orderInfo.cancelTime;
+
+                        if(orderInfo.orderState == 61){
+
+                            if(orderInfo.orderStateType ==1){
+                                result.cancelDesc = "用户主动要求取消"
+                            }
+                            if(orderInfo.orderStateType ==4){
+                                result.cancelDesc = "卖家缺货"
+                            }
+
+                            if(orderInfo.orderStateType ==6){
+                                result.cancelDesc = "其他原因"
+                            }
+                        }
 
                         if (orderInfo.deliverInfo !== null) {
                             result.sellerComment = orderInfo.deliverInfo.sellerComment;
@@ -304,14 +318,14 @@ router.post('/info', function (request, response, next) {
                                     curPrice: orderInfo.productList[i].curPrice,
                                     orgPrice: orderInfo.productList[i].orgPrice,
                                     imgKey: orderInfo.productList[i].imagesUrl,
-                                    thirdExchangeRate:orderInfo.productList[i].thirdExchangeRate,
+                                    thirdExchangeRate: orderInfo.productList[i].thirdExchangeRate,
                                     count: orderInfo.productList[i].count
                                 });
                             }
                             result.productList = productList;
                         }
                         params.sellerId = orderInfo.sellerId;
-                        callback(null,result);
+                        callback(null, result);
                     });
                 }
                 catch
@@ -612,7 +626,6 @@ router.post('/updateExpressInfo', function (request, response, next) {
 });
 
 
-
 //获取售后的订单列表
 router.post('/afterSalelist', function (request, response, next) {
     logger.info("进入获取售后的订单列表");
@@ -714,8 +727,8 @@ router.post('/afterSalelist', function (request, response, next) {
                                         receiverMobile: order.receiverMobile,
                                         receiverTele: order.receiverTele,
                                         orderState: order.orderState,
-                                       // sellerComment: order.sellerComment,
-                                      //  buyerComment: order.buyerComment,
+                                        // sellerComment: order.sellerComment,
+                                        //  buyerComment: order.buyerComment,
                                         deliverTime: order.deliverTime,
                                         successTime: order.successTime,
                                         exchangeCash: order.exchangeCash,
@@ -730,7 +743,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 productId: order.productList[i].productId,
                                                 productName: order.productList[i].productName,
                                                 skunum: order.productList[i].skuNum,
-                                                skuDesc:order.productList[i].skuDesc,
+                                                skuDesc: order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
                                                 imgUrl: order.productList[i].imagesUrl.split(',')[0],
                                                 count: order.productList[i].count
@@ -1162,10 +1175,10 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                     try {
                         Order.downLoad(params, function (err, data) {
                             if (err) {
-                              return callback(1,null);
+                                return callback(1, null);
                             } else {
-                                isDownLoad=true;
-                               return callback(null,isDownLoad);
+                                isDownLoad = true;
+                                return callback(null, isDownLoad);
                             }
                         });
 
@@ -1176,11 +1189,11 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                 },
                 function (callback) {
                     try {
-                        if(!isDownLoad){
-                            return callback(1,null);
+                        if (!isDownLoad) {
+                            return callback(1, null);
                         }
                         var json = xlsx.parse("/data/run/jfshare_node/jfshare_seller_proxy/excel/excel.xlsx");
-                       // console.log(json);
+                        // console.log(json);
                         var list = [];
                         if (json != null && json.length > 0) {
 
@@ -1192,12 +1205,12 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                                     if (sheetData.data[i].length >= 4) {
                                         var deliverInfo = new order_types.DeliverInfo({
                                             expressName: sheetData.data[i][2],
-                                            expressNo: sheetData.data[i][1]+"",
-                                            sellerComment:sheetData.data[i][3]
+                                            expressNo: sheetData.data[i][1] + "",
+                                            sellerComment: sheetData.data[i][3]
                                         });
 
                                         var order = new order_types.Order({
-                                            orderId: sheetData.data[i][0]+"",
+                                            orderId: sheetData.data[i][0] + "",
                                             deliverInfo: deliverInfo
                                         });
                                         list.push(order);
@@ -1210,12 +1223,12 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                         if (list.length >= 0) {
                             Order.batchDeliverOrder(params, function (err, data) {
                                 if (err) {
-                                    return callback(err,err);
+                                    return callback(err, err);
                                 }
-                                return callback(null,data);
+                                return callback(null, data);
                             });
                         } else {
-                            callback(2,null);
+                            callback(2, null);
                         }
 
                     } catch (ex) {
@@ -1226,23 +1239,19 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                 }
             ],
             function (err, results) {
-                if(err){
-                    if(err ==1 || err ==2){
+                if (err) {
+                    if (err == 1 || err == 2) {
                         result.code = 500;
                         result.desc = "批量发货失败";
                         response.json(result);
-                    }else{
+                    } else {
                         response.json(err);
                     }
 
-                }else{
+                } else {
                     response.json(result);
                 }
             });
-
-
-
-
 
 
         //});
