@@ -52,7 +52,7 @@ router.post('/list', function (request, response, next) {
     var afterSaleList = [];
     var orderIdList = [];
     result.orderList = [];
-    result.afterSaleList = [];
+    result.afterSaleList = afterSaleList;
     async.series([
             function (callback) {
                 try {
