@@ -112,7 +112,7 @@ Buyer.prototype.newLogin = function(param,callback){
             res.desc = "登录失败";
             callback(res, null);
         } else if(data[0].result.code == "1"){
-            logger.error("请求参数：" + JSON.stringify(param));
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -156,8 +156,8 @@ Buyer.prototype.thirdUserSignin = function(param,callback){
             res.desc = "登录失败";
             callback(res, null);
         } else if (data[0].result.code == 1){
-            logger.error("请求参数：" + JSON.stringify(param));
-            logger.error("不能登录，因为: " + JSON.stringify(data));
+            logger.warn("请求参数：" + JSON.stringify(param));
+            logger.warn("不能登录，因为: " + JSON.stringify(data));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -320,7 +320,7 @@ Buyer.prototype.getBuyer = function(param,callback){
             res.desc = "false to get buyer";
             callback(res, null);
         } else if(data[0].result.code == 1){
-            logger.error("请求参数：" + JSON.stringify(param));
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);

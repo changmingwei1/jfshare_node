@@ -12,5 +12,6 @@
   "replaceConsole" : true,
   "levels": {
     "warn":  "warn"
+    //  "error":"error"
   }
 }

@@ -11,7 +11,6 @@ function AfterSale() {}
 
 //售后审核
 AfterSale.prototype.auditPass = function (params, callback) {
-
     var afterSale = new afterSale_types.AfterSale({
         userId: params.buyerId,
         sellerId: params.sellerId,
@@ -21,16 +20,14 @@ AfterSale.prototype.auditPass = function (params, callback) {
         state: params.state, //根据实际情况定义 如 1：新建（待审核） 2：审核通过 3：审核不通过
         skuNum: params.skuNum
     });
-
     logger.info("AfterSaleServ-auditPass  args:" + JSON.stringify(afterSale));
-
     var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "auditPass", afterSale);
-
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-auditPass  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("AfterSaleServ-auditPass  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("AfterSaleServ-auditPass  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "审核失败！";
             callback(res, null);
@@ -55,18 +52,18 @@ AfterSale.prototype.request = function (params, callback) {
         userComment: params.userComment
     });
     logger.info("AfterSaleServ-request  args:" + JSON.stringify(afterSaleParam));
-
     var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "request", afterSaleParam);
-
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-request  result:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("AfterSaleServ-request  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("AfterSaleServ-request  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "申请审核失败！";
             callback(res, null);
         } else if(data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(params));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -78,7 +75,6 @@ AfterSale.prototype.request = function (params, callback) {
 
 //查询售后信息
 AfterSale.prototype.queryAfterSale = function (params, callback) {
-
     var afterSaleQueryParam = null;
     if (params.orderIdList == null) {
         afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
@@ -95,34 +91,25 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
             orderIdList:params.orderIdList
         });
     }
-
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
-    try {
-        var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSale", afterSaleQueryParam);
-
-        Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
-            logger.info("AfterSaleServ-queryAfterSale  result:" + JSON.stringify(data));
-            var res = {};
-            if (err || data[0].result.code == "1") {
-                logger.error("AfterSaleServ-queryAfterSale  失败原因 ======" + err);
-                res.code = 500;
-                res.desc = "查询审核信息失败！";
-                callback(res, null);
-            } else {
-                callback(null, data[0].afterSaleList);
-            }
-        });
-    } catch (ex) {
-        res.code = 500;
-        res.desc = "查询审核信息失败！";
-        callback(res, null);
-    }
-
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSale", afterSaleQueryParam);
+    Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
+        logger.info("AfterSaleServ-queryAfterSale  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("AfterSaleServ-queryAfterSale  失败原因 ======" + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "查询审核信息失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0].afterSaleList);
+        }
+    });
 };
 
 /*查询售后订单*/
 AfterSale.prototype.queryAfterSaleOrder = function (params, callback) {
-
     var pagination = new pagination_types.Pagination({
         numPerPage:params.perCount,
         currentPage:params.curPage
@@ -131,14 +118,13 @@ AfterSale.prototype.queryAfterSaleOrder = function (params, callback) {
         userId: params.userId,
         orderId: params.orderId
     });
-
     var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [param,pagination]);
-
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
         logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("AfterSaleServ-queryAfterSaleOrderList  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("AfterSaleServ-queryAfterSaleOrderList  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询售后订单列表失败！";
             callback(res, null);
