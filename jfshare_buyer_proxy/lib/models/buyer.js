@@ -118,6 +118,42 @@ Buyer.prototype.newLogin = function(param,callback){
     });
 };
 
+/*第三方账号注册*/
+Buyer.prototype.thirdUserSignin = function(param,callback){
+    //参数
+    var userThird = new buyer_types.UserInfoThird({
+        custId:param.custId,
+        mobile: param.mobile,
+        thirdType: param.thirdType,
+        extInfo: param.extInfo
+    });
+    var loginLog = new buyer_types.LoginLog({
+        browser:param.browser
+    });
+    var validateInfo = new buyer_types.ValidateInfo({
+        thirdType: param.thirdType,
+        custId: param.custId,
+        accessToken: param.accessToken,
+        openId: param.openId,
+        valiNum: param.captchaDesc,
+        valiNumType:"buyer_signin"
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'thirdUserSignin',[loginLog,userThird,validateInfo]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到登录信息:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == "1") {
+            logger.error("不能登录，因为: ======" + err);
+            res.code = 500;
+            res.desc = "登录失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 //手机号短信登录
 Buyer.prototype.loginBySms = function(param,callback){
     //参数
@@ -210,6 +246,45 @@ Buyer.prototype.buyerIsExist = function(loginName,callback){
             callback(res, null);
         } else{
             callback(null, data);
+        }
+    });
+};
+
+/*判断第三方用户是否存在*/
+Buyer.prototype.isExitsThirdUser = function(arg,callback){
+
+    var loginLog = new buyer_types.LoginLog({
+        browser: arg.browser
+    });
+    var validateInfo = new buyer_types.ValidateInfo({
+        thirdType: arg.thirdType,
+        custId: arg.custId,
+        accessToken: arg.accessToken,
+        openId: arg.openId
+    });
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'isExitsThirdUser',[loginLog,validateInfo]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到的信息:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("err，because: ======" + err);
+            res.code = 500;
+            res.desc = "服务器异常不能判断";
+            callback(res, null);
+        } else if (data[0].result.code == 1 && data[0].result.failDescList[0].failCode == 3002){
+            res.code = 200;
+            res.failCode = data[0].result.failDescList[0].failCode;
+            res.remark = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else if (data[0].result.code == 1 && data[0].result.failDescList[0].failCode == 1003){
+            res.code = 200;
+            res.failCode = data[0].result.failDescList[0].failCode;
+            res.remark = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+           callback(null, data);
         }
     });
 };

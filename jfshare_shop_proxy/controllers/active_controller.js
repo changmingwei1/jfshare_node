@@ -20,11 +20,12 @@ router.post('/jmeterTest',function(request,response,next){
     var result = {code: 200};
     try {
         var arg = request.body;
-        arg.key = "user:token:timestamp:103Mobile";
+        arg.key = "subject:Info1001";
         Score.getRedisbyKey(arg, function (err, data) {
             if (err) {
                 response.json(err);
             } else {
+                result.data = data[0];
                 response.json(result);
             }
         });
