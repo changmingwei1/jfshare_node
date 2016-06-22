@@ -1114,6 +1114,141 @@ router.post('/enterAmountCall', function (request, response, next) {
     }
 });
 
+/*账号是否已注册及登陆*/
+router.post('/existsThirdUser', function (request, response, next) {
+
+    logger.info("账号是否已注册及登陆...");
+    var resContent = {code: 200};
+    try {
+        var param = request.body;
+        if (param == null || param.thirdType == null || param.thirdType == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:thirdType不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.custId == null || param.custId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:custId不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.accessToken == null || param.accessToken == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:accessToken不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.openId == null || param.openId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:openId不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:browser不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
+        Buyer.isExitsThirdUser(param, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+                var buyer = data[0].buyer;
+                var authInfo = data[0].authInfo;
+                resContent.userId = buyer.userId;
+                resContent.loginName = buyer.mobile;
+                resContent.token = authInfo.token;
+                resContent.ppInfo = authInfo.ppInfo;
+                /*给出系统当前时间*/
+                resContent.curTime = new Date().getTime();
+                response.json(resContent);
+                logger.info("get buyer response:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("不能判断，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能判断";
+        response.json(resContent);
+    }
+});
+
+/*第三方账号注册*/
+router.post('/thirdUserSignin', function (request, response, next) {
+
+    logger.info("第三方账号注册接口...");
+    var resContent = {code: 200};
+    try {
+        var param = request.body;
+        if (param == null || param.thirdType == null || param.thirdType == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:thirdType不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.custId == null || param.custId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:custId不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.accessToken == null || param.accessToken == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:accessToken不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.openId == null || param.openId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:openId不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:browser不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:mobile不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:captchaDesc不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
+        Buyer.thirdUserSignin(param, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+                var buyer = data[0].buyer;
+                var authInfo = data[0].authInfo;
+                resContent.userId = buyer.userId;
+                resContent.loginName = buyer.mobile;
+                resContent.token = authInfo.token;
+                resContent.ppInfo = authInfo.ppInfo;
+                /*给出系统当前时间*/
+                resContent.curTime = new Date().getTime();
+                response.json(resContent);
+                logger.info("get buyer response:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("不能判断，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能判断";
+        response.json(resContent);
+    }
+});
 
 /*压力测试*/
 router.post('/jmeterTest',function(request,response,next){

@@ -1038,3 +1038,231 @@ BuyerResult.prototype.write = function(output) {
   return;
 };
 
+ValidateInfo = module.exports.ValidateInfo = function(args) {
+  this.thirdType = null;
+  this.custId = null;
+  this.accessToken = null;
+  this.openId = null;
+  this.valiNum = null;
+  this.valiNumType = null;
+  if (args) {
+    if (args.thirdType !== undefined) {
+      this.thirdType = args.thirdType;
+    }
+    if (args.custId !== undefined) {
+      this.custId = args.custId;
+    }
+    if (args.accessToken !== undefined) {
+      this.accessToken = args.accessToken;
+    }
+    if (args.openId !== undefined) {
+      this.openId = args.openId;
+    }
+    if (args.valiNum !== undefined) {
+      this.valiNum = args.valiNum;
+    }
+    if (args.valiNumType !== undefined) {
+      this.valiNumType = args.valiNumType;
+    }
+  }
+};
+ValidateInfo.prototype = {};
+ValidateInfo.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.thirdType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.custId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.accessToken = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.openId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.valiNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.valiNumType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ValidateInfo.prototype.write = function(output) {
+  output.writeStructBegin('ValidateInfo');
+  if (this.thirdType !== null && this.thirdType !== undefined) {
+    output.writeFieldBegin('thirdType', Thrift.Type.I32, 1);
+    output.writeI32(this.thirdType);
+    output.writeFieldEnd();
+  }
+  if (this.custId !== null && this.custId !== undefined) {
+    output.writeFieldBegin('custId', Thrift.Type.STRING, 2);
+    output.writeString(this.custId);
+    output.writeFieldEnd();
+  }
+  if (this.accessToken !== null && this.accessToken !== undefined) {
+    output.writeFieldBegin('accessToken', Thrift.Type.STRING, 3);
+    output.writeString(this.accessToken);
+    output.writeFieldEnd();
+  }
+  if (this.openId !== null && this.openId !== undefined) {
+    output.writeFieldBegin('openId', Thrift.Type.STRING, 4);
+    output.writeString(this.openId);
+    output.writeFieldEnd();
+  }
+  if (this.valiNum !== null && this.valiNum !== undefined) {
+    output.writeFieldBegin('valiNum', Thrift.Type.STRING, 5);
+    output.writeString(this.valiNum);
+    output.writeFieldEnd();
+  }
+  if (this.valiNumType !== null && this.valiNumType !== undefined) {
+    output.writeFieldBegin('valiNumType', Thrift.Type.STRING, 6);
+    output.writeString(this.valiNumType);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+UserInfoThird = module.exports.UserInfoThird = function(args) {
+  this.custId = null;
+  this.mobile = null;
+  this.thirdType = null;
+  this.extInfo = null;
+  if (args) {
+    if (args.custId !== undefined) {
+      this.custId = args.custId;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.thirdType !== undefined) {
+      this.thirdType = args.thirdType;
+    }
+    if (args.extInfo !== undefined) {
+      this.extInfo = args.extInfo;
+    }
+  }
+};
+UserInfoThird.prototype = {};
+UserInfoThird.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.custId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.thirdType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.extInfo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserInfoThird.prototype.write = function(output) {
+  output.writeStructBegin('UserInfoThird');
+  if (this.custId !== null && this.custId !== undefined) {
+    output.writeFieldBegin('custId', Thrift.Type.STRING, 1);
+    output.writeString(this.custId);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.thirdType !== null && this.thirdType !== undefined) {
+    output.writeFieldBegin('thirdType', Thrift.Type.I32, 3);
+    output.writeI32(this.thirdType);
+    output.writeFieldEnd();
+  }
+  if (this.extInfo !== null && this.extInfo !== undefined) {
+    output.writeFieldBegin('extInfo', Thrift.Type.STRING, 4);
+    output.writeString(this.extInfo);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
