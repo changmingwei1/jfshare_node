@@ -75,7 +75,7 @@ Buyer.prototype.validAuth = function(param, callback){
         logger.info("validAuth result: " + JSON.stringify(data));
         var res = {};
         if (err||data[0].code == "1") {
-            logger.error("can't validAuth because: ======" + err);
+            logger.error("can't validAuth because: " + err);
             res.code = 501;
             res.desc = "鉴权失败";
             callback(res,null);
@@ -128,7 +128,9 @@ Buyer.prototype.thirdUserSignin = function(param,callback){
         extInfo: param.extInfo
     });
     var loginLog = new buyer_types.LoginLog({
-        browser:param.browser
+        browser:param.browser,
+        clientType: param.clientType,
+        version: param.version
     });
     var validateInfo = new buyer_types.ValidateInfo({
         thirdType: param.thirdType,
@@ -143,12 +145,17 @@ Buyer.prototype.thirdUserSignin = function(param,callback){
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到登录信息:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
             logger.error("不能登录，因为: ======" + err);
             res.code = 500;
             res.desc = "登录失败";
             callback(res, null);
-        } else {
+        } else if (data[0].result.code == 1){
+            logger.error("不能登录，因为: ======" + err);
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
             callback(null, data);
         }
     });
@@ -254,7 +261,9 @@ Buyer.prototype.buyerIsExist = function(loginName,callback){
 Buyer.prototype.isExitsThirdUser = function(arg,callback){
 
     var loginLog = new buyer_types.LoginLog({
-        browser: arg.browser
+        browser: arg.browser,
+        clientType: arg.clientType,
+        version: arg.version
     });
     var validateInfo = new buyer_types.ValidateInfo({
         thirdType: arg.thirdType,
