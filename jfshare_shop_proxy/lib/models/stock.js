@@ -34,6 +34,7 @@ Stock.prototype.queryStock = function(params,callback){
         logger.info("getStock result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
+            logger.error("请求参数：" + JSON.stringify(params));
             logger.error("false to getStock , because: ======" + err);
             res.code = 500;
             res.desc = "false to getStock";
@@ -63,14 +64,12 @@ Stock.prototype.batchQueryStock = function (params, callback) {
         queryType: "total"
     });
     //获取client
-
     logger.info("query stock --batchQueryParam--- params---------->:" + JSON.stringify(batchQueryParam));
-
     var stockServ = new Lich.InvokeBag(Lich.ServiceKey.StockServer, 'batchQueryStock', [batchQueryParam]);
     Lich.wicca.invokeClient(stockServ, function (err, data) {
         logger.info("query stock result---------->:" + JSON.stringify(data));
-
         if (err || data[0].result.code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
             logger.error("can't query stock because: ======" + err);
             res.code = 500;
             res.desc = "获取库存失败";

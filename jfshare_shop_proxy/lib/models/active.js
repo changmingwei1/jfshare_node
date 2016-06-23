@@ -35,7 +35,8 @@ Active.prototype.querySlotImageList = function(param,callback){
         logger.info("获取到的资源:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == "1") {
-            logger.error("不能获取，因为: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("不能获取，因为: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "不能获取到资源";
             callback(res, null);
