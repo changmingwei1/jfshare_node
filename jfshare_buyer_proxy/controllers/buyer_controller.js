@@ -1302,7 +1302,7 @@ router.post('/requestHttps',function(request,response,next){
             }
         });
     } catch (ex) {
-        logger.warn("请求参数：" + JSON.stringify(arg));
+        logger.warn("请求参数1111：" + JSON.stringify(arg));
         logger.error("get http request error:" + ex);
         result.code = 500;
         result.desc = "获取失败";
