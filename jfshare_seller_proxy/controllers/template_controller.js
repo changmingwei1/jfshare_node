@@ -192,8 +192,9 @@ router.post('/updatePostageTemplate', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                response.json(result);
                 logger.info("update freight info response:" + JSON.stringify(result));
+                response.json(result);
+
             }
         });
     } catch (ex) {
@@ -206,6 +207,62 @@ router.post('/updatePostageTemplate', function (request, response, next) {
         response.json(result);
     }
 });
+
+
+//取消默认的运费模板
+router.post('/cannelDefaultTemplate', function (request, response, next) {
+    logger.info("进入取消默认的运费模板流程");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+
+        if (params.id == null || params.id == "" || params.id <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.templateGroup != 21 && params.templateGroup != 22) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        logger.info("update freight params:" + JSON.stringify(params));
+
+        Template.cannelDefaultTemplate(params, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+                logger.info("cannelDefaultTemplate freight info response:" + JSON.stringify(result));
+                response.json(result);
+
+            }
+        });
+    } catch (ex) {
+
+
+        logger.error("更新运费模板失败:" + ex);
+        result.code = 500;
+        result.desc = "更新运费模板失败";
+
+        response.json(result);
+    }
+});
+
 //删除运费模板
 router.post('/delPostageTemplate', function (request, response, next) {
 
