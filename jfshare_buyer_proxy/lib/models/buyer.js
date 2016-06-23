@@ -224,7 +224,8 @@ Buyer.prototype.logout = function(param,callback){
 Buyer.prototype.newSignin = function(param, callback) {
     var thrift_buyer = new buyer_types.Buyer({
         mobile:param.mobile,
-        pwdEnc:param.pwdEnc
+        pwdEnc:param.pwdEnc,
+        loginName:param.mobile
     });
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "newSignin", [thrift_buyer]);
     Lich.wicca.invokeClient(buyerServ, function (err, data) {
