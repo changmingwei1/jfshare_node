@@ -1290,6 +1290,7 @@ router.post('/requestHttps',function(request,response,next){
     var result = {code: 200};
     try {
         var arg = request.body;
+        logger.warn("buyer_controller的请求参数：" + JSON.stringify(arg));
         Buyer.requestHttps(arg.url, function (err, data) {
             if (err) {
                 response.json(err);
