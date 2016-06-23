@@ -1285,18 +1285,18 @@ router.post('/jmeterTest',function(request,response,next){
 });
 
 /*HTTPS请求方法*/
-router.get('/requestHttps',function(request,response,next){
+router.post('/requestHttps',function(request,response,next){
     logger.info("进入获取http请求接口..");
     var result = {code: 200};
     try {
-        var arg = request.query;
+        var arg = request.body;
         Buyer.requestHttps(arg.url, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             } else {
                 var remark = data[0].buyer.remark;
-                result.remark = remark;
+                result.remark = JSON.parse(remark);
                 response.json(result);
             }
         });
