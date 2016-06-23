@@ -118,26 +118,26 @@ router.post('/list', function (request, response, next) {
                                 //组装list
                                 var partsNames = [];
                                 var subjectNodeTrees = data[0].subjectNodeTrees;
+                                if(subjectNodeTrees!=null){
+                                    subjectNodeTrees.forEach(function (subjectList) {
+                                        //logger.info("get subjectList list response-----:" + JSON.stringify(subjectList));
+                                        if (subjectList != null) {
+                                            var subjectpath = "";
+                                            for (var i = 0; i < subjectList.length; i++) {
+                                                if (i == subjectList.length - 1) {
+                                                    subjectpath += subjectList[i].name;
+                                                } else {
+                                                    subjectpath += subjectList[i].name + "-";
 
-                                subjectNodeTrees.forEach(function (subjectList) {
-                                    //logger.info("get subjectList list response-----:" + JSON.stringify(subjectList));
-                                    if (subjectList != null) {
-                                        var subjectpath = "";
-                                        for (var i = 0; i < subjectList.length; i++) {
-                                            if (i == subjectList.length - 1) {
-                                                subjectpath += subjectList[i].name;
-                                            } else {
-                                                subjectpath += subjectList[i].name + "-";
-
+                                                }
                                             }
+                                            subjectName.push(subjectpath);
+                                        } else {
+                                            subjectName.push("");
                                         }
-                                        subjectName.push(subjectpath);
-                                    } else {
-                                        subjectName.push("");
-                                    }
+                                    });
+                                }
 
-
-                                });
                                 callback(null, subjectName);
                             }
                         });
@@ -624,7 +624,7 @@ router.post('/update', function (request, response, next) {
                    // logger.error("更新商品失败---商品服务异常：" + results[0]);
                    // result.code = 500;
                     //result.desc = "更新商品失败";
-                    response.json(result[0]);
+                    response.json(results[0]);
                     return;
                 }
                 if (err == 2) {

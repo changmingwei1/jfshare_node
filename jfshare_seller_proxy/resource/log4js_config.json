@@ -5,12 +5,12 @@
       "type": "file",
       "filename": "../error.log",
       "maxLogSize": 2097152,
-      "backup": 4,
-      "category": "error"
+      "backup": 3,
+      "category": "info"
     }
   ],
   "replaceConsole" : true,
   "levels": {
-    "error":  "error"
+    "error":  "info"
   }
 }

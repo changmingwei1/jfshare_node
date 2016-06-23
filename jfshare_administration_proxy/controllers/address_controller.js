@@ -202,6 +202,7 @@ router.post('/getcitys', function(req, res, next) {
         result.code = 500;
         result.desc = "参数错误";
         res.json(result);
+        return;
     }
     try{
 
@@ -213,6 +214,7 @@ router.post('/getcitys', function(req, res, next) {
             result.cityList = data;
             logger.info("查询省份下的市 response:" + JSON.stringify(result));
             res.json(result);
+            return;
 
         });
     } catch (ex) {
@@ -233,6 +235,7 @@ router.post('/getcountys', function(req, res, next) {
         result.code = 500;
         result.desc = "参数错误";
         res.json(result);
+        return;
     }
     try{
 
@@ -244,6 +247,7 @@ router.post('/getcountys', function(req, res, next) {
             result.countyList = data;
             logger.info("查询市下面的乡镇 response:" + JSON.stringify(result));
             res.json(result);
+            return;
 
         });
     } catch (ex) {

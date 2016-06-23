@@ -129,6 +129,35 @@ Template.prototype.updatePostageTemplate = function (params, callback) {
     });
 };
 
+//更新运费模板
+Template.prototype.cannelDefaultTemplate = function (params, callback) {
+
+
+
+    var freight = new baseTemplate_types.PostageTemplate({
+        id: params.id,
+        sellerId: params.sellerId
+    });
+
+    logger.info("cannelDefaultTemplate:" + JSON.stringify(freight));
+    // 获取client
+    var freightServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "updatePostageTemplate", freight);
+    // 调用 freightServ
+    Lich.wicca.invokeClient(freightServ, function (err, data) {
+        logger.info("freightServ-cannelDefaultTemplate result:" + JSON.stringify(data));
+        if (err || data[0].code == 1) {
+            logger.error("freightServ-cannelDefaultTemplate  失败原因 ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "更新运费模板失败！";
+            callback(result, null);
+        }
+        callback(null, data);
+    });
+};
+
+
+
 //删除运费模板
 Template.prototype.delPostageTemplate = function (params, callback) {
     // 获取client
