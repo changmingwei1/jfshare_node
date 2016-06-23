@@ -31,7 +31,8 @@ Cart.prototype.countItem = function(param, callback){
         logger.info("调用cartServ-countItem  result:" + JSON.stringify(data));
         var res = {};
         if(err || data[0].result.code == "1"){
-            logger.error("调用cartServ-countItem失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用cartServ-countItem失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "购物车商品数失败！";
             callback(res, null);
@@ -44,25 +45,24 @@ Cart.prototype.countItem = function(param, callback){
 
 //添加购物车项目
 Cart.prototype.addCartItem = function(param, callback){
-
     var item = new cart_types.Item({
         productId:param.productId,
         skuNum: param.skuNum,
         count: param.count,
         price: param.price
     });
-
     var cartServ = new Lich.InvokeBag(Lich.ServiceKey.CartServer, "addItem", [param.userId + "",item,param.source]);
-
     Lich.wicca.invokeClient(cartServ, function(err, data) {
         logger.info("调用cartServ-addItem  result:" + JSON.stringify(data));
         var res = {};
         if(err){
-            logger.error("调用cartServ-addItem失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用cartServ-addItem失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "添加购物车失败！";
             callback(res, null);
         } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -95,7 +95,8 @@ Cart.prototype.deleteCartItem = function(param, callback){
         logger.info("调用cartServ-deleteItem  result:" + JSON.stringify(data));
         var res = {};
         if(err || data[0].code == "1"){
-            logger.error("调用cartServ-deleteItem失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用cartServ-deleteItem失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "删除购物车失败！";
             callback(res, null);
@@ -115,7 +116,8 @@ Cart.prototype.cartListItem = function(param, callback){
         logger.info("调用cartServ-listItem  result:" + JSON.stringify(data));
         var res = {};
         if(err || data[0].code == "1"){
-            logger.error("调用cartServ-listItem失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用cartServ-listItem失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "添加购物车失败！";
             callback(res, null);
@@ -143,8 +145,8 @@ Cart.prototype.cartUpdateItem = function(param, callback){
         logger.info("调用cartServ-updateItem result:" + JSON.stringify(data[0]));
         var res = {};
         if(err || data[0].result.code == "1"){
-            logger.error("调用cartServ-countItem失败  失败原因 ======" + err);
-            logger.error("错误信息:" + JSON.stringify(data[0].result));
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用cartServ-countItem失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "购物车商品数失败！";
             callback(res, null);

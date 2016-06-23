@@ -27,6 +27,8 @@ Message.prototype.add = function (params, callback) {
         logger.info("add message result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("添加失败系统消息，因为：" + JSON.stringify(data));
             res.code = 500;
             res.desc = data[0].failDescList[0].desc;
             callback(res, null);
@@ -48,6 +50,8 @@ Message.prototype.get = function (params, callback) {
         logger.info("get message result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("获取系统消息失败，因为：" + JSON.stringify(data));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -74,6 +78,8 @@ Message.prototype.update = function (params, callback) {
         logger.info("get message result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("更新系统消息失败，因为：" + JSON.stringify(data));
             res.code = 500;
             res.desc = "更新信息失败";
             callback(res, null);
@@ -92,6 +98,8 @@ Message.prototype.del = function (params, callback) {
         logger.info("get message result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("删除系统消息失败，因为：" + JSON.stringify(data));
             res.code = 500;
             res.desc = "删除系统信息失败";
             callback(res, null);
@@ -115,6 +123,8 @@ Message.prototype.list = function (params, callback) {
         logger.info("list messageList result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("获取系统消息列表失败，因为：" + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取系统消息列表失败";
             callback(res, null);
@@ -139,10 +149,12 @@ Message.prototype.getAppUpgradeInfo = function (params, callback) {
         logger.info("list messageList result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(params));
             res.code = 500;
             res.desc = "查询版本号失败";
             callback(res, null);
         } else if (data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(params));
             res.code = 500;
             res.desc = data[0].result;
         } else {
@@ -166,10 +178,13 @@ Message.prototype.getAppUpgradeInfoStr = function (params, callback) {
         logger.info("list messageList result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("查询app版本升级信息失败，因为：" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询版本号失败";
             callback(res, null);
         } else if (data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(params));
             res.code = 500;
             res.desc = data[0].result;
         } else {

@@ -35,7 +35,7 @@ Seller.prototype.querySeller = function(sellerId,baseTag,callback){
         logger.info("get buyer result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == "1") {
-            logger.error("can't get buyer because: ======" + err);
+            logger.error("can't get buyer because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "false to get buyer";
             callback(res, null);

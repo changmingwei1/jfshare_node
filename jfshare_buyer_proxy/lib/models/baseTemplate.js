@@ -24,24 +24,23 @@ function BaseTemplate(){}
 
 /*查询邮费模板*/
 BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, callback) {
-
     var params = new baseTemplate_types.PostageTemplateQueryParam({
         sellerId: sellerId,
         templateGroup:2
     });
-
     logger.info("调用查询邮费模板信息，args:" + JSON.stringify(params));
     var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "queryPostageTemplate", params);
-
     Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
         logger.info("调用查询邮费模板信息，result:" + JSON.stringify(data));
         var res = {};
         if(err){
-            logger.error("调用查询邮费模板信息失败，失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("调用查询邮费模板信息失败，失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询邮费模板信息失败！";
             callback(res, null);
         } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(params));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -53,23 +52,22 @@ BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, c
 
 /*获取商家邮费模板，批量获取*/
 BaseTemplate.prototype.getSellerPostageTemplate = function(sellerIds, callback) {
-
     var params = new baseTemplate_types.SellerPostageTemplateParam({
         sellerIds: sellerIds
     });
-
     logger.info("调用查询邮费模板信息，args:" + JSON.stringify(params));
     var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "getSellerPostageTemplate", params);
-
     Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
         logger.info("调用查询邮费模板信息，result:" + JSON.stringify(data));
         var res = {};
         if(err){
-            logger.error("调用查询邮费模板信息失败，失败原因，server中还没有完成批量查找店铺邮费模板的方法 ======》" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("调用查询邮费模板信息失败，失败原因，server中还没有完成批量查找店铺邮费模板的方法 ======》" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询邮费模板信息失败！";
             callback(res, null);
         } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(params));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -81,9 +79,7 @@ BaseTemplate.prototype.getSellerPostageTemplate = function(sellerIds, callback) 
 
 /*邮费计算*/
 BaseTemplate.prototype.calculatePostage = function(param,  callback) {
-
     logger.info("调用邮费模板信息："+JSON.stringify(param));
-
     var sellerList = param.sellerPostageList;
     var params = [];
     for(var i = 0 ;i < sellerList.length; i++){
@@ -105,20 +101,18 @@ BaseTemplate.prototype.calculatePostage = function(param,  callback) {
         });
         params.push(spList);
     }
-
     var arg = new baseTemplate_types.CalculatePostageParam({
         sendToProvince:param.provinceId,
         sellerPostageBasicList:params
     });
-
     logger.info("调用邮费计算，  args:" + JSON.stringify(arg));
     var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer, "calculatePostage", arg);
-
     Lich.wicca.invokeClient(baseTemplateServ, function(err, data) {
         logger.info("调用邮费计算，  result:" + JSON.stringify(data[0]));
         var res = {};
         if(err || data[0].result.code == "1"){
-            logger.error("调用邮费计算失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用邮费计算失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "邮费计算失败！";
             callback(res, null);
@@ -139,7 +133,8 @@ BaseTemplate.prototype.queryStorehouse = function(params,callback){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("不能获取仓库信息 because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("不能获取仓库信息 because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取仓库失败";
             callback(res, null);
@@ -151,15 +146,13 @@ BaseTemplate.prototype.queryStorehouse = function(params,callback){
 
 /*获取仓库信息*/
 BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
-
     //获取client
     var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer,'getStorehouse',storehouseIds);
-
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("不能获取仓库信息 because: ======" + err);
+            logger.error("不能获取仓库信息 because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取仓库失败";
             callback(res, null);
@@ -171,29 +164,25 @@ BaseTemplate.prototype.getStorehouse = function(storehouseIds,callback){
 
 /*批量获取商品收货省份对应的发货仓库*/
 BaseTemplate.prototype.getDeliverStorehouse = function(params,calback){
-
     var productRefProvinceList = [];
-
     var productRefProvince = new baseTemplate_types.ProductRefProvince({
         sellerId: params.sellerId,
         productId: params.productId,
         storehouseIds: params.storehouseIds,
         sendToProvince: params.provinceId
     });
-
     productRefProvinceList.push(productRefProvince);
-
     var param = new baseTemplate_types.DeliverStorehouseParam({
         productRefProvinceList:productRefProvinceList
     });
-
     //获取client
     var BaseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.TemplateServer,'getDeliverStorehouse',param);
     Lich.wicca.invokeClient(BaseTemplateServ, function(err, data){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("不能获取仓库信息 because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("不能获取仓库信息 because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取仓库失败";
             callback(res, null);

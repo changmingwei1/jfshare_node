@@ -22,8 +22,8 @@ var buyer_types = require('../lib/thrift/gen_code/buyer_types');
 router.get('/getCaptcha', function (request, response, next) {
     logger.info("进入获取验证码接口");
     var resContent = {code: 200};
+    var param = request.query;
     try {
-        var param = request.query;
         logger.info("获取验证码请求参数id= " + JSON.stringify(param));
         Common.getCaptcha(param.id, function (err, data) {
             if (err) {
@@ -38,6 +38,7 @@ router.get('/getCaptcha', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("获取验证码失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "不能获取验证码";
@@ -49,8 +50,8 @@ router.get('/getCaptcha', function (request, response, next) {
 router.post('/validateCaptcha', function (request, response, next) {
     logger.info("进入验证图形验证码接口");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         logger.info("验证图形验证码请求参数：" + JSON.stringify(param));
         Common.validateCaptcha(param, function (err, data) {
             if (err) {
@@ -61,6 +62,7 @@ router.post('/validateCaptcha', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("验证失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "验证失败";
@@ -72,8 +74,8 @@ router.post('/validateCaptcha', function (request, response, next) {
 router.get('/sms', function (request, response, next) {
     logger.info("进入获取验证码接口");
     var resContent = {code: 200};
+    var param = request.query;
     try {
-        var param = request.query;
         if (param == null || param.mobile == null) {
             resContent.code = 400;
             resContent.desc = "请求参数错误";
@@ -89,6 +91,7 @@ router.get('/sms', function (request, response, next) {
             response.json(resContent);
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("获取验证码失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "不能获取验证码";
@@ -100,8 +103,8 @@ router.get('/sms', function (request, response, next) {
 router.get('/validateMsgCaptcha', function (request, response, next) {
     logger.info("进入验证短信验证码接口");
     var resContent = {code: 200};
+    var param = request.query;
     try {
-        var param = request.query;
         if (param == null || param.mobile == null || param.captchaDesc == null) {
             resContent.code = 400;
             resContent.desc = "请求参数错误";
@@ -118,6 +121,7 @@ router.get('/validateMsgCaptcha', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("验证失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "验证失败";
@@ -127,11 +131,10 @@ router.get('/validateMsgCaptcha', function (request, response, next) {
 
 /*手机短信登录*/
 router.post('/login', function (request, response, next) {
-
     logger.info("进入手机短信登录接口..");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         if (param.mobile == null || param.mobile == "") {
             resContent.code = 500;
             resContent.desc = "手机号不能为空";
@@ -189,6 +192,7 @@ router.post('/login', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("登录失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "登录失败";
@@ -217,8 +221,8 @@ router.post('/logout', function (req, res, next) {
 router.post('/login2', function (req, res, next) {
     logger.info("进入账号密码登录接口..");
     var resContent = {code: 200};
+    var param = req.body;
     try {
-        var param = req.body;
         if (param.mobile == null || param.mobile == "") {
             resContent.code = 500;
             resContent.desc = "手机号不能为空";
@@ -281,10 +285,11 @@ router.post('/login2', function (req, res, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("登录失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "登录失败";
-        response.json(resContent);
+        res.json(resContent);
     }
 });
 
@@ -293,8 +298,8 @@ router.post('/regist', function (req, res, next) {
 
     logger.info("进入注册接口..");
     var resContent = {code: 200};
+    var param = req.body;
     try {
-        var param = req.body;
         if (param.mobile == null || param.mobile == "") {
             resContent.code = 500;
             resContent.desc = "手机号不能为空";
@@ -328,10 +333,11 @@ router.post('/regist', function (req, res, next) {
             });
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("注册失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "注册失败";
-        response.json(resContent);
+        res.json(resContent);
     }
 });
 
@@ -340,8 +346,8 @@ router.get('/exists', function (request, response, next) {
 
     logger.info("进入判断手机号是否存在接口...");
     var resContent = {code: 200};
+    var param = request.query;
     try {
-        var param = request.query;
         if (param == null || param.mobile == null || param.mobile == "") {
             resContent.code = 500;
             resContent.desc = "参数错误，手机号不能为空";
@@ -352,6 +358,7 @@ router.get('/exists', function (request, response, next) {
         Buyer.buyerIsExist(param.mobile, function (error, data) {
             if (error) {
                 response.json(error);
+                return;
             } else {
                 var value = data[0].value;
                 resContent.value = value;
@@ -360,6 +367,7 @@ router.get('/exists', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("不能判断，原因是:" + ex);
         resContent.code = 500;
         resContent.desc = "不能判断";
@@ -371,9 +379,8 @@ router.get('/exists', function (request, response, next) {
 router.post('/getAuthInfo', function (request, response, next) {
     logger.info("进入获取鉴权信息接口");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
-        logger.info("请求参数：" + JSON.stringify(param));
         if (param == null) {
             resContent.code = 500;
             resContent.desc = "参数错误";
@@ -410,7 +417,7 @@ router.post('/getAuthInfo', function (request, response, next) {
             response.json(resContent);
             return;
         }
-
+        logger.info("请求参数：" + JSON.stringify(param));
         Buyer.getAuthInfo(param, function (err, data) {
             if (err) {
                 response.json(err);
@@ -425,6 +432,7 @@ router.post('/getAuthInfo', function (request, response, next) {
             logger.info("获取到的信息是：" + JSON.stringify(resContent));
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("获取信息失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "不能获取到信息";
@@ -436,8 +444,8 @@ router.post('/getAuthInfo', function (request, response, next) {
 router.post('/validAuth', function (request, response, next) {
     logger.info("进入验证鉴权接口");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         if (param == null) {
             resContent.code = 400;
             resContent.desc = "参数错误";
@@ -478,6 +486,7 @@ router.post('/validAuth', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("验证失败，because :" + ex);
         resContent.code = 501;
         resContent.desc = "验证失败";
@@ -487,12 +496,10 @@ router.post('/validAuth', function (request, response, next) {
 
 /*获取个人用户信息*/
 router.post('/query', function (request, response, next) {
-
     logger.info("进入获取个人用户信息接口...");
     var resContent = {code: 200};
-
+    var param = request.body;
     try {
-        var param = request.body;
         if (param.token == null || param.token == "") {
             resContent.code = 400;
             resContent.desc = "鉴权参数不能为空";
@@ -527,6 +534,7 @@ router.post('/query', function (request, response, next) {
             Buyer.getBuyer(param, function (error, data) {
 
                 if (error) {
+                    logger.error("请求参数：" + JSON.stringify(param));
                     response.json(error);
                 } else {
                     var buyer = data[0].buyer;
@@ -553,6 +561,7 @@ router.post('/query', function (request, response, next) {
             });
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("获取用户信息失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "不能获取用户信息";
@@ -565,8 +574,8 @@ router.post('/update', function (request, response, next) {
 
     logger.info("进入更新用户信息接口");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         if (param.token == null || param.token == "") {
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
@@ -599,7 +608,6 @@ router.post('/update', function (request, response, next) {
                 return;
             }
             Buyer.updateBuyer(param, function (error, data) {
-
                 if (error) {
                     response.json(error);
                 } else {
@@ -609,6 +617,7 @@ router.post('/update', function (request, response, next) {
             });
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("不能更新，原因是:" + ex);
         resContent.code = 500;
         resContent.desc = "更新个人信息失败";
@@ -621,8 +630,8 @@ router.post('/scoreTotal', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         if (param.userId == null || param.userId == "" || param.userId <= 0) {
             resContent.code = 400;
             resContent.desc = "用户id不能为空";
@@ -670,6 +679,7 @@ router.post('/scoreTotal', function (request, response, next) {
             });
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("不能获取，原因是:" + ex);
         resContent.code = 500;
         resContent.desc = "获取用户积分失败";
@@ -682,10 +692,8 @@ router.post('/scoreTrade', function (request, response, next) {
 
     logger.info("进入获取用户积分接口");
     var resContent = {code: 200};
+    var arg = request.body;
     try {
-        var arg = request.body;
-
-        logger.info("请求参数信息" + JSON.stringify(arg));
         if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
             resContent.code = 400;
             resContent.desc = "用户id不能为空";
@@ -710,7 +718,7 @@ router.post('/scoreTrade', function (request, response, next) {
             response.json(resContent);
             return;
         }
-
+        logger.info("请求参数信息" + JSON.stringify(arg));
         Buyer.validAuth(arg, function (err, data) {
             if (err) {
                 response.json(err);
@@ -751,6 +759,7 @@ router.post('/scoreTrade', function (request, response, next) {
             });
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(arg));
         logger.error("获取失败，because: " + ex);
         resContent.code = 500;
         resContent.desc = "获取积分列表失败";
@@ -804,8 +813,8 @@ router.post('/socrelist', function (request, response, next) {
 router.post('/resetPwd', function (request, response, next) {
     logger.info("进入重置密码接口...");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         //参数校验
         if (param.mobile == null || param.newPwd == null || param.mobile == "" || param.newPwd == "") {
             resContent.code = 400;
@@ -835,6 +844,7 @@ router.post('/resetPwd', function (request, response, next) {
             });
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("重置密码失败，原因:" + ex);
         result.code = 500;
         result.desc = "重置密码失败";
@@ -847,8 +857,8 @@ router.post('/changePwd', function (request, response, next) {
 
     logger.info("进入修改密码接口...");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         //参数校验
         if (param.userId == null || param.newPwd == null || param.userId == "" || param.newPwd == "") {
             resContent.code = 400;
@@ -903,6 +913,7 @@ router.post('/changePwd', function (request, response, next) {
             });
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("修改密码失败，原因:" + ex);
         result.code = 500;
         result.desc = "修改密码失败";
@@ -914,11 +925,12 @@ router.post('/changePwd', function (request, response, next) {
 router.get('/getQRCode', function (request, response, next) {
     logger.info("进入获取验证码接口");
     var resContent = {code: 200};
+    var param = request.query;
     try {
-        var param = request.query;
         var id = param.id;
         Common.getQRCode(id, function (err, data) {
             if (err) {
+                logger.error("请求参数：" + JSON.stringify(param));
                 response.json(err);
                 return;
             } else {
@@ -934,6 +946,7 @@ router.get('/getQRCode', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("获取验证码失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "不能获取验证码";
@@ -946,18 +959,15 @@ router.post('/queryCachAmount', function (request, response, next) {
 
     logger.info("兑出积分查询调用接口");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
-
-        logger.info("请求参数信息" + JSON.stringify(param));
-
         if (param.userId == null || param.userId == "") {
             resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
             return;
         }
-
+        logger.info("请求参数信息" + JSON.stringify(param));
         Score.queryCachAmount(param, function (error, data) {
             if (error) {
                 response.json(error);
@@ -969,6 +979,7 @@ router.post('/queryCachAmount', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("兑出积分查询异常，原因是======:" + ex);
         resContent.code = 500;
         resContent.desc = "兑出积分查询失败";
@@ -980,9 +991,8 @@ router.post('/cachAmountCall', function (request, response, next) {
 
     logger.info("进入兑出积分调用接口流程");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
-        logger.info("请求参数信息" + JSON.stringify(param));
         if (param.userId == null || param.userId == "") {
             resContent.code = 400;
             resContent.desc = "参数错误";
@@ -1001,17 +1011,16 @@ router.post('/cachAmountCall', function (request, response, next) {
             response.json(resContent);
             return;
         }
-
         Score.cachAmountCall(param, function (error, data) {
             if (error) {
                 response.json(error);
             } else {
-
                 response.json(resContent);
                 logger.info("Score cachAmountCall response:" + JSON.stringify(resContent));
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("兑出积分调用异常，原因是======:" + ex);
         resContent.code = 500;
         resContent.desc = "兑出积分调用失败";
@@ -1024,9 +1033,8 @@ router.post('/enterAmountCall', function (request, response, next) {
 
     logger.info("进入兑入积分调用接口");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
-        logger.info("请求参数信息" + JSON.stringify(param));
         if (param.AppCode == null || param.AppCode == "") {
             resContent.code = 400;
             resContent.desc = "参数错误";
@@ -1107,6 +1115,7 @@ router.post('/enterAmountCall', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("积分兑入异常，原因是======:" + ex);
         resContent.code = 500;
         resContent.desc = "积分兑入失败";
@@ -1119,8 +1128,8 @@ router.post('/existsThirdUser', function (request, response, next) {
 
     logger.info("账号是否已注册及登陆...");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         if (param == null || param.thirdType == null || param.thirdType == "") {
             resContent.code = 400;
             resContent.desc = "参数错误:thirdType不能为空";
@@ -1169,6 +1178,7 @@ router.post('/existsThirdUser', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("不能判断，原因是:" + ex);
         resContent.code = 500;
         resContent.desc = "不能判断";
@@ -1181,8 +1191,8 @@ router.post('/thirdUserSignin', function (request, response, next) {
 
     logger.info("第三方账号注册接口...");
     var resContent = {code: 200};
+    var param = request.body;
     try {
-        var param = request.body;
         if (param == null || param.thirdType == null || param.thirdType == "") {
             resContent.code = 400;
             resContent.desc = "参数错误:thirdType不能为空";
@@ -1243,6 +1253,7 @@ router.post('/thirdUserSignin', function (request, response, next) {
             }
         });
     } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("不能判断，原因是:" + ex);
         resContent.code = 500;
         resContent.desc = "不能判断";

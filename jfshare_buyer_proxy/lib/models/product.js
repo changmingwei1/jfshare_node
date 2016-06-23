@@ -103,11 +103,13 @@ Product.prototype.getById4dis = function(param, callback){
         logger.info("get subject info result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("subjectServ-getById4dis查询类目信息  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询类目失败";
             callback(res, null);
         } else if (data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = "查询类目失败";
             callback(res, null);

@@ -46,7 +46,8 @@ Buyer.prototype.getAuthInfo = function(param,callback){
         logger.info("getAuthInfo result: " + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == "1") {
-            logger.error("can't getAuthInfo because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't getAuthInfo because: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "false to getAuthInfo";
             callback(res,null);
@@ -75,7 +76,8 @@ Buyer.prototype.validAuth = function(param, callback){
         logger.info("validAuth result: " + JSON.stringify(data));
         var res = {};
         if (err||data[0].code == "1") {
-            logger.error("can't validAuth because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't validAuth because: " + JSON.stringify(data));
             res.code = 501;
             res.desc = "鉴权失败";
             callback(res,null);
@@ -104,11 +106,13 @@ Buyer.prototype.newLogin = function(param,callback){
         logger.info("获取到登录信息:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("不能登录，因为: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("不能登录，因为: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "登录失败";
             callback(res, null);
         } else if(data[0].result.code == "1"){
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -128,7 +132,9 @@ Buyer.prototype.thirdUserSignin = function(param,callback){
         extInfo: param.extInfo
     });
     var loginLog = new buyer_types.LoginLog({
-        browser:param.browser
+        browser:param.browser,
+        clientType: param.clientType,
+        version: param.version
     });
     var validateInfo = new buyer_types.ValidateInfo({
         thirdType: param.thirdType,
@@ -143,12 +149,19 @@ Buyer.prototype.thirdUserSignin = function(param,callback){
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到登录信息:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
-            logger.error("不能登录，因为: ======" + err);
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("不能登录，因为: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "登录失败";
             callback(res, null);
-        } else {
+        } else if (data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            logger.warn("不能登录，因为: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
             callback(null, data);
         }
     });
@@ -172,7 +185,8 @@ Buyer.prototype.loginBySms = function(param,callback){
         logger.info("获取到登录信息:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == "1") {
-            logger.error("不能登录，因为: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("不能登录，因为: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "登录失败";
             callback(res, null);
@@ -195,7 +209,8 @@ Buyer.prototype.logout = function(param,callback){
         logger.info("获取到注销信息信息:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].code == "1") {
-            logger.error("不能注销，因为: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("不能注销，因为: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "注销失败";
             callback(res, null);
@@ -206,24 +221,20 @@ Buyer.prototype.logout = function(param,callback){
 };
 
 //注册
-Buyer.prototype.newSignin = function(data, callback) {
-    //if(valid.empty(data)) {
-    //    return callback({code:1, failDesc:'参数非法', result:false});
-    //}
-
-
+Buyer.prototype.newSignin = function(param, callback) {
     var thrift_buyer = new buyer_types.Buyer({
-        mobile:data.mobile,
-        pwdEnc:data.pwdEnc
+        mobile:param.mobile,
+        pwdEnc:param.pwdEnc,
+        loginName:param.mobile
     });
-
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "newSignin", [thrift_buyer]);
     Lich.wicca.invokeClient(buyerServ, function (err, data) {
         var res = {};
         if (err||data[0].code == "1") {
-            logger.error("注册失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("注册失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
-            res.desc = "注册失败失败";
+            res.desc = "注册失败";
             callback(res, null);
         } else {
             callback(null, data);
@@ -240,7 +251,8 @@ Buyer.prototype.buyerIsExist = function(loginName,callback){
         logger.info("获取到的信息:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == 1) {
-            logger.error("err，because: ======" + err);
+            logger.error("请求参数：" + loginName);
+            logger.error("err，because: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "服务器异常不能判断";
             callback(res, null);
@@ -251,16 +263,18 @@ Buyer.prototype.buyerIsExist = function(loginName,callback){
 };
 
 /*判断第三方用户是否存在*/
-Buyer.prototype.isExitsThirdUser = function(arg,callback){
+Buyer.prototype.isExitsThirdUser = function(param,callback){
 
     var loginLog = new buyer_types.LoginLog({
-        browser: arg.browser
+        browser: param.browser,
+        clientType: param.clientType,
+        version: param.version
     });
     var validateInfo = new buyer_types.ValidateInfo({
-        thirdType: arg.thirdType,
-        custId: arg.custId,
-        accessToken: arg.accessToken,
-        openId: arg.openId
+        thirdType: param.thirdType,
+        custId: param.custId,
+        accessToken: param.accessToken,
+        openId: param.openId
     });
 
     //获取client
@@ -269,7 +283,8 @@ Buyer.prototype.isExitsThirdUser = function(arg,callback){
         logger.info("获取到的信息:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("err，because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("err，because: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "服务器异常不能判断";
             callback(res, null);
@@ -300,11 +315,13 @@ Buyer.prototype.getBuyer = function(param,callback){
         logger.info("get buyer result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("can't get buyer because: ======" + err);
             res.code = 500;
             res.desc = "false to get buyer";
             callback(res, null);
         } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -316,7 +333,6 @@ Buyer.prototype.getBuyer = function(param,callback){
 
 //更新用户信息
 Buyer.prototype.updateBuyer = function(param,callback){
-
     var buyer = new buyer_types.Buyer({
         userId:param.userId,
         userName:param.userName,
@@ -324,15 +340,14 @@ Buyer.prototype.updateBuyer = function(param,callback){
         birthday:param.birthday,
         sex:param.sex
     });
-
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'updateBuyer',[buyer]);
-
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("updateBuyer result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].code == "1") {
-            logger.error("can't updateBuyer because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't updateBuyer because: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "false to updateBuyer";
             callback(res, null);
@@ -350,12 +365,12 @@ Buyer.prototype.newResetBuyerPwd = function(param,callback){
     });
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'newResetBuyerPwd',[param.newPwd, params]);
-
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("updateBuyer result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].code == "1") {
-            logger.error("can't updateBuyer because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't updateBuyer because: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "false to updateBuyer";
             callback(res, null);

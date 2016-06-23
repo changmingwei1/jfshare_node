@@ -48,7 +48,8 @@ Order.prototype.orderProfileQuery = function (param, callback) {
         logger.info("调用orderServ-orderProfileQuery  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-orderProfileQuery失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用orderServ-orderProfileQuery失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询定单列表失败！";
             callback(res, null);
@@ -67,7 +68,8 @@ Order.prototype.orderStateQuery = function (param, callback) {
         logger.info("调用orderServ-orderStateQuery  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-orderStateQuery失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用orderServ-orderStateQuery失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询定单列表失败！";
             callback(res, null);
@@ -86,7 +88,8 @@ Order.prototype.queryOrderDetail = function (param, callback) {
         logger.info("调用orderServ-queryOrderDetail  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-queryOrderDetail失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用orderServ-queryOrderDetail失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询定单明细失败！";
             callback(res, null);
@@ -120,11 +123,13 @@ Order.prototype.payApply = function (param, callback) {
         logger.info("call orderServ-payApply result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("调用orderServ-payApply失败  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "提交订单失败！";
+            res.desc = "支付失败！";
             callback(res, null);
         } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -148,6 +153,7 @@ Order.prototype.payState = function (param, callback) {
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("call orderSer-payState result:" + JSON.stringify(data));
         if (err || data[0].result.code == 1) {
+            logger.error("请求参数：" + JSON.stringify(param));
             var res = {};
             res.code = 500;
             res.desc = "查询订单支付状态失败！";
@@ -222,12 +228,13 @@ Order.prototype.orderConfirm = function (arg, callback) {
         logger.info("调用cartServ-orderConfirm result:" + JSON.stringify(data[0]));
         var res = {};
         if (err) {
-            logger.error("调用cartServ-orderConfirm失败  失败原因 ======" + err);
-            //logger.error("错误信息:" + JSON.stringify(data[0].result));
+            logger.error("请求参数：" + JSON.stringify(arg));
+            logger.error("调用cartServ-orderConfirm失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "提交订单失败！";
             callback(res, null);
         } else if (data[0].result.code == 1) {
+            logger.error("请求参数：" + JSON.stringify(arg));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -292,6 +299,7 @@ Order.prototype.confirmReceipt = function (param, callback) {
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("call orderSer-payState result:" + JSON.stringify(data));
         if (err || data[0] == '1') {
+            logger.error("请求参数：" + JSON.stringify(param));
             var res = {};
             res.code = 500;
             res.desc = "查询订单状态失败！";
@@ -316,6 +324,7 @@ Order.prototype.orderConfirmResult = function (params, callback) {
         logger.info("AfterSaleServ-orderConfirmResult  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
             logger.error("AfterSaleServ-orderConfirmResult  失败原因 ======" + err);
             res.code = 500;
             res.desc = "扫码预生成订单失败！";

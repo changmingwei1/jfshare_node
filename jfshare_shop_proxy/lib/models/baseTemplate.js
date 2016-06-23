@@ -37,11 +37,13 @@ BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, c
         logger.info("调用查询邮费模板信息，result:" + JSON.stringify(data));
         var res = {};
         if(err){
-            logger.error("调用查询邮费模板信息失败，失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("调用查询邮费模板信息失败，失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询邮费模板信息失败！";
             callback(res, null);
         } else if(data[0].result.code == 1){
+            logger.error("请求参数：" + JSON.stringify(params));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -112,12 +114,14 @@ BaseTemplate.prototype.calculatePostage = function (param, callback) {
         logger.info("调用邮费计算，  result:" + JSON.stringify(data[0]));
         var res = {};
         if (err) {
-            logger.error("调用邮费计算失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用邮费计算失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "邮费计算失败！";
             callback(res, null);
         } else if (data[0].result.code == 1) {
-            logger.error("调用邮费计算失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用邮费计算失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -138,7 +142,8 @@ BaseTemplate.prototype.queryStorehouse = function(params,callback){
         logger.info("get BaseTemplate result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("不能获取仓库信息 because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("不能获取仓库信息 because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取仓库失败";
             callback(res, null);
@@ -194,11 +199,13 @@ BaseTemplate.prototype.getDeliverStorehouse = function(params,callback){
         var res = {};
         logger.info("getDeliverStorehouse result:" + JSON.stringify(data[0]));
         if (err) {
-            logger.error("false to getDeliverStorehouse because: " + err);
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("false to getDeliverStorehouse because: " + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取仓库列表失败";
             callback(res, null);
         } else if(data[0].result.code == 1){
+            logger.error("请求参数：" + JSON.stringify(params));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);

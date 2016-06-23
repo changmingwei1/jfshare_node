@@ -49,6 +49,7 @@ Product.prototype.queryProductList = function (params, callback) {
         logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
         var ret = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(params));
             logger.error("调用productServ-queryProductList失败  失败原因 ======" + err);
             ret.code = 500;
             ret.desc = "查询商品列表失败！";
@@ -142,24 +143,21 @@ Product.prototype.queryHotSKUV1 = function (paramters, callback) {
         logger.info("调用productServ-queryHotSKUV1 result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(paramters));
             logger.error("调用productServ-queryHotSKUV1  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询商品sku信息失败！";
             callback(res, null);
         } else if (data[0].result.code == 1) {
             if (data[0].result.failDescList[0].failCode == 3001) {
-
-                logger.error("调用productServ-queryHotSKUV1  失败原因 ======" + err);
-                logger.error("如果走到这里----证明是没有对应的仓库,请注意这不是错误" + err);
+                logger.warn("如果走到这里----证明是没有对应的仓库,请注意这不是错误");
                 callback(3, null);
             } else {
-
-
+                logger.warn("请求参数：" + JSON.stringify(paramters));
                 res.code = 500;
                 res.desc = data[0].result.failDescList[0].desc;
                 callback(res, null);
             }
-
         } else {
             callback(null, data[0]);
         }
@@ -176,13 +174,13 @@ Product.prototype.queryProductDetail = function (arg, callback) {
     logger.info("get productDetail info args:" + JSON.stringify(param));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductDetail", param);
-
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
         logger.info("调用productServ-queryProductDetail result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用productServ-queryProductDetail查询商品详情  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(arg));
+            logger.error("调用productServ-queryProductDetail查询商品详情  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询商品详情失败！";
             callback(res, null);
@@ -201,7 +199,8 @@ Product.prototype.getSubTree = function (param, callback) {
         logger.info("调用subjectServ-getSubTree  result:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("调用subjectServ-getSubTree查询子分类失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用subjectServ-getSubTree查询子分类失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询子分类失败";
             callback(res, null);
@@ -249,8 +248,9 @@ Product.prototype.queryHotSKUBatch = function (params, callback) {
         logger.info("queryHotSKUBatch-----------------> result:" + JSON.stringify(data));
 
         if (err || data[0].result.code == "1") {
+            logger.error("请求参数：" + JSON.stringify(params));
             var res = {};
-            logger.error("queryHotSKUBatch fail because: ======" + err);
+            logger.error("queryHotSKUBatch fail because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取商品sku信息失败";
             callback(res, null);
@@ -272,7 +272,8 @@ Product.prototype.expressQuery = function (arg, callback) {
         logger.info("get expressInfo result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("can't get expressInfo because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(arg));
+            logger.error("can't get expressInfo because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "false to get expressInfo";
             callback(res, null);
@@ -280,8 +281,6 @@ Product.prototype.expressQuery = function (arg, callback) {
             callback(null, data);
         }
     });
-
-
 };
 
 //测试redis

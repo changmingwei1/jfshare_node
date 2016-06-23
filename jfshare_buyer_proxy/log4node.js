@@ -1,18 +1,23 @@
+var express = require('express');
+var app = express();
 var  configlog4node = {
-     /**
+    /**
      log4js 的配置
      **/
-     log4jsConfig:{
+    log4jsConfig:{
         appenders: [
             { type: 'console' }, /*控制台输出*/
             {
-                type: 'file', /*文件输出*/
-                filename: 'logs/access.log',
+                type: 'dateFile',
+                filename: 'logs/log',
+                pattern: "_yyyy-MM-dd",
                 maxLogSize: 1024,
-                backups:3,
-                category: 'normal'
+                alwaysIncludePattern: false,
+                backups: 4,
+                category: 'logger'
             }
-        ]
+        ],
+        replaceConsole: true
     },
     /** log4Node中权限的记录日志*/
     rbacjsConfig:{
@@ -42,12 +47,11 @@ var  configlog4node = {
         return logger;
     },
 
-    useLog4js : function( config) {
+    useLog4js : function(category) {
         var log4js = require('log4js');
-        log4js.configure(config.log4jsConfig);
-        var logger = log4js.getLogger(config.category);// 'normal'
-        logger.setLevel(config.level);  //  'INFO'
-        /***返回日志**/
+        var logger = log4js.getLogger('normal');// 'normal'
+        logger.setLevel('warn');  //  'error'
+        app.use(log4js.connectLogger(logger, {level:log4js.levels.WARN}));
         return logger;
     },
 
