@@ -1284,4 +1284,28 @@ router.post('/jmeterTest',function(request,response,next){
     }
 });
 
+/*HTTPS请求方法*/
+router.get('/requestHttps',function(request,response,next){
+    logger.info("进入获取http请求接口..");
+    var result = {code: 200};
+    try {
+        var arg = request.query;
+        Buyer.requestHttps(arg.url, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            } else {
+                var remark = data[0].buyer.remark;
+                result.remark = remark;
+                response.json(result);
+            }
+        });
+    } catch (ex) {
+        logger.error("get http request error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        response.json(result);
+    }
+});
+
 module.exports = router;
