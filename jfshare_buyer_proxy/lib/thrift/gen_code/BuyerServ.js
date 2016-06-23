@@ -2369,6 +2369,113 @@ BuyerServ_isExitsThirdUser_result.prototype.write = function(output) {
   return;
 };
 
+BuyerServ_requestHttps_args = function(args) {
+  this.url = null;
+  if (args) {
+    if (args.url !== undefined) {
+      this.url = args.url;
+    }
+  }
+};
+BuyerServ_requestHttps_args.prototype = {};
+BuyerServ_requestHttps_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_requestHttps_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_requestHttps_args');
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 1);
+    output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_requestHttps_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_requestHttps_result.prototype = {};
+BuyerServ_requestHttps_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.BuyerResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_requestHttps_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_requestHttps_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 BuyerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -3332,6 +3439,53 @@ BuyerServClient.prototype.recv_isExitsThirdUser = function(input,mtype,rseqid) {
   }
   return callback('isExitsThirdUser failed: unknown result');
 };
+BuyerServClient.prototype.requestHttps = function(url, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_requestHttps(url);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_requestHttps(url);
+  }
+};
+
+BuyerServClient.prototype.send_requestHttps = function(url) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('requestHttps', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_requestHttps_args();
+  args.url = url;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_requestHttps = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_requestHttps_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('requestHttps failed: unknown result');
+};
 BuyerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -3943,6 +4097,36 @@ BuyerServProcessor.prototype.process_isExitsThirdUser = function(seqid, input, o
     this._handler.isExitsThirdUser(args.loginLog, args.validateInfo,  function (err, result) {
       var result = new BuyerServ_isExitsThirdUser_result((err != null ? err : {success: result}));
       output.writeMessageBegin("isExitsThirdUser", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_requestHttps = function(seqid, input, output) {
+  var args = new BuyerServ_requestHttps_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.requestHttps.length === 1) {
+    Q.fcall(this._handler.requestHttps, args.url)
+      .then(function(result) {
+        var result = new BuyerServ_requestHttps_result({success: result});
+        output.writeMessageBegin("requestHttps", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_requestHttps_result(err);
+        output.writeMessageBegin("requestHttps", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.requestHttps(args.url,  function (err, result) {
+      var result = new BuyerServ_requestHttps_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("requestHttps", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

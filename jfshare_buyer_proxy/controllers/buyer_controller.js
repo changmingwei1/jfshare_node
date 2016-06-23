@@ -1290,7 +1290,6 @@ router.post('/requestHttps',function(request,response,next){
     var result = {code: 200};
     try {
         var arg = request.body;
-        logger.warn("buyer_controller的请求参数：" + JSON.stringify(arg));
         Buyer.requestHttps(arg.url, function (err, data) {
             if (err) {
                 response.json(err);
@@ -1302,7 +1301,6 @@ router.post('/requestHttps',function(request,response,next){
             }
         });
     } catch (ex) {
-        logger.warn("请求参数1111：" + JSON.stringify(arg));
         logger.error("get http request error:" + ex);
         result.code = 500;
         result.desc = "获取失败";
