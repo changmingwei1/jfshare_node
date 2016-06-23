@@ -192,7 +192,7 @@ Product.prototype.update = function (params, callback) {
             logger.error("productServ-updateProduct  失败原因 ======" + err + JSON.stringify(data));
             res.code = 500;
             res.desc = "更新商品失败";
-
+            //[{"result":{"code":1,"failDescList":[{"name":"product","failCode":"3101","desc":"商品价格校验失败，价格应大于0，原价不可低于现价"}]},"value":null}]
             if(data[0].result.code == 1 && data[0].result.failDescList[0].failCode){
                 res.desc = data[0].result.failDescList[0].desc;
             }
