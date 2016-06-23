@@ -13,7 +13,7 @@ var  configlog4node = {
                 pattern: "_yyyy-MM-dd",
                 maxLogSize: 1024,
                 alwaysIncludePattern: false,
-                backups: 4,
+                backups: 3,
                 category: 'logger'
             }
         ],
