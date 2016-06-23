@@ -708,13 +708,13 @@ router.post('/list', function (request, response, next) {
                         return;
                     }
                     if (err == 2) {
-                        logger.error("查询售后失败--售后服务异常 ===> 这个不是错：" + err);
+                        logger.warn("查询售后失败--售后服务异常 ===> 这个不是错：" + err);
                         result.sellerList = results[1];
                         response.json(result);
                         return;
                     }
                     if (err == 4) {
-                        logger.error("查询卖家信息失败--卖家服务异常：" + err);
+                        logger.warn("查询卖家信息失败--卖家服务异常：" + err);
                         result.afterSaleList = results[2];
                         response.json(result);
                         return;
