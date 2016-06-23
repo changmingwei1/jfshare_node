@@ -25,6 +25,7 @@ Expresss.prototype.queryExpress = function(params, callback){
     Lich.wicca.invokeClient(expressOrderServ, function (err, data) {
         logger.info("expressOrderServ-expressQuery result:" + JSON.stringify(data));
         if(err || data[0].result.code == 1){
+            logger.error("请求参数：" + JSON.stringify(params));
             var ret = {};
             logger.error("expressOrderServ-expressQuery  失败原因 ======" + err);
             ret.code = 500;

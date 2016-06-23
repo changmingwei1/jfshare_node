@@ -65,11 +65,13 @@ Score.prototype.queryScoreTrade = function (param, callback) {
         logger.info("get buyerScoreList result:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("can't get queryScoreTrade because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't get queryScoreTrade because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取积分交易列表失败";
             callback(res, null);
         } else if (data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -104,11 +106,13 @@ Score.prototype.enterAmountCall = function (param, callback) {
         logger.info("Score enterAmountCall result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("Score enterAmountCall because: ======" + err);
             res.code = 500;
             res.desc = "积分兑入错误";
             callback(res, null);
         } else if (data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -131,11 +135,13 @@ Score.prototype.queryCachAmount = function (param, callback) {
         logger.info("Score queryCachAmount result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("Score queryCachAmount because: ======" + err);
             res.code = 500;
             res.desc = "兑出积分查询错误";
             callback(res, null);
         } else if (data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -160,11 +166,13 @@ Score.prototype.cachAmountCall = function (param, callback) {
         logger.info("Score cachAmountCall result:" + JSON.stringify(data));
         var res = {};
         if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("Score cachAmountCall because: ======" + err);
             res.code = 500;
             res.desc = "兑出积分错误";
             callback(res, null);
         } else if (data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
@@ -194,6 +202,7 @@ Score.prototype.queryScoreUser = function (params, callback) {
         logger.info("scoreServ.queryScoreUser result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == 1) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("scoreServ.queryScoreUser because: ======" + err);
             res.code = 500;
             res.desc = "查询积分错误";

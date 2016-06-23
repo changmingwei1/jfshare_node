@@ -29,7 +29,7 @@ Common.prototype.getCaptcha = function(id,callback){
         logger.info("getCaptcha result: " + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == "1") {
-            logger.error("can't getCaptcha because: ======" + err);
+            logger.error("can't getCaptcha because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "false to getCaptcha";
             callback(res,null);
@@ -53,7 +53,8 @@ Common.prototype.validateCaptcha = function(param, callback){
         logger.info("getCaptcha result: " + JSON.stringify(data));
         var res = {};
         if (err||data[0].code == "1") {
-            logger.error("can't getCaptcha because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't getCaptcha because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "验证图形验证码失败";
             callback(res,null);
@@ -76,12 +77,13 @@ Common.prototype.sendMsgCaptcha = function(param, callback){
         logger.info("getCaptcha result: " + JSON.stringify(data));
         var res = {};
         if(err){
-            logger.error("调用commonServ-sendMsgCaptcha失败  失败原因 ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用commonServ-sendMsgCaptcha失败  失败原因 ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "获取短信验证码失败！";
             callback(res, null);
         } else if(data[0].code == 1){
-            logger.info("调用commonServ-sendMsgCaptcha失败  失败原因 ======" + data[0].failDescList[0].desc);
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].failDescList[0].desc;
             callback(res, null);
@@ -105,11 +107,13 @@ Common.prototype.validateMsgCaptcha = function(param, callback){
         logger.info("getCaptcha result: " + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("can't getCaptcha because: ======" + err);
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't getCaptcha because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "验证短信验证码失败";
             callback(res,null);
         } else if(data[0].code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].failDescList[0].desc;
             callback(res,null);

@@ -34,7 +34,8 @@ Stock.prototype.queryStock = function(params,callback){
         logger.info("getStock result:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == 1) {
-            logger.error("false to getStock , because: ======" + err);
+            logger.error("ÇëÇó²ÎÊý£º" + JSON.stringify(params));
+            logger.error("false to getStock , because: ======" + JSON.stringify(data));
             res.code = 500;
             res.desc = "false to getStock";
             callback(res, null);
