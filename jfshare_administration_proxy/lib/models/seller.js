@@ -135,6 +135,7 @@ Seller.prototype.querySellerBatch = function (params, callback) {
 Seller.prototype.updateSeller = function (params, callback) {
 
     var seller = new seller_types.Seller({
+        sellerName:params.sellerName,
         sellerId: params.sellerId,
         companyName: params.companyName,
         shopName: params.shopName,
