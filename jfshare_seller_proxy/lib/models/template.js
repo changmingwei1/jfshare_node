@@ -80,9 +80,9 @@ Template.prototype.setDefaultPostageTemplate = function (params, callback) {
             var result = {};
             result.code = 500;
             result.desc = "设置默认模板失败";
-            callback(result, null);
+            return callback(result, null);
         }
-        callback(null, data);
+        return callback(null, data);
     });
 };
 //更新运费模板
@@ -133,7 +133,6 @@ Template.prototype.updatePostageTemplate = function (params, callback) {
 Template.prototype.cannelDefaultTemplate = function (params, callback) {
 
 
-
     var freight = new baseTemplate_types.PostageTemplate({
         id: params.id,
         sellerId: params.sellerId
@@ -150,12 +149,11 @@ Template.prototype.cannelDefaultTemplate = function (params, callback) {
             var result = {};
             result.code = 500;
             result.desc = "更新运费模板失败！";
-            callback(result, null);
+            return callback(result, null);
         }
-        callback(null, data);
+        return callback(null, data);
     });
 };
-
 
 
 //删除运费模板

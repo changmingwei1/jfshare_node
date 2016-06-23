@@ -392,7 +392,7 @@ Product.prototype.setProductState = function (params, callback) {
         logger.info("productServ-setProductState  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
-            logger.error("productServ-setProductState  失败原因 ======" + err);
+            logger.error("productServ-setProductState  失败原因 ======" + err + JSON.stringify(data));
             res.code = 500;
             res.desc = "申请上架或下架失败！";
             callback(res, null);
