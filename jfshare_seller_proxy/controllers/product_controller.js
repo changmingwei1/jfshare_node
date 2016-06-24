@@ -1437,7 +1437,7 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                 return response.json(err);
             }else{
                 if(data!=null&&data!=""){
-                    result.productName=data.productName;
+                    //result.productName=data.productName;
                     var captchaDetals=data.captchaDetals;
                     var captObj=[];
                     if(captchaDetals==null||captchaDetals==""){
