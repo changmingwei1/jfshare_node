@@ -381,9 +381,9 @@ Buyer.prototype.newResetBuyerPwd = function(param,callback){
 };
 
 /*HTTPS请求方法*/
-Buyer.prototype.requestHttps = function(url,callback){
+Buyer.prototype.requestHttps = function(param,callback){
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'requestHttps',[url]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'requestHttps',[param.url,param.extInfo]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到的信息:" + JSON.stringify(data));
         var res = {};

@@ -2371,9 +2371,13 @@ BuyerServ_isExitsThirdUser_result.prototype.write = function(output) {
 
 BuyerServ_requestHttps_args = function(args) {
   this.url = null;
+  this.extInfo = null;
   if (args) {
     if (args.url !== undefined) {
       this.url = args.url;
+    }
+    if (args.extInfo !== undefined) {
+      this.extInfo = args.extInfo;
     }
   }
 };
@@ -2398,9 +2402,13 @@ BuyerServ_requestHttps_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.extInfo = input.readString();
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2415,6 +2423,11 @@ BuyerServ_requestHttps_args.prototype.write = function(output) {
   if (this.url !== null && this.url !== undefined) {
     output.writeFieldBegin('url', Thrift.Type.STRING, 1);
     output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  if (this.extInfo !== null && this.extInfo !== undefined) {
+    output.writeFieldBegin('extInfo', Thrift.Type.STRING, 2);
+    output.writeString(this.extInfo);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3439,7 +3452,7 @@ BuyerServClient.prototype.recv_isExitsThirdUser = function(input,mtype,rseqid) {
   }
   return callback('isExitsThirdUser failed: unknown result');
 };
-BuyerServClient.prototype.requestHttps = function(url, callback) {
+BuyerServClient.prototype.requestHttps = function(url, extInfo, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -3450,19 +3463,20 @@ BuyerServClient.prototype.requestHttps = function(url, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_requestHttps(url);
+    this.send_requestHttps(url, extInfo);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_requestHttps(url);
+    this.send_requestHttps(url, extInfo);
   }
 };
 
-BuyerServClient.prototype.send_requestHttps = function(url) {
+BuyerServClient.prototype.send_requestHttps = function(url, extInfo) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('requestHttps', Thrift.MessageType.CALL, this.seqid());
   var args = new BuyerServ_requestHttps_args();
   args.url = url;
+  args.extInfo = extInfo;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -4108,8 +4122,8 @@ BuyerServProcessor.prototype.process_requestHttps = function(seqid, input, outpu
   var args = new BuyerServ_requestHttps_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.requestHttps.length === 1) {
-    Q.fcall(this._handler.requestHttps, args.url)
+  if (this._handler.requestHttps.length === 2) {
+    Q.fcall(this._handler.requestHttps, args.url, args.extInfo)
       .then(function(result) {
         var result = new BuyerServ_requestHttps_result({success: result});
         output.writeMessageBegin("requestHttps", Thrift.MessageType.REPLY, seqid);
@@ -4124,7 +4138,7 @@ BuyerServProcessor.prototype.process_requestHttps = function(seqid, input, outpu
         output.flush();
       });
   } else {
-    this._handler.requestHttps(args.url,  function (err, result) {
+    this._handler.requestHttps(args.url, args.extInfo,  function (err, result) {
       var result = new BuyerServ_requestHttps_result((err != null ? err : {success: result}));
       output.writeMessageBegin("requestHttps", Thrift.MessageType.REPLY, seqid);
       result.write(output);
