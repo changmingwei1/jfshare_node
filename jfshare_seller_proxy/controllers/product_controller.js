@@ -1174,7 +1174,7 @@ router.post('/queryCaptchaList', function(request, response, next) {
                     });
                 });
                 result.yedNum=data.yedNum;
-                result.thmonNum=data.thmonNum;
+                result.thmonNum=data.monNum;
                 result.productList=products;
 
                 logger.info("查询卖家虚拟商品验证记录 result" + JSON.stringify(data));
@@ -1441,8 +1441,10 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                     var captchaDetals=data.captchaDetals;
                     var captObj=[];
                     if(captchaDetals==null||captchaDetals==""){
-                        result.code = 500;
-                        result.desc = "查询虚拟商品验证明细失败";
+                        //result.code = 500;
+                        //result.desc = "查询虚拟商品验证明细失败";
+
+                        result.productDetailList=null;
                         response.json(result);
                         return;
                     }

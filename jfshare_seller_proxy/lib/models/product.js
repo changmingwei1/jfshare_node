@@ -522,7 +522,7 @@ Product.prototype.queryCaptchaList = function (params, callback) {
 
     var page = new pagination_types.Pagination({
         numPerPage: params.perCount,
-        currentPage: params.curpage
+        currentPage: params.curPage
     });
     var captchaQueryParam = new product_types.CaptchaQueryParam({
         sellerId:params.sellerId,
@@ -551,7 +551,7 @@ Product.prototype.queryCaptchaTotalList = function (params, callback) {
 
     var page = new pagination_types.Pagination({
         numPerPage: params.perCount,
-        currentPage: params.curpage
+        currentPage: params.curPage
     });
     var captchaQueryParam = new product_types.CaptchaQueryParam({
         sellerId:params.sellerId,
@@ -581,7 +581,7 @@ Product.prototype.queryCaptchaDetails = function (params, callback) {
 
     var page = new pagination_types.Pagination({
         numPerPage: params.perCount,
-        currentPage: params.curpage
+        currentPage: params.curPage
     });
     var captchaQueryParam = new product_types.CaptchaQueryParam({
         productId:params.productId,
