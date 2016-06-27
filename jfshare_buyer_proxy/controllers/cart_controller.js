@@ -275,12 +275,17 @@ router.post('/list', function (req, res, next) {
                                 skuCount: itemDetailList[j].product.skuCount,
                                 count: itemDetailList[j].product.count,
                                 sku: {
-                                    skuNum: itemDetailList[j].product.product.productSku.skuItems[0].skuNum,
-                                    skuName: itemDetailList[j].product.product.productSku.skuItems[0].skuName,
-                                    weight: itemDetailList[j].product.product.productSku.skuItems[0].weight
+                                    skuNum: "",
+                                    skuName: "",
+                                    weight: ""
                                 },
                                 imgKey: itemDetailList[j].product.product.imgKey.split(',')[0]
                             };
+                            if(itemDetailList[j].product.product.productSku.skuItems!=null &&itemDetailList[j].product.product.productSku.skuItems.length>0){
+                                product.sku.skuNum = itemDetailList[j].product.product.productSku.skuItems[0].skuNum;
+                                product.sku.skuName = itemDetailList[j].product.product.productSku.skuItems[0].skuName;
+                                product.sku.weight = itemDetailList[j].product.product.productSku.skuItems[0].weight;
+                            }
                             productList.push(product);
                         }
                         cartLists.productList = productList;
@@ -346,6 +351,7 @@ router.post('/list', function (req, res, next) {
             //        return;
             //    }
             //});
+
         });
     } catch (ex) {
         logger.error("get cart product list error:" + ex);
