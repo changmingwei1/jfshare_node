@@ -19,7 +19,7 @@ router.post('/login', function(request, response, next) {
     try{
         //var arg = request.query;
         var params = request.body;
-        logger.info("请求参数错误:" + JSON.stringify(params));
+
         //参数验证
         if(params == null || params.loginName == null){
             result.code = 500;
@@ -33,6 +33,7 @@ router.post('/login', function(request, response, next) {
             response.json(result);
             return;
         }
+        logger.info("登录请求参数:" + JSON.stringify(params));
         Manager.signin(params, function (err, data) {
             if (err) {
                 response.json(err);
