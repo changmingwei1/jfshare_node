@@ -1,0 +1,31 @@
+<link href="/templates/public/error/layout_1/styles/style_base/css/error.css" rel="stylesheet" type="text/css"/>
+<div class="error">
+    <div class="errormain">
+        <h3>抱歉，您访问的页面已经去火星了......</h3>
+        <h4><p><span id="remainTime" name="remainTime">10</span>秒后将自动跳转到首页</p></h4>
+        <p>
+            1. 请检查您输入的地址是否正确。<br />2. 如果您不能确认您输入的网址，请进入首页浏览更多精彩内容
+        </p>
+    </div>
+</div>
+<iframe src="http://y.jf.189.cn/preview/CommPage/fixHeight.html#320" id="iframeA" name="iframeA" style="display: none;"></iframe>
+
+<script type="text/javascript">
+    var SysSecond;
+    var InterValObj;
+    function show(time) {
+        SysSecond = time;
+        InterValObj = window.setInterval(showTime, 1000);
+    }
+    function showTime() {
+        if (SysSecond > 0) {
+            SysSecond = SysSecond - 1;
+            var second = Math.floor(SysSecond % 60);             // 计算秒
+            document.getElementById("remainTime").innerHTML = second;
+        } else {//剩余时间小于或等于0的时候，就停止间隔函数
+            window.clearInterval(InterValObj);
+            window.location.href = jf189_bath;
+        }
+    }
+    show(10);
+</script>

@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>-，报价</title>
+    <meta name="keywords" content="-，"/>
+    <meta name="description" content="-报价，销售，价格优惠"/>
+    <meta property="qc:admins" content="" />
+    <link href="/templates/merchant/template_jfshare_xj/styles/color_1/css/header.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .lazy {
+            display: none;
+        }
+        *{outline:none; padding:0; margin:0;}
+        body{ font-family:"宋体"; font-size:12px; font-weight:normal; color:#333;}
+        ul,ol{ list-style:none;}
+        img{ border:0;}
+        a{color:#333; text-decoration:none; font-family:"microsoft yahei"; outline:none;}
+        a:hover{color:#fe3e4c; text-decoration:none;}
+        h1,h2,h3{ font-family:"microsoft yahei"; font-size:12px; font-weight:normal;}
+        .left{ float:left;}
+        .right{ float:right;}
+        .clear{ clear:both;}
+    </style>
+<link href="/templates/merchant/template_jfshare_xj/styles/color_1/css/product.css" rel="stylesheet" type="text/css"/>
+    <link href="/templates/merchant/template_jfshare_xj/styles/color_1/css/detail.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+
+        a:link{
+            text-decoration:none;
+        }
+        a:visited{
+            text-decoration:none;
+        }
+        a:hover{
+            text-decoration:none;
+        }
+        a:active{
+            text-decoration:none;
+        }
+    </style>
+    <script type="text/javascript" src="/templates/global_js/jquery/jquery-1.5.min.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript">
+        var contextPath = '';
+        function checkShopSearchForm(theForm) {
+            if (theForm.keyword.value == "请输入关键字") {
+                theForm.keyword.value = "";
+            }
+//           filtecharacter(theForm.keyword,0);
+        }
+        var arr=new Array();
+        arr[0]=/[\`\~\!\@#$\%\^\&\*\(\)\+\\\]\[\}\{\'\;\:\"\/\.\,\>\<\]\s\|\=\-\?\～\！\¥\……\（\）\——\：\“\？\》\《\，\。\；\‘\?\”\【\】]/g;
+        arr[1]=/[^\d]/g;
+        function filtecharacter(obj, index) {        //屏蔽关键字
+            obj.value = obj.value.replace(arr[index], "");
+        }
+        function displayHeadSorts() {
+            $("#sortLay").show();
+        }
+        function hiddenHeadSorts() {
+            $("#sortLay").hide();
+        }
+
+        function addToFavoriteShop(url) {
+            var a = url;
+            var b = "聚分享，省钱又放心";
+            if (document.all) {
+                window.external.AddFavorite(a, b);
+            } else if (window.sidebar) {
+                window.sidebar.addPanel(b, a, "");
+            } else {
+                alert("对不起，您的浏览器不支持此操作!\n请您使用菜单栏或Ctrl+D收藏本站。");
+            }
+        }
+        function turnoff(obj){
+            document.getElementById(obj).style.display="none";
+        }
+
+        $(function() {
+            $("img.lazy").lazyload();
+            $("img.lazy").show().lazyload();
+            $("img.lazy").lazyload({ threshold : 200 });
+            $("img").lazyload({
+                placeholder : "/templates/merchant/template_jfshare_xj/styles/color_1/images/grey.gif",
+                event : "click"
+            });
+            $("img.lazy").lazyload({
+                effect : "fadeIn"
+            });
+        });
+		
+		function highlightPage(){
+			if(!document.getElementsByTagName) return false;
+			if(!document.getElementById) return false;
+			if(!document.getElementById('sidemenuid')) return false;
+			var nav = document.getElementById('sidemenuid');
+			var links = nav.getElementsByTagName('a');
+			var last = 0;
+			for (var i=0;i<links.length;i++){
+				var linkurl =  links[i].getAttribute('href');
+				var currenturl = document.location.href;
+					if(currenturl.indexOf(linkurl)!=-1){
+						last = i;
+					}
+			}
+			links[last].className = 'yanse';
+			return true;
+		} 
+		
+		function hiddenDiv(p){
+		var divobj = document.getElementById("div1");
+		//alert(divobj.style.display);
+		var divs = divobj.children;
+		for(var i=0;i<divs.length;i++){
+		var div = divs[i];
+		if(div.tagName == 'DIV'){
+		if(p==1) $("#div1").animate({opacity: "hide"}, "slow");
+		else div.style.display = '';
+		}
+		}
+		}
+
+		function hiddenDivs(){
+		setTimeout("hiddenDiv(1)",5000);
+		}
+    </script>
+
+    <script>
+        var shopStyle = '/templates/merchant/template_jfshare_xj/styles/color_1', frontPath = '', mid = "", pid = 'p_2023165', userId = '', loginUrl = "null?id=p_2023165", nowStock = '10', securitySellableCount = '0', onceMustBuyCount = '', canspecialcount = '0', redirectURL = '';
+        var count = 0; //商品总数
+        var toEnd = new Array();
+        var toBegin = new Array();
+        var count2 = 0; //商品总数
+        var toEnd2 = new Array();
+        var toBegin2 = new Array();
+    </script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/jquery.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/lrscroll.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/share.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/dicengComm_pack_v1.0.1.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery.form-2.43.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/insertHmtlbox.js"></script>
+    <script type="text/javascript" src="/js/tools.js"></script>
+    <script type="text/javascript" src="/js/json/json2.js"></script>
+    <script type="text/javascript" src="/js/thickbox/thickbox.js"></script>
+    <script type="text/javascript" src="/js/dyniframesize.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/bestcompages.js"></script>
+    <script type="text/javascript" src="/templates/merchant/common_js/jquery.scrollByBtn.js"></script>
+    <script type="text/javascript">
+        TencentArticl.onload();
+    </script>
+    <script src="/templates/global_js/tracing.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/jqzoom.pack.1.0.1.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/product.js"></script>
+    <script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/promotion.js"></script>
+    <script type="text/javascript">
+        var frontPath = '', ombcount = '', uid = '', tuanPath = '';
+        function changeDiv(div1, div2, a1, a2) {
+            document.getElementById(div1).style.display = "block";
+            document.getElementById(div2).style.display = "none";
+            document.getElementById(a1).className = "cur";
+            document.getElementById(a2).className = "";
+        }
+        function buyCount() {
+            $("#buyCount").attr("value", $("#amount").val());
+            $("#buyCount_1").attr("value", $("#amount").val());
+        }
+        var frontPath = '', ombcount = '', uid = '', tuanPath = '';
+        function changeDiv(div1, div2, a1, a2) {
+            document.getElementById(div1).style.display = "block";
+            document.getElementById(div2).style.display = "none";
+            document.getElementById(a1).className = "cur";
+            document.getElementById(a2).className = "";
+        }
+        jQuery(document).ready(function () {
+            buyCount();
+        });
+
+
+    </script>
+    <script type="text/javascript" src="/js/promotion.js"></script>
+<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+			<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+			<link rel="Bookmark" href="/favicon.ico" type="image/x-icon" />
+		</head>
+<div style="display:none"> <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000207841'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s96.cnzz.com/z_stat.php%3Fid%3D1000207841' type='text/javascript'%3E%3C/script%3E"));</script></script> </div>
+<body class="w990"><!--通用头部开始-->
+
+    <div id="box">
+    <div class="header">
+	
+	<div class="header_top">
+            <div class="header_top_cen">
+		<div class="header_top_right">
+
+                    <ul class="right" style="width:522px; height:40px; margin-left:38px; display:inline; overflow:hidden;">
+                        <li><a href="/member/index.jsp" style="border:none;">我的聚分享</a></li>
+                        <li><h3></h3><a href="http://jfshare.com/help/index-150024.html">帮助中心</a></li>
+                        <li><h3></h3><h1></h1><a href="http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo" class="weibo" target="_blank">聚分享官方微博</a></li>
+                        <li style="width:122px;"><h3></h3><h2></h2><a href="/shopping/cart.jsp" class="gouwu">购物车<input name="" type="button" value="0" />件</a></li>
+						<li style="margin:7px 0 0 10px;"><a href="http://supplier.jfshare.com/"><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/login_button.jpg" alt="" /></a></li>
+                    </ul>
+                    <ul class="right">
+                        <li><a href="javascript:;" onClick="addToFavoriteShop('http://www.jfshare.com/')" style="margin-right:8px; display:inline; border:none;">收藏本站</a></li>
+                        <li>欢迎光临聚分享！聚分享！ <a href="https://www.jfshare.com/login/sign_in.jsp" style="padding-left:18px; color:#ea0000; border:none;">请登录</a><h3></h3></li>
+                                <li><a href="https://www.jfshare.com/login/register.jsp" style="color:#ea0000;">注册</a></li>
+                            </ul>
+                </div>
+            </div>
+        </div>
+        <div class="header_Lsou">
+            <div class="header_Lsou_cen">
+                <div class="search right">
+                    <ul>
+
+                        <form id="searchform" onSubmit="return checkShopSearchForm(this);" method="post" action="/product_list.jsp?publishtime=0&styleClass=1">
+                            <li class="search_1"><input id="keyword" type="text" name="keyword" autocomplete="off"><input type="hidden" value="c_10000" name="columnId"></li>
+                            <li class="search_2"><a href="javascript:void(0)" onClick="document.getElementById('searchform').submit();">搜索</a></li>
+                        </form>
+
+                    </ul>
+                    <ol>
+                        <li>热门搜索：
+                            </ol>
+                </div>
+            </div>
+        </div>
+       <!--  <div class="ydhk"><p><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/header_navyg.png" alt="" /></p></div> -->
+        <div class="nav">
+            <div class="navA">
+                <ul >
+                    </ul>
+                <p class="right" style="margin-right:20px; display:inline;">400-800-2383</p>
+            </div>
+        </div>
+    </div>
+    <!--通用头部结束-->
+
+<!--详细页--->
+<div class="location"><a href="/">首页 </a>
+     &gt;&nbsp;</div>
+<!--商品列表页-->
+<div class="content">
+<div class="product_one">
+<div class="left pic">
+    <div class="large_pic" id="bigpicdiv">
+        <a href="/upload/nopic_800.gif" id="midImgLink" class="jqzoom" title="">
+            <img id="midImg" alt="" src="/upload/nopic_350.gif"/>
+        </a>
+    </div>
+    <p class="clear"></p>
+    <div class="small_Pic">
+        <div class="scroll" style="position:relative;">
+            <div id="scrollul">
+                <div class="each">
+                        <a id="img40_0" href="javascript:void(0)" class="cur"
+                           ref1="/upload/nopic_350.gif" ref2="/upload/nopic_800.gif">
+                            <img alt="" src="/upload/nopic_60.gif"/>
+                        </a>
+                    </div>
+                </div>
+        </div>
+        </div>
+</div>
+<div class="right product_xin">
+<div class="t1">
+    <p></p>
+    <span></span>
+</div>
+<div class="t2">
+    <p>市&nbsp;场&nbsp;价：<font color="#979797">¥<s><i id="marketPriceDiv">359.00</i></S></font></p>
+                <ul>
+		<input  type="hidden" id="RateOfRmb2IntegralExchangesValue" value="0.01"/>
+            <li class="left">商&nbsp;城&nbsp;价：<em>¥</em><font color="#d51700"><em id="reLoadPriceSpan">159.00</em></font></li>
+                <!--   <li>所需积分：<font color="#d51700" id="reLoadPriceSpan1">15900.0</font>积分</li> -->
+        </ul>
+    </div>
+<!-- 新加 -->
+<script type="text/javascript">
+    function loadIntegral(id,mId,userId){
+        jQuery.ajaxSettings['contentType'] = "application/x-www-form-urlencoded; charset=utf-8";
+        jQuery.post("/ajax/getProductIntegral.jsp",{id:id,m:mId,userId:userId},function(responseText){
+            jQuery("#amountInteralDiv").append(jQuery.trim(responseText));
+        });
+    }
+    jQuery(loadIntegral('p_2023165','',''));
+</script>
+<!-- 新加end-->
+<!-- 赠品start-->
+<div class="t4">
+<!-- 赠品end-->
+<!-- 商品评论start-->
+<div class="t5">
+    <p class="left">商品评分:
+        <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+            <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+            <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+            <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+            <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+            
+        (已有0人评价)
+    </p>
+</div>
+<!-- 商品评论end-->
+<div class="t6">
+    <p><font>服&nbsp;&nbsp;&nbsp;&nbsp;务：由 聚分享 发货并提供售后服务&nbsp;&nbsp;</font><a id="a1" href="tencent://message/?uin=1728607690&Site=&Menu=yes" >客服1</a>&nbsp;&nbsp;<a id="a2" href="tencent://message/?uin=1695187947&Site=&Menu=yes" >客服2</a>&nbsp;&nbsp;<a id="a3" href="tencent://message/?uin=2082346933&Site=&Menu=yes" >客服3</a></p>
+</div>
+<div class="t7">
+    <p>支&nbsp;&nbsp;&nbsp;&nbsp;持：</p>
+    <ul>
+        <li class="t7_1"><a href="http://www.jfshare.com/templates/merchant/template_jfshare_xj/help/index-150024.html" target="_blank">积分支付</a></li>
+        <li class="t7_2"><a href="http://www.jfshare.com/mobile/mobile.jsp" target="_blank">中移动电子券</a></li>
+        <li class="t7_3"><a href="http://www.jfshare.com/integral/integral.jsp" target="_blank">电信积分互换</a></li>
+    </ul>
+    <p>100电信积分等于1元</p>
+</div>
+<div class="t8">
+    <span id="stock" style="display: none;">10</span>
+    <span id="productPriceSkuId" style="display: none;">sku_1862537</span>
+    <div class="t8" id="inputyBody">
+                <div class="bntbuy">
+                    <div class="bbtn">
+                        <span style="font-size: 20px;font-weight: bold;">此商品已下架，您可以选择购买其他商品！</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product_two">
+    <div class="left product_left">
+        <div class="left_classification">
+            </div>
+        <div class="left_brand">
+            <ol>
+                <li>相关品牌</li>
+            </ol>
+            <ul>
+                <li>
+                            <font>没有相关的品牌！</font>
+                        </li>
+                    </ul>
+        </div>
+        <!--最近浏览过的商品-->
+            <!--最近浏览过的商品-->
+        <!--购买此商品的人还购买过 start-->
+        <!-- 购买此商品的人还购买过end-->
+    </div>
+    <div class="right product_right">
+       <!--最佳搭档start -->
+        <!--最佳搭档end -->
+         <!-- 产品祥细展示start-->
+        <!-- 产品祥细展示end-->
+    </div>
+       <!--  你可能感兴趣的产品start-->
+    <!-- 你可能感兴趣的产品end-->
+
+</div>
+</div>
+<div class="footer">
+<!--通用尾部开始-->
+    <div class="footer">
+        <div class="footer_gui">
+            <ul>
+                </ul>
+        </div>
+
+        <div class="footer_cen">
+            <h1>
+                <p><a href="http://www.jfshare.com/COFCO/COFCO.jsp" style="float: left; width: 1220px; height: 104px;"></a></p>
+
+            </h1>
+        </div>
+
+          
+        <div class="footer_bang" >
+            <div class="footer_bang_a">
+                <ul class="footer_bang_aa">
+                    <li>
+                                </li>
+                        <li>
+                                </li>
+                        <li>
+                                </li>
+                        <li>
+                                </li>
+                        <li>
+                                </li>
+                        </ul>
+
+
+                <ol>
+                    <li style="text-align:left; margin-top:2px;  line-height:18px; padding-left:45px;">
+                        <span><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/gz.jpg"/></span>
+                        <span style=" float:right; text-align:left; width:145px;">
+                            <ul>
+                                <li><span style="padding-top:2px;"><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/w1.jpg"/></span><a
+                                        href="http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo"  target="_blank">
+                                    &nbsp;新浪官方微博</a>
+                                </li>
+                                <li><span style="padding-top:2px;"><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/w2.jpg" /></span><a href="http://jfshare.t.sohu.com" target="_blank">
+                                    &nbsp;搜狐官方微博</a></li>
+                                <li>
+                                    <span style="padding-top:2px;"><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/w3.jpg" /></span><a href="http://t.qq.com/JFXjfshare" target="_blank">&nbsp;腾讯官方微博</a>
+                                </li>
+                            </ul>
+                        </span>
+                    </li>
+                   
+					<li style="text-align:left; line-height:20px; padding-left:45px; padding-top:11px; width:195px;">
+                        <span><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/kf.jpg"></span>
+                        <span style="float:right; text-align:left; width:160px; margin-top:1px;">客服热线：<font color="#bc0101">400-800-2383</font> </span>
+                    </li>
+                    
+					<li style="text-align:left; line-height:14px; padding-left:45px; padding-top:5px; width:195px;">
+                        <span><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/ts.jpg"></span>
+                        <span style="float:right; text-align:left; width:160px;">投诉中心：<font color="#bc0101">13923807086</font> <font color="#bc0101" style="padding-left:60px;">ts@jfshare.com</font> </span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="footer_my">
+            <p>
+                </p>
+        </div>
+        <div class="footer_bottom">
+            <div style="background:#FFFFFF; width:1220px; height:130px; margin:0 auto;">
+                <ul>
+                    <li></li>
+                </ul>
+                <ol>
+                    </ol>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
+<body onLoad="highlightPage();">
+</body>
+<!--是否团购活动-->
+<!--是否抢购活动-->
+<div style="display:none;">
+    </div>

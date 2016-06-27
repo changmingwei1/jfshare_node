@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* CSS Document */
+body{  margin:0; padding:0; font-size:12px; word-wrap:break-word; color:#333; font-family:"����"; }
+ul,li,dl,dt,dd,span,del,b,font,label,ol{ padding:0px; margin:0px; list-style-type:none;}
+p,input,form{ margin:0px; padding:0px;}
+h1,h2,h3,h4,h5,h6{ margin:0px; padding:0px; font-weight:normal; font-size:12px;}
+img{border:0;}
+a{ text-decoration:none; color:#333;}
+a:hover{ text-decoration:underline; color:#d00;}
+.clear{ clear:both; height:0; line-height:0; font-size:0; overflow:hidden;}
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix {display: inline-table;}
+* html .clearfix {height: 1%;} 
+*+html .clearfix{height: 1%;}
+.clearfix {display: block;}
+
+
+.error{ border:#ddd 1px solid; background:#f6f6f6; width:988px; margin:10px auto 0;}
+
+.errormain{ background:url(/img/error_icon.gif) no-repeat 190px 50px; padding:70px 0 70px 376px; width:614px; margin:auto; overflow:hidden; }
+.errormain h3{ font-size:14px; font-weight:bold;}
+.errormain h4{ padding:18px 0;}
+.errormain p{ line-height:18px;}
+.errormain p a{ color:#f60;}

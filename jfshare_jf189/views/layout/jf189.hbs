@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>天翼积分商城|我的订单</title>
+    <meta name="renderer" content="webkit"><!-- 默认360极速内核 -->
+    <meta name="description" content="天翼积分商城（jf.189.cn）是为具有电信积分兑换资格的客户提供积分兑换和消费等各类服务的综合信息服务平台。在此可利用电信积分以超低价格换购丰厚的商品。" />
+    <meta name="keywords" content="电信积分,积分兑换,中国电信积分兑换,中国电信积分查询,电信积分查询,电信积分兑换,礼品兑换,宽带积分,天翼积分, E家积分" />
+    <!--<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />-->
+    <link rel="stylesheet" href="/jf189/css/usercenter.css" />
+    <link rel="stylesheet" href="/jf189/css/userorder.css" />
+    <link rel="stylesheet" href="/templates/webui-popover/jquery.webui-popover.min.css" />
+
+    <script type="text/javascript" src="/jf189/js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="/jf189/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript" src="/jf189/js/DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/jf189/js/userorder.js"></script>
+    <script type="text/javascript" src="/jf189/js/shareJs.js"></script>
+
+    <script src="/templates/webui-popover/jquery.webui-popover.min.js"></script>
+    <script src="/js/handlebars-v4.0.4.js" type="text/javascript"></script>
+    <script src="/js/json/json2.js" type="text/javascript"></script>
+    <script src="/js/util/tools.js" type="text/javascript"></script>
+    <script src="/js/util/Math.uuid.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/ucenter/buyer/ucenter.hbs-helper.js"></script>
+
+</head>
+<body>
+<!--   中间部分内容   -->
+<div id="content">
+    <div id="leftpart">
+        <div id="userleftInfo">
+            <div class="info-lcol">
+                <div class="u-pic">
+                    <img alt="用户头像" src="{{sexImg}}">
+                    <div class="mask"></div>
+                </div>
+                <div class="info-m">
+                    <div class="u-name">
+                        <span>{{userName}}</span>
+                    </div>
+                    <!--<div class="u-level">-->
+                        <!--<span>{{custLevel}}</span>-->
+
+                    <!--</div>-->
+                </div>
+                <!--<a href="http://jf.189.cn/JFSubject/BirthdaySubject.aspx" target="_blank" class="birthIcon istoday" title="前往生日专享">生日</a>-->
+                <div id="quite" title="退出登录"></div>
+            </div>
+
+        </div>
+        <!-- 导航菜单 -->
+        <div id="centerNav">
+
+            <dl>
+                <dt>我的积分</dt>
+
+                <dd id="dyjf"><a href="http://y.jf.189.cn/selfcenter/myYiPoints.aspx" target="_top">积分抵用券</a></dd>
+                <dd id="yjfcz"><a href="http://y.jf.189.cn/selfcenter/recharge.aspx" target="_top">抵用券充值</a></dd>
+                <dt>我的订单</dt>
+                <dd id="dddcx"><a href="http://y.jf.189.cn/selfcenter/order.aspx" target="_top">订单查询</a></dd>
+                <dd class="active">尊享订单查询</dd>
+                <dt>账户管理</dt>
+                <dd id="account"><a href="http://y.jf.189.cn/selfcenter/user.aspx" target="_top">基本资料</a></dd>
+                <dd id="password"><a href="http://y.jf.189.cn/selfcenter/password.aspx" target="_top">密码修改</a></dd>
+                <dd id="address"><a href="http://y.jf.189.cn/selfcenter/deliverAddress.aspx" target="_top">收货地址管理</a></dd>
+
+            </dl>
+
+        </div>
+    </div>
+    <!-- 右侧 -->
+    <div id="rightpart">
+        {{{body}}}
+    </div>
+    <input type="hidden" id="ssid" value="{{ssid}}">
+</div>
+<iframe id="loginInfoFrm" name="loginInfoFrm" src="#" style="display: none;" width="100%" height="0px"></iframe>
+<iframe src="http://y.jf.189.cn/preview/CommPage/fixHeight.html#1100" id="iframeA" name="iframeA" style="display: none;"></iframe>
+</body>
+</html>

@@ -1,0 +1,90 @@
+#address {margin-top: 20px;}
+#address i{  color: #f90;font-style: normal;}
+#addressTips {
+	border:1px solid #c3d8e6;
+	padding:8px 0px 8px 15px;
+	margin-bottom:10px;line-height: 17px;
+	background: #e5f5ff;
+}
+#addressTips img{vertical-align: top;}
+#address ul {
+	padding-left:35px;
+}
+#address li {
+	margin:10px 0px;
+}
+#address li span {
+	width:100px;
+	height:28px;
+	line-height:28px;
+	text-align:right;
+	display:block;
+	float:left;
+	margin-right:5px;
+}
+#address .iptAdd {
+	width:120px;
+	height:28px;
+	line-height:28px;
+	border:1px solid #ccc;
+	color:#999;
+	text-align:center;
+	background:#ffffed;
+}
+#address li textarea {
+	width:385px;
+	border:1px solid #ccc;
+	color:#999;
+	background:#ffffed;
+}
+
+#address #cancel {
+	margin:38px 0px 0px;
+}
+#address #conform:hover {
+	text-decoration:none;
+	background-position:bottom;
+}
+#address .skyBtn {
+  background-color: #026AB3;
+  color: white;line-height: 20px;width:100px;margin-right: 20px;
+  border-radius: 5px;
+  padding: 7px 15px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+#address .addFooter{margin-left: 100px;}
+
+
+
+.tableAdd{width: 100%;text-align: center;border-collapse:collapse;font-size: 12px;margin-top: 10px;  border: 1px solid #e7e7e7;}
+.tableAdd .even{background-color: #eee;}
+.tableAdd .trhover{background-color: #ccc;}
+.tableAdd tr {
+  border-bottom: 1px solid #e7e7e7;
+}
+.tableAdd th{background-color: #f2f2f2;color: #333;height: 38px; font-weight: normal;}
+.tableAdd td{padding:5px;height: 40px;}
+.tableAdd .note{
+  padding: 4px 5px;
+  background: #f60;
+  color: #fff;
+  border: 1px solid #f60;display: none;
+  border-radius: 3px;
+  text-decoration: none;
+}
+#addressDefault .note {
+  padding: 2px 5px;display: inline;
+  border: 1px solid #ff3800;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background: #ffd6cc;
+  color: #f30;
+}
+.tableAdd tr:hover{background-color: #eee;}
+.tableAdd tr:hover .note{display: inline;}
+
+
+.addtip{margin-left: 106px;margin-top: 5px;color:#aaa;}

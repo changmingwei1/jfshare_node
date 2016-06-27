@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="{{mata_keys}}">
+        <meta name="description" content="{{meta_desc}}">
+        <title>{{title}} - 聚分享</title>
+        <style>
+            *{outline:none; padding:0; margin:0;}
+            body{ font-family:"宋体"; font-size:12px; font-weight:normal; color:#333;}
+            ul,ol{ list-style:none;}
+            img{ border:0;}
+            a{color:#333; text-decoration:none; font-family:"microsoft yahei"; outline:none;}
+            a:hover{color:#fe3e4c; text-decoration:none;}
+            h1,h2,h3{ font-family:"microsoft yahei"; font-size:12px; font-weight:normal;}
+            .left{ float:left;}
+            .right{ float:right;}
+            .clear{ clear:both;}
+        </style>
+
+        <!-- css start -->
+        {{>css}}
+        <!-- css end -->
+
+        <!-- priority js start -->
+        {{>script_head}}
+        <!-- priority js end -->
+    </head>
+    <body class="w990">
+        <!-- pub header start -->
+        {{> header}}
+        <!-- pub header end -->
+
+        <!-- center content start -->
+        <div id="contents">
+            <!-- body core detail start -->
+            {{{body}}}
+            <!-- body core detail end -->
+        </div>
+        <!-- center content end -->
+
+            <!-- footer start -->
+            {{> footer}}
+            <!-- footer end -->
+
+            <!-- async js start -->
+            {{>script_tail}}
+            <!-- async js end -->
+    </body>
+</html>
+

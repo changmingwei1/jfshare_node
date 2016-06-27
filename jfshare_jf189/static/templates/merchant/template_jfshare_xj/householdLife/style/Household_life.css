@@ -1,0 +1,125 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{outline:none; padding:0; margin:0;}
+body{ font-family:"宋体"; font-size:12px; font-weight:normal; color:#333333;}
+ul,ol{ list-style:none;}
+img{ border:0;}
+a{color:#333333; text-decoration:none;}
+a:hover{color:#835c39; text-decoration:none;}
+h1,h2,h3{ font-family:"宋体"; font-size:12px; font-weight:normal;}
+.left{ float:left;}
+.right{ float:right;}
+.clear{ clear:both;}
+
+
+.Content_Household_life{ min-width:1220px; margin:0 auto;}
+.Content_Household_life1{ min-width:1220px; margin:0 auto; height:768px;}
+
+/* banner */
+.Household_life_banner { margin:0 auto; width:100%; height:360px; position:relative;}
+#slides { margin:0 auto; width:100%; height:360px; position:absolute; z-index:1; overflow:hidden;}
+#slides li { margin:0 auto; min-width:1220px; height:360px;}
+#slides li p{ margin:0 auto; width:1220px; height:360px; position:relative; z-index:5;}
+#slides li p a{ float:left; width:1220px; height:360px; overflow:hidden; text-indent:-9999px;}
+#pagination { margin:0 auto; width:1015px; height:14px; padding-left:205px; position:relative; _width:500px; *width:500px; _position:absolute; *position:absolute; _left:35%; *left:35%; _padding-left:205px; *padding-left:205px; z-index:2;}
+#pagination li { width:14px; height:14px; float:left; margin-left:5px; border-radius:7px; background:#d9d9d9; margin-top:335px;}
+#pagination li a { display:block; width:14px; height:14px;  text-indent:-9999px; font-size:0px;}
+#pagination li.current { background:#b08d6d;}
+
+
+.Household_life_Center{ width:1220px; margin:0 auto;}
+/* 栏目分类 */
+.Household_life_nav{ float:left; width:191px; height:738px; margin-top:10px; padding:2px; background:#b08d6d; z-index:20; position:absolute; overflow:hidden;}
+.Household_life_one{ width:171px; padding:0 12px; height:32px; color:#FFFFFF; font-size:16px; font-family:"microsoft yahei"; line-height:30px;}
+.Household_life_two{ width:191px; height:706px; background:#FFFFFF;}
+.Household_life_two dl{ float:left; width:191px; padding-bottom:6px;}
+.Household_life_two dl dt{ float:left; width:191px; height:30px; border-bottom:1px dashed #dddddd; overflow:hidden; margin-bottom:8px;}
+.Household_life_two dl dt a:hover{ color:#b08d6d;}
+.Household_life_two dl .Household_life_two1 a{ display:block; width:155px; height:30px; line-height:30px; background:url("../images/Household_life.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/householdLife/images/Household_life.png*/ 0 -6px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Household_life_two dl .Household_life_two2 a{ display:block; width:155px; height:30px; line-height:30px; background:url("../images/Household_life.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/householdLife/images/Household_life.png*/ 0 -36px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Household_life_two dl .Household_life_two3 a{ display:block; width:155px; height:30px; line-height:30px; background:url("../images/Household_life.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/householdLife/images/Household_life.png*/ 0 -67px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Household_life_two dl .Household_life_two4 a{ display:block; width:155px; height:30px; line-height:30px; background:url("../images/Household_life.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/householdLife/images/Household_life.png*/ 0 -100px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Household_life_two dl .Household_life_two5 a{ display:block; width:155px; height:30px; line-height:30px; background:url("../images/Household_life.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/householdLife/images/Household_life.png*/ 0 -130px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Household_life_two dl .Household_life_two6 a{ display:block; width:155px; height:30px; line-height:30px; background:url("../images/Household_life.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/householdLife/images/Household_life.png*/ 0 -156px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Household_life_two dl dd{ float:left; width:80px; height:19px; line-height:19px; overflow:hidden; margin-left:15px; display:inline;}
+.Household_life_two dl dd a{ color:#666;}
+.Household_life_two dl dd a:hover{ color:#b08d6d;}
+
+
+/* 新品推荐 品牌热销 */
+.Household_life_hot{ float:right; width:1015px; position:absolute; margin-top:370px; margin-left:205px; display:inline;}
+#turn{ float:left; width:805px;}
+.menu{ width:805px; height:30px;}
+.menu ul{float:left; width:805px;}
+.menu li{cursor:pointer;position:relative;float:left;height:30px; text-align:center; width:140px; border-right:1px solid #FFFFFF; font-size:14px; line-height:30px; color:#333; background:#DDDDDD; font-family:"microsoft yahei"; overflow:hidden;}
+.menu .libg{ background:#b08d6d; color:#FFFFFF;}
+.turn{ float:left; width:804px; height:350px; overflow:hidden; border-top:2px solid #b08d6d; border-right:1px solid #DDDDDD;}
+.Food_beverage_hot_nav{ float:left; width:200px; height:174px; overflow:hidden; border-left:1px solid #DDDDDD; border-bottom:1px solid #DDDDDD;}
+.Food_beverage_hot_nav dt{ float:left; width:140px; height:140px; overflow:hidden; margin-left:30px; display:inline; margin-top:5px;}
+.Food_beverage_hot_nav dt img{ float:left; width:140px; height:140px;}
+.Food_beverage_hot_nav dd{ float:left; margin-top:5px; padding:0 12px; width:176px; height:20px; line-height:20px; overflow:hidden;}
+.Food_beverage_hot_nav dd a{ float:left; width:110px; height:20px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.Food_beverage_hot_nav dd font{ float:right; padding-left:10px; width:48px; height:18px; overflow:hidden; text-align:right; font-size:14px; font-family:"microsoft yahei"; color:#835c39;}
+
+/* 今日特价 */
+.turn_right{ width:200px; padding-left:10px; margin-top:30px; border-top:2px solid #b08d6d;}
+.turn_right_nav{ width:200px; background:#f0f0f0; height:40px;}
+.turn_right_nav li{ width:200px; height:40px; line-height:38px; text-align:center; font-size:20px; font-family:"microsoft yahei";  background:url("../images/Household_life.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/householdLife/images/Household_life.png*/ 0 -201px no-repeat;}
+.turn_right_cen{ width:198px; height:309px; overflow:hidden; border:1px solid #DDDDDD; border-top:none;}
+.turn_right_cen dt{ float:left; width:150px; padding:0 24px; margin:12px 0 12px;}
+.turn_right_cen dt img{ float:left; width:150px; height:150px;}
+.turn_right_cen dd{ float:left; width:150px; padding:0 24px; line-height:24px;}
+.turn_right_cen dd s{ color:#666;}
+.turn_right_cen dd h1{ float:left; width:150px; height:24px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.turn_right_cen dd h2{ float:left; width:150px; font-size:14px; font-family:"microsoft yahei";}
+.turn_right_cen dd h2 font{ color:#835c39; font-size:16px;}
+.turn_right_cen dd b{ float:left; margin-top:8px; height:34px; width:150px; text-align:center; line-height:34px; background:#b08d6d;}
+.turn_right_cen dd b a{ float:left; height:34px; width:140px; font-size:18px; color:#FFFFFF; font-family:"microsoft yahei";}
+.turn_right_cen dd b a:hover{ color:#FFFFFF;}
+
+
+.Household_life_Center1{ width:1220px; margin:0 auto;}
+.Center_left{ width:195px;}
+.Center_right{ width:1015px;}
+/* 品牌 */
+.brand{ width:193px; border:1px solid #DDDDDD;}
+.brand_nav{ float:left; width:193px; height:36px; line-height:36px; background:#b08d6d; text-align:center; font-size:16px; color:#FFFFFF; font-family:"microsoft yahei";}
+.brand_cen{ float:left; width:193px; overflow:hidden;}
+.brand_cen li{ float:left; width:96px; margin-top:-1px; margin-left:-1px; border-top:1px dashed #dddddd; border-left:1px dashed #dddddd;}
+.brand_cen li img{ width:96px; height:65px; float:left;}
+
+
+/* 热销排行 */
+.ranking{ width:193px; border:1px solid #DDDDDD; margin-top:15px;}
+.ranking_nav{ float:left; width:193px; height:36px; line-height:36px; background:#b08d6d; text-align:center; font-size:16px; color:#FFFFFF; font-family:"microsoft yahei"; z-index:2; position:relative;}
+.ranking_cen{ float:left; width:193px; z-index:1;}
+.ranking_cen dl{ float:left; width:193px; border-top:1px dashed #DDDDDD; margin-top:-1px;}
+.ranking_cen dl dt{ float:left; width:160px; height:160px; overflow:hidden; padding:10px 16px;}
+.ranking_cen dl dt img{ float:left; width:160px; height:160px;}
+.ranking_cen dl dd{ float:left; width:173px; padding:0 10px 18px 10px; line-height:20px;}
+.ranking_cen dl dd a{ float:left; width:173px; height:20px; text-align:center; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.ranking_cen dl dd font{ float:left; width:173px; height:20px; overflow:hidden; text-align:center; font-size:18px; color:#835c39; font-family:"microsoft yahei"}
+.ranking_cen dl dd font s{ font-size:14px; padding:0 10px; color:#666;}
+
+
+/* 家纺用品 生活日用 时尚家饰 厨房用品 卫浴用品 康体保健 */
+.Home_textile{ float:left; width:1015px; padding-bottom:12px;}
+.textile_nav{ width:1010px; border-bottom:2px solid #b08d6d; padding:0 0 0 5px; margin-top:7px;}
+.textile_nav .left{ width:180px; height:28px; line-height:28px; overflow:hidden; font-family:"microsoft yahei";}
+.textile_nav .left font{ padding-right:20px;}
+.textile_nav .left a:hover{ text-decoration:none;}
+.textile_nav .right{ width:800px; margin-top:5px; height:20px; line-height:20px; text-align:right; overflow:hidden;}
+.textile_nav .right a{ padding:0 6px;}
+.textile_cen{ width:1015px; margin-top:5px;}
+.textile_cen_left{ width:752px; border:1px solid #e8e8e8; padding:5px 11px; height:386px; overflow:hidden;}
+.textile_cen_left1{ width:752px; height:385px; overflow:hidden;}
+.textile_cen_left dl{ float:left; width:187px; height:192px; overflow:hidden; border-bottom:1px dashed #e8e8e8; border-right:1px dashed #e8e8e8;}
+.textile_cen_left dl dt{ float:left; width:160px; height:160px; overflow:hidden; margin-left:13px; display:inline; margin-top:5px;}
+.textile_cen_left dl dt img{ float:left; width:160px; height:160px;}
+.textile_cen_left dl dd{ float:left; padding:0 8px; width:170px; height:20px; line-height:20px; overflow:hidden;}
+.textile_cen_left dl dd a{ float:left; width:120px; height:18px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.textile_cen_left dl dd font{ float:right; width:48px; height:18px; text-align:right; overflow:hidden; font-size:14px; font-family:"microsoft yahei"; color:#835c39;}
+.textile_cen_right{ width:228px; height:398px; overflow:hidden;}
+.textile_cen_right img{ float:left; width:228px; height:398px;}
+

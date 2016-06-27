@@ -1,0 +1,40 @@
+{{!< jf189}}
+
+<!-- order css start -->
+{{>order_css}}
+<!-- order css end -->
+
+<div class="chartPanel">
+    <div class="back"><a class="link" href="/buyer/myOrders?ssid={{ssid}}">返回尊享订单列表</a></div>
+    <div class="o_mt">
+        <h2>订单详情</h2>
+    </div>
+
+    <!--填充订单物流跟踪-->
+    <div id="myorderDeliverTracePanel"></div>
+
+    <!--填充订单-->
+    <div id="myOrderPanel"></div>
+
+    <!--填充订单详情-->
+    <div id="myOrderInfoPanel"></div>
+
+    <!--填充结算信息-->
+    <div id="bottomPanel"></div>
+</div>
+
+<!-- order async js start -->
+{{>order_detail_script_tail}}
+<!-- order async js end -->
+
+<script type="text/javascript">
+    var orderId = '{{orderId}}';
+    var ssid = '{{ssid}}';
+    var _hbs_order = Handlebars.compile( $("#query_order_template").html());
+    var _hbs_orderInfo = Handlebars.compile($("#hbs-orderInfo").html());
+</script>
+
+<!-- order js start -->
+<script type="text/javascript" src="/js/order/render_core_detail.js?v=1.0.0"></script>
+<!-- order js end -->
+

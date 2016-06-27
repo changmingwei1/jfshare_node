@@ -1,0 +1,49 @@
+<script type="text/javascript" src="/templates/merchant/common_js/jquery.scrollByBtn.js"></script>
+<script type="text/javascript" src="/js/util/lrscroll.js"></script>
+<script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/insertHmtlbox.js"></script>
+<script type="text/javascript" src="/js/thickbox/thickbox.js"></script>
+<script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/bestcompages.js"></script>
+<script src="/templates/global_js/tracing.js"></script>
+<script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/promotion.js"></script>
+
+<!--<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");-->
+<!--document.write(unescape("%3Cspan id='cnzz_stat_icon_1000207841'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s96.cnzz.com/z_stat.php%3Fid%3D1000207841' type='text/javascript'%3E%3C/script%3E"));-->
+<!--</script>-->
+
+
+
+<!--添加购物车成功简介-->
+<script id="cart_success_template" type="text/x-handlebars-template">
+    <div class="poplayer_box">
+        <a class="closeDiv" href="javascript:changecartOpen();"></a>
+    
+        <div class="layer_detail_cart">
+            <h2>此商品已加入购物车</h2>
+            <div class="cont">
+                购物车共 <strong id="totalAmount">\{{totalAmount}}</strong> 件</b>
+            </div>
+            <div class="btn">
+                <a href="javascript:window.location='/cart/list'"><img
+                        src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_btn_01.gif"/></a>
+                <a href="javascript:changecartOpen();">继续购物</a>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--添加购物车失败简介-->
+<script id="cart_failure_template" type="text/x-handlebars-template">
+    <div class="poplayer_box">
+        <a class="closeDiv" href="javascript:changecartOpen();"></a>
+
+        <div class="layer_detail_cart">
+            <h2>加入购物车失败</h2>
+            <div class="cont">
+               \{{errorMsg}}
+            </div>
+            <div class="btn">
+                <a href="javascript:changecartOpen();">返回重试</a>
+            </div>
+        </div>
+    </div>
+</script>

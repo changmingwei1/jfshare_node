@@ -1,0 +1,179 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{outline:none; padding:0; margin:0;}
+body{ font-family:"宋体"; font-size:12px; font-weight:normal; color:#333333;}
+ul,ol{ list-style:none;}
+img{ border:0;}
+a{color:#333333; text-decoration:none;}
+a:hover{color:#ff4a93; text-decoration:none;}
+h1,h2,h3{ font-family:"宋体"; font-size:12px; font-weight:normal;}
+.left{ float:left;}
+.right{ float:right;}
+.clear{ clear:both;}
+
+
+.Content_Beauty_makeup{ width:1220px; margin:0 auto;}
+
+.Beauty_makeup{ float:right; width:1015px; margin-top:10px;}
+/* banner */
+.Beauty_makeup_banner { float:right; width:1015px; height:315px;}
+#slides { margin:0 auto; width:1015px; height:315px; z-index:1; position:absolute;}
+#slides li { margin:0 auto; width:1015px; height:315px;}
+#slides li p{ margin:0 auto; width:1015px; height:315px; z-index:5;}
+#slides li p a{ float:left; width:1015px; height:315px; overflow:hidden; text-indent:-9999px;}
+#pagination { float:right; width:auto; z-index:2; padding-right:20px; position:relative; margin-top:295px;}
+#pagination li { width:14px; height:14px; float:left; margin-left:5px; border-radius:7px; background:#d9d9d9;}
+#pagination li a { display:block; width:14px; height:14px;  text-indent:-9999px; font-size:0px;}
+#pagination li.current { background:#3c9c24;}
+
+
+.Beauty_makeup_Center{ width:1220px; margin:0 auto;}
+/* 栏目分类 */
+.Beauty_makeup_nav{ float:left; width:193px; height:676px; margin-top:10px; border:1px solid #dddddd; z-index:20; overflow:hidden;}
+.Beauty_makeup_one{ width:171px; padding:0 12px; height:36px; color:#FFFFFF; background:#ff4a93; font-size:16px; font-family:"microsoft yahei"; line-height:36px;}
+.Beauty_makeup_two{ width:193px; height:644px;}
+.Beauty_makeup_two dl{ float:left; width:193px; padding-bottom:8px;}
+.Beauty_makeup_two dl dt{ float:left; width:193px; height:28px; border-bottom:1px dashed #dddddd; overflow:hidden; margin-bottom:7px;}
+.Beauty_makeup_two dl dt a:hover{ color:#ff4a93;}
+.Beauty_makeup_two dl .Beauty_makeup_two1 a{ display:block; width:155px; height:32px; line-height:32px; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ 0 -6px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Beauty_makeup_two dl .Beauty_makeup_two2 a{ display:block; width:155px; height:32px; line-height:32px; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ 0 -36px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Beauty_makeup_two dl .Beauty_makeup_two3 a{ display:block; width:155px; height:32px; line-height:32px; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ 0 -67px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Beauty_makeup_two dl .Beauty_makeup_two4 a{ display:block; width:155px; height:32px; line-height:32px; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ 0 -100px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Beauty_makeup_two dl .Beauty_makeup_two5 a{ display:block; width:155px; height:32px; line-height:32px; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ 0 -130px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Beauty_makeup_two dl .Beauty_makeup_two6 a{ display:block; width:155px; height:32px; line-height:32px; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ 0 -162px no-repeat; font-size:14px; font-weight:bold; color:#666; padding-left:36px;}
+.Beauty_makeup_two dl dd{ float:left; width:80px; height:18px; line-height:18px; overflow:hidden; margin-left:15px; display:inline;}
+.Beauty_makeup_two dl dd a{ color:#666;}
+.Beauty_makeup_two dl dd a:hover{ color:#ff4a93;}
+
+
+/* 新品上市 热销榜 */
+.Beauty_makeup_hot{ float:right; width:1015px; margin-top:10px;}
+
+#turn{ float:left; width:795px;}
+.menu{ float:left; width:795px; height:30px;}
+.menu ul{float:left; width:795px;}
+.menu li{cursor:pointer;position:relative;float:left;height:30px; text-align:center; width:140px; border-right:1px solid #FFFFFF; font-size:14px; line-height:30px; color:#333; background:#DDDDDD; font-family:"microsoft yahei";}
+.menu .libg{ background:#ff4a93; color:#FFFFFF;}
+.turn{ float:left; width:792px; height:320px; overflow:hidden; border-top:2px solid #ff4a93; border-right:1px solid #DDDDDD;}
+.Beauty_makeup_hot_nav{ float:left; width:197px; height:159px; overflow:hidden; border-bottom:1px solid #DDDDDD; border-left:1px solid #DDDDDD;}
+.Beauty_makeup_hot_nav dt{ float:left; width:130px; height:130px; overflow:hidden; padding-left:33px; margin-top:5px;}
+.Beauty_makeup_hot_nav dt img{ float:left; width:130px; height:130px;}
+.Beauty_makeup_hot_nav dd{ float:left; padding:0 12px; width:172px; height:20px; line-height:20px; overflow:hidden;}
+.Beauty_makeup_hot_nav dd a{ float:left; width:120px; height:18px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.Beauty_makeup_hot_nav dd font{ float:right; width:48px; height:18px; text-align:right; overflow:hidden; font-size:14px; font-family:"microsoft yahei"; color:#ff4a93;}
+
+.hot_right{ width:208px; height:350px; overflow:hidden; border:1px solid #DDDDDD; background:#f8f8f8;}
+.hot_right_nav{ float:left; width:190px; height:30px; line-height:30px; padding-left:18px; background:url("../images/product_list.jsp-columnId=c_430052")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup_B.jpg*/ repeat-x; font-family:"microsoft yahei"; font-size:16px;}
+.hot_right_cen{ float:left; width:208px; background:#FFFFFF; padding-bottom:10px;}
+.hot_right_cen dt{ float:left; width:208px; height:14px; line-height:14px; overflow:hidden; margin-top:10px;}
+.hot_right_cen dt font{ float:left; width:14px; height:14px; text-align:center; padding-left:18px; color:#FFFFFF; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ 0 -208px no-repeat;}
+.hot_right_cen dt a{ float:left; width:160px; height:14px; overflow:hidden; padding-left:6px; white-space:nowrap; text-overflow:ellipsis;}
+.hot_right_cen dd{ float:left; width:150px; padding-left:38px; line-height:24px; margin-top:10px;}
+.hot_right_cen dd img{ float:left; width:50px; height:50px; margin-right:8px; display:inline; overflow:hidden; border:1px solid #ff4a93;}
+.hot_right_cen dd s{ float:left; width:84px; height:24px; line-height:24px; overflow:hidden; color:#666;}
+.hot_right_cen dd b{ float:left; width:84px; height:24px; line-height:24px; overflow:hidden; font-size:14px; font-family:"microsoft yahei"; color:#ff4a93;}
+.hot_right_cen1{ float:left; width:208px;}
+.hot_right_cen1 li{ float:left; width:208px; height:36px; line-height:36px; overflow:hidden; border-top:1px solid #dddddd;}
+.hot_right_cen1 li font{ float:left; width:14px; height:36px; text-align:center; padding-left:18px; color:#FFFFFF; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ 0 -231px no-repeat;}
+.hot_right_cen1 li a{ float:left; width:160px; height:36px; overflow:hidden; padding-left:6px; white-space:nowrap; text-overflow:ellipsis;}
+
+
+/* 时尚彩妆 */
+.Beauty_makeup_Fashion{ width:1220px; margin-top:25px;}
+.Fashion_nav{ width:1215px; border-bottom:2px solid #ff4a93; padding:0 0 0 5px;}
+.Fashion_nav .left{ width:280px; height:28px; line-height:28px; overflow:hidden; font-family:"方正正黑简体"}
+.Fashion_nav .left font{ padding-right:20px;}
+.Fashion_nav .left a:hover{ text-decoration:none;}
+.Fashion_nav .right{ width:900px; margin-top:5px; height:20px; line-height:20px; text-align:right; overflow:hidden;}
+.Fashion_nav .right a{ padding:0 6px;}
+.Fashion_cen{ width:1220px; margin-top:5px;}
+.Fashion_cen_left{ width:984px;}
+.Fashion_cen_left li{ float:left; width:230px; height:300px; overflow:hidden; margin-right:16px; display:inline;}
+.Fashion_cen_left li img{ float:left; width:230px; height:300px;}
+.Fashion_cen_right{ width:228px; height:298px; overflow:hidden; border:1px solid #dddddd; border-left:none;}
+.Fashion_cen_right dt{ float:left; width:75px; height:99px; overflow:hidden; border-left:1px solid #dddddd; text-align:center; line-height:24px;}
+.Fashion_cen_right .a1{ background:#ff71cb;}
+.Fashion_cen_right .a1 a{ color:#FFFFFF;}
+.Fashion_cen_right .a2{ background:#cccccc;}
+.Fashion_cen_right dt img{ float:left; width:75px; height:75px; overflow:hidden;}
+.Fashion_cen_right dd{ float:left; width:228px; border-left:1px solid #dddddd; line-height:33px; overflow:hidden; height:33px; background:#f8f8f8; border-bottom:1px solid #dddddd;}
+.Fashion_cen_right dd font{ float:left; width:14px; height:33px; text-align:center; padding-left:10px; color:#FFFFFF; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ -8px -233px no-repeat;}
+.Fashion_cen_right dd a{ float:left; width:192px; height:36px; padding-left:8px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+
+
+/* 香水精油-面部保养-男士护理-身体护理*/
+.Beauty_makeup_Perfume{ width:1220px; margin-top:20px;}
+.Perfume_left{ width:200px; height:440px; overflow:hidden; border:1px solid #e8e8e8;}
+.Perfume_left_nav{ float:left; width:185px; height:38px; line-height:38px; padding-left:15px; background:#dddddd; color:#000; font-family:"microsoft yahei"; font-size:16px;}
+.Perfume_left_cen{ float:left; width:200px; background:#FFFFFF; padding-bottom:12px;}
+.Perfume_left_cen dt{ float:left; width:200px; height:14px; line-height:14px; overflow:hidden; margin-top:12px;}
+.Perfume_left_cen dt font{ float:left; width:14px; height:14px; text-align:center; padding-left:13px; color:#FFFFFF; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ -5px -208px no-repeat;}
+.Perfume_left_cen dt a{ float:left; width:160px; height:14px; overflow:hidden; padding-left:6px; white-space:nowrap; text-overflow:ellipsis;}
+.Perfume_left_cen dd{ float:left; width:150px; padding-left:38px; line-height:24px; margin-top:10px;}
+.Perfume_left_cen dd img{ float:left; width:50px; height:50px; margin-right:8px; display:inline; overflow:hidden; border:1px solid #ff4a93;}
+.Perfume_left_cen dd s{ float:left; width:84px; height:24px; line-height:24px; overflow:hidden; color:#666;}
+.Perfume_left_cen dd b{ float:left; width:84px; height:24px; line-height:24px; overflow:hidden; font-size:14px; font-family:"microsoft yahei"; color:#ff4a93;}
+.Perfume_left_cen1{ float:left; width:200px; background:#FFFFFF; padding-bottom:12px;}
+.Perfume_left_cen1 dt{ float:left; width:200px; height:14px; line-height:14px; overflow:hidden; margin-top:10px;}
+.Perfume_left_cen1 dt font{ float:left; width:14px; height:14px; text-align:center; padding-left:13px; color:#FFFFFF; background:url("../images/product_list.jsp-columnId=c_430051")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/personalCare/images/Beauty_makeup.png*/ -5px -242px no-repeat;}
+.Perfume_left_cen1 dt a{ float:left; width:160px; height:14px; overflow:hidden; padding-left:6px; white-space:nowrap; text-overflow:ellipsis;}
+.Perfume_left_cen1 dd{ float:left; width:150px; padding-left:38px; line-height:24px; margin-top:10px;}
+.Perfume_left_cen1 dd img{ float:left; width:50px; height:50px; margin-right:8px; display:inline; overflow:hidden; border:1px solid #e8e8e8;}
+.Perfume_left_cen1 dd s{ float:left; width:84px; height:24px; line-height:24px; overflow:hidden; color:#666;}
+.Perfume_left_cen1 dd b{ float:left; width:84px; height:24px; line-height:24px; overflow:hidden; font-size:14px; font-family:"microsoft yahei"; color:#ff4a93;}
+
+.Perfume_right{ width:1005px;}
+.Perfume_nav{ width:1000px; border-bottom:2px solid #ff4a93; padding:0 0 0 5px; margin-top:9px;}
+.Perfume_nav .left{ width:280px; height:28px; line-height:28px; overflow:hidden; font-family:"方正正黑简体";}
+.Perfume_nav .left font{ padding-right:20px;}
+.Perfume_nav .left a:hover{ text-decoration:none;}
+.Perfume_nav .right{ width:700px; margin-top:5px; height:20px; line-height:20px; text-align:right; overflow:hidden;}
+.Perfume_nav .right a{ padding:0 6px;}
+.Perfume_cen{ width:1005px; margin-top:5px;}
+.Perfume_cen_left{ width:740px; border:1px solid #e8e8e8; padding:5px 11px; height:386px; overflow:hidden;}
+.Perfume_cen_left1{ width:740px; height:385px; overflow:hidden;}
+.Perfume_cen_left dl{ float:left; width:184px; height:192px; overflow:hidden; border-bottom:1px dashed #e8e8e8; border-right:1px dashed #e8e8e8;}
+.Perfume_cen_left dl dt{ float:left; width:160px; height:160px; overflow:hidden; margin-left:12px; display:inline; margin-top:5px;}
+.Perfume_cen_left dl dt img{ float:left; width:160px; height:160px;}
+.Perfume_cen_left dl dd{ float:left; padding:0 7px; width:170px; height:20px; line-height:20px; overflow:hidden;}
+.Perfume_cen_left dl dd a{ float:left; width:120px; height:18px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.Perfume_cen_left dl dd font{ float:right; width:48px; height:18px; text-align:right; overflow:hidden; font-size:14px; font-family:"microsoft yahei"; color:#ff4a93;}
+.Perfume_cen_right{ width:228px; height:398px; overflow:hidden;}
+.Perfume_cen_right img{ float:left; width:228px; height:398px;}
+
+
+
+/* 口腔护理 */
+.Beauty_makeup_Oral{ width:1220px; margin-top:25px; padding-bottom:12px;}
+.Oral_nav{ width:1215px; border-bottom:2px solid #ff4a93; padding:0 0 0 5px;}
+.Oral_nav .left{ width:280px; height:28px; line-height:28px; overflow:hidden; font-family:"方正正黑简体"}
+.Oral_nav .left font{ padding-right:20px;}
+.Oral_nav .left a:hover{ text-decoration:none;}
+.Oral_nav .right{ width:900px; margin-top:5px; height:20px; line-height:20px; text-align:right; overflow:hidden;}
+.Oral_nav .right a{ padding:0 6px;}
+.Oral_cen{ width:1220px; margin-top:5px;}
+.Oral_cen li{ float:left; width:235px; height:300px; overflow:hidden; margin-right:11px; display:inline;}
+.Oral_cen li img{ float:left; width:235px; height:300px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

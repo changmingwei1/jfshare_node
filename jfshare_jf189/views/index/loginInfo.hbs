@@ -1,0 +1,13 @@
+{{!< main}}
+<input type="input" name="loginStatus" value="{{ssid}}"/>
+
+<script type="text/javascript">
+//    $(function(){
+       var res = {{result}};
+//        alert(res === 201);
+        if(res === 201) {
+            parent.logoutJFX();
+        }
+//    });
+</script>
+

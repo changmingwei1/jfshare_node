@@ -1,0 +1,51 @@
+<!--<script type="text/javascript" src="/templates/global_js/jquery/jquery-1.7.2.min.js"></script>-->
+<!--<script type="text/javascript" src="/js/util/handlebars-v3.0.0.min.js"></script>-->
+<script type="text/javascript" src="/js/order/render_core_confirm.js?v=1.0.0"></script>
+
+<script type="text/javascript">
+//立即购买参数
+var fromBatch = 1;
+var render_orderInfo = {{{data}}};
+var score2cashAmount = Number(render_orderInfo.pInfo.score2cashAmount);
+var itemCount = Number(render_orderInfo.count);
+var price = Number(render_orderInfo.pInfo.curPrice);
+
+if(score2cashAmount > 0) {
+    render_orderInfo.amountSum = Number((price-score2cashAmount)*itemCount).toFixed(2); //订单金额, 不含运费, 减掉抵消金额
+    render_orderInfo.scoreSum = 100*itemCount;
+} else {
+    render_orderInfo.amountSum = 0; //订单金额, 不含运费, 减掉抵消金额
+    render_orderInfo.scoreSum = Number(100 * price * itemCount).toFixed(0);
+}
+
+render_orderInfo.postage = 0;
+
+//计算邮费参数
+var calcPostageParam = {
+    sellerId:render_orderInfo.sellerId,
+    productId:render_orderInfo.productId,
+    templateId:render_orderInfo.postageId,
+    number:itemCount,
+    amount:Number(price*itemCount).toFixed(2),
+    weight:Number(render_orderInfo.pInfo.weight)*itemCount
+}
+
+Handlebars.registerHelper('self_total',function(val1, val2, self_total) {
+    var ret = 0;
+    try {
+        ret = Number(val1).toFixed(2);
+
+        if(ret > 0){
+            ret = "¥" + ret + " + ";
+        } else {
+            ret = "";
+        }
+        if (Number(val2) > 0) {
+            ret = ret + val2 + " 积分";
+        }
+    } catch (err) {
+
+    }
+    return ret;
+});
+</script>

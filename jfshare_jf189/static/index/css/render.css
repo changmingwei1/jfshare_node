@@ -1,0 +1,7 @@
+.message{ border:#ddd 1px solid; background:#f6f6f6; width:1200px; margin:10px auto 0;}
+
+.messagemain{ background:url(/img/message_icon.gif) no-repeat 190px 50px; padding:70px 0 70px 376px; width:614px; margin:auto; overflow:hidden; }
+.messagemain h3{ font-size:14px; font-weight:bold;}
+.messagemain h4{ padding:18px 0;}
+.messagemain p{ line-height:18px;}
+.messagemain p a{ color:#f60;}

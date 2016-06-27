@@ -1,0 +1,131 @@
+@charset "utf-8";
+/* CSS Document */
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix {display: inline-table;}
+* html .clearfix {height: 1%;}
+*+html .clearfix{height: 1%;}
+.clearfix {display: block;}
+.warper{width:1002px;border-top:1px solid #d7d7d7;margin:0 auto;}
+.reservation_box{width:980px;margin:0 auto;}
+.reservation_box .title{height:46px;position:relative;}
+.reservation_box .title p{float:left;display:inline;}
+.reservation_box .title p.iconpic{background:url(../images/reservation_icon1.jpg) no-repeat 0 0;width:86px;height:57px;position:absolute;top:0px;left:0;}
+.reservation_box .title p.name{margin-left:96px;color:#cc0000;font-size:16px;font-weight:bold;height:31px; overflow:hidden;padding-top:15px;}
+.reservation_box .title p.area a{color:#1765a7;}
+.reservation_box .title p.area,
+.reservation_box .title p.num,
+.reservation_box .title p.date{margin-left:20px;height:27px;padding-top:19px; overflow:hidden;color:#666;}
+.reservation_box .title p span{color:#1765a7;}
+.reservation_box .time{border-top:1px solid #120f10;border-bottom:1px solid #f0f0f0;border-left:1px solid #f0f0f0;border-right:1px solid #f0f0f0;}
+.reservation_box .time .box{border-top:1px solid #fff;background:#f4f4f4;border-bottom:1px solid #d1d1d1;padding:0px 20px 11px 20px;}
+.reservation_box .time .box .screening{font-weight:bold;color:#333;float:left;padding-top:11px;display:inline;width:65px;}
+.reservation_box .time .box .selectime{float:left;padding-top:7px;display:inline;width:873px;}
+.reservation_box .time .box .selectime label,
+.reservation_box .time .box .selectime span{float:left; line-height:20px; font-family:verdana;}
+.reservation_box .time .box .selectime label{width:56px; text-align:center; cursor:pointer;}
+.reservation_box .time .box .selectime span{color:#999;font-size:10px;}
+.reservation_box .time .box .selectime label.cur{color:#990000;}
+
+.reservation_warm{width:980px;margin:10px auto 0 auto;border:1px solid #ffcc7f; position:relative;}
+.reservation_warm .close{position:absolute;background:url(../images/reservation_icon2.gif) no-repeat 0 -70px;width:9px;height:8px; overflow:hidden;top:5px;right:10px;cursor:pointer;}
+.reservation_warm .warm{border:1px solid #fff; background:#ffffe5;padding:10px;}
+.reservation_warm .warm p{padding-left:18px;line-height: 18px;}
+.reservation_warm .warm p.p1{font-weight:bold;color:#cc0000;background:url(../images/reservation_icon2.gif) no-repeat 0 0;height:14px;padding:2px 0 5px 20px;}
+.reservation_warm .warm p.p2{margin-top:5px;color:#666;}
+.reservation_screen {width:960px;margin:0 auto;}
+.reservation_screen img{ vertical-align:top;}
+
+.reservation_seat{width:938px;margin:10px auto 0 auto;border:1px solid #f2f2d8;background:#ffffe5;padding:0 10px 10px 10px;}
+.reservation_seat .select_seat{border-bottom:1px dashed #d7d7d7;padding-bottom:10px;color:#000;}
+.reservation_seat .select_seat .seat_title{float:left;width:105px;display:inline;margin-top:14px;color:#666;}
+.reservation_seat .select_seat .seat_box{width:838px;float:left;display:inline;}
+.reservation_seat .select_seat .seat_box li{float:left;width:268px;height:22px;margin-top:10px;margin-right:10px;display:inline;}
+.reservation_seat .select_seat .seat_box li .seat,
+.reservation_seat .select_seat .seat_box li .selected,
+.reservation_seat .select_seat .seat_box li .price{float:left;display:inline;}
+.reservation_seat .select_seat .seat_box li .seat,
+.reservation_seat .select_seat .seat_box li .price{padding-top:3px;}
+.reservation_seat .select_seat .seat_box li .selected,
+.reservation_seat .select_seat .seat_box li .price{margin-left:12px;}
+.reservation_seat .select_seat .seat_box li .selected select{width:110px;}
+.reservation_seat .select_seat .seat_box li .selected{padding-top:1px;*padding-top:0px;}
+.reservation_seat .select_seat .seat_box li .seat em{font-family:verdana;font-style:normal;color:#009900;font-weight:bold;}
+.reservation_seat .select_seat .seat_box li .price{font-family:verdana;color:#ff0000;}
+.reservation_seat .select_sell{margin-top:10px;color:#000;}
+.reservation_seat .select_sell .sell_title{float:left;width:100px;display:inline;color:#666;margin-top:3px;}
+.reservation_seat .select_sell .sell_box{float:left;width:838px;display:inline;}
+.reservation_seat .select_sell .sell_box p{ line-height:20px;}
+.reservation_seat .select_sell .sell_box p span{float:left;display:inline-block;margin-right:20px;font-family:verdana;}
+.reservation_seat .select_sell .sell_box p span.s2{color:#ff0000;}
+
+.reservation_with{width:938px;margin:10px auto 0 auto;border:1px solid #eeeeee;background:#f4f4f4;padding:0 10px 10px 10px;}
+.reservation_with .with_title{height:34px;}
+.reservation_with .with_title h2{font-weight:bold;font-size:14px;float:left;display:inline;padding-top:10px;}
+.reservation_with .with_title .pop{float:left;display:inline;padding-top:11px;color:#3366cc; cursor: pointer;}
+.reservation_with .with_box{}
+.reservation_with .with_box .item{margin-bottom:10px;}
+.reservation_with .with_box .item li{float:left;width:464px;padding:10px 0 10px 0;display:inline;}
+.reservation_with .with_box .item li .with_pic{float:left;width:130px; text-align:center;}
+.reservation_with .with_box .item li .with_pic img{ vertical-align:top;width:100px;height:100px; overflow:hidden;border:1px solid #ccc;}
+.reservation_with .with_box .item li .with_text{float:left;width:324px;padding-right:10px;}
+.reservation_with .with_box .item li .with_text p{color:#666;}
+.reservation_with .with_box .item li .with_text p.p_name{font-size:14px;font-weight:bold;color:#000;height:22px; line-height:22px;}
+.reservation_with .with_box .item li .with_text p.p_price{font-family:verdana;height:20px; line-height:22px;}
+.reservation_with .with_box .item li .with_text p.p_price em{color:#ff0000;font-style:normal;}
+.reservation_with .with_box .item li .with_text p.p_price b{color:#ff0000;}
+.reservation_with .with_box .item li .with_text p.p_decs{height:32px;line-height:16px; overflow:hidden;}
+.reservation_with .with_box .item li .with_text p.p_much{height:22px; line-height:22px;margin-top:3px;}
+.reservation_with .with_box .item li .with_text p.p_much select{width:50px;}
+.reservation_with .with_box .item li.cur{background:#ffffe5;}
+.reservation_with .with_box .item li.left10px{margin-left:10px;}
+.reservation_with .with_box .item.topbd{ margin-top:10px;border-top:1px solid #fff;}
+
+.reservation_info{width:960px;margin:10px auto 0 auto;}
+.reservation_info h2{height:24px; overflow:hidden;border-bottom:2px solid #f0f0f0;font-size:14px;font-weight:bold;color:#333333;padding-top:10px;padding-left:10px;}
+.reservation_info .info_box{margin-top:10px;}
+.reservation_info .info_box .info_point{width:278px;border:1px solid #ffcc7f;background:#ffffe5;float:left;padding:0px 10px 10px 10px;color:#cc6600;line-height:16px;}
+.reservation_info .info_box .info_point p{margin-top:10px;}
+.reservation_info .info_box .info_point p.point_p1{font-weight:bold;}
+.reservation_info .info_box .info_list{width:650px;float:right;}
+.reservation_info .info_box .info_list p{height:22px;margin-top:10px;}
+.reservation_info .info_box .info_list p span{float:left;display:inline-block;}
+.reservation_info .info_box .info_list p span.ss1{width:115px; text-align:right;color:#666;padding-top:5px;}
+.reservation_info .info_box .info_list p span.ss2{width:243px;height:20px;border-width:1px;border-style:solid;border-color:#808080 #d4d0c8 #d4d0c8 #808080;}
+.reservation_info .info_box .info_list p span.ss2 input{width:243px;height:20px;*height:18px;border:0;}
+.reservation_info .info_box .info_list p span.ss3{padding-top:1px;*padding-top:0px;}
+.reservation_info .info_btn{ text-align:center;margin-top:20px;}
+.reservation_info .info_btn img{ vertical-align:top;}
+
+.zuoWeiList{ width:960px; margin:20px auto 0; }
+.zuoWeiList h1{ text-align:center; margin-bottom:30px;}
+.zuoWeiList .item{  width:100%; margin-top:13px; height:23px; text-align:center; vertical-align:top; }
+.zuoWeiList .item a{ color:#fff;}
+.zuoWeiList .item a:hover{ color:#fff;text-decoration:none;}
+.zuoWeiList .item .red,
+.zuoWeiList .item .blue,
+.zuoWeiList .item .green,
+.zuoWeiList .item .roseo,
+.zuoWeiList .item .vip,
+.zuoWeiList .item .couples,
+.zuoWeiList .item .gray,
+.zuoWeiList .item .notcur{ display:inline-block; background:url(../images/zw_icon1.png) no-repeat; width:22px; height:23px; line-height:23px; text-align:center; font-size:12px; font-family:arial; margin-right:2px;}
+
+.zuoWeiList .item .blue{ background:url(../images/zw_icon6.png) no-repeat 0 0;}
+.zuoWeiList .item .roseo{  background:url(../images/zw_icon5.png) no-repeat 0 0;cursor: default;}
+.zuoWeiList .item .red{cursor:pointer;}
+.zuoWeiList .item .notcur{ background:none; }
+.zuoWeiList .top26{ margin-top:26px;}
+
+
+.zuoWeiList .item .first,.zuoWeiList .item .last{ display:inline-block; width:22px; height:22px; line-height:20px; font-weight:bold;
+    color:#333; font-family:Verdana; text-align:center;}
+.zuoWeiList .item .last{ margin-right:0; }
+.zuoWeiList .item .first:hover,.zuoWeiList .item .last:hover{ color:#333;}
+
+.zuoweiTips{ background:url(../images/film.png) no-repeat 0 -380px; height:38px; padding-left:360px; margin:30px auto 0 25px;}
+.zuoweiTips span{ float:left; display:inline; margin-right:30px; padding-top:8px;}
+.zuoweiTips span img{ margin:0 6px -4px 0;}
+
+.sumbitPic{ display:inline; height:28px; margin:0 10px 10px 0;}
+.sumbitPic a{ display:inline-block;background: #CCCCCC;  border:#E5E5E5 1px solid; padding:0 20px; height:34px; font:bold 14px/34px 宋体; color:#666666;}
+.sumbitPic a:hover{ text-decoration:none;color:#666666;}

@@ -1,0 +1,62 @@
+{{!< main}}
+
+<!-- order css start -->
+{{>confirm_css}}
+<!-- order css end -->
+
+<!-- order js start -->
+{{>confirm_script_head}}
+<!-- order js end -->
+
+<div class="main">
+        <!--填充导购提示-->
+        <div id="guidePanel" class="cartStep step02"></div>
+
+        <div class="order">
+            <!--填充收货地址-->
+            <div id="consigneePanel"></div>
+            <!--填充配送方式-->
+            <div id="deliveryPanel"></div>
+            <!--填充支付方式-->
+            <div id="paymentPanel"></div>
+            <div id="cardPanel"></div>
+            <div id="promotionPanel"></div>
+        </div>
+
+        <!--填充购物车头-->
+        <div id="cartHeadPanel"></div>
+        <!--填充购物车明细-->
+        <div id="cartBodyPanel"></div>
+        <!--填充优惠方式-->
+        <div id="activePanel" style="border: 1px solid #DDDDDD;border-top: none;"></div>
+        <div id="barcodePay"  style="border: 1px solid #DDDDDD;border-top: none;"></div>
+        <!--填充结算信息-->
+        <div id="bottomPanel"></div>
+
+        <form id="confirmOrderform" action="/order/confirm_order" method="post">
+            <input type="hidden" name="ssid" id="ssid" value="{{ssid}}"/>
+            <input type="hidden" name="orderFormToken" value="7FC600E9F07DA0987FF623DB369DA6A159696622774333768"/>
+            <input  type="hidden" id="totalPayAmount" name="totalPayAmount" value=""/> <!--hidden 实际支付总金额-->
+            <input  type="hidden" id="addressId" name="addressId" value=""/> <!--hidden 选中收货地址id-->
+            <input  type="hidden" id="postage" name="postage" value="0"/> <!--hidden 运费-->
+            <input  type="hidden" id="fromSource" name="fromSource" value="1"/> <!--hidden 运费-->
+            <input  type="hidden" id="fromBatch" name="fromBatch" value="1"/> <!--购买入口-->
+            <input  type="hidden" id="count" name="count" /> <!--购买商品数量-->
+            <input  type="hidden" id="productId" name="productId" /> <!--商品ID-->
+            <input  type="hidden" id="storehouseId" name="storehouseId"/> <!--仓库ID-->
+            <input  type="hidden" id="skuNum" name="skuNum" /> <!--Sku编码-->
+            <input  type="hidden" id="curPrice" name="curPrice"/> <!--商品现价-->
+            <input  type="hidden" id="sellerId" name="sellerId"/> <!--商品现价-->
+	        <input  type="hidden" id="buyerComment" name="buyerComment"/> <!--购买留言-->
+        </form>
+</div>
+<iframe src="http://y.jf.189.cn/preview/CommPage/fixHeight.html#740" id="iframeA" name="iframeA" style="display: none;"></iframe>
+
+<!--<html xmlns:wb=“http://open.weibo.com/wb”>-->
+<!--统计代码-->
+<!--<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>-->
+<!--<div class="insight_log" style="display: none" pageName="购物流程:普通:订单确认页" userId="u_1860104" m="m_100"/>-->
+
+<!-- order async js start -->
+{{>confirm_script_tail}}
+<!-- order async js end -->

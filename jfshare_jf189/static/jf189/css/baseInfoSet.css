@@ -1,0 +1,47 @@
+#baseInfoTips {
+	border:1px solid #c3d8e6;
+	padding:8px 0px 8px 15px;margin-top: 10px;
+	margin-bottom:10px;line-height: 17px;
+	background: #e5f5ff;
+}
+#baseInfoTips img{vertical-align: top;}
+#baseInfoTips i{font-style: normal;}
+.normalUl{
+  width: 100%;margin-top: 10px;
+  font-size: 14px;
+}
+.normalUl li{display: inline-block;width: 28%;}
+.normalUl span{height: 30px;display: inline-block;}
+.normalUl .c1{width:93px;text-align: right;}
+.normalUl li.c3{width:340px;}
+.normalUl a:hover{text-decoration: underline;}
+
+
+.rechargeBox{width:460px;margin:50px auto;}
+.rechargeBox p{margin:10px 0;color: #999;}
+.rechargeBox .txinput{height: 28px !important;padding-left: 5px;
+  width: 138px;
+  margin: 10px;
+  vertical-align: bottom;
+  line-height: 28px;  border: #999 1px solid;}
+.rechargeBox label{font-size: 14px;display: inline-block;width:150px;text-align: right;line-height: 50px;color: #666;}
+label.except{  width: auto; margin-right: 10px;margin-left: 10px;cursor: pointer;}
+.rechargeBox b{font-size: 18px;color: #999;}
+
+#editPanel{opacity: 0;display:none;position: relative;top:50px;}
+#warnWin p{line-height: 30px;font-size: 18px;color:#666;vertical-align: top;padding: 35px 28px 10px;}
+#closeDialog {
+  display: block;cursor: pointer;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  color: white;
+  background: #333;
+  border-radius: 50%;
+  border: 2px solid white;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: bolder;
+}

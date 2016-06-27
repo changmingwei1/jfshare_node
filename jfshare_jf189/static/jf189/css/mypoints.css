@@ -1,0 +1,57 @@
+.pointsInfo{border: 2px solid #666;color:#666;padding:40px 35px;margin-top: 20px;background-color: #ffffcc;border-radius: 10px; }
+.pointsInfo span{font-size: 14px;display: inline-block;width: 30%;margin-right: 20px;}
+.pointsInfo span b{font-size: 24px;font-weight: normal;}
+
+.chartBox{height: 300px;}
+.chartInfo{width:180px;height: 260px;position: absolute;left:20px;top:44px;z-index: 10;text-align: left;}
+.chartInfo .hr{height:1px;background-color: #ccc;margin:12px 0;}
+.f1{font-size: 36px;color: #333;}
+.f1 i{font-style: normal;}
+.f2{font-size: 14px;color: #999;position: relative;font-family: "宋体";}
+.f2 i{color: #ff9900;font-style: normal;}
+.f2 b{color: #333;font-weight: normal;}
+.yelBox{padding: 9px;border:1px solid #cc9900;background-color: #ffcc33;font-size: 0px;margin-right: 10px;line-height: 30px;vertical-align: middle;}
+.purBox{padding: 9px;border:1px solid #990099;background-color: #996699;font-size: 0px;margin-right: 10px;line-height: 30px;vertical-align: middle;}
+.bluBox{padding: 9px;border:1px solid #000099;background-color: #666699;font-size: 0px;margin-right: 10px;line-height: 30px;vertical-align: middle;}
+.graBox{padding: 9px;border:1px solid #6666cc;background-color: #ccc;font-size: 0px;margin-right: 10px;line-height: 30px;vertical-align: middle;}
+
+#chartCarousel{height:378px;margin:0 auto;background: none;}
+#chartCarousel .bd li{height: 370px;position: relative;width: 930px !important;}
+#chartCarousel .bd li a,#chartCarousel .bd li a img{width:100%;height:auto;}
+
+#chartCarousel .hd ul li {
+  width: 9px;
+  height: 9px;
+  overflow: hidden;
+  margin-right: 5px;
+  text-indent: -999px;
+  cursor: pointer;
+  background: url("../common/images/icoCircle.gif") 0 -9px no-repeat;
+}
+#chartCarousel .hd ul li.on{background-position: 0 0;}
+
+
+#chartCarousel2{height:378px;background: none;width:550px;margin-left: 210px;margin-top: 10px;}
+#chartCarousel2 .bd li{height: 370px;position: relative;width: 550px !important;}
+#chartCarousel2 .bd li a,#chartCarousel .bd li a img{width:100%;height:auto;}
+
+#chartCarousel2 .hd ul li {
+  width: 9px;
+  height: 9px;
+  overflow: hidden;
+  margin-right: 5px;
+  text-indent: -999px;
+  cursor: pointer;
+  background: url("../common/images/icoCircle.gif") 0 -9px no-repeat;
+}
+#chartCarousel2 .hd ul li.on{background-position: 0 0;}
+
+
+.tableChart{width: 100%;text-align: center;border-collapse:collapse;font-size: 14px;}
+.tableChart .even{background-color: #eee;}
+.tableChart .trhover{background-color: #ccc;}
+.tableChart th{background-color: #999;color: white;height: 38px;border:1px solid #666;  font-weight: normal;}
+.tableChart td{border:1px solid #666;height: 30px;}
+
+
+.fadeIn{opacity: 0;filter: alpha(opacity=0);left:100px;}

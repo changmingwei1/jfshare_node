@@ -1,0 +1,191 @@
+<script type="text/javascript" src="/js/jquery/layer.min.js"></script>
+<script type="text/javascript" src="/js/jquery/jquery.observable.js"></script>
+<script type="text/javascript" src="/js/jquery/jquery.views.js"></script>
+<script type="text/javascript" src="/js/jquery/jquery.json-2.3.js"></script>
+<script type="text/javascript" src="/js/order/treeSelector.js"></script>
+<script type="text/javascript" src="/js/order/AddressEditor.js"></script>
+<script type="text/javascript" src="/js/thickbox/thickbox.js"></script>
+<script type="text/javascript" src="/js/util/jquery.selectcity.min.js"></script>
+<script type="text/javascript" src="/js/util/selectcity.js"></script>
+
+
+<!--购买流程提示-->
+<script id="guide_show_template" type="text/x-handlebars-template">
+<ul>
+    <li class="s1">1.\{{fromBatchTip}}</li>
+    <li class="s2">2.填写并核对订单信息</li>
+    <li class="s3">3.成功提交订单</li>
+    <li class="s4">4.支付成功</li>
+</ul>
+</script>
+
+<!--收货地址页签-->
+<script id="consignee_show_template" type="text/x-handlebars-template">
+<h2 class="order_title"><b>收货人信息</b><a href="javascript:;" class="edit">[修改]</a></h2>
+<div class="receiveInfo clearfix">
+    <ul>
+        <li>姓名： \{{receiverName}}</li>
+        <li>地区： \{{provinceName}} \{{cityName}} \{{countyName}}</li>
+        <li>详细地址： \{{address}}</li>
+        \{{#if postCode}}
+        <li>邮编：\{{postCode}}</li>
+        \{{/if}}
+        \{{#if mobile}}
+        <li>手机：\{{mobile}}</li>
+        \{{/if}}
+        \{{#if tel}}
+        <li>固定电话：\{{#if telCode}}\{{telCode}}-\{{/if}}\{{tel}}\{{#if telExtNumber}}-\{{telExtNumber}}\{{/if}}</li>
+        \{{/if}}
+        \{{#if email}}
+        <li>邮箱：\{{email}}</li>
+        \{{/if}}
+    </ul>
+</div>
+</script>
+<!--收货地址编辑页-->
+<script id="consignee_edit_template" type="text/x-handlebars-template">
+<h2 class="order_title"><b>收货人信息</b><a href="javascript:;" class="cancelEdit">[确认收货人信息]</a></h2>
+<div class="order_shrEx clearfix">
+    <div class="order_add">
+        \{{#if consigneeList}}
+        <ul id="consigneeList">
+            \{{#each consigneeList}}
+            <li>
+                <a href="javascript:;" class="delete deleteConsignee" addrid="\{{id}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[删除]</a>
+                <a href="javascript:;" class="default defaultConsignee" addrid="\{{id}}"> \{{#self_if_default_option isDefault 1}}&nbsp;&nbsp;&nbsp;&nbsp;\{{else}}[设为默认]\{{/self_if_default_option}}</a>
+                <label><input type="radio" name="userAddresses" value="\{{id}}" \{{self_radio_option id ../id}} /> \{{provinceName}}  \{{cityName}}  \{{countyName}} \{{address}} (\{{receiverName}} 收)\{{#if postCode}}，\{{postCode}}\{{/if}}\{{#if mobile}}，\{{mobile}}\{{/if}}\{{#if telCode}}，\{{telCode}}-\{{/if}}\{{tel}}\{{#if telExtNumber}}-\{{telExtNumber}}\{{/if}} </label>
+            </li>
+            \{{/each}}
+            <li><input type="radio" name="userAddresses" class="other" /> 使用其它地址 </li>
+        </ul>
+        \{{/if}}
+    </div>
+
+    <div class="order_add2">
+        <ul>
+            <li>
+                <label><em>*</em>收货人姓名：</label>
+                <div class="f2"><input type="text" id="receiverName" value="\{{receiverName}}" /></div>
+            </li>
+            <!--<li>-->
+                <!--<label><em>*</em>省&nbsp;&nbsp;&nbsp;&nbsp;份：</label>-->
+                <!--<div class="f2"><span class="region"></span><span class="subtips"></span></div>-->
+            <!--</li>-->
+            <li id="jsSelectcityPanel"></li>
+            <li>
+                <label><em>*</em>详细地址：</label>
+                <div class="f2"><input type="text" value="\{{address}}" id="detailAddress" class="w340"/></div>
+            </li>
+            <li>
+                <label>邮&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
+                <div class="f2"><input type="text" id="email" name="email" value="\{{email}}" /></div>
+            </li>
+            <li>
+                <label><em>*</em>手&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
+                <div class="f2" style="width: 520px;float: left;">
+                    <div class="fl">
+                        <div class="fl"><input type="text" id="mobile" value="\{{mobile}}" maxlength="11" />
+                            <span class="subtips">或</span></div>
+                        <label style="width: 50px;color:#000000;">电话：</label>
+                        <div class="fl"><input type="text" id="telCode" value="\{{telCode}}" style="width:30px;"/>-<input type="text" id="tel" value="\{{tel}}" style="width:80px;"/>-<input type="text" id="telExtNumber" value="\{{telExtNumber}}" style="width:30px;"/></div>
+                    </div>
+                    <div class="fl" style="margin-top:5px;"><span class="contips">填写手机号或固定电话便于接收发货通知短信及送货前确认</span></div>
+                </div>
+            </li>
+        </ul>
+        <div class="btnSave"><a href="javascript:;" class="save">保存收货人信息</a>&nbsp;&nbsp;<span id="tipMsg"></span><span class="subtips"></span></div>
+    </div>
+</div>
+</script>
+
+<!--选择支付方式-->
+<script id="payment_show_template" type="text/x-handlebars-template">
+<h2 class="order_title"><b>选择支付方式</b></h2>
+<div class="receiveInfo clearfix">
+    <ul>
+        <li>
+            \{{#each  payments}}
+            <label>
+                <input type="radio" value="\{{paymentId}}" name="payType">
+                \{{paymentName}}
+            </label>
+            \{{/each}}
+        </li>
+    </ul>
+    <input type="hidden" value="" id="selectedPaymentId"/>
+</div>
+</script>
+
+<!--订单详情标题-->
+<script id="cart_head_template" type="text/x-handlebars-template">
+<div class="cartTop"><b>订单详情</b><a href="#" style="display:none;">返回购物车修改</a></div>
+<!--<div class="batch"><a href="javascript:;" class="cartTop">{{sellerName}}</a></div>-->
+<div class="cartTh">
+    <span class="t1">\{{self_product_title}}商品</span>
+    <span class="t2">单价（元）</span>
+    <span class="t3">数量</span>
+    <span class="t4">小计（元）</span>
+    <span class="t5">运费（元）</span>
+</div>
+</script>
+
+<!--按卖家划分商品列表-->
+<script id="cart_body_template" type="text/x-handlebars-template">
+    <div class="cartlist">
+        <div class="batch"><a href="javascript:;" class="cartTop">\{{seller.sellerName}}</a></div>
+
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+            <tr>
+                <td class="c_title">
+                    <div class="c_img">
+                        <a href="\{{self_product_url productId}}" target="_self"><img
+                                src="\{{self_pic_url pInfo.imgKey}}"
+                                alt="\{{pInfo.productName}}" title="\{{pInfo.productName}}"/></a>
+                    </div>
+                    <div class="c_meta">
+                        <a href="\{{self_product_url productId}}" target="_self">\{{pInfo.productName}}</a>
+                        <p>\{{pInfo.skuDesc}}</p>
+                    </div>
+                </td>
+                <td class="c_price">
+                    \{{self_curprice pInfo.curPrice pInfo.score2cashAmount}}
+                    <p>&yen;
+                        <del>\{{pInfo.orgPrice}}</del>
+                </td>
+                <td class="c_amount">
+                    <div class="m_amount">
+                        <span>\{{count}}</span>
+                    </div>
+                </td>
+                <td class="c_total">
+                    \{{self_total amountSum scoreSum}}
+                </td>
+                <td class="c_postage">
+                    &yen;\{{postage}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="orderNote">
+            <label>订单备注：</label>
+            <textarea id="buyerComment_textarea" class="area"></textarea>
+            <li class="tip">有关发货等购买要求一律以上面的选择为准，备注无效。</li>
+        </div>
+    </div>
+</script>
+
+
+<!--买家备注、汇总-->
+<script id="order_bottom_template" type="x-handlebars-template">
+    <div class="invoice" style="position:relative;">
+        <b>结算信息</b>
+    </div>
+
+    <div class="orderTotal">
+        <p class="total">您需要为订单支付: <b>\{{self_total amountTotal scoreSum}}</b></p> <!-- + 100 积分-->
+        <div class="btns" >
+            <a href="javascript:;" onclick="javascript:orderConfirm()" id="btnSubmit" class="btn_02">提交订单</a>
+        </div>
+    </div>
+</script>

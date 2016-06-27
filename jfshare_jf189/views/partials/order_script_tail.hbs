@@ -1,0 +1,274 @@
+<script type="text/javascript" src="/js/util/timer.js"></script>
+<script type="text/javascript" src="/js/order/order.constant.js"></script>
+<script type="text/javascript" src="/js/pagination/pagination.js"></script>
+
+<!--订单列表查询条件-->
+<script id="query_show_template" type="text/x-handlebars-template">
+    <div class="orderquery clearfix">
+        <form action="" method="post">
+            <select id="startDay" name="startDay" class="sel fl">
+                <option value="" >所有</option>
+                <option value="1" >一天之内</option>
+                <option value="7" >一星期之内</option>
+                <option value="30" >一个月之内</option>
+            </select>
+            <input type="submit" class="btnquery fr" value="查&nbsp;询"/>
+            <input type="text" class="text fr" value="商品名称、订单编号" id="searchKeyword" name="searchKeyword"/>
+        </form>
+    </div>
+</script>
+
+<!--订单列表页签-->
+<script id="nav_show_template" type="text/x-handlebars-template">
+    <div class="myOrderNav">
+        <ul class="clearfix" id="orderListMenu">
+            <li ><a href="#" url="/buyer/orderList?tabState=0">全部</a></li>
+            <li ><a href="#" url="/buyer/orderList?tabState=1">待支付</a></li>
+            <li ><a href="#" url="/buyer/orderList?tabState=3">待发货</a></li>
+            <li ><a href="#" url="/buyer/orderList?tabState=4">待收货</a></li>
+            <!--<li ><a href="#" url="/buyer/orderList?tabState=50">待评论</a></li>-->
+            <li ><a href="#" url="/buyer/orderList?tabState=6">已取消</a></li>
+            <li ><a href="#" url="/buyer/orderList?tabState=51">已完成</a></li>
+        </ul>
+    </div>
+</script>
+
+<!--订单列表-->
+<script id="list_show_template" type="text/x-handlebars-template">
+  <div class="myorderList">
+    <div class="tab_order">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <form method="post" id="addToCartformo_common_2351929" name="addToCartform" action="">
+                <tbody>
+                <tr class="sep_row" style="display:none;">
+                    <td colspan="7">&nbsp;</td>
+                </tr>
+                <tr class="tit">
+                    <td colspan="2">商品</td>
+                    <td width="10%">单价(元)</td>
+                    <td width="10%">数量</td>
+                    <td width="15%">实付款(元)</td>
+                    <td width="20%">交易状态</td>
+                    <td width="20%">操作</td>
+                </tr>
+                <tr class="sep_row" style="display:none;">
+                    <td colspan="7">&nbsp;</td>
+                </tr>
+                \{{#if orderProfileList}}
+                \{{#each orderProfileList}}
+
+                    <tr>
+                        <td colspan="7" class="tit">
+                            <div class="th">
+                                     <span class="s1">
+                                         <em>\{{createTime}}</em>&nbsp;&nbsp;&nbsp;&nbsp;
+                                         订单号：\{{orderId}}
+                                     </span>
+                                     <span class="s3" id="orderListTime_\{{@index}}" val="\{{orderId}}">
+                                     </span>
+                                     <span class="s3"  id= "seller_\{{sellerId}}" title="\{{sellerName}}">
+                                         <a target="_blank" class="js_utm_params" href="javascript:;" utm_content="my_order_seller_name"><i></i> &nbsp;商家：<span>\{{sellerName}}</span></a>
+                                     </span>
+                            </div>
+                        </td>
+                    </tr>
+                        <div style="display: none;">\{{self_keep_index @index}}</div>
+                    \{{#if productList}}
+                    \{{#each productList}}
+                    <tr>
+                        <td class="parcel" colspan="2">
+                            <div class="parcelItem" style="border-top:none;">
+                                <ul>
+                                    <li class="clearfix">
+                                        <p class="img">
+                                            <a href="\{{self_product_url productId}}" target="_blank"><img src="\{{self_pic_url imagesUrl}}" alt=""/></a>
+                                        </p>
+
+                                        <div class="cont">
+                                            <p class="name">
+                                                <span><a href="\{{self_product_url productId}}" target="_blank" title="\{{productName}}">\{{productName}}</a>&nbsp;&nbsp;
+                                                </span>
+                                                <span>  <a href="\{{self_product_snap_url productSnapshootId}}" target="_blank" title="" style="text-decoration: underline;color:darkgray;">交易快照</a></span>
+                                            </p>
+                                            <p class="type">
+                                                <span title="\{{skuDesc}}">\{{self_sku_desc skuDesc}}</span>
+                                                <!--<span title="\{{sellerClassNum}}">自定义: \{{sellerClassNum}}</span>-->
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td><div class="price" style="color:#F00;">&yen;\{{curPrice}}</div> <del> &yen;\{{orgPrice}}</del> </td>
+                        <td><div class="cont">\{{count}}</div></td>
+
+                        \{{#self_if_index_check @index 0}}
+                            <td rowspan="\{{self_product_size ../../productList}}"><div class="price" style="color:#F00;">\{{../../../closingPrice}}</div></td>
+
+                            <td  rowspan="\{{self_product_size ../../productList}}" class="trade_status">
+                                <div class="state">
+                                    \{{#self_if_wait_pay ../../orderState}}
+                                    <div id="sec_left_\{{../../../_index}}" class="time_left_1" style="display: none;">
+                                        \{{self_time_count_param ../../../../../nodeNowTime ../../../cancelTime}}</div>
+                                    <div id="sec_tip_\{{../../../orderId}}" style="color:#04ab00;">距离订单取消还有<br><i id="dday\{{../../../_index}}">0</i>天<i id="dhour\{{../../../_index}}">0</i>小时<i id="dminite\{{../../../_index}}">0</i>分钟<i id="dsecond\{{../../../_index}}">0</i>秒</div>
+                                    \{{else}}
+                                    \{{/self_if_wait_pay}}
+
+                                    <p id="proState_\{{../../orderId}}">
+                                        (\{{self_order_state_enum ../../orderState}})
+                                    </p>
+                                </div>
+                                <!--跟踪包裹-->
+                                <!--end 跟踪包裹-->
+                            </td>
+                            <td  rowspan="\{{self_product_size ../../productList}}" class="operate" width="113">
+                                <span><a href="/buyer/myOrderInfo/\{{../../orderId}}" target="_blank">订单详情</a></span>
+                                \{{#self_if_wait_pay ../../orderState}}
+                                <a id="ele\{{../../../_index}}" href="javascript:void(0)" class="btn_02 ele_\{{../../../orderId}}" onclick="payOrder('\{{../../../orderId}}');">我要付款</a>
+                                \{{else}}
+                                \{{/self_if_wait_pay}}
+
+                                <div style="display:none" id="blk0" class="blk">
+                                    <div class="head">
+                                        <div class="head-right">
+                                            <a id="close0" class="closeBtn" href="javascript:void(0)">关闭</a>
+                                        </div>
+                                    </div>
+
+                                    <div id="pay_box">
+                                        <div class="clearfix">
+                                            <h4 style="font-size: 14px;">个人帐户支付:</h4>
+                                            <div class="box1">
+                                                <ul>
+                                                    <li>
+                                                        <a href="javascript:;" onclick="_goTo('mpay_80000','o_common_2351929','payi_121');" title="中国移动手机支付">
+                                                            <img src="/img/2014/9/22/1990001.jpg" alt="中国移动手机支付" width="140" height="40"/></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" onclick="_goTo('mpay_50000','o_common_2351929','payi_100');" title="支付宝">
+                                                            <img src="http://www.jfshare.cn/img/2012/5/7/50625.png" alt="支付宝" width="140" height="40"/></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" onclick="_goTo('mpay_100000','o_common_2351929','payi_123');" title="翼支付">
+                                                            <img src="/img/2014/9/18/1970000.jpg" alt="翼支付" width="140" height="40"/></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" onclick="_goTo('mpay_110000','o_common_2351929','payi_144');" title="招商银行支付">
+                                                            <img src="/img/2015/9/9/2470000.jpg" alt="招商银行支付" width="140" height="40"/></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" onclick="_goTo('mpay_50002','o_common_2351929','payi_6');" title="银联支付">
+                                                            <img src="/img/2012/5/7/50627.gif" alt="银联支付" width="140" height="40"/></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" onclick="_goTo('mpay_60000','o_common_2351929','payi_8');" title="财付通支付">
+                                                            <img src="/img/2012/5/7/50626.png" alt="财付通支付" width="140" height="40"/></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="foot">
+                                        <div class="foot-right"></div>
+                                    </div>
+                                </div>
+                              <!--<span><a href="javascript:void(0);" onClick="checkBuyForm('o_common_2351929');" >再次购买</a></span>-->
+                                \{{#self_if_wait_pay ../../orderState}}
+                                    <span><a href="javascript:void(0);" id="cancel_\{{../../../orderId}}" class="blue_link" onclick="cancelOrder('\{{../../../orderId}}')">取消订单</a></span>
+                                \{{else}}
+                                \{{/self_if_wait_pay}}
+                                <!--<span><a href="javascript:void(0)" style="cursor: default;text-decoration: none;color: #999999;line-height: 24px">申请投诉</a> </span>-->
+                            </td>
+                        \{{else}}
+                        \{{/self_if_index_check}}
+
+                    </tr>
+                    \{{/each}}
+                    \{{/if}}
+                \{{/each}}
+                \{{/if}}
+
+                \{{#self_blank_rows orderProfileList}}
+                <tr>
+                    <td colspan="100%" style="border:0px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="100%" style="border:0px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="100%" style="border:0px;text-align: center;">未找到记录</td>
+                </tr>
+                <tr>
+                    <td colspan="100%" style="border:0px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="100%" style="border:0px;">&nbsp;</td>
+                </tr>
+                \{{else}}
+                \{{/self_blank_rows}}
+                <!--&lt;!&ndash;<input type="hidden" value="m_100" name="merchantId">&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="hidden" value="c_430043," name="histroyColumnIds"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="hidden" value="p_2060144," name="ids">&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="hidden" value="u_2462524" name="userId">&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="hidden" value="1," name="amounts">&ndash;&gt;-->
+                <!--&lt;!&ndash;<input type="hidden" value="sku_1920334," name="skuIds">&ndash;&gt;-->
+
+                <!--<div style="display: none;" id="attrso_common_2351929">{"attr_450001":"sv_1070289","attr_450000":"sv_1070284"}-&#45;&#45;</div>-->
+                </tbody>
+            </form>
+        </table>
+    </div>
+
+  </div>
+</script>
+
+<script id="cacelreason_show_template" type="text/x-handlebars-template">
+<div class="msglayer">
+    <div class="hb">
+        <a href="javascript:void(0);" class="close_order" onclick="divClose('#cancelOrderLayer')"></a>取消订单
+    </div>
+    <div class="bd">
+        <form action="#" id="addRefund" method="POST" name="addRefund" onsubmit="return checkCancelForm(this);">
+            <input type="hidden" name="orderId" value="\{{orderId}}">
+
+            <div class="cancel_mail">
+                <ul class="clearfix">
+                    <li>
+                        <input type="radio" name="refundReason" value="1">现在不想购
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="2">信息填写错误
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="3">重新拍
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="4">卖家缺货
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="5">同城见面交易
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="6">其他原因
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="7">支付方式不符合
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="8">账户余额不足
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="9">担心质量没有保障
+                    </li>
+                    <li>
+                        <input type="radio" name="refundReason" value="10">联系不到商家无法沟通
+                    </li>
+                </ul>
+                <div class="btns">
+                    <input type="submit" class="btn_01" value="&nbsp;确定&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</script>

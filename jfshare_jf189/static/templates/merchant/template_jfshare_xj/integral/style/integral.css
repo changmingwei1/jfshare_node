@@ -1,0 +1,209 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.content{ min-width:1220px; margin:0 auto;}
+
+
+.integral_nav{ min-width:1220px; height:50px; background:#313131;}
+.integral_nav_1{ width:1152px; margin:0 auto;}
+.integral_nav_2{ float:left; width:195px;}
+.integral_nav_2 img{ float:left; width:195px; height:50px;}
+.integral_nav_3{ float:left; width:640px; height:50px; overflow:hidden;}
+.integral_nav_3 li{ float:left; width:auto; padding:0 15px; color:#FFF; line-height:50px; font-size:14px;}
+.integral_nav_3 li a{ color:#FFF; font-family:"Impact"; font-size:18px;}
+.integral_nav_3 li a:hover{ text-decoration:none; color:#ffcc00;}
+.integral_nav_4{ float:right;}
+.integral_nav_4 li{ float:left; width:auto; color:#FFF; font-size:14px; line-height:50px; margin-left:6px; display:inline;}
+.integral_nav_4 li input{ float:left; width:72px; height:30px; line-height:30px; margin-top:10px; text-align:center; color:#424242; font-size:14px; background:#FFF; border:none; color:#999;}
+.integral_nav_4 .integral_nav_button{ margin-left:0px;}
+.integral_nav_4 .integral_nav_button input{ cursor:pointer; background:#c40000; width:56px; color:#FFF;}
+	
+
+/* banner */
+.Household_life_banner { margin:0 auto; width:100%; height:410px; position:relative; z-index:1;}
+#slides { margin:0 auto; width:100%; height:410px; position:absolute; z-index:1; overflow:hidden;}
+#slides li { margin:0 auto; min-width:1220px; height:410px;}
+#slides li .integral_banner_L{ margin:0 auto; width:1220px; height:410px; position:relative; z-index:5;}
+#slides li .integral_banner_L .integral_banner_D a{ float:left; width:765px; height:410px; overflow:hidden; text-indent:-9999px;}
+#pagination { margin:0 auto; width:1015px; padding-left:205px; position:relative; _width:500px; *width:500px; _position:absolute; *position:absolute; _left:35%; *left:35%; _padding-left:205px; *padding-left:205px; z-index:2;}
+#pagination li { width:14px; height:14px; float:left; margin-left:5px; border-radius:7px; background:#FFF; margin-top:380px;}
+#pagination li a { display:block; width:14px; height:14px; text-indent:-9999px; font-size:0px;}
+#pagination li.current { background:#BBB;}
+
+.integral_banner_R{ float:left; width:360px; height:370px; margin-top:18px; background:#FFF; border-right:1px solid #bbb; border-top:1px solid #bbb;}
+.integral_banner_R_C{ float:left; width:180px; height:185px; overflow:hidden;}
+.integral_banner_R_C1{ float:left; width:163px; height:184px; padding:0 8px; overflow:hidden; border-left:1px solid #bbb; border-bottom:1px solid #bbb;}
+.integral_banner_R_C1:hover{ border:1px solid #F00; position:absolute; margin-top:-1px;}
+.integral_banner_R_C1 p{ float:left; width:163px; text-align:center;}
+.integral_banner_R_C1 .img{ margin-top:10px;}
+.integral_banner_R_C1 .name{ line-height:24px; height:24px; overflow:hidden;}
+.integral_banner_R_C1 .price font{ color:#e42143;}
+.integral_banner_R_C1 .price del{ padding-right:6px;}
+
+
+/* 登录 */
+.integral_login_cen{ width:1220px; margin:0 auto; height:410px;}
+.integral_login{ width:195px; background:#e42143; height:410px; overflow:hidden; position:absolute; z-index:2;}
+.integral_login_1{ width:195px; overflow:hidden;}
+.integral_login_1 h1{ float:left; width:173px; height:18px; line-height:18px; overflow:hidden; padding:0 11px; font-size:15px; font-family:"microsoft yahei"; font-weight:bold; color:#FFFFFF; margin-top:12px;}
+.integral_login_01{ float:left; width:173px; border-bottom:1px solid #f13858; margin:0 11px; display:inline;}
+.integral_login_01 h2{ float:left; width:173px; height:30px; line-height:20px; overflow:hidden; font-weight:bold; color:#FFFFFF; margin-top:6px; border-bottom:1px solid #d01b3a;}
+.integral_login_01 h2 input{ background:url("../images/integral_1.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/integral_1.png*/ 0 0 no-repeat; border:none; width:56px; height:20px; line-height:20px; text-align:center; color:#e52142; font-weight:bold; cursor:pointer; margin-left:5px;}
+.integral_login_02{ float:left; width:173px; border-bottom:1px solid #f13858; margin:0 11px; display:inline;}
+.integral_login_02 h3{ float:left; width:173px; height:45px; line-height:18px; overflow:hidden; color:#FFFFFF; margin-top:8px; border-bottom:1px solid #d01b3a;}
+.integral_login_1 p{ float:left; width:173px; height:18px; line-height:18px; overflow:hidden; padding:0 11px; font-size:15px; font-family:"microsoft yahei"; font-weight:bold; color:#FFFFFF; margin-top:10px;}
+.integral_login_1 ul{ float:left; background:url("../images/integral_1.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/integral_1.png*/ 0 -32px no-repeat; width:173px; height:113px; margin-left:11px; display:inline; margin-top:6px;}
+.integral_login_1 ul li{ float:left; width:170px; margin-left:2px; display:inline; margin-top:8px;}
+.integral_login_1 ul li img{ float:left; width:170px; height:60px;}
+.integral_login_1 ul li .hrjf{ float:left; background:url("../images/integral_1.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/integral_1.png*/ -70px 0 no-repeat; width:70px; height:27px; line-height:27px; text-align:center; border:none; color:#FFFFFF; cursor:pointer; margin:0 8px 0 8px;}
+.integral_login_1 ul li .hrjf:hover{ text-decoration:none; color: #FFFFFF;}
+.integral_login_1 ul li font{ float:left; font-size:12px; width:80px; color:#444444;}
+.integral_login_2{ width:175px; padding:0 10px;}
+.integral_login_2 .integral_login_2_xx{ width:175px; height:44px; overflow:hidden;}
+.integral_login_2 .integral_login_2_xx li{ float:left; width:175px; height:22px; overflow:hidden; line-height:22px;}
+.integral_login_2 .integral_login_2_xx li a{ color:#FFF;}
+.integral_login_2 .integral_login_2_xx li a:hover{ color:#FFF;}
+.integral_login_2 p{ width:175px; line-height:22px; height:22px; overflow:hidden; margin-top:5px; color:#FFF;}
+.integral_login_2 span{ float:left; width:175px; height:25px; overflow:hidden; line-height:25px; margin-top:5px; color:#FFF;}
+.integral_login_2 span a img{ float:left; margin-right:5px; width:25px; height:25px;}
+.integral_login_03{ float:left; width:173px; border-bottom:1px solid #f13858; margin:0 11px; display:inline;}
+.integral_login_03 h3{ float:left; width:150px; height:36px; line-height:18px; overflow:hidden; padding:0 11px; color:#FFFFFF; margin-top:5px; border-bottom:1px solid #d01b3a;}
+.integral_login_03 h3 a{ margin: 5px 0 0 12px; float:left; color: #e42143; background:url("../images/center_jfhh_1.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/center_jfhh_1.gif*/ 0 0px no-repeat; width:56px; height:20px; text-align:center; line-height: 20px;}
+.integral_login_03 h3 a:hover{ text-decoration:none; color: #e42143;}
+
+/* 弹出层 */
+.integral_login_Out{ width:175px; padding:0 10px; margin-top:5px; height:22px; overflow:hidden;}
+.integral_login_Out a{ color:#FFF; line-height:22px; text-align:left;}
+.integral_login_Out a:hover{ text-decoration:underline;}
+
+#wrap{ width:612px; position:fixed; _position:absolute; z-index:222; overflow:hidden; left:30%; top:10%;}
+.acity{ display:block; cursor:pointer;display:block;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;}
+.city{ width:612px; background:#FFFFFF; overflow:hidden; display:none;}
+.ok{ cursor:pointer; float:left; width:612px; height:36px; line-height:36px; background:#df0001;}
+.ok font{ color:#FFF; font-size:16px; padding:0 12px; font-family:"microsoft yahei";}
+.center_jfdcym{ width:612px; min-height:500px; border:1px solid #c1c1c1; display:none; overflow: hidden;position: absolute;background:#fff; z-index:999;}
+.center_jfdcym_nav{ width:612px; height:27px; line-height:27px; background:#e5e5e6;}
+.center_jfdcym_nav li{ float:left; width:102px; height:27px; padding-left:28px; background:url("../images/integral_1.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/integral_1.png*/ no-repeat 0 -142px; font-size:16px; font-family:"microsoft yahei"; font-weight:bold; color:#FFF;}
+.center_jfdcym_cen{ width:500px; padding:32px 50px;}
+.center_jfdcym_cen li{ float:left; width:500px; color:#666666; font-size:14px; font-family:"microsoft yahei"; height:40px;}
+.center_jfdcym_cen li input{ width:160px; height:24px; margin:0 8px; padding:0 5px;}
+.center_jfdcym_cen .xk input{ font-size:14px; border-left:none; border-top:none; border-right:none; border-bottom:1px solid #c1c1c1;}
+.center_jfdcym_cen li select{ width:170px; height:26px; margin:0 8px;}
+.jfdc_anniu { margin-top:10px; width:240px; margin-left:120px; display:inline;}
+.jfdc_anniu a{ background:url("../images/integral_1.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/integral_1.png*/ no-repeat 0 -155px; float:left; width:73px; height:25px; text-align:center; font-size:14px; font-family:"microsoft yahei"; font-weight:bold; color:#FFF; line-height:25px; margin-left:38px; display:inline; cursor:pointer;}
+.jfdc_anniu a:hover{ text-decoration:none; color:#FFF;}
+
+
+.center_left_1{ width:195px; background:url("../images/center_jfhh.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/center_jfhh.jpg*/ no-repeat; height:345px; overflow:hidden; margin-top:-5px;}
+.center_left_1 h1{ float:left; width:173px; height:18px; line-height:18px; overflow:hidden; padding:0 11px; font-size:15px; font-family:"microsoft yahei"; font-weight:bold; color:#FFFFFF; margin-top:20px;}
+.center_left_1 h2{ float:left; width:173px; height:20px; line-height:20px; overflow:hidden; padding:0 11px; font-weight:bold; color:#FFFFFF; margin-top:6px;}
+.center_left_1 h2 input{ background:url("../images/center_jfhh_1.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/center_jfhh_1.gif*/ 0 0 no-repeat; border:none; width:56px; height:20px; line-height:20px; text-align:center; color:#e52142; font-weight:bold; cursor:pointer; margin-left:5px;}
+.center_left_1 h3{ float:left; width:173px; height:36px; line-height:18px; overflow:hidden; padding:0 11px; color:#FFFFFF; margin-top:20px;}
+.center_left_1 h3 a{ margin: 5px 0 0 12px; float:left; color: #e42143; background:url("../images/center_jfhh_1.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/center_jfhh_1.gif*/ 0 -392px no-repeat; width: 70px; height:27px; text-align:center; line-height: 27px;}
+.center_left_1 h3 a:hover{ text-decoration:none; color: #e42143;}
+
+.center_jfdcym_dccg{ width:800px; margin-top:168px;}
+.center_jfdcym_dccg li{ float:left; background:url("../images/jfhuhuan_dccg.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/jfhuhuan_dccg.jpg*/ no-repeat 190px 0; height:28px; line-height:28px; font-size:14px; margin-top:20px; text-align:center; width:800px;}
+.center_jfdcym_dccg li a{ margin-left:20px; display:inline; cursor:pointer;}
+
+
+.hidden{display:none;}
+.move{cursor:move;}
+.bg{position: fixed; z-index:0;width: 100%;height: 100%;top: 0;left: 0;filter: alpha(opacity=70);opacity: 0.7;overflow: hidden;background:#000000; _background:none; display:none; z-index:99;}
+*html { background:url("-")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/style/**/ fixed; }
+*html body { margin:0; height:100%;}
+*html .bg{ position: absolute; left: expression(documentElement.scrollLeft + documentElement.clientWidth - this.offsetWidth); top: expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight);}
+
+
+
+
+/* 积分兑换 */
+.integral_exchange{ min-width:1220px; margin:0 auto; background:#FFF;}
+.integral_exchange ul{ width:1220px; margin:0 auto;}
+.integral_exchange ul li{ float:left; width:auto;}
+.integral_exchange ul li img{ float:left;}
+.integral_exchange ul li a{ position:absolute; color:#2a73b1; text-decoration:underline; width:405px; text-align:center; margin-top:205px;}
+.integral_exchange ul li a:hover{ text-decoration:none;}
+
+
+
+
+.integral_content{ min-width:1220px; margin:0 auto; background:#f5f5f5; padding-bottom:20px;}
+/* 品牌兑换 */
+.integral_brand{ width:1152px; margin:0 auto; padding-top:20px;}
+.integral_brand_nav{ float:left; width:1152px; height:25px; overflow:hidden;}
+.integral_brand_nav span{ padding-right:200px; line-height:25px;}
+.integral_brand_cen{ float:left; width:1152px;}
+
+.integral_brand_left{ float:left; width:185px; height:326px; overflow:hidden; margin-top:2px;}
+#turn{ position:absolute; width:185px; height:326px; overflow:hidden; z-index:1;}
+.menu{ float:left; width:185px; position:absolute; margin-top:305px;}
+.menu ul{ margin:0 auto; width:165px;}
+.menu li{cursor:pointer;position:relative;float:right;height:10px; text-align:center; width:10px; font-size:14px; font-weight:bold; color:#6c6c6c; background:#FFF; text-indent:-9999px; margin:0 0 0 4px; border-radius:8px; font-size:0px;}
+.menu .libg{ background:#bababa; color:#a7be62;}
+.turn{ float:left; width:185px;}
+.turn img{ float:left;}
+
+.integral_brand_middle{ float:left; width:780px;}
+.integral_brand_middle ul{ float:left;}
+.integral_brand_middle ul li{ float:left; width:auto;}
+.integral_brand_middle ul li a{ float:left;}
+.integral_brand_middle ul li img{ float:left; margin:2px 0 0 2px; display:inline;}
+
+.integral_brand_right{ float:right; margin-top:2px;}
+
+
+/* 广告位 */
+.integral_cen_banner{ width:1152px; margin:0 auto;}
+.integral_cen_banner img{ float:left; width:1152px; height:100px; margin-top:15px;}
+
+
+/* 积分兑换区 */
+.integral_F1{ margin:0 auto; width:1152px; padding-top:20px;}
+.integral_F1_left{ float:left; width:190px;}
+.integral_F1_left_nav{ float:left; width:190px; height:90px;}
+.integral_F1_left_nav img{ float:left;}
+.integral_F1_left_nav1{ float:left; width:160px; padding:0 15px; height:198px; overflow:hidden; background:#FFF;}
+.integral_F1_left_nav1 li{ float:left; width:72px; height:70px; overflow:hidden; margin:20px 0 0 4px; display:inline;}
+.integral_F1_left_nav1 li img{ float:left; width:72px; height:70px;}
+.integral_F1_left_nav2{ float:left; width:144px; height:102px; overflow:hidden; padding:0 16px 0 30px; margin-top:15px;}
+.integral_F1_left_nav2 li{ float:left; width:72px; line-height:34px; height:34px; overflow:hidden;}
+.integral_F1_banner{ float:left; width:365px; height:420px; overflow:hidden;}
+.integral_F1_banner img{ float:left; width:365px; height:420px;}
+.integral_F1_right{ float:left; width:597px;}
+.integral_F1_right ul{ float:left; width:597px; height:242px; border-bottom:1px solid #e5e5e5;}
+.integral_F1_right ul li{ float:left; width:198px; height:242px;}
+.integral_F1_right ol{ float:left; width:597px; height:177px;}
+.integral_F1_right ol li{ float:left; width:198px; height:177px;}
+.integral_F1_right li{ border-left:1px solid #e5e5e5;}
+.integral_F1_right li img{ float:left;}
+
+/* 按钮滚动 */
+.uldiv{ float:left;width:190px;position:relative; height:178px; overflow:hidden; background:#FFF; padding:10px 0;}
+.btndiv{ width:190px; height:25px; position:absolute; z-index:10; margin-top:75px;}
+a.abtn{ height:31px; width:20px; position:absolute;overflow:hidden;background:url("../images/integral_center_bom.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/integral/images/integral_center_bom.png*/ no-repeat; text-indent:-9999em; outline:none;}
+a.aleft{left:5px;background-position:0 0;}
+a.agrayleft{cursor:default;background-position:0 0; filter: alpha(opacity=50); opacity: 0.5;}
+a.aright{right:5px;background-position:0 -31px;}
+a.agrayright{cursor:default;background-position:0 -31px; filter: alpha(opacity=50); opacity: 0.5;}
+.scrollcontainer{ margin-left:42px; width:110px; height:178px; overflow:hidden; position:absolute; z-index:20;}
+.scrollcontainer ul{width:20000px;position:absolute;}
+.scrollcontainer ul li{width:110px; float:left; overflow:hidden; z-index:10;}
+.scrollcontainer ul li a{ float:left;}
+.scrollcontainer ul li img{ width:110px; height:60px; z-index:10;}
+
+
+.uldiv1{ float:left;width:190px;position:relative; height:178px; overflow:hidden; background:#FFF; padding:10px 0;}
+.uldiv2{ float:left;width:190px;position:relative; height:178px; overflow:hidden; background:#FFF; padding:10px 0;}
+.uldiv3{ float:left;width:190px;position:relative; height:178px; overflow:hidden; background:#FFF; padding:10px 0;}
+.uldiv4{ float:left;width:190px;position:relative; height:178px; overflow:hidden; background:#FFF; padding:10px 0;}
+
+
+
+
+
+
+
+
+

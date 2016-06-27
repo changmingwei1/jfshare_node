@@ -1,0 +1,182 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{outline:none; padding:0; margin:0;}
+body{ font-family:"宋体"; font-size:12px; font-weight:normal; color:#585858;}
+ul,ol{ list-style:none;}
+img{ border:0;}
+a{color:#585858; text-decoration:none;}
+a:hover{color:#FF0000; text-decoration:underline;}
+h1,h2,h3{ font-family:"宋体"; font-size:12px; font-weight:normal;}
+.left{ float:left;}
+.right{ float:right;}
+.clear{ clear:both;}
+ 
+
+#box{ width:100%; margin:0 auto;}
+
+
+
+/* 通用头部 */
+.header{ margin:0 auto; width:100%; position: relative; z-index: 8;}
+.header_top{ margin:0 auto; width:100%; height:40px; background:url("../images/header_top_B.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top_B.jpg*/ repeat-x;}
+.header_top_cen{ margin:0 auto; width:1220px; height:40px; background:url("../images/header_top_B.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top_B.jpg*/ repeat-x;}
+
+.header_top_left{ float:left; width:300px; height:40px; overflow:hidden; border-right:1px solid #dbdadc;}
+.header_top_left p{ float:left; width:99px; height:40px; overflow:hidden; border-left:1px solid #dbdadc;}
+.header_top_left .header_top_left_a a,
+.header_top_left .header_top_left_b a,
+.header_top_left .header_top_left_c a{ float:left; text-indent:-9999px; width:99px; height:40px; background:url("../images/header_top.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top.gif*/ no-repeat 0 0;}
+.header_top_left .header_top_left_b a{ background-position:0 -80px;}
+.header_top_left .header_top_left_c a{ background-position:0 -160px;}
+.header_top_left .header_top_left_a a:hover{ background-position:0 -40px;}
+.header_top_left .header_top_left_b a:hover{ background-position:0 -120px;}
+.header_top_left .header_top_left_c a:hover{ background-position:0 -200px;}
+.header_top_right{ float:right; width:1200px; height:40px; overflow:hidden;}
+.header_top_right ul{ width:auto; line-height:40px; color:#585858;}
+.header_top_right ul li{ float:left; width:auto;}
+.header_top_right ul li a{ color:#585858; padding:0 5px 0 6px;}
+.header_top_right ul li a:hover{ color:#ff0000;}
+.header_top_right ul li h1{ float:left; margin-top:11px; width:23px; height:19px; background:url("../images/header_top.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top.gif*/ no-repeat 0 -246px;}
+.header_top_right ul li h2{ float:left; margin-top:11px; width:25px; height:19px; background:url("../images/header_top.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top.gif*/ no-repeat 0 -271px;}
+.header_top_right ul li h3{ float:left; margin-left:5px; display:inline; margin-top:15px; width:8px; height:12px; background:url("../images/header_top.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top.gif*/ no-repeat 0 -297px;}
+.header_top_right ul li .gouwu { float:left; width:72px; _margin-top:10px;}
+.header_top_right ul li .gouwu input{ width:24px; height:18px; line-height:18px; background:none; border-top:none; border-left:none; border-right:none; border-bottom:1px solid #585858; cursor:pointer;}
+.header_top_right ul li .gouwu:hover{ text-decoration:none; color:#585858;}
+.header_top_left .baise a{ background:url("../images/header_top.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top.gif*/ no-repeat; background-position:0 -40px;}
+.header_top_left .baise1 a{ background:url("../images/header_top.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top.gif*/ no-repeat; background-position:0 -120px;}
+.header_top_left .baise2 a{ background:url("../images/header_top.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top.gif*/ no-repeat; background-position:0 -200px;}
+
+.header_Lsou{ margin:0 auto; width:100%; height:85px; background:url("../images/header_top_B1.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top_B1.jpg*/ repeat-x;}
+.header_Lsou_cen{ margin:0 auto; width:1220px; height:85px; background:url("../images/header_top_B1.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top_B1.jpg*/ repeat-x;}
+.logo{ margin:24px 0 0 18px; display:inline;}
+.search{ width:400px; margin-top:18px; margin-right:170px; display:inline;}
+.search ul{ float:left; width:365px; padding:0 0 0 35px; height:30px; background:url("../images/header_top111.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top111.gif*/ no-repeat 0 0; overflow:hidden;}
+.search ul li{ float:left; width:auto; line-height:18px;}
+.search ul .search_1{ height:18px; line-height:18px; width:308px; padding:6px 0 6px 0;}
+.search ul .search_1 input{ float:left; line-height:18px; height:18px; font-size:14px; border:none; background:none; width:302px; color:#bababa;}
+.search ul .search_2{ width:57px; height:30px; text-indent:-9999px;}
+.search ul .search_2 a{ float:left; width:57px; height:30px; font-size:16px; font-weight:bold; color:#FFFFFF; letter-spacing:5px;}
+.search ul .search_2 a:hover{ color:#FFF; text-decoration:none;}
+.search ol{ float:right; width:400px; color:#656565; height:30px; overflow:hidden;}
+.search ol li{ float:left; width:400px; line-height:30px;}
+.search ol li a{ color:#656565; padding:0 5px;}
+.search ol li a:hover{ color:#ff0000;}
+
+.nav{ width:100%; margin:0 auto; background:url("../images/header_top_B2.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top_B2.jpg*/ repeat-x; height:35px;}
+.navA{ width:1220px; margin:0 auto; background:url("../images/header_top_B2.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top_B2.jpg*/ repeat-x; height:35px;}
+.navA ul{ float:left; width:auto;}
+.navA ul li{ float:left; width:auto; height:35px; line-height:35px; text-align:center;}
+.navA ul .nav_fl{ width:195px; height:35px; background:url("../images/header_top111.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top111.gif*/ no-repeat 0 -32px; text-indent:-9999px;}
+.navA ul .nav_fl a{ float:left; width:195px; height:35px;}
+.navA ul .nav_sy{ width:110px;}
+.navA ul .nav_sy a{ color:#FFFFFF; float:left; height:35px; overflow: hidden; width:110px; font: 700 15px/35px "microsoft yahei";}
+.navA ul .nav_sy a:hover{ background:#ffbf00; width:110px; height:35px; text-decoration:none;}
+.navA ul li a{ text-decoration:none;}
+.navA p{ background:url("../images/header_top111.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top111.gif*/ no-repeat 0 -70px; width:178px; height:30px; overflow:hidden; text-indent:-9999px;}
+.yanse{ background:#ffbf00;}
+.ydhk{ width:1220px; margin:0 auto;}
+.ydhk p{ float:left; width:32px; height:22px; position:absolute; margin:-12px 0 0 558px; display:inline;}
+
+
+
+
+/*通用尾部*/
+.footer{ margin:0 auto; width:100%; float:left; position: relative; z-index: 8;}
+.footer_gui{ margin:0 auto; width:100%; height:74px; background:#eeeeee;}
+.footer_gui ul{ margin:0 auto; width:1000px; height:74px; background:#eeeeee; position:relative; z-index:5;}
+.footer_gui ul li{ float:left; width:288px; height:74px; margin-right:68px; display:inline;}
+.footer_gui ul li a img{ float:left; width:288px; height:74px;}
+
+.footer_cen{ margin:0 auto; width:100%; height:104px; background:url("../images/footer_B2.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/footer_B2.jpg*/ top center no-repeat;}
+.footer_cen h1{ margin:0 auto; width:1000px; height:104px; background:url("../images/footer_B2.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/footer_B2.jpg*/ top center no-repeat; position:relative; z-index:5;}
+
+.footer_bang{ margin:0 auto; width:100%; height:164px; background:url("../images/footer_B3.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/footer_B3.jpg*/ top center no-repeat;}
+.footer_bang_a{ margin:0 auto; width:1000px; height:164px; height:164px; background:url("../images/footer_B3.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/footer_B3.jpg*/ top center no-repeat;}
+.footer_bang_a .footer_bang_aa{ float:left; width:790px;}
+.footer_bang_a .footer_bang_aa li{ float:left; width:110px; margin:55px 0 0 45px; display:inline; position:relative; z-index:5;}
+.footer_bang_a .footer_bang_aa li a{ float:left; width:110px; line-height:22px; height:22px; overflow:hidden;}
+.footer_bang_a ol{
+	float: right;
+	width: 210px;
+	overflow:hidden;
+	position:relative; z-index:5;
+}
+.footer_bang_a ol li{
+	float:left;
+	width: 182px;
+	padding-top: 14px;
+	display: inline;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+}
+.footer_bang_a span{
+float:left;
+}
+.footer_bang_a span ul{
+	 float:left;
+	width: 145px;
+}
+.footer_bang_a span ul li{
+	 float:left;
+	width: 145px;
+	height:24px;
+	overflow:hidden;
+	margin:0px 0 0 0;
+	padding:0px;
+}	
+.footer_my{ margin:0 auto; min-width:1220px; height:30px; overflow:hidden; line-height:30px; background:#EEE;}
+.footer_my p{ margin:0 auto; width:320px;}
+.footer_my p a{ float:left; font-size:14px; width:auto; background:url("../images/header_top.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/header_top.gif*/ no-repeat 0 -321px; height:23px; padding:0 10px;}
+
+.footer_bottom{ width:100%; margin:0 auto; height:130px; background:#FFFFFF;}
+.footer_bottom ul{ width:100%; text-align:center; margin:0 auto; color:#333333;}
+.footer_bottom ul li{ width:1220px; margin:0 auto; line-height:50px; height:50px; overflow:hidden;}
+.footer_bottom ol{ width:800px; margin:0 auto; margin-top:2px;}
+.footer_bottom ol li{ float:left; width:auto; margin:0 5px 0 5px; display:inline;}
+
+
+
+
+
+/* 商品分类*/
+.sort_A{ position:absolute; z-index:222; margin-left:45px; display:inline;}
+.allsort {Z-INDEX: 11; FLOAT: left; WIDTH: 195px; POSITION: relative;}
+.allsort .mc { OVERFLOW:hidden; WIDTH: 195px; height:612px;}
+.allsort .item { WIDTH: 195px; HEIGHT: 102px; background:url("../images/center_B5.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/center_B5.gif*/ no-repeat 0 -160px;}
+.allsort .fore {BORDER-TOP-STYLE: none;}
+.allsort SPAN {DISPLAY: block; Z-INDEX: 1; WIDTH: 180px; POSITION: relative; height:102px; padding-left:12px; padding-right:3px;}
+.allsort H3 {FONT-WEIGHT: normal; WIDTH: 180px; height:30px; line-height:30px; overflow:hidden;}
+.allsort .hover H3 a{ OVERFLOW: hidden;}
+.allsort .hover span{ BACKGROUND:#f5f5f5;}
+.allsort .item span H3 A{ color:#d60101; font-family:"microsoft yahei"; font-size:14px;}
+.allsort H3 A:link {DISPLAY: block; COLOR: #333; LINE-HEIGHT: 30px; HEIGHT: 102px}
+.allsort H3 A:visited {DISPLAY: block; COLOR: #333; LINE-HEIGHT: 30px; HEIGHT: 102px}
+.allsort H3 A:hover {COLOR: #d60101;}
+.allsort H3 A:active {COLOR: #1b578a}
+.allsort SPAN .item_nav{ width:180px; height:72px; overflow:hidden;}
+.allsort SPAN .item_nav li{ float:left; width:60px; line-height:20px; height:20px; overflow:hidden;}
+
+.allsort .item .i-mc { min-height:612px; _height:612px; width:678px; background:url("../images/center_B8.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/center_B8.jpg*/ repeat-y; DISPLAY: none; top:0; LEFT: 195px; POSITION: absolute;}
+.allsort .item DT {PADDING-RIGHT: 6px; FONT-WEIGHT: bold; PADDING-TOP: 2px}
+.allsort .item DD {OVERFLOW: hidden; PADDING-TOP: 3px; ZOOM: 1; font-weight:normal;}
+.allsort .subitem {WIDTH:430px; padding:0 12px;}
+.allsort .subitem DL {BORDER-TOP: #ddd 1px dashed; PADDING-BOTTOM: 8px; OVERFLOW: hidden; PADDING-TOP: 6px; ZOOM: 1}
+.allsort .subitem .fore {BORDER-TOP-STYLE: none}
+.allsort .subitem DT {FLOAT: left; WIDTH: 54px; LINE-HEIGHT: 22px; TEXT-ALIGN: right}
+.allsort .subitem DT A{COLOR: #D60101; font-family:"microsoft yahei"; font-weight:normal;}
+.allsort .subitem DD {FLOAT: left; WIDTH: 368px;}
+.allsort .subitem DD em{ float:left; width:auto; font-style:normal; line-height:14px; height:14px; BORDER-LEFT:#ccc 1px solid; margin:3px 0 4px 0; padding:0 8px;word-break:keep-all;}
+.allsort .subitem DD em a:hover{ color:#FF0000;}
+
+.allsort .frBrand{ float:right; width:200px; padding:0 12px; overflow:hidden;}
+.allsort .frBrand h2{ color:#666; width:200px; font-weight:bold; line-height:30px; margin-top:5px; font-size:12px; float:left;}
+.allsort .frBrand .brandImg{ float:left; width:200px; margin-top:5px; overflow:hidden;}
+.allsort .frBrand .brandImg a img{ float:left; width:90px; height:45px;}
+.allsort .frBrand .brandTxt{ float:left; width:200px; padding-bottom:15px;}
+.allsort .frBrand .brandTxt img{ float:left; width:200px;}
+.allsort .hover .i-mc {DISPLAY: block; Z-INDEX: 12;}
+/* end商品分类*/
+
+.location{ width:1200px; margin:0 auto; line-height:30px; height:30px;}

@@ -1,0 +1,55 @@
+.uc-common-detail-item{border:1px solid #ccc;margin-bottom: 10px;background-color: #eee;}
+
+.uc-common-detail-title{background-color:#e4e4e4;height: 49px; }
+.uc-common-detail-title h3{font-size: 16px;color: #333;font-weight: normal;padding: 6px 0 0 10px;}
+.uc-common-detail-title h4{font-weight: normal;font-size: 12px;color: #666;padding-left: 10px;}
+.uc-common-detail-item dd {
+  float: left;color: #999;
+  padding: 10px 0px;
+}
+.uc-common-detail-item .fir {
+  padding-top: 10px;height: 124px;
+}
+.uc-common-detail-item .fir img {
+  float: left;
+  margin: 0px 20px 0 10px;border: 2px solid #fff;
+}
+.uc-common-detail-item .fir h3 {
+  font-size: 14px;color: #333;font-weight: normal;
+}
+.uc-common-detail-item .fir p {
+  font-size: 12px;
+  padding: 10px 0px;
+}
+.uc-common-detail-item .sed {
+  width: 32%;
+}
+.uc-common-detail-item .sed, .uc-common-detail-item .four,.uc-common-detail-item .thr {
+  text-align: center;
+  line-height: 100px;
+}
+.uc-common-detail-item .sed span, .uc-common-detail-item .four span {
+  font-size: 16px;
+  color: #999;
+}
+
+
+.myCommon{border-top: 1px dashed #ccc;margin:10px;}
+.isay{padding-top:10px;font-weight: bold;}
+.time{color:#999;padding:2px 0px;}
+.common{margin:10px;}
+.gfBox{background-color: #ffffcc;border-radius: 5px;margin:20px 10px 10px;position: relative;min-height: 100px;text-align: right;padding-right: 10px;}
+.gfBox b{
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  z-index: 100;
+  left: 20px;
+  top: -20px;
+  width: 0;
+  height: 0;
+  border-width: 10px;
+  border-style: dashed dashed solid;
+  border-color: transparent transparent #ffffcc;
+  font-size: 0;
+  line-height: 0;
+}
