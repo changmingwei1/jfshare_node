@@ -97,7 +97,15 @@ router.get('/messageList', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            var messages = data[0].messages;
+            var messageList = data[0].messages;
+            var messages = [];
+            if(messageList != null && messageList.length > 0){
+                for(var i = 0; i < messageList.length; i++){
+                    if(messageList[i].status == 2){
+                        messages.push(messageList[i]);
+                    }
+                }
+            }
             resContent.messages = messages;
             response.json(resContent);
             logger.info("响应的结果:" + JSON.stringify(resContent));
