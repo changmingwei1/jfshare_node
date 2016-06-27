@@ -50,14 +50,12 @@ var  configlog4node = {
     useLog4js : function(category) {
         var log4js = require('log4js');
         var logger = log4js.getLogger('normal');// 'normal'
-
         /********************
          *
          *  logger.setLevel('info');  //  'INFO'
          *
          */
-
-        logger.setLevel('error');  //  'INFO'
+        logger.setLevel('info');  //  'INFO'
         //app.use(log4js.connectLogger(logger, {level:log4js.levels.ERROR}));
         return logger;
     },
@@ -70,7 +68,6 @@ var  configlog4node = {
         /***返回日志**/
         return logger;
     }
-
 };
 
 /***** 将改模块中的功能导出去 *****/
