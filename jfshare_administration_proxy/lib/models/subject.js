@@ -266,9 +266,13 @@ Subject.prototype.updateAttributes = function (params, callback) {
 Subject.prototype.flushtoAll = function (params, callback) {
 
     //参数需要修改
+    // 修改人
+    //当前类目id
     var subjectInfo = new subject_types.SubjectInfo({
         pid: params.pid,
-        attributes: params.id
+        attributes: params.id,
+        updater:params.updater,
+        id:params.subjectId
     });
 
     var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "applyAttributeToSuperAll", [subjectInfo]);

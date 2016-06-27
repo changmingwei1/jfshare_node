@@ -247,6 +247,29 @@ router.post('/flushtoAll', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.pid == null || params.pid == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.updater == null || params.updater == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.subjectId == null || params.subjectId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        // updater:params.updater,
+       // id:params.subjectId
         Subject.flushtoAll(params, function (error, data) {
             if (error) {
                 response.json(error);
