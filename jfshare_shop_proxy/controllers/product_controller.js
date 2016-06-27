@@ -130,6 +130,7 @@ router.get('/productInfo', function (req, res, next) {
                         productInfo.productName = product.productName;
                         productInfo.viceName = product.viceName;
                         productInfo.imgKey = product.imgKey;
+                        productInfo.detailKey = product.detailKey;
                         productInfo.productDesc = product.detailContent;
                         productInfo.skuTemplate = JSON.parse(product.skuTemplate);
                         productInfo.sellerId = product.sellerId;
@@ -210,19 +211,17 @@ router.get('/productDetail', function (req, res, next) {
 
     logger.info("进入查询商品详情接口");
     var result = {code: 200};
-
     try {
         var arg = req.query;
         //arg.detailKey = "56a1915a0cf2bb85eb5701a7";
         //arg.productId = "ze160122101802000570";
-        if (arg.detailKey == null && arg.productId == null) {
-
+        if (arg.detailKey == null || arg.detailKey == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
-        if (arg.detailKey == "" && arg.productId == "") {
+        if (arg.productId == null || arg.productId == "") {
             result.code = 400;
             result.desc = "参数错误";
             res.json(result);
