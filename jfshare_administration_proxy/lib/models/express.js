@@ -22,10 +22,10 @@ Expresss.prototype.queryList = function(params, callback){
     var expressOrderServ = new Lich.InvokeBag(Lich.ServiceKey.ExpresssServer, "query",[]);
     // 调用 expressOrderServ
     Lich.wicca.invokeClient(expressOrderServ, function (err, data) {
-        logger.info("expressOrderServ-queryList result:" + JSON.stringify(data));
+        logger.info("express-queryList result:" + JSON.stringify(data));
         if(err || data[0].result.code == 1){
             var ret = {};
-            logger.error("expressOrderServ-queryList  失败原因 ======" + err);
+            logger.error("express-queryList  失败原因 ======" + err);
             ret.code = 500;
             ret.desc = "查询服务商列表失败！";
             callback(ret,null);
@@ -47,9 +47,9 @@ Expresss.prototype.expressQuery = function(params, callback){
     var expressOrderServ = new Lich.InvokeBag(Lich.ServiceKey.ExpresssServer, "expressQuery",expressParams);
     // 调用 expressOrderServ
     Lich.wicca.invokeClient(expressOrderServ, function (err, data) {
-        logger.info("expressOrderServ-queryList result:" + JSON.stringify(data));
+        logger.info("express-queryList result:" + JSON.stringify(data));
         if(err || data[0].result.code == 1){
-            logger.error("expressOrderServ-queryList  失败原因 ======" + err);
+            logger.error("express-queryList  失败原因 ======" + err);
             var ret = {};
             ret.code = 500;
             ret.desc = "查询物流失败！";
