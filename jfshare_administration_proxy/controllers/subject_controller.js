@@ -247,12 +247,6 @@ router.post('/flushtoAll', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.pid == null || params.pid == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
 
         if (params.updater == null || params.updater == "") {
             result.code = 500;

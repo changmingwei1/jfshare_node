@@ -282,7 +282,7 @@ router.post('/info', function (request, response, next) {
                         result.sellerId = orderInfo.sellerId;
                         result.cancelTime = orderInfo.cancelTime;
                         result.thirdScore = orderInfo.thirdScore;
-                        result.thirdPrice =  orderInfo.thirdScore;
+                        result.thirdPrice =  orderInfo.thirdPrice;
                         if(orderInfo.orderState == 61){
                             result.cancelDesc = "其他原因";
                             if(orderInfo.orderStateType ==1){
