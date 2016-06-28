@@ -394,6 +394,7 @@ Buyer.prototype.requestHttps = function(param,callback){
             res.desc = "服务器异常不能判断";
             callback(res, null);
         } else if (data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
             logger.warn("获取到的信息:" + JSON.stringify(data));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
