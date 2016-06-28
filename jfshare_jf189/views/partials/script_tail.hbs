@@ -1,0 +1,16 @@
+<script type="text/javascript">
+    function addToFavoriteShop(url) {
+        var a = url;
+        var b = "聚分享，省钱又放心";
+        if (document.all) {
+            window.external.AddFavorite(a, b);
+        } else if (window.sidebar) {
+            window.sidebar.addPanel(b, a, "");
+        } else {
+            alert("对不起，您的浏览器不支持此操作!\n请您使用菜单栏或Ctrl+D收藏本站。");
+        }
+    }
+    function turnoff(obj){
+        document.getElementById(obj).style.display="none";
+    }
+</script>

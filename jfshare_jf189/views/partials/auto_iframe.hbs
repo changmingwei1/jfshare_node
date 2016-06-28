@@ -1,0 +1,45 @@
+<iframe src="#" id="iframeA" name="iframeA" style="display: none;"></iframe>
+<script type="text/javascript">
+    $(function(){
+        window.onload = function() {
+            var doc = document
+            var height = calcPageHeight(doc)
+            var myifr = doc.getElementById('iframeA')
+            if (myifr) {
+                myifr.src = 'http://jf.189.cn/CommonPage/fixHeight.html#' + height;
+            }
+        };
+    });
+
+    // 计算页面的实际高度，iframe自适应会用到
+    function calcPageHeight(doc) {
+        var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+        var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+        var height  = Math.max(cHeight, sHeight)
+
+        return height
+    }
+</script>
+<script type="text/javascript">
+    $(function(){
+        window.onload = function() {
+            var doc = document
+            var height = calcPageHeight(doc)
+            var myifr = doc.getElementById('iframeA')
+            if (myifr) {
+                myifr.src = 'http://jf.189.cn/CommonPage/fixHeight.html#' + height;
+            }
+        };
+    });
+
+    // 计算页面的实际高度，iframe自适应会用到
+    function calcPageHeight(doc) {
+        var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+        var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+        var height  = Math.max(cHeight, sHeight)
+        //alert(cHeight+"|"+sHeight+"|"+height);
+        height = $(document.body).height();
+        alert("cH:"+cHeight+"|sH:"+sHeight+"|height:"+height);
+        return height
+    }
+</script>

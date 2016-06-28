@@ -1,0 +1,54 @@
+{{!< main }}
+<!--<br/><br/><br/><br/><br/><br/<br/><br/><br/><br/><br/>-->
+<!--<h1 align="center" style="font-size:18px;">{{message}}</h1>-->
+<!--<br/><br/><br/><br/><br/><br/<br/><br/><br/><br/><br/>-->
+<link href="/index/css/render.css" rel="stylesheet" type="text/css"/>
+<div class="message">
+    <div class="messagemain">
+        <h4><p>页面努力加载中</p></h4>
+    </div>
+</div>
+<iframe src="http://y.jf.189.cn/preview/CommPage/fixHeight.html#320" id="iframeA" name="iframeA" style="display: none;"></iframe>
+<script type="text/javascript">
+    var spinner_opts = {
+        lines: 10, // 花瓣数目
+        length: 5, // 花瓣长度
+        width: 5, // 花瓣宽度
+        radius: 12, // 花瓣距中心半径
+        corners: 1, // 花瓣圆滑度 (0-1)
+        rotate: 0, // 花瓣旋转角度
+        direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+        color: '#5882FA', // 花瓣颜色
+        speed: 1, // 花瓣旋转速度
+        trail: 60, // 花瓣旋转时的拖影(百分比)
+        shadow: false, // 花瓣是否显示阴影
+        hwaccel: false, //spinner 是否启用硬件加速及高速旋转
+        className: 'spinner', // spinner css 样式名称
+        zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+        top: '105px', // spinner 相对父容器Top定位 单位 px
+        left: '540px'// spinner 相对父容器Left定位 单位 px
+    };
+
+    var _randerUrl = '{{renderUrl}}';
+    var spinner = new Spinner(spinner_opts);
+    var target = $('.messagemain').get(0);
+    var province = 110000;
+    spinner.spin(target);
+    $(function () {
+        $("body").oneTime('2s', function () {
+            var ip = getIPv4(function(ip){
+                $.ajax({
+                    url: "/nnc/province?clientIp=" + ip,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (rdata) {
+                        if(rdata.status === 200) {
+                            province = rdata.data.provinceId;
+                        }
+                        window.location.href = _randerUrl + "&provinceId=" + province + "&storehouseId=-1";
+                    }
+                });
+            });
+        });
+    });
+</script>

@@ -1,0 +1,76 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+/*订单列表*/
+.tab_order{ margin-top:10px;}
+.tab_order table{  border-collapse:collapse;}
+.tab_order table td{ border:#eaeaea 1px solid;  vertical-align:top;}
+.tab_order table .sep_row{ height:10px;}
+.tab_order table .sep_row td{ border:0;}
+
+
+.tab_order .tit{ padding:0 0px 0 15px; background:#f5f5f5; }
+.tab_order .th{ height:31px; line-height:31px;}
+.tab_order .th span{ display: inline-block;}
+.tab_order .th .s1{ float:left;}
+.tab_order .th .s2{ float:right;}
+.tab_order .th .s3{ float:left; margin-left:20px; color:#06c;}
+.tab_order .th a{ color:#06c; margin-top:5px;}
+.tab_order .th em{ color:#666;}
+.tab_order .th strong{ color:#c00; margin-right:15px;}
+
+.tab_order .parcelNum{ vertical-align:middle;}
+.parcelNum{ width:32px; vertical-align:middle;}
+.parcelNum b{ width:21px; background:#c00; display:inline-block; padding:5px 0px 5px; color:#fff; font-weight:normal; margin:0 4px; text-align:center;}
+
+.tab_order .trade_status{ width:150px; text-align:center;}
+.tab_order .operate{ text-align:center; padding-top:15px;}
+.tab_order .operate span{ display:block; line-height:24px;}
+.tab_order .operate p{ line-height:24px; color:#c00;}
+.tab_order .operate span a{ color:#06c;}
+.tab_order .btn_gray02,.tab_order .btn_02{ margin:5px 0; padding:0 9px;}
+
+.tab_order .parcel{ width:495px;}
+.parcelItem{ border-top:#eaeaea 1px solid; margin-top:-1px; width: 380px;}
+.parcelItem li{ margin:0 10px; height:86px;}
+.parcelItem li .img{ float:left; display:inline; margin:10px 10px 0 5px;  width:90px; height:90px; overflow:hidden;}
+.parcelItem li .cont{ float:left; width:245px;margin-right:10px;}
+.parcelItem li .integral,.parcelItem li .price,.parcelItem li .p_amount{ float:left;line-height:86px;text-align: center;border-left: 1px solid #EAEAEA;}
+.parcelItem li .integral{width: 84px;width: 94px \9;}
+.parcelItem li .price{width: 99px;width: 109px \9;}
+.parcelItem li .p_amount{ width: 69px;width: 79px \9;}
+.parcelItem li .name{ margin:10px 0; height:14px; line-height:14px;}
+.parcelItem li .name span{ float:left;max-width:245px;_width:expression((documentElement.clientWidth > 245) ? "245px" : "auto" ) margin-right: 5px; display: inline; overflow: hidden;}
+.parcelItem li .name_movie{ margin:10px 0; line-height:18px; }
+.parcelItem li .name_movie span{ float:left;max-width:350px;_width:expression((documentElement.clientWidth > 350) ? "350px" : "auto" ) margin-right: 10px; display: inline; overflow: hidden;}
+.parcelItem li .type{ color:#aaa; margin-bottom:8px;}
+.parcelItem li .type span{ margin-left:0px;}
+.parcelItem li .gift{ height:18px; line-height:18px; overflow:hidden;}
+.parcelItem li .gift span{ color:#c00;}
+.parcelItem li.bo_no{ border:none;}
+.bd_bottom{ border-bottom:#ccc 1px dashed;}
+
+.tab_order .state{ margin-top:8px; text-align:center;}
+.tab_order .state p{ line-height:24px; color:#c00;}
+.tab_order .state p.black_color{color:#333333;}
+.tab_order .state p i{color:#c00;}
+.tab_order .state span{ display:block; line-height:24px;}
+.tab_order .state span a{ color:#06c;}
+
+.orderGift{ background:#f5f5f5; border-top:#eaeaea 1px solid; height:33px; line-height:33px; overflow:hidden;}
+.orderGift b{ float:left; margin:0px 15px 0 0; background:#c00; width:67px; text-align:center; line-height:33px; height:33px; color:#fff; font-weight:normal; position:relative;}
+.orderGift b em{ position:absolute; right:-6px; top:12px; background:url(../images/ucenter_ui.png) no-repeat -34px -126px; width:6px; height:11px; overflow:hidden;}
+
+.taocan{ background:#f5f5f5; border-top:#f5f5f5 1px solid; border-bottom:#eaeaea 1px solid; height:60px; padding-left:40px; position:relative;}
+.taocan em{ position: absolute; left:11px; top:10px; background:url(../images/ucenter_ui.png) no-repeat -44px -127px; text-align:center; width:16px; height:19px; line-height:18px; color:#fff; text-indent:-99em; }
+.taocan .arrow{ position:absolute; left:27px; top:60px; background:url(../images/ucenter_ui.png) no-repeat -22px -152px; width:13px; height:8px; overflow:hidden;}
+.taocan .name{ margin:10px 0; height:14px; line-height:14px; font-weight:bold; overflow:hidden;}
+.taocan .gift{ height:14px; line-height:14px; overflow:hidden;}
+.taocan .gift span{ color:#c00;}
+.taocan_pro{ background:#f5f5f5; border-top:#fff 1px solid; padding-top:5px;}
+/* end 订单列表*/
+
+.statistic{ line-height:40px; border-bottom:#ccc 1px dotted; padding-left:20px;float:right;}
+.orderTotal{ text-align:right; clear: both;float:right;}
+.orderTotal .total{ margin:15px 0; font-size:14px; font-weight:bold;float:right;}
+.orderTotal .total strong{ color:#e60000; font-size:24px;}

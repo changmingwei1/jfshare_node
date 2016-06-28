@@ -1,0 +1,112 @@
+<script type="text/javascript" src="/js/util/handlebars-v3.0.0.min.js"></script>
+<script type="text/javascript">
+    var productId = "{{{productId}}}";
+    var snapshotId = "{{{snapshotId}}}";
+    var state = "{{{state}}}";
+    var contextPath = '';
+    var provinceId = '{{{provinceId}}}'
+    var ssid = '{{{ssid}}}';
+    var storehouseId = '{{{storehouseId}}}';
+    function checkShopSearchForm(theForm) {
+        if (theForm.keyword.value == "请输入关键字") {
+            theForm.keyword.value = "";
+        }
+//           filtecharacter(theForm.keyword,0);
+    }
+    var arr=new Array();
+    arr[0]=/[\`\~\!\@#$\%\^\&\*\(\)\+\\\]\[\}\{\'\;\:\"\/\.\,\>\<\]\s\|\=\-\?\～\！\¥\……\（\）\——\：\“\？\》\《\，\。\；\‘\?\”\【\】]/g;
+    arr[1]=/[^\d]/g;
+    function filtecharacter(obj, index) {        //屏蔽关键字
+        obj.value = obj.value.replace(arr[index], "");
+    }
+    function displayHeadSorts() {
+        $("#sortLay").show();
+    }
+    function hiddenHeadSorts() {
+        $("#sortLay").hide();
+    }
+
+    $(function() {
+        rendData();
+        $("http://www.jfshare.com/img.lazy").lazyload();
+        $("http://www.jfshare.com/img.lazy").show().lazyload();
+        $("http://www.jfshare.com/img.lazy").lazyload({ threshold : 200 });
+        $("img").lazyload({
+            placeholder : "/templates/merchant/template_jfshare_xj/styles/color_1/images/grey.gif",
+            event : "click"
+        });
+        $("http://www.jfshare.com/img.lazy").lazyload({
+            effect : "fadeIn"
+        });
+    });
+
+    function highlightPage(){
+        if(!document.getElementsByTagName) return false;
+        if(!document.getElementById) return false;
+        if(!document.getElementById('sidemenuid')) return false;
+        var nav = document.getElementById('sidemenuid');
+        var links = nav.getElementsByTagName('a');
+        var last = 0;
+        for (var i=0;i<links.length;i++){
+            var linkurl =  links[i].getAttribute('href');
+            var currenturl = document.location.href;
+            if(currenturl.indexOf(linkurl)!=-1){
+                last = i;
+            }
+        }
+        links[last].className = 'yanse';
+        return true;
+    }
+
+    function hiddenDiv(p){
+        var divobj = document.getElementById("div1");
+        //alert(divobj.style.display);
+        var divs = divobj.children;
+        for(var i=0;i<divs.length;i++){
+            var div = divs[i];
+            if(div.tagName == 'DIV'){
+                if(p==1) $("#div1").animate({opacity: "hide"}, "slow");
+                else div.style.display = '';
+            }
+        }
+    }
+
+    function hiddenDivs(){
+        setTimeout("hiddenDiv(1)",5000);
+    }
+</script>
+
+<script>
+var shopStyle = '/templates/merchant/template_jfshare_xj/styles/color_1', frontPath = '', mid = "m_100", pid = 'p_2041160', userId = '', loginUrl = "", redirectURL = 'http%3A%2F%2Fwww.jfshare.com%2Fproduct.jsp%3Fid%3Dp_2041160';
+var count = 0; //商品总数
+var toEnd = new Array();
+var toBegin = new Array();
+var count2 = 0; //商品总数
+var toEnd2 = new Array();
+var toBegin2 = new Array();
+</script>
+        <!--<script type="text/javascript" src="templates/merchant/template_jfshare_xj/js/jquery.js"></script>-->
+        <!--<script type="text/javascript" src="templates/merchant/template_jfshare_xj/js/share.js"></script>-->
+        <!--<script type="text/javascript" src="templates/merchant/template_jfshare_xj/js/dicengComm_pack_v1.0.1.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--TencentArticl.onload();-->
+<!--</script>-->
+<script type="text/javascript" src="/js/product/render_core.js?v=1.0.0"></script>
+<script type="text/javascript">
+var frontPath = '', ombcount = '', uid = '', tuanPath = '';
+function changeDiv(div1, div2, a1, a2) {
+    document.getElementById(div1).style.display = "block";
+    document.getElementById(div2).style.display = "none";
+    document.getElementById(a1).className = "cur";
+    document.getElementById(a2).className = "";
+}
+var frontPath = '', ombcount = '', uid = '', tuanPath = '';
+function changeDiv(div1, div2, a1, a2) {
+    document.getElementById(div1).style.display = "block";
+    document.getElementById(div2).style.display = "none";
+    document.getElementById(a1).className = "cur";
+    document.getElementById(a2).className = "";
+}
+
+</script>
+<script type="text/javascript" src="/templates/merchant/template_jfshare_xj/js/promotion.js"></script>

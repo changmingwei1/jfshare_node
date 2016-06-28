@@ -1,0 +1,524 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>å¸®åŠ©ä¸­å¿ƒ - èšåˆ†äº«</title>
+    <meta name="keywords" content="å¸®åŠ©ä¸­å¿ƒ - èšåˆ†äº«"/>
+    <meta name="description" content="å¸®åŠ©ä¸­å¿ƒ - èšåˆ†äº«"/>
+    <meta property="qc:admins" content="" />
+    <link href="../styles/color_1/css/header.css" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/css/header.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .lazy {
+            display: none;
+        }
+        *{outline:none; padding:0; margin:0;}
+        body{ font-family:"å®‹ä½“"; font-size:12px; font-weight:normal; color:#333;}
+        ul,ol{ list-style:none;}
+        img{ border:0;}
+        a{color:#333; text-decoration:none; font-family:"microsoft yahei"; outline:none;}
+        a:hover{color:#fe3e4c; text-decoration:none;}
+        h1,h2,h3{ font-family:"microsoft yahei"; font-size:12px; font-weight:normal;}
+        .left{ float:left;}
+        .right{ float:right;}
+        .clear{ clear:both;}
+    </style>
+<link href="styles/style_base/css/525288.jpg.css" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/help/styles/style_base/css/help.css" rel="stylesheet"
+                      type="text/css"/>
+    <script type="text/javascript" src="../../../global_js/jquery/jquery-1.5.min.js" tppabs="http://www.jfshare.com/templates/global_js/jquery/jquery-1.5.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.lazyload.min.js" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript">
+        var contextPath = '';
+        function checkShopSearchForm(theForm) {
+            if (theForm.keyword.value == "è¯·è¾“å…¥å…³é”®å­—") {
+                theForm.keyword.value = "";
+            }
+//           filtecharacter(theForm.keyword,0);
+        }
+        var arr=new Array();
+        arr[0]=/[\`\~\!\@#$\%\^\&\*\(\)\+\\\]\[\}\{\'\;\:\"\/\.\,\>\<\]\s\|\=\-\?\ï½ž\ï¼\Â¥\â€¦â€¦\ï¼ˆ\ï¼‰\â€”â€”\ï¼š\â€œ\ï¼Ÿ\ã€‹\ã€Š\ï¼Œ\ã€‚\ï¼›\â€˜\?\â€\ã€\ã€‘]/g;
+        arr[1]=/[^\d]/g;
+        function filtecharacter(obj, index) {        //å±è”½å…³é”®å­—
+            obj.value = obj.value.replace(arr[index], "");
+        }
+        function displayHeadSorts() {
+            $("#sortLay").show();
+        }
+        function hiddenHeadSorts() {
+            $("#sortLay").hide();
+        }
+
+        function addToFavoriteShop(url) {
+            var a = url;
+            var b = "èšåˆ†äº«ï¼Œçœé’±åˆæ”¾å¿ƒ";
+            if (document.all) {
+                window.external.AddFavorite(a, b);
+            } else if (window.sidebar) {
+                window.sidebar.addPanel(b, a, "");
+            } else {
+                alert("å¯¹ä¸èµ·ï¼Œæ‚¨çš„æµè§ˆå™¨ä¸æ”¯æŒæ­¤æ“ä½œ!\nè¯·æ‚¨ä½¿ç”¨èœå•æ æˆ–Ctrl+Dæ”¶è—æœ¬ç«™ã€‚");
+            }
+        }
+        function turnoff(obj){
+            document.getElementById(obj).style.display="none";
+        }
+
+        $(function() {
+            $("http://www.jfshare.com/templates/merchant/template_jfshare_xj/help/img.lazy").lazyload();
+            $("http://www.jfshare.com/templates/merchant/template_jfshare_xj/help/img.lazy").show().lazyload();
+            $("http://www.jfshare.com/templates/merchant/template_jfshare_xj/help/img.lazy").lazyload({ threshold : 200 });
+            $("img").lazyload({
+                placeholder : "../styles/color_1/images/grey.gif"/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/grey.gif*/,
+                event : "click"
+            });
+            $("http://www.jfshare.com/templates/merchant/template_jfshare_xj/help/img.lazy").lazyload({
+                effect : "fadeIn"
+            });
+        });
+		
+		function highlightPage(){
+			if(!document.getElementsByTagName) return false;
+			if(!document.getElementById) return false;
+			if(!document.getElementById('sidemenuid')) return false;
+			var nav = document.getElementById('sidemenuid');
+			var links = nav.getElementsByTagName('a');
+			var last = 0;
+			for (var i=0;i<links.length;i++){
+				var linkurl =  links[i].getAttribute('href');
+				var currenturl = document.location.href;
+					if(currenturl.indexOf(linkurl)!=-1){
+						last = i;
+					}
+			}
+			links[last].className = 'yanse';
+			return true;
+		} 
+		
+		function hiddenDiv(p){
+		var divobj = document.getElementById("div1");
+		//alert(divobj.style.display);
+		var divs = divobj.children;
+		for(var i=0;i<divs.length;i++){
+		var div = divs[i];
+		if(div.tagName == 'DIV'){
+		if(p==1) $("#div1").animate({opacity: "hide"}, "slow");
+		else div.style.display = '';
+		}
+		}
+		}
+
+		function hiddenDivs(){
+		setTimeout("hiddenDiv(1)",5000);
+		}
+    </script>
+
+    <script type="text/javascript" src="../../../../js/jquery-1.5.min.js" tppabs="http://www.jfshare.com/js/jquery-1.5.min.js"></script>
+        <script type="text/javascript" src="common_js/525289.jpg" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/help/common_js/helper.js"></script>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+			<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+			<link rel="Bookmark" href="/favicon.ico" type="image/x-icon" />
+		</head>
+<div style="display:none"> <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000207841'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s96.cnzz.com/z_stat.php%3Fid%3D1000207841' type='text/javascript'%3E%3C/script%3E"));</script></script> </div>
+<body class="w990"><!--é€šç”¨å¤´éƒ¨å¼€å§‹-->
+
+    <div id="box">
+    <div class="header">
+	
+	<div class="header_top">
+            <div class="header_top_cen">
+		<div class="header_top_right">
+
+                    <ul class="right" style="width:522px; height:40px; margin-left:38px; display:inline; overflow:hidden;">
+                        <li><a href="javascript:if(confirm('http://www.jfshare.com/member/index.jsp  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/member/index.jsp'" tppabs="http://www.jfshare.com/member/index.jsp" style="border:none;">æˆ‘çš„èšåˆ†äº«</a></li>
+                        <li><h3></h3><a href="javascript:if(confirm('http://jfshare.com/help/index-150024.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://jfshare.com/help/index-150024.html'" tppabs="http://jfshare.com/help/index-150024.html">å¸®åŠ©ä¸­å¿ƒ</a></li>
+                        <li><h3></h3><h1></h1><a href="javascript:if(confirm('http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo'" tppabs="http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo" class="weibo" target="_blank">èšåˆ†äº«å®˜æ–¹å¾®åš</a></li>
+                        <li style="width:122px;"><h3></h3><h2></h2><a href="javascript:if(confirm('http://www.jfshare.com/shopping/cart.jsp  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/shopping/cart.jsp'" tppabs="http://www.jfshare.com/shopping/cart.jsp" class="gouwu">è´­ç‰©è½¦<input name="" type="button" value="0" />ä»¶</a></li>
+						<li style="margin:7px 0 0 10px;"><a href="javascript:if(confirm('http://supplier.jfshare.com/  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://supplier.jfshare.com/'" tppabs="http://supplier.jfshare.com/"><img src="../styles/color_1/images/login_button.jpg" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/login_button.jpg" alt="" /></a></li>
+                    </ul>
+                    <ul class="right">
+                        <li><a href="javascript:;" onClick="addToFavoriteShop('../../../../index.htm'/*tpa=http://www.jfshare.com/*/)" style="margin-right:8px; display:inline; border:none;">æ”¶è—æœ¬ç«™</a></li>
+                        <li>æ¬¢è¿Žå…‰ä¸´èšåˆ†äº«ï¼èšåˆ†äº«ï¼ <a href="javascript:if(confirm('https://www.jfshare.com/login/sign_in.jsp  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='https://www.jfshare.com/login/sign_in.jsp'" tppabs="https://www.jfshare.com/login/sign_in.jsp" style="padding-left:18px; color:#ea0000; border:none;">è¯·ç™»å½•</a><h3></h3></li>
+                                <li><a href="javascript:if(confirm('https://www.jfshare.com/login/register.jsp  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='https://www.jfshare.com/login/register.jsp'" tppabs="https://www.jfshare.com/login/register.jsp" style="color:#ea0000;">æ³¨å†Œ</a></li>
+                            </ul>
+                </div>
+            </div>
+        </div>
+        <div class="header_Lsou">
+            <div class="header_Lsou_cen">
+                <div class="search right">
+                    <ul>
+
+                        <form id="searchform" onSubmit="return checkShopSearchForm(this);" method="post" action="http://www.jfshare.com/product_list.jsp?publishtime=0&styleClass=1">
+                            <li class="search_1"><input id="keyword" type="text" name="keyword" autocomplete="off"><input type="hidden" value="c_10000" name="columnId"></li>
+                            <li class="search_2"><a href="javascript:void(0)" onClick="document.getElementById('searchform').submit();">æœç´¢</a></li>
+                        </form>
+
+                    </ul>
+                    <ol>
+                        <li>çƒ­é—¨æœç´¢ï¼š
+                            </ol>
+                </div>
+            </div>
+        </div>
+       <!--  <div class="ydhk"><p><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/header_navyg.png" alt="" /></p></div> -->
+        <div class="nav">
+            <div class="navA">
+                <ul >
+                    </ul>
+                <p class="right" style="margin-right:20px; display:inline;">400-800-2383</p>
+            </div>
+        </div>
+    </div>
+    <!--é€šç”¨å¤´éƒ¨ç»“æŸ-->
+
+<div class="position">
+            <a href="../../../../index.jsp.htm" tppabs="http://www.jfshare.com/index.jsp">é¦–é¡µ</a>
+        > å¸®åŠ©ä¸­å¿ƒ
+    </div>
+    <div class="wrap">
+            <div class="bigbox clearfix">
+                <style type="text/css">
+    <!--
+    h3 {
+        cursor: pointer;
+    }
+
+    -->
+</style>
+<div class="silder_l">
+        <div class="l_help">
+            <h2>å¸®åŠ©ä¸­å¿ƒ</h2>
+
+            <div class="help_list">
+                <h3 onclick="changeColumn('c_280002',this)"
+                         >
+                            è´­ç‰©æŒ‡å—</h3>
+                    <ul id="c_280002"
+                            style="display:none;" >
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-220001.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-220001.html'" tppabs="http://www.jfshare.com/help/index-220001.html"
+                                       > &middot; è´­ç‰©æµç¨‹</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150002.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150002.html'" tppabs="http://www.jfshare.com/help/index-150002.html"
+                                       > &middot; è´­ç‰©åˆ¸ä½¿ç”¨</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150003.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150003.html'" tppabs="http://www.jfshare.com/help/index-150003.html"
+                                       > &middot; ä¼šå‘˜åˆ¶åº¦</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150005.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150005.html'" tppabs="http://www.jfshare.com/help/index-150005.html"
+                                       > &middot; ç”¨æˆ·å®‰å…¨</a>
+                                </li>
+                            </ul>
+                    <h3 onclick="changeColumn('c_280003',this)"
+                         >
+                            é…é€æ–¹å¼</h3>
+                    <ul id="c_280003"
+                            style="display:none;" >
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-230000.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-230000.html'" tppabs="http://www.jfshare.com/help/index-230000.html"
+                                       > &middot; é…é€æ–¹å¼</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150007.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150007.html'" tppabs="http://www.jfshare.com/help/index-150007.html"
+                                       > &middot; è®¢å•æŸ¥è¯¢</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150010.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150010.html'" tppabs="http://www.jfshare.com/help/index-150010.html"
+                                       > &middot; ç‰©æµèŒƒå›´</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150008.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150008.html'" tppabs="http://www.jfshare.com/help/index-150008.html"
+                                       > &middot; åˆ†äº«å€¼è¯´æ˜Ž</a>
+                                </li>
+                            </ul>
+                    <h3 onclick="changeColumn('c_280004',this)"
+                         >
+                            æ”¯ä»˜æ–¹å¼</h3>
+                    <ul id="c_280004"
+                            style="display:none;" >
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150016.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150016.html'" tppabs="http://www.jfshare.com/help/index-150016.html"
+                                       > &middot; ç½‘é“¶åœ¨çº¿æ”¯ä»˜</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-190000.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-190000.html'" tppabs="http://www.jfshare.com/help/index-190000.html"
+                                       > &middot; ç§»åŠ¨æ‰‹æœºæ”¯ä»˜</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150013.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150013.html'" tppabs="http://www.jfshare.com/help/index-150013.html"
+                                       > &middot; ç§¯åˆ†æ”¯ä»˜</a>
+                                </li>
+                            </ul>
+                    <h3 onclick="changeColumn('c_280005',this)"
+                         >
+                            å”®åŽæœåŠ¡</h3>
+                    <ul id="c_280005"
+                            style="display:none;" >
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/product_list.jsp?columnId=c_430073  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/product_list.jsp?columnId=c_430073'" tppabs="http://www.jfshare.com/help/index-250000.html"
+                                       > &middot; æµ·æ·˜å•†å“é€€æ¢è´§æ”¿ç­–</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-210001.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-210001.html'" tppabs="http://www.jfshare.com/help/index-210001.html"
+                                       > &middot; é€€æ¢è´§æµç¨‹</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150017.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150017.html'" tppabs="http://www.jfshare.com/help/index-150017.html"
+                                       > &middot; æœ¬å•†åŸŽé€€æ¢è´§æ”¿ç­–</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150021.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150021.html'" tppabs="http://www.jfshare.com/help/index-150021.html"
+                                       > &middot; é€€æ¬¾è¯´æ˜Ž</a>
+                                </li>
+                            </ul>
+                    <h3 onclick="changeColumn('c_280006',this)"
+                        class="shower" >
+                            å®¢æœä¸­å¿ƒ</h3>
+                    <ul id="c_280006"
+                            >
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-240003.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-240003.html'" tppabs="http://www.jfshare.com/help/index-240003.html"
+                                       > &middot; å•†åŸŽå…¬å‘Š</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-180000.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-180000.html'" tppabs="http://www.jfshare.com/help/index-180000.html"
+                                       > &middot; ç§¯åˆ†äº’é€š</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150024.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150024.html'" tppabs="http://www.jfshare.com/help/index-150024.html"
+                                       class="helpcur"> &middot; å¸¸è§é—®é¢˜FAQ</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150023.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150023.html'" tppabs="http://www.jfshare.com/help/index-150023.html"
+                                       > &middot; è”ç³»æˆ‘ä»¬</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/525290.jpg  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/525290.jpg'" tppabs="http://www.jfshare.com/help/index-150030.html"
+                                       > &middot; æœåŠ¡æ¡æ¬¾</a>
+                                </li>
+                            <li>
+                                    <a href="javascript:if(confirm('http://www.jfshare.com/help/index-150027.html  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÒÑ¾­±»Õ¾µãÂþÓÎÆ÷ÅÅ³ý¹æÔò²ÎÊýÅÅ³ýµÄÂ·¾¶µØÖ·¡£(¸ÃÏµÍ³µÄ Teleport Ultra ÊØÔòÊÇ¿ÉÑ¡µÄ; ²Î¼ûÏîÄ¿ÊôÐÔ, ÍøÂçÀñÒÇ¡£)  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.jfshare.com/help/index-150027.html'" tppabs="http://www.jfshare.com/help/index-150027.html"
+                                       > &middot; å‘ç¥¨åˆ¶åº¦</a>
+                                </li>
+                            </ul>
+                    </div>
+        </div>
+    </div>
+<div class="silder_r">
+        <div class="r_cont">
+            <h2><span style="color:">å¸¸è§é—®é¢˜FAQ</span></h2>
+            <div class="cont_txt"><p>1ã€èšåˆ†äº«æœ‰å“ªäº›æ”¯ä»˜æ–¹å¼ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼š ç›®å‰èšåˆ†äº«æ”¯æŒ<a href="javascript:if(confirm('http://www.so.com/525291.jpg  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.so.com/525291.jpg'" tppabs="http://www.so.com/s?q=%E7%BD%91%E9%93%B6%E5%9C%A8%E7%BA%BF%E6%94%AF%E4%BB%98&ie=utf-8&src=se_lighten" target="_blank">ç½‘é“¶åœ¨çº¿æ”¯ä»˜</a>ã€æ”¯ä»˜å®æ”¯ä»˜ã€è´¢ä»˜é€šæ”¯ä»˜ä¸‰ç§æ”¯ä»˜æ–¹å¼ã€‚å…·ä½“æ”¯ä»˜æ–¹å¼è¯·å‚è§&ldquo;å¸®åŠ©ä¸­å¿ƒï¼æ”¯ä»˜æ–¹å¼&rdquo;ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>2ã€ä¸ºä»€ä¹ˆæ´»åŠ¨åˆšå¼€å§‹å°±æœ‰å•†å“æ˜¾ç¤º&ldquo;å”®å®Œ&rdquo;ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼š èšåˆ†äº«ä¸ºæ‚¨æä¾›çš„å•†å“å› å…¶æœ¬èº«çš„ç‰¹æ®Šå±žæ€§ä¸Žé«˜æ˜‚çš„ä»·å€¼ï¼Œæ‰€ä»¥æ•°é‡æœ‰é™ï¼Œå‡ºçŽ°ä¼—å¤šèšåˆ†äº«ç”¨æˆ·åŒæ—¶æŠ¢è´­çš„æƒ…å†µæ—¶ï¼Œéƒ¨åˆ†çƒ­é”€å•†å“ä¼šåœ¨å‡ åˆ†é’Ÿå†…è¢«æŠ¢è´­ä¸€ç©ºã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>ç‰¹åˆ«æç¤ºï¼šå½“æŸçƒ­é”€å•†å“è¢«æ”¾å…¥è´­ç‰©è½¦æ—¶å¹¶ä¸ä¼šå åŽ»å•†å“åº“å­˜é‡ï¼Œåªæœ‰å°†æŠ¢è´­åˆ°çš„å•†å“ç”Ÿæˆè®¢å•åŽï¼Œè¯¥è®¢å•ä¸­çš„å•†å“æ‰ä¼šäº§ç”Ÿ15åˆ†é’Ÿçš„åº“å­˜å ç”¨æ—¶é—´ï¼Œè‹¥æ‚¨åœ¨15åˆ†é’Ÿå†…æ²¡æœ‰åŠæ—¶å®Œæˆä»˜æ¬¾ï¼Œè¯¥è®¢å•å•†å“åº“å­˜ä¼šé‡æ–°é‡Šæ”¾ï¼Œæ–¹ä¾¿å…¶ä»–ç”¨æˆ·å†æ¬¡æŠ¢è´­ã€‚æ‰€ä»¥ï¼Œå¦‚æžœçœ‹è§æŸæ¬¾åŠ¨å¿ƒå•†å“å·²å”®å®Œï¼Œä¹Ÿåˆ«å¿˜äº†è¯•è¯•åˆ·æ–°é¡µé¢å“¦ï¼</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;3ã€å¦‚ä½•èŽ·å¾—èšåˆ†äº«ç¤¼åˆ¸ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼š èšåˆ†äº«ä¼šä¸å®šæœŸä¸¾è¡Œå›žé¦ˆç”¨æˆ·çš„è¶…å€¼æ´»åŠ¨ï¼Œèšåˆ†äº«ç¤¼åˆ¸ä¼šä»¥èµ å“å½¢å¼åœ¨æ´»åŠ¨ä¸­äº§ç”Ÿï¼Œå…³æ³¨æˆ‘ä»¬çš„é¦–é¡µä¸Žæ´»åŠ¨ä¸“åŒºï¼Œæœ‰æ›´å¤šæƒŠå–œç­‰å¾…æ‚¨æ¥å‘çŽ°ï¼è¯¦è§&ldquo;å¸®åŠ©ä¸­å¿ƒï¼ç¤¼åˆ¸è§„åˆ™&rdquo;ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>4ã€é…é€è´¹ç”¨å¦‚ä½•æ”¶å–ï¼Ÿé…é€ç‰©æµèƒ½å¦é€‰æ‹©ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šèšåˆ†äº«å…¨åœºå…è¿è´¹(åŠ æ€¥å¿«é€’é™¤å¤–)ï¼›æˆ‘ä»¬æä¾›<a href="javascript:if(confirm('http://www.so.com/product_list.jsp?columnId=c_430071  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.so.com/product_list.jsp?columnId=c_430071'" tppabs="http://www.so.com/s?q=%E9%A1%BA%E4%B8%B0&ie=utf-8&src=se_lighten" target="_blank">é¡ºä¸°</a>ã€ä¸­é€šã€<a href="javascript:if(confirm('http://www.so.com/product_list.jsp?columnId=c_1210050  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.so.com/product_list.jsp?columnId=c_1210050'" tppabs="http://www.so.com/s?q=%E4%BC%98%E9%80%9F&ie=utf-8&src=se_lighten" target="_blank">ä¼˜é€Ÿ</a>ã€EMSå››ç§é…é€ç‰©æµï¼Œæˆ‘ä»¬ä¼šæ ¹æ®æ‚¨çš„æƒ…å†µä¸ºæ‚¨é€‰æ‹©æœ€åˆé€‚çš„å¿«é€’æ–¹å¼ï¼Œä½†å¾ˆæŠ±æ­‰ï¼Œæ‚¨æ— æ³•è‡ªå·±ç›´æŽ¥é€‰æ‹©<a href="javascript:if(confirm('http://www.so.com/product_list.jsp?columnId=c_490001  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.so.com/product_list.jsp?columnId=c_490001'" tppabs="http://www.so.com/s?q=%E5%BF%AB%E9%80%92%E5%85%AC%E5%8F%B8&ie=utf-8&src=se_lighten" target="_blank">å¿«é€’å…¬å¸</a>ã€‚è¯¦è§&ldquo;å¸®åŠ©ä¸­å¿ƒï¼é…é€æ–¹å¼&rdquo;ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;5ã€å¦‚æžœæ”¶åˆ°çš„å•†å“ä¸æ»¡æ„æ€Žä¹ˆåŠžï¼Ÿæ˜¯å¦å¯ä»¥åŠžç†é€€æ¢è´§ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼š è‡ªæ‚¨ç­¾æ”¶å•†å“ä¹‹æ—¥èµ·7æ—¥å†…ï¼Œèšåˆ†äº«å¯ä¸ºæ‚¨åŠžç†é€€æ¢è´§æœåŠ¡ã€‚æ‚¨ä¹Ÿå¯ä»¥é€‰æ‹©å½“åœºæ‹’æ”¶ã€‚å¦‚éœ€åŠžç†é€€æ¢è´§ä¸šåŠ¡æˆ–è¦æ‹’æ”¶å•†å“ï¼Œè¯·æ‚¨è‡´ç”µèšåˆ†äº«å®¢æœçƒ­çº¿ï¼ˆ400-800-2383ã€400-115-6767ï¼‰å’¨è¯¢ã€‚æˆ‘ä»¬å¸Œæœ›æä¾›ç»™æ‚¨çš„å•†å“å’ŒæœåŠ¡éƒ½èƒ½è®©æ‚¨æ»¡æ„ï¼Œä½†æ¯ä¸ªè®¢å•ç›®å‰åªèƒ½æœ‰ä¸€æ¬¡é€€æ¢è´§æœºä¼šï¼Œå› æ­¤è¯·æ‚¨åœ¨ä¸‹å•æ—¶æ…Žé‡å†³å®šã€‚å¤šæ¬¡æ— ç†ç”±æ‹’æ”¶å°†æœ‰å¯èƒ½å½±å“æˆ‘ä»¬ç»§ç»­ä¸ºæ‚¨æœåŠ¡ã€‚è¯¦è§&ldquo;å¸®åŠ©ä¸­å¿ƒï¼é€€æ¢è´§æ”¿ç­–&rdquo;ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;6ã€å¯ä»¥å¼€å‘ç¥¨å—ï¼Ÿéœ€è¦äº¤ç¨Žå—ï¼Ÿéƒ½å¯ä»¥å¼€å…·å“ªäº›ç±»åž‹çš„å‘ç¥¨ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šæ‚¨å¥½ï¼Œæˆ‘ä»¬çš„å•†å“æ˜¯å¯ä»¥å¼€å…·å‘ç¥¨çš„ï¼›å¦å¤–æˆ‘ä»¬çš„è®¢å•ä¸­å·²ç»åŒ…å«äº†ç¨Žè´¹ï¼Œæ‚¨æ”¶è´§æ—¶ä¸éœ€è¦æ”¯ä»˜é¢å¤–çš„è´¹ç”¨ï¼›å¯ä»¥å¼€å…·å‘ç¥¨çš„ç±»åž‹å¦‚ä¸‹ï¼šæœè£…ã€é¥°å“ã€ç®±åŒ…ã€éž‹å¸½ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>å¦‚éœ€å‘ç¥¨ï¼Œè¯·åœ¨æäº¤è®¢å•å¹¶å®Œæˆæ”¯ä»˜åŽè‡´ç”µèšåˆ†äº«å®¢æœçƒ­çº¿ç´¢è¦å‘ç¥¨ï¼Œæˆ‘ä»¬å°†åœ¨æ‚¨æ”¶åˆ°å•†å“çš„7å¤©ä¹‹å†…ç¡®å®šæ²¡æœ‰é€€æ¢è´§åŽï¼Œä»¥å¹³ä¿¡æ–¹å¼å¯„å‡ºã€‚è¯¦è§&ldquo;å¸®åŠ©ä¸­å¿ƒï¼æ”¯ä»˜æ–¹å¼ï¼å‘ç¥¨åˆ¶åº¦&rdquo;ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>7ã€ä¸æ³¨å†Œæˆ–ä¸ç™»é™†æ˜¯å¦åŒæ ·å¯ä»¥å®Œæˆè´­ç‰©ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šå¾ˆæŠ±æ­‰ï¼Œä¸å¯ä»¥ã€‚æ‚¨å¯ä»¥åœ¨éžç™»é™†çŠ¶æ€æŒ‘é€‰å•†å“å¹¶åŠ å…¥è´­ç‰©è½¦ï¼Œä½†è¿›å…¥æ”¯ä»˜é˜¶æ®µæ—¶å¿…é¡»è¦å®Œæˆæ³¨å†Œæˆ–è€…ç™»é™†ã€‚å› ä¸ºæˆ‘ä»¬éœ€è¦æ ¹æ®æ‚¨çš„æ³¨å†Œä¿¡æ¯æ¥ä¸ºæ‚¨æä¾›æœåŠ¡ï¼ŒåŒæ—¶ï¼Œä»¥ä¼šå‘˜èº«ä»½äº§ç”Ÿçš„æ¶ˆè´¹å°†èŽ·å¾—ç§¯åˆ†ã€ç¤¼åˆ¸ã€ä¼šå‘˜ç­‰çº§æå‡ç­‰å®žæƒ å¥–åŠ±ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>8ã€ä»€ä¹ˆæ˜¯è‰²å·®ï¼Ÿå…³äºŽè‰²å·®çš„é—®é¢˜ï¼ˆäº§å“ä¸Žç½‘ä¸Šå›¾ç‰‡çš„å·®å¼‚ï¼‰</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šè‰²å·®æ˜¯ç½‘ç»œè´­ç‰©å¾ˆéš¾é¿å…çš„é—®é¢˜ï¼Œè‰²å·®äº§ç”Ÿå¤šå‘ç”ŸäºŽå•†ä¸šæ‹ç‰‡å’Œ<a href="javascript:if(confirm('http://www.so.com/product_list.jsp?columnId=c_490005  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.so.com/product_list.jsp?columnId=c_490005'" tppabs="http://www.so.com/s?q=%E5%90%8E%E6%9C%9F%E5%88%B6%E4%BD%9C&ie=utf-8&src=se_lighten" target="_blank">åŽæœŸåˆ¶ä½œ</a>ä¸Šï¼Œå› æ‹æ‘„åŠ å…¥ç¯å…‰çš„æ•ˆæžœï¼Œéš¾å…ä¼šäº§ç”Ÿä¸€å®šçš„è‰²å·®ã€‚å†è€…å°±æ˜¯ç”µè„‘æ˜¾ç¤ºå±åˆ†è¾¨çŽ‡çš„åŽŸå› å¯¼è‡´ï¼Œä¸åŒçš„ç”µè„‘æ˜¾ç¤ºçš„è‰²å½©ä¼šæœ‰æ‰€å·®å¼‚ï¼›å¦‚åŒæ‚¨åˆ°å•†åœºè´­ä¹°ç”µè§†æœºæ—¶ï¼Œä¸åŒçš„ç”µè§†å› åˆ†è¾¨çŽ‡çš„ä¸åŒæ˜¾ç¤ºå‡ºçš„è‰²å½©è¿˜åŽŸæ•ˆæžœä¹Ÿæœ‰æ‰€ä¸åŒã€‚å½“ç„¶çº¢è‰²ä¸å¯èƒ½ä¼šå˜æˆé»„è‰²çš„æ•ˆæžœï¼Œå»ºè®®æ‚¨åœ¨ç½‘è´­æ—¶çœ‹åˆ°å•†å“å›¾ç‰‡æ—¶ï¼Œè¯·åœ¨æ­¤åŸºç¡€ä¸ŠåŠ æ·±1-2ä¸ªè‰²è°ƒï¼ŒåŸºæœ¬ä¸Šå°±æ˜¯æ‚¨æ”¶åˆ°å®žç‰©çš„è‰²å½©èƒ½å»åˆã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>9ã€ä»€ä¹ˆæ˜¯èšåˆ†äº«è™šæ‹Ÿè´¦æˆ·ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šè™šæ‹Ÿè´¦æˆ·æ˜¯å®¢æˆ·åœ¨èšåˆ†äº«æ‹¥æœ‰çš„ä¸“ç”¨è´¦æˆ·ï¼Œæ³¨å†Œæ¿€æ´»æˆåŠŸåŽå³å¯æ‹¥æœ‰ï¼Œç”¨äºŽå­˜æ”¾ç”±äºŽé€€è´§ã€å¥–åŠ±ã€è¡¥æ¬¾ç­‰äº§ç”Ÿçš„çŽ°é‡‘ï¼Œç”¨æˆ·å¯å¯¹è™šæ‹Ÿè´¦æˆ·è¿›è¡Œå……å€¼ï¼Œä¹Ÿå¯ç”¨è´¦æˆ·å¯ç”¨ä½™é¢æ”¯ä»˜è´§æ¬¾ã€‚åŒæ—¶æç¤ºæ‚¨,æ‚¨çš„å¯†ç æ˜¯æ‚¨çš„ä¸ªäººéšç§,è¯·æ‚¨å¦¥å–„ä¿ç®¡å¹¶ä¸è¦å‘ŠçŸ¥ä»–äºº,ç¡®ä¿æ‚¨çš„è´¦æˆ·ä½¿ç”¨å®‰å…¨ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>10ã€æˆ‘åœ¨æäº¤è®¢å•ä»¥åŽèƒ½å¦æ›´æ”¹é…é€åœ°å€å‘¢ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šä¸€æ—¦æ‚¨çš„è®¢å•å·²ç»è¢«å®¡æ ¸ï¼Œæ‚¨å°†æ— æ³•æ›´æ”¹é…é€åœ°å€ã€‚æˆ‘ä»¬å¯ä»¥å¸®æ‚¨æŸ¥è¯¢ä¸€ä¸‹æ‚¨è®¢å•çš„çŠ¶æ€ï¼Œå¦‚æžœè¿˜æ²¡æœ‰å‘å‡ºå¯ä»¥æ‰‹åŠ¨å¸®æ‚¨æ›´æ”¹ä¸€ä¸‹ï¼Œä½†æ˜¯å¦‚æžœè´§å“å·²å‘å‡ºå°±æ— æ³•æ›´æ”¹äº†ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>11ã€å‰å‡ å¤©ä»Žèšåˆ†äº«ä¹°çš„ä¸œè¥¿æ”¶åˆ°åŽä¸å–œæ¬¢äº†ï¼Œèƒ½ä¸èƒ½é€€è´§å•Šï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šéžå•†å“è´¨é‡é—®é¢˜çš„ï¼Œåœ¨å•†å“æ€§èƒ½å®Œå¥½ï¼Œå“ç›¸å…¨æ–°ï¼Œæœªç»ä½¿ç”¨ï¼Œç›¸å…³é™„å±žé…ä»¶ï¼ˆå¦‚åŒ…è£…ã€åŠç‰Œã€ä¸‰åŒ…å¡ç­‰ï¼‰é½å…¨ï¼Œä¸å½±å“æˆ‘å¸äºŒæ¬¡é”€å”®çš„å‰æä¸‹ï¼Œæ‚¨åªéœ€æä¾›å•†å“è´­ä¹°å‡­è¯ï¼ŒåŠå¯¹åº”çš„å‘ç¥¨ï¼ˆå¤å°ä»¶æ— æ•ˆï¼‰ï¼Œæ‚¨å¯ä»¥ç”³è¯·é€€æ¢è´§ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>12ã€ä¼˜æƒ åˆ¸æ¿€æ´»åŽä¸ºä½•ä¸èƒ½ä½¿ç”¨ï¼Ÿè¿˜èƒ½å†æ¬¡èŽ·å¾—å—ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šç”±äºŽèšåˆ†äº«ç½‘ç«™çš„åŽŸå› é€ æˆä¼˜æƒ åŠµä¸èƒ½ä½¿ç”¨ï¼Œæ˜¯å¯ä»¥è”ç³»å®¢æœé‡æ–°ç”³è¯·çš„ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>13ã€ä¸‹å•æ—¶å¯ä»¥æŒ‡å®šé€è´§æ—¶é—´å—ï¼Ÿ&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šå¯ä»¥ï¼Œä¸‹å•æ—¶æ‚¨å¯ä»¥é€‰æ‹©å·¥ä½œæ—¥é€è´§ã€ä¼‘æ¯æ—¥é€è´§æˆ–åŒé€‰ï¼ŒèŠ‚å‡æ—¥ä¹Ÿå¯ä»¥å®Œæˆé…é€ï¼Œä¸ºæ‚¨å°½å¯èƒ½çš„æä¾›ä¾¿æ·å‘¨åˆ°çš„æœåŠ¡ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>14ã€æ”¶è´§æ—¶å‘çŽ°å•†å“æœ‰é—®é¢˜å¯ä»¥æ‹’æ”¶å—ï¼Ÿ</p>
+
+<p>&nbsp;</p>
+
+<p>èšåˆ†äº«è§£ç­”ï¼šå¿«é€’åˆ°è¾¾æ—¶ï¼Œè¯·æ‚¨åœ¨å¿«é€’äººå‘˜åœ¨åœºçš„æƒ…å†µä¸‹æœ¬äººç­¾æ”¶å¹¶å½“åœºéªŒè´§ï¼Œå¦‚å‘çŽ°åŒ…è£…ç ´æŸæˆ–å•†å“é—®é¢˜ï¼Œè¯·æ‚¨å½“åœºè‡´ç”µæˆ‘å¸å®¢æœ400-800-2383ã€400-115-6767ï¼Œæˆ‘ä»¬ä¼šå¸®åŠ©æ‚¨å¦¥å–„å¤„ç†ã€‚</p>
+
+<p>&nbsp;</p>
+
+<p>æ›´å¤šé—®é¢˜ï¼Œè¯·è¿›å…¥&ldquo;å¸®åŠ©ä¸­å¿ƒ&rdquo;æŸ¥è¯¢ï¼Œæˆ–ç›´æŽ¥è‡´ç”µæˆ‘ä»¬çš„èšåˆ†äº«å®¢æœçƒ­çº¿400-800-2383ã€400-115-6767ï¼Œç”±å®¢æœäººå‘˜ä¸ºæ‚¨è§£ç­”ã€‚</p>
+</div>
+            <style type="text/css">
+                .cont_txt p {line-height: 22px}
+                .cont_txt div {line-height: 22px}
+            </style>
+        </div>
+    </div>
+</div>
+        </div>
+        <!--endå¸®åŠ©ä¸­å¿ƒ-->
+    <div class="footer">
+<!--é€šç”¨å°¾éƒ¨å¼€å§‹-->
+    <div class="footer">
+        <div class="footer_gui">
+            <ul>
+                </ul>
+        </div>
+
+        <div class="footer_cen">
+            <h1>
+                <p><a href="../../../../COFCO/COFCO.jsp.htm" tppabs="http://www.jfshare.com/COFCO/COFCO.jsp" style="float: left; width: 1220px; height: 104px;"></a></p>
+
+            </h1>
+        </div>
+
+          
+        <div class="footer_bang" >
+            <div class="footer_bang_a">
+                <ul class="footer_bang_aa">
+                    <li>
+                                </li>
+                        <li>
+                                </li>
+                        <li>
+                                </li>
+                        <li>
+                                </li>
+                        <li>
+                                </li>
+                        </ul>
+
+
+                <ol>
+                    <li style="text-align:left; margin-top:2px;  line-height:18px; padding-left:45px;">
+                        <span><img src="../styles/color_1/images/gz.jpg" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/gz.jpg"/></span>
+                        <span style=" float:right; text-align:left; width:145px;">
+                            <ul>
+                                <li><span style="padding-top:2px;"><img src="../styles/color_1/images/w1.jpg" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/w1.jpg"/></span><a
+                                        href="javascript:if(confirm('http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo'" tppabs="http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo"  target="_blank">
+                                    &nbsp;æ–°æµªå®˜æ–¹å¾®åš</a>
+                                </li>
+                                <li><span style="padding-top:2px;"><img src="../styles/color_1/images/w2.jpg" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/w2.jpg" /></span><a href="javascript:if(confirm('http://jfshare.t.sohu.com/  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://jfshare.t.sohu.com/'" tppabs="http://jfshare.t.sohu.com/" target="_blank">
+                                    &nbsp;æœç‹å®˜æ–¹å¾®åš</a></li>
+                                <li>
+                                    <span style="padding-top:2px;"><img src="../styles/color_1/images/w3.jpg" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/w3.jpg" /></span><a href="javascript:if(confirm('http://t.qq.com/JFXjfshare  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://t.qq.com/JFXjfshare'" tppabs="http://t.qq.com/JFXjfshare" target="_blank">&nbsp;è…¾è®¯å®˜æ–¹å¾®åš</a>
+                                </li>
+                            </ul>
+                        </span>
+                    </li>
+                   
+					<li style="text-align:left; line-height:20px; padding-left:45px; padding-top:11px; width:195px;">
+                        <span><img src="../styles/color_1/images/kf.jpg" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/kf.jpg"></span>
+                        <span style="float:right; text-align:left; width:160px; margin-top:1px;">å®¢æœçƒ­çº¿ï¼š<font color="#bc0101">400-800-2383</font> </span>
+                    </li>
+                    
+					<li style="text-align:left; line-height:14px; padding-left:45px; padding-top:5px; width:195px;">
+                        <span><img src="../styles/color_1/images/ts.jpg" tppabs="http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/ts.jpg"></span>
+                        <span style="float:right; text-align:left; width:160px;">æŠ•è¯‰ä¸­å¿ƒï¼š<font color="#bc0101">13923807086</font> <font color="#bc0101" style="padding-left:60px;">ts@jfshare.com</font> </span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="footer_my">
+            <p>
+                </p>
+        </div>
+        <div class="footer_bottom">
+            <div style="background:#FFFFFF; width:1220px; height:130px; margin:0 auto;">
+                <ul>
+                    <li></li>
+                </ul>
+                <ol>
+                    </ol>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
+<body onLoad="highlightPage();">
+</body>

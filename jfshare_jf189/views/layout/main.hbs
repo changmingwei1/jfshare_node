@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv = "X-UA-Compatible" content = "IE=9,chrome=1" >
+        <meta name="keywords" content="{{mata_keys}}">
+        <meta name="description" content="{{meta_desc}}">
+        <title>{{title}} - 聚分享</title>
+
+        <!-- css start -->
+        {{>css}}
+        <!-- css end -->
+
+        <!-- priority js start -->
+        {{>script_head}}
+        <!-- priority js end -->
+    </head>
+    <body class="w990">
+
+        <!-- center content start -->
+        <div id="contents">
+            <!-- body core detail start -->
+            {{{body}}}
+            <!-- body core detail end -->
+        </div>
+        <!-- center content end -->
+
+        <!-- right sidebar start -->
+        {{>sidebar}}
+        <!-- right sidebar end -->
+
+            <!-- async js start -->
+            {{>script_tail}}
+            <!-- async js end -->
+        <!--<iframe src="#" id="iframeA" name="iframeA" style="display: none;"></iframe>-->
+        <iframe id="loginInfoFrm" name="loginInfoFrm" src="#" style="display: none;" width="100%" height="0px"></iframe>
+        <div id="testLoad"></div>
+        <script type="text/javascript" src="/js/util/contentloaded.js"></script>
+        <script type="text/javascript">
+            function resizeIfr() {
+                $('body').oneTime('1s','B',function(){
+                    var doc = document;
+                    var myifr = doc.getElementById('iframeA');
+                    var height = calcPageHeight(doc);
+                    if (myifr) {
+                        myifr.src = 'http://y.jf.189.cn/preview/CommPage/fixHeight.html#' + height;
+                    }
+                },5);
+            }
+
+            // 计算页面的实际高度，iframe自适应会用到
+            function calcPageHeight(doc) {
+                var h = $(document.body).height();
+                if(h > 0) {
+                    return h > 400 ? (h + 20) : 400;
+                }
+
+                var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+                var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+                var height  = Math.max(cHeight, sHeight)
+//                console.log("cH:"+cHeight+"| sH:"+sHeight+"| h:" +h);
+                return height
+            }
+        </script>
+
+    </body>
+</html>
+

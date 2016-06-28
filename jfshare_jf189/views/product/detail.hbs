@@ -1,0 +1,303 @@
+{{!< main}}
+
+<!-- detail css start -->
+{{>detail_css}}
+<!-- detail css end -->
+
+<!-- detail js start -->
+{{>detail_script_head}}
+<!-- detail js end -->
+
+    <!--商品列表页-->
+<div class="content">
+        <div class="product_one">
+            <div class="left pic">
+                <div class="large_pic" id="bigpicdiv">
+                </div>
+                <p class="clear"></p>
+                <div class="small_Pic">
+                    <div class="scroll" style="position:relative;">
+                        <div id="scrollul">
+                           <!-- <div class="each">
+                            </div>-->
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right product_xin">
+                <div class="t1">
+                   <div id="productName"></div>
+                   <span><div id="viceName"></div></span>
+                </div>
+                <div class="t2">
+                <ul>
+                    <li class="left"><em style="font-size: 12px;"></em><font color="#d51700"><em id="curPrice"></em><em id="showJifen"></em></font></li> <!-- + 100 积分-->
+                    <li><font color="#979797"><s style="font-size: 12px;"><i id="marketPriceDiv"><em id="orgPrice"></em></i></S></font></li>
+                        <!--   <li>所需积分：<font color="#d51700" id="reLoadPriceSpan1"></font>积分</li> -->
+                </ul>
+                </div>
+                <!-- 新加 -->
+                        <!--<script type="text/javascript">-->
+                                <!--function loadIntegral(id,mId,userId){-->
+                                    <!--jQuery.ajaxSettings['contentType'] = "application/x-www-form-urlencoded; charset=utf-8";-->
+                                    <!--jQuery.post("ajax/getProductIntegral.jsp.htm",{id:id,m:mId,userId:userId},function(responseText){-->
+                                        <!--jQuery("#amountInteralDiv").append(jQuery.trim(responseText));-->
+                                    <!--});-->
+                                <!--}-->
+                        <!--jQuery(loadIntegral('p_2041160','m_100',''));-->
+                            <!--</script>-->
+                <!-- 新加end-->
+    <!-- 赠品start-->
+    <div class="t4">
+        <!-- 赠品end-->
+        <!-- 商品评论start-->
+        <div class="t5">
+        <!--
+            <p class="left">商品评分:
+                <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+                <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+                <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+                <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+                <img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_layerStarsIcon01.gif">
+
+                (已有0人评价)
+            </p>
+        -->
+        </div>
+        <!-- 商品评论end-->
+        <div class="t6">
+            <p><font>服务&nbsp;&nbsp;&nbsp;&nbsp;</font><a id="a1" href="tencent://message/?uin=1728607690&Site=&Menu=yes" >客服1</a>&nbsp;&nbsp;<a id="a2" href="tencent://message/?uin=1695187947&Site=&Menu=yes" >客服2</a>&nbsp;&nbsp;<a id="a3" href="tencent://message/?uin=2082346933&Site=&Menu=yes" >客服3</a></p>
+        </div>
+        <div class="t7">
+            省份&nbsp;&nbsp;&nbsp;
+            <select id="provinceId" style="width:100px">
+            </select>
+            <span style="color: red; display: none">无货</span>
+                <!--<li class="t7_1"><a href="#" target="_blank">积分支付</a></li>-->
+                <!--<li class="t7_2"><a href="mobile/mobile.jsp.htm" target="_blank">中移动电子券</a></li>-->
+                <!--<li class="t7_3"><a href="integral/integral.jsp.htm" target="_blank">电信积分互换</a></li>-->
+            <!--<p>100电信积分等于1元</p>-->
+        </div>
+        <div class="t8">
+            <form style="margin:0px" method="post" id="addProductSkuform" name="addProductSkuform"
+                  action="#">
+                <input  type="hidden" id="ssid" name="ssid" value="{{ssid}}"/>
+                <input type="hidden" value="m_100" id="mid" name="mid">
+                <input type="hidden" value="c_430050" id="histroyColumnId" name="histroyColumnId"/>
+
+                <input  type="hidden" id="userId" name="userId" value=""/> <!--hidden 买家id-->
+                <input  type="hidden" id="sellerId" name="sellerId" value=""/> <!--hidden 卖家id-->
+                <input  type="hidden" id="productId" name="productId"/> <!--hidden 商品id-->
+                <input  type="hidden" id="productName" name="productName"/> <!--hidden 商品名称-->
+                <input  type="hidden" id="skuNum" name="skuNum" value=""/>   <!--hidden 选中sku 立即购买用-->
+                <input  type="hidden" id="skuDesc" name="skuDesc" value=""/>   <!--hidden 选中sku描述 立即购买用-->
+                <input  type="hidden" id="stock" name="stock" value="0"/>   <!--hidden 库存-->
+                <input  type="hidden" id="curPrice" name="curPrice" value="0"/>   <!--hidden 现价-->
+                <input  type="hidden" id="orgPrice" name="orgPrice" value="0"/>   <!--hidden 原价-->
+                <input  type="hidden" id="storehouseIds" name="storehouseIds"/>   <!--hidden 仓库id列表-->
+                <input  type="hidden" id="storehouseId" name="storehouseId"/>   <!--hidden 仓库id-->
+                <input  type="hidden" id="score2cashAmount" name="score2cashAmount"/>   <!--hidden 天翼100尊享积分抵现金金额-->
+                <input  type="hidden" id="imgKey" name="imgKey"/>   <!--hidden 图片key-->
+                <input  type="hidden" id="weight" name="weight"/>   <!--hidden 商品重量-->
+                <input  type="hidden" id="count" name="count"/>   <!--hidden 购买数量-->
+                <input  type="hidden" id="postageId" name="postageId"/>   <!--hidden 运费模板-->
+
+                <div class="js_reskubox clear">
+                       <!--填充sku start-->
+                       <div id="showsku">
+                       </div>
+                </div>
+                <div id="buysnap" style="display:none;width: 350px;float: left;margin-right: 200px;border-top: 1px dotted #ccc;padding-top: 15px;">
+                    <div style="border: 1px solid #efe5cc;background: #fff3d7;line-height: 26px;padding: 20px 0;width: 260px;float: left;text-align: center;">
+                        <p>您看到的是交易快照</p><p><a id="a_productdetail" href="#">点击查看商品详情</a></p>
+                    </div>
+                </div>
+                <ol class="t8_m" id="choose">
+                    <li>购买数量&nbsp;&nbsp;</li>
+                    <li class="t8_m_1">
+                        <a href="javascript:;" id="amount_decrease" style="cursor:pointer;" onClick="amountDecrease();">-</a>
+                        <input type="text" value="1" name="amount" maxlength="4" id="amount" onblur="checkAmount(this.value, 0);" style="width: 24px; height: 26px;"/>
+                        <a href="javascript:;" id="amount_increase" style="cursor:pointer;" onClick="amountIncrease();">+</a>
+                    </li>
+                    <!--填充库存  （库存剩余  件）-->
+                    <li id="stockShow"></li>
+                </ol>
+                <!--填充sku选中提示-->
+                <ol class="t8_x"><li> <p class="already" id="selectedSkuText" style="color: red;"></p></li></ol>
+                <!--填充购买数量提示-->
+                <ol class="t8_x"><li> <p class="already" id="selectedAmountText" style="color: red;"></p></li></ol>
+                <ul class="t8_l">
+                    <li><input value="立即购买" id="buynow" class="buydisable" type="button" disabled="disabled" style="display:none;" onclick="addToBuyNow();"/></li>
+                    <!--<li><input value="加入购物车" id="cart" class="buydisable" type="button" disabled="disabled" style="display:none;" onclick="addToCart();"/></li>-->
+                    <!--填充分享-->
+                    <!--<li class="F">-->
+                        <!--<a id="a_baihchannel" onmouseover=baimouseOver(); onmouseout=baimouseOut(); href="javascript:void(0);">分享</a>-->
+                        <!--<div id=__ddnav_guan onmouseover=baimouseOver(); style="DISPLAY: none" onmouseout=baimouseOut();>-->
+                            <!--<h1><img src="/templates/merchant/template_jfshare_xj/styles/color_1/images/product_list17.png" alt="" /></h1>-->
+                            <!--<ul>-->
+                                <!--<li class="F1"><a href="javascript:if(confirm('http://t.qq.com/JFXjfshare  \n\n 分享?'))window.location='http://t.qq.com/JFXjfshare'" target="_blank">腾讯微博</a></li>-->
+                                <!--<li class="F2"><a href="javascript:if(confirm('http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://e.weibo.com/jfshare?ref=http%3A%2F%2Fweibo.com%2F1739979095%2Fprofile%3Fleftnav%3D1%26wvr%3D3.6%26mod%3Dpersoninfo'" target="_blank">新浪微博</a></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--填充收藏-->
+                    <!--<li class="S">-->
+                        <!--<a onclick="favoriteProduct('p_2041160','/templates/merchant/template_jfshare_xj/styles/color_1','','favorite','','家魔仕','锅具/厨房用品/家居生活/所有商品','')" style="cursor:pointer;">收藏</a>-->
+                    <!--</li>-->
+                    <!--填充加入购物车弹出层-->
+                    <div class="poplayer" id="cartOpen"
+                         style="width:260px;display:none;margin: -110px 0 0 50px;*margin: -80px 0 0 -200px;">
+                    </div>
+                    <!--end 加入购物车弹出层-->
+                    <!--加入收藏弹出层-->
+                    <span>
+                        <div class="poplayer" id="favoriteLoginLayer" style="display:none; margin: -240px 0 0 340px; width:350px;float:left;">
+                        </div>
+                        <div class="poplayer"  style="margin:-80px 0 0 160px;*margin:-40px 0px 0px -210px;width:200px;display:none;" id="addfavoriteLayer">
+                            <div class="poplayer_box">
+                                <a href="#" class="closeDiv" onclick="closeAddFrovite();"></a>
+                                <div class="layer_detail_collect">
+                                    <div class="cont">已成功加入收藏</div>
+                                    <div class="btn"><a href="javascript:if(confirm('http://www.jfshare.com/member/favor_list.jsp?type=product&tag=13  \n\n 加入收藏?'))window.location='http://www.jfshare.com/member/favor_list.jsp?type=product&tag=13'">查看我的收藏>></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                    <!--end 加入收藏弹出层-->
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="product_two">
+    <!--<div class="left product_left">-->
+        <!--<div class="left_classification">-->
+            <!--&lt;!&ndash;商品分类&ndash;&gt;-->
+            <!--<ol><li>相关分类</li></ol>-->
+            <!--&lt;!&ndash;end category&ndash;&gt;-->
+            <!--&lt;!&ndash;end 商品分类&ndash;&gt;</div>-->
+        <!--<div class="left_brand">-->
+            <!--<ol>-->
+                <!--<li>相关品牌</li>-->
+            <!--</ol>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;最近浏览过的商品&ndash;&gt;-->
+        <!--&lt;!&ndash;你浏览过的商品&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="left_browse">&ndash;&gt;-->
+            <!--&lt;!&ndash;<ol><li>最近浏览的商品</li></ol>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;end heViewed&ndash;&gt;-->
+        <!--&lt;!&ndash;end 你浏览过的商品&ndash;&gt;-->
+        <!--&lt;!&ndash;最近浏览过的商品&ndash;&gt;-->
+        <!--&lt;!&ndash;购买此商品的人还购买过 start&ndash;&gt;-->
+        <!--&lt;!&ndash; 购买此商品的人还购买过end&ndash;&gt;-->
+    <!--</div>-->
+    <div class="left product_right">
+        <!--最佳搭档start -->
+        <div class="product_details_0">
+        </div>
+        <!--最佳搭档end -->
+        <!-- 产品祥细展示start-->
+
+        <script type="text/javascript"> var frontPath='',redirectURL='%2Fproduct.jsp%3Fid%3D%26cid%3D';</script>
+        <!--<script type="text/javascript">-->
+
+            <!--window.onload=function getId(){-->
+
+                <!--var pi = document.getElementById("pi");-->
+                <!--var updateClass = document.getElementById("updateClass");-->
+                <!--if(pi == "" || pi == null || pi == undefined){-->
+                    <!--updateClass.style.marginTop = "0px;";-->
+                <!--}-->
+            <!--}-->
+
+        <!--</script>-->
+        <style type="text/css">body{background: none repeat scroll 0 0 transparent}</style>
+
+        <div class="product_details" style=" ">
+            <div id="a">
+              </div>
+                    <!--详情页签-->
+                    <ul class="product_details_1" id="float">
+                        <li class="back" id="liTab_1" onclick="moveToTab(1);" ><a href="#a">商品详情</a></li>
+                        <li id="liTab_2" onclick="moveToTab(2);"><a href="#a">规格参数</a></li>
+                        <!--<li id="liTab_3" onclick="moveToTab(3);"><a href="#a">商品评价</a></li>-->
+                        <!--<li id="liTab_4" onclick="moveToTab(4);"><a href="#a">商品咨询</a></li>-->
+                        <!--<li id="liTab_5" onclick="moveToTab(5);" ><a href="#a">售后服务</a></li>-->
+                     </ul>
+                    <script type="text/javascript">
+                        $.fn.smartFloat=function smartFloat(){
+                            var position = function(e){
+                                var top = e.position().top, pos = e.css("position");
+                                $(window).scroll(function(){
+                                    var scrolls = $(this).scrollTop();
+                                    if (scrolls > top){
+                                        if(window.XMLHttpRequest){
+                                            e.css({position: "fixed",top: 0});
+                                        }else{
+                                            e.css({top:scrolls});
+                                        }
+                                    }else{
+                                        e.css({position:pos,top: top});
+                                    }
+                                });
+                            };
+                            return $(this).each(function(){
+                                position($(this));
+                            });
+                        };
+                        //绑定
+                        $("#float").smartFloat();
+                    </script>
+                    <!--页签 商品详情 内容-->
+                    <div class="product_details_2"  id="divTab_1" >
+                    </div>
+
+                    <!--页签 规格参数 内容-->
+                    <div class="product_details_3"  id="divTab_2" style="display: none">
+                    </div>
+
+                    <!--&lt;!&ndash;页签 商品评价 内容&ndash;&gt;-->
+                    <!--<div class="product_details_4" id="divTab_3_1" style="display: none">-->
+                        <!--<iframe style="width:990px;border:0px; height:500px; position:relative; z-index:111;" onload="setCwinHeight('comments');" height="auto" name="comments" id="comments"-->
+                                <!--frameborder="0" scrolling="no" src="javascript:;">-->
+                        <!--</iframe>-->
+                    <!--</div>-->
+                   <!--&lt;!&ndash;页签 商品评价 评论分析&ndash;&gt;-->
+                    <!--<div class="product_details_8888" id="divTab_3_2" style="display: none">-->
+                        <!--<iframe style="width:990px;border:0px; min-height: 1300px;" onload="setCwinHeight('comments');" name="comments" id="comments1"-->
+                                <!--frameborder="0" scrolling="no" src="javascript:;" >-->
+                        <!--</iframe>-->
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash;页签 商品咨询 内容&ndash;&gt;-->
+                    <!--<div class="product_details_999" id="divTab_4_1" style="display: none">-->
+                        <!--<iframe style="width: 980px;border:0px; min-height: 900px;" onload="setCwinHeight('advice');" height="auto" name="advice" id="advice"-->
+                                <!--frameborder="0" scrolling="no" src="javascript:;"  hspace="0">-->
+                        <!--</iframe>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;页签 商品咨询 分页&ndash;&gt;-->
+                    <!--<div class="right_page" id="divTab_4_2" style="display: none">-->
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash;页签 售后服务 内容&ndash;&gt;-->
+                    <!--<div class="product_details_11" id="divTab_5" style="display: none" >-->
+                        <!--<p>售后服务</p>-->
+                    <!--</div>-->
+        </div>
+    </div>
+
+    <!-- 产品祥细展示end-->
+</div>
+<!--  你可能感兴趣的产品start-->
+<!-- 你可能感兴趣的产品end-->
+</div>
+</div>
+    <!-- detail async js start -->
+    {{>detail_script_tail}}
+    <!-- detail async js end -->
+<iframe src="#" id="iframeA" name="iframeA" style="display: none;"></iframe>

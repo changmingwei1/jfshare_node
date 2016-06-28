@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+.location{ height:40px; line-height:40px; padding-left:5px; width:1195px; color:#666; margin:auto;}
+.location b a{ font-size:18px;font-family:Microsoft Yahei;color:#082f8f;}
+.location .none{display:none;}
+
+.moreclass{width:1200px;margin:0 auto;}
+.moreclass .moreclass_tab{border-bottom:3px solid #d6000d;height:30px; overflow:hidden; zoom:1;}
+.moreclass .moreclass_tab a{display:block;float:left;font-size:16px; font-weight:bold; line-height:30px; height:30px; text-align:center; background:#e6e6e6;margin-right:3px;color:#7c7c7c; text-decoration:none;cursor:pointer; width:132px; font-family:"microsoft yahei";}
+.moreclass .moreclass_tab a span{height:30px;display:block;float:left;overflow:hidden; width:132px;}
+.moreclass .moreclass_tab a:hover,
+.moreclass .moreclass_tab a.cur{color:#fff; background:#d6000d;}
+/*moreclass_box*/
+.moreclass .moreclass_box{border-width:0 1px 1px 1px;border-color:#dedcdc;border-style:solid;padding:0 20px;}
+.list{padding-top:10px;padding-bottom:10px;}
+.list .title {height:37px; overflow:hidden;position:relative;}
+.list .title h2{height:36px;font-size:14px;color:#cc0000;font-weight:bold;border-bottom:1px solid #ccc; line-height:36px;background:url("../images/product_list.jsp-columnId=c_430029&page={p_num}")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/brands/styles/style_base/images/moreclass_icon.gif*/ no-repeat 0 -132px;padding-left:10px;}
+.list .title h2 a{color:#cc0000;}
+.list .title p{position:absolute;top:0;height:36px; line-height:36px;right:0px;font-weight:bold;}
+.list .title p em{font-style:normal;color:#999;font-weight:normal;}
+.list .title p a:hover{ text-decoration:none;}
+.list .title p a:hover em{color:#cc0000;}
+.list .cont dl{padding:10px 0;border-bottom:1px solid #dddddd;}
+.list .cont dl dt{font-size:12px;font-weight:bold;background:url("../images/product_list.jsp-columnId=c_430029&page={p_num}")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/brands/styles/style_base/images/moreclass_icon.gif*/ no-repeat 0 -175px;height:14px; line-height:14px; overflow:hidden;padding:5px 0 10px 10px;}
+.list .cont dl dd{padding:0 20px 0 20px; line-height:18px;}
+.list .cont dl dd a,
+.list .cont dl dd span{ vertical-align:middle;}
+.list .cont dl dd span{color:#999;font-size:10px;}
+/*END moreclass_box*/
+
+/*===所有品牌===*/
+.brander{padding-top:10px;overflow:hidden;zoom:1;}
+.brander h2{height:36px;font-size:14px;color:#000;font-weight:bold;border-bottom:1px solid #ccc; line-height:36px;}
+.brander ul{margin-top:20px;}
+.brander li{float:left;width:75px; overflow:hidden;display:inline;margin-left:18px;padding-bottom:10px;}
+.brander li .pic{ text-align:center;width: 73px;height: 42px;}
+.brander li .pic img{ vertical-align:top;border:1px solid #ddd;}
+.brander li .title{ text-align:center;line-height:18px; overflow:hidden;height:18px;margin-top:5px;}
+/*===end所有品牌===*/

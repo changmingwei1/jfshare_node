@@ -1,0 +1,35 @@
+{{!< main}}
+<html>
+<title>模拟提交前端支付通知</title>
+
+<form id="payResponseTestForm" method="post" target="_blank" action="http://y.jf.189.cn/preview/WebCashier/Cashier.aspx">
+    <br/>AppCode : <input type="input" name="AppCode" value="{{AppCode}}">
+    <br/>RequestDate: <input type="input" name="RequestDate" value="{{RequestDate}}">
+    <br/>Sign: <input type="input" name="Sign" value="{{Sign}}">
+    <br/>SpId: <input type="input" name="SpId" value="{{SpId}}">
+    <br/>DeviceNo: <input type="input" name="DeviceNo" value="{{DeviceNo}}">
+    <br/>DeviceType: <input type="input" name="DeviceType" value="{{DeviceType}}">
+    <br/>ProvinceID: <input type="hidden" name="ProvinceID" value="{{ProvinceID}}">
+    <br/>PayIntegral: <input type="input" name="PayIntegral" value="{{PayIntegral}}">
+    <br/>PayDefaultIntegral: <input type="input" name="PayDefaultIntegral" value="{{PayDefaultIntegral}}"> <span style="color: red">*</span>
+    <br/>PayDefaultMoney: <input type="input" name="PayDefaultMoney" value="{{PayDefaultMoney}}">
+    <br/>CommodityName: <input type="input" name="CommodityName" value="{{CommodityName}}">
+    <br/>BusinessRemark: <input type="input" name="BusinessRemark" value="{{BusinessRemark}}" size="35px;"> <span style="color: red">*</span>
+    <br/>SPOrderID: <input type="input" name="SPOrderID" value="{{SPOrderID}}">
+    <br>
+    <br>
+    <input id="btnPayRequest" type="submit" value="支付" class="btnStyle" />
+</form>
+
+<h1>登录状态：</h1>
+<form id="payResponseTestForm" method="post" target="_blank" action="/pay/payApply?ssid=06db638ddd3c11d176807b96ff539c35184e7ab00eb73d48ff6da9c2a7c2a806135dd4b788280a3d4602e2068e7a18a21ba1f9c21049e38aa30f56509c1e04c385b6b3edc4ade484942277ef99bc38116326c07298c2bc112a876739a06fabc6">
+    <input type="hidden" name="ssid" value="06db638ddd3c11d176807b96ff539c35184e7ab00eb73d48ff6da9c2a7c2a806135dd4b788280a3d4602e2068e7a18a21ba1f9c21049e38aa30f56509c1e04c385b6b3edc4ade484942277ef99bc38116326c07298c2bc112a876739a06fabc6">
+    <input type="hidden" name="payApply[orderId]" value="15400081">
+    <input type="hidden" name="payApply[payChannal]" value="1">
+    <input id="btnPayRequest" type="submit" value="检测是否登陆" class="btnStyle" />
+</form>
+<div id="loginInfo">1111</div>
+<script type="text/javascript">
+//    $("#loginInfo").load( 'http://localhost:23003/login/isLoginTY?ssid=112345');
+</script>
+</html>

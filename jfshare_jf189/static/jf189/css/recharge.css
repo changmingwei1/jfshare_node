@@ -1,0 +1,10 @@
+.rechargeBox{width:460px;margin:50px auto;}
+.rechargeBox p{margin:10px 0;color: #999;}
+.rechargeBox label{font-size: 14px;display: inline-block;width:150px;text-align: right;line-height: 30px;color: #666;}
+.rechargeBox b{font-size: 18px;color: #999;}
+.rechargeBox img{float:right;}
+.txinput{border:1px solid #999;height:25px;}
+.reminder{border:1px solid #999;padding: 20px;background-color: #ffffcc;}
+.reminder h2{color: #333;margin-bottom:20px;}
+.reminder p{line-height: 30px;color:#666;}
+p.fTip{margin-top: -10px;}

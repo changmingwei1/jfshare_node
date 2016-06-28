@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/pay/pay_core_callback.js"></script>
+<form id="payRequestForm" method="post" target="_blank" action="undefined"><input type="hidden" name="AppCode"
+                                                                                  value="undefined"><input type="hidden"
+                                                                                                           name="RequestDate"
+                                                                                                           value="undefined"><input
+        type="hidden" name="Sign" value="undefined"><input type="hidden" name="SpId" value="undefined"><input
+        type="hidden" name="DeviceNo" value="undefined"><input type="hidden" name="DeviceType" value="undefined"><input
+        type="hidden" name="ProvinceID" value="undefined"><input type="hidden" name="PayIntegral"
+                                                                 value="undefined"><input type="hidden"
+                                                                                          name="PayDefaultIntegral"
+                                                                                          value="undefined"><input
+        type="hidden" name="PayDefaultMoney" value="undefined"><input type="hidden" name="CommodityName"
+                                                                      value="undefined"><input type="hidden"
+                                                                                               name="BusinessRemark"
+                                                                                               value="undefined"><input
+        type="hidden" name="SPOrderID" value="undefined"></form>
+<iframe id="loginInfoFrm" name="loginInfoFrm" src="#" style="display: none;" width="100%" height="100px"></iframe>
+<script type="text/javascript" language="JavaScript">var iframe = document.getElementById("loginInfoFrm");
+iframe.src = "/login/isLoginTY?t=0.07140882289968431&ssid=06db638ddd3c11d1e421a2f1cb252b75af95dd87c076aade28eec33ff7374827e6f309098bb6455a8a86e8f1c0da17cfe8f43458c07cefa8413d658375e55a82ffc79635d7a5cc9eba7f65b3c48a880b4454678c8349333277bbfbfc7ae232e8";
+if (iframe.attachEvent) {
+    iframe.attachEvent("onload", function () {
+        checkJFXLoginStatus(06
+        db638ddd3c11d1e421a2f1cb252b75af95dd87c076aade28eec33ff7374827e6f309098bb6455a8a86e8f1c0da17cfe8f43458c07cefa8413d658375e55a82ffc79635d7a5cc9eba7f65b3c48a880b4454678c8349333277bbfbfc7ae232e8, callbackLogin, callbackLogout
+        )
+        ;
+    });
+} else {
+    iframe.onload = function () {
+        checkJFXLoginStatus(06
+        db638ddd3c11d1e421a2f1cb252b75af95dd87c076aade28eec33ff7374827e6f309098bb6455a8a86e8f1c0da17cfe8f43458c07cefa8413d658375e55a82ffc79635d7a5cc9eba7f65b3c48a880b4454678c8349333277bbfbfc7ae232e8, callbackLogin, callbackLogout
+        )
+        ;
+    }
+}</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!--{{!< main}}-->
+
+<!--&lt;!&ndash; order css start &ndash;&gt;-->
+<!--<link href="/templates/public/shopping/layout_3/styles/style_base/css/shopping.css" rel="stylesheet" type="text/css"/>-->
+<!--<link href="/templates/public/shopping/layout_3/styles/style_base/css/reservation.css" rel="stylesheet" type="text/css"/>-->
+<!--<link href="/js/thickbox/thickbox.css" rel="stylesheet" type="text/css"/>-->
+<!--&lt;!&ndash; order css end &ndash;&gt;-->
+
+<!--&lt;!&ndash; order js start &ndash;&gt;-->
+<!--<script type="text/javascript" src="/js/util/handlebars-v3.0.0.min.js"></script>-->
+<!--<script type="text/javascript" src="/js/cart/render_core_list.js?v=1.0.0"></script>-->
+<!--&lt;!&ndash; order js end &ndash;&gt;-->
+
+<!--<div class="main">-->
+        <!--&lt;!&ndash;填充导购提示&ndash;&gt;-->
+        <!--<div id="guidePanel" class="cartStep step01"></div>-->
+
+        <!--<div id="cartBottonPanel"></div>-->
+        <!--&lt;!&ndash;填充购物车头&ndash;&gt;-->
+        <!--<div id="cartHeadPanel"></div>-->
+        <!--&lt;!&ndash;填充购物车明细&ndash;&gt;-->
+        <!--<div id="cartBodyPanel"></div>-->
+        <!--&lt;!&ndash;填充优惠方式&ndash;&gt;-->
+        <!--<div id="activePanel" style="border: 1px solid #DDDDDD;border-top: none;"></div>-->
+        <!--<div id="barcodePay"  style="border: 1px solid #DDDDDD;border-top: none;"></div>-->
+        <!--&lt;!&ndash;填充结算信息&ndash;&gt;-->
+        <!--<div id="bottomPanel"></div>-->
+
+        <!--<form id="confirmOrderform" action="#" method="post">-->
+            <!--&lt;!&ndash;<input type="hidden" name="m" value="m_100"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="hidden" name="t" value="common"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="hidden" name="objId" value=""/>&ndash;&gt;-->
+            <!--<input type="hidden" name="orderFormToken" value="7FC600E9F07DA0987FF623DB369DA6A159696622774333768"/>-->
+            <!--&lt;!&ndash;<input type="hidden" id="input_description" name="description" value=""/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="hidden" name="promotionUserId" id="promotionUserId">&ndash;&gt;-->
+            <!--&lt;!&ndash;<input type="hidden" name="promotionUserPhone" id="promotionUserPhone">&ndash;&gt;-->
+            <!--<input  type="hidden" id="fromSource" name="fromSource" value="1"/> &lt;!&ndash;hidden 终端类型&ndash;&gt;-->
+            <!--<input  type="hidden" id="fromBatch" name="fromBatch"/> &lt;!&ndash;购买入口&ndash;&gt;-->
+            <!--<input  type="hidden" id="cartKeyList" name="cartKeyList"/> &lt;!&ndash;购买商品列表JSON&ndash;&gt;-->
+        <!--</form>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;<html xmlns:wb=“http://open.weibo.com/wb”>&ndash;&gt;-->
+<!--&lt;!&ndash;统计代码&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="insight_log" style="display: none" pageName="购物流程:普通:订单确认页" userId="u_1860104" m="m_100"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash; order async js start &ndash;&gt;-->
+        <!--&lt;!&ndash;购买流程提示&ndash;&gt;-->
+<!--<script id="guide_show_template" type="text/x-handlebars-template">-->
+<!--<ul>-->
+    <!--<li class="s1">1.\{{fromBatchTip}}</li>-->
+    <!--<li class="s2">2.填写并核对订单信息</li>-->
+    <!--<li class="s3">3.成功提交订单</li>-->
+    <!--<li class="s4">4.支付成功</li>-->
+<!--</ul>-->
+<!--</script>-->
+
+<!--<script id="cart_bottom_template" type="text/x-handlebars-template">-->
+    <!--<div class="batch botBatch">-->
+        <!--<span><input type="checkbox" class="check_all" />全选</span>-->
+        <!--<a href="javascript:;" class="batchDelete">批量删除</a>-->
+    <!--</div>-->
+<!--</script>-->
+
+<!--<script id="empty_cart_template" type="text/x-handlebars-template">-->
+    <!--<div class="cart_empty">-->
+        <!--<div class="empty">-->
+            <!--<h2>您还没有挑选商品，赶快行动吧！您可以:</h2>-->
+            <!--<p>马上去 <a href="\{{self_home_url}}">首页看看</a><br />-->
+                <!--&nbsp;-->
+            <!--</p>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</script>-->
+
+
+<!--<script id="cart_head_template" type="text/x-handlebars-template">-->
+<!--<div class="cartTh">-->
+    <!--<span class="t1">购物车中的商品</span>-->
+    <!--<span class="t2">单价（元）</span>-->
+    <!--<span class="t3">数量</span>-->
+    <!--<span class="t4">小计（元）</span>-->
+    <!--<span class="t5">运费（元）</span>-->
+    <!--<span class="t6">操作</span>-->
+<!--</div>-->
+<!--</script>-->
+
+<!--<script id="cart_body_template" type="text/x-handlebars-template">-->
+<!--<div class="cartlist">-->
+        <!--\{{#each itemList}}-->
+        <!--<div class="batch"><a href="javascript:;" class="cartTop">\{{seller.sellerName}}</a></div> &lt;!&ndash;<input type="checkbox" />&ndash;&gt;-->
+
+        <!--<table width="100%" border="0" cellspacing="0" cellpadding="0">-->
+        <!--<tbody>-->
+        <!--\{{#each itemDetailList}}-->
+                <!--<tr>-->
+                    <!--<td class="c_check"><input type="checkbox"  class="item_check" value="\{{product.product.productId}}#\{{product.product.productSku.skuNum}}" /></td>-->
+                    <!--<td class="c_title">-->
+                        <!--<div class="c_img">-->
+                            <!--<a href="\{{self_product_url product.product.productId}}" target="_blank"><img src="\{{self_pic_url product.product.productSku.vPicture product.product.imgKey}}" alt="\{{product.product.productName}}" title="\{{product.product.productName}}"/></a>-->
+                        <!--</div>-->
+                        <!--<div class="c_meta">-->
+                            <!--<a href="\{{self_product_url product.product.productId}}" target="_blank">\{{product.product.productName}}</a>-->
+                            <!--<p>\{{product.product.productSku.skuName}}</p>-->
+                        <!--</div>-->
+                    <!--</td>-->
+                    <!--<td class="c_price">-->
+                        <!--&yen; \{{product.product.productSku.curPrice}}-->
+                        <!--<p>&yen; <del>\{{product.product.productSku.orgPrice}}</del>-->
+                    <!--</td>-->
+                    <!--<td class="c_amount">-->
+                        <!--\{{#if product.product.activeState}}-->
+                        <!--<div class="m_amount">-->
+                            <!--<a href="javascript:;" class="m_minus"></a>-->
+                            <!--&lt;!&ndash;<span>\{{../product.count}}</span>&ndash;&gt;-->
+                            <!--<input type="text" value="\{{../product.count}}" class="m_number" itemId="\{{../product.product.productId}}#\{{../product.product.productSku.skuNum}}" itemPrice="\{{../product.product.productSku.curPrice}}"/>-->
+                            <!--<a href="javascript:;" class="m_plus"></a>-->
+                            <!--<div class="clear"></div>-->
+                            <!--<div class="amountLayer" style="display:none;">-->
+                                <!--<span><s class="ic1"></s>不能继续减少数量</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--\{{else}}-->
+                        <!--<span style="color: #E60000;">此商品已下架</span>-->
+                        <!--\{{/if}}-->
+                    <!--</td>-->
+                    <!--<td class="c_total">-->
+                        <!--\{{#if  product.product.activeState}}-->
+                        <!--&yen;<span class="item_total">\{{self_multiple ../product.product.productSku.curPrice ../product.count}}</span>-->
+                        <!--\{{else}}-->
+                        <!----->
+                        <!--\{{/if}}-->
+                    <!--</td>-->
+                    <!--<td class="c_postage">-->
+                        <!--\{{#if  product.product.activeState}}-->
+                        <!--&yen;0-->
+                        <!--\{{else}}-->
+                        <!----->
+                        <!--\{{/if}}-->
+                    <!--</td>-->
+                    <!--<td class="c_operate">-->
+                        <!--<div style="position:relative;" class="operate_box" itemId="\{{product.product.productId}}#\{{product.product.productSku.skuNum}}">-->
+                            <!--<p><a href="javascript:;" class="a_deleteItem">删除</a></p>-->
+                            <!--<div class="layer_box" style="display:none;" >-->
+                                <!--<s class="arrow"></s>-->
+                                <!--<p class="del_title">确定要删除吗？</p>-->
+                                <!--<p class="del_btn">-->
+                                    <!--<a href="javascript:;" class="btn_01 confirm_delete">确定</a>-->
+                                    <!--<a href="javascript:;" class="btn_gray cancel_delete">取消</a>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</td>-->
+                <!--</tr>-->
+          <!--\{{/each}}-->
+          <!--</tbody>-->
+        <!--</table>-->
+        <!--\{{/each}}-->
+<!--</div>-->
+<!--</script>-->
+
+<!--&lt;!&ndash;汇总&ndash;&gt;-->
+<!--<script id="summary_bottom_template" type="x-handlebars-template">-->
+<!--<div class="cashier">-->
+    <!--<p class="totalPrice"><span>商品总计</span>（不含运费）：<b>-->
+        <!--&yen;\{{totalPayAmount}}-->
+    <!--</b> </p>-->
+    <!--<div class="btns">-->
+        <!--<a href="\{{self_home_url}}" class="blue_link mr10">继续购物>></a>-->
+        <!--<a href="#" class="goOrderForm btn_02" title="去结算">去结算</a>-->
+    <!--</div>-->
+<!--</div>-->
+<!--</script>-->
+<!--&lt;!&ndash; order async js end &ndash;&gt;-->

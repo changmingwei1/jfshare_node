@@ -1,0 +1,71 @@
+<!--<script type="text/javascript" src="/templates/global_js/jquery/jquery-1.7.2.min.js"></script>-->
+<!--<script type="text/javascript" src="/js/util/handlebars-v3.0.0.min.js"></script>-->
+<script type="text/javascript" src="/js/order/render_core_create.js?v=1.0.0"></script>
+<script type="text/javascript" src="/templates/public/member/layout_2/js/common.js"></script>
+
+<script type="text/javascript">
+var userId = "{{{userId}}}"; //买家id
+var fromBatch = "{{{fromBatch}}}"; //购买入口
+var extend =  {{{extend}}};
+var orderIdList = "{{{orderIdList}}}";
+</script>
+
+<style>
+body {
+    color: #666;
+    font: 12px '微软雅黑';
+    margin: 10px;;
+}
+.correct {
+background: url(/img/hb_1.png) no-repeat 0 -113px;
+width: 16px;
+height: 17px;
+display: inline-block;
+vertical-align: middle;
+}
+.error {
+    background: url(/img/hb_1.png) no-repeat 0 -96px;
+    width: 16px;
+    height: 17px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.bold {
+    font-weight: 700;
+    font-size: 14px;
+    color: #343434;
+    margin-left: 4px;
+}
+.bd h4 {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #343434;
+    margin-bottom: 16px;
+    background: 0 0;
+    padding: 0;
+}
+.cancel_mail a {
+    color: #0099cb;
+}
+.bg
+{
+    background-color: #666;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+    z-index: 9999;
+    position: fixed !important; /*FF IE7*/
+    position: absolute;
+    _top: expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ?
+documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2); /*IE5 IE5.5*/
+}
+.msglayer{ border:5px solid #e5e5e5; width:472px; background:#fff;}
+.msglayer .hb{ padding-left:15px; line-height:32px;  background:url(/img/msgbox_fix.png) no-repeat 0 0; color:#fff;}
+.msglayer .hb .close_payret{ float:right; display:inline; margin:8px 10px 0 0; width:15px; height:15px; background:url(/img/msgbox_fix.png) no-repeat 0px -37px;}
+.msglayer .bd{ padding:20px 10px 20px 30px; border:1px solid #d5d5d5; border-top:0; overflow:hidden;}
+</style>

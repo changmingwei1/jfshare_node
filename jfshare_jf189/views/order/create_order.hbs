@@ -1,0 +1,122 @@
+{{!< main}}
+
+<!-- order css start -->
+{{>confirm_css}}
+<!-- order css end -->
+
+<!-- order js start -->
+{{>create_script_head}}
+<!-- order js end -->
+
+<div class="main">
+    <input type="hidden" id="ssid" value="{{ssid}}">
+       <!--{{extend}}-->
+       <!--填充导购提示-->
+       <div id="guidePanel" class="cartStep step03"></div>
+       <!--填充订单简介-->
+       <div id="submitOrderPanel" class="submitOrder"></div>
+
+       <div id="payRequestPanel" style="display: none;"></div>
+
+      <!--付款结果确认弹层-->
+      <div class="msglayer" id="payRetConfirmLayer" style="display: none;"></div>
+      <div id="bg" class="bg" style="display: none;"></div>
+    <iframe src="http://y.jf.189.cn/preview/CommPage/fixHeight.html#340" id="iframeA" name="iframeA" style="display: none;"></iframe>
+</div>
+
+<!-- order async js start -->
+<!--购买流程提示-->
+<script id="guide_show_template" type="text/x-handlebars-template">
+<ul>
+       <li class="s1">1.\{{fromBatchTip}}</li>
+       <li class="s2">2.填写并核对订单信息</li>
+       <li class="s3">3.成功提交订单</li>
+       <li class="s4">4.支付成功</li>
+</ul>
+</script>
+
+<!--订单简介-->
+<script id="submit_order_template" type="text/x-handlebars-template">
+       <div class="submitInfo">
+                  <s class="s_icon"></s>
+              <h2>订单已提交，请尽快完成支付，感谢您对我们的支持！</h2>
+              <p class="p_txt">
+                     <span>应付：<strong>\{{showTotalPrice paymentInfo.price paymentInfo.thirdScore 0}}</strong></span>
+              </p>
+       </div>
+       <div class="bankPay">
+              <p><strong>立即支付<span>\{{showTotalPrice paymentInfo.price paymentInfo.thirdScore 0}}</span>，即可完成订单</strong>。请您在<b>\{{paymentInfo.cancelTime}}</b>前完成支付，否则订单会被自动取消。</p>
+              <div style="display:none;" class="bankInter clearfix">
+                  <div class="clearfix">
+                      <h4 style="font-size: 14px;">个人帐户支付:</h4>
+                      <ul>
+                          <li>
+                              <label><input type="radio" name="payChannel" value="1" checked/></label>
+                              <div class="img paymentItemImg"><img width="140" height="40" src="/img/2014/9/18/1970000.jpg" alt="翼支付" title="翼支付"/></div>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+            <div class="confirmPay">
+                <form id="payApplyForm" method="post" target="_blank" action="">
+                    <input type="hidden" name="ssid" value="">
+                    <input type="hidden" name="payApply[orderId]" value="">
+                    <input id="btnPayApply" type="submit" value="支付" class="btn_02" />
+                </form>
+            </div>
+       </div>
+</script>
+
+
+<!--仅仅选择支付方式-->
+<script id="pay_select_template" type="text/x-handlebars-template">
+    <div class="submitInfo">
+        <s class="s_icon"></s>
+        <h2>请尽快完成支付，感谢您对我们的支持！</h2>
+        <p class="p_txt">
+            <span>您的订单：\{{orderIdList}}</span>
+            <!--<span>应付金额：<strong>&yen;\{{paymentInfo.price}}元</strong></span>-->
+            <!--<span>付款方式：\{{ttt}}</span>-->
+        </p>
+    </div>
+    <div class="bankPay">
+        <div class="bankInter clearfix">
+            <div class="clearfix">
+                <h4 style="font-size: 14px;">个人帐户支付:</h4>
+                <ul>
+                    <li>
+                        <label><input type="radio" name="payChannel" value="1"/></label>
+                        <div class="img paymentItemImg"><img width="140" height="40" src="/img/2014/9/18/1970000.jpg" alt="翼支付" title="翼支付"/></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="confirmPay">
+            <a href="javascript:;" id="toPayBtn" class="btn_02">支付</a>
+        </div>
+    </div>
+</script>
+
+<script id="pay_retconfirm_show_template" type="text/x-handlebars-template">
+
+    <div class="hb">
+        <a href="javascript:void(0);" class="close_payret" onclick="payretClose('#payRetConfirmLayer')"></a>
+    </div>
+    <div class="bd">
+            <h4>请在新打开的页面完成支付！</h4>
+            <div class="cancel_mail">
+                <ul  class="clearfix">
+                    <li>
+                        <span class="correct"></span>
+                        <span class="bold">付款成功</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--|&nbsp;&nbsp;&nbsp;&nbsp;您可以选择：<a href="http://jf.189.cn/preview/CommonPage/Default.aspx?Partner=160260&Sign=F71E34303426963F3ABF713D3370EA09">继续购物&gt;&gt;</a>-->
+                    </li>
+                    <li>
+                        <span class="error"></span>
+                        <span class="bold">付款失败</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;建议您稍后重试
+                    </li>
+                </ul>
+            </div>
+    </div>
+</script>
+<!-- order async js end -->

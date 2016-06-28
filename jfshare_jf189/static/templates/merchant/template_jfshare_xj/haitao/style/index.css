@@ -1,0 +1,174 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+/* 内容一 */
+.content{ min-width:1220px; margin:0 auto;}
+
+.q_nav{ min-width:1220px; margin:0 auto; background:#e8e8e8; height:55px;}
+.q_nav_1{ width:1220px; height:55px; margin:0 auto; overflow:hidden;}
+.q_nav_1 p{ float:left; width:195px;}
+.q_nav_1 ul{ float:left; width:1025px; height:55px;}
+.q_nav_1 ul li{ float:left; width:168px; height:55px; overflow:hidden;}
+.q_nav_1 ul li a{ float:left; width:168px; height:55px; overflow:hidden;}
+.q_nav_1 ul li a:hover{ background:url("../images/product/nav02.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/product/nav02.jpg*/ no-repeat; width:168px; height:55px;}
+
+
+/* banner */
+.cofco_banner{ margin:0 auto; min-width:1220px; height:478px; overflow:hidden;}
+
+.cofco_banner_1 { min-width:1220px; height:478px; margin:0 auto; position: relative; overflow:hidden;}
+
+.cofco_banner_2{ min-width:1220px; margin:0 auto;}
+.cofco_banner_2 li{ min-width:1220px; margin:0 auto;}
+.cofco_banner_2 a{ display:block; min-width:1220px; height:478px; text-indent:-9999px;}
+
+.cofco_banner_1 .num1{ margin:0 auto; width:300px;}
+.cofco_banner_1 .num { overflow:hidden; height:7px; position: absolute; bottom:15px;}
+.cofco_banner_1 .num li { width:60px; height:7px; margin-right:5px; cursor:pointer; float: left; font-size:0px; opacity:0.5; filter:alpha(opacity=50); background:#FFF; text-indent:-9999px;}
+.cofco_banner_1 .num li.on { opacity:1; filter:alpha(opacity=100); background:#dd0101;} 
+
+.cofco_banner_3{ width:1220px; margin:0 auto;}
+.cofco_banner_3 .prev{ display: none; width: 60px; height:95px; background: url("../images/cofco_banner_bom.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/cofco_banner_bom.png*/ no-repeat; opacity:0.5; filter:"alpha(opacity=50)"; -ms-filter:"alpha(opacity=50)"; position: absolute; top: 190px;}
+.cofco_banner_3 .next { margin-left:1160px; display: none; width: 60px; height:95px; background: url("../images/cofco_banner_bom1.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/cofco_banner_bom1.png*/ no-repeat; opacity:0.5; filter:"alpha(opacity=50)"; -ms-filter:"alpha(opacity=50)"; position: absolute; top: 190px;}
+
+
+.ensure{ min-width:1220px; margin:0 auto; background:#edeaea; height:90px; overflow:hidden;}
+.ensure p{ width:1220px; margin:0 auto;}
+
+
+
+
+
+/* 内容二 */
+.content_1{ width:1210px; margin:0 auto; padding-bottom:20px;}
+
+
+/* 天天特价 */
+.Special{ width:1210px; margin:0 auto;}
+.Special p{ float:left; width:1210px; height:40px; overflow:hidden; margin-top:12px; border-bottom:3px solid #35393c;}
+.Special_cen{ float:left; width:1210px; overflow:hidden;}
+.Special_cen dl{ float:left; width:241px; border-bottom:1px solid #ddd; border-right:1px solid #ddd;}
+.Special_cen dl dt{ float:left; width:241px; height:260px; overflow:hidden;}
+.Special_cen dl dd{ float:left; width:211px; padding:0 15px; line-height:14px; height:28px; overflow:hidden; margin:8px 0; font-family:"microsoft yahei";}
+.Special_cen dl dd a:hover{ text-decoration:none;}
+.Special_cen dl dd a{ font-family:"microsoft yahei";}
+.Special_cen dl dd font{ color:#d6000d; font-family:"microsoft yahei"; font-weight:bold;}
+.Special_cen dl dd b{ color:#d6000d; font-family:"microsoft yahei"; font-size:16px;}
+
+
+/* 国家馆 */
+.countries{ width:1210px; margin:0 auto;}
+.countries_nav{ float:left; width:1210px; margin-top:12px;}
+
+
+.menu{ float:left; width:1210px; border-bottom:3px solid #34383b; height:56px;}
+.menu ul{float:left; width:1210px; background:#edeaea;}
+.menu li{cursor:pointer;position:relative;float:left;height:32px; padding:12px 0; text-align:center; width:241px; border-right:1px solid #dcdcdc; font-size:16px; line-height:20px; color:#6c6c6c; font-family:"microsoft yahei";}
+.menu .libg{ color:#FFFFFF; background:#34383b;}
+.turn{ float:left; width:1210px;}
+.countries_0{ float:left; width:241px; height:482px; overflow:hidden;}
+.countries_1{ float:left; width:968px; border-left:1px solid #ddd;}
+.countries_2{ float:left; width:968px}
+.countries_2 p{ float:left; width:241px; height:240px; overflow:hidden; border-bottom:1px solid #ddd; border-right:1px solid #ddd;}
+.countries_3{ float:left; width:968px;}
+.countries_3 li{ float:left; width:241px; height:240px; overflow:hidden; border-bottom:1px solid #ddd; border-right:1px solid #ddd;}
+.countries_logo{ float:left; width:1208px; border:1px solid #ddd; border-top:none;}
+.countries_logo ul li{ float:left; width:133px; height:90px; overflow:hidden; border-left:1px solid #eee;}
+.countries_logo ul li a img:hover{ filter: alpha(opacity=70); opacity: 0.7;}
+
+
+.f_list1{ float:left; width:483px; height:240px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list2{ float:left; width:483px; height:240px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list3{ float:left; width:483px; height:240px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list4{ float:left; width:483px; height:240px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list5{ float:left; width:483px; height:240px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.countries_5 .f_out {height:240px;overflow:hidden;position:relative;z-index:111;}
+
+.countries_5 .f_out .vip01pic,.jcToppic .vip01pic {width:58px;height:58px;display:block;position:absolute;top:0px;left:0px;background:url("../images/vipico.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/vipico.gif*/ no-repeat 0 0;z-index:200}
+.countries_4 { width:200px; height:6px; overflow:hidden; margin-top:225px; margin-left:165px; text-align:center; z-index:123; position:absolute;}
+.countries_4 ul li { float:left; margin:0 4px; width:40px; height:6px; display:block;}
+.countries_4 ul li.opdiv,.noopdiv {padding:0;opacity:1}
+.countries_4 ul li.opdiv a {width:40px;height:6px; background:#bac0c9; display:block;}
+.countries_4 ul li.noopdiv a {width:40px;height:6px; background:#e5118e;display:block;}
+
+
+.f_list6{ float:left; width:398px; height:420px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list7{ float:left; width:398px; height:420px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list8{ float:left; width:398px; height:420px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list9{ float:left; width:398px; height:420px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list10{ float:left; width:398px; height:420px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list11{ float:left; width:398px; height:420px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list12{ float:left; width:398px; height:420px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.Beauty_2 .f_out {height:420px;overflow:hidden;position:relative;z-index:111;}
+.Beauty_2 .f_out img{ width:398px; height:420px;}
+.Beauty_2 .f_out .vip01pic,.jcToppic .vip01pic {width:58px;height:58px;display:block;position:absolute;top:0px;left:0px;background:url("../images/vipico.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/vipico.gif*/ no-repeat 0 0;z-index:200}
+.Beauty_1 { width:200px; height:6px; overflow:hidden; margin-top:400px; margin-left:130px; text-align:center; z-index:123; position:absolute;}
+.Beauty_1 ul li { float:left; margin:0 4px; width:40px; height:6px; display:block;}
+.Beauty_1 ul li.opdiv,.noopdiv {padding:0;opacity:1}
+.Beauty_1 ul li.opdiv a {width:40px;height:6px; background:#bac0c9; display:block;}
+.Beauty_1 ul li.noopdiv a {width:40px;height:6px; background:#e5118e;display:block;}
+
+
+
+/* 美妆个护 */
+.Beauty{ width:1210px; margin:0 auto;}
+.Beauty_nav{ float:left; width:1210px; height:40px; overflow:hidden; margin-top:15px; border-bottom:3px solid #34383b;}
+.Beauty_cen{ float:left; width:597px;}
+.Beauty_cen ul{ float:left; width:597px;}
+.Beauty_cen ul li{ float:left; width:198px; height:254px; overflow:hidden; border-bottom:1px solid #ddd; border-right:1px solid #ddd;}
+.Beauty_cen ol{ float:left; width:597px;}
+.Beauty_cen ol li{ float:left; width:198px; height:165px; overflow:hidden; border-bottom:1px solid #ddd; border-right:1px solid #ddd;}
+
+.Beauty_hot{ float:right; width:213px; height:420px; overflow:hidden; border-bottom:1px solid #ddd; border-right:1px solid #ddd;}
+.Beauty_hot p{ float:left; overflow:hidden; padding:0 15px; width:183px; height:40px; line-height:40px; background:#e1e1e1; font-family:"microsoft yahei"; font-size:18px;}
+.Beauty_hot ul{ float:left; width:198px; padding:5px 10px 5px 5px; border-bottom:1px dashed #ddd;}
+.Beauty_hot ul .a1{ float:left; width:85px; height:85px; overflow:hidden;}
+.Beauty_hot ul .a1 img{ float:left; width:85px; height:85px; overflow:hidden;}
+.Beauty_hot ul .a2{ float:right; width:110px; line-height:16px; height:32px; overflow:hidden; margin-top:8px;}
+.Beauty_hot ul .a2 a{ color:#666666;}
+.Beauty_hot ul .a2 a:hover{ color:#ed1c24;}
+.Beauty_hot ul .a3{ float:right; width:110px; height:22px; margin-top:10px; overflow:hidden;}
+.Beauty_hot ul .a3 font{ color:#666666; font-family:"microsoft yahei";}
+
+
+
+
+/* 在线客服 */
+#returnTop {
+	right:35px;
+	_display:none;
+	position:fixed;
+	_position:absolute;
+	bottom:-300px;
+	_bottom:auto;
+	overflow:hidden;
+	transition:bottom 0.9s;
+	-webkit-transition:bottom 0.9s;
+	-moz-transition:bottom 0.9s;
+	-o-transition:bottom 0.9s;
+}
+.returnTop1{ width:40px;}
+.gotop_1{ float:right; width:40px; height:317px; background:url("../images/product/right.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/product/right.jpg*/ no-repeat; display:inline;} 
+.gotop_1 a{ float:left; width:40px;}
+.gotop_1 .right_p1{ height:38px; text-indent:-9999px; cursor:pointer;}
+.gotop_1 .right_p1:hover{ background:url("../images/product/right1.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/product/right1.jpg*/ 0 0 no-repeat;}
+.gotop_1 .right_p2{ height:38px; text-indent:-9999px; cursor:pointer;}
+.gotop_1 .right_p2:hover{ background:url("../images/product/right1.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/product/right1.jpg*/ 0 -38px no-repeat;}
+.gotop_1 .right_p3{ height:38px; text-indent:-9999px; cursor:pointer;}
+.gotop_1 .right_p3:hover{ background:url("../images/product/right1.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/product/right1.jpg*/ 0 -76px no-repeat;}
+.gotop_1 .right_p4{ height:38px; text-indent:-9999px; cursor:pointer;}
+.gotop_1 .right_p4:hover{ background:url("../images/product/right1.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/product/right1.jpg*/ 0 -114px no-repeat;}
+.gotop_1 .right_p5{ height:38px; text-indent:-9999px; cursor:pointer;}
+.gotop_1 .right_p5:hover{ background:url("../images/product/right1.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/haitao/images/product/right1.jpg*/ 0 -152px no-repeat;}
+.gotop_1 .right_gotop{ height:42px; text-indent:-9999px;}
+.gotop_1 .right_p6{ height:42px; text-indent:-9999px; cursor:pointer;}
+
+
+
+
+
+
+
+

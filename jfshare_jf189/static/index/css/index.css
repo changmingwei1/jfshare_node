@@ -1,0 +1,293 @@
+div.banner{
+    width: 100%;
+    height: 245px;
+    position: relative;
+    overflow: hidden;
+}
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+/*轮播图样式*/
+.flexslider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    zoom: 1;
+}
+.flexslider .slides li {
+    width: 100%;
+    height: 100%;
+}
+.flex-direction-nav a {
+    width: 70px;
+    height: 70px;
+    line-height: 99em;
+    overflow: hidden;
+    margin: -35px 0 0;
+    display: block;
+    background: url("../images/ad_ctr.png") no-repeat;
+    position: absolute;
+    top: 45%;
+    z-index: 10;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transition: all .3s ease;
+    border-radius: 50%;
+}
+
+.flex-direction-nav .flex-next {
+    background-position: 0 -70px;
+    right: 230px;
+}
+
+.flex-direction-nav .flex-prev {
+    left: 230px;
+}
+
+.flexslider:hover .flex-next {
+    opacity: 0.8;
+    filter: alpha(opacity=25);
+}
+
+.flexslider:hover .flex-prev {
+    opacity: 0.8;
+    filter: alpha(opacity=25);
+}
+
+.flexslider:hover .flex-next:hover,
+.flexslider:hover .flex-prev:hover {
+    opacity: 1;
+    filter: alpha(opacity=50);
+}
+
+.flex-control-nav {
+    width: 100%;
+    position: absolute;
+    bottom: -9px;
+    text-align: center;
+}
+
+.flex-control-nav li {
+    margin: 0 2px;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+}
+
+.flex-control-paging li a {
+    background: url("../images/bot.png") no-repeat ;
+    display: block;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -99em;
+    width: 45px;
+    cursor: pointer;
+}
+
+
+.flex-control-paging li a.flex-active,
+.flex-control-paging li.active a {
+    background-position: 0 0;
+}
+.flex-control-paging li a:hover{
+    background: url("../images/bott.png") no-repeat ;
+    width: 60px;
+}
+
+.flexslider .slides a img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+div.active{
+    display: block;
+}
+
+/*轮播图样式*/
+
+
+.banner .tapLeft{
+    position: absolute;
+    left: 10.2%;
+    top:38.5%;
+    display: inline-block;
+    width: 36px;
+    height: 59px;
+    z-index: 99;
+    cursor: pointer;
+    background: url("../images/left.png");
+
+}
+.banner .tapRight{
+    position: absolute;
+    right: 10.2%;
+    top:38.5%;
+    display: inline-block;
+    width: 36px;
+    height: 59px;
+    z-index: 99;
+    cursor: pointer;
+    background: url("../images/right.png");
+}
+
+/*主题内容*/
+div.content{
+    width: 1200px;
+    margin: 0 auto;
+    font: 18px "Microsoft Yahei", Helvetica, STHeiTi,arial,sans-serif;
+}
+ul.title{
+    width: 880px;
+    overflow: hidden;
+    list-style-type: none;
+    margin: 0px;
+    padding-left: 320px;
+    margin-bottom: 29px;
+
+}
+ul.title li{
+    float: left;
+    height: 55px;
+    line-height: 84px;
+    margin: 0 50px;
+    border-bottom: 2px solid #fff;
+}
+ul.title li:link,ul.title li:active{
+    color: #000;
+}
+ul.title li:hover{
+    border-bottom: 2px solid #ff8200;
+
+}
+.cur{
+    color: #ff8200;
+    /*text-decoration: underline;*/
+}
+div.titlecon{
+    width: 100%;
+    overflow: hidden;
+
+}
+div.titlecon div{
+    width: 236px;
+    margin: 0 4px 0 0;
+    float: left;
+    /*display: inline-block;*/
+}
+div.per img{
+    opacity: 0.7;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+}
+div.per img:hover{
+    opacity: 1;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+}
+div.title2{
+    width: 100%;
+    height: 64px;
+    line-height: 64px;
+}
+div.title2 div{
+    float: left;
+}
+div.hrs{
+    width: 500px;
+    height: 64px;
+    padding-top: 31px;
+}
+hr.xian{
+    height:1px;
+    border: none;
+    border-top: 1px solid #e2e2e2;
+}
+div.menu{
+    width: 200px;
+    text-align: center;
+    line-height: 74px;
+    color: #777;
+}
+div.proTitle{
+    width: 100%;
+    height: 64px;
+    line-height: 84px;
+}
+div.arrow-right {
+    width: 0;
+    height: 0;
+    border-top:10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #219fed;
+    display: inline-block;
+}
+div.proContent{
+    width: 100%;
+    overflow: hidden;
+
+}
+div.left{
+    width: 244px;
+    float: left;    
+}
+div.right{
+    width: 956px;
+    float: left;
+}
+div.pic{
+    width: 238px;
+    float: left;
+    border-top: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+}
+div.pic img{
+    vertical-align: top;
+}
+div.goods{
+    width: 283px;
+    float: left;
+    margin-right: 19px;
+    margin-bottom: 20px;
+    border: 1px solid #fff;
+}
+div.goods:hover{
+    border: 1px solid #eb6100;
+}
+div.goods a{
+    text-decoration: none;
+}
+p.goodname{
+    color: #4f4f4f;
+    margin: 0;
+    padding: 0 20px;
+    font-size: 14px;
+}
+div.money{
+    float: left;
+    width: 120px;
+    line-height: 20px;
+    color: #959595;
+    font-size: 12px;
+    padding: 20px 0;
+    margin-left: 20px;
+}
+span{
+    color: #fc3d39;
+    font-size: 25px;
+}
+div.exchange{
+    width: 70px;
+    float: right;
+    font-size: 16px;
+    background: #ff8200;
+    color: #fff;
+    padding: 4px 18px;
+    margin: 15px 20px 20px 0;
+}
+
+
+

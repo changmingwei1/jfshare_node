@@ -1,0 +1,59 @@
+{{!< main}}
+
+<!-- order css start -->
+<link href="/templates/public/shopping/layout_3/styles/style_base/css/shopping.css" rel="stylesheet" type="text/css"/>
+<style>
+.submitInfo h2 b {
+color: #e20000;
+font-family: Arial;
+margin: 0 4px;
+font-size: 20px;
+}
+.submitInfo h2 {
+    border-bottom: 1px solid #f1f1f1;
+    font: 700 14px/26px "宋体";
+    color: #333;
+}
+</style>
+<!-- order css end -->
+
+<!-- order js start -->
+<!--<script type="text/javascript" src="/templates/global_js/jquery/jquery-1.7.2.min.js"></script>-->
+<!--<script type="text/javascript" src="/js/util/handlebars-v3.0.0.min.js"></script>-->
+<script type="text/javascript" src="/js/order/render_core_payret.js?v=1.0.0"></script>
+<script type="text/javascript">
+    var payret = {{{data}}};
+</script>
+<!-- order js end -->
+
+<div class="main">
+       <!--填充导购提示-->
+       <div id="guidePanel" class="cartStep step04"></div>
+       <!--填充支付通知简介-->
+       <div id="payRetPanel" class="payRet"></div>
+</div>
+
+<!-- order async js start -->
+<!--购买流程提示-->
+<script id="guide_show_template" type="text/x-handlebars-template">
+<ul>
+       <li class="s1">1.\{{fromBatchTip}}</li>
+       <li class="s2">2.填写并核对订单信息</li>
+       <li class="s3">3.成功提交订单</li>
+       <li class="s4">4.支付成功</li>
+</ul>
+</script>
+
+<!--支付通知简介-->
+<script id="pay_ret_template" type="text/x-handlebars-template">
+       <div class="submitInfo">
+              <s class="s_icon"></s>
+              <h2>您已成功付款<b>&yen;\{{price}}</b>元，<b>\{{score}}</b>积分</h2>
+              <p class="p_txt">
+                   <i class="gfails3"></i><strong>安全提示！</strong>下单后，<span>给您发送链接办理退款的都是骗子！</span>
+                  我们不会以系统升级、订单异常等原因要求您退款，谨防假冒客服电话诈骗！
+              </p>
+       </div>
+</script>
+<iframe src="http://y.jf.189.cn/preview/CommPage/fixHeight.html#320" id="iframeA" name="iframeA" style="display: none;"></iframe>
+<!-- order async js end -->

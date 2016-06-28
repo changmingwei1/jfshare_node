@@ -1,0 +1,200 @@
+<!--订单物流跟踪信息-->
+<script id="query_deliver_trace_template" type="text/x-handlebars-template">
+</script>
+
+<!--订单信息-->
+<script id="query_order_template" type="text/x-handlebars-template">
+    <div class="module mt10">
+            <div class="orderstate clearfix">
+                <strong class="fl">
+                    当前订单状态：
+                    <span class="ftx_04">\{{showOrderStateDesc orderState}}</span>
+                </strong>
+            </div>
+            <div class="orderinfo">
+            <ul>
+                <li>
+                    <span> \{{orderStateType}} \{{orderStateTypeDesc}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="orderinfo">
+            <ul>
+                <h4>收货信息</h4>
+                <li>
+                    <label>收货人：</label>
+                    <span>\{{deliverInfo.receiverName}}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>联系方式：</label>
+                    <span>\{{#if deliverInfo.receiverMobile}}\{{deliverInfo.receiverMobile}}\{{/if}}
+                        \{{#if deliverInfo.receiverTele}}，\{{deliverInfo.receiverTele}}\{{/if}}
+                    </span>
+                </li>
+                <li>
+                    <label>收货地址：</label>
+                    <span>
+                        \{{deliverInfo.provinceName}}&nbsp;
+                        \{{deliverInfo.cityName}}&nbsp;
+                        \{{deliverInfo.countyName}}&nbsp;
+                        \{{deliverInfo.receiverAddress}}\{{#if deliverInfo.postCode}}，&nbsp;\{{deliverInfo.postCode}}\{{/if}}
+                    </span>
+                </li>
+            </ul>
+            <ul>
+                <h4>支付信息</h4>
+                \{{#isShowPayInfo payInfo.payState}}
+                    <li>
+                        <label>支付方式：</label>
+                        <span>
+                             天翼支付
+                        </span>
+                    </li>
+                    <li>
+                        <label>支付时间：</label>
+                            <span>\{{payInfo.payTime}}</span>
+                    </li>
+                    <li>
+                        <label>现金：</label>
+                        <span>\{{thirdPrice}}元</span>
+                    </li>
+                    <li>
+                        <label>积分：</label>
+                        <span>\{{thirdScore}}分</span>
+                    </li>
+                \{{/isShowPayInfo}}
+            </ul>
+            \{{#if deliverTime}}
+            <ul>
+                <h4>发货信息</h4>
+                <li>
+                    <label>快递/物流名称：</label>
+                    <span id="span_expressName"></span>
+                </li>
+                <li>
+                    <label>运单号：</label>
+                    <span>\{{deliverInfo.expressNo}}</span>
+                </li>
+                <li>
+                    <label>发货时间：</label>
+                    <span>\{{deliverTime}}</span>
+                </li>
+                <li>
+                    <!--<label>-->
+                    <a href="javascript:;" class="btn btn-warning express-trace" data-placement="auto" style="color:#000;text-decoration:underline;">点击查看物流详情</a>
+                    <!--</label>-->
+                </li>
+            </ul>
+            \{{/if}}
+            <ul>
+                <h4>其他信息</h4>
+                <li>
+                    <label>买家留言：</label>
+                    <span> \{{buyerComment}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
+<!--订单详情信息-->
+<script id="query_orderinfo_template" type="text/x-handlebars-template">
+<div class="myorderList">
+<div class="tab_order">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr class="sep_row" style="display:none;">
+            <td colspan="5">&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td colspan="5" class="tit">
+                <div class="th">
+                     <span class="s1">
+                         <em>\{{createTime}}</em>&nbsp;&nbsp;&nbsp;&nbsp;
+                         订单号：\{{orderId}}
+                     </span>
+                     <span class="s3" id="orderListTime_1" val="\{{orderId}}">
+                     </span>
+                     <span class="s3" id= "seller_\{{sellerId}}" title="\{{sellerName}}">
+                         <a target="_blank" class="js_utm_params" href="javascript:;" utm_content="my_order_seller_name"><i></i> &nbsp;商家：<span>\{{sellerName}}</span></a>
+                     </span>
+                </div>
+            </td>
+        </tr>
+        <tr class="tit">
+            <td colspan="2">商品</td>
+            <td width="10%">单价(元)</td>
+            <td width="10%">数量</td>
+            <td width="15%">小计(元)</td>
+        </tr>
+        <tr class="sep_row" style="display:none;">
+            <td colspan="5">&nbsp;</td>
+        </tr>
+        \{{#if productList}}
+        \{{#each productList}}
+        <tr>
+            <td class="parcel" colspan="2">
+                <div class="parcelItem" style="border-top:none;">
+                    <ul>
+                        <li class="clearfix">
+                            <p class="img">
+                                <a href="\{{self_product_url productId}}" target="_blank"><img src="\{{self_pic_url imagesUrl}}" alt=""/></a>
+                            </p>
+
+                            <div class="cont">
+                                <p class="name">
+                                    <span><a href="\{{self_product_url productId}}" target="_blank" title="\{{productName}}">\{{productName}}</a>
+                                    </span>
+                                </p>
+                                <p class="type">
+                                    <span title="\{{skuDesc}}">\{{self_sku_desc skuDesc}}</span>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td><div class="price" style="color:#F00;">&yen;\{{curPrice}}</div> <del> &yen;\{{orgPrice}}</del> </td>
+            <td><div class="cont">\{{count}}</div></td>
+            <td><div class="price" style="color:#F00;">\{{../../closingPrice}}</div></td>
+        </tr>
+        \{{/each}}
+        \{{/if}}
+    </tbody>
+</table>
+</div>
+</div>
+</script>
+
+<script id="hbs-orderInfo" type="text/x-handlebars-template">
+    <ul class="uc-order-detail-list">
+        <li class="uc-order-detail-item">
+            <div class="uc-order-detail-title"><h3>\{{createTime}}</h3><h4>订单号：<span>\{{orderId}}</span></h4></div>
+            <dl class="productInfor">
+                \{{#each productList}}
+                <dd class="fir">
+                    <a href="\{{showProductUrl productId}}" target="_self"><img src="\{{showImage imagesUrl}}" width="110" height="110" border="0"></a>
+
+                    <h3>\{{productName}}</h3>
+                    <h5>\{{skuDesc}}</h5>
+
+                    <p>\{{showPrice this}}</p>
+                </dd>
+
+                <dd class="sed"><span>\{{count}}</span> 件</dd>
+                \{{/each}}
+
+                <dd class="four">\{{showOrderStateDesc orderState}}</dd>
+
+                <dd class="thr">
+
+                </dd>
+            </dl>
+        </li>
+    </ul>
+</script>
+
+<!--买家汇总-->
+<script id="order_bottom_template" type="x-handlebars-template">
+    \{{showPriceTotal closingPrice productList postage}}
+</script>

@@ -1,0 +1,160 @@
+@charset "utf-8";
+/* CSS Document */
+
+.h125px{height:125px;}
+.wrap{ background:#fff;}
+a.btns{display:inline-block;width:100px;background:url(../images/register_btn1.png) no-repeat 0 0; text-align:center;font-weight:bold;font-size:14px;color:#fff;height:23px;padding-top:3px;*height:22px;}
+button.btns{display:inline-block;width:100px;background:url(../images/register_btn1.png) no-repeat 0 0; text-align:center;font-weight:bold;font-size:14px;color:#fff;height:29px;border:0;cursor: pointer; vertical-align: middle;}
+a.w98px{background-position:0 -29px;width:100px;}
+a.btns:hover{ text-decoration:none;color:#fff;}
+.wrap .container{width:1200px; border:#dedede 1px solid; margin:10px auto 0; padding:20px 0;}
+.wrap .container .register{ background:url(../images/register_icon1.gif) repeat-y center center;height:320px;}
+.h3_title{height:40px;  background:url(../images/register_icon2.gif) repeat-x left bottom; position:relative;}
+.h3_title h3{ background:url(../images/register_title.gif) no-repeat 0 0;height:40px; text-indent:-99999px;}
+.h3_title h3.t1{background-position:0 0;}
+.h3_title h3.t2{background-position:0 -40px;}
+.h3_title h3.t6{background-position:0 -200px;}
+.h3_title .box_msg{position:absolute;top:21px; right:0;height:14px;padding-top:1px;color:#999;}
+.h3_title .box_msg a{color:#3366cc;font-weight:bold;}
+.h3_title .box_msg a:hover{color:#3366cc; text-decoration:none;font-weight:bold;}
+.wrap .container .register .register_login{float:left;width:416px;padding:0 40px;}
+/*====用户登录====*/
+.wrap .container .register .register_login .login_form{ padding-top:15px;}
+.wrap .container .register .register_login .login_form .form_item{height:26px; width:100%; overflow:hidden; margin-top:12px;}
+.wrap .container .register .register_login .login_form .form_item span{display:inline-block;float:left;height:26px;}
+.wrap .container .register .register_login .login_form .form_item span.i_name{width:115px; line-height:26px; text-align:right;font-size:14px;color:#666;}
+.wrap .container .register .register_login .login_form .form_item span.i_input{width:200px;border:1px solid #c1c1c3; background:#fff;height:24px;}
+.wrap .container .register .register_login .login_form .form_item span.i_input input{ border:0; background:none;height:24px;width:196px;*margin:-1px 0 -1px 0; line-height:24px;padding:0 2px 0 2px;}
+.wrap .container .register .register_login .login_form .form_item span.w80px{width:78px;}
+.wrap .container .register .register_login .login_form .form_item span.w80px input{width:74px;}
+.wrap .container .register .register_login .login_form .form_item span.i_dec{width:94px;margin-left:5px; line-height:26px;}
+.wrap .container .register .register_login .login_form .form_item span.i_code{width:70px;margin-left:5px;height:24px;padding:1px 0;}
+.wrap .container .register .register_login .login_form .form_item span.i_code img{ vertical-align:top;width:70px;height:24px; overflow:hidden;}
+.wrap .container .register .register_login .login_form .form_item span.i_decode{width:139px;margin-left:5px; line-height:26px;}
+.wrap .container .register .register_login .login_form .form_item span a,
+.wrap .container .register .register_login .login_form .form_item span a:hover{color:#3366cc;}
+.form_msg{ height:18px; padding-top:5px;padding-left:115px;color:#999;}
+.form_msg span.warm{color:#f00;}
+.wrap .container .register .register_login .login_form .form_btn{padding-left:115px;height:29px;}
+/*====end用户登录====*/
+.wrap .container .register .register_new{float:right;width:412px;padding:0 40px;}
+.wrap .container .register .register_new .new_text{padding-top:20px;}
+.wrap .container .register .register_new .new_text li{ vertical-align:top;height:26px; line-height:26px; overflow:hidden;color:#666; background:url(../images/register_icon3.gif) no-repeat 0 10px;padding-left:10px;}
+.wrap .container .register .register_new .new_btn{padding-top:20px;height:29px;}
+.wrongTips{ border:#ff0101 1px solid; background:#fff3f3 url(../images/layer_x.gif) no-repeat 4px 4px; width:290px; padding:6px 0 0px 25px; color:#f00; height:18px;}
+/*==服务条框==*/
+.wrap .agree{}
+.wrap .agree h3{font-size:14px;color:#cc0000;font-weight:bold; text-align:center;padding:15px 0; width:876px; text-align:center;  margin:0 auto 10px auto;background:url(../images/register_icon2.gif) repeat-x 0 bottom;}
+.wrap .agree .agree_text{ width:834px; border:#dedede 1px solid; font-size:14px;color:#666; line-height:24px;height:488px; overflow-y:scroll;padding:0 20px; margin:auto;}
+.wrap .agree .agree_text p{margin-top:20px;}
+.wrap .agree .agree_btn{height:29px; text-align:center;margin-top:20px;}
+/*==end服务条框==*/
+/*==end找回密码==*/
+.wrap .find_b{padding:0;}
+.find_pwd{height:290px;padding:70px 280px 0 280px;}
+.find_pwd .h3_t3{background:url(../images/register_title.gif) no-repeat 0 -80px;height:40px; text-indent:-99999px;}
+.find_pwd .pwd_t{color:#999;font-size:14px;}
+.find_pwd .pwd_emaill{height:29px;margin-top:10px;color:#666;}
+.find_pwd .pwd_emaill span{display:inline-block;float:left;height:29px;}
+.find_pwd .pwd_emaill span.e_name{ line-height:29px;font-size:14px;}
+.find_pwd .pwd_emaill span.e_input{border:1px solid #c2c2c4;height:27px; background:#fff;}
+.find_pwd .pwd_emaill span.e_input input{ line-height:27px;width:200px;padding:0 2px; border:0; background:none;*margin:-1px 0;height:27px;}
+.find_pwd .pwd_emaill span.e_btn{height:29px;margin-left:5px;}
+
+/*==end找回密码==*/
+/*==找回密码成功==*/
+/*==========找回密码==========*/
+.password { width: 988px; margin: 10px auto 0px auto; border: 1px solid #e3dfdb; overflow: hidden;}
+.password .method { width: 955px; margin-top: 20px; margin-right: auto; margin-bottom: 10px; margin-left: auto;padding-top: 20px;	padding-bottom: 15px;}
+.password .method h2 { background-image: url(../images/register_bg_01.gif); background-repeat: no-repeat; background-position: 0px 0px;height: 38px; width: 500px; margin-left: 23px; margin-bottom: 5px;}
+.password .method .box { padding-top: 0px; padding-right: 20px; padding-bottom: 15px; padding-left: 20px; border-bottom-width: 1px;	border-bottom-style: dashed; border-bottom-color: #dcdbd9; margin-bottom: 20px;}
+.password .method .box h3 { height: 28px; width: 915px; background-image: url(../images/register_bg_01.gif); background-repeat: no-repeat; background-position: 0px -39px; line-height: 28px; text-indent: 10px; color: #666; margin-bottom: 18px;}
+.password .method .box .fixBox { width: 100%; overflow: hidden; margin-bottom: 14px;}
+.password .method .box .fixBox label { text-align: right; width: 270px; font-size: 14px; float: left; line-height: 24px;}
+.password .method .box .fixBox .put { float: left;}
+.password .method .box .fixBox .put input { height: 24px; width: 212px; border: 1px solid #a6a6a6; text-indent: 5px; font-size: 14px;}
+.password .method .box .fixBox .put #select { width: 214px; height: 24px; border: 1px solid #a6a6a6; font-size: 14px;}
+.password .method .box .btn {padding-left: 270px;}
+.password .method .add { padding-left: 20px; line-height: 18px; padding-right: 20px;}
+.password .method .add a { color: #c00;	text-decoration: underline;}
+.password .success_box { height: 194px; width: 575px; margin-top: 60px; margin-right: auto; margin-bottom: 50px; margin-left: auto;overflow: hidden; background-image: url(../images/register_success_bg.jpg); background-repeat: no-repeat;}
+.password .success_box .box { padding-top: 65px; padding-left: 165px;}
+.password .success_box .box p { line-height: 18px; width: 395px; margin-bottom: 10px;}
+.password .success_box .box p b { font-size: 14px;}
+.password .success_box .box .btn { margin-top: 18px;}
+.password .success_box .box .btn a img { margin-right: 15px;}
+
+.password .fail_box { height: 194px; width: 575px; margin-top: 60px; margin-right: auto; margin-bottom: 50px; margin-left: auto;overflow: hidden; background-image: url(../images/register_failure_bg.jpg); background-repeat: no-repeat;}
+.password .fail_box .box { padding-top: 65px; padding-left: 165px;}
+.password .fail_box .box p { line-height: 18px; width: 395px; margin-bottom: 10px;}
+.password .fail_box .box p b { font-size: 14px;}
+.password .fail_box .box .btn { margin-top: 18px;}
+.password .fail_box .box .btn a img { margin-right: 15px;}
+/*==========and 找回密码==========*/
+/*==找回密码成功==*/
+.find_s{height:290px;padding:70px 0px 0 240px;}
+.find_s .h3_t4{background:url(../images/register_title.gif) no-repeat 0 -120px;height:40px; text-indent:-99999px;}
+.find_s .s_pic{float:left;width:120px;display:inline;margin-right:80px;}
+.find_s .s_pic img{ vertical-align:top;margin-top:30px;}
+.find_s .s_txt{float:left;width:456px;}
+.find_s .s_txt .txt_msg{font-size:14px;font-weight:bold;color:#cc0000;margin-top:10px; line-height:22px;}
+.find_s .s_txt .txt_warm{ line-height:22px;color:#666;font-size:14px;margin-top:15px;}
+.find_s .s_txt .txt_btn{height:29px;margin-top:15px;}
+.find_s .s_txt .txt_btn a.btns{float:left;margin-right:10px;}
+.find_s .h3_t5{background:url(../images/register_title.gif) no-repeat 0 -160px;height:40px; text-indent:-99999px;}
+.fail{padding:70px 0px 0 240px;}
+/*==end找回密码成功==*/
+/*==end找回密码成功==*/
+/*==注册新用户==*/
+.login_box{width:600px; margin:0 auto;padding:40px 0;min-height:400px;height:auto!important;_height:400px;}
+.login_box .box_cont{padding:0 0 20px 0;}
+.login_box .box_cont .cont_item{padding-bottom:15px;}
+.login_box .box_cont .top35px{margin-top:35px;}
+.login_box .box_cont .cont_item span{display:inline-block;float:left;height:26px;}
+.login_box .box_cont .cont_item span.i_name{width:220px; line-height:26px; text-align:right;font-size:14px;color:#666;}
+.login_box .box_cont .cont_item span.i_name label{color:#cc0000;}
+.login_box .box_cont .cont_item span.i_input{width:200px;border:1px solid #c1c1c3; background:#fff;height:24px;}
+.login_box .box_cont .cont_item span.i_input input{ border:0; background:none;height:24px;width:196px;*margin:-1px 0 -1px 0; line-height:24px;padding:0 2px 0 2px;}
+.login_box .box_cont .cont_item span.w80px{width:78px;}
+.login_box .box_cont .cont_item span.w80px input{width:74px;}
+.login_box .box_cont .cont_item span.i_code{width:70px;margin-left:5px;height:24px;padding:1px 0;}
+.login_box .box_cont .cont_item span.i_code img{ vertical-align:top;width:70px;height:24px; overflow:hidden;}
+.login_box .box_cont .cont_item span.i_dec{margin-left:5px; line-height:26px;}
+.login_box .box_cont .cont_item span a,
+.login_box .box_cont .cont_item span a:hover{color:#3366cc;}
+.login_box .box_cont .cont_agree{margin-top:55px;height:26px;padding-left:160px;}
+.login_box .box_cont .cont_agree input{float:left;margin:6px 5px 0 4px;*margin:1px 2px 0 0;}
+.login_box .box_cont .cont_agree span{display:inline-block;float:left;height:26px; line-height:26px;color:#999;}
+.login_box .box_cont .cont_agree span a{color:#3366cc;}
+.login_box .box_cont .cont_agree span a:hover{color:#3366cc;}
+.login_box .box_cont .cont_btn{height:29px;margin-top:15px;padding-left:220px;}
+.login_box .box_cont .cont_msg{height:14px; line-height:14px;color:#999;padding-left:220px; overflow:hidden;margin-top:5px;}
+.login_box .box_cont .msg_red{color:#f00;}
+
+.form{ margin-top:10px; }
+.box_cont .form ul{ padding:15px 0 20px;}
+.box_cont .form ul.line{ border-bottom:#e6e6e6 1px solid;}
+.box_cont .form li{ width:100%; margin-top:12px; overflow:hidden; font-size:14px}
+.box_cont .form label{ float:left; width:220px; text-align:right; line-height:24px;}
+.box_cont .form input{ border:#bab9bd 1px solid; width:195px; height:24px; line-height:24px; padding-left:5px;}
+.box_cont .form input.put_small{ width:73px;}
+.box_cont .form .fl{ line-height:24px;}
+
+/*==end注册新用户==*/
+
+/*----------我添加的*/
+.login_box .error_tip{color:#f00;overflow:hidden}
+ e {
+     color: #FF0000;
+     font-size: 12px;
+ }
+/*我添加的--------end*/
+
+
+/*==注册成功==*/
+.regSuccess{ width:880px; margin:50px auto;}
+.regSuccess h1{ background:url(../images/regSuccess_h1Bg.gif) no-repeat; margin:60px 0 15px 260px; height:58px;}
+.regSuccess p{  margin:12px 0 0 260px; color:#666;}
+.regSuccess .btnBox{ margin:25px 0 0 260px;}
+.regSuccess .btnBox a{ margin-right:10px;}
+/*==end注册成功==*/

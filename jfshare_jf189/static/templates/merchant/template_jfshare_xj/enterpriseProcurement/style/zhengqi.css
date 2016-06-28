@@ -1,0 +1,193 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{outline:none; padding:0; margin:0;}
+body{ font-family:"宋体"; font-size:12px; font-weight:normal; color:#333333;}
+ul,ol{ list-style:none;}
+img{ border:0;}
+a{color:#333333; text-decoration:none;}
+a:hover{color:#ed1c24; text-decoration:none;}
+h1,h2,h3{ font-family:"宋体"; font-size:12px; font-weight:normal;}
+.left{ float:left;}
+.right{ float:right;}
+.clear{ clear:both;}
+
+
+.content{ min-width:1220px; margin:0 auto;}
+.zhengqi_center{ min-width:1220px; margin:0 auto; padding-bottom:30px;}
+
+
+/* nav */
+.zhengqi_nav{ width:1220px; margin:0 auto;}
+.zhengqi_nav_1{ width:195px; position:absolute; background:#FFFFFF; z-index:2; height:460px; overflow:hidden;}
+.zhengqi_nav_1 dl{ float:left; width:183px; padding:11px 0 10px 12px; height:36px; border-bottom:1px solid #e4e4e4;}
+.zhengqi_nav_1 dl dt{ float:left; width:183px; height:16px; line-height:16px; overflow:hidden;}
+.zhengqi_nav_1 dl dt a{ color:#333333; font-size:14px; font-weight:bold;}
+.zhengqi_nav_1 dl dt a:hover{ color:#F00;}
+.zhengqi_nav_1 dl dd{ float:left; width:183px; margin-top:8px; height:14px; line-height:14px; overflow:hidden;}
+.zhengqi_nav_1 dl dd a{ color:#888888; float:left; width:60px; height:14px; overflow:hidden;}
+.zhengqi_nav_1 dl dd a:hover{ color:#F00;}
+.zhengqi_nav_1 p{ float:left; width:195px; height:58px; line-height:58px; overflow:hidden; background:#494c52;}
+.zhengqi_nav_1 p a{ float:left; width:183px; padding-left:12px; height:58px; color:#FFF; font-size:14px; font-weight:bold;}
+
+/* banner */
+.zhengqi_banner { margin:0 auto; width:100%; height:460px; position:relative; z-index:1;}
+#slides { margin:0 auto; width:100%; height:460px; position:absolute; z-index:1; overflow:hidden;}
+#slides li { margin:0 auto; min-width:1220px; height:460px;}
+#slides li p{ margin:0 auto; width:1220px; height:460px; position:relative; z-index:5;}
+#slides li p a{ float:left; width:1220px; height:460px; overflow:hidden; text-indent:-9999px;}
+#pagination { margin:0 auto; width:1015px; height:14px; padding-left:205px; position:relative; _width:500px; *width:500px; _position:absolute; *position:absolute; _left:35%; *left:35%; _padding-left:205px; *padding-left:205px; z-index:2;}
+#pagination li { width:14px; height:14px; float:left; margin-left:5px; border-radius:7px; background:#d9d9d9; margin-top:435px;}
+#pagination li a { display:block; width:14px; height:14px;  text-indent:-9999px; font-size:0px;}
+#pagination li.current { background:#494c52;}
+
+
+/* 阳光采购 */
+.zhengqi_brand{ width:1220px; margin:0 auto;}
+.zhengqi_brand ol{ float:left; width:1220px; margin-top:20px;}
+.zhengqi_brand ol li{ width:auto; line-height:42px; height:42px; overflow:hidden;}
+.zhengqi_brand ol .left{ width:365px;}
+.zhengqi_brand ol .left img{ float:left;}
+.zhengqi_brand ol .right{ width:660px; padding-right:30px; text-align:right;}
+.zhengqi_brand ol .right a{ font-size:14px; color:#888888;}
+.zhengqi_brand ol .right a:hover{ color:#FF0000;}
+.zhengqi_brand ul{ float:left; width:1220px;}
+.zhengqi_brand ul li{ float:left; width:auto; margin-left:3px; margin-top:3px; display:inline;}
+.zhengqi_brand ul li img{ float:left;}
+
+
+/* 1F家居生活 */
+.zhengqi_1F{ width:1220px; margin:0 auto;}
+.nav_1F{ float:left; width:1220px; height:30px; overflow:hidden; margin-top:20px;}
+
+.left_1F{ float:left; width:195px; height:552px; overflow:hidden;}
+.left_nav_1F{ width:195px; position:absolute;}
+.left_nav_1F ul{ width:171px; padding:12px;}
+.left_nav_1F ul li{ float:left; width:84px; height:30px; line-height:30px; overflow:hidden; color:#FFFFFF;}
+.left_nav_1F ul li a{ color:#FFFFFF; font-size:12px;}
+.left_nav_1F ul li a:hover{ text-decoration:underline;}
+.left_banner_1F{ float:left; width:195px; height:552px; overflow:hidden;}
+
+.right_1F{ float:right; width:1024px; height:549px; overflow:hidden; background:#FFFFFF; border-bottom:1px solid #dedede; border-right:1px solid #dedede; border-top:2px solid #b9b9b9;}
+.right_1F_top{ float:left; width:1024px;}
+.f_list{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+
+.f_list1{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list2{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list3{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list4{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list5{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list6{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list7{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list8{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list9{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.f_list10{ float:left; width:370px; height:414px; overflow:hidden; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.flashlist .f_out {height:414px;overflow:hidden;position:relative;z-index:111;}
+.flashlist .f_out img{ width:370px; height:414px;}
+.flashlist .f_out .vip01pic,.jcToppic .vip01pic {width:58px;height:58px;display:block;position:absolute;top:0px;left:0px;background:url("../images/vipico.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/enterpriseProcurement/images/vipico.gif*/ no-repeat 0 0;z-index:200}
+.f_tabs { width:200px; height:6px; overflow:hidden; margin-top:395px; margin-left:100px; text-align:center; z-index:123; position:absolute;}
+.f_tabs ul li { float:left; margin:0 4px; width:40px; height:6px; display:block;}
+.f_tabs ul li.opdiv,.noopdiv {padding:0;opacity:1}
+.f_tabs ul li.opdiv a {width:40px;height:6px; background:#bac0c9; display:block;}
+.f_tabs ul li.noopdiv a {width:40px;height:6px; background:#e5118e;display:block;}
+
+.right_1F_cen{ float:left; width:445px;}
+.right_1F_cen ul{ float:left; width:445px;}
+.right_1F_cen ul li{ float:left; width:auto; border-bottom:1px solid #dedede; border-right:1px solid #dedede;}
+.right_1F_cen ul li img{ float:left;}
+
+.right_1F_right{ float:right; width:208px; height:414px; overflow:hidden; border-bottom:1px solid #dedede;}
+.right_1F_right p{ float:left; overflow:hidden; padding:0 15px; width:178px; height:40px; line-height:40px; background:#e1e1e1; font-family:"microsoft yahei"; font-size:16px;}
+.right_1F_right ul{ float:left; width:193px; padding:0 10px 0 5px; margin-top:18px;}
+.right_1F_right ul .a1{ float:left; width:70px; height:70px; overflow:hidden;}
+.right_1F_right ul .a1 img{ float:left; width:70px; height:70px; overflow:hidden;}
+.right_1F_right ul .a2{ float:right; width:110px; line-height:16px; height:32px; overflow:hidden;}
+.right_1F_right ul .a2 a{ color:#666666;}
+.right_1F_right ul .a2 a:hover{ color:#ed1c24;}
+.right_1F_right ul .a3{ float:right; width:110px; height:22px; margin-top:10px; overflow:hidden;}
+.right_1F_right ul .a3 font{ color:#666666; font-family:"microsoft yahei";}
+
+.right_1F_bottom{ float:left; width:1024px; }
+.picbox_1{ width:924px; height:110px; overflow:hidden; position:relative; margin-left:50px;}
+.piclist_1{ height:110px;position:absolute; left:0px; top:0px; overflow:hidden;}
+.piclist_1 li{ float:left; width:210px; height:90px; overflow:hidden; margin:20px 10px 0 10px; display:inline;}
+.swaplist_1{ position:absolute; left:-3000px; top:0px}
+.og_prev_1,.og_next_1{ width:25px; height:40px; background:url("../images/icon.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/enterpriseProcurement/images/icon.jpg*/ no-repeat; position:absolute; top:48px; z-index:99; cursor:pointer;filter:alpha(opacity=70); opacity:0.7;}
+.og_prev_1{ background-position:0 -65px; left:10px;}
+.og_next_1{ background-position:-5px -5px; right:10px;}
+
+
+/* 2F个护美妆 3F 4F 5F 6F */
+.picbox_2{ width:950px; height:110px; overflow:hidden; margin-left:40px;}
+.piclist_2{ height:110px; left:0px; top:0px; overflow:hidden;}
+.piclist_2 li{ float:left; width:178px; height:90px; overflow:hidden; margin:26px 10px 0 0px; display:inline;}
+.piclist_2 li p{ float:left; width:90px; height:90px; overflow:hidden;}
+.piclist_2 li p img{ float:left; width:90px; height:90px; overflow:hidden;}
+.piclist_2 li span{ float:right; width:80px; line-height:16px; height:32px; overflow:hidden; margin-top:15px;}
+.piclist_2 li h1{ float:right; width:80px; line-height:16px; height:16px; margin-top:5px; overflow:hidden; font-family:"microsoft yahei"; color:#666666;}
+.swaplist_2{ position:absolute; left:-3000px; top:0px}
+.og_prev_2,.og_next_2{ width:25px; height:40px; background:url("../images/icon.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/enterpriseProcurement/images/icon.jpg*/ no-repeat; position:absolute; top:48px; z-index:99; cursor:pointer;filter:alpha(opacity=70); opacity:0.7;}
+.og_prev_2{ background-position:0 -65px; left:10px;}
+.og_next_2{ background-position:-5px -5px; right:10px;}
+
+
+
+/* 底部活动区 */
+.zhengqi_center_bottom{ min-width:1220px; margin:0 auto; background:#008558;}
+.zhengqi_center_bottom ul{ min-width:1220px; margin:0 auto;}
+.zhengqi_center_bottom ul li{ min-width:1220px; margin:0 auto;}
+.zhengqi_center_bottom ul li p{ width:1220px; margin:0 auto; position:relative; z-index:10;}
+.zhengqi_center_bottom ul li p img{ float:left; width:1220px;}
+
+
+
+
+/* 在线客服 */
+#returnTop {
+	right:35px;
+	_display:none;
+	position:fixed;
+	_position:absolute;
+	bottom:-260px;
+	_bottom:auto;
+	overflow:hidden;
+	transition:bottom 0.9s;
+	-webkit-transition:bottom 0.9s;
+	-moz-transition:bottom 0.9s;
+	-o-transition:bottom 0.9s;
+}
+.returnTop1{ width:57px;}
+.gotop_1{ float:right; width:57px; height:234px; background:url("../images/zxkf.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/enterpriseProcurement/images/zxkf.jpg*/ no-repeat; display:inline;} 
+.gotop_1 a{ float:left; width:57px;}
+.gotop_1 .right_p1{ height:58px; text-indent:-9999px; cursor:pointer;}
+.gotop_1 .right_p1:hover{ background:url("../images/zxkf_4.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/enterpriseProcurement/images/zxkf_4.jpg*/ no-repeat;}
+.gotop_1 .right_p2{ height:58px; text-indent:-9999px; cursor:pointer;}
+.gotop_1 .right_p2:hover{ background:url("../images/zxkf_1.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/enterpriseProcurement/images/zxkf_1.jpg*/ no-repeat;}
+.gotop_1 .right_gotop{ height:57px; text-indent:-9999px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

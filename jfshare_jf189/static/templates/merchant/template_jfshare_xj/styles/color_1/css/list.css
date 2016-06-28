@@ -1,0 +1,268 @@
+/*----------商品列表页样式----------*/
+.location{ margin:0 auto; width:1220px; line-height:30px;}
+.listMain {	width: 1220px; margin-right: auto; margin-left: auto; margin-top: 0px;	margin-bottom: 10px;}
+.listM_left { float: left; width: 196px; overflow: hidden;}
+.listM_right { width: 990px; float: right; }
+.listM_left .ad { width: 190px; margin-bottom: 10px; overflow: hidden;}
+
+/*列表页商品分类*/
+.listM_left .sidebar { width: 100%; overflow: hidden; margin-bottom: 20px;}
+.listM_left .sidebar h2 {background-image: url("../images/list_title_1.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_title_1.gif*/; background-repeat: no-repeat; background-position: 0px -4px; height: 32px;	width: 196px; line-height: 32px; color: #FFF; font-weight:bold; font-size: 18px; text-indent: 10px;}
+.listM_left .sidebar .sidebar_box { width: 196px; border-top:none; overflow: hidden;	background-color: #fff7ea;}
+.listM_left .sidebar .sidebar_box ul li { width: 180px; display: inline; float: left; margin-left: 8px;}
+.listM_left .sidebar .sidebar_box ul li .one { height: 29px; width: 100%; border-bottom-width: 1px; border-bottom-style:solid;border-bottom-color: #f9e9d2;line-height: 29px;  color: #ff9e00;}
+.listM_left .sidebar .sidebar_box ul li .one span { margin-right: 2px; margin-left: 2px;}
+.listM_left .sidebar .sidebar_box ul li .one a { font-size: 12px;font-weight: bold; color: #ff9e00;}
+.listM_left .sidebar .sidebar_box ul li .tow { float:left; width:180px; line-height: 25px; padding-bottom: 5px;}
+.listM_left .sidebar .sidebar_box ul li .tow a { width:72px; float:left; margin-left:18px; height:25px; overflow:hidden;}
+/*and 列表页商品分类*/
+
+/*商品排行榜*/
+.listM_left .productList { width: 100%; margin-bottom: 10px; overflow: hidden;}
+.listM_left .productList h3 { background-image: url("../images/list_title_1.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_title_1.gif*/; background-repeat: no-repeat; background-position: 0px -36px; height: 36px; width: 196px; overflow: hidden;}
+.listM_left .productList .box { width: 194px; border: 1px solid #dddbdb; overflow: hidden; border-top:none;}
+.listM_left .productList .box ul li { line-height: 39px; width: 192px; float: left; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #e5e5e5; display: inline; overflow: hidden; margin: 1px; padding-bottom: 7px;}
+.listM_left .productList .box ul li .number { float: left; height: 18px; width: 18px; margin-top: 9px; margin-left: 6px;	display: inline;}
+.listM_left .productList .box ul li .title { line-height: 16px; float: left; width: 150px; margin-left: 6px; margin-top: 10px; margin-right: 0px; margin-bottom: 3px;}
+.listM_left .productList .box ul li .cur { float: left; height: 60px; width: 150px; margin-left: 30px; display: inline;}
+.listM_left .productList .box ul li .cur .pic { float: left; height: 60px; width: 60px; display: inline; overflow: hidden;}
+.listM_left .productList .box ul li .cur .price { float: left; height: 45px; width: 78px; padding-left: 12px; line-height: 14px; padding-top: 15px; font-family: Verdana;}
+.listM_left .productList .box ul li .cur .price s { color: #666;}
+.listM_left .productList .box ul li .cur .price p { color: #cc0000;}
+/*and 商品排行榜*/
+
+/*最近浏览过的商品*/
+.listM_left .viewed { width: 100%; margin-bottom: 10px; overflow: hidden;}
+.listM_left .viewed h3 { background-image: url("../images/list_title_1.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_title_1.gif*/; background-repeat: no-repeat; background-position: 0px -72px; height: 36px; width: 196px; overflow: hidden;}
+.listM_left .viewed h4 { background-image: url("../images/history_h2Bg.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/history_h2Bg.gif*/; background-repeat: no-repeat; height: 36px; width: 190px; overflow: hidden;}
+.listM_left .viewed .box { border: 1px solid #dddbdb; border-top:none; width: 194px;}
+.listM_left .viewed .box ul li { width: 186px; margin-left: 1px; height: 65px; border-bottom-width: 1px;border-bottom-style: solid; border-bottom-color: #e5e5e5; overflow: hidden; padding: 3px;}
+.listM_left .viewed .box ul li .pic { float: left; height: 60px; width: 60px; overflow: hidden; margin-top:3px;}
+.listM_left .viewed .box ul li .title { float: left; width: 110px; margin-left: 5px; margin-top: 15px; height: 30px;	display: inline; overflow: hidden; line-height: 15px;}
+.listM_left .viewed .box ul li .xPrinc{margin-left: 5px;font-family: arial;float:left;}
+/*and 最近浏览过的商品*/
+
+/*热卖推荐*/
+.listM_right .hotrec { width: 790px; overflow: hidden; margin-bottom: 10px;}
+.listM_right .hotrec h2 { background-image: url("../images/list_title_2.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_title_2.gif*/; background-repeat: no-repeat; height: 36px; width: 790px; overflow: hidden;}
+.listM_right .hotrec .box { height: 228px; width: 788px; border: 1px solid #dddbdb; overflow: hidden;}
+.listM_right .hotrec .box ul {	clear: none;	width: 780px;}
+.listM_right .hotrec .box ul li { width: 135px; margin-left: 20px; display: inline; float: left;}
+.listM_right .hotrec .box ul li .pic { margin-top: 12px; margin-bottom: 8px; margin-right: 0px; margin-left: 5px; width: 120px;	position: relative; z-index:1; height: 120px;}
+.listM_right .hotrec .box ul li .title {	line-height: 18px;	height: 36px;}
+.listM_right .hotrec .box ul li .price { line-height: 18px; font-family: Verdana; margin-top: 2px;}
+.listM_right .hotrec .box ul li .Button {	text-align: center;	margin-top: 8px;}
+/*and 热卖推荐*/
+
+/*商品筛选*/
+.listM_right .selection { width: 100%;margin-bottom: 10px;}
+.listM_right .selection h3 { background-image: url("../images/list_title_2.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_title_2.gif*/; background-repeat: no-repeat;background-position: 0px -6px; height: 30px; width: 990px;}
+.listM_right .selection h3 b { font-size: 14px; line-height: 30px; color: #cc0000; margin-left: 15px;	float: left;}
+.listM_right .selection h3 span { float: right; margin-right: 8px; margin-top: 9px;}
+.listM_right .selection h3 span a { color: #0065d7;}
+.listM_right .selection .box { width: 988px; border: 1px solid #dddbdb; border-top:none; padding-top: 10px;}
+.listM_right .selection .box .sortDiv { width: 979px; overflow: hidden; padding-left: 8px; padding-bottom: 8px;}
+.listM_right .selection .box .sortDiv h4 { text-align: right; float: left; width: 105px; font-weight: bold; line-height: 22px;*padding-top:2px;}
+.listM_right .selection .box .sortDiv .item { width: 650px; float: left; line-height: 22px;padding-left: 1px;}
+.listM_right .selection .box .sortDiv .item_R { width: 70px; float: left; line-height: 22px;padding-left: 1px;}
+.listM_right .selection .box .sortDiv .item ul li { float: left; margin-right: 15px; white-space: nowrap;}
+.listM_right .selection .box .sortDiv .all { float: left; width: 49px; line-height: 22px; height: 22px;}
+.listM_right .selection .box .sortDiv .item .text {	float: left;}
+.listM_right .selection .box .sortDiv .item .text span { line-height: 22px;}
+.listM_right .selection .box .sortDiv .item .btn {	float: left;	padding-left: 4px;}
+.listM_right .selection .box .sortDiv .item .text label #textfield {	border: 1px double #CCC;	height: 19px;}
+.listM_right .selection .box .property { height: 20px; width: 105px; margin: 5px auto -1px auto; display: block;}
+.listM_right .selection .box .sortDiv .item_R a{ color: red;}
+.listM_right .selection .box .sortDiv .item_R a:hover{background: none;}
+.sortDiv a { padding:2px; line-height: 18px; color:#333; display:inline-block;text-decoration:none;}
+.sortDiv a:hover, .sortDiv a.cur { background: none repeat scroll 0 0 #000000; color: #FFFFFF;  display: inline-block; padding: 2px; text-decoration: none; line-height: 18px;}
+/*and 商品筛选*/
+/*纠错搜索begin*/
+.search_nav{ width:100%; float:left; margin-bottom:10px; display:inline; border-top:4px #000 solid;}
+.search_nav h2, .search_nav h3 {color: #666666;padding: 12px 0 10px 10px;}
+.search_nav h3 b{color: #CB0103;}
+.noresult { width: 100%;}
+.noresultbox {padding-left: 200px;}
+.noresult .p1, .noresult .p3 {color: #333333;font-size: 14px;font-weight: bold;}
+.noresult .p2 {color: #333333; margin-top: 10px;}
+.noresult .p1 b,.noresult .p2 b,.noresult span{color: #CB0103;}
+.photolist .top_box { background-image: url("../images/list_title_2.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_title_2.gif*/; background-repeat: no-repeat;background-position: 0px -36px; height: 35px;}
+.result_key { color: #666666; font-size: 14px;  line-height: 42px; padding-left: 20px; }
+.result_key span { color: #CB0103; }
+
+#omit { color: #666666; font-weight: normal; text-decoration: line-through;}
+.highlightStyle{color: #CB0103;}
+/*纠错搜索end*/
+/* 商品列表 */
+.listM_right .photolist {	margin-top: 20px;}
+.listM_right .photolist .topba { background-image: url("../images/list_title_2.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_title_2.gif*/; background-position: 0px -72px; height: 39px;}
+.listM_right .photolist .reSearch{width: 100%;margin-bottom: 10px;}
+.listM_right .photolist .reSearch h3 { background-image: url("../images/list_title_2.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_title_2.gif*/; background-repeat: no-repeat;background-position: 0px -36px; height: 36px; line-height: 36px;width: 790px;}
+.listM_right .photolist .reSearch h3 b{ padding-left: 9px;color: #333331;}
+.listM_right .photolist .reSearch h3 a{display: inline-block;  margin: 0 5px; padding: 2px; text-decoration: none;color: #CC0100;}
+.listM_right .photolist .topba .topba_left { float: left; padding-top: 7px; padding-right: 10px; padding-left: 10px;}
+.listM_right .photolist .topba .topba_center { float: left; height: 40px; width: 450px; }
+
+.listM_right .photolist .topba .topba_center .each,.listM_right .photolist .topba .topba_center .cur{ float:left; margin:7px 10px 0 0; display:inline; text-align:center; width:50px; line-height:24px; height:24px; border:1px solid #cecbce;}
+.listM_right .photolist .topba .topba_center .eachTime{float:left; margin:10px 10px 0 0; display:inline; text-align:center; width:60px; padding-top:2px; height:19px;  background:url("../images/list_pic_time.jpg")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_pic_time.jpg*/ no-repeat;}
+.listM_right .photolist .topba .topba_center .curTime{float:left; margin:7px 10px 0 0; display:inline; text-align:center; border:1px solid #cecbce; width:72px; line-height:24px; height:24px;}
+.listM_right .photolist .topba .topba_center .cur{ background:url("../images/list_pauxu.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_pauxu.gif*/ no-repeat -50px 0;}
+.listM_right .photolist .topba .topba_center .each a{ color:#333;}
+.listM_right .photolist .topba .topba_center .each a:hover{ text-decoration:none;}
+.listM_right .photolist .topba .topba_center .cur a{ color:#663a00;}
+.listM_right .photolist .topba .topba_center .each img{ margin:0 3px -1px 0;}
+
+.listM_right .photolist .topba .topba_center h3 { line-height:40px; float: left; padding-right:10px; margin-left:8px;}
+.listM_right .photolist .topba .topba_center p{ float: left; height: 15px; padding-right: 8px; padding-left: 8px; margin-top: 10px;	border: 1px double #CCC; padding-top: 3px; background-color: #FFF; margin-left: 10px;}
+.listM_right .photolist .topba .topba_center p img {	word-spacing: 4px;}
+.listM_right .photolist .topba .topba_center .sale { float:left; width:50px; text-align:center; padding-top:4px; height:19px; 	margin-top:10px;	margin-left: 10px; background-image: url("../images/list_sale.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_sale.gif*/; background-repeat: no-repeat;}
+.listM_right .photolist .topba .topba_right {float: right; height: 40px; width: 165px; padding-right: 10px; line-height: 40px;text-align: center;}
+.listM_right .photolist .topba .topba_right b {	color: #c00;}
+.listM_right .photolist .topba .topba_right a{ border:1px solid #cecbce; padding:5px 6px; margin-left:5px; display:inline;}
+.listM_right .photolist .photolist_box { width: 988px; border: 1px solid #dddddd;}
+.listM_right .photolist .photolist_box .plul ul li { float: left; width: 170px; display: inline; margin-top: 15px; margin-bottom: 15px; margin-left: 22px;}
+.listM_right .photolist .photolist_box .plul ul li .pic { margin-bottom: 26px; height: 140px; width: 170px; margin-top: 0px; margin-right: auto; margin-left: auto;position:relative;z-index:1;}
+.listM_right .photolist .photolist_box .plul ul li .pic .layer_ico {width:43px; height:43px; position:absolute; top:0; left:0;}
+
+.listM_right .photolist .photolist_box .plul ul li .title {	line-height: 18px;	height: 36px;overflow: hidden;}
+.listM_right .photolist .photolist_box .plul ul li .price {	line-height: 18px;	margin-top: 2px;	margin-bottom: 3px;}
+.listM_right .photolist .photolist_box .plul ul li .price .comment { color: #666; line-height: 25px; height: 25px; font-family: Verdana;}
+.listM_right .photolist .photolist_box .plul ul li .price .comment a { color: #999;}
+.listM_right .photolist .photolist_box .plul ul li .Button span {	 float: left;}
+/*.listM_right .photolist .photolist_box .plul ul li .Button p {	float: left; }*/
+.listM_right .photolist .topba .topba_left img { margin-right: 8px;}
+.listM_right .photolist h4 { color: #999; padding: 8px;}
+.listM_right .photolist h4 b { font-family: Arial; color: #cc0000;}
+.listM_right .photolist .page {text-align: right; float:left;width: 99%;height:30px; margin-top: 10px;}
+
+.price .Marketprice { color: #666; font-family: Arial;}
+.price .Marketprice span { text-decoration:line-through; margin-right: 6px;}
+.price .Marketprice b { color: #c00;}
+.price .Memberprice { color: #666;}
+.price .Memberprice b {	color: #c00;}
+.hotIcon{ width:49px; height:49px; position:absolute; z-index:2; background-image: url("../images/list_hotIcon.png")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/list_hotIcon.png*/; background-repeat: no-repeat; right: 0px; bottom: 0px;}
+/* and 商品列表 */
+
+/* 图文box商品列表 */
+.listM_right .photolist .photolist_box2 { width: 788px; border: 1px solid #ddd;}
+.listM_right .photolist .photolist_box2 .plul ul li { margin-top: 10px; margin-bottom: 10px; border-bottom: 1px dashed #CCC; height: 140px; width: 780px; padding-bottom: 10px; display: inline; float: left;}
+.listM_right .photolist .photolist_box2 ul li .pic { float: left; height: 120px; width: 120px; margin: 10px;position:relative;}
+.listM_right .photolist .photolist_box2 ul li .pic .layer_ico{width:43px; height:43px; position:absolute; top:0; left:0;}
+.listM_right .photolist .photolist_box2 ul li .text { float: left; width: 495px; margin-top: 10px; height: 120px; line-height: 22px;}
+.listM_right .photolist .photolist_box2 ul li .Button { float: right; height: 120px; width: 90px; margin-top: 10px;}
+.listM_right .photolist .photolist_box2 ul li .text .Title { font-size: 14px; margin-top: 5px; margin-bottom: 5px;}
+.listM_right .photolist .photolist_box2 ul li .text .Features { color: #999;}
+.listM_right .photolist .photolist_box2 ul li .text .price span {	margin-right: 18px;}
+.listM_right .photolist .photolist_box2 ul li .Button p {	margin-top: 10px;}
+/*end 图文box商品列表 *
+
+
+/*弹出层 购物车 结算 对比*/
+.cartlayer_layer{margin-top:10px;}
+.cartlayer{border:3px solid #999;background:#ddd;padding:1px;width:238px;}
+.cartlayer_box{border:1px solid #fff;background:#fff url("../images/cartlayer_bg.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_bg.gif*/ repeat-x 0 0;min-height:50px;height:auto!important;_height:50px;padding:0 10px 10px 10px;position:relative}
+.cartlayer_box h2{line-height:30px;font-size:14px; font-weight:bold;margin-top:20px;}
+.cartlayer_box h2 b{background:url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat -59px -25px;display:inline-block;height:30px; vertical-align:middle; overflow:hidden;width:38px;}
+.cartlayer_box h3{height:24px;line-height:24px;color:#000;font-weight:bold;font-size:12px;}
+.cartlayer_box h3 b{background:url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat 0 0;display:inline-block;height:24px; vertical-align:middle; overflow:hidden;width:30px;}
+a.cartlayer_close{background:url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat -30px -27px;width:12px;height:12px; overflow:hidden;position:absolute;right:6px;top:6px;}
+.cartlayer_box table{width:100%;border-collapse:collapse;empty-cells:show;width:100%;}
+.cartlayer_box table th{font-weight:normal; text-align:left;}
+.cartlayer_box table th,.cartlayer_box table td{padding:5px 0 5px 0;}
+.cartlayer_pro span{display:inline-block;position:relative;height:42px; vertical-align:top;cursor:pointer;margin-bottom:6px;}
+.cartlayer_pro span img{vertical-align:top;width:40px;height:40px;border:1px solid #ccc;}
+.cartlayer_pro span.shower img{border-color:#ff6633;}
+.cartlayer_pro span s{display:none;}
+.cartlayer_pro span.shower s{background:url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat -42px -29px;display:block;position:absolute;right:1px;bottom:1px;width:10px;height:10px; overflow:hidden;}
+.cartlayer_march span{float:left;display:inline-block;margin-right:5px;}
+.cartlayer_march span.s1,.cartlayer_march span.s3{cursor:pointer;}
+.cartlayer_march span s{background:url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat 0px -27px;width:15px;display:block; overflow:hidden;height:12px;margin-top:5px;}
+.cartlayer_march span.s3 s{background-position:-15px -27px;}
+.cartlayer_march span.s2{width:54px;height:21px;background:url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat -45px 0px;}
+.cartlayer_march span.s2 input{background:none;border:0;width:50px;height:21px;line-height:21px;padding:0 2px; text-align:center;}
+.cartlayer_march span.s4{line-height:21px;}
+.cartlayer_submit{margin-top:10px; display: block; text-align: center; position: relative;}
+.cartlayer_submit a{display:inline-block;background:url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat 0px -40px;width:55px;height:19px; overflow:hidden;}
+.cartlayer_submit a.buy{background-position:0 -80px;width:68px;}
+.cartlayer_submit a.choose{background-position:0 -60px;width:99px; vertical-align:top;}
+.cartlayer_submit a.clearup{background:none;line-height:19px; vertical-align:top;width:35px;}
+.cartlayer_total{padding:0 20px;}
+.cartlayer_total p span,.cartlayer_total p strong{color:#cc0000;}
+.box2{padding-left:2px;padding-right:2px;}
+.box2 h3{padding-left:8px;}
+.cartlayer_comparison {border:1px solid #dcdcdc;padding:2px; overflow:hidden; zoom:1;margin-bottom:5px;color:#666;}
+.cartlayer_comparison span{display:inline-block;float:left;}
+.cartlayer_comparison span.s1{width:40px; background:#000;}
+.cartlayer_comparison span.s2{width:153px;padding-top:5px; line-height:16px;}
+.cartlayer_comparison span.s3{width:33px;padding-top:24px;}
+.cartlayer_comparison span img{height:40px;width:40px; vertical-align:top;}
+.cartlayer_comparison span.s3 a,.cartlayer_submit a.clearup,.cartlayer_collection a{color:#0064db; text-decoration:underline;}
+.cartlayer_comparison span.s3 a:hover,.cartlayer_submit a.clearup:hover,.cartlayer_collection a:hover{color:#0064db; text-decoration:none;}
+.cartlayer_collection{width:121px;margin:10px auto 0 auto;color:#666;background:url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat 0px -100px;padding-left:33px; line-height:20px;}
+/*end 弹出层 购物车 结算 对比*/
+
+
+.poplayer{background:none repeat scroll 0 0 #DDDDDD;border: 3px solid #999999;padding:1px;}
+.poplayer_box{background:#fff url("../images/cartlayer_bg.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_bg.gif*/ repeat-x scroll 0 0 ; height: auto !important;min-height: 50px;padding-bottom:10px;position: relative;}
+.poplayer_box a.closeDiv {background: url("../images/cartlayer_icon.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/cartlayer_icon.gif*/ no-repeat scroll -30px -27px transparent;height: 12px;overflow: hidden;position: absolute;right: 6px;top: 6px;width: 12px;}
+
+.layer_detail_comment h2{height:29px;line-height:29px;background:url("../images/poplayer_bg.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/poplayer_bg.gif*/ repeat-x 0 0;color:#000;font-size:14px;font-weight:bold;padding-left:10px;}
+.layer_detail_comment h2 span{color:#0066cb;}
+.layer_detail_comment .cont{padding:0 15px 0 15px;margin-top:15px;}
+.layer_detail_comment .cont table {width:100%;border-collapse:collapse;empty-cells:show;}
+.layer_detail_comment .cont table td{padding:5px 0 5px 0;}
+.layer_detail_comment .cont table td .detail_stater img{float:left; vertical-align:middle;}
+.layer_detail_comment .cont table td input.detail_input1{border:1px solid #a3adb6;padding:0 2px;height:20px;line-height:20px;width:400px;}
+.layer_detail_comment .cont table td input.detail_input2{border:1px solid #a3adb6;padding:0 2px;height:20px;line-height:20px;width:80px;}
+.layer_detail_comment .cont table td input.w170px{width:170px;}
+.layer_detail_comment .cont table td textarea.detail_textarea1{border:1px solid #a3adb6;padding:2 2px;height:20px;line-height:20px;width:404px; overflow-y:auto;height:120px;}
+.layer_detail_comment .cont table td .msg{color:#999;}
+.layer_detail_comment .cont table td .upbtn span{float:left; display:inline-block;margin-right:5px;}
+.layer_detail_comment .cont table td .upbtn span.s3{float:right;margin-right:12px;}
+
+.layer_detail_comment .btn{padding-left:65px;margin-top:20px;}
+.layer_detail_comment .btn a,.layer_detail_comment .btn img{ vertical-align:bottom;}
+.layer_detail_comment .btn a,.layer_detail_comment .cont table td a{color:#0066cb;}
+.layer_detail_comment .btn a:hover,.layer_detail_comment .cont table td a:hover{color:#0066cb; text-decoration:underline;}
+
+
+.ColorTxt{ width: 397px; overflow: hidden; padding-top: 7px; padding-bottom: 5px; padding-left: 9px;}
+.ColorTxt label{ line-height:26px; float: left; }
+.ColorTxt span{ float:left; width:337px;}
+.ColorTxt span a{ float:left; margin-right:10px; display:block; padding:5px; margin-bottom:5px; background:#fff; overflow:hidden; border:1px solid #ddd; position:relative;}
+.ColorTxt span .selected{ border:1px solid #ff6633;}
+.ColorTxt span a.selected .zIndexPic{ visibility:visible;}
+.ColorTxt span a .zIndexPic{ right:0px; bottom:0px; position:absolute; }
+
+.t6 { border: 1px solid #feeec7;margin-top:15px;*margin-top:0px;_margin-top:3px;}
+.t6 .choose { background-color: #fffaf0; border: 1px solid #FFF; border-bottom: 1px solid #feeec7; overflow:hidden; }
+.t6 .bntbuy { background-color: #FFFBF7; margin: 1px; padding-bottom: 6px; }
+.t6 .choose .Color { width: 397px; overflow: hidden; padding-top: 7px; padding-bottom: 5px; padding-left: 9px;}
+.t6 .choose .Color label{ line-height:26px; float: left; }
+.t6 .choose .Color span{ float:left; display:block;}
+.t6 .choose .Color span a{ float:left; margin-right:10px; display:block; width:40px; height:40px; overflow:hidden; border:1px solid #ddd; position:relative;}
+.t6 .choose .Color span .selected{ border:1px solid #ff6633;}
+.t6 .choose .Color span a.selected .zIndexPic{ visibility:visible;}
+.t6 .choose .Color span a .zIndexPic{ right:0px; bottom:0px; position:absolute; z-index:10;}
+.t6 .choose .quantity {width: 397px; overflow: hidden; padding-top: 5px; padding-bottom: 6px; padding-left: 9px; }
+.t6 .choose .quantity label{ line-height:26px; float: left; }
+.t6 .choose .quantity span{ display:block; float:left;}
+.t6 .choose .quantity span input{ width:50px; height:17px; border:1px solid #ddd; padding:1px 0 1px 2px;	line-height:17px; text-align:center; background: url("../images/detail_bg_smallPic.gif")/*tpa=http://www.jfshare.com/templates/merchant/template_jfshare_xj/styles/color_1/images/detail_bg_smallPic.gif*/ no-repeat; background-position: -82px -104px; }
+.t6 .bntbuy .already { padding-left: 9px; color: #cc3300; line-height: 26px; padding-bottom: 4px;padding-top: 3px; }
+.t6 .bntbuy .bbtn { position: relative; display: block; padding-left: 9px; }
+.t6 .bntbuy .bbtn a img { margin-right: 10px; }
+.t7 { padding-top: 15px; padding-right: 5px; padding-bottom: 0; padding-left: 9px; }
+.t7 .icons { height: 25px; }
+.t7 .icons span { line-height: 12px; height: 12px; }
+.t7 .icons a img { margin-bottom: -3px; }
+.t7 .labels { height: 23px;}
+.t7 .labels a { color: #0066cc; margin-right: 5px; }
+
+.noShowAttr {height: 85px;overflow: hidden;}
+/*图片居中*/
+.wh60{ width:60px; height:60px;}
+.wh160{ width:160px; height:160px;}
+.verticalPic{ text-align:center; display: table-cell; vertical-align: middle; overflow:hidden;}
+.verticalPic a{ height:100%\9; writing-mode:tb-rl\9;}
+.verticalPic img{ vertical-align:middle;}
+/*图片居中 end*/

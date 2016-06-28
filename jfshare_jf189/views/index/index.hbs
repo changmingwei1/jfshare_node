@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <script type="text/javascript">
+        var _oztime = (new Date()).getTime();
+    </script>
+    <script type="text/javascript" src="/js/jquery/jquery.js"></script>
+    <link rel="stylesheet" href="index/css/index.css">
+    <script src="js/slider.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="banner">
+    <!-- 轮播广告 -->
+    <input type="hidden" name="ssid" id="ssid" value="{{ssid}}">
+    <div id="banner_tabs" class="flexslider">
+        <ul class="slides" style="overflow:hidden;">
+            <li>
+                <a title=""  href="http://ct100.jfshare.com/product/render/ze160525173651000950?ssid={{ssid}}">
+                    <img id="bannerImg_1" src="http://proxy.jfshare.com/system/v1/jfs_image/413CCF48AD117EB930F9C363235BD94B.jpg" width="" height="" alt="" >
+                </a>
+            </li>
+            <li>
+                <a title=""  href="http://ct100.jfshare.com/product/render/ze160414144304000743?ssid={{ssid}}">
+                    <img src="http://proxy.jfshare.com/system/v1/jfs_image/B120338AE4E3535DCDAFC0AEF80E09A1.jpg" width="" height="" alt="" >
+                </a>
+            </li>
+            <li >
+                <a title=""  href="http://ct100.jfshare.com/product/render/ze160622095226000334?ssid={{ssid}}">
+                    <img src="http://proxy.jfshare.com/system/v1/jfs_image/922B786A9ECDD75BD9DB195C4F607137.jpg" width="" height="" alt="" >
+                </a>
+            </li>
+            <li >
+                <a title=""  href="http://ct100.jfshare.com/product/render/ze160412095319000326?ssid={{ssid}}">
+                    <img src="http://proxy.jfshare.com/system/v1/jfs_image/56A73A2AB123793FA442CE73B492AC26.jpg" width="" height="" alt="" >
+                </a>
+            </li>
+            <li >
+                <a title=""  href="http://ct100.jfshare.com/product/render/ze160623150235000977?ssid={{ssid}}">
+                    <img src="http://proxy.jfshare.com/system/v1/jfs_image/FB35172223E21568B76C6061B840E276.jpg" width="" height="" alt="" >
+                </a>
+            </li>
+
+        </ul>
+        <ul class="flex-direction-nav">
+            <li><a class="flex-prev" href="javascript:;">上一张</a></li>
+            <li><a class="flex-next" href="javascript:;">下一张</a></li>
+        </ul>
+        <ol id="bannerCtrl" class="flex-control-nav flex-control-paging">
+            <li><a>1</a></li>
+            <li><a>2</a></li>
+            <li><a>3</a></li>
+            <li><a>4</a></li>
+            <li><a>4</a></li>
+        </ol>
+    </div>
+</div>
+<div class="content">
+    <ul class="title">
+        <li>热卖单品</li>
+        <li>每周上新</li>
+        <li>好评单品</li>
+        <li>品牌推荐</li>
+    </ul>
+    <div class="titlecon one">
+        <div class="per" style="width: 238px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160623105125000807?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/8956A17A6547F1BD5C959B1A0875094A.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160415145130000053?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/AF26C594ACD87D5B71FAAEC09A3697CE.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160513162246000656?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/9013896C93B5F899A1119CF79EE60C3E.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160513160738000461?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/C29F69DB6FC1131317C6F897C80E1F5F.jpg" alt="">
+            </a>
+        </div>
+        <div class="per" style="width: 238px;margin-right: 0px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160623104034000100?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/27E889C7C71357D3F183D20132605A21.jpg" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="titlecon one" style="display: none;">
+        <div class="per" style="width: 238px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160505150622000525?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/5F8167A8DB452018EAA22D0924ACFE9C.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160415162145000165?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/AFCF6DF412339C729F75293D7C551B84.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160422102234000617?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/94E851D69EEFFCF40D24BC17134240A6.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160623143556000463?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/57E2E145A7D518BEDE310060551D54CF.jpg" alt="">
+            </a>
+        </div>
+        <div class="per" style="width: 238px;margin-right: 0px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160416063549000503?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/03A535A64609E8534900E90213562DE4.jpg" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="titlecon one" style="display: none;">
+        <div class="per" style="width: 238px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160525174849000355?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/EDE709DB309917A9D0E4D4F4052C4CFE.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160513161053000432?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/CF9ADC5D07B3B55B532D9C32AE0E8BF6.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160513141513000996?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/7B887639B6B2C6C5D84149AF49613C09.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160623171432000812?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/839A81FC72362EEA5DB380B88FFEA009.jpg" alt="">
+            </a>
+        </div>
+        <div class="per" style="width: 238px;margin-right: 0px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160623113221000812?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/C08E113497CF3A7AE1D000EC12CF15BC.jpg" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="titlecon one" style="display: none;">
+        <div class="per" style="width: 238px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160513163403000776?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/57A44FD06947E4CB274C3620AEFCBEF4.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160524152135000295?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/FAFA34756BF5E565AB3A512AE68D641A.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160513173713000006?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/21E759A7AE968AF24A03C3B9E073B89F.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160513150717000003?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/04954357528742BB232D2C42E83F32B5.jpg" alt="">
+            </a>
+        </div>
+        <div class="per" style="width: 238px;margin-right: 0px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160513164943000342?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/A65C719B5EFAE20321385E0B9FA688F2.jpg" alt="">
+            </a>
+        </div>
+    </div>
+
+    <div class="title2">
+        <div class="hrs">
+            <hr class="xian">
+        </div>
+        <div class="menu" style="color: #ff8200;">百分尊享特惠区</div>
+        <div class="hrs">
+            <hr class="xian">
+        </div>
+    </div>
+    <div class="titlecon">
+        <div class="per" style="width: 238px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160623145414000983?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/17040F16CA638A301D97B088C071FE08.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160517174935000737?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/B922F0F1E6B15E8510458F1ACEEE29BB.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160513170758000039?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/1B20C0C6A7A74FE2C40428953A9E0BD2.jpg" alt="">
+            </a>
+        </div>
+        <div class="per">
+            <a href="http://ct100.jfshare.com/product/render/ze160623140201000058?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/EB1A73E34011B5D0DB83DF822DFB1E7C.jpg" alt="">
+            </a>
+        </div>
+        <div class="per" style="width: 238px;margin-right: 0px;">
+            <a href="http://ct100.jfshare.com/product/render/ze160623144255000772?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/07BA1EA26003A6B0E1FAF02847D23121.jpg" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="proTitle" style="color: #219fed;">
+        <div class="arrow-right"><!--向右的三角--></div>
+        手机数码&nbsp;Mobile digital
+    </div>
+    <div class="proContent">
+        <div class="left">
+            <a href="http://ct100.jfshare.com/product/render/ze160622095756000345?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/3294192ACCE9C775EEF4380EA5B01DB5.jpg" alt="">
+            </a>
+        </div>
+        <div class="right">
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160419181105000771?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/1D828CB5694F7FE9DA0D358BB4B848D1.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic" style="width:476px;">
+                    <a href="http://ct100.jfshare.com/product/render/ze160622101502000701?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/4BE8F71C52103E4C9774300EF2A63EDC.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160422102940000301?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/9AA06D1E6E1654DD74200B075BFDADFB.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160420140448000819?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/8BA3D9948EADB3A677E1932D3D3D4C6A.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160416185630000955?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/D1B79259B63DE9DA240D31FC1D77708E.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160416190646000920?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/3A0FBD65ABA496436A03CF1487022DF2.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160422142105000409?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/888716FE4796B1A3B444412907685BE2.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="proTitle" style="color: #ff8200;">
+        <div class="arrow-right" style="border-left: 10px solid #ff8200;"><!--向右的三角--></div>
+        家用电器&nbsp;Household appliances
+    </div>
+    <div class="proContent">
+        <div class="left">
+            <a href="http://ct100.jfshare.com/product/render/ze160516095423000752?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/450BF43AC402E2A956DC1A64E05B78BB.jpg" alt="">
+            </a>
+        </div>
+        <div class="right">
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160516101012000826?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/821644547DEB8DED692626B2231740E3.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic" style="width:476px;">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513173431000648?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/78283192645FBF60C5939E51060F2433.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513171958000091?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/8C7AA3987315229ABE8F58248F667ADF.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513175826000509?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/E035185E4C0666791A514010F3FE88BF.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160517174618000893?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/4E0A4DB9BA17D834E6AD2306CE4FB7D0.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160516101824000325?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/62C18D1B1EA5092EE0421F31A5228A20.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160623090509000293?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/BB96B4435D2539944EB15A6E2FBE4A98.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="proTitle" style="color: #73a508;">
+        <div class="arrow-right" style="border-left: 10px solid #73a508;"><!--向右的三角--></div>
+        家居生活&nbsp;Household life
+    </div>
+    <div class="proContent">
+        <div class="left">
+            <a href="http://ct100.jfshare.com/product/render/ze160513161611000006?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/13CAC54DA25D62A11E4CFAA2C576CCB8.jpg" alt="">
+            </a>
+        </div>
+        <div class="right">
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160417122623000818?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/9ADBE606F933D19D1D9432B2063984B0.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160417122623000818?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/C46078CB13AD4DBC1F2313057136BC76.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160417122623000818?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/EF4652A0DAC8ABB2685C5C876B0F13AE.jpg" alt="">
+                    </a>
+                </div>
+
+                <!--div class="pic" style="width:480px;">
+                    <a href="http://ct100.jfshare.com/product/render/ze160416203438000540?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/C46078CB13AD4DBC1F2313057136BC76.jpg" alt="">
+                    </a>
+                </div -->
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160416205839000155?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/6B2A94D2E17A689F54C3B559A2AD6847.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513155131000579?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/E88C3F4046D5BCCD1C967D1E2E806231.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160623164250000986?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/F42F0CB3FB6E81196057D25C6AE0F7D3.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160622104004000816?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/A448AF77AE03C8247C39282AD9682CCD.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513161848000608?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/8B26E5D18CCD95735C0A2DD85DE5A256.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="proContent" style="padding-top: 10px;">
+        <a href="http://ct100.jfshare.com/product/render/ze160513181955000733?ssid={{ssid}}">
+            <img src="index/images/pic6.png" alt="">
+        </a>
+    </div>
+    <div class="proTitle" style="color: #e6118f;">
+        <div class="arrow-right" style="border-left: 10px solid #e6118f;"><!--向右的三角--></div>
+        个护美妆&nbsp;Protect beauty makeup
+    </div>
+    <div class="proContent">
+        <div class="left">
+            <a href="http://ct100.jfshare.com/product/render/ze160513181955000733?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/31AA1E4F100E6C4A4470B150098063C4.jpg" alt="">
+            </a>
+        </div>
+        <div class="right">
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513180552000956?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/6B36201D6514C5321BE5810AC21C1858.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513181214000361?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/FB2FA62EA2BA3EFFB42C94A83070CADD.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513181214000361?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/FCDCB10EC9687108248FF121284F0C51.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513181214000361?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/A4B62058CC2CEA520E4D433975AB7383.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160417173003000939?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/CB5182BC3AA98841F417B115940DCD23.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160513182245000665?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/7E7FB7B7F237126E73AE017842583348.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160622110950000089?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/F788B3BCFAE8DD067CC3A68C8127439B.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160418101802000646?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/7628CA5345B6365106E448B876762A1D.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="proTitle" style="color: #815541;">
+        <div class="arrow-right" style="border-left: 10px solid #815541;"><!--向右的三角--></div>
+        食品酒水&nbsp;Food and beverage
+    </div>
+    <div class="proContent">
+        <div class="left">
+            <a href="http://ct100.jfshare.com/product/render/ze160418102547000275?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/63E6149E680CFA5FDCC71CA528ED486F.jpg" alt="">
+            </a>
+        </div>
+        <div class="right">
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160418102346000545?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/8B06463A9B7369E6816AF37799FE7416.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic" style="width:475px;">
+                    <a href="http://ct100.jfshare.com/product/render/ze160422110355000155?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/9DBF6C9F0DE3C3E862A00090C3CA5599.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160422105703000022?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/205F053CE1024C62170754C346A3A9BB.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160418104618000812?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/B7EAEF6BCB2C2504B108503657CDD1DC.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160422110529000784?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/BA55C5F1B37CE31854DD14038EAD82C1.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160422140031000448?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/523AECAD787357A0E5B9B51603835A86.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160422140205000502?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/D5301AF2BBF6DD752EDE2836ACC79AD6.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="proTitle" style="color: #42866c;">
+        <div class="arrow-right" style="border-left: 10px solid #42866c;"><!--向右的三角--></div>
+        箱包配饰&nbsp;Luggage accessories
+    </div>
+    <div class="proContent">
+        <div class="left">
+            <a href="http://ct100.jfshare.com/product/render/ze160418142614000790?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/CD4EB9004B6362E59BCEFDF2AC438656.jpg" alt="">
+            </a>
+        </div>
+        <div class="right">
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160418134708000456?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/59A88AD4C9F08EBA2D1E749793E00CB5.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160623092039000038?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/854E21A0C900A00C1F93B141E7CD1694.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160623092039000038?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/F7D7B7F10E9DD432862C5DABBDAE7211.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160623092039000038?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/2987B53D1CF402292CE9071ED743B701.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="rtop">
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160422140542000562?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/61BB9C6E1F9F78162FB9BD00C7C02635.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160418144106000837?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/D3CF4569EC7C5B49C4B091A36433DCCE.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160518174937000643?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/488F5AECB4F8571A25BD17F480660FA4.jpg" alt="">
+                    </a>
+                </div>
+                <div class="pic">
+                    <a href="http://ct100.jfshare.com/product/render/ze160623170134000538?ssid={{ssid}}">
+                        <img src="http://proxy.jfshare.com/system/v1/jfs_image/F21637381984DD9CBC638F8A1A2C8829.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="proContent" style="padding-top: 10px;">
+        <a href="http://ct100.jfshare.com/product/render/ze160418145733000170?ssid={{ssid}}">
+            <img src="index/images/pic-h-02.png" alt="">
+        </a>
+    </div>
+    <div class="title2">
+        <div class="hrs">
+            <hr class="xian">
+        </div>
+        <div class="menu">猜你喜欢</div>
+        <div class="hrs">
+            <hr class="xian">
+        </div>
+    </div>
+    <div class="proContent">
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160418110110000868?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/DAB5012A7CC7E6B04D7BC56663AA3B09.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">中粮 CAVENDISH & HARVEY嘉云糖热带水果味200g(德国进口 盒)</p>
+                    <div class="money">
+                        <span class="red">3000</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160623095219000353?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/BE9371054C44C8EA3A34FCE66933ECA2.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">D3 韩版时尚饰品 手镯女细 四叶草幸运扣手饰手环 韩国配饰 TJ000550U-001</p>
+                    <div class="money">
+                        <span class="red">4000</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160622135814000236?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/A4F0B2DFE11EF302964F363656A583CD.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">果爱芒果味果冻（果味型 六盒装）新包装110gX6</p>
+                    <div class="money">
+                        <span class="red">1850</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods" style="margin-right:0;">
+            <a href="http://ct100.jfshare.com/product/render/ze160621153237000199?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/0DE988E2E3A0846E4B4B24BA65CB7F43.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">西班牙NIVEA妮维雅男士活力磨砂洁面乳 100ml/瓶</p>
+                    <div class="money">
+                        <span class="red">2990</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+    <div class="proContent">
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160623102207000191?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/9510D29D13DB8C47DDF522D18A47E271.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">韩国原装进口 真鲜蜂蜜柚子茶550g/瓶 冲调饮品下午茶</p>
+                    <div class="money">
+                        <span class="red">3500</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160512140437000873?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/3C1C15B3EF2C5DB4E6B9A7A5ECB6CBCF.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">明基（BENQ）音乐 通讯耳机 A101P 白色/黑色/红黑色</p>
+                    <div class="money">
+                        <span class="red">2900</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160517173835000720?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/502BB32AFA341E7884B8D5D8AD276594.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">美的豆浆机DE12X12<br />&nbsp;</p>
+                    
+                    <div class="money">
+                        <span class="red">27900</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods" style="margin-right:0;">
+            <a href="http://ct100.jfshare.com/product/render/ze160517174112000756?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/417D81249FB4921BA9129961666868B9.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">美的电炖锅BGH40B<br />&nbsp;</p>
+                    <div class="money">
+                        <span class="red">24900</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+    <div class="proContent">
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160422103708000618?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/EBABDF91953FD25896F68313F34E000A.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">JCPAL 1A单USB口充电器 本朴白/天空蓝/苹果绿/小桃红</p>
+                    <div class="money">
+                        <span class="red">3800</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160516143709000490?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/3E1ACB2C799CFA4535DBF9722B390127.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">千足珠宝眷属近圆光洁极亮6.5-7mm淡水珍珠银项链首饰饰品 白色</p>
+                    <div class="money">
+                        <span class="red">100</span> 积分<br /><span class="red">+180</span> 元
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods">
+            <a href="http://ct100.jfshare.com/product/render/ze160417180739000404?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/1A21CDAB6535659428B4F56861509A42.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">韩佛（Enature）绿色豆荚嫩肌CC霜<br />&nbsp;</p>
+                    <div class="money">
+                        <span class="red">21800</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+        <div class="goods" style="margin-right:0;">
+            <a href="http://ct100.jfshare.com/product/render/ze160417183314000163?ssid={{ssid}}">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/B1EBDC4F407C891C58E11110743C8FB5.jpg" alt="">
+                <div style="overflow: hidden;">
+                    <p class="goodname">COE韩伊 橄榄Olive手霜 60g<br />&nbsp;</p>
+                    <div class="money">
+                        <span class="red">2800</span> 积分
+                    </div>
+                    <div class="exchange">立即兑换</div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+
+</div>
+
+<iframe src="#" id="iframeA" name="iframeA" style="display: none;"></iframe>
+
+<script type="text/javascript">
+    //轮播播放程序
+    var bannerSlider = new Slider($('#banner_tabs'), {
+        time: 4000,
+        delay: 400,
+        event: 'hover',
+        auto: true,
+        mode: 'fade',
+        controller: $('#bannerCtrl'),
+        activeControllerCls: 'active'
+    });
+    $('#banner_tabs .flex-prev').on('click',function(){
+        bannerSlider.prev();
+    });
+    $('#banner_tabs .flex-next').on('click',function(){
+        bannerSlider.next();
+    });
+
+    //tab选项卡
+    $(".title li").mouseover(function(){
+        $(".title li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
+        $("div.one").hide().eq($(this).index()).show();
+
+    });
+</script>
+<!--<script type="text/javascript" src="/js/jquery/jquery.timers.js"></script>-->
+<script type="text/javascript" src="/js/util/contentloaded.js"></script>
+<script type="text/javascript">
+    $(function(){
+        window.onload = new function() {
+            contentLoaded(resizeIfr);
+            var naturalHeight = document.getElementById("bannerImg_1").naturalHeight || 470;
+            var naturalWidth = document.getElementById("bannerImg_1").naturalWidth || 1920;
+            var rate = naturalWidth/naturalHeight;
+            var divWidth = $("div.banner").width();
+            $("div.banner").height(divWidth/rate);
+            window.onresize = function(){
+                var naturalHeight = document.getElementById("bannerImg_1").naturalHeight || 470;
+                var naturalWidth = document.getElementById("bannerImg_1").naturalWidth || 1920;
+                var rate = naturalWidth/naturalHeight;
+                var divWidth = $("div.banner").width();
+                $("div.banner").height(divWidth/rate);
+            }
+        }
+    });
+
+
+    function resizeIfr() {
+        var doc = document;
+        var height = calcPageHeight(doc);
+        var myifr = doc.getElementById('iframeA');
+        if (myifr) {
+            myifr.src = 'http://y.jf.189.cn/preview/CommPage/fixHeight.html#' + height;
+        } else {
+            myifr.src = 'http://y.jf.189.cn/preview/CommPage/fixHeight.html#1000';
+        }
+    }
+
+    // 计算页面的实际高度，iframe自适应会用到
+    function calcPageHeight(doc) {
+        var h = $(document.body).height();
+
+        var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+        var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+        var height  = Math.max(cHeight, sHeight)
+        console.log("cH:"+cHeight+"| sH:"+sHeight+"| h:" +h);
+        return height
+    }
+</script>
+</body>
+</html>
