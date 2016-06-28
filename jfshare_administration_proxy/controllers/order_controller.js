@@ -261,6 +261,7 @@ router.post('/info', function (request, response, next) {
                             result.mobile = orderInfo.deliverInfo.receiverMobile;
                         } else {
                             if(orderInfo.deliverInfo!=null){
+
                                 result.address = orderInfo.deliverInfo.provinceName +
                                     orderInfo.deliverInfo.cityName +
                                     orderInfo.deliverInfo.countyName +
@@ -295,6 +296,7 @@ router.post('/info', function (request, response, next) {
 
                         }
                         if (orderInfo.deliverInfo !== null) {
+                            result.postCode = orderInfo.deliverInfo.postCode;
                             result.sellerComment = orderInfo.deliverInfo.sellerComment;
                             result.buyerComment = orderInfo.deliverInfo.buyerComment;
                             var deliverInfo = {
