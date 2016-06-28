@@ -120,37 +120,32 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
 
 //查询售后的订单list的个数
 AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
-    var afterSaleQueryParam = new afterSale_types.AfterSaleOrderParam({
-        //sellerId: params.sellerId,
-        // userId: params.userId,
-        //orderId: params.orderId,
-        //startTime: params.startTime,
-        // endTime: params.endTime
+    var afterSaleOrderParam = new afterSale_types.AfterSaleQueryCountParam({
+        state:1
     });
 
-    var page = new pagination_types.Pagination({
-        numPerPage: params.percount,
-        currentPage: params.curpage
-    });
-    logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
-
-    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [afterSaleQueryParam, page]);
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleCount", [afterSaleOrderParam]);
 
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
-        logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
+        logger.info("AfterSaleServ-queryAfterSaleCount  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("AfterSaleServ-queryAfterSaleOrderList  失败原因 ======" + err);
+            logger.error("AfterSaleServ-queryAfterSaleCount  失败原因 ======" + err);
             res.code = 500;
-            res.desc = "查询售后订单列表失败！";
+            res.desc = "查询售后订单个数！";
             callback(res, null);
         } else {
-            if (data[0] == null || data[0].afterSaleOrders == null || data[0].pagination == null || data[0].pagination.totalCount == null) {
-                callback(null, 0);
-            } else {
-                callback(null, data[0].pagination.totalCount);
+
+            if(data == null){
+                logger.error("AfterSaleServ-queryAfterSaleCount  失败原因  后台返回的数据是空======" + data);
+                return callback(null,0);
             }
 
+            if(data !=null && data[0]!=null && data[0].count!=null){
+                return callback(null,data[0].count);
+            }else{
+                return callback(null,0);
+            }
         }
     });
 
