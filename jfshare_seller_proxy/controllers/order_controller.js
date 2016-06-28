@@ -303,6 +303,7 @@ router.post('/info', function (request, response, next) {
                         result.exchangeCash = orderInfo.exchangeCash; //添加字段
                         result.type = orderInfo.productList[0].type;
                         result.thirdScore = orderInfo.thirdScore;
+                        result.thirdPrice =  orderInfo.thirdPrice;
                         var productList = [];
                         if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
 
