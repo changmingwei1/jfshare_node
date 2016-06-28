@@ -120,9 +120,9 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
 
 //查询售后的订单list的个数
 AfterSale.prototype.queryAfterSaleOrderList = function (params, callback) {
-    var afterSaleOrderParam = new afterSale_types.AfterSaleOrderParam({
-
-    })
+    var afterSaleOrderParam = new afterSale_types.AfterSaleQueryCountParam({
+        state:1
+    });
 
     var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleCount", [afterSaleOrderParam]);
 
