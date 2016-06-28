@@ -1084,6 +1084,7 @@ Order = module.exports.Order = function(args) {
   this.thirdScore = null;
   this.postageExt = null;
   this.orderType = null;
+  this.thirdPrice = null;
   if (args) {
     if (args.orderId !== undefined) {
       this.orderId = args.orderId;
@@ -1198,6 +1199,9 @@ Order = module.exports.Order = function(args) {
     }
     if (args.orderType !== undefined) {
       this.orderType = args.orderType;
+    }
+    if (args.thirdPrice !== undefined) {
+      this.thirdPrice = args.thirdPrice;
     }
   }
 };
@@ -1497,6 +1501,13 @@ Order.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 39:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1705,6 +1716,11 @@ Order.prototype.write = function(output) {
   if (this.orderType !== null && this.orderType !== undefined) {
     output.writeFieldBegin('orderType', Thrift.Type.I32, 38);
     output.writeI32(this.orderType);
+    output.writeFieldEnd();
+  }
+  if (this.thirdPrice !== null && this.thirdPrice !== undefined) {
+    output.writeFieldBegin('thirdPrice', Thrift.Type.STRING, 39);
+    output.writeString(this.thirdPrice);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
