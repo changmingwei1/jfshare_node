@@ -36,6 +36,12 @@ router.post('/jmeterTest',function(request,response,next){
         response.json(result);
     }
 });
+/*压力测试2*/
+router.post('/jmeterTest1',function(request,response,next){
+    logger.info("进入获取子分类接口");
+    var result = {code: 200};
+    response.json(result);
+});
 
 
 
