@@ -685,6 +685,7 @@ PostageTemplate = module.exports.PostageTemplate = function(args) {
   this.postageList = null;
   this.templateGroup = null;
   this.templateDesc = null;
+  this.isUsed = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -706,6 +707,9 @@ PostageTemplate = module.exports.PostageTemplate = function(args) {
     }
     if (args.templateDesc !== undefined) {
       this.templateDesc = args.templateDesc;
+    }
+    if (args.isUsed !== undefined) {
+      this.isUsed = args.isUsed;
     }
   }
 };
@@ -786,6 +790,13 @@ PostageTemplate.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.isUsed = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -839,6 +850,11 @@ PostageTemplate.prototype.write = function(output) {
   if (this.templateDesc !== null && this.templateDesc !== undefined) {
     output.writeFieldBegin('templateDesc', Thrift.Type.STRING, 7);
     output.writeString(this.templateDesc);
+    output.writeFieldEnd();
+  }
+  if (this.isUsed !== null && this.isUsed !== undefined) {
+    output.writeFieldBegin('isUsed', Thrift.Type.I32, 8);
+    output.writeI32(this.isUsed);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
