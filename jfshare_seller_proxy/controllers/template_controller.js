@@ -217,14 +217,6 @@ router.post('/cannelDefaultTemplate', function (request, response, next) {
     try {
         var params = request.body;
 
-        if (params.id == null || params.id == "" || params.id <= 0) {
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-
         if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
 
             result.code = 500;
@@ -232,18 +224,8 @@ router.post('/cannelDefaultTemplate', function (request, response, next) {
             response.json(result);
             return;
         }
-
-        if (params.templateGroup != 21 && params.templateGroup != 22) {
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
-
-        logger.info("update freight params:" + JSON.stringify(params));
-
-        Template.cannelDefaultTemplate(params, function (error, data) {
+        params.id = 0;
+        Template.setDefaultPostageTemplate(params, function (error, data) {
             if (error) {
                 response.json(error);
             } else {
