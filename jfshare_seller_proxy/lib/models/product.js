@@ -276,11 +276,11 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
         numPerPage: params.perCount,
         currentPage: params.curpage
     });
-    logger.info("productServ-queryProduct  result:" + JSON.stringify(ProductCardViewParam));
+    logger.info("productServ-queryProductCardViewList  result:" + JSON.stringify(ProductCardViewParam));
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCardViewList", [ProductCardViewParam, page]);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("productServ-queryProduct  result:" + JSON.stringify(data));
+        logger.info("productServ-queryProductCardViewList  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == 1) {
             logger.error("productServ-queryProduct  失败原因 ======" + err);
@@ -307,17 +307,17 @@ Product.prototype.queryProductCard = function (params, callback) {
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsProductCard", [productRetParam, page]);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("productServ-queryProductCard  result:" + JSON.stringify(data));
+        logger.info("productServ-statisticsProductCard  result:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("productServ-queryProductCard  失败原因 ======" + err);
+            logger.error("productServ-statisticsProductCard  失败原因 ======" + err);
             res.code = 500;
             res.desc = "查询虚拟商品失败";
             return callback(res, null);
         }else if(data==null){
             return callback(null,null);
         }else if(data[0].result.code ==1){
-            logger.error("productServ-queryProductCard  失败原因 ======" + data);
+            logger.error("productServ-statisticsProductCard  失败原因 ======" + data);
             res.code = 500;
             res.desc = "查询虚拟商品失败";
             return callback(res, null);

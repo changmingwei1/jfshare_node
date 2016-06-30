@@ -737,13 +737,6 @@ router.post('/ticketList', function (request, response, next) {
             return;
         }
 
-        if (params.skuNum == null || params.skuNum == "") {
-
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
         if (params.perCount == null || params.perCount == "" || params.perCount <= 0) {
 
             result.code = 500;
