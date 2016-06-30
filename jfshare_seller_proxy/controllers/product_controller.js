@@ -696,6 +696,8 @@ router.post('/virtualList', function (request, response, next) {
 
             if (data[0].cardtatisticsList != null) {
                 result.cardtatisticsList = data[0].cardtatisticsList;
+                var pagination = data[0].pagination;
+                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             }
             return response.json(result);
         });
@@ -759,6 +761,8 @@ router.post('/ticketList', function (request, response, next) {
             }
             if (data[0].cardViewList != null) {
                 result.cardViewList = data[0].cardViewList;
+                var pagination = data[0].pagination;
+                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             }
             response.json(result);
             return;
