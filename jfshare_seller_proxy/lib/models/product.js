@@ -494,12 +494,12 @@ Product.prototype.reCaptcha = function (params, callback) {
         sellerId:params.sellerId,
         cardNumber:params.captchaNum
     });
-    logger.info("调用 productServ-reCaptcha 入参:" + JSON.stringify(params));
+    logger.error("调用 productServ-reCaptcha 入参:" + JSON.stringify(params));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "useProductCard", productCardParam);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("调用 productServ-reCaptcha result:" + JSON.stringify(data));
+        logger.error("调用 productServ-reCaptcha result:" + JSON.stringify(data));
         var res = {};
         if (err) {
             logger.error("调用 productServ-reCaptcha  失败原因 ======" + err);
@@ -558,17 +558,47 @@ Product.prototype.queryCaptchaTotalList = function (params, callback) {
         pagination:page,
         monthQuery:params.monthQuery
     });
-    logger.info("调用 productServ-queryCaptchaTotalList 入参:" + JSON.stringify(params));
+    logger.warn("调用 productServ-queryCaptchaTotalList 入参:" + JSON.stringify(params));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryCaptchaTotalList", captchaQueryParam);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("调用 productServ-queryCaptchaTotalList result:" + JSON.stringify(data));
+        logger.warn("调用 productServ-queryCaptchaTotalList result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
             logger.error("调用 productServ-queryCaptchaTotalList  失败原因 ======" + err);
             res.code = 500;
             res.desc = "调用productServ-queryCaptchaTotalList 失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
+//查询每天验码统计数
+Product.prototype.queryCaptchaDayTotalList = function (params, callback) {
+
+    var page = new pagination_types.Pagination({
+        numPerPage: params.perCount,
+        currentPage: params.curPage
+    });
+    var captchaDayQueryParam = new product_types.CaptchaDayQueryParam({
+        sellerId:params.sellerId,
+        pagination:page,
+        date:params.queryDate
+    });
+    logger.warn("调用 productServ-queryCaptchaDayTotalList 入参:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryCaptchaDayTotalList", captchaDayQueryParam);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.warn("调用 productServ-queryCaptchaDayTotalList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == "1") {
+            logger.error("调用 productServ-queryCaptchaDayTotalList  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "调用productServ-queryCaptchaDayTotalList 失败！";
             callback(res, null);
         } else {
             callback(null, data[0]);
@@ -586,7 +616,7 @@ Product.prototype.queryCaptchaDetails = function (params, callback) {
     var captchaQueryParam = new product_types.CaptchaQueryParam({
         productId:params.productId,
         pagination:page,
-        monthQuery:params.monthQuery
+        monthQuery:params.queryDate
     });
     logger.info("调用 productServ-queryCaptchaDetails 入参:" + JSON.stringify(params));
     // 获取client
@@ -602,6 +632,66 @@ Product.prototype.queryCaptchaDetails = function (params, callback) {
             callback(res, null);
         } else {
             callback(null, data[0]);
+        }
+    });
+};
+
+//获取买家--买家--买家个人信息
+Product.prototype.getBuyer = function(param,callback){
+
+    var buyer = new buyer_types.Buyer({userId:param.userId});
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getBuyer',[buyer]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("get buyer result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't get buyer because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get buyer";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
+/*查询商品*/
+Product.prototype.queryProductForSeller = function (productId, baseTag, skuTemplateTag, skuTag, attributeTag, callback) {
+    var param = new product_types.ProductRetParam({
+        baseTag: baseTag,
+        skuTemplateTag: skuTemplateTag,
+        skuTag: skuTag,
+        attributeTag: attributeTag
+    });
+
+    logger.info("get product info args:" + JSON.stringify(param));
+    logger.info("get product info args--productId:" + JSON.stringify(productId));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProduct", [productId, param]);
+
+    //invite productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("get product info result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("调用productServ-queryProduct查询商品失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询商品列表失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
         }
     });
 };

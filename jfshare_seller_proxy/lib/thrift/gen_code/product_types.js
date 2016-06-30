@@ -3525,6 +3525,89 @@ CaptchaQueryParam.prototype.write = function(output) {
   return;
 };
 
+CaptchaDayQueryParam = module.exports.CaptchaDayQueryParam = function(args) {
+  this.sellerId = null;
+  this.pagination = null;
+  this.date = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.date !== undefined) {
+      this.date = args.date;
+    }
+  }
+};
+CaptchaDayQueryParam.prototype = {};
+CaptchaDayQueryParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.date = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CaptchaDayQueryParam.prototype.write = function(output) {
+  output.writeStructBegin('CaptchaDayQueryParam');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 1);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.STRING, 3);
+    output.writeString(this.date);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 AldCaptchaItem = module.exports.AldCaptchaItem = function(args) {
   this.productId = null;
   this.productName = null;
@@ -3616,6 +3699,72 @@ AldCaptchaItem.prototype.write = function(output) {
   if (this.aldCaptcha !== null && this.aldCaptcha !== undefined) {
     output.writeFieldBegin('aldCaptcha', Thrift.Type.I32, 4);
     output.writeI32(this.aldCaptcha);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+DayAldCaptchaCount = module.exports.DayAldCaptchaCount = function(args) {
+  this.date = null;
+  this.checkedTotalNum = null;
+  if (args) {
+    if (args.date !== undefined) {
+      this.date = args.date;
+    }
+    if (args.checkedTotalNum !== undefined) {
+      this.checkedTotalNum = args.checkedTotalNum;
+    }
+  }
+};
+DayAldCaptchaCount.prototype = {};
+DayAldCaptchaCount.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.date = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.checkedTotalNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+DayAldCaptchaCount.prototype.write = function(output) {
+  output.writeStructBegin('DayAldCaptchaCount');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.STRING, 1);
+    output.writeString(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.checkedTotalNum !== null && this.checkedTotalNum !== undefined) {
+    output.writeFieldBegin('checkedTotalNum', Thrift.Type.I32, 2);
+    output.writeI32(this.checkedTotalNum);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3881,7 +4030,7 @@ DayCaptchaListResult = module.exports.DayCaptchaListResult = function(args) {
   this.soldNum = null;
   this.checkedNum = null;
   this.pagination = null;
-  this.itemList = null;
+  this.dayAldCaptchaCountList = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
@@ -3895,8 +4044,8 @@ DayCaptchaListResult = module.exports.DayCaptchaListResult = function(args) {
     if (args.pagination !== undefined) {
       this.pagination = args.pagination;
     }
-    if (args.itemList !== undefined) {
-      this.itemList = args.itemList;
+    if (args.dayAldCaptchaCountList !== undefined) {
+      this.dayAldCaptchaCountList = args.dayAldCaptchaCountList;
     }
   }
 };
@@ -3948,7 +4097,7 @@ DayCaptchaListResult.prototype.read = function(input) {
       if (ftype == Thrift.Type.LIST) {
         var _size88 = 0;
         var _rtmp392;
-        this.itemList = [];
+        this.dayAldCaptchaCountList = [];
         var _etype91 = 0;
         _rtmp392 = input.readListBegin();
         _etype91 = _rtmp392.etype;
@@ -3956,9 +4105,9 @@ DayCaptchaListResult.prototype.read = function(input) {
         for (var _i93 = 0; _i93 < _size88; ++_i93)
         {
           var elem94 = null;
-          elem94 = new ttypes.DayAldCaptchaItem();
+          elem94 = new ttypes.DayAldCaptchaCount();
           elem94.read(input);
-          this.itemList.push(elem94);
+          this.dayAldCaptchaCountList.push(elem94);
         }
         input.readListEnd();
       } else {
@@ -3996,15 +4145,122 @@ DayCaptchaListResult.prototype.write = function(output) {
     this.pagination.write(output);
     output.writeFieldEnd();
   }
-  if (this.itemList !== null && this.itemList !== undefined) {
-    output.writeFieldBegin('itemList', Thrift.Type.LIST, 5);
-    output.writeListBegin(Thrift.Type.STRUCT, this.itemList.length);
-    for (var iter95 in this.itemList)
+  if (this.dayAldCaptchaCountList !== null && this.dayAldCaptchaCountList !== undefined) {
+    output.writeFieldBegin('dayAldCaptchaCountList', Thrift.Type.LIST, 5);
+    output.writeListBegin(Thrift.Type.STRUCT, this.dayAldCaptchaCountList.length);
+    for (var iter95 in this.dayAldCaptchaCountList)
     {
-      if (this.itemList.hasOwnProperty(iter95))
+      if (this.dayAldCaptchaCountList.hasOwnProperty(iter95))
       {
-        iter95 = this.itemList[iter95];
+        iter95 = this.dayAldCaptchaCountList[iter95];
         iter95.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+DayCaptchaProductResult = module.exports.DayCaptchaProductResult = function(args) {
+  this.result = null;
+  this.pagination = null;
+  this.itemList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.itemList !== undefined) {
+      this.itemList = args.itemList;
+    }
+  }
+};
+DayCaptchaProductResult.prototype = {};
+DayCaptchaProductResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size96 = 0;
+        var _rtmp3100;
+        this.itemList = [];
+        var _etype99 = 0;
+        _rtmp3100 = input.readListBegin();
+        _etype99 = _rtmp3100.etype;
+        _size96 = _rtmp3100.size;
+        for (var _i101 = 0; _i101 < _size96; ++_i101)
+        {
+          var elem102 = null;
+          elem102 = new ttypes.DayAldCaptchaItem();
+          elem102.read(input);
+          this.itemList.push(elem102);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+DayCaptchaProductResult.prototype.write = function(output) {
+  output.writeStructBegin('DayCaptchaProductResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.itemList !== null && this.itemList !== undefined) {
+    output.writeFieldBegin('itemList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.itemList.length);
+    for (var iter103 in this.itemList)
+    {
+      if (this.itemList.hasOwnProperty(iter103))
+      {
+        iter103 = this.itemList[iter103];
+        iter103.write(output);
       }
     }
     output.writeListEnd();
@@ -4019,6 +4275,7 @@ CaptchaDetailResult = module.exports.CaptchaDetailResult = function(args) {
   this.result = null;
   this.productName = null;
   this.productCards = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
@@ -4028,6 +4285,9 @@ CaptchaDetailResult = module.exports.CaptchaDetailResult = function(args) {
     }
     if (args.productCards !== undefined) {
       this.productCards = args.productCards;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -4062,21 +4322,29 @@ CaptchaDetailResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size96 = 0;
-        var _rtmp3100;
+        var _size104 = 0;
+        var _rtmp3108;
         this.productCards = [];
-        var _etype99 = 0;
-        _rtmp3100 = input.readListBegin();
-        _etype99 = _rtmp3100.etype;
-        _size96 = _rtmp3100.size;
-        for (var _i101 = 0; _i101 < _size96; ++_i101)
+        var _etype107 = 0;
+        _rtmp3108 = input.readListBegin();
+        _etype107 = _rtmp3108.etype;
+        _size104 = _rtmp3108.size;
+        for (var _i109 = 0; _i109 < _size104; ++_i109)
         {
-          var elem102 = null;
-          elem102 = new ttypes.ProductCard();
-          elem102.read(input);
-          this.productCards.push(elem102);
+          var elem110 = null;
+          elem110 = new ttypes.ProductCard();
+          elem110.read(input);
+          this.productCards.push(elem110);
         }
         input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
       } else {
         input.skip(ftype);
       }
@@ -4105,15 +4373,20 @@ CaptchaDetailResult.prototype.write = function(output) {
   if (this.productCards !== null && this.productCards !== undefined) {
     output.writeFieldBegin('productCards', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.productCards.length);
-    for (var iter103 in this.productCards)
+    for (var iter111 in this.productCards)
     {
-      if (this.productCards.hasOwnProperty(iter103))
+      if (this.productCards.hasOwnProperty(iter111))
       {
-        iter103 = this.productCards[iter103];
-        iter103.write(output);
+        iter111 = this.productCards[iter111];
+        iter111.write(output);
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 4);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
