@@ -10,51 +10,51 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 
 var AfterSale = require('../lib/models/afterSale');
 
-//ÊÛºóÉóºË
+//å”®åå®¡æ ¸
 router.post('/review', function (request, response, next) {
     var result = {code: 200};
 
     try {
         var params = request.body;
-        logger.info("ÊÛºóÉóºËµÄ²ÎÊı:" + JSON.stringify(params));
+        logger.info("å”®åå®¡æ ¸çš„å‚æ•°:" + JSON.stringify(params));
         if (params.productId == null || params.productId == "") {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
         if (params.orderId == null || params.orderId == "") {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
         if (params.userId == null || params.userId == "") {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
         if (params.sellerId == null || params.sellerId == "") {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
         if (params.skuNum == null || params.skuNum == "") {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
-        if (params.reviewResult == "1") { //±íÊ¾¾Ü¾ø
+        if (params.reviewResult == "1") { //è¡¨ç¤ºæ‹’ç»
             params.state = 3;
-        } else if (params.reviewResult == "0") { //±íÊ¾Í¬Òâ
+        } else if (params.reviewResult == "0") { //è¡¨ç¤ºåŒæ„
 
-            params.state = 2; //¸ù¾İÊµ¼ÊÇé¿ö¶¨Òå Èç 1£ºĞÂ½¨£¨´ıÉóºË£© 2£ºÉóºËÍ¨¹ı 3£ºÉóºË²»Í¨¹ı
+            params.state = 2; //æ ¹æ®å®é™…æƒ…å†µå®šä¹‰ å¦‚ 1ï¼šæ–°å»ºï¼ˆå¾…å®¡æ ¸ï¼‰ 2ï¼šå®¡æ ¸é€šè¿‡ 3ï¼šå®¡æ ¸ä¸é€šè¿‡
         } else {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
@@ -70,34 +70,34 @@ router.post('/review', function (request, response, next) {
     } catch (ex) {
         logger.error(" AfterSale.auditPass error:" + ex);
         result.code = 500;
-        result.desc = "ÉóºËÊ§°Ü";
+        result.desc = "å®¡æ ¸å¤±è´¥";
         response.json(result);
     }
 });
-//ÉóºËĞÅÏ¢²éÑ¯
+//å®¡æ ¸ä¿¡æ¯æŸ¥è¯¢
 router.post('/toReview', function (request, response, next) {
     var result = {code: 200};
 
     try {
         var params = request.body;
-        logger.info("ÉóºËĞÅÏ¢²éÑ¯£¬ arg:" + JSON.stringify(params));
+        logger.info("å®¡æ ¸ä¿¡æ¯æŸ¥è¯¢ï¼Œ arg:" + JSON.stringify(params));
 
         if (params.productId == null || params.productId == "") {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
         if (params.orderId == null || params.orderId == "") {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
 
         if (params.skuNum == null || params.skuNum == "") {
             result.code = 400;
-            result.desc = "ÇëÇó²ÎÊı´íÎó";
+            result.desc = "è¯·æ±‚å‚æ•°é”™è¯¯";
             response.json(result);
             return;
         }
@@ -114,7 +114,7 @@ router.post('/toReview', function (request, response, next) {
     } catch (ex) {
         logger.error("AfterSale.queryAfterSale error:" + ex);
         result.code = 500;
-        result.desc = "²éÑ¯ÉóºËĞÅÏ¢Ê§°Ü";
+        result.desc = "æŸ¥è¯¢å®¡æ ¸ä¿¡æ¯å¤±è´¥";
         response.json(result);
     }
 });
