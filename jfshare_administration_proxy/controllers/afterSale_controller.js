@@ -95,12 +95,6 @@ router.post('/toReview', function (request, response, next) {
             return;
         }
 
-        if (params.skuNum == null || params.skuNum == "") {
-            result.code = 400;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
         AfterSale.queryAfterSale(params, function (err, data) {
             if (err) {
                 response.json(err);
