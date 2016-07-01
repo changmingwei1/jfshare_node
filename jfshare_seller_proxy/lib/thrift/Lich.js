@@ -19,7 +19,7 @@ var ServiceKey = {
     SubjectServer: "Subject",
 //	AddressServer: "Address",
     OrderServer: "Order",
-    //  BuyerServer: "Buyer",
+    BuyerServer: "Buyer",
     ProductServer: "Product",
     StockServer: "Stock",
     //  AddressServer: "Address",

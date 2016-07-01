@@ -1077,15 +1077,159 @@ router.post('/reCaptcha', function(request, response, next) {
         //return;
         //--------------------------------------------------------------
 
-        Product.reCaptcha(params, function (err, data) {
-            if(err){
-                return response.json(err);
-            }else{
-                logger.info("验证虚拟商品兑换码 result" + JSON.stringify(data));
-                response.json(result);
-                return;
-            }
-        });
+        //--------------------
+
+        var captchaTemp={};
+        var buyerTemp={};
+        var productInfo={};
+
+        async.series([
+                function (callback) {
+                    try {
+                        Product.reCaptcha(params, function (err, data) {
+                            if(err){
+                                callback(1, null);
+                            }else{
+                                var cards=data.cardList;
+                                if(cards!=null){
+                                    var buyerId=cards[0].buyerId;
+                                    var productId=cards[0].productId;
+                                    var cardNumber=cards[0].cardNumber;
+                                    params.userId=buyerId;
+                                    params.productId=productId;
+                                    captchaTemp.cardNumber=cardNumber;
+                                }
+
+                                logger.info("验证虚拟商品兑换码 result" + JSON.stringify(data));
+                                callback(null, result);
+                            }
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取订单列表异常:" + ex);
+                        result.code = 500;
+                        result.desc = "验码失败";
+                        response.json(result);
+                        return;
+                    }
+                },
+                function (callback) {
+                    try {
+                        logger.info("查询buyer params" + JSON.stringify(params));
+                        Product.getBuyer(params, function (error, data) {
+                            if (error) {
+                                callback(2, null);
+                            } else {
+                                var buyer = data[0].buyer;
+                                if (buyer != null) {
+                                    //resContent.buyer = {
+                                    //    userId: buyer.userId,
+                                    //    userName: buyer.userName,
+                                    //    favImg: buyer.favImg,
+                                    //    birthday: buyer.birthday,
+                                    //    sex: buyer.sex,
+                                    //    mobile: buyer.mobile
+                                    //};
+
+                                    buyerTemp.userName=buyer.userName;
+                                    buyerTemp.mobile=buyer.mobile;
+
+                                    logger.info("个人用户信息响应:" + JSON.stringify(buyerTemp));
+                                    callback(null, buyerTemp);
+
+                                } else {
+                                    result.code = 500;
+                                    result.desc = "获取用户信息失败";
+                                    response.json(result);
+                                    logger.info("个人用户信息响应:" + JSON.stringify(result));
+                                    return;
+                                }
+                            }
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取批量类目异常:" + ex);
+                        result.code = 500;
+                        result.desc = "验码失败";
+                        response.json(result);
+                        return;
+                    }
+                },
+                function (callback) {
+                    try {
+                        logger.info("查询product params" + JSON.stringify(params));
+                        Product.queryProductForSeller(params.productId, 1, 1, 0, 0, function (err, data) {
+                            if (err) {
+                                callback(3, null);
+                            } else {
+                                var product = data[0].product;
+                                //productInfo.productId = product.productId;
+                                //productInfo.productName = product.productName;
+                                //productInfo.imgUrl = product.imgKey;
+                                //productInfo.productDesc = product.detailContent;
+                                //productInfo.productAttribute = product.attribute;
+                                //productInfo.skuTemplate = JSON.parse(product.skuTemplate);
+                                //productInfo.sellerId = product.sellerId;
+                                //////添加卖家名称
+                                //productInfo.sellerName = product.sellerName;
+                                //result.productInfo = productInfo;
+                                productInfo.productName = product.productName;
+
+                                logger.info("get product info response:" + JSON.stringify(productInfo));
+                                callback(null, productInfo);
+                            }
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取商品信息异常:" + ex);
+                        result.code = 500;
+                        result.desc = "验码失败";
+                        response.json(result);
+                        return;
+                    }
+                }
+            ],
+            function (err, results) {
+
+                logger.info("result[0]:" + JSON.stringify(results[0]));
+                logger.info("result[1]:" + JSON.stringify(results[1]));
+                logger.info("result[2]:" + JSON.stringify(results[2]));
+
+                if (err == 1) {
+                    logger.error("验码失败---product服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "验码失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("获取用户信息异常--product服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "验码失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 3) {
+                    logger.error("获取产品信息异常--product服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "验码失败";
+                    response.json(result);
+                    return;
+                }
+
+                if (err == null) {
+                    logger.info("shuju------------->" + JSON.stringify(results));
+
+                    result.productName=productInfo.productName;
+                    result.cardNumber=captchaTemp.cardNumber;
+                    result.userName=buyerTemp.userName;
+                    result.mobile=buyerTemp.mobile;
+
+                    response.json(result);
+                    return;
+                }
+            });
+        //--------------------
     } catch (ex) {
         logger.error("验证虚拟商品兑换码失败:" + ex);
         result.code = 500;
@@ -1195,7 +1339,7 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
     var result = {code: 200};
     try{
         var params = request.body;
-        logger.info("卖家虚拟商品验证统计请求入参，params:" + JSON.stringify(params));
+        logger.warn("卖家虚拟商品验证统计请求入参，params:" + JSON.stringify(params));
 
         if (params == null || params.sellerId == null||params.sellerId == "") {
             result.code = 400;
@@ -1222,67 +1366,34 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
             return;
         }
 
-        //---------------------前台测试用---------------------------------------------
-
-//        var productTotalList=[];
-//        var productDayList=[];
-//    if(params.date=="2016-01"||params.date=="2016-02"||params.date=="2016-03"){
-//        result.thsoldNum=50;
-//        result.thmonNum=33;
-//    result.page = {
-//        total:60,
-//        pageCount:3
-//    };
-//    for(var i=0;i<20;i++){
-//        productDayList.push({
-//            productId:20,
-//            productName:"测试：测试商品m",
-//            thsoldNum:20,
-//            thCaptcha:20
-//        });
-//    }
-//    productTotalList.push({
-//        data:"2016-05-27",
-//        thDayNum:20,
-//        productDayList:productDayList
-//    });
-//}else if(params.date=="2016-03"){
-//        result.thsoldNum=50;
-//        result.thmonNum=33;
-//    result.page = {
-//        total:3,
-//        pageCount:1
-//    };
-//    for(var i=0;i<3;i++){
-//        productDayList.push({
-//            productId:20,
-//            productName:"测试：测试商品m",
-//            thsoldNum:20,
-//            thCaptcha:20
-//        });
-//    }
-//    productTotalList.push({
-//        data:"2016-05-26",
-//        thDayNum:20,
-//        productDayList:productDayList
-//    });
-//}else{
-//
-//}
-//        result.productTotalList=productTotalList;
-//        response.json(result);
-//        return;
-
-
-        //-------------------------------------------------------------------
         Product.queryCaptchaTotalList(params, function (err, data) {
+
             if(err){
                 return response.json(err);
             }else{
-                var str=params.date.split("-");
-                var dayNum= CommonUtil.sgetDays(str[0],str[1]);
 
-                if(data.itemList!=null){
+                var dayCaptchaList=data.dayAldCaptchaCountList;
+                var tempObj=[];
+                if(dayCaptchaList!=null) {
+                    result.page = {
+                        total: data.pagination.totalCount,
+                        pageCount: data.pagination.pageNumCount
+                    };
+                    dayCaptchaList.forEach(function(item){
+                        tempObj.push({
+                            thDayNum:item.checkedTotalNum,
+                            date:item.date
+                        });
+                    });
+
+                    result.thmonNum = data.checkedNum;
+                    result.thsoldNum = data.soldNum;
+                    result.productTotalList = tempObj;
+
+                }
+
+                /**
+                 if(data.itemList!=null){
                     var monAca=[];
                     var monAst=[];
                     var tempObj=[];
@@ -1338,7 +1449,8 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
 
 
                 }
-                logger.info("卖家虚拟商品验证统计 result" + JSON.stringify(data));
+                 **/
+                logger.warn("卖家虚拟商品验证统计 result" + JSON.stringify(data));
                 response.json(result);
                 return;
             }
@@ -1351,6 +1463,87 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
         response.json(result);
     }
 });
+
+//根据日期查询商品每天验证码数据
+router.post('/queryCaptchaDayTotalList', function(request, response, next) {
+
+    logger.info("进入查询商品每天验证码数据接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("查询商品每天验证码数据请求入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.sellerId == null||params.sellerId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.date== null || params.date == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.perCount== null || params.perCount == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.curPage== null || params.curPage == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Product.queryCaptchaDayTotalList(params, function (err, data) {
+            if(err){
+                return response.json(err);
+            }else{
+                if(data!=null&&data!=""){
+                    //result.productName=data.productName;
+                    var captchaDetals=data.itemList;
+                    var captObj=[];
+                    if(captchaDetals==null||captchaDetals==""){
+                        //result.code = 500;
+                        //result.desc = "查询虚拟商品验证明细失败";
+
+                        result.itemList=null;
+                        response.json(result);
+                        return;
+                    }
+                    result.page = {
+                        total: data.pagination.totalCount,
+                        pageCount: data.pagination.pageNumCount
+                    };
+                    captchaDetals.forEach(function(item){
+                        captObj.push({
+                            productId:item.productId,
+                            productName:item.productName,
+                            aldSold:item.aldSold,
+                            aldCaptcha:item.aldCaptcha,
+                            date:item.date
+                        });
+                    });
+                    result.itemList=captObj;
+                }
+
+                logger.info("查询商品每天验证码数据 result" + JSON.stringify(result));
+                response.json(result);
+                return;
+            }
+
+        });
+    } catch (ex) {
+        logger.error("查询商品每天验证码数据失败:" + ex);
+        result.code = 500;
+        result.desc = "查询商品每天验证码数据失败";
+        response.json(result);
+    }
+});
+
 
 //卖家虚拟商品验证列表明细
 router.post('/queryCaptchaDetails', function(request, response, next) {
