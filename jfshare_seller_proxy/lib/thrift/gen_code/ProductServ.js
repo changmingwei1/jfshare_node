@@ -2361,7 +2361,7 @@ ProductServ_useProductCard_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
+        this.success = new ttypes.ProductCardResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
@@ -2597,6 +2597,114 @@ ProductServ_queryCaptchaTotalList_result.prototype.read = function(input) {
 
 ProductServ_queryCaptchaTotalList_result.prototype.write = function(output) {
   output.writeStructBegin('ProductServ_queryCaptchaTotalList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaDayTotalList_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ProductServ_queryCaptchaDayTotalList_args.prototype = {};
+ProductServ_queryCaptchaDayTotalList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.CaptchaDayQueryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaDayTotalList_args.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryCaptchaDayTotalList_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaDayTotalList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ProductServ_queryCaptchaDayTotalList_result.prototype = {};
+ProductServ_queryCaptchaDayTotalList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.DayCaptchaProductResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryCaptchaDayTotalList_result.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryCaptchaDayTotalList_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -3813,6 +3921,53 @@ ProductServClient.prototype.recv_queryCaptchaTotalList = function(input,mtype,rs
   }
   return callback('queryCaptchaTotalList failed: unknown result');
 };
+ProductServClient.prototype.queryCaptchaDayTotalList = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCaptchaDayTotalList(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCaptchaDayTotalList(param);
+  }
+};
+
+ProductServClient.prototype.send_queryCaptchaDayTotalList = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCaptchaDayTotalList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ProductServ_queryCaptchaDayTotalList_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ProductServClient.prototype.recv_queryCaptchaDayTotalList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ProductServ_queryCaptchaDayTotalList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCaptchaDayTotalList failed: unknown result');
+};
 ProductServClient.prototype.queryCaptchaDetails = function(param, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -4561,6 +4716,36 @@ ProductServProcessor.prototype.process_queryCaptchaTotalList = function(seqid, i
     this._handler.queryCaptchaTotalList(args.param,  function (err, result) {
       var result = new ProductServ_queryCaptchaTotalList_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryCaptchaTotalList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ProductServProcessor.prototype.process_queryCaptchaDayTotalList = function(seqid, input, output) {
+  var args = new ProductServ_queryCaptchaDayTotalList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCaptchaDayTotalList.length === 1) {
+    Q.fcall(this._handler.queryCaptchaDayTotalList, args.param)
+      .then(function(result) {
+        var result = new ProductServ_queryCaptchaDayTotalList_result({success: result});
+        output.writeMessageBegin("queryCaptchaDayTotalList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ProductServ_queryCaptchaDayTotalList_result(err);
+        output.writeMessageBegin("queryCaptchaDayTotalList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCaptchaDayTotalList(args.param,  function (err, result) {
+      var result = new ProductServ_queryCaptchaDayTotalList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCaptchaDayTotalList", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
