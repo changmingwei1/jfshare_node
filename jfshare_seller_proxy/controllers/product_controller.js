@@ -1374,7 +1374,7 @@ router.post('/queryCaptchaTotalList', function(request, response, next) {
 
                 var dayCaptchaList=data.dayAldCaptchaCountList;
                 var tempObj=[];
-                if(data.dayCaptchaList!=null) {
+                if(dayCaptchaList!=null) {
                     result.page = {
                         total: data.pagination.totalCount,
                         pageCount: data.pagination.pageNumCount

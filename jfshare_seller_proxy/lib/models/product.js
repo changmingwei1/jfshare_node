@@ -556,7 +556,7 @@ Product.prototype.queryCaptchaTotalList = function (params, callback) {
     var captchaQueryParam = new product_types.CaptchaQueryParam({
         sellerId:params.sellerId,
         pagination:page,
-        monthQuery:params.monthQuery
+        monthQuery:params.date
     });
     logger.warn("调用 productServ-queryCaptchaTotalList 入参:" + JSON.stringify(params));
     // 获取client
@@ -586,7 +586,7 @@ Product.prototype.queryCaptchaDayTotalList = function (params, callback) {
     var captchaDayQueryParam = new product_types.CaptchaDayQueryParam({
         sellerId:params.sellerId,
         pagination:page,
-        date:params.queryDate
+        date:params.date
     });
     logger.warn("调用 productServ-queryCaptchaDayTotalList 入参:" + JSON.stringify(params));
     // 获取client
@@ -616,9 +616,10 @@ Product.prototype.queryCaptchaDetails = function (params, callback) {
     var captchaQueryParam = new product_types.CaptchaQueryParam({
         productId:params.productId,
         pagination:page,
-        monthQuery:params.queryDate
+        monthQuery:params.queryDate,
+        sellerId:params.sellerId
     });
-    logger.info("调用 productServ-queryCaptchaDetails 入参:" + JSON.stringify(params));
+    logger.info("调用 productServ-queryCaptchaDetails 入参:" + JSON.stringify(captchaQueryParam));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryCaptchaDetails", captchaQueryParam);
 

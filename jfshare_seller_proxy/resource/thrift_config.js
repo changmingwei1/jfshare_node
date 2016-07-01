@@ -183,5 +183,14 @@ module.exports.ServiceFactory = {
         //var obj = new ThriftConfig("101.201.38.182", 2001);
         //// var obj = new ThriftConfig("127.0.0.1", 1981);
         //return obj;
+    },
+    /**
+     * 买家服务
+     * @returns {ThriftConfig}
+     */
+    buyer: function () {
+        logger.info("--------->"+zookeeper.getData("buyer_ips")+"--->"+zookeeper.getData("buyer_port"));
+        return new ThriftConfig(zookeeper.getData("buyer_ips"),zookeeper.getData("buyer_port"));
+        //return obj = new ThriftConfig("101.201.38.182", 1990);
     }
 };
