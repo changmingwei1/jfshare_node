@@ -183,11 +183,11 @@
                             break;
                         }
                     }
+                    that.addr.isDefault = 0;
                     if (!found) {
                         if (empty(that.addresses)) {
                             that.addresses = [];
                         }
-                        that.addr.isDefault = 0;
                         that.addresses.push(that.addr);
                     }
                     that.cloneAddr = clone(that.addr);
