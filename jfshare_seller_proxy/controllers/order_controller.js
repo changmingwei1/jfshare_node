@@ -159,7 +159,7 @@ router.post('/list', function (request, response, next) {
             },
             function (callback) {
                 try {
-                    if (params.orderState == null && params.orderIdList != null && params.orderIdList.length > 0) {
+                    if ((params.orderState == null|| params.orderState == 5) && params.orderIdList != null && params.orderIdList.length > 0 ) {
                         afterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
                                 return callback(2, null);
