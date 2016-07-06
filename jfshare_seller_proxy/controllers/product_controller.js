@@ -1296,7 +1296,7 @@ router.post('/queryCaptchaList', function(request, response, next) {
                     products.push({
                         productId:item.productId,
                         productName:item.productName,
-                        aldsold:item.aldsold,
+                        aldsold:item.aldSold,
                         aldCaptcha:item.aldCaptcha
                     });
                 });
@@ -1654,6 +1654,8 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
 
         //-------------------------------------------------------------------------------------------------------
         var captObj=[];
+        var bIds=new Array();
+        var buyerTemp=[];
         async.series([
                 function (callback) {
                     try {
@@ -1678,25 +1680,26 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                                         total: data.pagination.totalCount,
                                         pageCount: data.pagination.pageNumCount
                                     };
-                                    captchaDetals.forEach(function(item){
 
+                                    captchaDetals.forEach(function(item){
+                                        bIds.push(item.buyerId);
                                         captObj.push({
                                             productName:data.productName,
                                             date:item.checkTime,
                                             consumeNum:item.cardNumber,
-                                            mobile:item.mobile,
-                                            nickName:item.nikeName,
+                                            //mobile:item.mobile,
+                                            //nickName:item.nikeName,
                                             buyerId:item.buyerId
                                         });
                                     });
                                     result.productDetailList=captObj;
                                 }
 
-                                logger.info("虚拟商品验证明细 result" + JSON.stringify(result));
-                                response.json(result);
-                                return;
+                                logger.info("虚拟商品验证明细 result" + JSON.stringify(captObj));
+                                //response.json(result);
+                                //return;
                             }
-
+                            callback(null, result);
                         });
 
                     } catch (ex) {
@@ -1709,13 +1712,13 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                 },
                 function (callback) {
                     try {
-                        logger.info("查询buyer params" + JSON.stringify(params));
-                        Product.getBuyer(params, function (error, data) {
+                        logger.info("查询buyer params" + JSON.stringify(bIds));
+                        Product.getBuyerList(bIds, function (error, data) {
                             if (error) {
                                 callback(2, null);
                             } else {
-                                var buyer = data[0].buyer;
-                                if (buyer != null) {
+                                var buyerLists = data[0].buyerList;
+                                if (buyerLists != null) {
                                     //resContent.buyer = {
                                     //    userId: buyer.userId,
                                     //    userName: buyer.userName,
@@ -1724,9 +1727,14 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                                     //    sex: buyer.sex,
                                     //    mobile: buyer.mobile
                                     //};
+                                    buyerLists.forEach(function(item){
+                                        buyerTemp.push({
+                                            buyerId:item.userId,
+                                            userName:item.userName,
+                                            mobile:item.mobile,
 
-                                    buyerTemp.userName=buyer.userName;
-                                    buyerTemp.mobile=buyer.mobile;
+                                        });
+                                    });
 
                                     logger.info("个人用户信息响应:" + JSON.stringify(buyerTemp));
                                     callback(null, buyerTemp);
@@ -1756,16 +1764,16 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                 logger.info("result[1]:" + JSON.stringify(results[1]));
 
                 if (err == 1) {
-                    logger.error("验码失败---product服务异常：" + err);
+                    logger.error("获取详情失败---product服务异常：" + err);
                     result.code = 500;
-                    result.desc = "验码失败";
+                    result.desc = "获取详情失败";
                     response.json(result);
                     return;
                 }
                 if (err == 2) {
                     logger.error("获取用户信息异常--product服务异常：" + err);
                     result.code = 500;
-                    result.desc = "验码失败";
+                    result.desc = "获取详情失败";
                     response.json(result);
                     return;
                 }
@@ -1774,11 +1782,41 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                 if (err == null) {
                     logger.info("shuju------------->" + JSON.stringify(results));
 
-                    result.productName=productInfo.productName;
-                    result.cardNumber=captchaTemp.cardNumber;
-                    result.userName=buyerTemp.userName;
-                    result.mobile=buyerTemp.mobile;
+                    //result.productName=productInfo.productName;
+                    //result.cardNumber=captchaTemp.cardNumber;
+                    //result.userName=buyerTemp.userName;
+                    //result.mobile=buyerTemp.mobile;
 
+                    var proList=result.productDetailList;
+                    //var proList=captObj;
+                    if(proList==null){
+                        result.code = 500;
+                        result.desc = "获取详情失败";
+                        response.json(result);
+                        return;
+                    }
+                    if(buyerTemp==null){
+                        response.json(result);
+                        return;
+                    }
+                    var newProList=[];
+                    for(var i=0;i<proList.length;i++){
+                        var proUserId=proList[i].userId;
+                        for(var j=0;j<buyerTemp.length;j++){
+                           if(proUserId=buyerTemp[j].buyerId){
+                               newProList.push({
+                                   productName:proList[i].productName,
+                                   date:proList[i].date,
+                                   consumeNum:proList[i].consumeNum,
+                                   //mobile:item.mobile,
+                                   //nickName:item.nikeName,
+                                   nickName:buyerTemp[j].userName,
+                                   mobile:buyerTemp[j].mobile
+                               })
+                           }
+                        }
+                    }
+                    result.productDetailList=newProList;
                     response.json(result);
                     return;
                 }
