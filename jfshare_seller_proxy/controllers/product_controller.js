@@ -263,13 +263,6 @@ router.post('/creat', function (request, response, next) {
             response.json(result);
             return;
         }
-        //参数验证
-        if (params.viceName == null || params.viceName == "") {
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
         /***
          *
          *
@@ -565,14 +558,7 @@ router.post('/update', function (request, response, next) {
             response.json(result);
             return;
         }
-        //参数验证
-        if (params.viceName == null || params.viceName == "") {
 
-            result.code = 500;
-            result.desc = "请求参数错误";
-            response.json(result);
-            return;
-        }
         //参数验证
         if (params.type !=2 && params.type !=3) {
             result.code = 500;

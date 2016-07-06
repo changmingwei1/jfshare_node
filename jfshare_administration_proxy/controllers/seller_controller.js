@@ -307,14 +307,23 @@ router.post('/list', function (request, response, next) {
                         sellerList.push(sellerTemp);
                     });
                 }
-                var sellerPagination = data[0].pagination;
-
                 var sellerPage=[];
-                sellerPage.push({
-                    total:sellerPagination.totalCount,
-                    pageCount:sellerPagination.pageNumCount
+                var sellerPagination = data[0].pagination;
+                if(sellerPagination!=null){
+                    sellerPage.push({
+                        total:sellerPagination.totalCount,
+                        pageCount:sellerPagination.pageNumCount
 
-                });
+                    });
+                }else{
+                    sellerPage.push({
+                        total:0,
+                        pageCount:0
+
+                    });
+                }
+
+
 
                 result.page = sellerPage;
                 result.sellerList = sellerList;

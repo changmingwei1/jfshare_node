@@ -27,7 +27,8 @@ BaseTemplate.prototype.queryPostageTemplate = function(sellerId,templateGroup, c
 
     var params = new baseTemplate_types.PostageTemplateQueryParam({
         sellerId: sellerId,
-        templateGroup:2
+        templateGroup:2,
+        isUsed:1
     });
 
     logger.info("调用查询邮费模板信息，args:" + JSON.stringify(params));

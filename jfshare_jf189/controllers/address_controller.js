@@ -57,7 +57,7 @@ router.post('/save', function(req, res, next) {
             countyName : addr.countyName,
             address : addr.address,
             postCode : addr.postCode,
-            isDefault : addr.isDefault,
+            isDefault : 0,
             email : addr.email,
         });
         // 获取client

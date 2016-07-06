@@ -414,14 +414,14 @@ function skuSelectEvent(attslist){
         var minOrgPrice = Number(Math.min.apply(Math, orgPrices)).toFixed(2);
         var count = dimstocks["SKUResults"][selectIdsKey].count;
 
-        $('#orgPrice').text((maxOrgPrice > minOrgPrice ? minOrgPrice + "～" + maxOrgPrice : maxOrgPrice));
+        $('#orgPrice').text(Number(maxOrgPrice) > Number(minOrgPrice) ? minOrgPrice + "～" + maxOrgPrice : maxOrgPrice);
         if(score2cashAmount > 0) {  //尊享商品
             $('#showJifen').text(" + 100积分" + (maxCurPrice == minCurPrice ? " / ¥" + minCurPrice : ""));
             maxCurPrice = Number(Number(maxCurPrice) - score2cashAmount/100).toFixed(2);
             minCurPrice = Number(Number(minCurPrice) - score2cashAmount/100).toFixed(2);
-            $('#curPrice').text("¥" + (maxCurPrice > minCurPrice ? minCurPrice + "～" + maxCurPrice : maxCurPrice));
+            $('#curPrice').text("¥" + (Number(maxCurPrice) > Number(minCurPrice) ? minCurPrice + "～" + maxCurPrice : maxCurPrice));
         } else {
-            $('#curPrice').text((maxCurPrice > minCurPrice ? Number(Number(minCurPrice)*100).toFixed(0) + "～" + Number(Number(maxCurPrice)*100).toFixed(0) : Number(Number(maxCurPrice)*100).toFixed(0)) + "积分");
+            $('#curPrice').text((Number(maxCurPrice) > Number(minCurPrice) ? Number(Number(minCurPrice)*100).toFixed(0) + "～" + Number(Number(maxCurPrice)*100).toFixed(0) : Number(Number(maxCurPrice)*100).toFixed(0)) + "积分");
         }
 
         $('#stock').val(count);
@@ -528,15 +528,15 @@ function renderPriceStockInit() {
     var stock = empty(dimstocks["stockTotal"].total) ? 0 : dimstocks["stockTotal"].total;
 
     //金额大于1元 + 100积分换购
-    $('#orgPrice').text((initMaxOrgPrice > initMinOrgPrice ? initMinOrgPrice + "～" + initMaxOrgPrice : initMaxOrgPrice));
+    $('#orgPrice').text(Number(initMaxOrgPrice) > Number(initMinOrgPrice) ? initMinOrgPrice + "～" + initMaxOrgPrice : initMaxOrgPrice);
 
     if(score2cashAmount > 0) { //尊享商品
         $('#showJifen').text(" + 100积分" + (initMaxCurPrice == initMinCurPrice ? " / ¥" + initMaxCurPrice : ""));
         initMaxCurPrice = Number(Number(initMaxCurPrice) - score2cashAmount/100).toFixed(2);
         initMinCurPrice = Number(Number(initMinCurPrice) - score2cashAmount/100).toFixed(2);
-        $('#curPrice').text("¥" + (initMaxCurPrice > initMinCurPrice ? initMinCurPrice + "～" + initMaxCurPrice : initMaxCurPrice));
+        $('#curPrice').text("¥" + (Number(initMaxCurPrice) > Number(initMinCurPrice) ? initMinCurPrice + "～" + initMaxCurPrice : initMaxCurPrice));
     } else {
-        $('#curPrice').text((initMaxCurPrice > initMinCurPrice ? Number(Number(initMinCurPrice)*100).toFixed(0) + "～" + Number(Number(initMaxCurPrice)*100).toFixed(0) : Number(Number(initMaxCurPrice)*100).toFixed(0)) + "积分");
+        $('#curPrice').text((Number(initMaxCurPrice) > Number(initMinCurPrice) ? Number(Number(initMinCurPrice)*100).toFixed(0) + "～" + Number(Number(initMaxCurPrice)*100).toFixed(0) : Number(Number(initMaxCurPrice)*100).toFixed(0)) + "积分");
     }
     $('#stock').val(stock);
     $('#stockShow').text("（库存剩余 " + stock + " 件）");

@@ -346,7 +346,7 @@ router.post('/info', function (request, response, next) {
             },
             function (callback) {
                 try {
-                    if (params.orderState == null || params.orderState == 1) {
+                    if (params.orderState == null || params.orderState == 1 || params.orderState == 5) {
                         afterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
                                 return callback(2, null);
