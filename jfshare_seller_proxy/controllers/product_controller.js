@@ -1622,41 +1622,186 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
         //return;
         //------------------------------------------------------------------
 
-        Product.queryCaptchaDetails(params, function (err, data) {
-            if(err){
-                return response.json(err);
-            }else{
-                if(data!=null&&data!=""){
-                    //result.productName=data.productName;
-                    var captchaDetals=data.captchaDetals;
-                    var captObj=[];
-                    if(captchaDetals==null||captchaDetals==""){
-                        //result.code = 500;
-                        //result.desc = "查询虚拟商品验证明细失败";
 
-                        result.productDetailList=null;
+        //Product.queryCaptchaDetails(params, function (err, data) {
+        //    if(err){
+        //        return response.json(err);
+        //    }else{
+        //        if(data!=null&&data!=""){
+        //            //result.productName=data.productName;
+        //            var captchaDetals=data.productCards;
+        //
+        //            if(captchaDetals==null||captchaDetals==""){
+        //                //result.code = 500;
+        //                //result.desc = "查询虚拟商品验证明细失败";
+        //
+        //                result.productDetailList=null;
+        //                response.json(result);
+        //                return;
+        //            }
+        //
+        //            result.page = {
+        //                total: data.pagination.totalCount,
+        //                pageCount: data.pagination.pageNumCount
+        //            };
+        //            captchaDetals.forEach(function(item){
+        //
+        //                captObj.push({
+        //                    productName:data.productName,
+        //                    date:item.checkTime,
+        //                    consumeNum:item.cardNumber,
+        //                    mobile:item.mobile,
+        //                    nickName:item.nikeName,
+        //                    buyerId:item.buyerId
+        //                });
+        //            });
+        //            result.productDetailList=captObj;
+        //        }
+        //
+        //        logger.info("虚拟商品验证明细 result" + JSON.stringify(result));
+        //        response.json(result);
+        //        return;
+        //    }
+        //
+        //});
+
+
+        //-------------------------------------------------------------------------------------------------------
+        var captObj=[];
+        async.series([
+                function (callback) {
+                    try {
+                        Product.queryCaptchaDetails(params, function (err, data) {
+                            if(err){
+                                return response.json(err);
+                            }else{
+                                if(data!=null&&data!=""){
+                                    //result.productName=data.productName;
+                                    var captchaDetals=data.productCards;
+
+                                    if(captchaDetals==null||captchaDetals==""){
+                                        //result.code = 500;
+                                        //result.desc = "查询虚拟商品验证明细失败";
+
+                                        result.productDetailList=null;
+                                        response.json(result);
+                                        return;
+                                    }
+
+                                    result.page = {
+                                        total: data.pagination.totalCount,
+                                        pageCount: data.pagination.pageNumCount
+                                    };
+                                    captchaDetals.forEach(function(item){
+
+                                        captObj.push({
+                                            productName:data.productName,
+                                            date:item.checkTime,
+                                            consumeNum:item.cardNumber,
+                                            mobile:item.mobile,
+                                            nickName:item.nikeName,
+                                            buyerId:item.buyerId
+                                        });
+                                    });
+                                    result.productDetailList=captObj;
+                                }
+
+                                logger.info("虚拟商品验证明细 result" + JSON.stringify(result));
+                                response.json(result);
+                                return;
+                            }
+
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取订单列表异常:" + ex);
+                        result.code = 500;
+                        result.desc = "验码失败";
                         response.json(result);
                         return;
                     }
+                },
+                function (callback) {
+                    try {
+                        logger.info("查询buyer params" + JSON.stringify(params));
+                        Product.getBuyer(params, function (error, data) {
+                            if (error) {
+                                callback(2, null);
+                            } else {
+                                var buyer = data[0].buyer;
+                                if (buyer != null) {
+                                    //resContent.buyer = {
+                                    //    userId: buyer.userId,
+                                    //    userName: buyer.userName,
+                                    //    favImg: buyer.favImg,
+                                    //    birthday: buyer.birthday,
+                                    //    sex: buyer.sex,
+                                    //    mobile: buyer.mobile
+                                    //};
 
-                    captchaDetals.forEach(function(item){
-                        captObj.push({
-                            productName:data.productName,
-                            date:item.captchaDate,
-                            consumeNum:item.card,
-                            mobile:item.mobile,
-                            nickName:item.nikeName
+                                    buyerTemp.userName=buyer.userName;
+                                    buyerTemp.mobile=buyer.mobile;
+
+                                    logger.info("个人用户信息响应:" + JSON.stringify(buyerTemp));
+                                    callback(null, buyerTemp);
+
+                                } else {
+                                    result.code = 500;
+                                    result.desc = "获取用户信息失败";
+                                    response.json(result);
+                                    logger.info("个人用户信息响应:" + JSON.stringify(result));
+                                    return;
+                                }
+                            }
                         });
-                    });
-                    result.productDetailList=captObj;
+
+                    } catch (ex) {
+                        logger.info("获取批量类目异常:" + ex);
+                        result.code = 500;
+                        result.desc = "验码失败";
+                        response.json(result);
+                        return;
+                    }
+                }
+            ],
+            function (err, results) {
+
+                logger.info("result[0]:" + JSON.stringify(results[0]));
+                logger.info("result[1]:" + JSON.stringify(results[1]));
+
+                if (err == 1) {
+                    logger.error("验码失败---product服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "验码失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("获取用户信息异常--product服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "验码失败";
+                    response.json(result);
+                    return;
                 }
 
-                logger.info("虚拟商品验证明细 result" + JSON.stringify(result));
-                response.json(result);
-                return;
-            }
 
-        });
+                if (err == null) {
+                    logger.info("shuju------------->" + JSON.stringify(results));
+
+                    result.productName=productInfo.productName;
+                    result.cardNumber=captchaTemp.cardNumber;
+                    result.userName=buyerTemp.userName;
+                    result.mobile=buyerTemp.mobile;
+
+                    response.json(result);
+                    return;
+                }
+            });
+
+
+
+
+        //---------------------------------------------------------------------------------------------------------
     } catch (ex) {
         logger.error("虚拟商品验证明细失败:" + ex);
         result.code = 500;
