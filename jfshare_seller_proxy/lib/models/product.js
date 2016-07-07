@@ -668,6 +668,32 @@ Product.prototype.getBuyer = function(param,callback){
     });
 };
 
+//批量获取买家--买家信息
+Product.prototype.getBuyerList = function(param,callback){
+
+    logger.info("param--- buyer result:" + JSON.stringify(param));
+   //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getListBuyer',[param]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("get buyer result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't get buyer because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get buyer";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
 /*查询商品*/
 Product.prototype.queryProductForSeller = function (productId, baseTag, skuTemplateTag, skuTag, attributeTag, callback) {
     var param = new product_types.ProductRetParam({
