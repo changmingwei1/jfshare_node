@@ -212,7 +212,8 @@ Order.prototype.batchExportOrderFull = function (params, callback) {
         startTime: params.startTime,
         endTime: params.endTime,
         orderState: params.orderState || 0,
-        sellerId: params.sellerId
+        sellerId: params.sellerId,
+        orderId:params.orderId
     });
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFull", [orderQueryConditions]);
