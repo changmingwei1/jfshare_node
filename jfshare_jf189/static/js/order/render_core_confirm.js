@@ -23,7 +23,7 @@ $(function() {
 function rendData() {
     renderGuide();
     $.ajax({
-        url: "/order/address_list",
+        url: "/order/address_list?t=" + new Date().getTime(),
         type: 'get',
         data:{ssid:$("#ssid").val()},
         dataType:'json',
