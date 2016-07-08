@@ -1093,19 +1093,26 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
     try {
 
         var params = request.body;
+        //orderId
 
-        if (params.startTime == "" || params.startTime == null) {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
+        if (params.orderId != "" && params.orderId != null) {
+
+        }else{
+            if (params.startTime == "" || params.startTime == null) {
+                result.code = 400;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+            if (params.endTime == "" || params.endTime == null) {
+                result.code = 400;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
         }
-        if (params.endTime == "" || params.endTime == null) {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
+
+
         Order.batchExportOrderFull(params, function (err, data) {
             if (err) {
                 response.json(err);
