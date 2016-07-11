@@ -6,9 +6,7 @@ var router = express.Router();
 var SessionUtil = require('../lib/util/SessionUtil');
 var paramValid = require('../lib/models/pub/param_valid');
 
-//log
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 
 //thrift
 var seller_types = require("../lib/thrift/gen_code/seller_types");

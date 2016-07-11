@@ -14,8 +14,7 @@ var zookeeper = require('../lib/util/zookeeper_util');
 require('date-utils');
 
 var buyer_types = require("../lib/thrift/gen_code/buyer_types");
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var Lich = require('../lib/thrift/Lich.js');
 var thrift = require('thrift');
 

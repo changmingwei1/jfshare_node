@@ -13,8 +13,7 @@ var sign = require('cookie-signature')
 var zookeeper = require('../util/zookeeper_util');
 
 //log
-var log4node = require('../../log4node');
-var log = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../util/log4node').configlog4node.servLog4js();
 
 /**
  * Module exports.

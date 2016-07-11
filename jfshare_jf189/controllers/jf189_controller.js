@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var view_index = require('../view_center/index/view_index');
 var view_order = require('../view_center/order/view_order');
 var paramValid = require('../lib/models/pub/param_valid');
@@ -122,7 +121,7 @@ router.post('/pay/notify', function(req, res, next) {
             ret.status = 200;
             ret.msg = "请求成功";
             //ret.data = data[0].value;
-            res.json(200);
+            res.end("200");
         });
     } catch (err) {
         logger.error("后端支付通知----调用payServ-payNotify接收支付通知失败！", err);

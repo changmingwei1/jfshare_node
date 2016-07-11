@@ -1,8 +1,7 @@
 /**
  * Created by Lenovo on 2015/11/19.
  */
-var log4node = require('../../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../util/log4node').configlog4node.servLog4js();
 
 var result_types = require("../thrift/gen_code/result_types");
 var pay_types = require("../thrift/gen_code/pay_types");

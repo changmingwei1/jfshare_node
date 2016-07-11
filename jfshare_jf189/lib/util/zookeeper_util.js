@@ -1,5 +1,5 @@
 var zookeeper = require('node-zookeeper-client');
-
+var logger = require('../util/log4node').configlog4node.servLog4js();
 var zkMap = {};
 
 var options = {
@@ -31,12 +31,12 @@ function listChildren() {
     client.getChildren(
         public_client_path,
         function (event) {
-            console.log('Got watcher event: %s', event);
+            logger.debug('Got watcher event: %s', event);
             listChildren();
         },
         function (error, children, stat) {
             if (error) {
-                console.log(
+                logger.debug(
                     'Failed to list children of %s due to: %s.',
                     public_client_path,
                     error
@@ -44,7 +44,7 @@ function listChildren() {
                 return;
             }
 
-            console.log('Children of %s are: %j.', public_client_path, children);
+            logger.debug('Children of %s are: %j.', public_client_path, children);
             children.forEach(function(key){
                 getChildData(public_client_path, key);
             })
@@ -56,12 +56,12 @@ function listChildren() {
     client.getChildren(
         self_path,
         function (event) {
-            console.log('Got watcher event: %s', event);
+            logger.debug('Got watcher event: %s', event);
             listChildren();
         },
         function (error, children, stat) {
             if (error) {
-                console.log(
+                logger.debug(
                     'Failed to list children of %s due to: %s.',
                     self_path,
                     error
@@ -69,7 +69,7 @@ function listChildren() {
                 return;
             }
 
-            console.log('Children of %s are: %j.', self_path, children);
+            logger.debug('Children of %s are: %j.', self_path, children);
             children.forEach(function(key){
                 getChildData(self_path, key);
             })
@@ -78,31 +78,31 @@ function listChildren() {
 }
 
 function getChildData(nodePath, key){
-    console.log('key:%s.', key);
+    logger.debug('key:%s.', key);
     client.getData(nodePath + '/' + key,
         function(event){
-            console.log('Got event: %s.', event);
+            logger.debug('Got event: %s.', event);
             getChildData(nodePath, event.path.split('/')[3]);
         },
         function(error, data, stat){
             if (error) {
-                console.log(error.stack);
+                logger.debug(error.stack);
                 return;
             }
 
-            console.log('Got data: %s', data.toString('utf8'));
+            logger.debug('Got data: %s', data.toString('utf8'));
             zkMap[key] = data.toString('utf8');
         })
 }
 
 client.on('connected', function () {
-    console.log('Connected to the server.');
+    logger.debug('Connected to the server.');
     listChildren();
     console.info("zk ==>%s",JSON.stringify(zkMap));
 });
 
 client.on('disconnected', function(){
-    console.log('disconnected to the server.');
+    logger.debug('disconnected to the server.');
     if(client !== undefined){
         client.close();
         client = undefined;
@@ -112,7 +112,7 @@ client.on('disconnected', function(){
 });
 
 client.on('expired', function(){
-    console.log('expired to the server.');
+    logger.debug('expired to the server.');
     if(client !== undefined){
         client.close();
         client = undefined;
@@ -122,7 +122,7 @@ client.on('expired', function(){
 });
 
 client.on('authenticationFailed', function(){
-    console.log('authenticationFailed to the server.');
+    logger.debug('authenticationFailed to the server.');
     if(client !== undefined){
         client.close();
         client = undefined;
@@ -133,11 +133,11 @@ client.on('authenticationFailed', function(){
 
 client.getACL(path, function (error, acls, stat) {
     if (error) {
-        console.log(error.stack);
+        logger.debug(error.stack);
         return;
     }
 
-    console.log('ACL(s) are: %j', acls);
+    logger.debug('ACL(s) are: %j', acls);
 });
 
 module.exports.getData = function(key){

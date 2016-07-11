@@ -4,22 +4,13 @@
 //引入所需模块
 var express = require('express');
 var router = express.Router();
-//var path = require('path');
 
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var paramValid = require('../lib/models/pub/param_valid');
 
 var address_types = require("../lib/thrift/gen_code/address_types");
 var Lich = require('../lib/thrift/Lich.js');
 var thrift = require('thrift');
-var protocol = thrift.TBinaryProtocol;
-var transport =  thrift.TFramedTransport;
-var thriftOptions = {
-    transport: transport,
-    protocol: protocol
-};
-var thriftConfig = require('../resource/thrift_config');
 
 /**
  * 添加、修改收货地址

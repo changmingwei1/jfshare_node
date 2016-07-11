@@ -1,26 +1,16 @@
 //引入所需模块
 var express = require('express');
 var router = express.Router();
-//var path = require('path');
 var view = require('../view_center/product/view_product');
 
 var product_types = require("../lib/thrift/gen_code/product_types");
 var stock_types = require("../lib/thrift/gen_code/stock_types");
-var pagination_types = require("../lib/thrift/gen_code/pagination_types");
 var Lich = require('../lib/thrift/Lich.js');
 var thrift = require('thrift');
-var protocol = thrift.TBinaryProtocol;
-var transport =  thrift.TFramedTransport;
-var thriftOptions = {
-  transport: transport,
-  protocol: protocol
-};
-var thriftConfig = require('../resource/thrift_config');
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var paramValid = require('../lib/models/pub/param_valid');
 var detailStock = require('../lib/models/product/detail_stock');
-var SessionUtil = require('../lib/util/SessionUtil');
 
 router.get('/render/:productId', function(req, res, next) {
   var productId =  req.params["productId"] || "" ;
