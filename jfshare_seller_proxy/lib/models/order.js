@@ -173,7 +173,8 @@ Order.prototype.batchExportOrder = function (params, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
         startTime: params.startTime,
         endTime: params.endTime,
-        orderState: params.orderState || 0
+        orderState: params.orderState || 0,
+        orderId:params.orderId
     });
 
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
