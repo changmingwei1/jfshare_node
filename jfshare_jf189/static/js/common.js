@@ -1,26 +1,5 @@
-var _imgServ = "http://101.201.39.61:3000/system/v1/jfs_image/";
+var _imgServ = "http://proxy.jfshare.com/system/v1/jfs_image/";
 //var _imgServ = "http://10.46.172.190:3000/system/v1/jfs_image/";
-
-/**
- * 获取fixHeightUrl
- * @returns {string}
- */
-var getTyHostUrl = function() {
-    var _url = "";
-    $.ajax({
-        url: "/jf189/ty/hostUrl",
-        type: 'get',
-        async: false,
-        dataType:'json',
-        success: function (data) {
-            _url = data.url;
-        }
-    });
-    return _url;
-}
-
-var _tyHostUrl = getTyHostUrl();
-
 var opts = {
     lines: 10, // 花瓣数目
     length: 7, // 花瓣长度

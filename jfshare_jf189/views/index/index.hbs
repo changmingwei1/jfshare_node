@@ -751,6 +751,24 @@
 <!--<script type="text/javascript" src="/js/jquery/jquery.timers.js"></script>-->
 <script type="text/javascript" src="/js/util/contentloaded.js"></script>
 <script type="text/javascript">
+    /**
+     * 获取fixHeightUrl
+     * @returns {string}
+     */
+    var getTyHostUrl = function() {
+        var _url = "";
+        $.ajax({
+            url: "/jf189/ty/hostUrl",
+            type: 'get',
+            async: false,
+            dataType:'json',
+            success: function (data) {
+                _url = data.url;
+            }
+        });
+        return _url;
+    }
+
     $(function(){
         window.onload = new function() {
             contentLoaded(resizeIfr);
@@ -766,13 +784,12 @@
                 var divWidth = $("div.banner").width();
                 $("div.banner").height(divWidth/rate);
             }
-
-
         }
     });
 
 
     function resizeIfr() {
+        var _tyHostUrl = getTyHostUrl();
         var doc = document;
         var height = calcPageHeight(doc);
         var myifr = doc.getElementById('iframeA');
