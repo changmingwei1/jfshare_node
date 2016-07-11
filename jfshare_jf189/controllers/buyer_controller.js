@@ -87,7 +87,7 @@ router.get('/myOrderInfo', function(req, res, next) {
     res.resData.title = "订单详情";
     res.resData.orderId = arg.orderId;
     res.resData.userId =  req.session.buyer.userId;
-    if (!paramValid.keyValid(params.orderId)) {
+    if (!paramValid.keyValid(res.resData.userId)) {
         logger.warn("用户userId有误, userId=" + params.userId + ", orderId=" +  params.orderId);
         res.json("非法参数请求！");
         return;
