@@ -15,7 +15,7 @@ var parseString = require('xml2js').parseString;
 var Lich = require('../lib/thrift/Lich.js');
 var thrift = require('thrift');
 var pay_types = require("../lib/thrift/gen_code/pay_types");
-
+var zookeeper = require('../lib/util/zookeeper_util');
 router.get('/index', function(req, res, next) {
     logger.info("首页访问----originalUrl==> " + req.originalUrl);
     logger.info("query.strParm==> " + req.query.strParm);
@@ -61,14 +61,15 @@ router.get('/pay/jump', function(req, res, next) {
         parseString(xml, function (err, result) {
             console.log(JSON.stringify(result));
             if(result != undefined) {
-                var _key = "JFX54475254";
-                var _spid = "160260";
+                var _key = zookeeper.getData("ty_appid");
+                var _spid = zookeeper.getData("ty_spid");
                 var dt = new Date();
                 var d0 = dt.toFormat("YYYYMMDDHH24MISS");
                 var d1 = dt.addMinutes(5).toFormat("YYYYMMDDHH24MISS");
 
                 var retParam = result.OutNotifyXMLRequest.PayMoney[0] + "-" + (Number(result.OutNotifyXMLRequest.PayIntegral[0]) + Number(result.OutNotifyXMLRequest.PayVoucher[0]));
-                var _url = "http://y.jf.189.cn/preview/CommPage/Success.aspx?Partner=" + _spid +
+                //var _url = "http://y.jf.189.cn/preview/CommPage/Success.aspx?Partner=" + _spid +
+                var _url = zookeeper.getData("ty_host_url") + "/preview/CommPage/Success.aspx?Partner=" + _spid +
                     "&Sign=" + CommonUtil.md5(_spid+_key+d1).toUpperCase() +
                     "&ParDate=" + d0 +
                     "&redirect=" + retParam;
@@ -169,6 +170,13 @@ router.get('/pay/payret', function(req, res, next) {
         //res.json(ret);
         view_index.tip(req, res, next, ret);
     }
+});
+
+/*
+ 获取天翼hostUrl
+ */
+router.get('/ty/hostUrl', function(req, res, next) {
+    res.json({url:zookeeper.getData("ty_host_url")});
 });
 
 module.exports = router;

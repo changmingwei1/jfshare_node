@@ -10,6 +10,7 @@ var path = require('path');
 var sessionUtil = require('../util/SessionUtil');
 var onHeaders = require('on-headers')
 var sign = require('cookie-signature')
+var zookeeper = require('../util/zookeeper_util');
 
 //log
 var log4node = require('../../log4node');
@@ -145,6 +146,7 @@ SessionInterceptor.prototype.buildResData = function(){
             rData.sexImg = req.session.buyer.sexImg;
             rData.custLevel = req.session.buyer.custLevel;
         }
+        rData.tyHostUrl = zookeeper.getData("ty_host_url");
         res.resData = rData;
         next();
     }
