@@ -107,12 +107,11 @@ router.get('/count_cart', function(req, res, next) {
 });
 
 router.get('/list', function(req, res, next) {
-    var parameters = {};
     var arg = req.body;
-    parameters.title =  "购物车";
-    parameters.fromBatch = arg.fromBatch || "1";
+    res.resData.title =  "购物车";
+    res.resData.fromBatch = arg.fromBatch || "1";
     //1.render no data ui
-    view.show_cart(req, res, next, parameters);
+    view.show_cart(req, res, next);
 });
 
 router.get('/list_cart', function(req, res, next) {

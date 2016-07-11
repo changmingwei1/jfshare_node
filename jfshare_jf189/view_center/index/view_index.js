@@ -1,21 +1,14 @@
-exports.signup = function(req, res, next, data) {
-    res.render("index/signup", data);
-}
-
-exports.login = function(req, res, next, data) {
-    res.render("index/login", data);
-}
-
 exports.notfound = function(req, res, next) {
-    var data = {};
-    res.render("index/404", data);
+    res.render("index/404", res.resData);
 }
 
 exports.err = function(req, res, next, data) {
+    data.tyHostUrl = res.resData.tyHostUrl;
     res.render("index/500", data);
 }
 
 exports.tip = function(req, res, next, data) {
+    data.tyHostUrl = res.resData.tyHostUrl;
     res.render("index/tip", data);
 }
 

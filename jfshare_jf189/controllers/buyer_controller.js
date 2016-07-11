@@ -84,17 +84,16 @@ router.get('/orderStateCount', function(req, res, next) {
 router.get('/myOrderInfo', function(req, res, next) {
     logger.info('买家订单详情页');
     var arg = req.query;
-    var params = res.resData;
-    params.title = "订单详情";
-    params.orderId = arg.orderId;
-    params.userId =  req.session.buyer.userId;
+    res.resData.title = "订单详情";
+    res.resData.orderId = arg.orderId;
+    res.resData.userId =  req.session.buyer.userId;
     if (!paramValid.keyValid(params.orderId)) {
         logger.warn("用户userId有误, userId=" + params.userId + ", orderId=" +  params.orderId);
         res.json("非法参数请求！");
         return;
     }
     //2.render no data ui
-    view_buyer.my_order_detail(req, res, next, params);
+    view_buyer.my_order_detail(req, res, next);
 });
 
 router.get('/orderDetail', function(req, res, next) {
