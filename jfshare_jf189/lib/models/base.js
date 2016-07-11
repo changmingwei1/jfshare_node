@@ -20,7 +20,7 @@ function BaseTemplate() {
  */
 BaseTemplate.prototype.getStorehouseId = function(param, callback) {
     if(valid.empty(param.sellerId) || valid.empty(param.productId) || valid.empty(param.storehouseIds) || valid.empty(param.sendToProvince)) {
-        console.log("getStorehouseId() 参数非法==> " + JSON.stringify(param));
+        logger.info("getStorehouseId() 参数非法==> " + JSON.stringify(param));
         return callback({code:1, failDesc:'参数非法', result:false});
     }
 
@@ -29,17 +29,17 @@ BaseTemplate.prototype.getStorehouseId = function(param, callback) {
     var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer, "getDeliverStorehouse", thrift_DeliverStorehouseParam);
     Lich.wicca.invokeClient(baseTemplateServ, function (err, rdata) {
         if (err) {
-            log.error("baseTemplateServ 连接仓库模板服务失败 ======" + err);
+            logger.error("baseTemplateServ 连接仓库模板服务失败 ======" + err);
             return callback({code:1, failDesc:"系统异常", result:false});
         }
-        log.info("baseTemplateServ.getDeliverStorehouse() 访问成功  result=" + JSON.stringify(rdata));
+        logger.info("baseTemplateServ.getDeliverStorehouse() 访问成功  result=" + JSON.stringify(rdata));
         if (rdata[0].result.code != 0) {
             var failDescList = rdata[0].failDescList;
             var failDesc = "系统异常";
             if(failDescList.length>0) {
                 failDesc = failDescList[0].desc;
             }
-            log.error("baseTemplateServ.getDeliverStorehouse() 访问失败  =====原因:"+failDesc);
+            logger.error("baseTemplateServ.getDeliverStorehouse() 访问失败  =====原因:"+failDesc);
             return callback({code: 1, failDesc:failDesc, result:false});
         }
         return callback({result:true, storehouseId:rdata[0].productStorehouseList[0].storehouseId});
@@ -54,7 +54,7 @@ BaseTemplate.prototype.getStorehouseId = function(param, callback) {
  */
 BaseTemplate.prototype.calcPostage = function(param, callback) {
     if(valid.empty(param.sellerId) || valid.empty(param.productId) || valid.empty(param.templateId) || valid.empty(param.amount) || valid.empty(param.number) || valid.empty(param.weight) || valid.empty(param.sendToProvince)) {
-        console.log("calcPostage() 参数非法==> " + JSON.stringify(param));
+        logger.info("calcPostage() 参数非法==> " + JSON.stringify(param));
         return callback({code:1, failDesc:'参数非法', result:false});
     }
 
@@ -64,17 +64,17 @@ BaseTemplate.prototype.calcPostage = function(param, callback) {
     var baseTemplateServ = new Lich.InvokeBag(Lich.ServiceKey.BaseTemplateServer, "calculatePostage", thrift_CalculatePostageParam);
     Lich.wicca.invokeClient(baseTemplateServ, function (err, rdata) {
         if (err) {
-            log.error("baseTemplateServ 连接运费模板服务失败 ======" + err);
+            logger.error("baseTemplateServ 连接运费模板服务失败 ======" + err);
             return callback({code:1, failDesc:"系统异常", result:false});
         }
-        log.info("baseTemplateServ.calculatePostage() 访问成功  result=" + JSON.stringify(rdata));
+        logger.info("baseTemplateServ.calculatePostage() 访问成功  result=" + JSON.stringify(rdata));
         if (rdata[0].result.code != 0) {
             var failDescList = rdata[0].result.failDescList;
             var failDesc = "系统异常";
             if(failDescList.length>0) {
                 failDesc = failDescList[0].desc;
             }
-            log.error("baseTemplateServ.calculatePostage() 访问失败  =====原因:"+failDesc);
+            logger.error("baseTemplateServ.calculatePostage() 访问失败  =====原因:"+failDesc);
             return callback({code: 1, failDesc:failDesc, result:false});
         }
         return callback({result:true, postage:rdata[0].totalPostage});
