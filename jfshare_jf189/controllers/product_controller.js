@@ -25,7 +25,8 @@ var SessionUtil = require('../lib/util/SessionUtil');
 router.get('/render/:productId', function(req, res, next) {
   var productId =  req.params["productId"] || "" ;
   if(productId) {
-    res.render("index/render", {renderUrl:"/product/"+productId+"?ssid="+req.query.ssid})
+    res.resData.renderUrl = "/product/"+productId+"?ssid="+req.query.ssid;
+    res.render("index/render", res.resData)
     return;
   }
   next();
