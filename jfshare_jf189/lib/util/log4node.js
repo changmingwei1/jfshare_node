@@ -68,6 +68,7 @@ var  configlog4node = {
         var config = configlog4node.log4jsConfig;
         log4js.configure(configlog4node.log4jsConfig);
         var logger = log4js.getLogger("servLog");// 'default'
+        logger.setLevel("info");
         /***返回日志**/
         return logger;
     }
