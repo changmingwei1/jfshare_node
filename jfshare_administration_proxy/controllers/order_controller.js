@@ -1098,18 +1098,19 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
         if (params.orderId != "" && params.orderId != null) {
 
         }else{
-            if (params.startTime == "" || params.startTime == null) {
-                result.code = 400;
-                result.desc = "参数错误";
-                response.json(result);
-                return;
-            }
-            if (params.endTime == "" || params.endTime == null) {
-                result.code = 400;
-                result.desc = "参数错误";
-                response.json(result);
-                return;
-            }
+            //因为管理中心和卖家中心用同一个借口，所以去掉
+            //if (params.startTime == "" || params.startTime == null) {
+            //    result.code = 400;
+            //    result.desc = "参数错误";
+            //    response.json(result);
+            //    return;
+            //}
+            //if (params.endTime == "" || params.endTime == null) {
+            //    result.code = 400;
+            //    result.desc = "参数错误";
+            //    response.json(result);
+            //    return;
+            //}
         }
 
 
