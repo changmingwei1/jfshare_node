@@ -7,8 +7,7 @@ var router = express.Router();
 //var path = require('path');
 var view = require('../view_center/cart/view_cart');
 var paramValid = require('../lib/models/pub/param_valid');
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 
 var cart_types = require("../lib/thrift/gen_code/cart_types");
 var Lich = require('../lib/thrift/Lich.js');
@@ -107,12 +106,11 @@ router.get('/count_cart', function(req, res, next) {
 });
 
 router.get('/list', function(req, res, next) {
-    var parameters = {};
     var arg = req.body;
-    parameters.title =  "购物车";
-    parameters.fromBatch = arg.fromBatch || "1";
+    res.resData.title =  "购物车";
+    res.resData.fromBatch = arg.fromBatch || "1";
     //1.render no data ui
-    view.show_cart(req, res, next, parameters);
+    view.show_cart(req, res, next);
 });
 
 router.get('/list_cart', function(req, res, next) {

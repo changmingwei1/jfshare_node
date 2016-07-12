@@ -2,7 +2,7 @@
  * Created by jumpkang on 2015/6/19.
  */
 var express = require('express')
-
+var logger = require('../util/log4node').configlog4node.servLog4js();
 var CommonUtil = require("./CommonUtil");
 
 var paramValid = require("../models/pub/param_valid");
@@ -18,15 +18,15 @@ SessionUtil.prototype.getKey = function(){
 }
 
 SessionUtil.prototype.isLogin = function(req, callback){
-    console.log(":::::::::::::::::::::::::::::::::::::::::::::::::"+JSON.stringify(req.cookies));
+    logger.debug(":::::::::::::::::::::::::::::::::::::::::::::::::"+JSON.stringify(req.cookies));
     var ssid = req.cookies.ssid||req.body.ssid||req.query.ssid||req.params.ssid||"";
     if(ssid){
-        console.log("ssid:"+ req.cookies.ssid);
+        logger.debug("ssid:"+ req.cookies.ssid);
         var cookieInfo = CommonUtil.jfxDecryptor(req.cookies.ssid, this.key);
         if(!cookieInfo) {
             return callback(false);
         }
-        console.log("cookieInfo:"+ cookieInfo);
+        logger.debug("cookieInfo:"+ cookieInfo);
         var loginLog = JSON.parse(cookieInfo);
         //调用验证中心
         new userModel().isOnline(loginLog, function(data){
@@ -35,7 +35,7 @@ SessionUtil.prototype.isLogin = function(req, callback){
                 return callback(true);
 
             } else {
-                console.log(JSON.stringify(data));
+                logger.debug(JSON.stringify(data));
                 return callback(false);
             }
         })
@@ -45,7 +45,7 @@ SessionUtil.prototype.isLogin = function(req, callback){
 }
 
 SessionUtil.prototype.getOnlineSession = function(req, callback){
-    console.log(":::::::::::::::::::::::::::::::::::::::::::::::::"+JSON.stringify(req.cookies));
+    logger.debug(":::::::::::::::::::::::::::::::::::::::::::::::::"+JSON.stringify(req.cookies));
     var ssid = req.cookies.ssid||req.body.ssid||req.query.ssid||req.params.ssid||"";
     if(ssid){
         var cookieInfo = CommonUtil.jfxDecryptor(ssid, this.key);
@@ -69,15 +69,15 @@ SessionUtil.prototype.getOnlineSession = function(req, callback){
 }
 
 SessionUtil.prototype.getOnlineCookies = function(req, callback){
-    console.log(":::::::::::::::::::::::::::::::::::::::::::::::::"+JSON.stringify(req.cookies));
+    logger.debug(":::::::::::::::::::::::::::::::::::::::::::::::::"+JSON.stringify(req.cookies));
     var ssid = req.ssid||req.cookies.ssid||req.body.ssid||req.query.ssid||req.params.ssid||"";
     if(ssid){
-        console.log("getOnlineCookies ==> ssid:"+ ssid);
+        logger.debug("getOnlineCookies ==> ssid:"+ ssid);
         var cookieInfo = CommonUtil.jfxDecryptor(ssid, this.key);
         if(!cookieInfo) {
             return callback({result:false});
         }
-        console.log("getOnlineCookies ==> cookieInfo:"+ cookieInfo);
+        logger.debug("getOnlineCookies ==> cookieInfo:"+ cookieInfo);
         var buyer = JSON.parse(cookieInfo);
         return callback({result:true, buyer:buyer});
     } else {
@@ -86,7 +86,7 @@ SessionUtil.prototype.getOnlineCookies = function(req, callback){
 }
 
 SessionUtil.prototype.removeCookie=function(res){
-    console.log("清空cookie.......")
+    logger.debug("清空cookie.......")
     res.setHeader("Set-Cookie", ["ssid=; path=/;expires=0"]);
 }
 

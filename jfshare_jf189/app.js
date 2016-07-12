@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+// create "middleware"
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var domain = require('domain');
 var session = require('express-session');
-var zookeeper = require('./resource/zookeeper_util');
 
+var zookeeper = require('./lib/util/zookeeper_util');
+var log4node = require('./lib/util/log4node');
 var MultipleRedisStore = require('connect-redis-multiple')(session);
 var SessionInterceptor = require('./lib/middleware/SessionInterceptor');
 
@@ -44,8 +45,14 @@ app.set('productDir', path.join(__dirname, 'views/product'));
 app.set('cartDir', path.join(__dirname, 'views/cart'));
 var hbs = require("express-hbs");
 
-console.log(":::::::: __dirname:::::::::;"+ __dirname);
-console.log('layoutsDir::::::::::::'+app.get('layoutsDir'));
+// =================log record=================
+log4node.configlog4node.appLog4js(app);
+var logger =log4node.configlog4node.servLog4js();
+// =================log record=================
+
+
+logger.info(":::::::: __dirname:::::::::;"+ __dirname);
+logger.info('layoutsDir::::::::::::'+app.get('layoutsDir'));
 app.engine('hbs', hbs.express4({
   viewsDir    : path.join(__dirname, 'views'),
   partialsDir : path.join(__dirname, 'views/partials'),
@@ -57,7 +64,7 @@ app.engine('hbs', hbs.express4({
 
 app.set('view engine', 'hbs');
 
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -85,17 +92,19 @@ app.use(SessionInterceptor.cookieDisabled());
 var opts = {
   servers: [
     {
-      //host: '120.24.153.155',
-      host: '123.56.207.210',
-      port: 6379,
+      //host: zookeeper.getData("redis_host"),
+      //port: zookeeper.getData("redis_port"),
+      //pass:zookeeper.getData("redis_pwd"),
+      host:'120.24.153.155',
+      port:'6379',
+      pass:'jfsharedis',
       client: null,
       socket: null,
-      ttl: 3600,
+      ttl: 36000,
       disableTTL: false,
       prefix: 'web-sid:',
       access: 'RW',
       db:2,
-      pass:'jfsharedis'
     }
   ],
   balance: 'random'
@@ -122,8 +131,6 @@ app.use('/jf189',jf189);
 app.use('/seller', sellers);
 app.use('/', index);
 app.use('/nnc', commons);
-//app.use('/buyer', buyers);
-
 
 app.use(SessionInterceptor.ajaxValid());
 app.use(SessionInterceptor.nomalValid());
@@ -133,7 +140,6 @@ app.use('/address', addresses);
 app.use('/buyer', buyers);
 app.use('/cart', carts);
 
-//app.use(SessionInterceptor.static());
 //app.use(function(){console.log("=======================静态资源======================")});
 
 // catch 404 and forward to error handler

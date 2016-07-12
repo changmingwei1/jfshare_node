@@ -6,7 +6,7 @@ var crypto = require('crypto');
 var urlencode = require('urlencode')
 var cookie = require('cookie');
 var sign = require('cookie-signature')
-
+var logger = require('../util/log4node').configlog4node.servLog4js();
 function CommonUtil(){}
 
 CommonUtil.prototype.getIP = function getClientIp(req) {
@@ -27,7 +27,7 @@ CommonUtil.prototype.jfxDecryptor = function(data, key) {
         decryped += decipher.update(data, 'hex', 'utf8');
         decryped += decipher.final('utf8');
     } catch(e){
-        console.log("解密失败......" + e);
+        logger.debug("解密失败......" + e);
         return null;
     }
     return decryped;
@@ -49,7 +49,7 @@ CommonUtil.prototype.DesDecryptTY = function(text) {
         var base64Re = new Buffer(decryptStr, 'base64').toString();
         return urlencode.decode(base64Re, 'gbk');
     } catch(e){
-        console.log("解密失败......" + e);
+        logger.debug("解密失败......" + e);
     }
 }
 
@@ -167,4 +167,4 @@ module.exports = new CommonUtil();
 
 //var a = "AQxbyfMYW1RArwUSyAOsnmtst%2fM%2bzikpBLHS8gt63s1bGczUnQO91einKMCHIfw%2fTF3VpMR5RODnQq4YhAWp7Ag4CFYhawl7l%2bcbmttF2c%2brXinD0Rhu7WWriEBtIsyuYh1aoZTQcP0xVl3BVVu6DC8QvW9GtYgDA17igtoVnCmIxQdzmmec0BCewmXMOHrT7Avj09Bbllk0GbjV6h21Bwbr9Hc4cHWUM5xAgGdtzyPflzk62ZB2vFrJYFC4NCQfRW7zHr3%2bwpRhul1H7BrMGqc1K0jTJRaGJFUi1l%2b4AsD6%2fZMOLsZ9pdK53ngQMIT6J70gxLb7LiSfKUSJ5hfFvCSoX5YehYH64CtxNCh%2b3aVu%2fUSxK%2fzFeg%3d%3d";
 //var u = new CommonUtil();
-//console.log(u.DesDecryptTY(a));
+//logger.debug(u.DesDecryptTY(a));

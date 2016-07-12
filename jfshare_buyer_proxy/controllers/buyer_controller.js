@@ -173,10 +173,12 @@ router.post('/login', function (request, response, next) {
                         //var loginLog = data[0].loginLog;
                         var userId = data[0].buyer.userId;
                         var authInfo = data[0].authInfo;
+                        var loginLog = data[0].loginLog;
                         resContent.loginName = data[0].buyer.mobile;
                         resContent.ppInfo = authInfo.ppInfo;
                         resContent.token = authInfo.token;
                         resContent.userId = userId;
+                        resContent.logoutTime =loginLog.logoutTime;
                         /*给出系统当前时间*/
                         resContent.curTime = new Date().getTime();
                         response.json(resContent);
@@ -266,11 +268,13 @@ router.post('/login2', function (req, res, next) {
                         //var loginLog = data[0].loginLog;
                         var buyer = data[0].buyer;
                         var authInfo = data[0].authInfo;
+                        var loginLog = data[0].loginLog;
                         resContent.userId = buyer.userId;
                         resContent.loginName = buyer.mobile;
                         //resContent.loginLog = loginLog;
                         resContent.token = authInfo.token;
                         resContent.ppInfo = authInfo.ppInfo;
+                        resContent.logoutTime =loginLog.logoutTime;
                         /*给出系统当前时间*/
                         resContent.curTime = new Date().getTime();
                         res.json(resContent);
@@ -1167,10 +1171,12 @@ router.post('/existsThirdUser', function (request, response, next) {
             } else {
                 var buyer = data[0].buyer;
                 var authInfo = data[0].authInfo;
+                var loginLog = data[0].loginLog;
                 resContent.userId = buyer.userId;
                 resContent.loginName = buyer.mobile;
                 resContent.token = authInfo.token;
                 resContent.ppInfo = authInfo.ppInfo;
+                resContent.logoutTime = loginLog.logoutTime;
                 /*给出系统当前时间*/
                 resContent.curTime = new Date().getTime();
                 response.json(resContent);
@@ -1242,10 +1248,12 @@ router.post('/thirdUserSignin', function (request, response, next) {
             } else {
                 var buyer = data[0].buyer;
                 var authInfo = data[0].authInfo;
+                var loginLog = data[0].loginLog;
                 resContent.userId = buyer.userId;
                 resContent.loginName = buyer.mobile;
                 resContent.token = authInfo.token;
                 resContent.ppInfo = authInfo.ppInfo;
+                resContent.logoutTime = loginLog.logoutTime;
                 /*给出系统当前时间*/
                 resContent.curTime = new Date().getTime();
                 response.json(resContent);

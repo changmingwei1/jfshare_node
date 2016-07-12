@@ -15,8 +15,7 @@ var SessionUtil = require('../lib/util/SessionUtil');
 var paramValid = require('../lib/models/pub/param_valid');
 
 //log
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 
 router.get('/myOrders', function(req, res, next) {
     view_buyer.my_orders(req, res, next);
@@ -84,17 +83,16 @@ router.get('/orderStateCount', function(req, res, next) {
 router.get('/myOrderInfo', function(req, res, next) {
     logger.info('买家订单详情页');
     var arg = req.query;
-    var params = res.resData;
-    params.title = "订单详情";
-    params.orderId = arg.orderId;
-    params.userId =  req.session.buyer.userId;
-    if (!paramValid.keyValid(params.orderId)) {
-        logger.warn("用户userId有误, userId=" + params.userId + ", orderId=" +  params.orderId);
-        res.json("非法参数请求！");
-        return;
-    }
+    res.resData.title = "订单详情";
+    res.resData.orderId = arg.orderId;
+    res.resData.userId =  req.session.buyer.userId;
+    //if (!paramValid.keyValid(res.resData.userId)) {
+    //    logger.warn("用户userId有误, userId=" + res.resData.userId + ", orderId=" +  res.resData.orderId);
+    //    res.json("非法参数请求！");
+    //    return;
+    //}
     //2.render no data ui
-    view_buyer.my_order_detail(req, res, next, params);
+    view_buyer.my_order_detail(req, res, next);
 });
 
 router.get('/orderDetail', function(req, res, next) {

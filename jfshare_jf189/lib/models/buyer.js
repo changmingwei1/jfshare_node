@@ -1,8 +1,7 @@
 /**
  * Created by Lenovo on 2015/11/19.
  */
-var log4node = require('../../log4node');
-var log = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../util/log4node').configlog4node.servLog4js();
 
 var buyer_types = require("../thrift/gen_code/buyer_types");
 var Lich = require('../thrift/Lich');
@@ -47,17 +46,17 @@ Buyer.prototype.logout = function(data, callback) {
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "logout", [thrift_loginLog]);
     Lich.wicca.invokeClient(buyerServ, function (err, rdata) {
         if (err) {
-            log.error("buyerServ 连接买家服务失败 ======" + err);
+            logger.error("buyerServ 连接买家服务失败 ======" + err);
             return callback({failDesc:"系统异常", result:false});
         }
-        log.info("buyerServ.logout() 访问成功  result=" + JSON.stringify(rdata));
+        logger.info("buyerServ.logout() 访问成功  result=" + JSON.stringify(rdata));
         if (rdata[0]["code"] != 0) {
             var failDescList = rdata[0].failDescList;
             var failDesc = "系统异常";
             if(failDescList.length>0) {
                 failDesc = failDescList[0].desc;
             }
-            log.error("buyerServ.logout() 访问失败  =====原因:"+failDesc);
+            logger.error("buyerServ.logout() 访问失败  =====原因:"+failDesc);
             return callback({failDesc:failDesc, result:false});
         }
         return callback({result:true});
@@ -74,10 +73,10 @@ Buyer.prototype.signinTY = function(data, cookie, callback) {
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "signinThirdParty", [thrift_loginlog, thrift_thirdUser]);
     Lich.wicca.invokeClient(buyerServ, function (err, rdata) {
         if (err) {
-            log.error("buyerServ 连接买家服务失败 ======" + err);
+            logger.error("buyerServ 连接买家服务失败 ======" + err);
             return callback({failDesc:"系统异常", code:1, result:false});
         }
-        log.info("buyerServ.signinThirdParty() 访问成功  result=" + JSON.stringify(rdata));
+        logger.info("buyerServ.signinThirdParty() 访问成功  result=" + JSON.stringify(rdata));
         if (rdata[0].result.code != 0) {
             var failDescList = rdata[0].result.failDescList;
             var failDesc = "系统异常";
@@ -99,18 +98,18 @@ Buyer.prototype.isOnline = function(data, callback) {
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "isOnline", [thrift_loginLog]);
     Lich.wicca.invokeClient(buyerServ, function (err, rdata) {
         if (err) {
-            log.error("buyerServ 连接买家服务失败 ======" + err);
+            logger.error("buyerServ 连接买家服务失败 ======" + err);
             callback({code:1, failDesc:'系统异常', result:false});
             return;
         }
-        log.info("buyerServ.isOnline() 访问成功  result=" + JSON.stringify(rdata));
+        logger.info("buyerServ.isOnline() 访问成功  result=" + JSON.stringify(rdata));
         if (rdata[0].result["code"] != 0) {
             var failDescList = rdata[0].result.failDescList;
             var failDesc = "系统异常";
             if(failDescList.length>0) {
                 failDesc = failDescList[0].desc;
             }
-            log.error("buyerServ.isOnline() 访问失败  =====原因:"+failDesc);
+            logger.error("buyerServ.isOnline() 访问失败  =====原因:"+failDesc);
             callback({code: 1, failDesc:failDesc, result:false});
         } else {
             if(rdata[0].value) {
@@ -130,10 +129,10 @@ Buyer.prototype.getInfo = function(data, callback) {
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, "getBuyer", [thrift_buyer]);
     Lich.wicca.invokeClient(buyerServ, function (err, rdata) {
         if (err) {
-            log.error("buyerServ 连接买家服务失败 ======" + err);
+            logger.error("buyerServ 连接买家服务失败 ======" + err);
             return callback(err);
         }
-        log.info("buyerServ.getBuyer() 访问成功  result=" + JSON.stringify(rdata));
+        logger.info("buyerServ.getBuyer() 访问成功  result=" + JSON.stringify(rdata));
         if (rdata[0].result["code"] != 0) {
             var failDescList = rdata[0].result.failDescList;
             var failDesc = "系统异常";

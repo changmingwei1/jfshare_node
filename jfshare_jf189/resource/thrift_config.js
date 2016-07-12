@@ -71,7 +71,7 @@ module.exports.getThriftConfig  =   function(url,port){
     return new ThriftConfig(url,port);
 }
 
-var zookeeper = require('./zookeeper_util');
+var zookeeper = require('../lib/util/zookeeper_util');
 /**********************************************************************************************************************************
  *
  * 所有的都按照下面写，没有的新加

@@ -10,25 +10,15 @@ var async = require('async');
 var qs = require('querystring');
 var request = require('request');
 var url = require('url');
+var zookeeper = require('../lib/util/zookeeper_util');
 require('date-utils');
 
 var buyer_types = require("../lib/thrift/gen_code/buyer_types");
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var Lich = require('../lib/thrift/Lich.js');
 var thrift = require('thrift');
-var protocol = thrift.TBinaryProtocol;
-var transport =  thrift.TFramedTransport;
-var thriftOptions = {
-    transport: transport,
-    protocol: protocol
-};
-var thriftConfig = require('../resource/thrift_config');
-
 
 router.get('/', function(req, res, next) {
-
-    //res.json(res.resData);
     res.render("index/index",res.resData);
 });
 
@@ -37,7 +27,6 @@ router.post('/isOnline', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', req_origin);
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-    //res.addHeader("Access-Control-Allow-Headers", "accept, content-type");
     sessionUtil.getOnlineCookies(req, function(data){
         res.json(data);
     });
@@ -53,19 +42,19 @@ router.options('/isOnline', function(req, res, next) {
     res.json({result:'OK'});
 });
 
-router.get('/captcha', function(req, res, next) {
-    var id = req.query.uuid||"";
-    if(id){
-        new commonModel().getCaptcha(id, function(rdata){
-            if(rdata.result){
-                var img = rdata.captcha.captchaBytes;   //从数据库中得到图片二进制数据
-                res.writeHead('200', {'Content-Type': 'image/jpeg'});    //写http头部信息
-                res.end(img,'binary');
-                //res结束，把图片显示出来也可以res.write(img,'binary')
-            }
-        });
-    }
-});
+//router.get('/captcha', function(req, res, next) {
+//    var id = req.query.uuid||"";
+//    if(id){
+//        new commonModel().getCaptcha(id, function(rdata){
+//            if(rdata.result){
+//                var img = rdata.captcha.captchaBytes;   //从数据库中得到图片二进制数据
+//                res.writeHead('200', {'Content-Type': 'image/jpeg'});    //写http头部信息
+//                res.end(img,'binary');
+//                //res结束，把图片显示出来也可以res.write(img,'binary')
+//            }
+//        });
+//    }
+//});
 
 router.get('/signinThirdParty4TY', function(req, res, next) {
     var strParm = req.query.strParm||"";
@@ -98,7 +87,6 @@ router.get('/signinThirdParty4TY', function(req, res, next) {
     ], function(err, sessionBuyer){
         if(err) {
             console.log("第三方账号登录失败" + err);
-            //res.json({signinResult:false, failDesc:err});
             res.render("index/index",{signinResult:false, failDesc:err});
         } else{
             req.session.regenerate(function(){
@@ -110,14 +98,10 @@ router.get('/signinThirdParty4TY', function(req, res, next) {
                 rData.loginStatus = true;
                 rData.ssid = CommonUtil.jfxCryptor(req.sessionID);
                 console.log("第三方账号登录成功 res.resData.ssid="+res.resData.ssid+", new.ssid="+rData.ssid);
-                //rData.loginLog = sessionBuyer.loginLog;
-                //res.json(rData);
-                //res.render("index/index",rData);
                 var resHtml =  ''
                     + '<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"></head><body>'
                     + '<script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js"></script>'
                     + '<script type="text/javascript" language="JavaScript">'
-                    //+ 'alert("ssid:==>'+rData.ssid+'");'
                         + 'location.href="' + redirectUrl + '?ssid='+rData.ssid+'";'
                     + '</script>'
                     + '</body></html>';
@@ -156,7 +140,6 @@ router.post('/isBindThirdParty', function(req, res, next) {
                     return;
                 }
                 logger.info("调用buyerServ-isBindThirdParty验证第三方登录  result.code =  （" + data[0].result.code + "）  1为失败 0为成功");
-                //view.confirm_cart(req, res, next, parameters);
                 if (!paramValid.empty(data[0].thirdUser)) {
                     ret.value = data[0].thirdUser;
                     ret.status = 200;
@@ -182,29 +165,17 @@ router.post('/isBindThirdParty', function(req, res, next) {
 });
 
 router.get('/thirdlogin', function(req, res, next) {
-    var _key = "JFX54475254";
-    var _spid = "160260";
+    var _key = zookeeper.getData("ty_appid");
+    var _spid = zookeeper.getData("ty_spid");
     var dt = new Date();
     var d0 = dt.toFormat("YYYYMMDDHH24MISS");
     var d1 = dt.addMinutes(5).toFormat("YYYYMMDDHH24MISS");
-    var _url = "http://y.jf.189.cn/preview/CommPage/Login.aspx?Partner=" + _spid
+    //var _url = "http://y.jf.189.cn/preview/CommPage/Login.aspx?Partner=" + _spid
+    var _url = zookeeper.getData("ty_host_url") + "/CommPage/Login.aspx?Partner=" + _spid
         + "&Sign=" + CommonUtil.md5(_spid+_key+d1).toUpperCase()
         + "&ParDate=" + d0;
     logger.info('thirdlogin 189url-----> ' + _url);
     res.json({url:_url});
-});
-
-router.get('/test', function(req, res, next) {
-    var _key = "JFX54475254";
-    var _spid = "160260";
-    var dt = new Date();
-    var d0 = dt.toFormat("YYYYMMDDHH24MISS");
-    var d1 = dt.addMinutes(5).toFormat("YYYYMMDDHH24MISS");
-    var _url = "http://y.jf.189.cn/preview/CommPage/Default.aspx?Partner=" + _spid
-        + "&Sign=" + CommonUtil.md5(_spid+_key+d1).toUpperCase()
-        + "&ParDate=" + d0;
-    logger.info('189url-----> ' + _url);
-    res.redirect(_url);
 });
 
 router.get('/isLoginTY', function(req, res, next) {
@@ -212,7 +183,7 @@ router.get('/isLoginTY', function(req, res, next) {
     var queryUrl = url.parse(req.headers.referer||'').query;
     req.ssid = qs.parse(queryUrl).ssid;
     logger.error("XstatusX referer==> " + req.headers.referer);
-    var checkUrl = 'http://y.jf.189.cn/preview/CommPage/LoginInfo.aspx?strUrl=http://ct100.jfshare.com/login/isLoginTY';
+    var checkUrl = zookeeper.getData("ty_host_url") + '/CommPage/LoginInfo.aspx?strUrl=http://ct100.jfshare.com/login/isLoginTY';
     //var checkUrl = 'http://y.jf.189.cn/preview/CommPage/LoginInfo.aspx?strUrl=http://localhost:23003/login/isLoginTY';
     if(!status) {
         res.redirect(checkUrl);
@@ -229,25 +200,6 @@ router.get('/isLoginTY', function(req, res, next) {
             res.end("ty login");
         }
     }
-});
-
-router.get('/test189', function(req, res, next) {
-    var params = {
-        "DeviceNo": "18610418281",
-        "PayIntegral": "1",
-        "PayDefaultIntegral": "0",
-        "AppCode": "CX",
-        "DeviceType": "18",
-        "RequestDate": "20160201161953",
-        "PayDefaultMoney": "1",
-        "action": "http://y.jf.189.cn/preview/WebCashier/Cashier.aspx",
-        "Sign": "4b081d15607d740995f837de630ef7fd",
-        "BusinessRemark": "订单支付",
-        "CommodityName": "聚分享订单",
-        "SpId": "160260",
-        "SPOrderID": "c30a6fff5710e38cdca6bab5faccedb2"
-    }
-    res.render("order/test_jf189", params);
 });
 
 module.exports = router;

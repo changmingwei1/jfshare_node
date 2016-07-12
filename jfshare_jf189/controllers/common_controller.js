@@ -6,8 +6,7 @@ var express = require('express');
 var router = express.Router();
 //var path = require('path');
 
-var log4node = require('../log4node');
-var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
+var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var paramValid = require('../lib/models/pub/param_valid');
 
 var common_types = require("../lib/thrift/gen_code/common_types");
