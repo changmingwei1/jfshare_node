@@ -68,7 +68,7 @@ router.get('/pay/jump', function(req, res, next) {
 
                 var retParam = result.OutNotifyXMLRequest.PayMoney[0] + "-" + (Number(result.OutNotifyXMLRequest.PayIntegral[0]) + Number(result.OutNotifyXMLRequest.PayVoucher[0]));
                 //var _url = "http://y.jf.189.cn/preview/CommPage/Success.aspx?Partner=" + _spid +
-                var _url = zookeeper.getData("ty_host_url") + "/preview/CommPage/Success.aspx?Partner=" + _spid +
+                var _url = zookeeper.getData("ty_host_url") + "/CommPage/Success.aspx?Partner=" + _spid +
                     "&Sign=" + CommonUtil.md5(_spid+_key+d1).toUpperCase() +
                     "&ParDate=" + d0 +
                     "&redirect=" + retParam;
@@ -169,6 +169,19 @@ router.get('/pay/payret', function(req, res, next) {
         //res.json(ret);
         view_index.tip(req, res, next, ret);
     }
+});
+
+router.get('/default', function(req, res, next) {
+    var _key = zookeeper.getData("ty_appid");
+    var _spid = zookeeper.getData("ty_spid");
+    var dt = new Date();
+    var d0 = dt.toFormat("YYYYMMDDHH24MISS");
+    var d1 = dt.addMinutes(5).toFormat("YYYYMMDDHH24MISS");
+    var _url = zookeeper.getData("ty_host_url") + "/CommPage/Default.aspx?Partner=" + _spid
+        + "&Sign=" + CommonUtil.md5(_spid+_key+d1).toUpperCase()
+        + "&ParDate=" + d0;
+    logger.info('189url-----> ' + _url);
+    res.redirect(_url);
 });
 
 /*
