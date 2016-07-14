@@ -154,11 +154,11 @@ CommonUtil.prototype.getCustLevelDesc=function(custLevel){
 }
 
 CommonUtil.prototype.getSexImage=function(sex){
-    var imgKey = "/jf189/common/images/noImg.jpg";  //未知
+    var imgKey = "http://y.jf.189.cn/selfcenter/common/images/man.jpg";  //未知
     if(sex === 0) {
-        imgKey = "/jf189/common/images/noImg.jpg" //女
+        imgKey = "http://y.jf.189.cn/selfcenter/common/images/girl.jpg" //女
     } else if(sex === 1) {
-        imgKey = "/jf189/common/images/noImg.jpg"  //男
+        imgKey = "http://y.jf.189.cn/selfcenter/common/images/man.jpg"  //男
     }
     return imgKey;
 }

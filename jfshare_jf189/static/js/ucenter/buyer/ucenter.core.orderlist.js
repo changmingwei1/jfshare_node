@@ -9,7 +9,10 @@ var renderPage = function(){
         });
         orderStates["0"] = orderCountTotal;
         $.each($(".ct > ul > li"), function(i, li){
-            $(li).children("h3").append("<span> "+orderStates[$(li).attr("orderState")]+"</span>")
+            var c = orderStates[$(li).attr("orderState")];
+            if(c > 0) {
+                $(li).children("h3").append("<span> "+c+"</span>")
+            }
         });
     });
 
