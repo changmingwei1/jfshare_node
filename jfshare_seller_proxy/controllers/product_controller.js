@@ -916,7 +916,13 @@ router.post('/improtTicket', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.productId == null || params.productId == "") {
 
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
         Product.improtVirtual(params, function (err, expressData) {
             if (err) {
                 response.json(result);

@@ -434,7 +434,8 @@ Product.prototype.improtVirtual = function (param, callback) {
 
     var ProductCardImportParam = new product_types.ProductCardImportParam({
         sellerId:param.sellerId,
-        path:param.path
+        path:param.path,
+        productId:param.productId
     });
 
 

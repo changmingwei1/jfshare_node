@@ -2161,6 +2161,128 @@ ProductServ_statisticsProductCard_result.prototype.write = function(output) {
   return;
 };
 
+ProductServ_statisticsSkuProductCard_args = function(args) {
+  this.param = null;
+  this.pagination = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ProductServ_statisticsSkuProductCard_args.prototype = {};
+ProductServ_statisticsSkuProductCard_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ProductCardSkuStatisticsParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_statisticsSkuProductCard_args.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_statisticsSkuProductCard_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_statisticsSkuProductCard_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ProductServ_statisticsSkuProductCard_result.prototype = {};
+ProductServ_statisticsSkuProductCard_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ProductCardStatisticsResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_statisticsSkuProductCard_result.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_statisticsSkuProductCard_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ProductServ_queryProductCardViewList_args = function(args) {
   this.param = null;
   this.pagination = null;
@@ -3732,6 +3854,54 @@ ProductServClient.prototype.recv_statisticsProductCard = function(input,mtype,rs
   }
   return callback('statisticsProductCard failed: unknown result');
 };
+ProductServClient.prototype.statisticsSkuProductCard = function(param, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_statisticsSkuProductCard(param, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_statisticsSkuProductCard(param, pagination);
+  }
+};
+
+ProductServClient.prototype.send_statisticsSkuProductCard = function(param, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('statisticsSkuProductCard', Thrift.MessageType.CALL, this.seqid());
+  var args = new ProductServ_statisticsSkuProductCard_args();
+  args.param = param;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ProductServClient.prototype.recv_statisticsSkuProductCard = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ProductServ_statisticsSkuProductCard_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('statisticsSkuProductCard failed: unknown result');
+};
 ProductServClient.prototype.queryProductCardViewList = function(param, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -4596,6 +4766,36 @@ ProductServProcessor.prototype.process_statisticsProductCard = function(seqid, i
     this._handler.statisticsProductCard(args.param, args.pagination,  function (err, result) {
       var result = new ProductServ_statisticsProductCard_result((err != null ? err : {success: result}));
       output.writeMessageBegin("statisticsProductCard", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ProductServProcessor.prototype.process_statisticsSkuProductCard = function(seqid, input, output) {
+  var args = new ProductServ_statisticsSkuProductCard_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.statisticsSkuProductCard.length === 2) {
+    Q.fcall(this._handler.statisticsSkuProductCard, args.param, args.pagination)
+      .then(function(result) {
+        var result = new ProductServ_statisticsSkuProductCard_result({success: result});
+        output.writeMessageBegin("statisticsSkuProductCard", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ProductServ_statisticsSkuProductCard_result(err);
+        output.writeMessageBegin("statisticsSkuProductCard", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.statisticsSkuProductCard(args.param, args.pagination,  function (err, result) {
+      var result = new ProductServ_statisticsSkuProductCard_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("statisticsSkuProductCard", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
