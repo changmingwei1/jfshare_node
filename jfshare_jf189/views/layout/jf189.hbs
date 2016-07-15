@@ -24,9 +24,74 @@
     <script src="/js/util/Math.uuid.js"></script>
     <script src="/js/common.js"></script>
     <script src="/js/ucenter/buyer/ucenter.hbs-helper.js"></script>
-
+    <!--<script type="text/javascript">-->
+        <!--//#endregion-->
+        <!--//#region 返回顶部-->
+        <!--function gotoTop(minHeight){-->
+            <!--$("#gotoTop").click(//定义返回顶部点击向上滚动的动画-->
+                    <!--function(){$('html,body').animate({scrollTop:0},150);-->
+                    <!--}).hover(//为返回顶部增加鼠标进入的反馈效果，用添加删除css类实现-->
+                    <!--function(){$(this).addClass("hover");},-->
+                    <!--function(){$(this).removeClass("hover");-->
+                    <!--});-->
+            <!--//获取页面的最小高度，无传入值则默认为600像素-->
+            <!--minHeight ? minHeight = minHeight : minHeight = 600;-->
+            <!--//为窗口的scroll事件绑定处理函数-->
+            <!--$(window).scroll(function(){-->
+                <!--//获取窗口的滚动条的垂直位置-->
+                <!--var s = $(window).scrollTop();-->
+                <!--//当窗口的滚动条的垂直位置大于页面的最小高度时，让返回顶部元素渐现，否则渐隐-->
+                <!--if( s > minHeight){-->
+                    <!--$("#gotoTop").fadeIn(100);-->
+                <!--}else{-->
+                    <!--$("#gotoTop").fadeOut(200);-->
+                <!--};-->
+            <!--});-->
+        <!--};-->
+    <!--</script>-->
 </head>
 <body>
+<!--   头部    -->
+<div id="header">
+    <!--  logo+搜索框   -->
+    <div class="header_lv2">
+        <div class="left">
+            <h1 id="checkoutLogo">
+                <img src="http://y.jf.189.cn/selfcenter/common/images/userCenter_logo.jpg" alt="积分商城个人中心" usemap="#Maplogo">积分商城个人中心
+                <map name="Maplogo" id="Maplogo">
+                    <area shape="rect" coords="2,14,163,74" href="http://jf.189.cn" title="积分商城首页" />
+                    <area shape="rect" coords="175,16,273,74" href="http://y.jf.189.cn/selfcenter/Index.aspx" title="个人中心" />
+                </map>
+            </h1>
+        </div>
+
+    </div>
+    <!-- 导航 菜单-->
+    <div id="nav">
+        <ul class="sn-quick-menu">
+            <li class="menu-item" id="isy">
+                <div class="sn-menu">
+                    <a class="menu-hd" href="http://y.jf.189.cn/selfcenter/Index.aspx">首页</a>
+                </div>
+            </li>
+            <li class="menu-item" id="iwdjf">
+                <div class="sn-menu">
+
+                    <a class="menu-hd" href="http://y.jf.189.cn/selfcenter/myYiPoints.aspx">我的积分</a>
+
+                </div>
+            </li>
+            <li class="menu-item" id="iwddd">
+                <div class="sn-menu">
+                    <a class="menu-hd" href="http://y.jf.189.cn/selfcenter/order.aspx">我的订单</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!--ending of -->
+</div>
+
+
 <!--   中间部分内容   -->
 <div id="content">
     <div id="leftpart">
@@ -46,7 +111,7 @@
                     <!--</div>-->
                 </div>
                 <!--<a href="http://jf.189.cn/JFSubject/BirthdaySubject.aspx" target="_blank" class="birthIcon istoday" title="前往生日专享">生日</a>-->
-                <div id="quite" title="退出登录"></div>
+                <!--<div id="quite" title="退出登录"></div>-->
             </div>
 
         </div>
@@ -76,6 +141,37 @@
     </div>
     <input type="hidden" id="ssid" value="{{ssid}}">
 </div>
+<div id="footer">
+    <table border="0" cellpadding="0" cellspacing="0" width="1200">
+        <tbody><tr>
+            <td rowspan="2" align="left" height="55" width="10"><a href="http://121.40.51.153/webchat/chat.html?c=1&amp;jId=2&amp;g=2" target="_blank">
+                <img src="http://y.jf.189.cn/selfcenter/greenimages/header_footer/zaixinkefu.jpg" alt="在线客服点击咨询" border="0"></a> </td>
+            <td rowspan="2" width="154">
+                <img src="http://jf.189.cn/Home/commongreen/images/header_footer/farr_03.gif"></td>
+            <td rowspan="2" align="center" width="375">增值电信业务经营许可证A2.B1.B2-20090001&nbsp;|&nbsp;京ICP备09031924号<br>
+                版权所有(C)中国电信集团公司&nbsp;|&nbsp;<a href="http://www.189.cn/" target="_blank">中国电信统一门户</a>&nbsp;|&nbsp;商户合作邮箱</td>
+            <td height="30" valign="bottom" width="196">
+                <img src="http://y.jf.189.cn/selfcenter/greenimages/header_footer/10000.gif"></td>
+            <td rowspan="2" align="right" width="120">
+                <img src="http://y.jf.189.cn/selfcenter/greenimages/header_footer/ct10000.jpg"></td>
+        </tr>
+        <tr>
+            <td height="29">
+                <img src="http://y.jf.189.cn/selfcenter/greenimages/header_footer/10659858.gif"></td>
+        </tr>
+        <tr>
+            <td colspan="5" align="center">
+            </td>
+        </tr>
+        </tbody></table>
+</div>
+<!--<div id="hm_t_undefined" class="hm-t-container">-->
+    <!--<div class="hm-t-feedback-trigger hm-t-unfold-button hm-t-unfold-button-txt" title="反馈建议"-->
+         <!--style="bottom: 44px; font-size: 14px; line-height: 17px; padding-top: 3px; height: 37px;">反馈建议-->
+    <!--</div>-->
+    <!--<div class="hm-t-go-top" id="gotoTop"-->
+         <!--style="display: block; background-position: -42px center; background-color: rgb(102, 102, 102);"></div>-->
+<!--</div>-->
 <iframe id="loginInfoFrm" name="loginInfoFrm" src="#" style="display: none;" width="100%" height="0px"></iframe>
 <iframe src="{{tyHostUrl}}/CommPage/fixHeight.html#1100" id="iframeA" name="iframeA" style="display: none;"></iframe>
 </body>
