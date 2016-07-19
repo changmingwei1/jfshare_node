@@ -224,7 +224,7 @@ router.post('/queryBySubject', function(request, response,next) {
 
                 var brands = data[0].brandInfo;
                 var brandList = [];
-                if (data[0].total != 0) {
+                if (data[0].total != 0 && brands!=null) {
                     brands.forEach(function (brandInfo) {
                         //var brand = ({
                         brandList.push({
