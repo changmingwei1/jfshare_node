@@ -1171,7 +1171,7 @@ router.post('/batchDeliverOrder', function (request, response, next) {
             response.json(result);
             return;
         }
-        params.path ="http://101.201.39.61/system/v1/jfs_image/AD258453998FFBDD44CE92C4261691E4.xlsx";
+        params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
         var isDownLoad = false;
         async.series([
                 function (callback) {
@@ -1205,13 +1205,16 @@ router.post('/batchDeliverOrder', function (request, response, next) {
                             if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
 
                                 for (var i = 1; i < sheetData.data.length; i++) {
-                                    if (sheetData.data[i].length >= 4) {
+
+                                    if (sheetData.data[i].length >= 3) {
                                         var deliverInfo = new order_types.DeliverInfo({
                                             expressName: sheetData.data[i][2],
                                             expressNo: sheetData.data[i][1] + "",
-                                            sellerComment: sheetData.data[i][3]
+                                            sellerComment: ""
                                         });
-
+                                        if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
+                                            deliverInfo.sellerComment = sheetData.data[i][3];
+                                        }
                                         var order = new order_types.Order({
                                             orderId: sheetData.data[i][0] + "",
                                             deliverInfo: deliverInfo
