@@ -475,10 +475,10 @@ router.post('/upload', function(req, res) {
 router.post('/uploadFile', function(req, res) {
 
     var req_origin = req.headers.origin || "*";
-    res.setHeader('Access-Control-Allow-Origin', req_origin);
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
+    //res.setHeader('Access-Control-Allow-Origin', req_origin);
+    //res.setHeader('Access-Control-Allow-Credentials', true);
+    //res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
+    //res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
 
 
     var originalUrl = req.originalUrl;
@@ -529,10 +529,10 @@ router.post('/uploadFile', function(req, res) {
 router.post('/uploadFiles', function(req, res) {
 
     var req_origin = req.headers.origin || "*";
-    res.setHeader('Access-Control-Allow-Origin', req_origin);
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
+    //res.setHeader('Access-Control-Allow-Origin', req_origin);
+    //res.setHeader('Access-Control-Allow-Credentials', true);
+    //res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
+    //res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
 
 
     var originalUrl = req.originalUrl;
