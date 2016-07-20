@@ -1171,6 +1171,7 @@ router.post('/batchDeliverOrder', function (request, response, next) {
             response.json(result);
             return;
         }
+        params.path ="http://101.201.39.61/system/v1/jfs_image/AD258453998FFBDD44CE92C4261691E4.xlsx";
         var isDownLoad = false;
         async.series([
                 function (callback) {
