@@ -269,6 +269,7 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
         sellerId: params.sellerId,
         productId: params.productId,
         cardNumber: params.cardNumber,
+        skuNum:params.skuNum,
         state: params.state
     });
     var page = new pagination_types.Pagination({
