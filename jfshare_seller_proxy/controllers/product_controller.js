@@ -677,7 +677,7 @@ router.post('/virtualSkuList', function (request, response, next) {
     } catch (ex) {
         logger.error("get  virtual product List error:" + ex);
         result.code = 500;
-        result.desc = "获取虚拟商品列表";
+        result.desc = "获取虚拟商品列表失败";
         response.json(result);
     }
 });

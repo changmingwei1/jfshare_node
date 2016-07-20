@@ -326,6 +326,43 @@ Product.prototype.queryProductCard = function (params, callback) {
         }
     });
 };
+
+//statisticsSkuProductCard
+Product.prototype.statisticsSkuProductCard = function (params, callback) {
+
+    var productRetParam = new product_types.ProductCardSkuStatisticsParam({
+        sellerId: params.sellerId,
+        productId: params.productId
+    });
+    var page = new pagination_types.Pagination({
+        numPerPage: params.perCount,
+        currentPage: params.curpage
+    });
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsSkuProductCard",[productRetParam, page]);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("productServ-statisticsSkuProductCard  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("productServ-statisticsSkuProductCard  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询虚拟商品失败";
+            return callback(res, null);
+        }else if(data==null){
+            return callback(null,null);
+        }else if(data[0].result.code ==1){
+            logger.error("productServ-statisticsSkuProductCard  失败原因 ======" + data);
+            res.code = 500;
+            res.desc = "查询虚拟商品失败";
+            return callback(res, null);
+        }else {
+            return callback(null, data)
+        }
+    });
+};
+
+
+
 ////申请上架
 //Product.prototype.setProductState = function (params, callback) {
 //

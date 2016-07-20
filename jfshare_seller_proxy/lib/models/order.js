@@ -247,7 +247,6 @@ Order.prototype.orderConfirm = function (arg, callback) {
 
 //批量发货
 Order.prototype.batchDeliverOrder = function (params, callback) {
-
     var batchDeliverParam = new order_types.BatchDeliverParam({
         orderList: params.list
     });
