@@ -1172,7 +1172,7 @@ router.post('/batchDeliverOrder', function (request, response, next) {
             return;
         }
         params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
-        logger.error("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
+       // logger.error("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
         var isDownLoad = false;
         async.series([
                 function (callback) {
