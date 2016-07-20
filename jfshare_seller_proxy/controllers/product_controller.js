@@ -668,10 +668,14 @@ router.post('/virtualSkuList', function (request, response, next) {
                 return
             }
             if(data == null){
-
                 return response.json(result);
+            }else{
+                if(data[0].cardtatisticsList!=null){
+                    result.cardtatisticsList = data[0].cardtatisticsList;
+                }
             }
-            return response.json(data);
+
+            return response.json(result);
         });
 
     } catch (ex) {
