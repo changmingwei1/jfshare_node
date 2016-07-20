@@ -257,7 +257,7 @@ Order.prototype.batchDeliverOrder = function (params, callback) {
         logger.info("调用orderServ-batchDeliverParam  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-batchDeliverParam  失败原因 ======" + err);
+            logger.error("调用orderServ-batchDeliverParam  失败原因 ======" + err +"返回的数据是"+JSON.stringify(data));
             res.code = 500;
             res.desc = data[0].failInfo;
             callback(res, null);
