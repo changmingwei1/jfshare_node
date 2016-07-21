@@ -269,10 +269,10 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
         sellerId: params.sellerId,
         productId: params.productId,
         cardNumber: params.cardNumber,
+        skuNum:params.skuNum,
         state: params.state
     });
     var page = new pagination_types.Pagination({
-
         numPerPage: params.perCount,
         currentPage: params.curpage
     });
@@ -326,6 +326,43 @@ Product.prototype.queryProductCard = function (params, callback) {
         }
     });
 };
+
+//statisticsSkuProductCard
+Product.prototype.statisticsSkuProductCard = function (params, callback) {
+
+    var productRetParam = new product_types.ProductCardSkuStatisticsParam({
+        sellerId: params.sellerId,
+        productId: params.productId
+    });
+    var page = new pagination_types.Pagination({
+        numPerPage: params.perCount,
+        currentPage: params.curpage
+    });
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "statisticsSkuProductCard",[productRetParam, page]);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("productServ-statisticsSkuProductCard  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("productServ-statisticsSkuProductCard  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询虚拟商品失败";
+            return callback(res, null);
+        }else if(data==null){
+            return callback(null,null);
+        }else if(data[0].result.code ==1){
+            logger.error("productServ-statisticsSkuProductCard  失败原因 ======" + data);
+            res.code = 500;
+            res.desc = "查询虚拟商品失败";
+            return callback(res, null);
+        }else {
+            return callback(null, data)
+        }
+    });
+};
+
+
+
 ////申请上架
 //Product.prototype.setProductState = function (params, callback) {
 //
@@ -434,7 +471,8 @@ Product.prototype.improtVirtual = function (param, callback) {
 
     var ProductCardImportParam = new product_types.ProductCardImportParam({
         sellerId:param.sellerId,
-        path:param.path
+        path:param.path,
+        productId:param.productId
     });
 
 
@@ -444,7 +482,7 @@ Product.prototype.improtVirtual = function (param, callback) {
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("调用productServ-improtVirtual result:" + JSON.stringify(data));
+        logger.error("调用productServ-improtVirtual result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
             logger.error("调用productServ-improtVirtual  失败原因 ======" + err + data);
@@ -646,6 +684,7 @@ Product.prototype.getBuyer = function(param,callback){
 
     var buyer = new buyer_types.Buyer({userId:param.userId});
 
+    logger.info("get buyer param-------:" + JSON.stringify(buyer));
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getBuyer',[buyer]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){

@@ -171,24 +171,11 @@ router.get('/thirdlogin', function(req, res, next) {
     var d0 = dt.toFormat("YYYYMMDDHH24MISS");
     var d1 = dt.addMinutes(5).toFormat("YYYYMMDDHH24MISS");
     //var _url = "http://y.jf.189.cn/preview/CommPage/Login.aspx?Partner=" + _spid
-    var _url = zookeeper.getData("ty_host_url") + "/preview/CommPage/Login.aspx?Partner=" + _spid
+    var _url = zookeeper.getData("ty_host_url") + "/CommPage/Login.aspx?Partner=" + _spid
         + "&Sign=" + CommonUtil.md5(_spid+_key+d1).toUpperCase()
         + "&ParDate=" + d0;
     logger.info('thirdlogin 189url-----> ' + _url);
     res.json({url:_url});
-});
-
-router.get('/test', function(req, res, next) {
-    var _key = zookeeper.getData("ty_appid");
-    var _spid = zookeeper.getData("ty_spid");
-    var dt = new Date();
-    var d0 = dt.toFormat("YYYYMMDDHH24MISS");
-    var d1 = dt.addMinutes(5).toFormat("YYYYMMDDHH24MISS");
-    var _url = zookeeper.getData("ty_host_url") + "/preview/CommPage/Default.aspx?Partner=" + _spid
-        + "&Sign=" + CommonUtil.md5(_spid+_key+d1).toUpperCase()
-        + "&ParDate=" + d0;
-    logger.info('189url-----> ' + _url);
-    res.redirect(_url);
 });
 
 router.get('/isLoginTY', function(req, res, next) {
@@ -196,7 +183,7 @@ router.get('/isLoginTY', function(req, res, next) {
     var queryUrl = url.parse(req.headers.referer||'').query;
     req.ssid = qs.parse(queryUrl).ssid;
     logger.error("XstatusX referer==> " + req.headers.referer);
-    var checkUrl = zookeeper.getData("ty_host_url") + '/preview/CommPage/LoginInfo.aspx?strUrl=http://ct100.jfshare.com/login/isLoginTY';
+    var checkUrl = zookeeper.getData("ty_host_url") + '/CommPage/LoginInfo.aspx?strUrl=http://ct100.jfshare.com/login/isLoginTY';
     //var checkUrl = 'http://y.jf.189.cn/preview/CommPage/LoginInfo.aspx?strUrl=http://localhost:23003/login/isLoginTY';
     if(!status) {
         res.redirect(checkUrl);

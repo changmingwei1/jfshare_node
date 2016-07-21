@@ -2796,6 +2796,72 @@ ProductCardStatisticsParam.prototype.write = function(output) {
   return;
 };
 
+ProductCardSkuStatisticsParam = module.exports.ProductCardSkuStatisticsParam = function(args) {
+  this.sellerId = null;
+  this.productId = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+  }
+};
+ProductCardSkuStatisticsParam.prototype = {};
+ProductCardSkuStatisticsParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductCardSkuStatisticsParam.prototype.write = function(output) {
+  output.writeStructBegin('ProductCardSkuStatisticsParam');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 1);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 2);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ProductCardParam = module.exports.ProductCardParam = function(args) {
   this.productId = null;
   this.transactionId = null;
@@ -2913,12 +2979,16 @@ ProductCardParam.prototype.write = function(output) {
 ProductCardImportParam = module.exports.ProductCardImportParam = function(args) {
   this.sellerId = null;
   this.path = null;
+  this.productId = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
     }
     if (args.path !== undefined) {
       this.path = args.path;
+    }
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
     }
   }
 };
@@ -2950,6 +3020,13 @@ ProductCardImportParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2969,6 +3046,11 @@ ProductCardImportParam.prototype.write = function(output) {
   if (this.path !== null && this.path !== undefined) {
     output.writeFieldBegin('path', Thrift.Type.STRING, 2);
     output.writeString(this.path);
+    output.writeFieldEnd();
+  }
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 3);
+    output.writeString(this.productId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

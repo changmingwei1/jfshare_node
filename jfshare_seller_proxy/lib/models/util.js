@@ -77,4 +77,15 @@ Util.prototype.sum = function(){
     return sum;
 }
 
+//获取指定日期的下一天
+Util.prototype.getNextDay=function(d){
+    d = new Date(d);
+    d = +d + 1000*60*60*24;
+    d = new Date(d);
+    //return d;
+    //格式化
+    return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+
+}
+
 module.exports = new Util();

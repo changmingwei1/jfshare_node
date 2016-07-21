@@ -66,7 +66,6 @@ function rendData() {
            score2cashAmount = Number(data.thirdExchangeRate);
 
             renderBaseInfo();
-            renderBaseParam();
             renderSkuDims();
 
             //如果未传仓库id,说明是页面首次加载触发, 否则是用户重新选择了城市触发
@@ -92,6 +91,7 @@ function rendData() {
                             dimstocks = eval(data.dimstocks);
                             skuInfos = data.skuInfos;
                             renderPriceStockInit();
+                            renderBaseParam();
                             //console.log(dimstocks);
                             if (data.status == 501) { //获取库存失败
                                 alert(data.msg);
@@ -766,7 +766,6 @@ function amountDecrease() {
  * 场景：1、页面加载 2、购买数量变化 3、sku选择时库存变化
  */
 function renderAmountIcon() {
-    //alert($("#amount_decrease").attr("style"));
     amount = Number($("#amount").val());
     onceMinBuyLimit = Number(onceMinBuyLimit);
     onceMaxBuyLimit = Number(onceMaxBuyLimit);
