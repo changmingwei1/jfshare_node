@@ -1197,7 +1197,7 @@ router.post('/reCaptcha', function(request, response, next) {
                         });
 
                     } catch (ex) {
-                        logger.info("获取批量类目异常:" + ex);
+                        logger.info("获取用户信息异常:" + ex);
                         result.code = 500;
                         result.desc = "验码失败";
                         response.json(result);
@@ -1230,7 +1230,7 @@ router.post('/reCaptcha', function(request, response, next) {
                         });
 
                     } catch (ex) {
-                        logger.info("获取商品信息异常:" + ex);
+                        logger.info("查询product异常:" + ex);
                         result.code = 500;
                         result.desc = "验码失败";
                         response.json(result);

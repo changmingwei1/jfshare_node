@@ -685,6 +685,7 @@ Product.prototype.getBuyer = function(param,callback){
 
     var buyer = new buyer_types.Buyer({userId:param.userId});
 
+    logger.info("get buyer param-------:" + JSON.stringify(buyer));
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getBuyer',[buyer]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){

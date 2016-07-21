@@ -13,6 +13,8 @@ var Order = require('../lib/models/order');
 var Util = require('../lib/models/util');
 var afterSale = require('../lib/models/afterSale');
 var Express = require('../lib/models/express');
+var Product = require('../lib/models/product');
+
 // 查询订单列表
 router.post('/list', function (request, response, next) {
     var result = {code: 200};
@@ -824,12 +826,12 @@ router.post('/querydealList', function (request, response, next) {
             response.json(result);
             return;
         }
-        //if (params.date == null || params.date == "") {
-        //    result.code = 500;
-        //    result.desc = "参数错误";
-        //    response.json(result);
-        //    return;
-        //}
+        if (params.date == null || params.date == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
         if (params.perCount == null || params.perCount == "") {
             result.code = 500;
@@ -843,46 +845,7 @@ router.post('/querydealList', function (request, response, next) {
             response.json(result);
             return;
         }
-
-        //-------------------------前台测试数据-----------------------------------
-        //result.perice="44.54";
-        //var productDeatilList=[];
-        //if(params.date=="2016-02-17"||params.date=="2015-11-28"||params.date=="2016-05-27"||params.date=="2016-05-28"){
-        //    result.count=60;
-        //    result.page = {
-        //        total:60,
-        //        pageCount:3
-        //    };
-        //
-        //    for(var i=1;i<=20;i++){
-        //        productDeatilList.push({
-        //            productDetId:i,
-        //            date:"13:25:14",
-        //            type:"收款",
-        //            paymode:"积分+和包",
-        //            perice:"20.45"
-        //        });
-        //    }
-        //}else{
-        //    result.count=1;
-        //    result.page = {
-        //        total:1,
-        //        pageCount:1
-        //    };
-        //    for(var i=1;i<=1;i++){
-        //        productDeatilList.push({
-        //            productDetId:i,
-        //            date:"12:28:35",
-        //            type:"收款",
-        //            paymode:"积分+和包",
-        //            perice:"12.47"
-        //        });
-        //    }
-        //}
-        //result.productDeatilList=productDeatilList;
-        //response.json(result);
-        //return;
-        //------------------------------------------------------------------
+        params.endDate=Util.getNextDay(params.date);
 
         Order.querydealList(params, function (err, data) {
 
@@ -985,24 +948,14 @@ router.post('/querydealDetail', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.sellerId == null || params.sellerId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
 
-        //------------------------前台测试数据--------------------------------
-        //var productDetail = {};
-        //productDetail = ({
-        //    type: 2,
-        //    payprice: "22.73",
-        //    orderId: "234s234fwef43",
-        //    mobile: "13211111111",
-        //    nickname: "测试：nick名",
-        //    paymode: "微信",
-        //    dealdate: "2016-05-25 12:22:35"
-        //
-        //});
-        //result.productDetail = productDetail;
-        //response.json(result);
-        //return;
-        //---------------------------------------------------------------
-
+/*
         Order.querydealDetail(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -1053,7 +1006,156 @@ router.post('/querydealDetail', function (request, response, next) {
             }
 
         });
+        */
+//----------------------------------------------------------------------------------
+        var buyerTemp={};
+        var orderDetail = {};
+        async.series([
+                function (callback) {
+                    try {
+                        Order.querydealDetail(params, function (err, data) {
+                            if (err) {
+                                callback(1, null);
+                            } else {
+                                var order = data[0].order;
 
+
+                                if (order == null) {
+                                    result.code = 500;
+                                    result.desc = "参数错误";
+                                    response.json(result);
+                                    return;
+                                }
+                                params.userId=order.userId;
+                                //if (order.deliverInfo == null) {
+                                //    orderDetail.mobile = "";
+                                //} else {
+                                //    orderDetail.mobile = order.deliverInfo.receiverMobile;
+                                //}
+
+                                if (order.payInfo == null) {
+                                    orderDetail.paymode = "";
+                                } else {
+                                    if (order.payInfo.payChannel == "1") {
+                                        orderDetail.paymode = "天翼";
+                                    } else if (order.payInfo.payChannel == "2") {
+                                        orderDetail.paymode = "支付宝";
+                                    } else if (order.payInfo.payChannel == "3" || order.payInfo.payChannel == "4" || order.payInfo.payChannel == "9") {
+                                        orderDetail.paymode = "微信";
+                                    } else if (order.payInfo.payChannel == "5" || order.payInfo.payChannel == "7") {
+                                        orderDetail.paymode = "支付宝";
+                                    } else if (order.payInfo.payChannel == "6" || order.payInfo.payChannel == "8") {
+                                        orderDetail.paymode = "和包";
+                                    } else {
+                                        orderDetail.paymode = "积分";
+                                    }
+                                }
+
+                                orderDetail.type = "收款";
+                                orderDetail.payprice = order.closingPrice;
+                                orderDetail.orderId = order.orderId;
+                                //orderDetail.nickname = order.userName;
+                                orderDetail.dealdate = order.createTime;
+                                result.productDetail = orderDetail;
+                            }
+
+                            callback(null, result);
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取订单流水异常:" + ex);
+                        result.code = 500;
+                        result.desc = "获取流水失败";
+                        response.json(result);
+                        return;
+                    }
+                },
+                function (callback) {
+                    try {
+                        logger.info("查询buyer params:" + JSON.stringify(params.userId));
+                        Product.getBuyer(params, function (error, data) {
+                            if (error) {
+                                callback(2, null);
+                            } else {
+                                var buyer = data[0].buyer;
+                                if (buyer != null) {
+                                    //resContent.buyer = {
+                                    //    userId: buyer.userId,
+                                    //    userName: buyer.userName,
+                                    //    favImg: buyer.favImg,
+                                    //    birthday: buyer.birthday,
+                                    //    sex: buyer.sex,
+                                    //    mobile: buyer.mobile
+                                    //};
+
+                                    buyerTemp.userName=buyer.userName;
+                                    buyerTemp.mobile=buyer.mobile;
+
+                                    logger.info("个人用户信息响应:" + JSON.stringify(buyerTemp));
+                                    callback(null, buyerTemp);
+
+                                } else {
+                                    result.code = 500;
+                                    result.desc = "获取用户信息失败";
+                                    response.json(result);
+                                    logger.info("个人用户信息响应:" + JSON.stringify(result));
+                                    return;
+                                }
+                            }
+                        });
+
+                    } catch (ex) {
+                        logger.info("获取用户信息异常:" + ex);
+                        result.code = 500;
+                        result.desc = "获取用户信息失败";
+                        response.json(result);
+                        return;
+                    }
+                }
+            ],
+            function (err, results) {
+
+                logger.info("result[0]:" + JSON.stringify(results[0]));
+                logger.info("result[1]:" + JSON.stringify(results[1]));
+
+                if (err == 1) {
+                    logger.error("获取流水失败---order服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "获取流水失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("获取用户信息异常--order服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "获取流水失败";
+                    response.json(result);
+                    return;
+                }
+
+
+                if (err == null) {
+                    logger.info("shuju------------->" + JSON.stringify(results));
+
+                    var proDetail= result.productDetail;
+                    if(proDetail==null){
+                        result.code = 500;
+                        result.desc = "获取详情失败";
+                        response.json(result);
+                        return;
+                    }
+                    if(buyerTemp==null){
+                        response.json(result);
+                        return;
+                    }
+
+                    proDetail.mobile=buyerTemp.mobile;
+                    proDetail.nickname=buyerTemp.userName;
+                    response.json(result);
+                    return;
+                }
+            });
+        //--------------------------------------------------------------------------
     } catch (ex) {
         logger.error("查询卖家交易明细失败，=========：" + ex);
         result.code = 500;

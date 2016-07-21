@@ -107,11 +107,14 @@ Order.prototype.querydealList = function (param, callback) {
     //------------------
     logger.info("调用orderServ-querydealList  入参:" + JSON.stringify(param));
     var orderQueryConditions = new order_types.OrderQueryConditions({
-        count: param.percount,
-        curPage: param.curpage,
-        startTime: param.date
+       // sellerId:param.sellerId,
+        count: param.perCount,
+        curPage: param.curPage,
+        payTimeStart: param.date,
+        payTimeEnd: param.endDate
     });
 
+    logger.info("调用orderServ-querydealList  入参:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryOffline", [2, param.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
