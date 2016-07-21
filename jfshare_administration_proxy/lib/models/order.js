@@ -221,7 +221,7 @@ Order.prototype.batchExportOrderFull = function (params, callback) {
         logger.info("调用orderServ-batchExportOrderFull  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-batchExportOrderFull  失败原因 ======" + err);
+            logger.error("调用orderServ-batchExportOrderFull  失败原因 ======" + err + JSON.stringify(data));
             res.code = 500;
             res.desc = "导出订单失败！";
             callback(res, null);
