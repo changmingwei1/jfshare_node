@@ -908,10 +908,17 @@ router.post('/afterSalelist', function (request, response, next) {
                                 return callback(null, 2);
                             } else {
                                 afterOrderList = data.afterSaleOrders;
-                                page.total = data.pagination.totalCount;
-                                page.pageCount = data.pagination.pageNumCount;
-                                callback(null, 1);
-                                return;
+                                if(data.pagination!=null){
+                                    page.total = data.pagination.totalCount;
+                                    page.pageCount = data.pagination.pageNumCount;
+                                    callback(null, 1);
+                                    return;
+                                }else{
+                                    page.total = 0;
+                                    page.pageCount = 0;
+                                    callback(null, 1);
+                                    return;
+                                }
                             }
 
                         });
