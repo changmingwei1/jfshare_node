@@ -107,11 +107,14 @@ Order.prototype.querydealList = function (param, callback) {
     //------------------
     logger.info("调用orderServ-querydealList  入参:" + JSON.stringify(param));
     var orderQueryConditions = new order_types.OrderQueryConditions({
-        count: param.percount,
-        curPage: param.curpage,
-        startTime: param.date
+       // sellerId:param.sellerId,
+        count: param.perCount,
+        curPage: param.curPage,
+        payTimeStart: param.date,
+        payTimeEnd: param.endDate
     });
 
+    logger.info("调用orderServ-querydealList  入参:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryOffline", [2, param.sellerId, orderQueryConditions]);
 
     Lich.wicca.invokeClient(orderServ, function (err, data) {
@@ -247,7 +250,6 @@ Order.prototype.orderConfirm = function (arg, callback) {
 
 //批量发货
 Order.prototype.batchDeliverOrder = function (params, callback) {
-
     var batchDeliverParam = new order_types.BatchDeliverParam({
         orderList: params.list
     });
@@ -257,7 +259,7 @@ Order.prototype.batchDeliverOrder = function (params, callback) {
         logger.info("调用orderServ-batchDeliverParam  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("调用orderServ-batchDeliverParam  失败原因 ======" + err);
+            logger.error("调用orderServ-batchDeliverParam  失败原因 ======" + err +"返回的数据是"+JSON.stringify(data));
             res.code = 500;
             res.desc = data[0].failInfo;
             callback(res, null);
@@ -307,7 +309,7 @@ Order.prototype.deliver = function (params, callback) {
         logger.info("调用orderServ-deliver  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
-            logger.error("调用orderServ-deliver  失败原因 ======" + err);
+            logger.error("调用orderServ-deliver  失败原因 ======" + err +"返回的数据是"+JSON.stringify(data));
             res.code = 500;
             res.desc = "发货失败！";
             callback(res, null);

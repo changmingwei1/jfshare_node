@@ -631,6 +631,63 @@ router.post('/update', function (request, response, next) {
     }
 });
 
+router.post('/virtualSkuList', function (request, response, next) {
+
+    logger.info("进入虚拟商品sku统计列表接口");
+    var result = {code: 200};
+    result.cardtatisticsList = [];
+    try {
+        //var params = request.query;
+        var params = request.body;
+        logger.info("进入虚拟商品sku统计列表接口:" + JSON.stringify(params));
+
+        //参数校验
+        //参数验证
+        if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.productId == null || params.productId == "" || params.productId <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        params.perCount = 1000;
+        params.curpage = 1;
+        Product.statisticsSkuProductCard(params, function (err, data) {
+            if (err) {
+                result.code = 500;
+                result.desc = "查看虚拟商品失败";
+                response.json(result);
+                return
+            }
+            if(data == null){
+                return response.json(result);
+            }else{
+                if(data[0].cardtatisticsList!=null){
+                    result.cardtatisticsList = data[0].cardtatisticsList;
+                }
+            }
+
+            return response.json(result);
+        });
+
+    } catch (ex) {
+        logger.error("get  virtual product List error:" + ex);
+        result.code = 500;
+        result.desc = "获取虚拟商品列表失败";
+        response.json(result);
+    }
+});
+
+
+
 
 router.post('/virtualList', function (request, response, next) {
 
@@ -1140,7 +1197,7 @@ router.post('/reCaptcha', function(request, response, next) {
                         });
 
                     } catch (ex) {
-                        logger.info("获取批量类目异常:" + ex);
+                        logger.info("获取用户信息异常:" + ex);
                         result.code = 500;
                         result.desc = "验码失败";
                         response.json(result);
@@ -1173,7 +1230,7 @@ router.post('/reCaptcha', function(request, response, next) {
                         });
 
                     } catch (ex) {
-                        logger.info("获取商品信息异常:" + ex);
+                        logger.info("查询product异常:" + ex);
                         result.code = 500;
                         result.desc = "验码失败";
                         response.json(result);
