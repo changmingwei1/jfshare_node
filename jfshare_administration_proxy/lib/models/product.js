@@ -825,7 +825,7 @@ Product.prototype.queryThirdPartyProduct = function (params, callback) {
     });
 
     var pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
-    logger.error("queryThirdPartyProduct  args:" + JSON.stringify(params) +  JSON.stringify(pagination) +  JSON.stringify(productCardParam));
+    logger.info("queryThirdPartyProduct  args:" + JSON.stringify(params) +  JSON.stringify(pagination) +  JSON.stringify(productCardParam));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryThirdPartyProduct", [productCardParam,pagination]);
 
