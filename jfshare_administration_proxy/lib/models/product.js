@@ -825,7 +825,7 @@ Product.prototype.queryThirdPartyProduct = function (params, callback) {
     });
 
     var pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
-    logger.info("queryThirdPartyProduct  args:" + JSON.stringify(params));
+    logger.error("queryThirdPartyProduct  args:" + JSON.stringify(params));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryThirdPartyProduct", [productCardParam,pagination]);
 
@@ -886,8 +886,7 @@ Product.prototype.offerThirdPartyProduct = function (params, callback) {
         thirdPartyProductId:params.thirdPartyProductId
     });
 
-    var pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
-    logger.info("getThirdPartyProductLog  args:" + JSON.stringify(params));
+    logger.error("getThirdPartyProductLog  args:" + JSON.stringify(params));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "offerThirdPartyProduct", [productCardParam]);
 
