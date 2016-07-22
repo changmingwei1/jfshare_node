@@ -276,5 +276,83 @@ router.post('/updateProductState', function (request, response, next) {
     }
 });
 
+//////////////////////////////////////////////////////////////////////////////////
+router.post('/ThirdPartyProductQuery', function (request, response, next) {
+
+    logger.info("进入第三方商品查询接口");
+    var result = {code: 200};
+
+    try {
+        //var params = request.query;
+        var params = request.body;
+        logger.info("进入第三方商品查询接口:" + params);
+        Product.queryThirdPartyProduct(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.thirdPartyProductList = data[0].thirdPartyProductList;
+            result.pagination = data[0].pagination;
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("apply state error:" + ex);
+        result.code = 500;
+        result.desc = "查询第三方商品失败";
+        response.json(result);
+    }
+});
+
+router.post('/getThirdPartyProductLog', function (request, response, next) {
+
+    logger.info("获取第三方操作日志");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        logger.info("获取第三方操作日志:" + params);
+        Product.getThirdPartyProductLog(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.thirdPartyProductList = data;
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("apply state error:" + ex);
+        result.code = 500;
+        result.desc = "查询第三方商品失败";
+        response.json(result);
+    }
+});
+
+
+router.post('/offerThirdPartyProduct', function (request, response, next) {
+    logger.info("获取第三方操作日志");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        logger.info("获取第三方操作日志:" + params);
+        Product.offerThirdPartyProduct(params, function(err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.value = data;
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("apply state error:" + ex);
+        result.code = 500;
+        result.desc = "查询第三方商品失败";
+        response.json(result);
+    }
+});
+
 
 module.exports = router;
