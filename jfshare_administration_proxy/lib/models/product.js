@@ -831,7 +831,7 @@ Product.prototype.queryThirdPartyProduct = function (params, callback) {
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.error("queryThirdPartyProduct result:" + JSON.stringify(data));
+        logger.error("queryThirdPartyProduct result:" + err+JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
             logger.error("queryThirdPartyProduct  失败原因 ======" +err + JSON.stringify(data));
