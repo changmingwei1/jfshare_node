@@ -839,8 +839,8 @@ Product.prototype.queryThirdPartyProduct = function (params, callback) {
             res.desc = "查询第三方商品失败！";
             callback(res, null);
         } else {
-            if(data[0]){
-                callback(null, data);
+            if(data[0]!=null){
+                callback(null, data[0]);
             }else{
                 callback(null, null);
             }
@@ -872,7 +872,7 @@ Product.prototype.getThirdPartyProductLog = function (params, callback) {
             callback(res, null);
         } else {
             if(data[0]!=null){
-                callback(null, data);
+                callback(null, data[0]);
             }else{
                 callback(null, null);
             }
