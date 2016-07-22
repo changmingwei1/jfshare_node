@@ -276,5 +276,133 @@ router.post('/updateProductState', function (request, response, next) {
     }
 });
 
+//////////////////////////////////////////////////////////////////////////////////
+router.post('/thirdPartyProductQuery', function (request, response, next) {
+
+    logger.info("进入第三方商品查询接口");
+    var result = {code: 200};
+    result.thirdPartyProductList = [];
+    result.pagination = "";
+    try {
+        //var params = request.query;
+        var params = request.body;
+        logger.info("进入第三方商品查询接口:" + params);
+        if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.percount == null || params.percount == ""|| params.percount <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        Product.queryThirdPartyProduct(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            if(data !=null){
+                result.thirdPartyProductList = data.thirdPartyProductList;
+                result.pagination = data[0].pagination;
+            }
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("apply state error:" + ex);
+        result.code = 500;
+        result.desc = "查询第三方商品失败";
+        response.json(result);
+    }
+});
+
+router.post('/getThirdPartyProductLog', function (request, response, next) {
+
+    logger.info("获取第三方操作日志");
+    var result = {code: 200};
+    result.pagination = "";
+    result.logs = ""
+    try {
+        var params = request.body;
+        logger.info("获取第三方操作日志:" + params);
+
+        if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.percount == null || params.percount == ""|| params.percount <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+
+        Product.getThirdPartyProductLog(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+
+            if(data!=null){
+                result.logs = data.logs;
+                result.pagination = data.pagination;
+            }
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("apply state error:" + ex);
+        result.code = 500;
+        result.desc = "查询第三方商品失败";
+        response.json(result);
+    }
+});
+
+
+router.post('/offerThirdPartyProduct', function (request, response, next) {
+    logger.info("进入提报功能");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        logger.info("进入提报功能:" + params);
+        if (params.thirdPartyProductId == null || params.thirdPartyProductId == "") {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        Product.offerThirdPartyProduct(params, function(err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.value = data;
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("提报 error:" + ex);
+        result.code = 500;
+        result.desc = "提报失败";
+        response.json(result);
+    }
+});
+
 
 module.exports = router;
