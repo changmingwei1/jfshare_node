@@ -277,7 +277,7 @@ router.post('/updateProductState', function (request, response, next) {
 });
 
 //////////////////////////////////////////////////////////////////////////////////
-router.post('/ThirdPartyProductQuery', function (request, response, next) {
+router.post('/thirdPartyProductQuery', function (request, response, next) {
 
     logger.info("进入第三方商品查询接口");
     var result = {code: 200};
