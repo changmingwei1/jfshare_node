@@ -834,7 +834,7 @@ Product.prototype.queryThirdPartyProduct = function (params, callback) {
         logger.error("queryThirdPartyProduct result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("queryThirdPartyProduct  失败原因 ======" + JSON.stringify(data));
+            logger.error("queryThirdPartyProduct  失败原因 ======" +err + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询第三方商品失败！";
             callback(res, null);
@@ -866,7 +866,7 @@ Product.prototype.getThirdPartyProductLog = function (params, callback) {
         logger.error("getThirdPartyProductLog result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("getThirdPartyProductLog  失败原因 ======" + JSON.stringify(data));
+            logger.error("getThirdPartyProductLog  失败原因 ======"+err + JSON.stringify(data));
             res.code = 500;
             res.desc = "查询第三方操作日志失败！";
             callback(res, null);
@@ -896,7 +896,7 @@ Product.prototype.offerThirdPartyProduct = function (params, callback) {
         logger.error("offerThirdPartyProduct result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
-            logger.error("offerThirdPartyProduct  失败原因 ======" + JSON.stringify(data));
+            logger.error("offerThirdPartyProduct  失败原因 ======" +err+ JSON.stringify(data));
             res.code = 500;
             res.desc = "提报失败！";
             callback(res, null);
