@@ -282,6 +282,7 @@ router.post('/thirdPartyProductQuery', function (request, response, next) {
     logger.info("进入第三方商品查询接口");
     var result = {code: 200};
     result.thirdPartyProductList = [];
+    result.pagination = "";
     try {
         //var params = request.query;
         var params = request.body;
@@ -326,7 +327,8 @@ router.post('/getThirdPartyProductLog', function (request, response, next) {
 
     logger.info("获取第三方操作日志");
     var result = {code: 200};
-
+    result.pagination = "";
+    result.logs = ""
     try {
         var params = request.body;
         logger.info("获取第三方操作日志:" + params);
@@ -377,9 +379,6 @@ router.post('/offerThirdPartyProduct', function (request, response, next) {
     try {
         var params = request.body;
         logger.info("进入提报功能:" + params);
-
-        //thirdPartyProductId
-
         if (params.thirdPartyProductId == null || params.thirdPartyProductId == "") {
 
             result.code = 500;
