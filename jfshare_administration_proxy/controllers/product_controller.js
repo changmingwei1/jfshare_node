@@ -286,6 +286,22 @@ router.post('/ThirdPartyProductQuery', function (request, response, next) {
         //var params = request.query;
         var params = request.body;
         logger.info("进入第三方商品查询接口:" + params);
+        if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.percount == null || params.percount == ""|| params.percount <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
         Product.queryThirdPartyProduct(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -312,6 +328,24 @@ router.post('/getThirdPartyProductLog', function (request, response, next) {
     try {
         var params = request.body;
         logger.info("获取第三方操作日志:" + params);
+
+        if (params.curpage == null || params.curpage == "" || params.curpage <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.percount == null || params.percount == ""|| params.percount <= 0) {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
+
         Product.getThirdPartyProductLog(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -331,12 +365,12 @@ router.post('/getThirdPartyProductLog', function (request, response, next) {
 
 
 router.post('/offerThirdPartyProduct', function (request, response, next) {
-    logger.info("获取第三方操作日志");
+    logger.info("进入提报功能");
     var result = {code: 200};
 
     try {
         var params = request.body;
-        logger.info("获取第三方操作日志:" + params);
+        logger.info("进入提报功能:" + params);
         Product.offerThirdPartyProduct(params, function(err, data) {
             if (err) {
                 response.json(err);
@@ -349,7 +383,7 @@ router.post('/offerThirdPartyProduct', function (request, response, next) {
     } catch (ex) {
         logger.error("apply state error:" + ex);
         result.code = 500;
-        result.desc = "查询第三方商品失败";
+        result.desc = "进入提报功能";
         response.json(result);
     }
 });
