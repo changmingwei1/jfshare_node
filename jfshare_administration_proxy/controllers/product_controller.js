@@ -281,7 +281,7 @@ router.post('/thirdPartyProductQuery', function (request, response, next) {
 
     logger.info("进入第三方商品查询接口");
     var result = {code: 200};
-
+    result.thirdPartyProductList = [];
     try {
         //var params = request.query;
         var params = request.body;
@@ -307,8 +307,10 @@ router.post('/thirdPartyProductQuery', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            result.thirdPartyProductList = data[0].thirdPartyProductList;
-            result.pagination = data[0].pagination;
+            if(data !=null){
+                result.thirdPartyProductList = data.thirdPartyProductList;
+                result.pagination = data[0].pagination;
+            }
             response.json(result);
             return;
         });
@@ -351,7 +353,11 @@ router.post('/getThirdPartyProductLog', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            result.thirdPartyProductList = data;
+
+            if(data!=null){
+                result.logs = data.logs;
+                result.pagination = data.pagination;
+            }
             response.json(result);
             return;
         });
@@ -371,6 +377,17 @@ router.post('/offerThirdPartyProduct', function (request, response, next) {
     try {
         var params = request.body;
         logger.info("进入提报功能:" + params);
+
+        //thirdPartyProductId
+
+        if (params.thirdPartyProductId == null || params.thirdPartyProductId == "") {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+
         Product.offerThirdPartyProduct(params, function(err, data) {
             if (err) {
                 response.json(err);
@@ -381,9 +398,9 @@ router.post('/offerThirdPartyProduct', function (request, response, next) {
             return;
         });
     } catch (ex) {
-        logger.error("apply state error:" + ex);
+        logger.error("提报 error:" + ex);
         result.code = 500;
-        result.desc = "进入提报功能";
+        result.desc = "提报失败";
         response.json(result);
     }
 });
