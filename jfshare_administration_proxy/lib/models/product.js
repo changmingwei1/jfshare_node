@@ -812,4 +812,102 @@ Product.prototype.queryProductCard = function (params, callback) {
         }
     });
 };
+/////////////////////////////////////////////////////////////////////////////////
+//查询第三方商品
+Product.prototype.queryThirdPartyProduct = function (params, callback) {
+    var productCardParam = new product_types.ThirdPartyProductQueryParam({
+        sellerName:params.sellerName,
+        productName:params.productName,
+         productState:params.productState,
+        productStock:params.productStock,
+        priceChange:params.priceChange,
+        offerState:params.offerState
+    });
+
+    var pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
+    logger.info("queryThirdPartyProduct  args:" + JSON.stringify(params) +  JSON.stringify(pagination) +  JSON.stringify(productCardParam));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryThirdPartyProduct", [productCardParam,pagination]);
+
+    //invite productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.error("queryThirdPartyProduct result:" + err+JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("queryThirdPartyProduct  失败原因 ======" +err + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "查询第三方商品失败！";
+            callback(res, null);
+        } else {
+            if(data[0]!=null){
+                callback(null, data[0]);
+            }else{
+                callback(null, null);
+            }
+
+        }
+    });
+};
+
+
+//获取第三方操作日志
+Product.prototype.getThirdPartyProductLog = function (params, callback) {
+    var productCardParam = new product_types.ThirdPartyProductLogParam({
+        thirdPartyProductId:params.productId
+    });
+
+    var pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
+    logger.error("getThirdPartyProductLog  args:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "getThirdPartyProductLog", [productCardParam,pagination]);
+
+    //invite productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.error("getThirdPartyProductLog result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("getThirdPartyProductLog  失败原因 ======"+err + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "查询第三方操作日志失败！";
+            callback(res, null);
+        } else {
+            if(data[0]!=null){
+                callback(null, data[0]);
+            }else{
+                callback(null, null);
+            }
+        }
+    });
+};
+
+//提报
+Product.prototype.offerThirdPartyProduct = function (params, callback) {
+    var productCardParam = new product_types.offerThirdPartyProduct({
+        thirdPartyProductId:params.thirdPartyProductId
+    });
+
+    logger.error("getThirdPartyProductLog  args:" + JSON.stringify(params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "offerThirdPartyProduct", [productCardParam]);
+
+    //invite productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.error("offerThirdPartyProduct result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("offerThirdPartyProduct  失败原因 ======" +err+ JSON.stringify(data));
+            res.code = 500;
+            res.desc = "提报失败！";
+            callback(res, null);
+        } else {
+            if(data[0]!=null){
+                callback(null, data[0].value);
+            }else{
+                callback(null, null);
+            }
+
+        }
+    });
+};
+
 module.exports = new Product();
