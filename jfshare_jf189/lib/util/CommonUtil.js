@@ -35,7 +35,7 @@ CommonUtil.prototype.jfxDecryptor = function(data, key) {
 
 CommonUtil.prototype.DesDecryptTY = function(text) {
     try{
-        var urlDecodeRe = urlencode.decode(text, 'gbk');
+        var urlDecodeRe = urlencode.decode(text, 'utf8');
         var plaintext = new Buffer(urlDecodeRe,'base64').toString('binary');
         //var plaintext = urlDecodeRe;
         var param = {};
@@ -47,7 +47,7 @@ CommonUtil.prototype.DesDecryptTY = function(text) {
 
         var decryptStr = desDecrypt(param);
         var base64Re = new Buffer(decryptStr, 'base64').toString();
-        return urlencode.decode(base64Re, 'gbk');
+        return urlencode.decode(base64Re, 'utf8');
     } catch(e){
         logger.debug("解密失败......" + e);
     }
