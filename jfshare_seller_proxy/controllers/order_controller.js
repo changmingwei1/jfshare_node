@@ -262,6 +262,7 @@ router.post('/info', function (request, response, next) {
                         }
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
+                            result.payState =  orderInfo.payInfo.payState;
                         }
 
 
