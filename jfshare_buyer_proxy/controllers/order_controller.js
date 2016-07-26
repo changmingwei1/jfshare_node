@@ -944,6 +944,7 @@ router.post('/info', function (req, res, next) {
                                 }
                                 if (orderInfo.payInfo != null) {
                                     result.payChannel = orderInfo.payInfo.payChannel;
+                                    result.payState = orderInfo.payInfo.payState;
                                 }
                                 result.curTime = new Date().getTime();
                                 result.createTime = orderInfo.createTime;
