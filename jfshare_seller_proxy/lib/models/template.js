@@ -55,9 +55,9 @@ Template.prototype.addPostageTemplate = function (params, callback) {
             var result = {};
             result.code = 500;
             result.desc = "添加运费模板失败！";
-            callback(result, null);
+            return callback(result, null);
         }
-        callback(null, data);
+       return callback(null, data);
     });
 };
 
