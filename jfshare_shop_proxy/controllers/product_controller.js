@@ -67,6 +67,58 @@ router.post('/list', function (req, res, next) {
     }
 });
 
+/*查询商品列表*/
+router.post('/listBySeller', function (req, res, next) {
+    logger.info("进入获取商品列表接口");
+    var resContent = {code: 200};
+
+    try {
+        var arg = req.body;
+        //var arg = req.query;
+        if (arg.perCount == null || arg.perCount == "" || arg.perCount <= 0) {
+            resContent.code = 400;
+            resContent.desc = "请输入每页显示条数";
+            res.json(resContent);
+            return;
+        }
+        logger.info("get product list args:" + JSON.stringify(arg));
+        Product.productSurveyBackendQuery(arg, function (err, data) {
+            var dataArr = [];
+            if (err) {
+                res.json(err);
+                return;
+            } else {
+                logger.info("调用productServ-queryProductList result:" + JSON.stringify(data));
+                var productSurveyList = data[0].productSurveyList;
+                productSurveyList.forEach(function (a) {
+                    var imgUri = a.imgUrl.split(",")[0];
+                    dataArr.push({
+                        productId: a.productId,
+                        productName: a.productName,
+                        viceName: a.viceName,
+                        curPrice: (Number(a.curPrice) / 100).toFixed(2),
+                        orgPrice: (Number(a.orgPrice) / 100).toFixed(2),
+                        //sellerId: a.sellerId,   //测试用,没意义
+                        imgKey: imgUri,
+                        type: a.type || 2
+                    });
+                });
+                var pagination = data[0].pagination;
+                resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+                resContent.productList = dataArr;
+                res.json(resContent);
+                logger.info("get product list response:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+
+        logger.error("获取商品列表失败:" + ex);
+        resContent.code = 500;
+        resContent.desc = "获取商品列表失败";
+        res.json(resContent);
+    }
+});
+
 /*查询商品属性信息*/
 router.get('/productAttribute', function (req, res, next) {
 
