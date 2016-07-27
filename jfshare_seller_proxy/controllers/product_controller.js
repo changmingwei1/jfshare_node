@@ -954,7 +954,7 @@ router.post('/improtTicket', function (request, response, next) {
 
     try {
         var params = request.body;
-        logger.info("进入导入券码接口--params:" + params);
+        logger.error("进入导入券码接口--params:" + params);
 
         //参数校验
         //参数验证
