@@ -482,7 +482,7 @@ Product.prototype.improtVirtual = function (param, callback) {
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.error("调用productServ-improtVirtual result:" + JSON.stringify(data));
+        logger.info("调用productServ-improtVirtual result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
             logger.error("调用productServ-improtVirtual  失败原因 ======" + err + data);
