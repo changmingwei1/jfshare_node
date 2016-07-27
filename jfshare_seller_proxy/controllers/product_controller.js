@@ -1864,9 +1864,9 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                     }
                     var newProList=[];
                     for(var i=0;i<proList.length;i++){
-                        var proUserId=proList[i].userId;
+                        var proUserId=proList[i].buyerId;
                         for(var j=0;j<buyerTemp.length;j++){
-                           if(proUserId=buyerTemp[j].buyerId){
+                           if(proUserId==buyerTemp[j].buyerId){
                                newProList.push({
                                    productName:proList[i].productName,
                                    date:proList[i].date,

@@ -71,6 +71,8 @@ router.post('/addPostageTemplate', function (request, response, next) {
         Template.addPostageTemplate(params, function (error, data) {
             if (error) {
                 response.json(error);
+
+                return;
             } else {
                 logger.info("add freight info response:" + JSON.stringify(data));
                 response.json(result);

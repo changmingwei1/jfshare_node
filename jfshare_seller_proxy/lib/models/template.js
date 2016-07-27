@@ -51,13 +51,13 @@ Template.prototype.addPostageTemplate = function (params, callback) {
     Lich.wicca.invokeClient(templateServer, function (err, data) {
         logger.info("templateServer-addPostageTemplate result:" + JSON.stringify(data[0]));
         if (err || data[0].result.code == 1) {
-            logger.error("templateServer-addPostageTemplate  失败原因 ======" + err);
+            logger.error("templateServer-addPostageTemplate  失败原因 ======" + err + JSON.stringify(data));
             var result = {};
             result.code = 500;
             result.desc = "添加运费模板失败！";
-            callback(result, null);
+            return callback(result, null);
         }
-        callback(null, data);
+       return callback(null, data);
     });
 };
 
