@@ -954,7 +954,7 @@ router.post('/improtTicket', function (request, response, next) {
 
     try {
         var params = request.body;
-        logger.error("进入导入券码接口--params:" + params);
+        logger.info("进入导入券码接口--params:" + params);
 
         //参数校验
         //参数验证
@@ -982,7 +982,7 @@ router.post('/improtTicket', function (request, response, next) {
         }
         Product.improtVirtual(params, function (err, expressData) {
             if (err) {
-                response.json(result);
+                response.json(err);
                 return;
             }else{
                 response.json(result);
