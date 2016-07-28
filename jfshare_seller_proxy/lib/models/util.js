@@ -88,4 +88,21 @@ Util.prototype.getNextDay=function(d){
 
 }
 
+Util.prototype.getYestoday=function(){
+    var yesterday = new Date();
+    var yesterday_milliseconds=yesterday.getTime()-1000*60*60*24;
+
+    yesterday.setTime(yesterday_milliseconds);
+
+    var strYear = yesterday.getFullYear();
+    var strDay = yesterday.getDate();
+    var strMonth = yesterday.getMonth()+1;
+    if(strMonth<10)
+    {
+        strMonth="0"+strMonth;
+    }
+    datastr = strYear+"-"+strMonth+"-"+strDay;
+    return datastr;
+}
+
 module.exports = new Util();
