@@ -265,13 +265,17 @@ Product.prototype.statisticsProductCard = function (params, callback) {
 //卡密列表
 Product.prototype.queryProductCardViewList = function (params, callback) {
 
+
     var ProductCardViewParam = new product_types.ProductCardViewParam({
         sellerId: params.sellerId,
         productId: params.productId,
         cardNumber: params.cardNumber,
-        skuNum:params.skuNum,
         state: params.state
     });
+
+    if(params.skuNum !=""){
+        ProductCardViewParam.skuNum = params.skuNum;
+    }
     var page = new pagination_types.Pagination({
         numPerPage: params.perCount,
         currentPage: params.curpage
