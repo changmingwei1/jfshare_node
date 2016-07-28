@@ -276,11 +276,11 @@ Product.prototype.queryProductCardViewList = function (params, callback) {
         numPerPage: params.perCount,
         currentPage: params.curpage
     });
-    logger.info("productServ-queryProductCardViewList  result:" + JSON.stringify(ProductCardViewParam));
+    logger.error("productServ-queryProductCardViewList  result:" + JSON.stringify(ProductCardViewParam));
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCardViewList", [ProductCardViewParam, page]);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("productServ-queryProductCardViewList  result:" + JSON.stringify(data));
+        logger.error("productServ-queryProductCardViewList  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == 1) {
             logger.error("productServ-queryProduct  失败原因 ======" + err);
@@ -482,10 +482,10 @@ Product.prototype.improtVirtual = function (param, callback) {
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.error("调用productServ-improtVirtual result:" + JSON.stringify(data));
+        logger.info("调用productServ-improtVirtual result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
-            logger.error("调用productServ-improtVirtual  失败原因 ======" + err + data);
+            logger.error("参数："+JSON.stringify(ProductCardImportParam)+"调用productServ-improtVirtual  失败原因 ======" + err + JSON.stringify(data));
             res.code = 500;
             res.desc = "导入虚拟商品失败！";
             //[{"code":1,"failDescList":[{"name":"productCard","failCode":"5502","desc":"商品卡密导入失败"}]}]

@@ -66,6 +66,50 @@ Product.prototype.queryProductList = function (params, callback) {
     });
 };
 
+// 根据卖家id查询商品列表
+Product.prototype.productSurveyBackendQuery = function (params, callback) {
+
+    var thrift_pagination = new pagination_types.Pagination({
+        currentPage: params.curPage || 1,
+        numPerPage: params.perCount
+    });
+    var thrift_params = new product_types.ProductSurveyQueryParam({
+        pagination: thrift_pagination,
+        subjectId: params.subjectId,
+        sellerId: params.sellerId,
+        brandId: params.brandId,
+        activeState: 300,
+        /* create_time DESC:按创建时间降序
+         cur_price DESC:按现价降序
+         cur_price ASC:按现价升序
+         click_rate DESC:按点击量降序 */
+        sort: params.sort || 'create_time DESC'
+    });
+    logger.info("调用productServ-queryProductList args:" + JSON.stringify(thrift_params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "productSurveyBackendQuery", thrift_params);
+    // 调用 productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
+        var ret = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("调用productServ-queryProductList失败  失败原因 ======" + err);
+            ret.code = 500;
+            ret.desc = "查询商品列表失败！";
+            callback(ret, null);
+        } else if (data[0].result.code == 1 && data[0].result.productSurveyList == null) {
+            ret.code = 200;
+            ret.desc = "列表为空";
+            ret.productList = [];
+            callback(ret, null);
+            logger.info("调用productServ-queryProductList result:" + JSON.stringify(data[0]));
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 // 查询商品
 Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, skuTag, attributeTag, callback) {
     var param = new product_types.ProductRetParam({
