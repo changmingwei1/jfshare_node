@@ -889,21 +889,44 @@ router.post('/querydealList', function (request, response, next) {
                         type: "收款",
                         date: order.createTime,
                         paymode: order.payInfo.payChannel,
-                        perice: order.closingPrice
+                        perice: order.closingPrice,
+                        exchangeScore:order.exchangeScore
                     });
                     sumPerice.push(order.closingPrice);
                 });
                 for (var i = 0; i < productDeatilList.length; i++) {
                     if (productDeatilList[i].paymode == "1") {
-                        productDeatilList[i].paymode = "天翼";
+                        if(productDeatilList[i].exchangeScore>0){
+                            productDeatilList[i].paymode = "天翼+积分";
+                        }else{
+                            productDeatilList[i].paymode = "天翼";
+                        }
                     } else if (productDeatilList[i].paymode == "2") {
-                        productDeatilList[i].paymode = "支付宝";
+                        if(productDeatilList[i].exchangeScore>0){
+                            productDeatilList[i].paymode = "支付宝+积分";
+                        }else{
+                            productDeatilList[i].paymode = "支付宝";
+                        }
+
                     } else if (productDeatilList[i].paymode == "3" || productDeatilList[i].paymode == "4" || productDeatilList[i].paymode == "9") {
-                        productDeatilList[i].paymode = "微信";
+                        if(productDeatilList[i].exchangeScore>0){
+                            productDeatilList[i].paymode = "微信+积分";
+                        }else{
+                            productDeatilList[i].paymode = "微信";
+                        }
+
                     } else if (productDeatilList[i].paymode == "5" || productDeatilList[i].paymode == "7") {
-                        productDeatilList[i].paymode = "支付宝";
+                        if(productDeatilList[i].exchangeScore>0){
+                            productDeatilList[i].paymode = "支付宝+积分";
+                        }else{
+                            productDeatilList[i].paymode = "支付宝";
+                        }
                     } else if (productDeatilList[i].paymode == "6" || productDeatilList[i].paymode == "8") {
-                        productDeatilList[i].paymode = "和包";
+                        if(productDeatilList[i].exchangeScore>0){
+                            productDeatilList[i].paymode = "和包+积分";
+                        }else{
+                            productDeatilList[i].paymode = "和包";
+                        }
                     } else {
                         productDeatilList[i].paymode = "积分";
                     }
