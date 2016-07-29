@@ -480,7 +480,7 @@ Product.prototype.improtVirtual = function (param, callback) {
     });
 
 
-    logger.info("import virtual product  args:" + JSON.stringify(param));
+    logger.error("import virtual product  args:" + JSON.stringify(param));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "importProductCard", ProductCardImportParam);
 
