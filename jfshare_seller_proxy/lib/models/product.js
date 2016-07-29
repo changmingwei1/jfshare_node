@@ -552,10 +552,10 @@ Product.prototype.reCaptcha = function (params, callback) {
             res.code = 500;
             res.desc = "券码验证失败";
             callback(res, null);
-        }else if(data[0].code == "1"){
+        }else if(data[0].result.code == 1){
             logger.error("调用 productServ-reCaptcha 失败code=1");
             res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data[0]);
