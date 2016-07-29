@@ -1137,7 +1137,7 @@ router.post('/reCaptcha', function(request, response, next) {
                     try {
                         Product.reCaptcha(params, function (err, data) {
                             if(err){
-                                callback(1, null);
+                                callback(1, err);
                             }else{
                                 var cards=data.cardList;
                                 if(cards!=null){
@@ -1246,27 +1246,27 @@ router.post('/reCaptcha', function(request, response, next) {
 
                 if (err == 1) {
                     logger.error("验码失败---product服务异常：" + err);
-                    result.code = 500;
-                    result.desc = "验码失败";
-                    response.json(result);
+                    //result.code = 500;
+                    //result.desc = err.desc;
+                    response.json(results[0]);
                     return;
                 }
                 if (err == 2) {
                     logger.error("获取用户信息异常--product服务异常：" + err);
-                    result.code = 500;
-                    result.desc = "验码失败";
-                    response.json(result);
-                    return;
+                    //result.code = 500;
+                    //result.desc = "验码失败";
+                    //response.json(result);
+                    //return;
                 }
                 if (err == 3) {
                     logger.error("获取产品信息异常--product服务异常：" + err);
-                    result.code = 500;
-                    result.desc = "验码失败";
-                    response.json(result);
-                    return;
+                    //result.code = 500;
+                    //result.desc = "验码失败";
+                    //response.json(result);
+                    //return;
                 }
 
-                if (err == null) {
+                if (err!=1) {
                     logger.info("shuju------------->" + JSON.stringify(results));
 
                     result.productName=productInfo.productName;
