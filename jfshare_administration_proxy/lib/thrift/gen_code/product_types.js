@@ -4477,27 +4477,27 @@ CaptchaDetailResult.prototype.write = function(output) {
 };
 
 ThirdPartyProductQueryParam = module.exports.ThirdPartyProductQueryParam = function(args) {
-  this.sellerName = null;
+  this.thirdPartyIdentify = null;
   this.productName = null;
-  this.productState = null;
-  this.productStock = null;
-  this.priceChange = null;
+  this.activeState = null;
+  this.stockState = null;
+  this.priceState = null;
   this.offerState = null;
   if (args) {
-    if (args.sellerName !== undefined) {
-      this.sellerName = args.sellerName;
+    if (args.thirdPartyIdentify !== undefined) {
+      this.thirdPartyIdentify = args.thirdPartyIdentify;
     }
     if (args.productName !== undefined) {
       this.productName = args.productName;
     }
-    if (args.productState !== undefined) {
-      this.productState = args.productState;
+    if (args.activeState !== undefined) {
+      this.activeState = args.activeState;
     }
-    if (args.productStock !== undefined) {
-      this.productStock = args.productStock;
+    if (args.stockState !== undefined) {
+      this.stockState = args.stockState;
     }
-    if (args.priceChange !== undefined) {
-      this.priceChange = args.priceChange;
+    if (args.priceState !== undefined) {
+      this.priceState = args.priceState;
     }
     if (args.offerState !== undefined) {
       this.offerState = args.offerState;
@@ -4519,8 +4519,8 @@ ThirdPartyProductQueryParam.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.sellerName = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.thirdPartyIdentify = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -4534,21 +4534,21 @@ ThirdPartyProductQueryParam.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.I32) {
-        this.productState = input.readI32();
+        this.activeState = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 4:
       if (ftype == Thrift.Type.I32) {
-        this.productStock = input.readI32();
+        this.stockState = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 5:
       if (ftype == Thrift.Type.I32) {
-        this.priceChange = input.readI32();
+        this.priceState = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -4571,9 +4571,9 @@ ThirdPartyProductQueryParam.prototype.read = function(input) {
 
 ThirdPartyProductQueryParam.prototype.write = function(output) {
   output.writeStructBegin('ThirdPartyProductQueryParam');
-  if (this.sellerName !== null && this.sellerName !== undefined) {
-    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 1);
-    output.writeString(this.sellerName);
+  if (this.thirdPartyIdentify !== null && this.thirdPartyIdentify !== undefined) {
+    output.writeFieldBegin('thirdPartyIdentify', Thrift.Type.I32, 1);
+    output.writeI32(this.thirdPartyIdentify);
     output.writeFieldEnd();
   }
   if (this.productName !== null && this.productName !== undefined) {
@@ -4581,19 +4581,19 @@ ThirdPartyProductQueryParam.prototype.write = function(output) {
     output.writeString(this.productName);
     output.writeFieldEnd();
   }
-  if (this.productState !== null && this.productState !== undefined) {
-    output.writeFieldBegin('productState', Thrift.Type.I32, 3);
-    output.writeI32(this.productState);
+  if (this.activeState !== null && this.activeState !== undefined) {
+    output.writeFieldBegin('activeState', Thrift.Type.I32, 3);
+    output.writeI32(this.activeState);
     output.writeFieldEnd();
   }
-  if (this.productStock !== null && this.productStock !== undefined) {
-    output.writeFieldBegin('productStock', Thrift.Type.I32, 4);
-    output.writeI32(this.productStock);
+  if (this.stockState !== null && this.stockState !== undefined) {
+    output.writeFieldBegin('stockState', Thrift.Type.I32, 4);
+    output.writeI32(this.stockState);
     output.writeFieldEnd();
   }
-  if (this.priceChange !== null && this.priceChange !== undefined) {
-    output.writeFieldBegin('priceChange', Thrift.Type.I32, 5);
-    output.writeI32(this.priceChange);
+  if (this.priceState !== null && this.priceState !== undefined) {
+    output.writeFieldBegin('priceState', Thrift.Type.I32, 5);
+    output.writeI32(this.priceState);
     output.writeFieldEnd();
   }
   if (this.offerState !== null && this.offerState !== undefined) {
@@ -4609,12 +4609,12 @@ ThirdPartyProductQueryParam.prototype.write = function(output) {
 ThirdPartyProduct = module.exports.ThirdPartyProduct = function(args) {
   this.productId = null;
   this.thirdPartyProductId = null;
-  this.sellerName = null;
+  this.thirdPartyIdentify = null;
   this.sellerClassNum = null;
   this.curPrice = null;
-  this.priceChange = null;
-  this.productStockJson = null;
-  this.productState = null;
+  this.priceState = null;
+  this.stockInfo = null;
+  this.activeState = null;
   this.offerState = null;
   this.updateTime = null;
   if (args) {
@@ -4624,8 +4624,8 @@ ThirdPartyProduct = module.exports.ThirdPartyProduct = function(args) {
     if (args.thirdPartyProductId !== undefined) {
       this.thirdPartyProductId = args.thirdPartyProductId;
     }
-    if (args.sellerName !== undefined) {
-      this.sellerName = args.sellerName;
+    if (args.thirdPartyIdentify !== undefined) {
+      this.thirdPartyIdentify = args.thirdPartyIdentify;
     }
     if (args.sellerClassNum !== undefined) {
       this.sellerClassNum = args.sellerClassNum;
@@ -4633,14 +4633,14 @@ ThirdPartyProduct = module.exports.ThirdPartyProduct = function(args) {
     if (args.curPrice !== undefined) {
       this.curPrice = args.curPrice;
     }
-    if (args.priceChange !== undefined) {
-      this.priceChange = args.priceChange;
+    if (args.priceState !== undefined) {
+      this.priceState = args.priceState;
     }
-    if (args.productStockJson !== undefined) {
-      this.productStockJson = args.productStockJson;
+    if (args.stockInfo !== undefined) {
+      this.stockInfo = args.stockInfo;
     }
-    if (args.productState !== undefined) {
-      this.productState = args.productState;
+    if (args.activeState !== undefined) {
+      this.activeState = args.activeState;
     }
     if (args.offerState !== undefined) {
       this.offerState = args.offerState;
@@ -4679,8 +4679,8 @@ ThirdPartyProduct.prototype.read = function(input) {
       }
       break;
       case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.sellerName = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.thirdPartyIdentify = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -4701,21 +4701,21 @@ ThirdPartyProduct.prototype.read = function(input) {
       break;
       case 6:
       if (ftype == Thrift.Type.I32) {
-        this.priceChange = input.readI32();
+        this.priceState = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 7:
       if (ftype == Thrift.Type.STRING) {
-        this.productStockJson = input.readString();
+        this.stockInfo = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 8:
       if (ftype == Thrift.Type.I32) {
-        this.productState = input.readI32();
+        this.activeState = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -4755,9 +4755,9 @@ ThirdPartyProduct.prototype.write = function(output) {
     output.writeString(this.thirdPartyProductId);
     output.writeFieldEnd();
   }
-  if (this.sellerName !== null && this.sellerName !== undefined) {
-    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 3);
-    output.writeString(this.sellerName);
+  if (this.thirdPartyIdentify !== null && this.thirdPartyIdentify !== undefined) {
+    output.writeFieldBegin('thirdPartyIdentify', Thrift.Type.I32, 3);
+    output.writeI32(this.thirdPartyIdentify);
     output.writeFieldEnd();
   }
   if (this.sellerClassNum !== null && this.sellerClassNum !== undefined) {
@@ -4770,19 +4770,19 @@ ThirdPartyProduct.prototype.write = function(output) {
     output.writeString(this.curPrice);
     output.writeFieldEnd();
   }
-  if (this.priceChange !== null && this.priceChange !== undefined) {
-    output.writeFieldBegin('priceChange', Thrift.Type.I32, 6);
-    output.writeI32(this.priceChange);
+  if (this.priceState !== null && this.priceState !== undefined) {
+    output.writeFieldBegin('priceState', Thrift.Type.I32, 6);
+    output.writeI32(this.priceState);
     output.writeFieldEnd();
   }
-  if (this.productStockJson !== null && this.productStockJson !== undefined) {
-    output.writeFieldBegin('productStockJson', Thrift.Type.STRING, 7);
-    output.writeString(this.productStockJson);
+  if (this.stockInfo !== null && this.stockInfo !== undefined) {
+    output.writeFieldBegin('stockInfo', Thrift.Type.STRING, 7);
+    output.writeString(this.stockInfo);
     output.writeFieldEnd();
   }
-  if (this.productState !== null && this.productState !== undefined) {
-    output.writeFieldBegin('productState', Thrift.Type.I32, 8);
-    output.writeI32(this.productState);
+  if (this.activeState !== null && this.activeState !== undefined) {
+    output.writeFieldBegin('activeState', Thrift.Type.I32, 8);
+    output.writeI32(this.activeState);
     output.writeFieldEnd();
   }
   if (this.offerState !== null && this.offerState !== undefined) {
@@ -4990,8 +4990,12 @@ ThirdPartyProductLog.prototype.write = function(output) {
 };
 
 ThirdPartyProductLogParam = module.exports.ThirdPartyProductLogParam = function(args) {
+  this.thirdPartyIdentify = null;
   this.thirdPartyProductId = null;
   if (args) {
+    if (args.thirdPartyIdentify !== undefined) {
+      this.thirdPartyIdentify = args.thirdPartyIdentify;
+    }
     if (args.thirdPartyProductId !== undefined) {
       this.thirdPartyProductId = args.thirdPartyProductId;
     }
@@ -5012,15 +5016,19 @@ ThirdPartyProductLogParam.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.thirdPartyIdentify = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
       if (ftype == Thrift.Type.STRING) {
         this.thirdPartyProductId = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 0:
-        input.skip(ftype);
-        break;
       default:
         input.skip(ftype);
     }
@@ -5032,8 +5040,13 @@ ThirdPartyProductLogParam.prototype.read = function(input) {
 
 ThirdPartyProductLogParam.prototype.write = function(output) {
   output.writeStructBegin('ThirdPartyProductLogParam');
+  if (this.thirdPartyIdentify !== null && this.thirdPartyIdentify !== undefined) {
+    output.writeFieldBegin('thirdPartyIdentify', Thrift.Type.I32, 1);
+    output.writeI32(this.thirdPartyIdentify);
+    output.writeFieldEnd();
+  }
   if (this.thirdPartyProductId !== null && this.thirdPartyProductId !== undefined) {
-    output.writeFieldBegin('thirdPartyProductId', Thrift.Type.STRING, 1);
+    output.writeFieldBegin('thirdPartyProductId', Thrift.Type.STRING, 2);
     output.writeString(this.thirdPartyProductId);
     output.writeFieldEnd();
   }

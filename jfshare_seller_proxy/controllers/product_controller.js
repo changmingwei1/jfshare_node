@@ -982,7 +982,7 @@ router.post('/improtTicket', function (request, response, next) {
         }
         Product.improtVirtual(params, function (err, expressData) {
             if (err) {
-                response.json(result);
+                response.json(err);
                 return;
             }else{
                 response.json(result);
@@ -1137,7 +1137,7 @@ router.post('/reCaptcha', function(request, response, next) {
                     try {
                         Product.reCaptcha(params, function (err, data) {
                             if(err){
-                                callback(1, null);
+                                callback(1, err);
                             }else{
                                 var cards=data.cardList;
                                 if(cards!=null){
@@ -1246,27 +1246,27 @@ router.post('/reCaptcha', function(request, response, next) {
 
                 if (err == 1) {
                     logger.error("验码失败---product服务异常：" + err);
-                    result.code = 500;
-                    result.desc = "验码失败";
-                    response.json(result);
+                    //result.code = 500;
+                    //result.desc = err.desc;
+                    response.json(results[0]);
                     return;
                 }
                 if (err == 2) {
                     logger.error("获取用户信息异常--product服务异常：" + err);
-                    result.code = 500;
-                    result.desc = "验码失败";
-                    response.json(result);
-                    return;
+                    //result.code = 500;
+                    //result.desc = "验码失败";
+                    //response.json(result);
+                    //return;
                 }
                 if (err == 3) {
                     logger.error("获取产品信息异常--product服务异常：" + err);
-                    result.code = 500;
-                    result.desc = "验码失败";
-                    response.json(result);
-                    return;
+                    //result.code = 500;
+                    //result.desc = "验码失败";
+                    //response.json(result);
+                    //return;
                 }
 
-                if (err == null) {
+                if (err!=1) {
                     logger.info("shuju------------->" + JSON.stringify(results));
 
                     result.productName=productInfo.productName;
@@ -1363,6 +1363,7 @@ router.post('/queryCaptchaList', function(request, response, next) {
                         aldCaptcha:item.aldCaptcha
                     });
                 });
+                result.yesToday=Util.getYestoday();
                 result.yedNum=data.yedNum;
                 result.thmonNum=data.monNum;
                 result.productList=products;
@@ -1627,95 +1628,7 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
             response.json(result);
             return;
         }
-        //---------------------前台测试数据-----------------------------
 
-
-        //var productDetailList=[];
-        //
-        //if(params.queryDate=="2016-04"||params.queryDate=="2016-05"){
-        //    result.page = {
-        //        total:60,
-        //        pageCount:3
-        //    };
-        //    for(var i=0;i<20;i++){
-        //        productDetailList.push({
-        //            productName:"测试：商品名称test",
-        //            date:"2016-05-26",
-        //            consumeNum:"af23wsdsf233",
-        //            mobile:"13211111111",
-        //            nickName:"测试：昵称test"
-        //        });
-        //    }
-        //
-        //}else if(params.queryDate=="2016-01"){
-        //    result.page = {
-        //        total:0,
-        //        pageCount:1
-        //    };
-        //}else{
-        //    result.page = {
-        //        total:1,
-        //        pageCount:1
-        //    };
-        //    productDetailList.push({
-        //        productName:"测试：商品名称test",
-        //        date:"2016-05-26",
-        //        consumeNum:"af23wsdsf233",
-        //        mobile:"13211111111",
-        //        nickName:"测试：昵称test"
-        //    });
-        //}
-        //
-        //result.productDetailList=productDetailList;
-        //response.json(result);
-        //return;
-        //------------------------------------------------------------------
-
-
-        //Product.queryCaptchaDetails(params, function (err, data) {
-        //    if(err){
-        //        return response.json(err);
-        //    }else{
-        //        if(data!=null&&data!=""){
-        //            //result.productName=data.productName;
-        //            var captchaDetals=data.productCards;
-        //
-        //            if(captchaDetals==null||captchaDetals==""){
-        //                //result.code = 500;
-        //                //result.desc = "查询虚拟商品验证明细失败";
-        //
-        //                result.productDetailList=null;
-        //                response.json(result);
-        //                return;
-        //            }
-        //
-        //            result.page = {
-        //                total: data.pagination.totalCount,
-        //                pageCount: data.pagination.pageNumCount
-        //            };
-        //            captchaDetals.forEach(function(item){
-        //
-        //                captObj.push({
-        //                    productName:data.productName,
-        //                    date:item.checkTime,
-        //                    consumeNum:item.cardNumber,
-        //                    mobile:item.mobile,
-        //                    nickName:item.nikeName,
-        //                    buyerId:item.buyerId
-        //                });
-        //            });
-        //            result.productDetailList=captObj;
-        //        }
-        //
-        //        logger.info("虚拟商品验证明细 result" + JSON.stringify(result));
-        //        response.json(result);
-        //        return;
-        //    }
-        //
-        //});
-
-
-        //-------------------------------------------------------------------------------------------------------
         var captObj=[];
         var bIds=new Array();
         var buyerTemp=[];
@@ -1879,6 +1792,7 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
                            }
                         }
                     }
+
                     result.productDetailList=newProList;
                     response.json(result);
                     return;

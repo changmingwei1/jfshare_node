@@ -224,6 +224,7 @@ router.post('/get', function(request, response, next) {
 router.post('/list', function(request, response, next) {
 
     var result = {code: 200};
+    result.messageList = [];
     var params = request.body;
     try{
         Message.list(params, function(error,data){

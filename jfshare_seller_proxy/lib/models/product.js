@@ -265,22 +265,26 @@ Product.prototype.statisticsProductCard = function (params, callback) {
 //卡密列表
 Product.prototype.queryProductCardViewList = function (params, callback) {
 
+
     var ProductCardViewParam = new product_types.ProductCardViewParam({
         sellerId: params.sellerId,
         productId: params.productId,
         cardNumber: params.cardNumber,
-        skuNum:params.skuNum,
         state: params.state
     });
+
+    if(params.skuNum !=""){
+        ProductCardViewParam.skuNum = params.skuNum;
+    }
     var page = new pagination_types.Pagination({
         numPerPage: params.perCount,
         currentPage: params.curpage
     });
-    logger.info("productServ-queryProductCardViewList  result:" + JSON.stringify(ProductCardViewParam));
+    logger.error("productServ-queryProductCardViewList  result:" + JSON.stringify(ProductCardViewParam));
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "queryProductCardViewList", [ProductCardViewParam, page]);
 
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("productServ-queryProductCardViewList  result:" + JSON.stringify(data));
+        logger.error("productServ-queryProductCardViewList  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == 1) {
             logger.error("productServ-queryProduct  失败原因 ======" + err);
@@ -476,7 +480,7 @@ Product.prototype.improtVirtual = function (param, callback) {
     });
 
 
-    logger.info("import virtual product  args:" + JSON.stringify(param));
+    logger.error("import virtual product  args:" + JSON.stringify(param));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "importProductCard", ProductCardImportParam);
 
@@ -485,7 +489,7 @@ Product.prototype.improtVirtual = function (param, callback) {
         logger.error("调用productServ-improtVirtual result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
-            logger.error("调用productServ-improtVirtual  失败原因 ======" + err + data);
+            logger.error("参数："+JSON.stringify(ProductCardImportParam)+"调用productServ-improtVirtual  失败原因 ======" + err + JSON.stringify(data));
             res.code = 500;
             res.desc = "导入虚拟商品失败！";
             //[{"code":1,"failDescList":[{"name":"productCard","failCode":"5502","desc":"商品卡密导入失败"}]}]
@@ -548,10 +552,10 @@ Product.prototype.reCaptcha = function (params, callback) {
             res.code = 500;
             res.desc = "券码验证失败";
             callback(res, null);
-        }else if(data[0].code == "1"){
+        }else if(data[0].result.code == 1){
             logger.error("调用 productServ-reCaptcha 失败code=1");
             res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data[0]);
