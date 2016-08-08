@@ -310,7 +310,7 @@ router.post('/thirdPartyProductQuery', function (request, response, next) {
             }
             if(data !=null){
                 result.thirdPartyProductList = data.thirdPartyProductList;
-                result.pagination = data[0].pagination;
+                result.pagination = data.pagination;
             }
             response.json(result);
             return;
@@ -348,8 +348,21 @@ router.post('/getThirdPartyProductLog', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.thirdPartyProductId == null || params.thirdPartyProductId == ""|| params.thirdPartyProductId <= 0) {
 
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
+        //thirdPartyIdentify
+        if (params.thirdPartyIdentify == null || params.thirdPartyIdentify == ""|| params.thirdPartyIdentify <= 0) {
 
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
         Product.getThirdPartyProductLog(params, function (err, data) {
             if (err) {
                 response.json(err);
