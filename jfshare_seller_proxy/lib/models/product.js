@@ -265,13 +265,17 @@ Product.prototype.statisticsProductCard = function (params, callback) {
 //卡密列表
 Product.prototype.queryProductCardViewList = function (params, callback) {
 
+
     var ProductCardViewParam = new product_types.ProductCardViewParam({
         sellerId: params.sellerId,
         productId: params.productId,
         cardNumber: params.cardNumber,
-        skuNum:params.skuNum,
         state: params.state
     });
+
+    if(params.skuNum !=""){
+        ProductCardViewParam.skuNum = params.skuNum;
+    }
     var page = new pagination_types.Pagination({
         numPerPage: params.perCount,
         currentPage: params.curpage
@@ -476,13 +480,13 @@ Product.prototype.improtVirtual = function (param, callback) {
     });
 
 
-    logger.info("import virtual product  args:" + JSON.stringify(param));
+    logger.error("import virtual product  args:" + JSON.stringify(param));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "importProductCard", ProductCardImportParam);
 
     //invite productServ
     Lich.wicca.invokeClient(productServ, function (err, data) {
-        logger.info("调用productServ-improtVirtual result:" + JSON.stringify(data));
+        logger.error("调用productServ-improtVirtual result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].code == "1") {
             logger.error("参数："+JSON.stringify(ProductCardImportParam)+"调用productServ-improtVirtual  失败原因 ======" + err + JSON.stringify(data));
@@ -548,10 +552,10 @@ Product.prototype.reCaptcha = function (params, callback) {
             res.code = 500;
             res.desc = "券码验证失败";
             callback(res, null);
-        }else if(data[0].code == "1"){
+        }else if(data[0].result.code == 1){
             logger.error("调用 productServ-reCaptcha 失败code=1");
             res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data[0]);

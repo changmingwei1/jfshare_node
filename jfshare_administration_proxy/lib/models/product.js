@@ -816,12 +816,12 @@ Product.prototype.queryProductCard = function (params, callback) {
 //查询第三方商品
 Product.prototype.queryThirdPartyProduct = function (params, callback) {
     var productCardParam = new product_types.ThirdPartyProductQueryParam({
-        sellerName:params.sellerName,
-        productName:params.productName,
-         productState:params.productState,
-        productStock:params.productStock,
-        priceChange:params.priceChange,
-        offerState:params.offerState
+       thirdPartyIdentify:params.thirdPartyIdentify,
+        productName :params.productName,
+        activeState:params.activeState,
+        stockState:params.stockState,
+        priceState :params.priceState,
+        offerState :params.offerState
     });
 
     var pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});
@@ -853,7 +853,8 @@ Product.prototype.queryThirdPartyProduct = function (params, callback) {
 //获取第三方操作日志
 Product.prototype.getThirdPartyProductLog = function (params, callback) {
     var productCardParam = new product_types.ThirdPartyProductLogParam({
-        thirdPartyProductId:params.productId
+        thirdPartyProductId:params.thirdPartyProductId,
+        thirdPartyIdentify:params.thirdPartyIdentify
     });
 
     var pagination = new pagination_types.Pagination({currentPage: params.curpage, numPerPage: params.percount});

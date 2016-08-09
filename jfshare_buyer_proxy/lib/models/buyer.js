@@ -307,7 +307,10 @@ Buyer.prototype.isExitsThirdUser = function(param,callback){
 //获取个人信息
 Buyer.prototype.getBuyer = function(param,callback){
 
-    var buyer = new buyer_types.Buyer({userId:param.userId});
+    var buyer = new buyer_types.Buyer({
+        userId:param.userId,
+        clientType:param.clientType
+    });
 
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getBuyer',[buyer]);
