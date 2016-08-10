@@ -341,7 +341,8 @@ Buyer.prototype.updateBuyer = function(param,callback){
         userName:param.userName,
         favImg:param.favImg,
         birthday:param.birthday,
-        sex:param.sex
+        sex:param.sex,
+        clientType:param.clientType
     });
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'updateBuyer',[buyer]);
