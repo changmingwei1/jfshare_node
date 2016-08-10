@@ -4610,6 +4610,8 @@ ThirdPartyProduct = module.exports.ThirdPartyProduct = function(args) {
   this.productId = null;
   this.thirdPartyProductId = null;
   this.thirdPartyIdentify = null;
+  this.name = null;
+  this.imgKey = null;
   this.sellerClassNum = null;
   this.curPrice = null;
   this.priceState = null;
@@ -4626,6 +4628,12 @@ ThirdPartyProduct = module.exports.ThirdPartyProduct = function(args) {
     }
     if (args.thirdPartyIdentify !== undefined) {
       this.thirdPartyIdentify = args.thirdPartyIdentify;
+    }
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.imgKey !== undefined) {
+      this.imgKey = args.imgKey;
     }
     if (args.sellerClassNum !== undefined) {
       this.sellerClassNum = args.sellerClassNum;
@@ -4687,47 +4695,61 @@ ThirdPartyProduct.prototype.read = function(input) {
       break;
       case 4:
       if (ftype == Thrift.Type.STRING) {
-        this.sellerClassNum = input.readString();
+        this.name = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 5:
       if (ftype == Thrift.Type.STRING) {
-        this.curPrice = input.readString();
+        this.imgKey = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 6:
-      if (ftype == Thrift.Type.I32) {
-        this.priceState = input.readI32();
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerClassNum = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 7:
       if (ftype == Thrift.Type.STRING) {
-        this.stockInfo = input.readString();
+        this.curPrice = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 8:
       if (ftype == Thrift.Type.I32) {
-        this.activeState = input.readI32();
+        this.priceState = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.stockInfo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.I32) {
+        this.activeState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
       if (ftype == Thrift.Type.I32) {
         this.offerState = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 10:
+      case 12:
       if (ftype == Thrift.Type.STRING) {
         this.updateTime = input.readString();
       } else {
@@ -4760,38 +4782,48 @@ ThirdPartyProduct.prototype.write = function(output) {
     output.writeI32(this.thirdPartyIdentify);
     output.writeFieldEnd();
   }
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 4);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.imgKey !== null && this.imgKey !== undefined) {
+    output.writeFieldBegin('imgKey', Thrift.Type.STRING, 5);
+    output.writeString(this.imgKey);
+    output.writeFieldEnd();
+  }
   if (this.sellerClassNum !== null && this.sellerClassNum !== undefined) {
-    output.writeFieldBegin('sellerClassNum', Thrift.Type.STRING, 4);
+    output.writeFieldBegin('sellerClassNum', Thrift.Type.STRING, 6);
     output.writeString(this.sellerClassNum);
     output.writeFieldEnd();
   }
   if (this.curPrice !== null && this.curPrice !== undefined) {
-    output.writeFieldBegin('curPrice', Thrift.Type.STRING, 5);
+    output.writeFieldBegin('curPrice', Thrift.Type.STRING, 7);
     output.writeString(this.curPrice);
     output.writeFieldEnd();
   }
   if (this.priceState !== null && this.priceState !== undefined) {
-    output.writeFieldBegin('priceState', Thrift.Type.I32, 6);
+    output.writeFieldBegin('priceState', Thrift.Type.I32, 8);
     output.writeI32(this.priceState);
     output.writeFieldEnd();
   }
   if (this.stockInfo !== null && this.stockInfo !== undefined) {
-    output.writeFieldBegin('stockInfo', Thrift.Type.STRING, 7);
+    output.writeFieldBegin('stockInfo', Thrift.Type.STRING, 9);
     output.writeString(this.stockInfo);
     output.writeFieldEnd();
   }
   if (this.activeState !== null && this.activeState !== undefined) {
-    output.writeFieldBegin('activeState', Thrift.Type.I32, 8);
+    output.writeFieldBegin('activeState', Thrift.Type.I32, 10);
     output.writeI32(this.activeState);
     output.writeFieldEnd();
   }
   if (this.offerState !== null && this.offerState !== undefined) {
-    output.writeFieldBegin('offerState', Thrift.Type.I32, 9);
+    output.writeFieldBegin('offerState', Thrift.Type.I32, 11);
     output.writeI32(this.offerState);
     output.writeFieldEnd();
   }
   if (this.updateTime !== null && this.updateTime !== undefined) {
-    output.writeFieldBegin('updateTime', Thrift.Type.STRING, 10);
+    output.writeFieldBegin('updateTime', Thrift.Type.STRING, 12);
     output.writeString(this.updateTime);
     output.writeFieldEnd();
   }
