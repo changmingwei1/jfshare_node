@@ -301,6 +301,8 @@ Buyer = module.exports.Buyer = function(args) {
   this.serial = null;
   this.createTime = null;
   this.lastUpdateTime = null;
+  this.state = null;
+  this.clientType = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -376,6 +378,12 @@ Buyer = module.exports.Buyer = function(args) {
     }
     if (args.lastUpdateTime !== undefined) {
       this.lastUpdateTime = args.lastUpdateTime;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.clientType !== undefined) {
+      this.clientType = args.clientType;
     }
   }
 };
@@ -568,6 +576,20 @@ Buyer.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 26:
+      if (ftype == Thrift.Type.I32) {
+        this.state = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 27:
+      if (ftype == Thrift.Type.I32) {
+        this.clientType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -702,6 +724,16 @@ Buyer.prototype.write = function(output) {
   if (this.lastUpdateTime !== null && this.lastUpdateTime !== undefined) {
     output.writeFieldBegin('lastUpdateTime', Thrift.Type.STRING, 25);
     output.writeString(this.lastUpdateTime);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 26);
+    output.writeI32(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.clientType !== null && this.clientType !== undefined) {
+    output.writeFieldBegin('clientType', Thrift.Type.I32, 27);
+    output.writeI32(this.clientType);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1031,6 +1063,96 @@ BuyerResult.prototype.write = function(output) {
   if (this.authInfo !== null && this.authInfo !== undefined) {
     output.writeFieldBegin('authInfo', Thrift.Type.STRUCT, 6);
     this.authInfo.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerListResult = module.exports.BuyerListResult = function(args) {
+  this.result = null;
+  this.buyerList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.buyerList !== undefined) {
+      this.buyerList = args.buyerList;
+    }
+  }
+};
+BuyerListResult.prototype = {};
+BuyerListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size0 = 0;
+        var _rtmp34;
+        this.buyerList = [];
+        var _etype3 = 0;
+        _rtmp34 = input.readListBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        {
+          var elem6 = null;
+          elem6 = new ttypes.Buyer();
+          elem6.read(input);
+          this.buyerList.push(elem6);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerListResult.prototype.write = function(output) {
+  output.writeStructBegin('BuyerListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.buyerList !== null && this.buyerList !== undefined) {
+    output.writeFieldBegin('buyerList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.buyerList.length);
+    for (var iter7 in this.buyerList)
+    {
+      if (this.buyerList.hasOwnProperty(iter7))
+      {
+        iter7 = this.buyerList[iter7];
+        iter7.write(output);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   output.writeFieldStop();
