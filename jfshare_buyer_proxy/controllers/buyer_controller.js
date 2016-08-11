@@ -971,16 +971,40 @@ router.post('/queryCachAmount', function (request, response, next) {
             response.json(resContent);
             return;
         }
+        if (param.token == null || param.token == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.ppInfo == null || param.ppInfo == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
         logger.info("请求参数信息" + JSON.stringify(param));
-        Score.queryCachAmount(param, function (error, data) {
-            if (error) {
-                response.json(error);
-            } else {
-                var score = data[0].cachAmount;
-                resContent.cachAmount = score;
-                response.json(resContent);
-                logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
+            Score.queryCachAmount(param, function (error, data) {
+                if (error) {
+                    response.json(error);
+                } else {
+                    var score = data[0].cachAmount;
+                    resContent.cachAmount = score;
+                    response.json(resContent);
+                    logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
+                }
+            });
         });
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
@@ -990,6 +1014,7 @@ router.post('/queryCachAmount', function (request, response, next) {
         response.json(resContent);
     }
 });
+
 /*兑出积分*/
 router.post('/cachAmountCall', function (request, response, next) {
 
@@ -1015,13 +1040,39 @@ router.post('/cachAmountCall', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        Score.cachAmountCall(param, function (error, data) {
-            if (error) {
-                response.json(error);
-            } else {
-                response.json(resContent);
-                logger.info("Score cachAmountCall response:" + JSON.stringify(resContent));
+
+        if (param.token == null || param.token == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.ppInfo == null || param.ppInfo == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数信息" + JSON.stringify(param));
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
+            Score.cachAmountCall(param, function (error, data) {
+                if (error) {
+                    response.json(error);
+                } else {
+                    response.json(resContent);
+                    logger.info("Score cachAmountCall response:" + JSON.stringify(resContent));
+                }
+            });
         });
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
@@ -1105,18 +1156,40 @@ router.post('/enterAmountCall', function (request, response, next) {
             response.json(resContent);
             return;
         }
-
+        if (param.token == null || param.token == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.ppInfo == null || param.ppInfo == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
         logger.info("请求参数信息" + JSON.stringify(param));
-
-        Score.enterAmountCall(param, function (error, data) {
-            if (error) {
-                response.json(error);
-            } else {
-                //var score = data[0].responseScore;
-                //resContent.responseScore = score;
-                response.json(resContent);
-                logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
             }
+            Score.enterAmountCall(param, function (error, data) {
+                if (error) {
+                    response.json(error);
+                } else {
+                    //var score = data[0].responseScore;
+                    //resContent.responseScore = score;
+                    response.json(resContent);
+                    logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
+                }
+            });
         });
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
