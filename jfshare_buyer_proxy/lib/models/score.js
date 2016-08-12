@@ -213,7 +213,6 @@ Score.prototype.queryScoreUser = function (params, callback) {
     });
 };
 
-
 //测试redis
 Score.prototype.getRedisbyKey = function (arg, callback) {
     logger.info(JSON.stringify(arg));
@@ -233,6 +232,51 @@ Score.prototype.getRedisbyKey = function (arg, callback) {
     });
 };
 
+/*用户是否绑定兑出账号*/
+Score.prototype.isUserIdRela = function (userId, callback) {
+    logger.info("请求参数：" + userId);
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'isUserIdRela', [userId]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get isUserIdRela result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("can't get isUserIdRela because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get isUserIdRela";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("can't get isUserIdRela, 请求参数arg=" + userId);
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else{
+            callback(null, data);
+        }
+    });
+};
+
+/*账号是否绑定*/
+Score.prototype.isAccountRela = function (account, callback) {
+    logger.info("请求参数：" + account);
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'isAccountRela', [account]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get isAccountRela result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("can't get isAccountRela because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get isAccountRela";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("can't get isAccountRela, 请求参数arg=" + account);
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else{
+            callback(null, data);
+        }
+    });
+};
 
 
 module.exports = new Score();

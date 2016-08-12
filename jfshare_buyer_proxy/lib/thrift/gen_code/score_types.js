@@ -1707,3 +1707,201 @@ ResponseScoreResult.prototype.write = function(output) {
   return;
 };
 
+ScoreAccount = module.exports.ScoreAccount = function(args) {
+  this.userId = null;
+  this.account = null;
+  this.createTime = null;
+  this.type = null;
+  this.state = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.account !== undefined) {
+      this.account = args.account;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+  }
+};
+ScoreAccount.prototype = {};
+ScoreAccount.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.account = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.type = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.state = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreAccount.prototype.write = function(output) {
+  output.writeStructBegin('ScoreAccount');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.account !== null && this.account !== undefined) {
+    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
+    output.writeString(this.account);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 3);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.STRING, 4);
+    output.writeString(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.STRING, 5);
+    output.writeString(this.state);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreAccountResult = module.exports.ScoreAccountResult = function(args) {
+  this.result = null;
+  this.scoreAccount = null;
+  this.value = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.scoreAccount !== undefined) {
+      this.scoreAccount = args.scoreAccount;
+    }
+    if (args.value !== undefined) {
+      this.value = args.value;
+    }
+  }
+};
+ScoreAccountResult.prototype = {};
+ScoreAccountResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.scoreAccount = new ttypes.ScoreAccount();
+        this.scoreAccount.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.BOOL) {
+        this.value = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreAccountResult.prototype.write = function(output) {
+  output.writeStructBegin('ScoreAccountResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.scoreAccount !== null && this.scoreAccount !== undefined) {
+    output.writeFieldBegin('scoreAccount', Thrift.Type.STRUCT, 2);
+    this.scoreAccount.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.value !== null && this.value !== undefined) {
+    output.writeFieldBegin('value', Thrift.Type.BOOL, 3);
+    output.writeBool(this.value);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

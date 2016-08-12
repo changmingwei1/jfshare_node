@@ -1389,4 +1389,72 @@ router.post('/requestHttps',function(request,response,next){
     }
 });
 
+/*用户是否绑定兑出账号*/
+router.post('/isUserIdRela', function (request, response, next) {
+
+    logger.info("进入用户是否绑定兑出账号接口...");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null || param.userId == null || param.userId == "") {
+            resContent.code = 500;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
+        Score.isUserIdRela(param.userId, function (error, data) {
+            if (error) {
+                response.json(error);
+                return;
+            } else {
+                var scoreAccountResult = data[0];
+                resContent.scoreAccountResult = scoreAccountResult;
+                response.json(resContent);
+                logger.info("get isUserIdRela response:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("不能判断，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能判断";
+        response.json(resContent);
+    }
+});
+
+/*账号是否绑定*/
+router.post('/isAccountRela', function (request, response, next) {
+
+    logger.info("进入账号是否绑定接口...");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null || param.account == null || param.account == "") {
+            resContent.code = 500;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
+        Score.isAccountRela(param.account, function (error, data) {
+            if (error) {
+                response.json(error);
+                return;
+            } else {
+                var value = data[0].value;
+                resContent.value = value;
+                response.json(resContent);
+                logger.info("get isAccountRela response:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("不能判断，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能判断";
+        response.json(resContent);
+    }
+});
+
 module.exports = router;
