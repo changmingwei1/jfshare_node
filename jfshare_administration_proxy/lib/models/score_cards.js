@@ -1,0 +1,57 @@
+/**
+ * Created by huapengpeng on 2016/4/21.
+ */
+/**
+ * @auther YinBo 2016/0815
+ * 积分卡管理
+ *
+ */
+var log4node = require('../../log4node');
+var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
+
+var Lich = require('../thrift/Lich.js');
+var thrift = require('thrift');
+var pagination_types = require('../thrift/gen_code/pagination_types');
+var score_types = require("../thrift/gen_code/batchCards_types");
+
+function ScoreCard() { 
+}
+
+//创建一个积分活动
+ScoreCard.prototype.createOneActivity = function (params, callback) {
+    var activityBean= new score_types.ActivityBean({
+        name:params.name,
+        pieceValue:params.pieceValue,
+        totalCount:params.totalCount,
+        /* 充值方式：0手动 1自动 */
+        rechargeType:params.rechargeType,
+        startTime:params.startTime,
+        endTime:params.endTime,
+        /* 状态：0可用 1作废 2过期 */
+        // curStatus:params.curStatus,
+        multiRechargeEnable:params.multiRechargeEnable
+        
+    });
+    var pagination = new pagination_types.Pagination({
+        currentPage: params.curpage,
+        numPerPage: params.percount
+    });
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServer, 'createOneActivity', [activityBean,pagination]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("scoreServ.queryScoreTrade result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.queryScoreTrade because: ======" + err);
+            res.code = 500;
+            res.desc = "创建积分卡活动失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
+
+module.exports = new ScoreCard();

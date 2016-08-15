@@ -221,6 +221,16 @@ module.exports.ServiceFactory = {
     score: function () {
         logger.info("--------->"+zookeeper.getData("score_serv_ips")+"--->"+zookeeper.getData("score_serv_port"));
         return new ThriftConfig(zookeeper.getData("score_serv_ips"),zookeeper.getData("score_serv_port"));
+    },
+    
+    
+    /**
+     * 积分卡 管理 server 
+     * @returns {ThriftConfig}
+     */
+    scoreCards: function () {
+        logger.info("--------->"+zookeeper.getData("score_cards_serv_ips")+"--->"+zookeeper.getData("score_cards_serv_port"));
+        return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
     }
 
 };
