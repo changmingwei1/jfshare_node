@@ -32,12 +32,9 @@ ScoreCard.prototype.createOneActivity = function (params, callback) {
         multiRechargeEnable:params.multiRechargeEnable
         
     });
-    var pagination = new pagination_types.Pagination({
-        currentPage: params.curpage,
-        numPerPage: params.percount
-    });
+
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServer, 'createOneActivity', [activityBean,pagination]);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'createOneActivity', [activityBean]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("scoreServ.queryScoreTrade result:" + JSON.stringify(data));
         var res = {};
