@@ -1506,13 +1506,13 @@ router.post('/relaAccountCall', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if (param.Token == null || param.Token == "") {
+        if (param.ToKen == null || param.ToKen == "") {
             resContent.code = 400;
             resContent.desc = "Token不能为空";
             response.json(resContent);
             return;
         }
-        if (param.ExpTime == null || param.ExpTime == "") {
+        if (param.ExceedTime == null || param.ExceedTime == "") {
             resContent.code = 400;
             resContent.desc = "过期时间不能为空";
             response.json(resContent);
@@ -1535,6 +1535,77 @@ router.post('/relaAccountCall', function (request, response, next) {
         logger.error("绑定失败，原因是:" + ex);
         resContent.code = 500;
         resContent.desc = "绑定失败";
+        response.json(resContent);
+    }
+});
+
+/*积分充值*/
+router.post('/recharge', function (request, response, next) {
+
+    logger.info("进入积分充值接口");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param.userId == null || param.userId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.token == null || param.token == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.ppInfo == null || param.ppInfo == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.cardName == null || param.cardName == "") {
+            resContent.code = 400;
+            resContent.desc = "卡号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.cardPsd == null || param.cardPsd == "") {
+            resContent.code = 400;
+            resContent.desc = "卡密不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数信息" + JSON.stringify(param));
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            Buyer.recharge(param, function (error, data) {
+                if (error) {
+                    response.json(error);
+                    return;
+                } else {
+                    var value = data[0].value;
+                    resContent.value = value;
+                    response.json(resContent);
+                    logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
+                }
+            });
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("积分充值异常，原因是======:" + ex);
+        resContent.code = 500;
+        resContent.desc = "积分充值失败";
         response.json(resContent);
     }
 });

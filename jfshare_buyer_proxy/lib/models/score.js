@@ -289,8 +289,8 @@ Score.prototype.relaAccountCall = function (params, callback) {
         DeviceNo:params.DeviceNo,
         DeviceType:params.DeviceType,
         OutCustID:params.OutCustID,
-        Token:params.Token,
-        ExpTime:params.ExpTime
+        ToKen:params.ToKen,
+        ExceedTime:params.ExceedTime
     });
 
     logger.info("请求参数：" + JSON.stringify(param));
