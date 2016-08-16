@@ -22,7 +22,7 @@ ScoreCard.prototype.createOneActivity = function (params, callback) {
     var activityBean= new score_types.ActivityBean({
         name:params.name,
         pieceValue:params.pieceValue,
-        totalCount:params.totalCount,
+        totalCount:parseInt(params.totalCount),
         /* 充值方式：0手动 1自动 */
         rechargeType:params.rechargeType,
         startTime:params.startTime,
@@ -32,19 +32,44 @@ ScoreCard.prototype.createOneActivity = function (params, callback) {
         multiRechargeEnable:params.multiRechargeEnable
         
     });
-    var pagination = new pagination_types.Pagination({
-        currentPage: params.curpage,
-        numPerPage: params.percount
-    });
+
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServer, 'createOneActivity', [activityBean,pagination]);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'createOneActivity', [activityBean]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
-        logger.info("scoreServ.queryScoreTrade result:" + JSON.stringify(data));
+        logger.info("createOneActivity result:" + JSON.stringify(data));
         var res = {};
         if (err|| data[0].result.code == 1) {
             logger.error("scoreServ.queryScoreTrade because: ======" + err);
             res.code = 500;
             res.desc = "创建积分卡活动失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+// 导出充值卡excel 
+ScoreCard.prototype.exportExcelByqueryCards = function (params, callback) {
+    var activityId =params.activityId;
+    var queryParams= new score_types.ActivityBean({
+        cardName:params.cardName,
+        cardPsd:params.cardPsd,
+        sendStatus:params.sendStatus,
+        rechargeStatus:params.rechargeStatus,
+        rechargeAccount:params.rechargeAccount
+    });
+    var psd=params.psd;
+
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'exportExcelByqueryCards', [activityId ,queryParams,psd]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("exportExcelByqueryCards result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.queryScoreTrade because: ======" + err);
+            res.code = 500;
+            res.desc = "导出积分卡excel失败";
             callback(res, null);
         } else {
             callback(null, data);
