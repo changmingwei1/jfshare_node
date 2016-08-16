@@ -278,5 +278,41 @@ Score.prototype.isAccountRela = function (account, callback) {
     });
 };
 
+/*电信账号绑定接口*/
+Score.prototype.relaAccountCall = function (params, callback) {
+
+    var param = new score_types.RelaAccountRequestParam({
+        AppCode:params.AppCode,
+        RequestDate:params.RequestDate,
+        Sign:params.Sign,
+        SpID:params.SpID,
+        DeviceNo:params.DeviceNo,
+        DeviceType:params.DeviceType,
+        OutCustID:params.OutCustID,
+        Token:params.Token,
+        ExpTime:params.ExpTime
+    });
+
+    logger.info("请求参数：" + JSON.stringify(param));
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'relaAccountCall', [param]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get isAccountRela result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("can't get isAccountRela because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get isAccountRela";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("can't get isAccountRela, 请求参数arg=" + JSON.stringify(params));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else{
+            callback(null, data);
+        }
+    });
+};
+
 
 module.exports = new Score();

@@ -1905,3 +1905,249 @@ ScoreAccountResult.prototype.write = function(output) {
   return;
 };
 
+RelaAccountRequestParam = module.exports.RelaAccountRequestParam = function(args) {
+  this.AppCode = null;
+  this.RequestDate = null;
+  this.Sign = null;
+  this.SpID = null;
+  this.DeviceNo = null;
+  this.DeviceType = null;
+  this.OutCustID = null;
+  this.Token = null;
+  this.ExpTime = null;
+  if (args) {
+    if (args.AppCode !== undefined) {
+      this.AppCode = args.AppCode;
+    }
+    if (args.RequestDate !== undefined) {
+      this.RequestDate = args.RequestDate;
+    }
+    if (args.Sign !== undefined) {
+      this.Sign = args.Sign;
+    }
+    if (args.SpID !== undefined) {
+      this.SpID = args.SpID;
+    }
+    if (args.DeviceNo !== undefined) {
+      this.DeviceNo = args.DeviceNo;
+    }
+    if (args.DeviceType !== undefined) {
+      this.DeviceType = args.DeviceType;
+    }
+    if (args.OutCustID !== undefined) {
+      this.OutCustID = args.OutCustID;
+    }
+    if (args.Token !== undefined) {
+      this.Token = args.Token;
+    }
+    if (args.ExpTime !== undefined) {
+      this.ExpTime = args.ExpTime;
+    }
+  }
+};
+RelaAccountRequestParam.prototype = {};
+RelaAccountRequestParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.AppCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.RequestDate = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.Sign = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.SpID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.DeviceNo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.DeviceType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.OutCustID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.Token = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.ExpTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+RelaAccountRequestParam.prototype.write = function(output) {
+  output.writeStructBegin('RelaAccountRequestParam');
+  if (this.AppCode !== null && this.AppCode !== undefined) {
+    output.writeFieldBegin('AppCode', Thrift.Type.STRING, 1);
+    output.writeString(this.AppCode);
+    output.writeFieldEnd();
+  }
+  if (this.RequestDate !== null && this.RequestDate !== undefined) {
+    output.writeFieldBegin('RequestDate', Thrift.Type.STRING, 2);
+    output.writeString(this.RequestDate);
+    output.writeFieldEnd();
+  }
+  if (this.Sign !== null && this.Sign !== undefined) {
+    output.writeFieldBegin('Sign', Thrift.Type.STRING, 3);
+    output.writeString(this.Sign);
+    output.writeFieldEnd();
+  }
+  if (this.SpID !== null && this.SpID !== undefined) {
+    output.writeFieldBegin('SpID', Thrift.Type.STRING, 4);
+    output.writeString(this.SpID);
+    output.writeFieldEnd();
+  }
+  if (this.DeviceNo !== null && this.DeviceNo !== undefined) {
+    output.writeFieldBegin('DeviceNo', Thrift.Type.STRING, 5);
+    output.writeString(this.DeviceNo);
+    output.writeFieldEnd();
+  }
+  if (this.DeviceType !== null && this.DeviceType !== undefined) {
+    output.writeFieldBegin('DeviceType', Thrift.Type.STRING, 6);
+    output.writeString(this.DeviceType);
+    output.writeFieldEnd();
+  }
+  if (this.OutCustID !== null && this.OutCustID !== undefined) {
+    output.writeFieldBegin('OutCustID', Thrift.Type.STRING, 7);
+    output.writeString(this.OutCustID);
+    output.writeFieldEnd();
+  }
+  if (this.Token !== null && this.Token !== undefined) {
+    output.writeFieldBegin('Token', Thrift.Type.STRING, 8);
+    output.writeString(this.Token);
+    output.writeFieldEnd();
+  }
+  if (this.ExpTime !== null && this.ExpTime !== undefined) {
+    output.writeFieldBegin('ExpTime', Thrift.Type.STRING, 9);
+    output.writeString(this.ExpTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ResponseRelaAcoountResult = module.exports.ResponseRelaAcoountResult = function(args) {
+  this.result = null;
+  this.ResponseScore = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.ResponseScore !== undefined) {
+      this.ResponseScore = args.ResponseScore;
+    }
+  }
+};
+ResponseRelaAcoountResult.prototype = {};
+ResponseRelaAcoountResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.ResponseScore = new ttypes.ResponseScore();
+        this.ResponseScore.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ResponseRelaAcoountResult.prototype.write = function(output) {
+  output.writeStructBegin('ResponseRelaAcoountResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.ResponseScore !== null && this.ResponseScore !== undefined) {
+    output.writeFieldBegin('ResponseScore', Thrift.Type.STRUCT, 2);
+    this.ResponseScore.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

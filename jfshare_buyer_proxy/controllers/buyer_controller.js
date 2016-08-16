@@ -1397,7 +1397,7 @@ router.post('/isUserIdRela', function (request, response, next) {
     var param = request.body;
     try {
         if (param == null || param.userId == null || param.userId == "") {
-            resContent.code = 500;
+            resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
             return;
@@ -1431,7 +1431,7 @@ router.post('/isAccountRela', function (request, response, next) {
     var param = request.body;
     try {
         if (param == null || param.account == null || param.account == "") {
-            resContent.code = 500;
+            resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
             return;
@@ -1456,5 +1456,88 @@ router.post('/isAccountRela', function (request, response, next) {
         response.json(resContent);
     }
 });
+
+/*电信账号绑定接口*/
+router.post('/relaAccountCall', function (request, response, next) {
+
+    logger.info("进入电信账号绑定接口...");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null || param.AppCode == null || param.AppCode == "") {
+            resContent.code = 400;
+            resContent.desc = "应用编码不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.RequestDate == null || param.RequestDate == "") {
+            resContent.code = 400;
+            resContent.desc = "请求时间不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.Sign == null || param.Sign == "") {
+            resContent.code = 400;
+            resContent.desc = "数据签名不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.SpID == null || param.SpID == "") {
+            resContent.code = 400;
+            resContent.desc = "业务编号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.DeviceNo == null || param.DeviceNo == "") {
+            resContent.code = 400;
+            resContent.desc = "设备号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.DeviceType == null || param.DeviceType == "") {
+            resContent.code = 400;
+            resContent.desc = "设备类型不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.OutCustID == null || param.OutCustID == "") {
+            resContent.code = 400;
+            resContent.desc = "客户编号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.Token == null || param.Token == "") {
+            resContent.code = 400;
+            resContent.desc = "Token不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.ExpTime == null || param.ExpTime == "") {
+            resContent.code = 400;
+            resContent.desc = "过期时间不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
+        Score.relaAccountCall(param, function (error, data) {
+            if (error) {
+                response.json(error);
+                return;
+            } else {
+                var ResponseScore = data[0].ResponseScore;
+                resContent.ResponseScore = ResponseScore;
+                response.json(resContent);
+                logger.info("get isAccountRela response:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("绑定失败，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "绑定失败";
+        response.json(resContent);
+    }
+});
+
 
 module.exports = router;
