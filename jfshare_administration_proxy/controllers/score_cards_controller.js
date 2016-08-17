@@ -167,7 +167,7 @@ router.post('/validataPsd', function (request, response, next) {
 });
 
 router.post('/directionRecharge', function (request, response, next) {
-    logger.info("进入校验密码流程");
+    logger.info("进入定向充值流程");
     var result = {code: 200};
     try {
         var params = request.body;
