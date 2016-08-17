@@ -121,7 +121,7 @@ ScoreCard.prototype.directionRecharge = function (params, callback) {
 
 
 ScoreCard.prototype.getActivityList = function (params, callback) {
-    var queryParams = new score_types.ActivityQueryParam({
+    var queryParams = new score_types.CardQueryParam({
             name: params.name,
             minPieceValue: params.minPieceValue,
             maxPieceValue: params.maxPieceValue,
@@ -152,5 +152,36 @@ ScoreCard.prototype.getActivityList = function (params, callback) {
         }
     });
 };
+
+ScoreCard.prototype.getActivityCardsList = function (params, callback) {
+    var queryParams = new score_types.CardQueryParam({
+            cardName: params.cardName,
+            cardPsd: params.cardPsd,
+            sendStatus: params.sendStatus,
+            rechargeStatus: params.rechargeStatus,
+            rechargeAccount: params.rechargeAccount
+        }
+    );
+
+    var page = new pagination_types.Pagination({
+        numPerPage: params.numPerPage,
+        currentPage: params.currentPage
+    });
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryCards', [params.activityId, queryParams,page]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.error("getActivityCardsList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("scoreServ.getActivityCardsList 失败 because: ======" + err + data);
+            res.code = 500;
+            res.desc = "获取批次下的卡密列表失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 
 module.exports = new ScoreCard();

@@ -260,4 +260,63 @@ router.post('/getActivityList', function (request, response, next) {
 });
 
 
+router.post('/getActivityCardsList', function (request, response, next) {
+    logger.info("获取批次下的cards列表");
+    //设置默认值
+    var result = {code: 200};
+    result.cardList = [];
+    result.pagination = {
+        totalCount: 0,
+        pageNumCount: 0,
+        numPerPage: 0,
+        currentPage: 0
+    };
+    try {
+        var params = request.body;
+
+        if (params.activityId == null || params.activityId == "" ||params.activityId<=0) {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.numPerPage == null || params.numPerPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.currentPage == null || params.currentPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        ScoreCards.getActivityCardsList(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+
+            if (data != null && data[0] != null && data[0].cardList != null) {
+                result.cardList = data[0].cardList;
+            }
+            if (data != null && data[0] != null && data[0].pagination != null) {
+                result.pagination = data[0].pagination;
+            }
+            logger.info("getActivityCardsList result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("获取批次下的卡密列表失败:" + ex);
+        result.code = 500;
+        result.desc = "获取批次下的卡密列表失败";
+        response.json(result);
+    }
+});
+
+
 module.exports = router;
