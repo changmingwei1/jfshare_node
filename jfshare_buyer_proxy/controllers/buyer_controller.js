@@ -1616,6 +1616,7 @@ router.post('/queryRechargeCards', function (request, response, next) {
     logger.info("进入积分充值接口");
     var resContent = {code: 200};
     var param = request.body;
+    var rechargeCardRecordList = [];
     try {
         if (param.userId == null || param.userId == "") {
             resContent.code = 400;
@@ -1683,6 +1684,69 @@ router.post('/queryRechargeCards', function (request, response, next) {
         logger.error("查询积分充值记录异常，原因是======:" + ex);
         resContent.code = 500;
         resContent.desc = "查询积分充值记录失败";
+        response.json(resContent);
+    }
+});
+
+/*H5第三方登陆*/
+router.post('/H5ThirdLogin', function (request, response, next) {
+
+    logger.info("进入积分充值接口");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param.appCode == null || param.appCode == "") {
+            resContent.code = 500;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.requestDate == null || param.requestDate == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.sign == null || param.sign == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.wayType == null || param.wayType == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.redirectUrl == null || param.redirectUrl == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数信息" + JSON.stringify(param));
+        Buyer.H5ThirdLogin(param, function (error, data) {
+            if (error) {
+                response.json(error);
+                return;
+            } else {
+                var url = data[0].url;
+                resContent.url = url;
+                response.json(resContent);
+                logger.info("Buyer H5ThirdLogin response:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("微信H5登录异常，原因是======:" + ex);
+        resContent.code = 500;
+        resContent.desc = "微信H5登录失败";
         response.json(resContent);
     }
 });
