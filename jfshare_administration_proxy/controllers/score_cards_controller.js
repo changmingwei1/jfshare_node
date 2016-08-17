@@ -137,5 +137,76 @@ router.post('/exportExcelByqueryCards', function (request, response, next) {
     }
 });
 
+router.post('/validataPsd', function (request, response, next) {
+    logger.info("进入校验密码流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("validataPsd params:" + JSON.stringify(params));
+        if(params.password ==null || params.password ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        ScoreCards.validataPsd(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            logger.info("validataPsd result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("定向充值密码校验异常:" + ex);
+        result.code = 500;
+        result.desc = "密码校验错误";
+        response.json(result);
+    }
+});
+
+router.post('/directionRecharge', function (request, response, next) {
+    logger.info("进入校验密码流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("directionRecharge params:" + JSON.stringify(params));
+        if(params.filePath ==null || params.filePath ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.password ==null || params.password ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if(params.activityId ==null || params.activityId ==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        ScoreCards.directionRecharge(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            logger.info("directionRecharge result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("定向充值异常:" + ex);
+        result.code = 500;
+        result.desc = "定向充值错误";
+        response.json(result);
+    }
+});
 
 module.exports = router;

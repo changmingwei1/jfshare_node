@@ -597,15 +597,11 @@ ScoreCardServ_queryCardById_result.prototype.write = function(output) {
 };
 
 ScoreCardServ_queryRechargeCards_args = function(args) {
-  this.activityId = null;
-  this.param = null;
+  this.userId = null;
   this.pagination = null;
   if (args) {
-    if (args.activityId !== undefined) {
-      this.activityId = args.activityId;
-    }
-    if (args.param !== undefined) {
-      this.param = args.param;
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
     }
     if (args.pagination !== undefined) {
       this.pagination = args.pagination;
@@ -628,20 +624,12 @@ ScoreCardServ_queryRechargeCards_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.I32) {
-        this.activityId = input.readI32();
+        this.userId = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.CardRechargeCardParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
       if (ftype == Thrift.Type.STRUCT) {
         this.pagination = new pagination_ttypes.Pagination();
         this.pagination.read(input);
@@ -660,18 +648,13 @@ ScoreCardServ_queryRechargeCards_args.prototype.read = function(input) {
 
 ScoreCardServ_queryRechargeCards_args.prototype.write = function(output) {
   output.writeStructBegin('ScoreCardServ_queryRechargeCards_args');
-  if (this.activityId !== null && this.activityId !== undefined) {
-    output.writeFieldBegin('activityId', Thrift.Type.I32, 1);
-    output.writeI32(this.activityId);
-    output.writeFieldEnd();
-  }
-  if (this.param !== null && this.param !== undefined) {
-    output.writeFieldBegin('param', Thrift.Type.STRUCT, 2);
-    this.param.write(output);
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
     output.writeFieldEnd();
   }
   if (this.pagination !== null && this.pagination !== undefined) {
-    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
     this.pagination.write(output);
     output.writeFieldEnd();
   }
@@ -1217,7 +1200,7 @@ ScoreCardServ_directRecharge_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.params = new ttypes.RechargeParams();
+        this.params = new ttypes.ToRechargeParams();
         this.params.read(input);
       } else {
         input.skip(ftype);
@@ -1548,7 +1531,7 @@ ScoreCardServClient.prototype.recv_queryCardById = function(input,mtype,rseqid) 
   }
   return callback('queryCardById failed: unknown result');
 };
-ScoreCardServClient.prototype.queryRechargeCards = function(activityId, param, pagination, callback) {
+ScoreCardServClient.prototype.queryRechargeCards = function(userId, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -1559,20 +1542,19 @@ ScoreCardServClient.prototype.queryRechargeCards = function(activityId, param, p
         _defer.resolve(result);
       }
     };
-    this.send_queryRechargeCards(activityId, param, pagination);
+    this.send_queryRechargeCards(userId, pagination);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_queryRechargeCards(activityId, param, pagination);
+    this.send_queryRechargeCards(userId, pagination);
   }
 };
 
-ScoreCardServClient.prototype.send_queryRechargeCards = function(activityId, param, pagination) {
+ScoreCardServClient.prototype.send_queryRechargeCards = function(userId, pagination) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('queryRechargeCards', Thrift.MessageType.CALL, this.seqid());
   var args = new ScoreCardServ_queryRechargeCards_args();
-  args.activityId = activityId;
-  args.param = param;
+  args.userId = userId;
   args.pagination = pagination;
   args.write(output);
   output.writeMessageEnd();
@@ -2006,8 +1988,8 @@ ScoreCardServProcessor.prototype.process_queryRechargeCards = function(seqid, in
   var args = new ScoreCardServ_queryRechargeCards_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.queryRechargeCards.length === 3) {
-    Q.fcall(this._handler.queryRechargeCards, args.activityId, args.param, args.pagination)
+  if (this._handler.queryRechargeCards.length === 2) {
+    Q.fcall(this._handler.queryRechargeCards, args.userId, args.pagination)
       .then(function(result) {
         var result = new ScoreCardServ_queryRechargeCards_result({success: result});
         output.writeMessageBegin("queryRechargeCards", Thrift.MessageType.REPLY, seqid);
@@ -2022,7 +2004,7 @@ ScoreCardServProcessor.prototype.process_queryRechargeCards = function(seqid, in
         output.flush();
       });
   } else {
-    this._handler.queryRechargeCards(args.activityId, args.param, args.pagination,  function (err, result) {
+    this._handler.queryRechargeCards(args.userId, args.pagination,  function (err, result) {
       var result = new ScoreCardServ_queryRechargeCards_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryRechargeCards", Thrift.MessageType.REPLY, seqid);
       result.write(output);
