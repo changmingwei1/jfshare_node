@@ -13,7 +13,7 @@ var Common = require('../lib/models/common');
 var sessionUtil = require('../lib/util/SessionUtil');
 var CommonUtil = require('../lib/util/CommonUtil');
 var Score = require('../lib/models/score');
-
+var ScoreCards = require('../lib/models/scoreCards');
 var score_types = require('../lib/thrift/gen_code/score_types');
 var pagination_types = require('../lib/thrift/gen_code/pagination_types');
 var buyer_types = require('../lib/thrift/gen_code/buyer_types');
@@ -1589,7 +1589,7 @@ router.post('/recharge', function (request, response, next) {
         //        response.json(err);
         //        return;
         //    }
-            Buyer.recharge(param, function (error, data) {
+        ScoreCards.recharge(param, function (error, data) {
                 if (error) {
                     response.json(error);
                     return;
