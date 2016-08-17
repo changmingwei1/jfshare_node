@@ -50,8 +50,8 @@ var  configlog4node = {
     useLog4js : function(category) {
         var log4js = require('log4js');
         var logger = log4js.getLogger('normal');// 'normal'
-        logger.setLevel('info');  //  'error'
-        app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
+        logger.setLevel('warn');  //  'error'
+        app.use(log4js.connectLogger(logger, {level:log4js.levels.WARN}));
         return logger;
     },
 
