@@ -196,6 +196,9 @@ router.post('/directionRecharge', function (request, response, next) {
                 response.json(err);
                 return;
             }
+            result.sucessNum=data[0].sucessNum;
+            result.failedNum=data[0].failedNum;
+
             logger.info("directionRecharge result:" + JSON.stringify(data));
             response.json(result);
             return;
