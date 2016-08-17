@@ -24,6 +24,8 @@ BatchActivity = module.exports.BatchActivity = function(args) {
   this.curStatus = null;
   this.password = null;
   this.multiRechargeEnable = null;
+  this.UsedCount = null;
+  this.SendCount = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -57,6 +59,12 @@ BatchActivity = module.exports.BatchActivity = function(args) {
     }
     if (args.multiRechargeEnable !== undefined) {
       this.multiRechargeEnable = args.multiRechargeEnable;
+    }
+    if (args.UsedCount !== undefined) {
+      this.UsedCount = args.UsedCount;
+    }
+    if (args.SendCount !== undefined) {
+      this.SendCount = args.SendCount;
     }
   }
 };
@@ -151,6 +159,20 @@ BatchActivity.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 12:
+      if (ftype == Thrift.Type.I32) {
+        this.UsedCount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.I32) {
+        this.SendCount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -215,6 +237,16 @@ BatchActivity.prototype.write = function(output) {
   if (this.multiRechargeEnable !== null && this.multiRechargeEnable !== undefined) {
     output.writeFieldBegin('multiRechargeEnable', Thrift.Type.STRING, 11);
     output.writeString(this.multiRechargeEnable);
+    output.writeFieldEnd();
+  }
+  if (this.UsedCount !== null && this.UsedCount !== undefined) {
+    output.writeFieldBegin('UsedCount', Thrift.Type.I32, 12);
+    output.writeI32(this.UsedCount);
+    output.writeFieldEnd();
+  }
+  if (this.SendCount !== null && this.SendCount !== undefined) {
+    output.writeFieldBegin('SendCount', Thrift.Type.I32, 13);
+    output.writeI32(this.SendCount);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -387,7 +419,7 @@ BatchCardRecord.prototype.write = function(output) {
 BatchRechargeCardRecord = module.exports.BatchRechargeCardRecord = function(args) {
   this.id = null;
   this.activityId = null;
-  this.cardId = null;
+  this.cardName = null;
   this.pieceValue = null;
   this.rechargeType = null;
   this.userId = null;
@@ -399,8 +431,8 @@ BatchRechargeCardRecord = module.exports.BatchRechargeCardRecord = function(args
     if (args.activityId !== undefined) {
       this.activityId = args.activityId;
     }
-    if (args.cardId !== undefined) {
-      this.cardId = args.cardId;
+    if (args.cardName !== undefined) {
+      this.cardName = args.cardName;
     }
     if (args.pieceValue !== undefined) {
       this.pieceValue = args.pieceValue;
@@ -445,8 +477,8 @@ BatchRechargeCardRecord.prototype.read = function(input) {
       }
       break;
       case 3:
-      if (ftype == Thrift.Type.I32) {
-        this.cardId = input.readI32();
+      if (ftype == Thrift.Type.STRING) {
+        this.cardName = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -500,9 +532,9 @@ BatchRechargeCardRecord.prototype.write = function(output) {
     output.writeI32(this.activityId);
     output.writeFieldEnd();
   }
-  if (this.cardId !== null && this.cardId !== undefined) {
-    output.writeFieldBegin('cardId', Thrift.Type.I32, 3);
-    output.writeI32(this.cardId);
+  if (this.cardName !== null && this.cardName !== undefined) {
+    output.writeFieldBegin('cardName', Thrift.Type.STRING, 3);
+    output.writeString(this.cardName);
     output.writeFieldEnd();
   }
   if (this.pieceValue !== null && this.pieceValue !== undefined) {
@@ -763,12 +795,16 @@ ActivityResult.prototype.write = function(output) {
 ActivityBatchResult = module.exports.ActivityBatchResult = function(args) {
   this.result = null;
   this.activityList = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.activityList !== undefined) {
       this.activityList = args.activityList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -815,6 +851,14 @@ ActivityBatchResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -843,6 +887,11 @@ ActivityBatchResult.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1035,12 +1084,16 @@ CardResult.prototype.write = function(output) {
 CardBatchResult = module.exports.CardBatchResult = function(args) {
   this.result = null;
   this.cardList = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.cardList !== undefined) {
       this.cardList = args.cardList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -1087,6 +1140,14 @@ CardBatchResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1115,6 +1176,11 @@ CardBatchResult.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1307,12 +1373,16 @@ CardRecordResult.prototype.write = function(output) {
 CardRecordBatchResult = module.exports.CardRecordBatchResult = function(args) {
   this.result = null;
   this.rechargeCardRecordList = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.rechargeCardRecordList !== undefined) {
       this.rechargeCardRecordList = args.rechargeCardRecordList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -1359,6 +1429,14 @@ CardRecordBatchResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1387,6 +1465,11 @@ CardRecordBatchResult.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1804,24 +1887,24 @@ DirectRechargeResult.prototype.write = function(output) {
   return;
 };
 
-RechargeParams = module.exports.RechargeParams = function(args) {
+ToRechargeParams = module.exports.ToRechargeParams = function(args) {
   this.validataStr = null;
-  this.FilePath = null;
+  this.filePath = null;
   this.activityId = null;
   if (args) {
     if (args.validataStr !== undefined) {
       this.validataStr = args.validataStr;
     }
-    if (args.FilePath !== undefined) {
-      this.FilePath = args.FilePath;
+    if (args.filePath !== undefined) {
+      this.filePath = args.filePath;
     }
     if (args.activityId !== undefined) {
       this.activityId = args.activityId;
     }
   }
 };
-RechargeParams.prototype = {};
-RechargeParams.prototype.read = function(input) {
+ToRechargeParams.prototype = {};
+ToRechargeParams.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -1843,7 +1926,7 @@ RechargeParams.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRING) {
-        this.FilePath = input.readString();
+        this.filePath = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -1864,16 +1947,16 @@ RechargeParams.prototype.read = function(input) {
   return;
 };
 
-RechargeParams.prototype.write = function(output) {
-  output.writeStructBegin('RechargeParams');
+ToRechargeParams.prototype.write = function(output) {
+  output.writeStructBegin('ToRechargeParams');
   if (this.validataStr !== null && this.validataStr !== undefined) {
     output.writeFieldBegin('validataStr', Thrift.Type.STRING, 1);
     output.writeString(this.validataStr);
     output.writeFieldEnd();
   }
-  if (this.FilePath !== null && this.FilePath !== undefined) {
-    output.writeFieldBegin('FilePath', Thrift.Type.STRING, 2);
-    output.writeString(this.FilePath);
+  if (this.filePath !== null && this.filePath !== undefined) {
+    output.writeFieldBegin('filePath', Thrift.Type.STRING, 2);
+    output.writeString(this.filePath);
     output.writeFieldEnd();
   }
   if (this.activityId !== null && this.activityId !== undefined) {

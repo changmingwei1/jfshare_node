@@ -1597,7 +1597,7 @@ router.post('/recharge', function (request, response, next) {
                     var value = data[0].value;
                     resContent.value = value;
                     response.json(resContent);
-                    logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
+                    logger.info("ScoreCards recharge response:" + JSON.stringify(resContent));
                 }
             });
         //});
@@ -1610,5 +1610,81 @@ router.post('/recharge', function (request, response, next) {
     }
 });
 
+/*查询积分充值记录*/
+router.post('/queryRechargeCards', function (request, response, next) {
+
+    logger.info("进入积分充值接口");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param.userId == null || param.userId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.token == null || param.token == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.ppInfo == null || param.ppInfo == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数信息" + JSON.stringify(param));
+        //Buyer.validAuth(param, function (err, data) {
+        //    if (err) {
+        //        response.json(err);
+        //        return;
+        //    }
+        ScoreCards.queryRechargeCards(param, function (error, data) {
+            if (error) {
+                response.json(error);
+                return;
+            } else {
+                var pagination = data[0].pagination;
+                if (pagination !== null) {
+                    resContent.page = {
+                        total: pagination.totalCount,
+                        pageCount: pagination.pageNumCount
+                    };
+                }
+                var rechargeCardRecords = data[0].rechargeCardRecordList;
+                if (rechargeCardRecords != null) {
+                    rechargeCardRecords.forEach(function (a) {
+                        rechargeCardRecordList.push({
+                            id: a.id,
+                            activityId: a.activityId,
+                            cardName: a.cardName,
+                            pieceValue: a.pieceValue,
+                            rechargeType: a.rechargeType,
+                            userId: a.userId,
+                            rechargeTime: a.rechargeTime
+                        });
+                    });
+                }
+                resContent.rechargeCardRecordList = rechargeCardRecordList;
+                response.json(resContent);
+                logger.info("ScoreCards queryRechargeCards response:" + JSON.stringify(resContent));
+            }
+        });
+        //});
+    } catch (ex) {
+        logger.error("查询积分充值记录异常，原因是======:" + ex);
+        resContent.code = 500;
+        resContent.desc = "查询积分充值记录失败";
+        response.json(resContent);
+    }
+});
 
 module.exports = router;
