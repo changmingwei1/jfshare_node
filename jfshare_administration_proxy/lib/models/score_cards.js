@@ -77,6 +77,46 @@ ScoreCard.prototype.exportExcelByqueryCards = function (params, callback) {
     });
 };
 
+//密码校验
+ScoreCard.prototype.validataPsd = function (params, callback) {
+    var psd=params.password;
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'validataPassword', psd);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("exportExcelByqueryCards result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.validataPsd 失败 because: ======" + err);
+            res.code = 500;
+            res.desc = "密码校验失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
+//定向充值
+ScoreCard.prototype.directionRecharge = function (params, callback) {
+    var queryParams= new score_types.ToRechargeParams({
+        filePath:params.filePath,
+        validataStr:params.password,
+        activityId:params.activityId
+    });
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'directRecharge', psd);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("directionRecharge result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.directionRecharge 失败 because: ======" + err);
+            res.code = 500;
+            res.desc = "定向充值失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new ScoreCard();
