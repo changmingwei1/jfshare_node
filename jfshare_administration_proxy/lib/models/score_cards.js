@@ -153,4 +153,27 @@ ScoreCard.prototype.getActivityList = function (params, callback) {
     });
 };
 
+
+// 作废批次活动
+ScoreCard.prototype.invalidOneActivity = function (params, callback) {
+    var activityId = params.activityId;
+    var psd = params.psd;
+
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'invalidOneActivity', [activityId, psd]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("invalidOneActivity result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("scoreServ.invalidOneActivity because: ======" + err);
+            res.code = 500;
+            res.desc = "作废批次活动失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
 module.exports = new ScoreCard();

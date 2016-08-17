@@ -129,9 +129,9 @@ router.post('/exportExcelByqueryCards', function (request, response, next) {
             return;
         });
     } catch (ex) {
-        logger.error("创建积分卡活动错误:" + ex);
+        logger.error("导出积分卡活动错误:" + ex);
         result.code = 500;
-        result.desc = "创建积分卡活动错误";
+        result.desc = "导出积分卡活动错误";
         response.json(result);
     }
 });
@@ -258,6 +258,47 @@ router.post('/getActivityList', function (request, response, next) {
         response.json(result);
     }
 });
+
+
+router.post('/invalidOneActivity', function (request, response, next) {
+    logger.info("作废批次活动流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("invalidOneActivity params:" + JSON.stringify(params));
+        if (params.activityId == null || params.activityId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.psd == null || params.psd == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+
+        ScoreCards.invalidOneActivity(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            logger.info("createOneActivity result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("作废积分卡活动错误:" + ex);
+        result.code = 500;
+        result.desc = "作废积分卡活动错误";
+        response.json(result);
+    }
+});
+
 
 
 module.exports = router;
