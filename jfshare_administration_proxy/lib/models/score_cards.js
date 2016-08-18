@@ -81,7 +81,7 @@ ScoreCard.prototype.exportExcelByqueryCards = function (params, callback) {
 ScoreCard.prototype.validataPsd = function (params, callback) {
     var psd = params.password;
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'validataPassword', psd);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'validataPassword', [psd]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("exportExcelByqueryCards result:" + JSON.stringify(data));
         var res = {};
@@ -104,7 +104,7 @@ ScoreCard.prototype.directionRecharge = function (params, callback) {
         activityId: params.activityId
     });
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'directRecharge', psd);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'directRecharge', [queryParams]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("directionRecharge result:" + JSON.stringify(data));
         var res = {};
