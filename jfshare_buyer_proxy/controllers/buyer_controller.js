@@ -1584,11 +1584,11 @@ router.post('/recharge', function (request, response, next) {
             return;
         }
         logger.info("请求参数信息" + JSON.stringify(param));
-        //Buyer.validAuth(param, function (err, data) {
-        //    if (err) {
-        //        response.json(err);
-        //        return;
-        //    }
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
         ScoreCards.recharge(param, function (error, data) {
                 if (error) {
                     response.json(error);
@@ -1600,7 +1600,7 @@ router.post('/recharge', function (request, response, next) {
                     logger.info("ScoreCards recharge response:" + JSON.stringify(resContent));
                 }
             });
-        //});
+        });
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("积分充值异常，原因是======:" + ex);
@@ -1643,43 +1643,43 @@ router.post('/queryRechargeCards', function (request, response, next) {
             return;
         }
         logger.info("请求参数信息" + JSON.stringify(param));
-        //Buyer.validAuth(param, function (err, data) {
-        //    if (err) {
-        //        response.json(err);
-        //        return;
-        //    }
-        ScoreCards.queryRechargeCards(param, function (error, data) {
-            if (error) {
-                response.json(error);
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
                 return;
-            } else {
-                var pagination = data[0].pagination;
-                if (pagination !== null) {
-                    resContent.page = {
-                        total: pagination.totalCount,
-                        pageCount: pagination.pageNumCount
-                    };
-                }
-                var rechargeCardRecords = data[0].rechargeCardRecordList;
-                if (rechargeCardRecords != null) {
-                    rechargeCardRecords.forEach(function (a) {
-                        rechargeCardRecordList.push({
-                            id: a.id,
-                            activityId: a.activityId,
-                            cardName: a.cardName,
-                            pieceValue: a.pieceValue,
-                            rechargeType: a.rechargeType,
-                            userId: a.userId,
-                            rechargeTime: a.rechargeTime
-                        });
-                    });
-                }
-                resContent.rechargeCardRecordList = rechargeCardRecordList;
-                response.json(resContent);
-                logger.info("ScoreCards queryRechargeCards response:" + JSON.stringify(resContent));
             }
+            ScoreCards.queryRechargeCards(param, function (error, data) {
+                if (error) {
+                    response.json(error);
+                    return;
+                } else {
+                    var pagination = data[0].pagination;
+                    if (pagination !== null) {
+                        resContent.page = {
+                            total: pagination.totalCount,
+                            pageCount: pagination.pageNumCount
+                        };
+                    }
+                    var rechargeCardRecords = data[0].rechargeCardRecordList;
+                    if (rechargeCardRecords != null) {
+                        rechargeCardRecords.forEach(function (a) {
+                            rechargeCardRecordList.push({
+                                id: a.id,
+                                activityId: a.activityId,
+                                cardName: a.cardName,
+                                pieceValue: a.pieceValue,
+                                rechargeType: a.rechargeType,
+                                userId: a.userId,
+                                rechargeTime: a.rechargeTime
+                            });
+                        });
+                    }
+                    resContent.rechargeCardRecordList = rechargeCardRecordList;
+                    response.json(resContent);
+                    logger.info("ScoreCards queryRechargeCards response:" + JSON.stringify(resContent));
+                }
+            });
         });
-        //});
     } catch (ex) {
         logger.error("查询积分充值记录异常，原因是======:" + ex);
         resContent.code = 500;
