@@ -810,13 +810,14 @@
     function resizeIfr() {
         var _tyHostUrl = getTyHostUrl();
         var doc = document;
-        var height = calcPageHeight(doc);
+//        var height = calcPageHeight(doc);
         var myifr = doc.getElementById('iframeA');
-        if (myifr) {
-            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#' + height;
-        } else {
-            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#1000';
-        }
+        myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
+//        if (myifr) {
+//            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#' + height;
+//        } else {
+//            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#1000';
+//        }
     }
 
     // 计算页面的实际高度，iframe自适应会用到
@@ -827,7 +828,7 @@
         var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
         var height  = Math.max(cHeight, sHeight)
         console.log("cH:"+cHeight+"| sH:"+sHeight+"| h:" +h);
-        return height
+        return height;
     }
 </script>
 </body>

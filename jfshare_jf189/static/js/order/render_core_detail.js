@@ -114,7 +114,6 @@ function renderExpressTrace(){
         async:true,
         success: function (data) {
             if (data.result) {
-                $("#span_expressName").html(data.expressInfo.name);
                 var traceHtml = "<ul>";
                 $.each(data.expressTrace.traceItems, function(i, traceItem){
                     traceHtml += "<li>[" + traceItem["ftime"] + "]&nbsp;&nbsp;" + traceItem["context"] + "</li>";
