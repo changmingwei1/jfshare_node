@@ -1913,8 +1913,8 @@ RelaAccountRequestParam = module.exports.RelaAccountRequestParam = function(args
   this.DeviceNo = null;
   this.DeviceType = null;
   this.OutCustID = null;
-  this.Token = null;
-  this.ExpTime = null;
+  this.ToKen = null;
+  this.ExceedTime = null;
   if (args) {
     if (args.AppCode !== undefined) {
       this.AppCode = args.AppCode;
@@ -1937,11 +1937,11 @@ RelaAccountRequestParam = module.exports.RelaAccountRequestParam = function(args
     if (args.OutCustID !== undefined) {
       this.OutCustID = args.OutCustID;
     }
-    if (args.Token !== undefined) {
-      this.Token = args.Token;
+    if (args.ToKen !== undefined) {
+      this.ToKen = args.ToKen;
     }
-    if (args.ExpTime !== undefined) {
-      this.ExpTime = args.ExpTime;
+    if (args.ExceedTime !== undefined) {
+      this.ExceedTime = args.ExceedTime;
     }
   }
 };
@@ -2010,14 +2010,14 @@ RelaAccountRequestParam.prototype.read = function(input) {
       break;
       case 8:
       if (ftype == Thrift.Type.STRING) {
-        this.Token = input.readString();
+        this.ToKen = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 9:
       if (ftype == Thrift.Type.STRING) {
-        this.ExpTime = input.readString();
+        this.ExceedTime = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -2068,14 +2068,14 @@ RelaAccountRequestParam.prototype.write = function(output) {
     output.writeString(this.OutCustID);
     output.writeFieldEnd();
   }
-  if (this.Token !== null && this.Token !== undefined) {
-    output.writeFieldBegin('Token', Thrift.Type.STRING, 8);
-    output.writeString(this.Token);
+  if (this.ToKen !== null && this.ToKen !== undefined) {
+    output.writeFieldBegin('ToKen', Thrift.Type.STRING, 8);
+    output.writeString(this.ToKen);
     output.writeFieldEnd();
   }
-  if (this.ExpTime !== null && this.ExpTime !== undefined) {
-    output.writeFieldBegin('ExpTime', Thrift.Type.STRING, 9);
-    output.writeString(this.ExpTime);
+  if (this.ExceedTime !== null && this.ExceedTime !== undefined) {
+    output.writeFieldBegin('ExceedTime', Thrift.Type.STRING, 9);
+    output.writeString(this.ExceedTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

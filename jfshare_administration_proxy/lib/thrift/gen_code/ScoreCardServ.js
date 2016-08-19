@@ -597,15 +597,11 @@ ScoreCardServ_queryCardById_result.prototype.write = function(output) {
 };
 
 ScoreCardServ_queryRechargeCards_args = function(args) {
-  this.activityId = null;
-  this.param = null;
+  this.userId = null;
   this.pagination = null;
   if (args) {
-    if (args.activityId !== undefined && args.activityId !== null) {
-      this.activityId = args.activityId;
-    }
-    if (args.param !== undefined && args.param !== null) {
-      this.param = new ttypes.CardRechargeCardParam(args.param);
+    if (args.userId !== undefined && args.userId !== null) {
+      this.userId = args.userId;
     }
     if (args.pagination !== undefined && args.pagination !== null) {
       this.pagination = new pagination_ttypes.Pagination(args.pagination);
@@ -628,20 +624,12 @@ ScoreCardServ_queryRechargeCards_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.I32) {
-        this.activityId = input.readI32();
+        this.userId = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.CardRechargeCardParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
       if (ftype == Thrift.Type.STRUCT) {
         this.pagination = new pagination_ttypes.Pagination();
         this.pagination.read(input);
@@ -660,18 +648,13 @@ ScoreCardServ_queryRechargeCards_args.prototype.read = function(input) {
 
 ScoreCardServ_queryRechargeCards_args.prototype.write = function(output) {
   output.writeStructBegin('ScoreCardServ_queryRechargeCards_args');
-  if (this.activityId !== null && this.activityId !== undefined) {
-    output.writeFieldBegin('activityId', Thrift.Type.I32, 1);
-    output.writeI32(this.activityId);
-    output.writeFieldEnd();
-  }
-  if (this.param !== null && this.param !== undefined) {
-    output.writeFieldBegin('param', Thrift.Type.STRUCT, 2);
-    this.param.write(output);
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
     output.writeFieldEnd();
   }
   if (this.pagination !== null && this.pagination !== undefined) {
-    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
     this.pagination.write(output);
     output.writeFieldEnd();
   }
@@ -978,6 +961,449 @@ ScoreCardServ_exportExcelByqueryCards_result.prototype.write = function(output) 
   return;
 };
 
+ScoreCardServ_recharge_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined && args.param !== null) {
+      this.param = new ttypes.RechargeParam(args.param);
+    }
+  }
+};
+ScoreCardServ_recharge_args.prototype = {};
+ScoreCardServ_recharge_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.RechargeParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_recharge_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_recharge_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_recharge_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new result_ttypes.StringResult(args.success);
+    }
+  }
+};
+ScoreCardServ_recharge_result.prototype = {};
+ScoreCardServ_recharge_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_recharge_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_recharge_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_validataPassword_args = function(args) {
+  this.validataStr = null;
+  if (args) {
+    if (args.validataStr !== undefined && args.validataStr !== null) {
+      this.validataStr = args.validataStr;
+    }
+  }
+};
+ScoreCardServ_validataPassword_args.prototype = {};
+ScoreCardServ_validataPassword_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.validataStr = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_validataPassword_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_validataPassword_args');
+  if (this.validataStr !== null && this.validataStr !== undefined) {
+    output.writeFieldBegin('validataStr', Thrift.Type.STRING, 1);
+    output.writeString(this.validataStr);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_validataPassword_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new result_ttypes.Result(args.success);
+    }
+  }
+};
+ScoreCardServ_validataPassword_result.prototype = {};
+ScoreCardServ_validataPassword_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_validataPassword_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_validataPassword_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_directRecharge_args = function(args) {
+  this.params = null;
+  if (args) {
+    if (args.params !== undefined && args.params !== null) {
+      this.params = new ttypes.ToRechargeParams(args.params);
+    }
+  }
+};
+ScoreCardServ_directRecharge_args.prototype = {};
+ScoreCardServ_directRecharge_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.params = new ttypes.ToRechargeParams();
+        this.params.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_directRecharge_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_directRecharge_args');
+  if (this.params !== null && this.params !== undefined) {
+    output.writeFieldBegin('params', Thrift.Type.STRUCT, 1);
+    this.params.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_directRecharge_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new ttypes.DirectRechargeResult(args.success);
+    }
+  }
+};
+ScoreCardServ_directRecharge_result.prototype = {};
+ScoreCardServ_directRecharge_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.DirectRechargeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_directRecharge_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_directRecharge_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_invalidOneActivity_args = function(args) {
+  this.activityId = null;
+  this.psd = null;
+  if (args) {
+    if (args.activityId !== undefined && args.activityId !== null) {
+      this.activityId = args.activityId;
+    }
+    if (args.psd !== undefined && args.psd !== null) {
+      this.psd = args.psd;
+    }
+  }
+};
+ScoreCardServ_invalidOneActivity_args.prototype = {};
+ScoreCardServ_invalidOneActivity_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activityId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.psd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_invalidOneActivity_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_invalidOneActivity_args');
+  if (this.activityId !== null && this.activityId !== undefined) {
+    output.writeFieldBegin('activityId', Thrift.Type.I32, 1);
+    output.writeI32(this.activityId);
+    output.writeFieldEnd();
+  }
+  if (this.psd !== null && this.psd !== undefined) {
+    output.writeFieldBegin('psd', Thrift.Type.STRING, 2);
+    output.writeString(this.psd);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_invalidOneActivity_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new ttypes.InvalidOneActivityResult(args.success);
+    }
+  }
+};
+ScoreCardServ_invalidOneActivity_result.prototype = {};
+ScoreCardServ_invalidOneActivity_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.InvalidOneActivityResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_invalidOneActivity_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_invalidOneActivity_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreCardServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -1225,7 +1651,7 @@ ScoreCardServClient.prototype.recv_queryCardById = function(input,mtype,rseqid) 
   }
   return callback('queryCardById failed: unknown result');
 };
-ScoreCardServClient.prototype.queryRechargeCards = function(activityId, param, pagination, callback) {
+ScoreCardServClient.prototype.queryRechargeCards = function(userId, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -1236,20 +1662,19 @@ ScoreCardServClient.prototype.queryRechargeCards = function(activityId, param, p
         _defer.resolve(result);
       }
     };
-    this.send_queryRechargeCards(activityId, param, pagination);
+    this.send_queryRechargeCards(userId, pagination);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_queryRechargeCards(activityId, param, pagination);
+    this.send_queryRechargeCards(userId, pagination);
   }
 };
 
-ScoreCardServClient.prototype.send_queryRechargeCards = function(activityId, param, pagination) {
+ScoreCardServClient.prototype.send_queryRechargeCards = function(userId, pagination) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('queryRechargeCards', Thrift.MessageType.CALL, this.seqid());
   var args = new ScoreCardServ_queryRechargeCards_args();
-  args.activityId = activityId;
-  args.param = param;
+  args.userId = userId;
   args.pagination = pagination;
   args.write(output);
   output.writeMessageEnd();
@@ -1369,6 +1794,195 @@ ScoreCardServClient.prototype.recv_exportExcelByqueryCards = function(input,mtyp
     return callback(null, result.success);
   }
   return callback('exportExcelByqueryCards failed: unknown result');
+};
+ScoreCardServClient.prototype.recharge = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_recharge(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_recharge(param);
+  }
+};
+
+ScoreCardServClient.prototype.send_recharge = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('recharge', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_recharge_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_recharge = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_recharge_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('recharge failed: unknown result');
+};
+ScoreCardServClient.prototype.validataPassword = function(validataStr, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_validataPassword(validataStr);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_validataPassword(validataStr);
+  }
+};
+
+ScoreCardServClient.prototype.send_validataPassword = function(validataStr) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('validataPassword', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_validataPassword_args();
+  args.validataStr = validataStr;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_validataPassword = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_validataPassword_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('validataPassword failed: unknown result');
+};
+ScoreCardServClient.prototype.directRecharge = function(params, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_directRecharge(params);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_directRecharge(params);
+  }
+};
+
+ScoreCardServClient.prototype.send_directRecharge = function(params) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('directRecharge', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_directRecharge_args();
+  args.params = params;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_directRecharge = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_directRecharge_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('directRecharge failed: unknown result');
+};
+ScoreCardServClient.prototype.invalidOneActivity = function(activityId, psd, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_invalidOneActivity(activityId, psd);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_invalidOneActivity(activityId, psd);
+  }
+};
+
+ScoreCardServClient.prototype.send_invalidOneActivity = function(activityId, psd) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('invalidOneActivity', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_invalidOneActivity_args();
+  args.activityId = activityId;
+  args.psd = psd;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_invalidOneActivity = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_invalidOneActivity_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('invalidOneActivity failed: unknown result');
 };
 ScoreCardServProcessor = exports.Processor = function(handler) {
   this._handler = handler
@@ -1567,8 +2181,8 @@ ScoreCardServProcessor.prototype.process_queryRechargeCards = function(seqid, in
   var args = new ScoreCardServ_queryRechargeCards_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.queryRechargeCards.length === 3) {
-    Q.fcall(this._handler.queryRechargeCards, args.activityId, args.param, args.pagination)
+  if (this._handler.queryRechargeCards.length === 2) {
+    Q.fcall(this._handler.queryRechargeCards, args.userId, args.pagination)
       .then(function(result) {
         var result = new ScoreCardServ_queryRechargeCards_result({success: result});
         output.writeMessageBegin("queryRechargeCards", Thrift.MessageType.REPLY, seqid);
@@ -1583,7 +2197,7 @@ ScoreCardServProcessor.prototype.process_queryRechargeCards = function(seqid, in
         output.flush();
       });
   } else {
-    this._handler.queryRechargeCards(args.activityId, args.param, args.pagination, function (err, result) {
+    this._handler.queryRechargeCards(args.userId, args.pagination, function (err, result) {
       if (err == null) {
         var result = new ScoreCardServ_queryRechargeCards_result((err != null ? err : {success: result}));
         output.writeMessageBegin("queryRechargeCards", Thrift.MessageType.REPLY, seqid);
@@ -1660,6 +2274,146 @@ ScoreCardServProcessor.prototype.process_exportExcelByqueryCards = function(seqi
       } else {
         var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
         output.writeMessageBegin("exportExcelByqueryCards", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_recharge = function(seqid, input, output) {
+  var args = new ScoreCardServ_recharge_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.recharge.length === 1) {
+    Q.fcall(this._handler.recharge, args.param)
+      .then(function(result) {
+        var result = new ScoreCardServ_recharge_result({success: result});
+        output.writeMessageBegin("recharge", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("recharge", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.recharge(args.param, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_recharge_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("recharge", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("recharge", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_validataPassword = function(seqid, input, output) {
+  var args = new ScoreCardServ_validataPassword_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.validataPassword.length === 1) {
+    Q.fcall(this._handler.validataPassword, args.validataStr)
+      .then(function(result) {
+        var result = new ScoreCardServ_validataPassword_result({success: result});
+        output.writeMessageBegin("validataPassword", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("validataPassword", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.validataPassword(args.validataStr, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_validataPassword_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("validataPassword", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("validataPassword", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_directRecharge = function(seqid, input, output) {
+  var args = new ScoreCardServ_directRecharge_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.directRecharge.length === 1) {
+    Q.fcall(this._handler.directRecharge, args.params)
+      .then(function(result) {
+        var result = new ScoreCardServ_directRecharge_result({success: result});
+        output.writeMessageBegin("directRecharge", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("directRecharge", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.directRecharge(args.params, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_directRecharge_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("directRecharge", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("directRecharge", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_invalidOneActivity = function(seqid, input, output) {
+  var args = new ScoreCardServ_invalidOneActivity_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.invalidOneActivity.length === 2) {
+    Q.fcall(this._handler.invalidOneActivity, args.activityId, args.psd)
+      .then(function(result) {
+        var result = new ScoreCardServ_invalidOneActivity_result({success: result});
+        output.writeMessageBegin("invalidOneActivity", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("invalidOneActivity", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.invalidOneActivity(args.activityId, args.psd, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_invalidOneActivity_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("invalidOneActivity", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("invalidOneActivity", Thrift.MessageType.EXCEPTION, seqid);
       }
       result.write(output);
       output.writeMessageEnd();
