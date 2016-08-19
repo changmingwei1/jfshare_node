@@ -790,7 +790,8 @@
 
     $(function(){
         window.onload = new function() {
-            contentLoaded(resizeIfr);
+//            contentLoaded(resizeIfr);
+            resizeIfr();
             var naturalHeight = document.getElementById("bannerImg_1").naturalHeight || 470;
             var naturalWidth = document.getElementById("bannerImg_1").naturalWidth || 1200;
             var rate = naturalWidth/naturalHeight;
