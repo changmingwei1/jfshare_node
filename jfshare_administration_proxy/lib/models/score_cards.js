@@ -121,7 +121,7 @@ ScoreCard.prototype.directionRecharge = function (params, callback) {
 
 
 ScoreCard.prototype.getActivityList = function (params, callback) {
-    var queryParams = new score_types.CardQueryParam({
+    var queryParams = new score_types.ActivityQueryParam({
             name: params.name,
             minPieceValue: params.minPieceValue,
             maxPieceValue: params.maxPieceValue,
@@ -140,7 +140,7 @@ ScoreCard.prototype.getActivityList = function (params, callback) {
     //获取客户端
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryActivities', [queryParams, page]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
-        logger.error("getActivityList result:" + JSON.stringify(data));
+        logger.info("getActivityList result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == 1) {
             logger.error("scoreServ.getActivityList 失败 because: ======" + err +data);
