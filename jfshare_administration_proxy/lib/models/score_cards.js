@@ -127,7 +127,7 @@ ScoreCard.prototype.getActivityList = function (params, callback) {
             maxPieceValue: params.maxPieceValue,
             minStartTime: params.minStartTime,
             maxStartTime: params.maxStartTime,
-            minEndTime: params.minStartTime,
+            minEndTime: params.minEndTime,
             maxEndTime: params.maxEndTime,
             curStatus: params.curStatus
         }
