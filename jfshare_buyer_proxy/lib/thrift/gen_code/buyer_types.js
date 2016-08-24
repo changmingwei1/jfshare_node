@@ -1388,3 +1388,200 @@ UserInfoThird.prototype.write = function(output) {
   return;
 };
 
+H5ThirdLoginParam = module.exports.H5ThirdLoginParam = function(args) {
+  this.appCode = null;
+  this.requestDate = null;
+  this.sign = null;
+  this.mobile = null;
+  this.wayType = null;
+  this.redirectUrl = null;
+  if (args) {
+    if (args.appCode !== undefined) {
+      this.appCode = args.appCode;
+    }
+    if (args.requestDate !== undefined) {
+      this.requestDate = args.requestDate;
+    }
+    if (args.sign !== undefined) {
+      this.sign = args.sign;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.wayType !== undefined) {
+      this.wayType = args.wayType;
+    }
+    if (args.redirectUrl !== undefined) {
+      this.redirectUrl = args.redirectUrl;
+    }
+  }
+};
+H5ThirdLoginParam.prototype = {};
+H5ThirdLoginParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.appCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.requestDate = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.sign = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.wayType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.redirectUrl = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+H5ThirdLoginParam.prototype.write = function(output) {
+  output.writeStructBegin('H5ThirdLoginParam');
+  if (this.appCode !== null && this.appCode !== undefined) {
+    output.writeFieldBegin('appCode', Thrift.Type.STRING, 1);
+    output.writeString(this.appCode);
+    output.writeFieldEnd();
+  }
+  if (this.requestDate !== null && this.requestDate !== undefined) {
+    output.writeFieldBegin('requestDate', Thrift.Type.STRING, 2);
+    output.writeString(this.requestDate);
+    output.writeFieldEnd();
+  }
+  if (this.sign !== null && this.sign !== undefined) {
+    output.writeFieldBegin('sign', Thrift.Type.STRING, 3);
+    output.writeString(this.sign);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 4);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.wayType !== null && this.wayType !== undefined) {
+    output.writeFieldBegin('wayType', Thrift.Type.STRING, 5);
+    output.writeString(this.wayType);
+    output.writeFieldEnd();
+  }
+  if (this.redirectUrl !== null && this.redirectUrl !== undefined) {
+    output.writeFieldBegin('redirectUrl', Thrift.Type.STRING, 6);
+    output.writeString(this.redirectUrl);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+H5ThirdLoginResult = module.exports.H5ThirdLoginResult = function(args) {
+  this.result = null;
+  this.url = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.url !== undefined) {
+      this.url = args.url;
+    }
+  }
+};
+H5ThirdLoginResult.prototype = {};
+H5ThirdLoginResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+H5ThirdLoginResult.prototype.write = function(output) {
+  output.writeStructBegin('H5ThirdLoginResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 2);
+    output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

@@ -54,7 +54,7 @@ ScoreCards.prototype.queryRechargeCards = function(param,callback){
     });
     logger.info("查询积分充值记录请求参数，param=" + JSON.stringify(param));
     //获取client
-    var scoreCardsServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ,'queryRechargeCards',[param.userId,]);
+    var scoreCardsServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ,'queryRechargeCards',[param.userId,pagination]);
     Lich.wicca.invokeClient(scoreCardsServ, function(err, data){
         logger.info("获取到的信息:" + JSON.stringify(data));
         var res = {};
