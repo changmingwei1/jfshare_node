@@ -916,7 +916,7 @@ Product.prototype.exportThirdPartyProduct = function (params, callback) {
 
 //提报
 Product.prototype.offerThirdPartyProduct = function (params, callback) {
-    var productCardParam = new product_types.offerThirdPartyProduct({
+    var productCardParam = new product_types.ThirdPartyProductQueryParam({
         thirdPartyProductId:params.thirdPartyProductId,
         thirdPartyIdentify:params.thirdPartyIdentify
     });
