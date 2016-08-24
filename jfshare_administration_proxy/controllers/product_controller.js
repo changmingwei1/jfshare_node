@@ -63,7 +63,11 @@ router.post('/list', function (request, response, next) {
                                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                                 // logger.info("get product list response:" + JSON.stringify(result));
                                 productSurveyList.forEach(function (a) {
-                                    var imgUri = a.imgUrl.split(",")[0];
+                                   var imgUri = "";
+                                    if(imgUri != null){
+                                       imgUri = a.imgUrl.split(",")[0];
+                                    }
+
                                     dataArr.push({
                                         productId: a.productId,
                                         sellerId: a.sellerId,
