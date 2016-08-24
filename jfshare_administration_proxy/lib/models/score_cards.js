@@ -51,6 +51,8 @@ ScoreCard.prototype.createOneActivity = function (params, callback) {
 
 // 导出充值卡excel 
 ScoreCard.prototype.exportExcelByqueryCards = function (params, callback) {
+
+
     var queryParams = new score_types.CardQueryParam({
         cardName: params.cardName,
         cardPsd: params.cardPsd,
@@ -61,7 +63,7 @@ ScoreCard.prototype.exportExcelByqueryCards = function (params, callback) {
     var psd = params.psd;
 
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'exportExcelByqueryCards', [activityId, queryParams, psd]);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'exportExcelByqueryCards', [params.activityId, queryParams, psd]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("exportExcelByqueryCards result:" + JSON.stringify(data));
         var res = {};
