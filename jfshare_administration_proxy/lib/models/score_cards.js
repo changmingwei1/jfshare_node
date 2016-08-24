@@ -51,8 +51,7 @@ ScoreCard.prototype.createOneActivity = function (params, callback) {
 
 // 导出充值卡excel 
 ScoreCard.prototype.exportExcelByqueryCards = function (params, callback) {
-    var activityId = params.activityId;
-    var queryParams = new score_types.ActivityBean({
+    var queryParams = new score_types.CardQueryParam({
         cardName: params.cardName,
         cardPsd: params.cardPsd,
         sendStatus: params.sendStatus,
