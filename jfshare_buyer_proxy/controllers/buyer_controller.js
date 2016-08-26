@@ -1589,7 +1589,7 @@ router.post('/recharge', function (request, response, next) {
                 response.json(err);
                 return;
             }
-        ScoreCards.recharge(param, function (error, data) {
+            ScoreCards.recharge(param, function (error, data) {
                 if (error) {
                     response.json(error);
                     return;
