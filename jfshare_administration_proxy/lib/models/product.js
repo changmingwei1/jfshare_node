@@ -916,12 +916,12 @@ Product.prototype.exportThirdPartyProduct = function (params, callback) {
 
 //提报
 Product.prototype.offerThirdPartyProduct = function (params, callback) {
-    var productCardParam = new product_types.ThirdPartyProductQueryParam({
+    var productCardParam = new product_types.ThirdPartyProduct({
         thirdPartyProductId:params.thirdPartyProductId,
         thirdPartyIdentify:params.thirdPartyIdentify
     });
 
-    logger.error("offerThirdPartyProduct  args:" + JSON.stringify(params));
+    logger.error("offerThirdPartyProduct  args:" + JSON.stringify(productCardParam));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "offerThirdPartyProduct", [productCardParam]);
 
