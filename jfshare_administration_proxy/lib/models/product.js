@@ -880,14 +880,48 @@ Product.prototype.getThirdPartyProductLog = function (params, callback) {
         }
     });
 };
+//exportThirdPartyProduct
+Product.prototype.exportThirdPartyProduct = function (params, callback) {
+    var productCardParam = new product_types.ThirdPartyProductQueryParam({
+        thirdPartyIdentify:1,
+        productName :params.productName,
+        activeState:params.activeState,
+        stockState:params.stockState,
+        priceState :params.priceState,
+        offerState :params.offerState
+    });
+    logger.info("exportThirdPartyProduct  args:" + JSON.stringify(params) +  JSON.stringify(productCardParam));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "exportThirdPartyProduct", [productCardParam]);
+
+    //invite productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.error("exportThirdPartyProduct result:" + err+JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("exportThirdPartyProduct  失败原因 ======" +err + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "导出第三方商品失败！";
+            callback(res, null);
+        } else {
+            if(data[0]!=null){
+                callback(null, data[0].value);
+            }else{
+                callback(null, null);
+            }
+
+        }
+    });
+};
 
 //提报
 Product.prototype.offerThirdPartyProduct = function (params, callback) {
-    var productCardParam = new product_types.offerThirdPartyProduct({
-        thirdPartyProductId:params.thirdPartyProductId
+    var productCardParam = new product_types.ThirdPartyProduct({
+        thirdPartyProductId:params.thirdPartyProductId,
+        thirdPartyIdentify:params.thirdPartyIdentify
     });
 
-    logger.error("getThirdPartyProductLog  args:" + JSON.stringify(params));
+    logger.error("offerThirdPartyProduct  args:" + JSON.stringify(productCardParam));
     // 获取client
     var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "offerThirdPartyProduct", [productCardParam]);
 
@@ -906,7 +940,6 @@ Product.prototype.offerThirdPartyProduct = function (params, callback) {
             }else{
                 callback(null, null);
             }
-
         }
     });
 };

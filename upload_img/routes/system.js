@@ -474,11 +474,11 @@ router.post('/upload', function(req, res) {
 /* 处理post请求，上传逻辑 */
 router.post('/uploadFile', function(req, res) {
 
-    var req_origin = req.headers.origin || "*";
-    res.setHeader('Access-Control-Allow-Origin', req_origin);
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
+    //var req_origin = req.headers.origin || "*";
+    //res.setHeader('Access-Control-Allow-Origin', req_origin);
+    //res.setHeader('Access-Control-Allow-Credentials', true);
+    //res.setHeader('Access-Control-Allow-Methods', 'GET'); //POST, GET, PUT, DELETE, OPTIONS
+    //res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept,X-Requested-With");
 
 
     var originalUrl = req.originalUrl;

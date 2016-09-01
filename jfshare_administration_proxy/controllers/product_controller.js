@@ -63,7 +63,11 @@ router.post('/list', function (request, response, next) {
                                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                                 // logger.info("get product list response:" + JSON.stringify(result));
                                 productSurveyList.forEach(function (a) {
-                                    var imgUri = a.imgUrl.split(",")[0];
+                                   var imgUri = "";
+                                    if(imgUri != null){
+                                       imgUri = a.imgUrl.split(",")[0];
+                                    }
+
                                     dataArr.push({
                                         productId: a.productId,
                                         sellerId: a.sellerId,
@@ -399,6 +403,13 @@ router.post('/offerThirdPartyProduct', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.thirdPartyIdentify == null || params.thirdPartyIdentify == "") {
+
+            result.code = 500;
+            result.desc = "请求参数错误";
+            response.json(result);
+            return;
+        }
 
         Product.offerThirdPartyProduct(params, function(err, data) {
             if (err) {
@@ -416,6 +427,29 @@ router.post('/offerThirdPartyProduct', function (request, response, next) {
         response.json(result);
     }
 });
+//第三方商品导出
+router.post('/exportThirdPartyProduct', function (request, response, next) {
+    logger.info("导出第三方商品");
+    var result = {code: 200};
 
+    try {
+        var params = request.body;
+        logger.info("进入导出第三方商品:" + params);
+        Product.exportThirdPartyProduct(params, function(err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.value = data;
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("导出第三方商品 error:" + ex);
+        result.code = 500;
+        result.desc = "导出第三方商品失败";
+        response.json(result);
+    }
+});
 
 module.exports = router;

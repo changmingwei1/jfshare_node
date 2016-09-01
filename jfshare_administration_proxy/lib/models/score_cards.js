@@ -51,8 +51,9 @@ ScoreCard.prototype.createOneActivity = function (params, callback) {
 
 // 导出充值卡excel 
 ScoreCard.prototype.exportExcelByqueryCards = function (params, callback) {
-    var activityId = params.activityId;
-    var queryParams = new score_types.ActivityBean({
+
+
+    var queryParams = new score_types.CardQueryParam({
         cardName: params.cardName,
         cardPsd: params.cardPsd,
         sendStatus: params.sendStatus,
@@ -62,7 +63,7 @@ ScoreCard.prototype.exportExcelByqueryCards = function (params, callback) {
     var psd = params.psd;
 
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'exportExcelByqueryCards', [activityId, queryParams, psd]);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'exportExcelByqueryCards', [params.activityId, queryParams, psd]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("exportExcelByqueryCards result:" + JSON.stringify(data));
         var res = {};
@@ -121,13 +122,13 @@ ScoreCard.prototype.directionRecharge = function (params, callback) {
 
 
 ScoreCard.prototype.getActivityList = function (params, callback) {
-    var queryParams = new score_types.CardQueryParam({
+    var queryParams = new score_types.ActivityQueryParam({
             name: params.name,
             minPieceValue: params.minPieceValue,
             maxPieceValue: params.maxPieceValue,
             minStartTime: params.minStartTime,
             maxStartTime: params.maxStartTime,
-            minEndTime: params.minStartTime,
+            minEndTime: params.minEndTime,
             maxEndTime: params.maxEndTime,
             curStatus: params.curStatus
         }
@@ -140,7 +141,7 @@ ScoreCard.prototype.getActivityList = function (params, callback) {
     //获取客户端
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryActivities', [queryParams, page]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
-        logger.error("getActivityList result:" + JSON.stringify(data));
+        logger.info("getActivityList result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == 1) {
             logger.error("scoreServ.getActivityList 失败 because: ======" + err +data);
