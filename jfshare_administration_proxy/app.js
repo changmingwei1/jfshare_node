@@ -17,6 +17,7 @@ var message = require('./controllers/message_controller');
 var seller = require('./controllers/seller_controller');
 var score = require('./controllers/score_controller');
 var score_cards = require('./controllers/score_cards_controller');// 积分卡
+var redPaper = require('./controllers/redpaper_controller');// 积分红包
 var brand = require('./controllers/brand_controller');
 var address = require('./controllers/address_controller');
 var afterSale = require('./controllers/afterSale_controller');
@@ -41,6 +42,8 @@ app.use('/manager/address',address);
 app.use('/manager/score',score);
 
 app.use('/manager/scoreCards',score_cards);// 积分卡
+app.use('/manager/redPaper',redPaper);// 积分红包
+
 
 app.use('/manager/message',message);
 app.use('/manager/seller',seller);
