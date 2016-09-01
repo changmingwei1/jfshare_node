@@ -230,18 +230,9 @@ module.exports.ServiceFactory = {
      */
     scoreCards: function () {
         logger.info("--------->"+zookeeper.getData("score_cards_serv_ips")+"--->"+zookeeper.getData("score_cards_serv_port"));
-        return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
-    },
-
-    /**
-     *  红包 管理 server
-     * @returns {ThriftConfig}
-     */
-    redPaper: function () {
-        logger.info("--------->"+zookeeper.getData("score_cards_serv_ips")+"--->"+zookeeper.getData("score_cards_serv_port"));
         // return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
         var obj = new ThriftConfig("127.0.0.1", 2005);
-        return obj;
-    }
+    },
+
 
 };

@@ -41,7 +41,7 @@ app.use('/manager/address',address);
 
 app.use('/manager/score',score);
 
-app.use('/manager/scoreCards',score_cards);// 积分卡
+app.use('/manager/scoreCards',score_cards);// 积分卡   
 app.use('/manager/redPaper',redPaper);// 积分红包
 
 

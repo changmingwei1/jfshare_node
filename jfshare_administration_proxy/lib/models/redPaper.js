@@ -12,7 +12,7 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var Lich = require('../thrift/Lich.js');
 var thrift = require('thrift');
 var pagination_types = require('../thrift/gen_code/pagination_types');
-var redPaper_types = require("../thrift/gen_code/RedPaperActivity_types");
+var redPaper_types = require("../thrift/gen_code/batchCards_types");
 
 function RedPaper() {
 }
@@ -40,7 +40,7 @@ RedPaper.prototype.createRedPaperActivity = function (params, callback) {
     });
 
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.RedPaperServ, 'createRedPaperActivity', [activityBean,params.userId]);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'createRedPaperActivity', [activityBean,params.userId]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("createRedPaperActivity result:" + JSON.stringify(data));
         var res = {};

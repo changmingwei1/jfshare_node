@@ -1404,6 +1404,961 @@ ScoreCardServ_invalidOneActivity_result.prototype.write = function(output) {
   return;
 };
 
+ScoreCardServ_createRedPaperActivity_args = function(args) {
+  this.activity = null;
+  this.userId = null;
+  if (args) {
+    if (args.activity !== undefined && args.activity !== null) {
+      this.activity = new ttypes.Activity(args.activity);
+    }
+    if (args.userId !== undefined && args.userId !== null) {
+      this.userId = args.userId;
+    }
+  }
+};
+ScoreCardServ_createRedPaperActivity_args.prototype = {};
+ScoreCardServ_createRedPaperActivity_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.activity = new ttypes.Activity();
+        this.activity.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_createRedPaperActivity_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_createRedPaperActivity_args');
+  if (this.activity !== null && this.activity !== undefined) {
+    output.writeFieldBegin('activity', Thrift.Type.STRUCT, 1);
+    this.activity.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_createRedPaperActivity_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new result_ttypes.Result(args.success);
+    }
+  }
+};
+ScoreCardServ_createRedPaperActivity_result.prototype = {};
+ScoreCardServ_createRedPaperActivity_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_createRedPaperActivity_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_createRedPaperActivity_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_updateRedPaperActivity_args = function(args) {
+  this.activity = null;
+  this.userId = null;
+  if (args) {
+    if (args.activity !== undefined && args.activity !== null) {
+      this.activity = new ttypes.Activity(args.activity);
+    }
+    if (args.userId !== undefined && args.userId !== null) {
+      this.userId = args.userId;
+    }
+  }
+};
+ScoreCardServ_updateRedPaperActivity_args.prototype = {};
+ScoreCardServ_updateRedPaperActivity_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.activity = new ttypes.Activity();
+        this.activity.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_updateRedPaperActivity_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_updateRedPaperActivity_args');
+  if (this.activity !== null && this.activity !== undefined) {
+    output.writeFieldBegin('activity', Thrift.Type.STRUCT, 1);
+    this.activity.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_updateRedPaperActivity_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new result_ttypes.Result(args.success);
+    }
+  }
+};
+ScoreCardServ_updateRedPaperActivity_result.prototype = {};
+ScoreCardServ_updateRedPaperActivity_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_updateRedPaperActivity_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_updateRedPaperActivity_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_invalidRedPaperActivity_args = function(args) {
+  this.activityId = null;
+  this.userId = null;
+  if (args) {
+    if (args.activityId !== undefined && args.activityId !== null) {
+      this.activityId = args.activityId;
+    }
+    if (args.userId !== undefined && args.userId !== null) {
+      this.userId = args.userId;
+    }
+  }
+};
+ScoreCardServ_invalidRedPaperActivity_args.prototype = {};
+ScoreCardServ_invalidRedPaperActivity_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.activityId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_invalidRedPaperActivity_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_invalidRedPaperActivity_args');
+  if (this.activityId !== null && this.activityId !== undefined) {
+    output.writeFieldBegin('activityId', Thrift.Type.STRING, 1);
+    output.writeString(this.activityId);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_invalidRedPaperActivity_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new result_ttypes.Result(args.success);
+    }
+  }
+};
+ScoreCardServ_invalidRedPaperActivity_result.prototype = {};
+ScoreCardServ_invalidRedPaperActivity_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_invalidRedPaperActivity_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_invalidRedPaperActivity_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperActivityList_args = function(args) {
+  this.activity = null;
+  this.pagination = null;
+  if (args) {
+    if (args.activity !== undefined && args.activity !== null) {
+      this.activity = new ttypes.Activity(args.activity);
+    }
+    if (args.pagination !== undefined && args.pagination !== null) {
+      this.pagination = new pagination_ttypes.Pagination(args.pagination);
+    }
+  }
+};
+ScoreCardServ_queryRedPaperActivityList_args.prototype = {};
+ScoreCardServ_queryRedPaperActivityList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.activity = new ttypes.Activity();
+        this.activity.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperActivityList_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_queryRedPaperActivityList_args');
+  if (this.activity !== null && this.activity !== undefined) {
+    output.writeFieldBegin('activity', Thrift.Type.STRUCT, 1);
+    this.activity.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperActivityList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new ttypes.ActivityListResult(args.success);
+    }
+  }
+};
+ScoreCardServ_queryRedPaperActivityList_result.prototype = {};
+ScoreCardServ_queryRedPaperActivityList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ActivityListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperActivityList_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_queryRedPaperActivityList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperReceivedList_args = function(args) {
+  this.receiveRecoard = null;
+  this.pagination = null;
+  if (args) {
+    if (args.receiveRecoard !== undefined && args.receiveRecoard !== null) {
+      this.receiveRecoard = new ttypes.ReceiveRecoard(args.receiveRecoard);
+    }
+    if (args.pagination !== undefined && args.pagination !== null) {
+      this.pagination = new pagination_ttypes.Pagination(args.pagination);
+    }
+  }
+};
+ScoreCardServ_queryRedPaperReceivedList_args.prototype = {};
+ScoreCardServ_queryRedPaperReceivedList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.receiveRecoard = new ttypes.ReceiveRecoard();
+        this.receiveRecoard.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperReceivedList_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_queryRedPaperReceivedList_args');
+  if (this.receiveRecoard !== null && this.receiveRecoard !== undefined) {
+    output.writeFieldBegin('receiveRecoard', Thrift.Type.STRUCT, 1);
+    this.receiveRecoard.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperReceivedList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new ttypes.ReceiveRecoardListResult(args.success);
+    }
+  }
+};
+ScoreCardServ_queryRedPaperReceivedList_result.prototype = {};
+ScoreCardServ_queryRedPaperReceivedList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ReceiveRecoardListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperReceivedList_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_queryRedPaperReceivedList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_exportRedPaperExcelForReceived_args = function(args) {
+  this.activityId = null;
+  this.receiveRecoard = null;
+  if (args) {
+    if (args.activityId !== undefined && args.activityId !== null) {
+      this.activityId = args.activityId;
+    }
+    if (args.receiveRecoard !== undefined && args.receiveRecoard !== null) {
+      this.receiveRecoard = new ttypes.ReceiveRecoard(args.receiveRecoard);
+    }
+  }
+};
+ScoreCardServ_exportRedPaperExcelForReceived_args.prototype = {};
+ScoreCardServ_exportRedPaperExcelForReceived_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.activityId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.receiveRecoard = new ttypes.ReceiveRecoard();
+        this.receiveRecoard.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_exportRedPaperExcelForReceived_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_exportRedPaperExcelForReceived_args');
+  if (this.activityId !== null && this.activityId !== undefined) {
+    output.writeFieldBegin('activityId', Thrift.Type.STRING, 1);
+    output.writeString(this.activityId);
+    output.writeFieldEnd();
+  }
+  if (this.receiveRecoard !== null && this.receiveRecoard !== undefined) {
+    output.writeFieldBegin('receiveRecoard', Thrift.Type.STRUCT, 2);
+    this.receiveRecoard.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_exportRedPaperExcelForReceived_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new ttypes.Result4Excel(args.success);
+    }
+  }
+};
+ScoreCardServ_exportRedPaperExcelForReceived_result.prototype = {};
+ScoreCardServ_exportRedPaperExcelForReceived_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.Result4Excel();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_exportRedPaperExcelForReceived_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_exportRedPaperExcelForReceived_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_generateH5Url_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined && args.param !== null) {
+      this.param = new ttypes.GenerateParam(args.param);
+    }
+  }
+};
+ScoreCardServ_generateH5Url_args.prototype = {};
+ScoreCardServ_generateH5Url_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.GenerateParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_generateH5Url_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_generateH5Url_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_generateH5Url_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new result_ttypes.StringResult(args.success);
+    }
+  }
+};
+ScoreCardServ_generateH5Url_result.prototype = {};
+ScoreCardServ_generateH5Url_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_generateH5Url_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_generateH5Url_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_receiveRedbag_args = function(args) {
+  this.activityId = null;
+  this.mobile = null;
+  if (args) {
+    if (args.activityId !== undefined && args.activityId !== null) {
+      this.activityId = args.activityId;
+    }
+    if (args.mobile !== undefined && args.mobile !== null) {
+      this.mobile = args.mobile;
+    }
+  }
+};
+ScoreCardServ_receiveRedbag_args.prototype = {};
+ScoreCardServ_receiveRedbag_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.activityId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_receiveRedbag_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_receiveRedbag_args');
+  if (this.activityId !== null && this.activityId !== undefined) {
+    output.writeFieldBegin('activityId', Thrift.Type.STRING, 1);
+    output.writeString(this.activityId);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_receiveRedbag_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = new result_ttypes.StringResult(args.success);
+    }
+  }
+};
+ScoreCardServ_receiveRedbag_result.prototype = {};
+ScoreCardServ_receiveRedbag_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_receiveRedbag_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_receiveRedbag_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreCardServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -1984,6 +2939,389 @@ ScoreCardServClient.prototype.recv_invalidOneActivity = function(input,mtype,rse
   }
   return callback('invalidOneActivity failed: unknown result');
 };
+ScoreCardServClient.prototype.createRedPaperActivity = function(activity, userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_createRedPaperActivity(activity, userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_createRedPaperActivity(activity, userId);
+  }
+};
+
+ScoreCardServClient.prototype.send_createRedPaperActivity = function(activity, userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('createRedPaperActivity', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_createRedPaperActivity_args();
+  args.activity = activity;
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_createRedPaperActivity = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_createRedPaperActivity_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('createRedPaperActivity failed: unknown result');
+};
+ScoreCardServClient.prototype.updateRedPaperActivity = function(activity, userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateRedPaperActivity(activity, userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateRedPaperActivity(activity, userId);
+  }
+};
+
+ScoreCardServClient.prototype.send_updateRedPaperActivity = function(activity, userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('updateRedPaperActivity', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_updateRedPaperActivity_args();
+  args.activity = activity;
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_updateRedPaperActivity = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_updateRedPaperActivity_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateRedPaperActivity failed: unknown result');
+};
+ScoreCardServClient.prototype.invalidRedPaperActivity = function(activityId, userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_invalidRedPaperActivity(activityId, userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_invalidRedPaperActivity(activityId, userId);
+  }
+};
+
+ScoreCardServClient.prototype.send_invalidRedPaperActivity = function(activityId, userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('invalidRedPaperActivity', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_invalidRedPaperActivity_args();
+  args.activityId = activityId;
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_invalidRedPaperActivity = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_invalidRedPaperActivity_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('invalidRedPaperActivity failed: unknown result');
+};
+ScoreCardServClient.prototype.queryRedPaperActivityList = function(activity, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryRedPaperActivityList(activity, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryRedPaperActivityList(activity, pagination);
+  }
+};
+
+ScoreCardServClient.prototype.send_queryRedPaperActivityList = function(activity, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryRedPaperActivityList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_queryRedPaperActivityList_args();
+  args.activity = activity;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_queryRedPaperActivityList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_queryRedPaperActivityList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryRedPaperActivityList failed: unknown result');
+};
+ScoreCardServClient.prototype.queryRedPaperReceivedList = function(receiveRecoard, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryRedPaperReceivedList(receiveRecoard, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryRedPaperReceivedList(receiveRecoard, pagination);
+  }
+};
+
+ScoreCardServClient.prototype.send_queryRedPaperReceivedList = function(receiveRecoard, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryRedPaperReceivedList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_queryRedPaperReceivedList_args();
+  args.receiveRecoard = receiveRecoard;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_queryRedPaperReceivedList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_queryRedPaperReceivedList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryRedPaperReceivedList failed: unknown result');
+};
+ScoreCardServClient.prototype.exportRedPaperExcelForReceived = function(activityId, receiveRecoard, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exportRedPaperExcelForReceived(activityId, receiveRecoard);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exportRedPaperExcelForReceived(activityId, receiveRecoard);
+  }
+};
+
+ScoreCardServClient.prototype.send_exportRedPaperExcelForReceived = function(activityId, receiveRecoard) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exportRedPaperExcelForReceived', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_exportRedPaperExcelForReceived_args();
+  args.activityId = activityId;
+  args.receiveRecoard = receiveRecoard;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_exportRedPaperExcelForReceived = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_exportRedPaperExcelForReceived_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exportRedPaperExcelForReceived failed: unknown result');
+};
+ScoreCardServClient.prototype.generateH5Url = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_generateH5Url(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_generateH5Url(param);
+  }
+};
+
+ScoreCardServClient.prototype.send_generateH5Url = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('generateH5Url', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_generateH5Url_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_generateH5Url = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_generateH5Url_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('generateH5Url failed: unknown result');
+};
+ScoreCardServClient.prototype.receiveRedbag = function(activityId, mobile, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_receiveRedbag(activityId, mobile);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_receiveRedbag(activityId, mobile);
+  }
+};
+
+ScoreCardServClient.prototype.send_receiveRedbag = function(activityId, mobile) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('receiveRedbag', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_receiveRedbag_args();
+  args.activityId = activityId;
+  args.mobile = mobile;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_receiveRedbag = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_receiveRedbag_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('receiveRedbag failed: unknown result');
+};
 ScoreCardServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -2414,6 +3752,286 @@ ScoreCardServProcessor.prototype.process_invalidOneActivity = function(seqid, in
       } else {
         var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
         output.writeMessageBegin("invalidOneActivity", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_createRedPaperActivity = function(seqid, input, output) {
+  var args = new ScoreCardServ_createRedPaperActivity_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.createRedPaperActivity.length === 2) {
+    Q.fcall(this._handler.createRedPaperActivity, args.activity, args.userId)
+      .then(function(result) {
+        var result = new ScoreCardServ_createRedPaperActivity_result({success: result});
+        output.writeMessageBegin("createRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("createRedPaperActivity", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.createRedPaperActivity(args.activity, args.userId, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_createRedPaperActivity_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("createRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("createRedPaperActivity", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_updateRedPaperActivity = function(seqid, input, output) {
+  var args = new ScoreCardServ_updateRedPaperActivity_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.updateRedPaperActivity.length === 2) {
+    Q.fcall(this._handler.updateRedPaperActivity, args.activity, args.userId)
+      .then(function(result) {
+        var result = new ScoreCardServ_updateRedPaperActivity_result({success: result});
+        output.writeMessageBegin("updateRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("updateRedPaperActivity", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.updateRedPaperActivity(args.activity, args.userId, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_updateRedPaperActivity_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("updateRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("updateRedPaperActivity", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_invalidRedPaperActivity = function(seqid, input, output) {
+  var args = new ScoreCardServ_invalidRedPaperActivity_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.invalidRedPaperActivity.length === 2) {
+    Q.fcall(this._handler.invalidRedPaperActivity, args.activityId, args.userId)
+      .then(function(result) {
+        var result = new ScoreCardServ_invalidRedPaperActivity_result({success: result});
+        output.writeMessageBegin("invalidRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("invalidRedPaperActivity", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.invalidRedPaperActivity(args.activityId, args.userId, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_invalidRedPaperActivity_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("invalidRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("invalidRedPaperActivity", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_queryRedPaperActivityList = function(seqid, input, output) {
+  var args = new ScoreCardServ_queryRedPaperActivityList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryRedPaperActivityList.length === 2) {
+    Q.fcall(this._handler.queryRedPaperActivityList, args.activity, args.pagination)
+      .then(function(result) {
+        var result = new ScoreCardServ_queryRedPaperActivityList_result({success: result});
+        output.writeMessageBegin("queryRedPaperActivityList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("queryRedPaperActivityList", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryRedPaperActivityList(args.activity, args.pagination, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_queryRedPaperActivityList_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("queryRedPaperActivityList", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("queryRedPaperActivityList", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_queryRedPaperReceivedList = function(seqid, input, output) {
+  var args = new ScoreCardServ_queryRedPaperReceivedList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryRedPaperReceivedList.length === 2) {
+    Q.fcall(this._handler.queryRedPaperReceivedList, args.receiveRecoard, args.pagination)
+      .then(function(result) {
+        var result = new ScoreCardServ_queryRedPaperReceivedList_result({success: result});
+        output.writeMessageBegin("queryRedPaperReceivedList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("queryRedPaperReceivedList", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryRedPaperReceivedList(args.receiveRecoard, args.pagination, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_queryRedPaperReceivedList_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("queryRedPaperReceivedList", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("queryRedPaperReceivedList", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_exportRedPaperExcelForReceived = function(seqid, input, output) {
+  var args = new ScoreCardServ_exportRedPaperExcelForReceived_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exportRedPaperExcelForReceived.length === 2) {
+    Q.fcall(this._handler.exportRedPaperExcelForReceived, args.activityId, args.receiveRecoard)
+      .then(function(result) {
+        var result = new ScoreCardServ_exportRedPaperExcelForReceived_result({success: result});
+        output.writeMessageBegin("exportRedPaperExcelForReceived", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("exportRedPaperExcelForReceived", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exportRedPaperExcelForReceived(args.activityId, args.receiveRecoard, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_exportRedPaperExcelForReceived_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("exportRedPaperExcelForReceived", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("exportRedPaperExcelForReceived", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_generateH5Url = function(seqid, input, output) {
+  var args = new ScoreCardServ_generateH5Url_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.generateH5Url.length === 1) {
+    Q.fcall(this._handler.generateH5Url, args.param)
+      .then(function(result) {
+        var result = new ScoreCardServ_generateH5Url_result({success: result});
+        output.writeMessageBegin("generateH5Url", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("generateH5Url", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.generateH5Url(args.param, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_generateH5Url_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("generateH5Url", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("generateH5Url", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_receiveRedbag = function(seqid, input, output) {
+  var args = new ScoreCardServ_receiveRedbag_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.receiveRedbag.length === 2) {
+    Q.fcall(this._handler.receiveRedbag, args.activityId, args.mobile)
+      .then(function(result) {
+        var result = new ScoreCardServ_receiveRedbag_result({success: result});
+        output.writeMessageBegin("receiveRedbag", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("receiveRedbag", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.receiveRedbag(args.activityId, args.mobile, function (err, result) {
+      if (err == null) {
+        var result = new ScoreCardServ_receiveRedbag_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("receiveRedbag", Thrift.MessageType.REPLY, seqid);
+      } else {
+        var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("receiveRedbag", Thrift.MessageType.EXCEPTION, seqid);
       }
       result.write(output);
       output.writeMessageEnd();

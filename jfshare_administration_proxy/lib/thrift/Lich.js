@@ -29,8 +29,7 @@ var ServiceKey = {
     AfterSaleServer:"AfterSale",
     ExpresssServer:"Expresss",
     ScoreServer:"Score",
-    ScoreCardsServ:"ScoreCards",// 积分卡服务
-    RedPaperServ:"RedPaper",// 红包服务
+    ScoreCardsServ:"ScoreCards",// 积分卡服务 红包服务
     StockServer:"Stock"
 };
 
