@@ -184,7 +184,7 @@ router.get('/isLoginTY', function(req, res, next) {
     req.ssid = qs.parse(queryUrl).ssid;
     logger.error("XstatusX referer==> " + req.headers.referer);
     var checkUrl = zookeeper.getData("ty_host_url") + '/CommPage/LoginInfo.aspx?strUrl=http://ct100.jfshare.com/login/isLoginTY';
-    //var checkUrl = 'http://y.jf.189.cn/preview/CommPage/LoginInfo.aspx?strUrl=http://localhost:23003/login/isLoginTY';
+    //var checkUrl = 'http://y.jf.189.cn/preview/CommPage/LoginInfo.aspx?strUrl=http://120.24.153.102:23003/login/isLoginTY';
     if(!status) {
         res.redirect(checkUrl);
     } else {
@@ -202,4 +202,27 @@ router.get('/isLoginTY', function(req, res, next) {
     }
 });
 
+router.get('/isLoginTYH5', function(req, res, next) {
+    var status = req.query.status||"";
+    logger.error("天翼登陆状态 status==> " + status);
+    var queryUrl = url.parse(req.headers.referer||'').query;
+    logger.error("天翼登陆状态 queryUrl==> " + queryUrl);
+    req.ssid = qs.parse(queryUrl).ssid;
+    logger.error("天翼登陆状态 ssid==> " + req.ssid);
+
+    logger.error("天翼登陆状态 referer==> " + req.headers.referer);
+    var checkUrl = zookeeper.getData("ty_host_url") + '/CommPage/LoginInfo.aspx?strUrl=http://120.24.153.102:23003/login/isLoginTYH5';
+    //var checkUrl = 'http://y.jf.189.cn/preview/CommPage/LoginInfo.aspx?strUrl=http://120.24.153.102:23003/login/isLoginTY';
+    if(!status) {
+        res.redirect(checkUrl);
+    } else {
+        logger.error("XstatusX 天翼登陆状态 ==>" + status);
+        if(status === "loginOut") {
+                res.end("logout");
+        }else {
+            logger.error("XstatusX 天翼登陆状态 ==> login");
+            res.end("login");
+        }
+    }
+});
 module.exports = router;
