@@ -1769,5 +1769,88 @@ router.post('/orderConfirmResult', function (request, response, next) {
     }
 });
 
-
+/*
+ 天翼H5买家支付申请
+ */
+router.post('/pay_applyTYH5', function(req, res, next) {
+    logger.info("进入天翼H5申请支付接口..");
+    var result = {code: 200};
+    try {
+        var arg = req.body;
+        if (arg == null || arg.payChannel == null || arg.orderIdList == null || arg.orderIdList.length <= 0) {
+            result.code = 400;
+            result.desc = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
+            result.code = 400;
+            result.desc = "用户id不能为空";
+            res.json(result);
+            return;
+        }
+        if (arg.token == "" || arg.token == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (arg.ppInfo == "" || arg.ppInfo == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            res.json(result);
+            return;
+        }
+        if (arg.browser == "" || arg.browser == null) {
+            result.code = 400;
+            result.desc = "浏览器标识不能为空";
+            res.json(result);
+            return;
+        }if (arg.clientType == "" || arg.clientType == null) {
+            result.code = 400;
+            result.desc = "终端标识不能为空";
+            res.json(result);
+            return;
+        }
+        logger.info("天翼H5申请支付请求参数 request:" + JSON.stringify(arg));
+        //Buyer.validAuth(arg, function (err, data) {
+        //    if (err) {
+        //        response.json(err);
+        //        return;
+        //    }
+        //    logger.info("天翼H5申请支付鉴权完成");
+        //    Order.payApplyTYH5(arg, function (err, payUrl) {
+        //        if (err) {
+        //            res.json(err);
+        //            return;
+        //        }
+        //    });
+        //});
+        Order.payApplyTYH5(arg, function (err, payUrl) {
+            if (err) {
+                res.json(err);
+                return;
+            }
+            if (payUrl !== null) {
+                logger.info("payApply ==> 调用orderServ-payApply申请支付成功");
+                //var formInfo = JSON.parse(payUrl.value);
+                //var payApplyFormStr = ''
+                //    +'<form id="payApplyForm" method="post" action="'+formInfo.action+'">'
+                //    +'<input type="hidden" name="requestXml" value="'+formInfo.requestXml+'">'
+                //    +'</form>';
+                //res.json(payApplyFormStr);
+               // return callback(null, payApplyFormStr);
+                var urlInfo = JSON.parse(payUrl.value);
+                result.payUrl = urlInfo;
+                res.json(result);
+                logger.info("order pay response:" + JSON.stringify(result));
+            }
+        });
+    } catch (ex) {
+        logger.error("ORDER.payApply error:" + ex);
+        result.code = 500;
+        result.desc = "天翼H5申请支付失败";
+        response.json(result);
+    }
+});
 module.exports = router;

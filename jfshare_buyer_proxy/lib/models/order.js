@@ -141,6 +141,57 @@ Order.prototype.payApply = function (param, callback) {
     });
 };
 
+/*天翼H5申请付款*/
+Order.prototype.payApplyTYH5 = function (parameters, callback) {
+    logger.info("天翼H5申请获取支付平台URL  parameters:" + JSON.stringify(parameters));
+    if (parameters.payChannel != 10) {
+        logger.warn("参数有误, parameters=" + parameters);
+        res.code = 500;
+        res.desc = "非法参数支付渠道！";
+        callback(res, null);
+    }
+    var payChannel = new pay_types.PayChannel({
+        payChannel:parameters.payChannel,
+        payIp: null,
+        returnUrl:"",
+        custId:parameters.custId,
+        custType:parameters.custType,
+        procustID:parameters.procustID,
+    });
+    var ids = []; ids.push(parameters.orderIdList);
+
+    var payParam = new order_types.PayParam({
+        userId: parameters.userId,
+        orderIdList: parameters.orderIdList,
+        exchangeScore:parameters.exchangeScore,
+        exchangeCash:parameters.exchangeCash,
+        payChannel: payChannel
+    });
+
+    logger.info("call orderServ-payApply args:" + JSON.stringify(payParam));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "payApply", payParam);
+
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("call orderServ-payApply result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(parameters));
+            logger.error("调用orderServ-payApply失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "支付失败！";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(parameters));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else if(data[0].result.code == 2){
+            callback(null, data[0]);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
 /*查询支付状态*/
 Order.prototype.payState = function (param, callback) {
 
