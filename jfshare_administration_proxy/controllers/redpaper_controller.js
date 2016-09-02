@@ -322,6 +322,42 @@ router.post('/exportRedPaperExcel', function (request, response, next) {
         response.json(result);
     }
 });
+router.post('/generateH5Url', function (request, response, next) {
+    logger.info("生成H5页面链接的流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("generateH5Url params:" + JSON.stringify(params));
+
+        if (params.activityId == null || params.activityId == "") {// 操作id
+            result.code = 500;
+            result.desc = "activityId  参数错误";
+            response.json(result);
+            return;
+        }
+
+        RedPaper.generateH5Url(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            // result.scoreList = data[0].scoreUsers;
+            // var pagination = data[0].pageination;
+            // if(pagination!=null){
+            //     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+            // }
+            logger.info("generateH5Url result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("生成H5页面链接的流程:" + ex);
+        result.code = 500;
+        result.desc = "生成H5页面链接的流程";
+        response.json(result);
+    }
+});
 
 
 

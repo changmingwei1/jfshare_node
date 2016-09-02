@@ -118,6 +118,28 @@ RedPaper.prototype.exportRedPaperExcel = function (params, callback) {
         }
     });
 };
+//生成H5页面链接
+RedPaper.prototype.generateH5Url = function (params, callback) {
+    var queryBean = new redPaper_types.GenerateParam({
+        activityId:params.activityId
+    });
+
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'generateH5Url',
+        [queryBean]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("exportRedPaperExcelForReceived result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == 1) {
+            logger.error("scoreServ.queryScoreTrade because: ======" + err);
+            res.code = 500;
+            res.desc = "生成H5页面链接失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 
 
