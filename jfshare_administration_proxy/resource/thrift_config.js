@@ -230,9 +230,8 @@ module.exports.ServiceFactory = {
      */
     scoreCards: function () {
         logger.info("--------->"+zookeeper.getData("score_cards_serv_ips")+"--->"+zookeeper.getData("score_cards_serv_port"));
-        // return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
-        var obj = new ThriftConfig("127.0.0.1", 2005);
-    },
+         return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
+    }
 
 
 };

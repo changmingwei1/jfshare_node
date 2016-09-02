@@ -85,6 +85,7 @@ function load(){
     var files = fs.readdirSync(basepath);//需要用到同步读取
 
     if(files){
+
         for(var i =0 ; i < files.length;i++){
             if(files[i].indexOf(".js")>0){
                 console.log("file:::::::::::::::::::::::::::::::::>"+files[i])
