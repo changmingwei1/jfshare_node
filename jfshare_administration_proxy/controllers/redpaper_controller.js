@@ -10,7 +10,7 @@ var async = require('async');
 
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
-var RedPaper = require('../lib/models/redPaper');// 积分卡功能
+var RedPaper = require('../lib/models/redPaper');// 积分红包功能
 
 router.post('/createRedPaperActivity', function (request, response, next) {
     logger.info("创建积分红包的流程");
