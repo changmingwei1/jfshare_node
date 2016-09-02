@@ -1434,7 +1434,7 @@ router.post('/isAccountRela', function (request, response, next) {
             resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
-            return;
+             return;
         }
         logger.info("传参，arg：" + JSON.stringify(param));
         Score.isAccountRela(param.account, function (error, data) {
@@ -1751,4 +1751,35 @@ router.post('/H5ThirdLogin', function (request, response, next) {
     }
 });
 
+/*用户是否为广东电信用户*/
+router.post('/isPurchaseMobile', function (request, response, next) {
+    var resContent = {code: 200};
+    var param = request.body;
+    logger.info("进入用户是否为广东电信用户接口..."+JSON.stringify(param));
+    try {
+        if (param == null || param.mobile == null || param.mobile == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
+        Buyer.isPurchaseMobile(param.mobile, function (error, data) {
+            if (error) {
+                response.json(error);
+                return;
+            } else {
+                var value = data[0].value;
+                resContent.value = value;
+                response.json(resContent);
+                logger.info("get isPurchaseMobile response:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("不能判断，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能判断";
+        response.json(resContent);
+    }
+});
 module.exports = router;

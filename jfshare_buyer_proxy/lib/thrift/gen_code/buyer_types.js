@@ -1585,3 +1585,70 @@ H5ThirdLoginResult.prototype.write = function(output) {
   return;
 };
 
+PurchaseMobileResult = module.exports.PurchaseMobileResult = function(args) {
+  this.result = null;
+  this.value = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.value !== undefined) {
+      this.value = args.value;
+    }
+  }
+};
+PurchaseMobileResult.prototype = {};
+PurchaseMobileResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.BOOL) {
+        this.value = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+PurchaseMobileResult.prototype.write = function(output) {
+  output.writeStructBegin('PurchaseMobileResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.value !== null && this.value !== undefined) {
+    output.writeFieldBegin('value', Thrift.Type.BOOL, 2);
+    output.writeBool(this.value);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
