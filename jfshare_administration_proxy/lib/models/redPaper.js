@@ -54,6 +54,70 @@ RedPaper.prototype.createRedPaperActivity = function (params, callback) {
         }
     });
 };
+//更新一个积分红包活动
+RedPaper.prototype.updateRedPaperActivity = function (params, callback) {
+    var activityBean = new redPaper_types.Activity({
+        id:params.activityId,
+        name:params.name,
+        maxScore:params.maxScore,
+        startTime:params.startTime,
+        endTime:params.endTime,
+        isShowRule:params.isShowRule,
+        isShowRecord:params.isShowRecord,
+        brief:params.brief,
+        singleGetType:params.singleGetType,
+        singleGetValue:params.singleGetValue,
+        perLimitTime:params.perLimitTime,
+        perDayTime:params.perDayTime,
+        partakeType:params.partTakeType,
+        registStartTime:params.registStartTime,
+        registEndTime:params.registEndTime,
+        isH5:params.isH5,
+        configure:params.configure
+
+    });
+
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'updateRedPaperActivity', [activityBean,params.userId]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("updateRedPaperActivity result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == 1) {
+            logger.error("scoreServ.updateRedPaperActivity because: ======" + err);
+            res.code = 500;
+            res.desc = "更新积分红包失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+//导出积分红包记录
+RedPaper.prototype.exportRedPaperExcel = function (params, callback) {
+    var queryBean = new redPaper_types.QueryParam4Record({
+        id:params.id,
+        userPhone:params.userPhone,
+        startTime:params.startTime,
+        endTime:params.endTime
+
+    });
+
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'exportRedPaperExcelForReceived',
+        [params.activityId,queryBean]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("exportRedPaperExcelForReceived result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("scoreServ.queryScoreTrade because: ======" + err);
+            res.code = 500;
+            res.desc = "导出积分红包excel失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 
 
