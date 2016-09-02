@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="92758b80-9d4f-4707-8373-07714df4f1e2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jfshare_administration_proxy/app.js" afterPath="$PROJECT_DIR$/jfshare_administration_proxy/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jfshare_administration_proxy/lib/models/redPaper.js" afterPath="$PROJECT_DIR$/jfshare_administration_proxy/lib/models/redPaper.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jfshare_administration_proxy/resource/thrift_config.js" afterPath="$PROJECT_DIR$/jfshare_administration_proxy/resource/thrift_config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jfshare_administration_proxy/lib/thrift/gen_code/ScoreCardServ.js" afterPath="$PROJECT_DIR$/jfshare_administration_proxy/lib/thrift/gen_code/ScoreCardServ.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jfshare_administration_proxy/lib/thrift/gen_code/batchCards_types.js" afterPath="$PROJECT_DIR$/jfshare_administration_proxy/lib/thrift/gen_code/batchCards_types.js" />
     </list>
     <ignored path="jfshare_node.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -76,11 +75,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="redpaper_controller.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="redpaper_controller.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jfshare_administration_proxy/controllers/redpaper_controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="137">
               <caret line="103" column="43" selection-start-line="103" selection-start-column="43" selection-end-line="103" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="batchCards_types.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jfshare_administration_proxy/lib/thrift/gen_code/batchCards_types.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="13" column="10" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -198,6 +207,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="jfshare_administration_proxy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfshare_node" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfshare_node" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfshare_administration_proxy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfshare_node" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfshare_node" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfshare_administration_proxy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="thrift" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -343,7 +392,7 @@
       <workItem from="1472021396780" duration="1110000" />
       <workItem from="1472098616192" duration="902000" />
       <workItem from="1472717845261" duration="11352000" />
-      <workItem from="1472790115941" duration="2026000" />
+      <workItem from="1472790115941" duration="2314000" />
     </task>
     <task id="LOCAL-00001" summary="change file">
       <created>1472717948141</created>
@@ -373,11 +422,18 @@
       <option name="project" value="LOCAL" />
       <updated>1472732406934</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="修改创建参数">
+      <created>1472801499508</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1472801499508</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39084000" />
+    <option name="totallyTimeSpent" value="39372000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="716" extended-state="6" />
@@ -437,7 +493,8 @@
     <MESSAGE value="增加积分红包接口" />
     <MESSAGE value="重构红包接口" />
     <MESSAGE value="add ignore file&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ignore file&#10;" />
+    <MESSAGE value="修改创建参数" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改创建参数" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -719,13 +776,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jfshare_administration_proxy/lib/thrift/gen_code/batchCards_types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3298">
-          <caret line="13" column="10" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jfshare_administration_proxy/lib/thrift/address_serv/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="506">
@@ -793,6 +843,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="137">
           <caret line="103" column="43" selection-start-line="103" selection-start-column="43" selection-end-line="103" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jfshare_administration_proxy/lib/thrift/gen_code/batchCards_types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="13" column="10" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="10" />
           <folding />
         </state>
       </provider>
