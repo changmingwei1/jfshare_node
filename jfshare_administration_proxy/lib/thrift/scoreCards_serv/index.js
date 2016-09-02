@@ -1,5 +1,5 @@
 
-var ScoreCardsServ = require("../gen_code/ScoreCardServ.js");
+var ScoreCardServ = require("../gen_code/ScoreCardServ.js");
 
 /*****************************固定引用 直接copy***********************************************************/
 var thrifgtConfig = require("../../../resource/thrift_config.js");
@@ -21,7 +21,7 @@ Config.key = lich.ServiceKey.ScoreCardsServ;
  * 赋值  所有的都加这个名字  ： thriftService
  * @type {exports|module.exports}
  */
-var thriftService = ScoreCardsServ;
+var thriftService = ScoreCardServ;
 
 
 /*********************************************这里不用动了 直接copy**********************************************************************************************/
