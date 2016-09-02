@@ -44,7 +44,7 @@ RedPaper.prototype.createRedPaperActivity = function (params, callback) {
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("createRedPaperActivity result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err || data[0].code == 1) {
             logger.error("scoreServ.createRedPaperActivity because: ======" + err);
             res.code = 500;
             res.desc = "创建积分红包失败";
