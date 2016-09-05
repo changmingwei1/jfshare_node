@@ -39,6 +39,7 @@ router.post('/queryOneRedPaperActivity', function (request, response, next) {
             obj.isH5=temp.isH5;
             obj.configure=temp.configure;
             obj.isShowRecord=temp.isShowRecord;
+            obj.isShowRule = temp.isShowRule;
             result.entity=obj;
 
             logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
