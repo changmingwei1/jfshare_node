@@ -379,8 +379,15 @@ router.post('/queryOneRedPaperActivity', function (request, response, next) {
                 response.json(err);
                 return;
             }
+            var temp=data[0].entity;
+            var obj={};
+            obj.name=temp.name;
+            obj.isH5=temp.isH5;
+            obj.configure=temp.configure;
+            obj.isShowRecord=temp.isShowRecord;
 
-            result.entity=data[0].entity;
+            result.entity=obj;
+
 
             logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
             response.json(result);
