@@ -401,7 +401,149 @@ router.post('/queryOneRedPaperActivity', function (request, response, next) {
     }
 });
 
+router.post('/queryRedPaperActivityList', function (request, response, next) {
+    logger.info("查询积分红包活动的list信息");
+    var result = {code: 200};
+    result.activityList = [];
+    result.pagination = {
+        totalCount: 0,
+        pageNumCount: 0,
+        numPerPage: 0,
+        currentPage: 0
+    };
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("queryRedPaperActivityList params:" + JSON.stringify(params));
 
+        if (params.numPerPage == null || params.numPerPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.currentPage == null || params.currentPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        RedPaper.queryRedPaperActivityList(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            if (data != null && data[0] != null && data[0].activityList != null) {
+                result.activityList = data[0].activityList;
+            }
+            if (data != null && data[0] != null && data[0].pagination != null) {
+                result.pagination = data[0].pagination;
+            }
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("查询积分红包活动的list信息:" + ex);
+        result.code = 500;
+        result.desc = "查询积分红包活动的列表失败";
+        response.json(result);
+    }
+});
+
+router.post('/querySendRedPaperList', function (request, response, next) {
+    logger.info("查询积分红包发放的记录");
+    var result = {code: 200};
+    result.activityList = [];
+    result.pagination = {
+        totalCount: 0,
+        pageNumCount: 0,
+        numPerPage: 0,
+        currentPage: 0
+    };
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("queryRedPaperActivityList params:" + JSON.stringify(params));
+
+        if (params.numPerPage == null || params.numPerPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.currentPage == null || params.currentPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.activityId == null || params.activityId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        RedPaper.querySendRedPaperList(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            if (data != null && data[0] != null && data[0].activityList != null) {
+                result.activityList = data[0].activityList;
+            }
+            if (data != null && data[0] != null && data[0].pagination != null) {
+                result.pagination = data[0].pagination;
+            }
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("查询积分红包发放的记录list:" + ex);
+        result.code = 500;
+        result.desc = "查询积分红包发放的记录失败";
+        response.json(result);
+    }
+});
+
+router.post('/setRedpaperActivityOver', function (request, response, next) {
+    logger.info("结束活动");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("setRedpaperActivityOver params:" + JSON.stringify(params));
+
+        if (params.activityId == null || params.activityId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.userId == null || params.userId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        RedPaper.setRedpaperActivityOver(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("结束活动:" + ex);
+        result.code = 500;
+        result.desc = "结束活动失败";
+        response.json(result);
+    }
+});
 
 
 module.exports = router;
