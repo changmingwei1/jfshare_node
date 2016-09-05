@@ -161,7 +161,7 @@ RedPaper.prototype.queryOneRedPaperActivity = function (params, callback) {
 };
 //查询活动列表
 RedPaper.prototype.queryRedPaperActivityList = function (params, callback) {
-    var queryParams = new score_types.RedPaperActivityQueryParam({
+    var queryParams = new redPaper_types.RedPaperActivityQueryParam({
             name: params.name,
             minStartTime: params.minStartTime,
             maxStartTime: params.maxStartTime,
@@ -194,7 +194,7 @@ RedPaper.prototype.queryRedPaperActivityList = function (params, callback) {
 
 //
 RedPaper.prototype.querySendRedPaperList = function (params, callback) {
-    var queryParams = new score_types.RedPaperSendQueryParam({
+    var queryParams = new redPaper_types.RedPaperSendQueryParam({
             mobile: params.mobile,
             sendMinStartTime: params.sendMinStartTime,
             snedMaxStartTime: params.snedMaxStartTime
@@ -230,10 +230,10 @@ RedPaper.prototype.setRedpaperActivityOver = function (params, callback) {
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("setRedpaperActivityOver result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err || data[0].code == 1) {
             logger.error("RedPaper.setRedpaperActivityOver because: ======" + err + JSON.stringify(data));
             res.code = 500;
-            res.desc = "结束活动失败";
+            res.desc = data[0].failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
