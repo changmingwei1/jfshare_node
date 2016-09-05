@@ -379,11 +379,9 @@ router.post('/queryOneRedPaperActivity', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            // result.scoreList = data[0].scoreUsers;
-            // var pagination = data[0].pageination;
-            // if(pagination!=null){
-            //     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
-            // }
+
+            result.entity=data[0].entity;
+
             logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
             response.json(result);
             return;

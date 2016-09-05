@@ -149,7 +149,7 @@ RedPaper.prototype.queryOneRedPaperActivity = function (params, callback) {
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == 1) {
+        if (err || data[0].result.code == 1) {
             logger.error("RedPaper.queryOneRedPaperActivity because: ======" + err);
             res.code = 500;
             res.desc = "询单个积分红包的信息";
