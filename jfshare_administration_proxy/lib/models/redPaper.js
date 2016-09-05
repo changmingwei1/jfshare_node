@@ -95,7 +95,7 @@ RedPaper.prototype.updateRedPaperActivity = function (params, callback) {
 //导出积分红包记录
 RedPaper.prototype.exportRedPaperExcel = function (params, callback) {
     var queryBean = new redPaper_types.QueryParam4Record({
-        id:params.id,
+        id:params.id,// 非活动id!!! --此字段deprecated
         userPhone:params.userPhone,
         startTime:params.startTime,
         endTime:params.endTime

@@ -2059,6 +2059,8 @@ Activity = module.exports.Activity = function(args) {
   this.isH5 = null;
   this.operatorUserId = null;
   this.configure = null;
+  this.sendScore = null;
+  this.count = null;
   if (args) {
     if (args.id !== undefined && args.id !== null) {
       this.id = args.id;
@@ -2125,6 +2127,12 @@ Activity = module.exports.Activity = function(args) {
     }
     if (args.configure !== undefined && args.configure !== null) {
       this.configure = args.configure;
+    }
+    if (args.sendScore !== undefined && args.sendScore !== null) {
+      this.sendScore = args.sendScore;
+    }
+    if (args.count !== undefined && args.count !== null) {
+      this.count = args.count;
     }
   }
 };
@@ -2296,6 +2304,20 @@ Activity.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 23:
+      if (ftype == Thrift.Type.I32) {
+        this.sendScore = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 24:
+      if (ftype == Thrift.Type.I32) {
+        this.count = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2417,6 +2439,16 @@ Activity.prototype.write = function(output) {
     output.writeString(this.configure);
     output.writeFieldEnd();
   }
+  if (this.sendScore !== null && this.sendScore !== undefined) {
+    output.writeFieldBegin('sendScore', Thrift.Type.I32, 23);
+    output.writeI32(this.sendScore);
+    output.writeFieldEnd();
+  }
+  if (this.count !== null && this.count !== undefined) {
+    output.writeFieldBegin('count', Thrift.Type.I32, 24);
+    output.writeI32(this.count);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -2522,6 +2554,74 @@ ActivityListResult.prototype.write = function(output) {
   if (this.pagination !== null && this.pagination !== undefined) {
     output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
     this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActivityRedPaperResult = module.exports.ActivityRedPaperResult = function(args) {
+  this.result = null;
+  this.entity = null;
+  if (args) {
+    if (args.result !== undefined && args.result !== null) {
+      this.result = new result_ttypes.Result(args.result);
+    }
+    if (args.entity !== undefined && args.entity !== null) {
+      this.entity = new ttypes.Activity(args.entity);
+    }
+  }
+};
+ActivityRedPaperResult.prototype = {};
+ActivityRedPaperResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.entity = new ttypes.Activity();
+        this.entity.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActivityRedPaperResult.prototype.write = function(output) {
+  output.writeStructBegin('ActivityRedPaperResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.entity !== null && this.entity !== undefined) {
+    output.writeFieldBegin('entity', Thrift.Type.STRUCT, 2);
+    this.entity.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
