@@ -13,6 +13,7 @@ var order = require('./controllers/order_controller');
 var cart = require('./controllers/cart_controller');
 var address = require('./controllers/address_controller');
 var buyer = require('./controllers/buyer_controller');
+var redPaper = require('./controllers/redpaper_controller');// 积分红包
 //var test = require('./controllers/test_controller');
 var zookeeper = require('./resource/zookeeper_util');
 //var view_index = require("./view_center/index/view_index");
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/buyer/product', product);
 app.use('/buyer/class', product);
 app.use('/buyer/order', order);
+app.use('/buyer/redPaper',redPaper);// 积分红包
 app.use('/buyer/cart', cart);
 app.use('/buyer/address', address);
 app.use('/buyer/buyer',buyer);

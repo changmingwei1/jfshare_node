@@ -31,7 +31,8 @@ var ServiceKey = {
     ExpresssServer:"Expresss",
     ScoreServer:"Score",
     TemplateServer:"template",
-    AfterSaleServer:"AfterSale"
+    AfterSaleServer:"AfterSale",
+    ScoreCardsServ:"ScoreCards",// 积分卡服务 红包服务
 };
 
 /**
