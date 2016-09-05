@@ -359,6 +359,43 @@ router.post('/generateH5Url', function (request, response, next) {
     }
 });
 
+router.post('/queryOneRedPaperActivity', function (request, response, next) {
+    logger.info("查询单个积分红包活动的信息");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("queryOneRedPaperActivity params:" + JSON.stringify(params));
+
+        if (params.activityId == null || params.activityId == "") {// 操作id
+            result.code = 500;
+            result.desc = "activityId  参数错误";
+            response.json(result);
+            return;
+        }
+
+        RedPaper.queryOneRedPaperActivity(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            // result.scoreList = data[0].scoreUsers;
+            // var pagination = data[0].pageination;
+            // if(pagination!=null){
+            //     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+            // }
+            logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("查询单个积分红包活动的信息:" + ex);
+        result.code = 500;
+        result.desc = "查询单个积分红包活动的信息";
+        response.json(result);
+    }
+});
+
 
 
 

@@ -140,6 +140,25 @@ RedPaper.prototype.generateH5Url = function (params, callback) {
         }
     });
 };
+//查询单个积分红包的信息 ---H5页面就会用到--页面展示
+RedPaper.prototype.queryOneRedPaperActivity = function (params, callback) {
+
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryOneRedPaperActivity',
+        [params.activityId]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == 1) {
+            logger.error("RedPaper.queryOneRedPaperActivity because: ======" + err);
+            res.code = 500;
+            res.desc = "询单个积分红包的信息";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 
 
