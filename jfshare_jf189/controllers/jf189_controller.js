@@ -85,6 +85,43 @@ router.get('/pay/jump', function(req, res, next) {
     }
 });
 
+//前端支付通知跳转页，将参数重定向给天翼H5页面
+router.get('/pay/jumph5', function(req, res, next) {
+    var ret = {};
+    try {
+        var arg = req.query;
+        logger.info("前端支付通知----get前端支付通知跳转页面[jf189]:" + arg.requestXML);
+
+        if (paramValid.empty(arg.requestXML)) {
+            logger.warn("获取支付通知参数为空");
+            ret.status = 500;
+            ret.msg = "非法参数请求！";
+            res.json(ret);
+            return;
+        }
+
+        ret.status = 200;
+        ret.msg = "请求成功";
+
+        var xml = decodeURIComponent(arg.requestXML);
+        logger.info("前端支付通知----解析xml:" + xml);
+        parseString(xml, function (err, result) {
+            console.log(JSON.stringify(result));
+            if(result != undefined) {
+                var _urlh5 = "http://h5.jfshare.com/h5-bfzx/html/pay-success.html"
+                res.redirect(_urlh5);
+            } else {
+                res.end("支付通知异常");
+            }
+        });
+    } catch (err) {
+        logger.error("支付通知跳转页面处理失败！", err);
+        ret.status = 500;
+        ret.msg = "处理失败！";
+        res.json(ret);
+    }
+});
+
 /**
  * 接收天翼的后端支付通知
  */
@@ -103,6 +140,52 @@ router.post('/pay/notify', function(req, res, next) {
 
         var payRes = new pay_types.PayRes({
             payChannel:1,
+            resUrl: arg.requestXML.replace(new RegExp("word","gm"),"+")
+        });
+        // 获取client
+        var payServ = new Lich.InvokeBag(Lich.ServiceKey.PayServer, "payNotify", payRes);
+        Lich.wicca.invokeClient(payServ, function (err, data) {
+            if (err || data[0].result.code == "1") {
+                logger.error("后端支付通知----调用payServ-payNotify接收支付通知失败  失败原因 ======" + err);
+                ret.status = 501;
+                ret.msg = "通知失败！";
+                res.json(404);
+                return;
+            }
+
+            logger.info("后端支付通知----调用payServ-payNotify接收支付通知成功  result.code =  （" + data[0].result.code + "）  1为失败 0为成功");
+            //logger.info("接口返回数据=====" + data[0]);
+            ret.status = 200;
+            ret.msg = "请求成功";
+            //ret.data = data[0].value;
+            res.end("200");
+        });
+    } catch (err) {
+        logger.error("后端支付通知----调用payServ-payNotify接收支付通知失败！", err);
+        ret.status = 500;
+        ret.msg = "处理失败！";
+        res.json(404);
+    }
+});
+
+/**
+ * 接收天翼H5的后端支付通知
+ */
+router.post('/pay/notifyh5', function(req, res, next) {
+    try {
+        var ret = {};
+        var arg = req.body;
+        logger.info("后端支付通知----post接收到第三方支付[jf189]的通知：" + arg.requestXML);
+        if (paramValid.empty(arg.requestXML)) {
+            logger.warn("获取支付通知参数有误, strParm");
+            ret.status = 500;
+            ret.msg = "非法参数请求！";
+            res.json(ret);
+            return;
+        }
+
+        var payRes = new pay_types.PayRes({
+            payChannel:10,
             resUrl: arg.requestXML.replace(new RegExp("word","gm"),"+")
         });
         // 获取client
