@@ -61,5 +61,31 @@ RedPaper.prototype.receiveRedbag = function (params, callback) {
     });
 };
 
+/**/
+RedPaper.prototype.getSendRedPaperList = function (params, callback) {
+
+    var queryParams = new redPaper_types.RedPaperSendQueryParam({
+        mobile: params.mobile
+    });
+    var page = new pagination_types.Pagination({
+        numPerPage: params.numPerPage,
+        currentPage: params.currentPage
+    });
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'getRedPaperReceivedList',
+        [params.encryActivityId, queryParams, page]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("querySendRedPaperList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("RedPaper.querySendRedPaperList because: ======" + err + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "查询发放红包记录列表失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new RedPaper();
