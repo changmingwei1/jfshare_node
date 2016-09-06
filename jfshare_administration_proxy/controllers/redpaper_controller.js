@@ -544,6 +544,37 @@ router.post('/setRedpaperActivityOver', function (request, response, next) {
         response.json(result);
     }
 });
+router.post('/generateH5Url', function (request, response, next) {
+    logger.info("结束活动");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("generateH5Url params:" + JSON.stringify(params));
+
+        if (params.activityId == null || params.activityId == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        RedPaper.generateH5Url(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("结束活动:" + ex);
+        result.code = 500;
+        result.desc = "结束活动失败";
+        response.json(result);
+    }
+});
 
 
 module.exports = router;

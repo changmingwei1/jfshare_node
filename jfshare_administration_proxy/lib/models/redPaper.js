@@ -240,5 +240,26 @@ RedPaper.prototype.setRedpaperActivityOver = function (params, callback) {
         }
     });
 };
+RedPaper.prototype.generateH5Url = function (params, callback) {
+    var queryParams = new redPaper_types.GenerateParam({
+        activityId: params.activityId
+        }
+    );
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'generateH5Url',
+        [queryParams]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("generateH5Url result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == 1) {
+            logger.error("RedPaper.generateH5Url because: ======" + err + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "生成H5红包链接失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new RedPaper();
