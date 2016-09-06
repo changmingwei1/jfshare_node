@@ -142,9 +142,7 @@ router.post('/getSendRedPaperList', function (request, response, next) {
                             result.activityList = data[0].activityList;
                             var activities = data[0].activityList;
                             activities.forEach(function(a){
-                                userIdList.push({
-                                    userId:a.userId
-                                });
+                                userIdList.push(a.userId);
                             });
                             params.userIdList = userIdList;
                         }

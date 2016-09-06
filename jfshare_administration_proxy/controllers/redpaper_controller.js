@@ -311,6 +311,7 @@ router.post('/exportRedPaperExcel', function (request, response, next) {
             // if(pagination!=null){
             //     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             // }
+            result.path = data[0].path;
             logger.info("exportRedPaperExcel result:" + JSON.stringify(data));
             response.json(result);
             return;
