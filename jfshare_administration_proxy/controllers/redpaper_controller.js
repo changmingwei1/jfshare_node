@@ -380,13 +380,13 @@ router.post('/queryOneRedPaperActivity', function (request, response, next) {
                 return;
             }
             var temp=data[0].entity;
-            var obj={};
-            obj.name=temp.name;
-            obj.isH5=temp.isH5;
-            obj.configure=temp.configure;
-            obj.isShowRecord=temp.isShowRecord;
+            // var obj={};
+            // obj.name=temp.name;
+            // obj.isH5=temp.isH5;
+            // obj.configure=temp.configure;
+            // obj.isShowRecord=temp.isShowRecord;
 
-            result.entity=obj;
+            result.entity=temp;
 
 
             logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
