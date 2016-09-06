@@ -13,22 +13,22 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 var RedPaper = require('../lib/models/redPaper');// 积分红包功能
 
 
-router.post('/queryOneRedPaperActivity', function (request, response, next) {
+router.post('/queryRedPaperActivity', function (request, response, next) {
     logger.info("查询单个积分红包活动的信息");
     var result = {code: 200};
     try {
         var params = request.body;
         //参数校验
-        logger.info("queryOneRedPaperActivity params:" + JSON.stringify(params));
+        logger.info("queryRedPaperActivity params:" + JSON.stringify(params));
 
-        if (params.activityId == null || params.activityId == "") {// 操作id
+        if (params.encryActivityId == null || params.encryActivityId == "") {// 操作id
             result.code = 500;
             result.desc = "activityId  参数错误";
             response.json(result);
             return;
         }
 
-        RedPaper.queryOneRedPaperActivity(params, function (err, data) {
+        RedPaper.queryRedPaperActivity(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
@@ -42,7 +42,7 @@ router.post('/queryOneRedPaperActivity', function (request, response, next) {
             obj.isShowRule = temp.isShowRule;
             result.entity=obj;
 
-            logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
+            logger.info("queryRedPaperActivity result:" + JSON.stringify(data));
             response.json(result);
             return;
         });
