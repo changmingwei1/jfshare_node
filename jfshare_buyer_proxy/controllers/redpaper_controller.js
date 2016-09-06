@@ -99,8 +99,8 @@ router.post('/receiveRedbag', function (request, response, next) {
 router.post('/getSendRedPaperList', function (request, response, next) {
     logger.info("查询积分红包发放的记录");
     var result = {code: 200};
-    result.activityList = [];
-    result.userInfoList = [];
+    var activityList = [];
+    var userInfoList = [];
     var userIdList = [];
     result.pagination = {
         totalCount: 0,
@@ -146,16 +146,17 @@ router.post('/getSendRedPaperList', function (request, response, next) {
                                     userId:a.userId
                                 });
                             });
-                            callback(null,userIdList);
+                            params.userIdList = userIdList;
                         }
                         if (data != null && data[0] != null && data[0].pagination != null) {
                             result.pagination = data[0].pagination;
                         }
+                        return callback(null, result);
                     });
                 },
                 /*根据userId,用户的头像*/
                 function(callback){
-                    Buyer.getListBuyer(userIdList, function(err, data){
+                    Buyer.getListBuyer(params.userIdList, function(err, data){
                         if(err){
                             return callback(2, null);
                         }
@@ -170,8 +171,8 @@ router.post('/getSendRedPaperList', function (request, response, next) {
                                 buyerInfo.favImg = buyerList[i].favImg;
                                 userInfoList.push(buyerInfo);
                             }
-                            return callback(null, userInfoList);
                         }
+                        return callback(null, userInfoList);
                     });
                 }
             ],
@@ -182,12 +183,14 @@ router.post('/getSendRedPaperList', function (request, response, next) {
                     response.json(result);
                     return;
                 } else if (err == 2) {
-                    logger.warn("查询买家头像信息是失败");
+                    logger.warn("查询买家头像信息失败");
+                    result = results[0];
                     response.json(result);
                     return;
                 } else {
-                    result.userInfoList = results[2];
                     logger.info("获取到的完整领取信息列表为: " + JSON.stringify(result));
+                    result = results[0];
+                    result.userInfoList = userInfoList;
                     response.json(result);
                     return;
                 }

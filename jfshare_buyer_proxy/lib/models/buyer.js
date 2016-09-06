@@ -338,6 +338,8 @@ Buyer.prototype.getBuyer = function(param,callback){
 //批量获取个人信息
 Buyer.prototype.getListBuyer = function(param,callback){
 
+    logger.info("批量获取个人信息的参数：" + JSON.stringify(param));
+
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getListBuyer',[param]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
