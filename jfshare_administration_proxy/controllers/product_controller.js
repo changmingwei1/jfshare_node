@@ -64,22 +64,31 @@ router.post('/list', function (request, response, next) {
                                 // logger.info("get product list response:" + JSON.stringify(result));
                                 productSurveyList.forEach(function (a) {
                                    var imgUri = "";
-                                    if(imgUri != null){
+                                    if(a.imgUrl != null){
                                        imgUri = a.imgUrl.split(",")[0];
                                     }
 
-                                    dataArr.push({
+                                    var product = {
                                         productId: a.productId,
                                         sellerId: a.sellerId,
-                                        subjectName: "1",
+                                        subjectName: "",
                                         productName: a.productName,
-                                        orgPrice: (Number(a.orgPrice) / 100).toFixed(2),
-                                        curPrice: (Number(a.curPrice) / 100).toFixed(2),
                                         totalSales: a.totalSales,
                                         imgUrl: imgUri,
                                         activeState: a.activeState,
                                         crateTime: a.createTime
-                                    });
+                                    };
+                                    if(a.orgPrice ==null){
+                                        product.orgPrice =0;
+                                    }else{
+                                        product.orgPrice =(Number(a.orgPrice) / 100).toFixed(2);
+                                    }
+                                    if(a.orgPrice ==null){
+                                        product.curPrice =0;
+                                    }else{
+                                        product.curPrice =(Number(a.curPrice) / 100).toFixed(2);
+                                    }
+                                    dataArr.push(product);
                                     subjectIdList.push(
                                         a.subjectId
                                     );
@@ -192,7 +201,9 @@ router.post('/list', function (request, response, next) {
                 if (err == null) {
                     logger.info("shuju------------->" + JSON.stringify(results));
                     for (var i = 0; i < results[0].length; i++) {
-                        results[0][i].subjectName = results[1][i];
+                        if(results[1].length>0&&results[1][i]!=null &&results[1][i]!=""){
+                            results[0][i].subjectName = results[1][i];
+                        }
                         logger.info("get product list response:" + JSON.stringify(dataArr));
                         logger.info("get product list response:" + JSON.stringify(subjectName));
                     }

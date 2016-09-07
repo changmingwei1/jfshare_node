@@ -75,19 +75,32 @@ router.post('/list', function (request, response, next) {
                                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                                 // logger.info("get product list response:" + JSON.stringify(result));
                                 productSurveyList.forEach(function (a) {
-                                    var imgUri = a.imgUrl.split(",")[0];
-                                    dataArr.push({
+                                    var imgUri = "";
+                                    if(a.imgUrl != null){
+                                        imgUri = a.imgUrl.split(",")[0];
+                                    }
+
+                                    var product = {
                                         productId: a.productId,
                                         sellerId: a.sellerId,
-                                        subjectName: "1",
                                         productName: a.productName,
-                                        orgPrice: (Number(a.orgPrice) / 100).toFixed(2),
-                                        curPrice: (Number(a.curPrice) / 100).toFixed(2),
+                                        subjectName:"",
                                         totalSales: a.totalSales,
                                         imgUrl: imgUri,
                                         activeState: a.activeState,
                                         crateTime: a.createTime
-                                    });
+                                    };
+                                    if(a.orgPrice ==null){
+                                        product.orgPrice =0;
+                                    }else{
+                                        product.orgPrice =(Number(a.orgPrice) / 100).toFixed(2);
+                                    }
+                                    if(a.orgPrice ==null){
+                                        product.curPrice =0;
+                                    }else{
+                                        product.curPrice =(Number(a.curPrice) / 100).toFixed(2);
+                                    }
+                                    dataArr.push(product);
                                     subjectIdList.push(
                                         a.subjectId
                                     );
@@ -198,7 +211,11 @@ router.post('/list', function (request, response, next) {
                 if (err == null) {
                     logger.info("shuju------------->" + JSON.stringify(results));
                     for (var i = 0; i < results[0].length; i++) {
-                        results[0][i].subjectName = results[1][i];
+
+                        if(results[1].length>0&&results[1][i]!=null &&results[1][i]!=""){
+                            results[0][i].subjectName = results[1][i];
+                        }
+
                         logger.info("get product list response:" + JSON.stringify(dataArr));
                         logger.info("get product list response:" + JSON.stringify(subjectName));
                     }
