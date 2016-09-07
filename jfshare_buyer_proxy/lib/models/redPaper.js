@@ -68,8 +68,10 @@ RedPaper.prototype.getSendRedPaperList = function (params, callback) {
         mobile: params.mobile
     });
     var page = new pagination_types.Pagination({
-        numPerPage: params.numPerPage,
-        currentPage: params.currentPage
+        //numPerPage: params.numPerPage,
+        //currentPage: params.currentPage   /*业务需求,现在H5只需要前10条信息即可*/
+        numPerPage: 10,
+        currentPage: 1
     });
     //获取客户端
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'getRedPaperReceivedList',
