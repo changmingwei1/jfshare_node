@@ -311,6 +311,7 @@ router.post('/exportRedPaperExcel', function (request, response, next) {
             // if(pagination!=null){
             //     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             // }
+            result.path = data[0].path;
             logger.info("exportRedPaperExcel result:" + JSON.stringify(data));
             response.json(result);
             return;
@@ -342,7 +343,7 @@ router.post('/generateH5Url', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            // result.scoreList = data[0].scoreUsers;
+            result.url = data[0].value;
             // var pagination = data[0].pageination;
             // if(pagination!=null){
             //     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
@@ -380,13 +381,13 @@ router.post('/queryOneRedPaperActivity', function (request, response, next) {
                 return;
             }
             var temp=data[0].entity;
-            var obj={};
-            obj.name=temp.name;
-            obj.isH5=temp.isH5;
-            obj.configure=temp.configure;
-            obj.isShowRecord=temp.isShowRecord;
+            // var obj={};
+            // obj.name=temp.name;
+            // obj.isH5=temp.isH5;
+            // obj.configure=temp.configure;
+            // obj.isShowRecord=temp.isShowRecord;
 
-            result.entity=obj;
+            result.entity=temp;
 
 
             logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
@@ -544,6 +545,7 @@ router.post('/setRedpaperActivityOver', function (request, response, next) {
         response.json(result);
     }
 });
+
 
 
 module.exports = router;

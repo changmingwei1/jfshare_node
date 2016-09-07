@@ -17,11 +17,11 @@ var redPaper_types = require("../thrift/gen_code/batchCards_types");
 function RedPaper() {}
 
 /*查询单个积分红包的信息 ---H5页面就会用到--页面展示*/
-RedPaper.prototype.queryOneRedPaperActivity = function (params, callback) {
+RedPaper.prototype.queryRedPaperActivity = function (params, callback) {
 
     //获取客户端
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryOneRedPaperActivity',
-        [params.activityId]);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryRedPaperActivity',
+        [params.encryActivityId]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
         var res = {};
@@ -61,5 +61,33 @@ RedPaper.prototype.receiveRedbag = function (params, callback) {
     });
 };
 
+/**/
+RedPaper.prototype.getSendRedPaperList = function (params, callback) {
+
+    var queryParams = new redPaper_types.RedPaperSendQueryParam({
+        mobile: params.mobile
+    });
+    var page = new pagination_types.Pagination({
+        numPerPage: params.numPerPage,
+        currentPage: params.currentPage   /*业务需求,现在H5只需要前10条信息即可*/
+        //numPerPage: 10,
+        //currentPage: 1
+    });
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'getRedPaperReceivedList',
+        [params.encryActivityId, queryParams, page]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("querySendRedPaperList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("RedPaper.querySendRedPaperList because: ======" + err + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "查询发放红包记录列表失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new RedPaper();

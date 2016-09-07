@@ -2061,6 +2061,7 @@ Activity = module.exports.Activity = function(args) {
   this.configure = null;
   this.sendScore = null;
   this.count = null;
+  this.realEndTime = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -2133,6 +2134,9 @@ Activity = module.exports.Activity = function(args) {
     }
     if (args.count !== undefined) {
       this.count = args.count;
+    }
+    if (args.realEndTime !== undefined) {
+      this.realEndTime = args.realEndTime;
     }
   }
 };
@@ -2318,6 +2322,13 @@ Activity.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 25:
+      if (ftype == Thrift.Type.STRING) {
+        this.realEndTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2447,6 +2458,11 @@ Activity.prototype.write = function(output) {
   if (this.count !== null && this.count !== undefined) {
     output.writeFieldBegin('count', Thrift.Type.I32, 24);
     output.writeI32(this.count);
+    output.writeFieldEnd();
+  }
+  if (this.realEndTime !== null && this.realEndTime !== undefined) {
+    output.writeFieldBegin('realEndTime', Thrift.Type.STRING, 25);
+    output.writeString(this.realEndTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

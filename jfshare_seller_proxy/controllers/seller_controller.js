@@ -104,6 +104,42 @@ router.get('/queryScore', function(request, response, next) {
         response.json(resContent);
     }
 });
+// 返回当前系统时间
+router.get('/curDataTime', function(request, response, next) {
+
+    logger.info("返回当前系统时间");
+    var resContent = {code:200};
+
+    try{
+        resContent.dateTime=getNowFormatDate();
+        response.json(resContent);
+        
+    }catch(ex){
+        logger.error("不能获取，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "返回当前系统时间";
+        response.json(resContent);
+    }
+});
+
+
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+        + " " + date.getHours() + seperator2 + date.getMinutes()
+        + seperator2 + date.getSeconds();
+    return currentdate;
+}
 
 //获取积分列表
 router.get('/queryScoreList', function(request, response, next) {

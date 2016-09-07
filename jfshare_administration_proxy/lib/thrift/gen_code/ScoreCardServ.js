@@ -1873,6 +1873,113 @@ ScoreCardServ_queryOneRedPaperActivity_result.prototype.write = function(output)
   return;
 };
 
+ScoreCardServ_queryRedPaperActivity_args = function(args) {
+  this.encryActivityId = null;
+  if (args) {
+    if (args.encryActivityId !== undefined) {
+      this.encryActivityId = args.encryActivityId;
+    }
+  }
+};
+ScoreCardServ_queryRedPaperActivity_args.prototype = {};
+ScoreCardServ_queryRedPaperActivity_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.encryActivityId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperActivity_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_queryRedPaperActivity_args');
+  if (this.encryActivityId !== null && this.encryActivityId !== undefined) {
+    output.writeFieldBegin('encryActivityId', Thrift.Type.STRING, 1);
+    output.writeString(this.encryActivityId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperActivity_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreCardServ_queryRedPaperActivity_result.prototype = {};
+ScoreCardServ_queryRedPaperActivity_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ActivityRedPaperResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_queryRedPaperActivity_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_queryRedPaperActivity_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreCardServ_queryRedPaperActivityList_args = function(args) {
   this.queryParam = null;
   this.pagination = null;
@@ -2363,11 +2470,11 @@ ScoreCardServ_generateH5Url_result.prototype.write = function(output) {
 };
 
 ScoreCardServ_receiveRedbag_args = function(args) {
-  this.activityId = null;
+  this.encryActivityId = null;
   this.mobile = null;
   if (args) {
-    if (args.activityId !== undefined) {
-      this.activityId = args.activityId;
+    if (args.encryActivityId !== undefined) {
+      this.encryActivityId = args.encryActivityId;
     }
     if (args.mobile !== undefined) {
       this.mobile = args.mobile;
@@ -2389,8 +2496,8 @@ ScoreCardServ_receiveRedbag_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.activityId = input.readI32();
+      if (ftype == Thrift.Type.STRING) {
+        this.encryActivityId = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -2413,9 +2520,9 @@ ScoreCardServ_receiveRedbag_args.prototype.read = function(input) {
 
 ScoreCardServ_receiveRedbag_args.prototype.write = function(output) {
   output.writeStructBegin('ScoreCardServ_receiveRedbag_args');
-  if (this.activityId !== null && this.activityId !== undefined) {
-    output.writeFieldBegin('activityId', Thrift.Type.I32, 1);
-    output.writeI32(this.activityId);
+  if (this.encryActivityId !== null && this.encryActivityId !== undefined) {
+    output.writeFieldBegin('encryActivityId', Thrift.Type.STRING, 1);
+    output.writeString(this.encryActivityId);
     output.writeFieldEnd();
   }
   if (this.mobile !== null && this.mobile !== undefined) {
@@ -3253,6 +3360,53 @@ ScoreCardServClient.prototype.recv_queryOneRedPaperActivity = function(input,mty
   }
   return callback('queryOneRedPaperActivity failed: unknown result');
 };
+ScoreCardServClient.prototype.queryRedPaperActivity = function(encryActivityId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryRedPaperActivity(encryActivityId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryRedPaperActivity(encryActivityId);
+  }
+};
+
+ScoreCardServClient.prototype.send_queryRedPaperActivity = function(encryActivityId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryRedPaperActivity', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_queryRedPaperActivity_args();
+  args.encryActivityId = encryActivityId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_queryRedPaperActivity = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_queryRedPaperActivity_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryRedPaperActivity failed: unknown result');
+};
 ScoreCardServClient.prototype.queryRedPaperActivityList = function(queryParam, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -3445,7 +3599,7 @@ ScoreCardServClient.prototype.recv_generateH5Url = function(input,mtype,rseqid) 
   }
   return callback('generateH5Url failed: unknown result');
 };
-ScoreCardServClient.prototype.receiveRedbag = function(activityId, mobile, callback) {
+ScoreCardServClient.prototype.receiveRedbag = function(encryActivityId, mobile, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -3456,19 +3610,19 @@ ScoreCardServClient.prototype.receiveRedbag = function(activityId, mobile, callb
         _defer.resolve(result);
       }
     };
-    this.send_receiveRedbag(activityId, mobile);
+    this.send_receiveRedbag(encryActivityId, mobile);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_receiveRedbag(activityId, mobile);
+    this.send_receiveRedbag(encryActivityId, mobile);
   }
 };
 
-ScoreCardServClient.prototype.send_receiveRedbag = function(activityId, mobile) {
+ScoreCardServClient.prototype.send_receiveRedbag = function(encryActivityId, mobile) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('receiveRedbag', Thrift.MessageType.CALL, this.seqid());
   var args = new ScoreCardServ_receiveRedbag_args();
-  args.activityId = activityId;
+  args.encryActivityId = encryActivityId;
   args.mobile = mobile;
   args.write(output);
   output.writeMessageEnd();
@@ -3991,6 +4145,36 @@ ScoreCardServProcessor.prototype.process_queryOneRedPaperActivity = function(seq
   }
 }
 
+ScoreCardServProcessor.prototype.process_queryRedPaperActivity = function(seqid, input, output) {
+  var args = new ScoreCardServ_queryRedPaperActivity_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryRedPaperActivity.length === 1) {
+    Q.fcall(this._handler.queryRedPaperActivity, args.encryActivityId)
+      .then(function(result) {
+        var result = new ScoreCardServ_queryRedPaperActivity_result({success: result});
+        output.writeMessageBegin("queryRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreCardServ_queryRedPaperActivity_result(err);
+        output.writeMessageBegin("queryRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryRedPaperActivity(args.encryActivityId,  function (err, result) {
+      var result = new ScoreCardServ_queryRedPaperActivity_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryRedPaperActivity", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
 ScoreCardServProcessor.prototype.process_queryRedPaperActivityList = function(seqid, input, output) {
   var args = new ScoreCardServ_queryRedPaperActivityList_args();
   args.read(input);
@@ -4116,7 +4300,7 @@ ScoreCardServProcessor.prototype.process_receiveRedbag = function(seqid, input, 
   args.read(input);
   input.readMessageEnd();
   if (this._handler.receiveRedbag.length === 2) {
-    Q.fcall(this._handler.receiveRedbag, args.activityId, args.mobile)
+    Q.fcall(this._handler.receiveRedbag, args.encryActivityId, args.mobile)
       .then(function(result) {
         var result = new ScoreCardServ_receiveRedbag_result({success: result});
         output.writeMessageBegin("receiveRedbag", Thrift.MessageType.REPLY, seqid);
@@ -4131,7 +4315,7 @@ ScoreCardServProcessor.prototype.process_receiveRedbag = function(seqid, input, 
         output.flush();
       });
   } else {
-    this._handler.receiveRedbag(args.activityId, args.mobile,  function (err, result) {
+    this._handler.receiveRedbag(args.encryActivityId, args.mobile,  function (err, result) {
       var result = new ScoreCardServ_receiveRedbag_result((err != null ? err : {success: result}));
       output.writeMessageBegin("receiveRedbag", Thrift.MessageType.REPLY, seqid);
       result.write(output);
