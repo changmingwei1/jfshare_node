@@ -23,12 +23,11 @@ SlotImage.prototype.saveAdvertSlotImage = function (params, callback) {
         slotName: params.slotName,
         remark: params.remark,
         jump: params.jump,
-        isOnline: params.isOnline,
-        sort: params.sort,
+        //isOnline: params.isOnline,
+        //sort: params.sort,
         startTime: params.startTime,
         endTime: params.endTime,
         // createTime: params.createTime
-
     });
 
     //获取客户端
@@ -36,7 +35,7 @@ SlotImage.prototype.saveAdvertSlotImage = function (params, callback) {
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("saveAdvertSlotImage result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err || data[0].code == 1) {
             logger.error("slotServ.saveAdvertSlotImage because: ======" + err);
             res.code = 500;
             res.desc = "创建广告位图片失败";
@@ -60,7 +59,6 @@ SlotImage.prototype.updateAdvertSlotImage = function (params, callback) {
         startTime: params.startTime,
         endTime: params.endTime,
         createTime: params.createTime
-
     });
 
     //获取客户端
@@ -68,11 +66,15 @@ SlotImage.prototype.updateAdvertSlotImage = function (params, callback) {
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("updateAdvertSlotImage result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err) {
             logger.error("slotServ.updateAdvertSlotImage because: ======" + err);
             res.code = 500;
             res.desc = "修改广告位图片"+"失败";
             callback(res, null);
+        } else if (data[0].code == 1) {
+            logger.warn("修改广告位图片失败，参数为：" + JSON.stringify(slotBean));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
         } else {
             callback(null, data);
         }
@@ -83,7 +85,6 @@ SlotImage.prototype.updateAdvertSlotImage = function (params, callback) {
 SlotImage.prototype.queryAdvertSlotImageList = function (params, callback) {
     var slotBean = new manager_types.AdvertSlotImageParam({
         advertId: params.advertId
-
     });
 
     //获取客户端
@@ -96,6 +97,10 @@ SlotImage.prototype.queryAdvertSlotImageList = function (params, callback) {
             res.code = 500;
             res.desc = "查询广告位图片"+"失败";
             callback(res, null);
+        } else if (data[0].code == 1) {
+            logger.warn("查询广告位图片列表失败，参数为：" + JSON.stringify(slotBean));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
         } else {
             callback(null, data);
         }
