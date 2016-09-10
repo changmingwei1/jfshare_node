@@ -197,7 +197,7 @@ RedPaper.prototype.querySendRedPaperList = function (params, callback) {
     var queryParams = new redPaper_types.RedPaperSendQueryParam({
             mobile: params.mobile,
             sendMinStartTime: params.sendMinStartTime,
-            snedMaxStartTime: params.snedMaxStartTime
+            snedMaxStartTime: params.sendMaxStartTime
         }
     );
 
