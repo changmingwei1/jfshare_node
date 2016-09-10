@@ -444,12 +444,13 @@ Buyer.prototype.requestHttps = function(param,callback){
 Buyer.prototype.H5ThirdLogin = function(param,callback){
 
     var params = new buyer_types.H5ThirdLoginParam({
-        appCode:param.appCode,  /*应用编码*/
-        requestDate:param.requestDate,  /*请求时间*/
-        sign:param.sign,    /*签名*/
-        mobile:param.mobile,    /*设配号*/
-        wayType:param.wayType,  /*用户渠道来源*/
-        redirectUrl:param.redirectUrl   /*重定向URL*/
+        //appCode:param.appCode,  /*应用编码*/
+        //requestDate:param.requestDate,  /*请求时间*/
+        //sign:param.sign,    /*签名*/
+        //mobile:param.mobile,    /*设配号*/
+        //wayType:param.wayType,  /*用户渠道来源*/
+        //redirectUrl:param.redirectUrl   /*重定向URL*/
+        requestXml:param.requestXml
     });
 
     //获取client
