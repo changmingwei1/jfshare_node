@@ -232,7 +232,7 @@ Order.prototype.orderConfirm = function (arg, callback) {
                 curPrice: product.curPrice + "",
                 /*postage:product.postage,*/ /*邮费可以不写入，直接在算进了totalSum中*/
                 storehouseId: product.storehouseId,
-                thirdExchangeRate:product.thirdExchangeRate
+                thirdExchangeRate:arg.thirdExchangeRate
             }));
         }
         sellerDetailList.push(new trade_types.BuySellerDetail({
