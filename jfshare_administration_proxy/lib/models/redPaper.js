@@ -166,7 +166,7 @@ RedPaper.prototype.queryRedPaperActivityList = function (params, callback) {
             minStartTime: params.minStartTime,
             maxStartTime: params.maxStartTime,
             minEndTime: params.minEndTime,
-            maxEndTime: params.minEndTime,
+            maxEndTime: params.maxEndTime,
             curStatus: params.curStatus
         }
     );
@@ -197,7 +197,7 @@ RedPaper.prototype.querySendRedPaperList = function (params, callback) {
     var queryParams = new redPaper_types.RedPaperSendQueryParam({
             mobile: params.mobile,
             sendMinStartTime: params.sendMinStartTime,
-            snedMaxStartTime: params.snedMaxStartTime
+            snedMaxStartTime: params.sendMaxStartTime
         }
     );
 
