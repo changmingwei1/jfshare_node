@@ -1689,11 +1689,11 @@ router.post('/queryRechargeCards', function (request, response, next) {
 });
 
 /*H5第三方登陆*/
-router.post('/H5ThirdLogin', function (request, response, next) {
+router.get('/H5ThirdLogin', function (request, response, next) {
 
     logger.info("进入H5第三方登陆接口");
     var resContent = {code: 200};
-    var param = request.body;
+    var param = request.query;
     logger.info("请求参数信息" + JSON.stringify(param));
     try {
         if (param.requestXml == null || param.requestXml == "") {
@@ -1756,6 +1756,7 @@ router.post('/H5ThirdLogin', function (request, response, next) {
         response.json(resContent);
     }
 });
+
 
 /*用户是否为广东电信用户*/
 router.post('/isPurchaseMobile', function (request, response, next) {
