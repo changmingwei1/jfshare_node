@@ -166,7 +166,7 @@ RedPaper.prototype.queryRedPaperActivityList = function (params, callback) {
             minStartTime: params.minStartTime,
             maxStartTime: params.maxStartTime,
             minEndTime: params.minEndTime,
-            maxEndTime: params.minEndTime,
+            maxEndTime: params.maxEndTime,
             curStatus: params.curStatus
         }
     );
