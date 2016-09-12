@@ -341,17 +341,17 @@ router.post('/confirm_order', function(req, res, next) {
     //});
 
     var deliverInfo;
-
+    logger.info("mobile的值为："+ arg.mobile);
     if (arg.tradeCode == "Z0002" || arg.tradeCode == "Z8002" || arg.tradeCode == "Z8001") {
         deliverInfo = new order_types.DeliverInfo({
             receiverMobile: arg.mobile
         });
     } else {
-        var deliverInfo  = new order_types.DeliverInfo({
+         deliverInfo  = new order_types.DeliverInfo({
             addressId: arg.addressId || "",
         });
     }
-
+    logger.info("receiverMobile的值为："+  JSON.stringify(deliverInfo));
     var thrift_orderInfo = new order_types.OrderInfo({
         productId: arg.productId,
         skuNum: arg.skuNum,
@@ -377,6 +377,7 @@ router.post('/confirm_order', function(req, res, next) {
         fromBatch: arg.fromBatch
     });
 
+    logger.info("调用cartServ-orderConfirm args:" + JSON.stringify(thrift_param));
     // 获取client
     var tradeServ = new Lich.InvokeBag(Lich.ServiceKey.TradeServer, "orderConfirm", thrift_param);
     Lich.wicca.invokeClient(tradeServ, function (err, data) {
