@@ -291,7 +291,7 @@ router.post('/confirm_order', function(req, res, next) {
     async.waterfall([
 
             /*根据商品id查找类目id*/
-            function(callback){
+            function(){
                 logger.info("11111111111111111111111111111111111111111111111111"+ arg.tradeCode);
                 //var productId = arg.sellerDetailList[0].productList[0].productId;
                 var productId = arg.productId;
@@ -309,7 +309,7 @@ router.post('/confirm_order', function(req, res, next) {
                 });
             },
             /*根据类目id,得到商品类型commodity*/
-            function (callback){
+            function (){
                 logger.info("4444444444444444444444444444444444444444444444444444444444444444444444"+ arg.tradeCode);
                 Product.getById4dis(arg, function(err,data){
                     if(err){
