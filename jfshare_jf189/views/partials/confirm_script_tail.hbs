@@ -98,6 +98,34 @@
 </div>
 </script>
 
+<!--虚拟商品订单  新加-->
+<script id="virtual_order" type="text/x-handlebars-template">
+    <h2 class="order_title">
+        <b>收货人信息</b>
+        <!--<a href="javascript:;" class="cancelEdit">[确认收货人信息]</a>-->
+    </h2>
+    <div class="order_addvirtual order_add2" style="background:#fff;border:0;margin-left:10px;">
+        <ul style="overflow:hidden;">
+            <li>
+                <label><em>*</em>手机号：</label>
+                <div class="f2" style="width: 520px;float: left;">
+                    <div class="fl">
+                        <div class="fl">
+                            <input type="text" id="mobilenumber" value="\{{mobile}}" maxlength="11" />
+                        </div>
+
+                    </div>
+                    <div class="fl" style="margin-top:5px;">
+                        <span class="contips" style="color:red;">用于接收卡密，请确保无误。</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</script>
+
+
+
 <!--选择支付方式-->
 <script id="payment_show_template" type="text/x-handlebars-template">
 <h2 class="order_title"><b>选择支付方式</b></h2>
