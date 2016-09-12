@@ -297,7 +297,7 @@ router.post('/confirm_order', function(req, res, next) {
                     var product = data[0].product;
                     arg.subjectId = product.subjectId;
                     arg.thirdExchangeRate = product.thirdExchangeRate;
-                    callback(null, result);
+                    callback(null, arg);
                 });
             },
             /*根据类目id,得到商品类型commodity*/
@@ -317,21 +317,21 @@ router.post('/confirm_order', function(req, res, next) {
                         }
                         arg.tradeCode = tradeCode;
                         logger.info("tradeCode的值为：" + arg.tradeCode);
-                        callback(null,result);
+                        callback(null,arg);
                     }
                 });
             },
         ],
         function (err, results) {
             if (err == 1) {
-                result.code = 500;
-                result.desc = "查询商品类目失败";
-                response.json(result);
+                arg.code = 500;
+                arg.desc = "查询商品类目失败";
+                response.json(arg);
                 return;
             } else if (err == 2) {
-                result.code = 500;
-                result.desc = "查询商品类型失败";
-                response.json(result);
+                arg.code = 500;
+                arg.desc = "查询商品类型失败";
+                response.json(arg);
                 return;
             }
         });
