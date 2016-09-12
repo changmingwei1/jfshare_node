@@ -265,7 +265,7 @@ router.post('/confirm_order', function(req, res, next) {
     logger.info('确认订单');
     var parameters = {};
     var arg = req.body;
-    parameters.userId =  req.session.buyer.userId+"" || "-1";
+    //parameters.userId =  req.session.buyer.userId+"" || "-1";
     parameters.userName = arg.userName || "";
     //parameters.userId = 17;
     parameters.title = "订单确认结果";
