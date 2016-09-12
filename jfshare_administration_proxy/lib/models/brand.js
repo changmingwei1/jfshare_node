@@ -131,7 +131,7 @@ Brand.prototype.list = function (params, callback) {
     //
     Lich.wicca.invokeClient(brandServ, function (err, data) {
         logger.info("brandServ-queryByPage result:" + JSON.stringify(data));
-        if (err || data[0].result.code == 1) {
+        if (err || data[0].result.code == 1 ||data[0] ==null) {
             logger.error("brandServ-queryByPage result   ======" + err);
             var result = {};
             result.code = 500;
