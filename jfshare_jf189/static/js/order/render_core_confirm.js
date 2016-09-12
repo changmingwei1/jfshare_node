@@ -338,7 +338,7 @@ function orderConfirm() {
                     $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
                     $("input[name='mobile']").val($("#mobilenumber").val());
                     $("input[name='type']").val(productType);
-                    $("input[name='tradeCode']").val();
+                    $("input[name='tradeCode']").val("Z8001");
                     console.log($("input[name='mobile']").val())
                     $("#confirmOrderform").submit();
                     var toPayBtn = $("#btnSubmit");
