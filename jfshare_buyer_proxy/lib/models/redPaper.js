@@ -25,12 +25,16 @@ RedPaper.prototype.queryRedPaperActivity = function (params, callback) {
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("queryOneRedPaperActivity result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err) {
             logger.error("RedPaper.queryOneRedPaperActivity because: ======" + err);
             res.code = 500;
-            res.desc = "询单个积分红包的信息";
+            res.desc = "查询询单个积分红包的信息";
             callback(res, null);
-        } else {
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
             callback(null, data);
         }
     });
