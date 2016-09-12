@@ -341,12 +341,13 @@ router.post('/confirm_order', function(req, res, next) {
     //});
 
     var deliverInfo;
-    logger.info("mobile的值为："+ arg.mobile);
     if (arg.tradeCode == "Z0002" || arg.tradeCode == "Z8002" || arg.tradeCode == "Z8001") {
+        logger.info("1111111111111111111111111111111111111111"+  arg.tradeCode);
         deliverInfo = new order_types.DeliverInfo({
-            receiverMobile: arg.mobile
+            receiverMobile: arg.mobile,
         });
     } else {
+        logger.info("22222222222222222222222222222222222222"+  arg.tradeCode);
          deliverInfo  = new order_types.DeliverInfo({
             addressId: arg.addressId || "",
         });
