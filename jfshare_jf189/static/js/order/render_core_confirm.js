@@ -337,6 +337,7 @@ function orderConfirm() {
                     $("input[name='postage']").val(render_orderInfo.postage);
                     $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
                     $("input[name='mobile']").val($("#mobilenumber").val());
+                    $("input[name='type']").val(productType);
                     $("input[name='tradeCode']").val();
                     console.log($("input[name='mobile']").val())
                     $("#confirmOrderform").submit();
