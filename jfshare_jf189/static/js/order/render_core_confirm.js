@@ -7,12 +7,15 @@ var addresslist=null; //收货地址列表
 var deliveryRuleSelector; //配送方式控件对象
 var notDelivery=false; //是否需要配送方式
 var paymentlist=null; //支付方式
-
+var productType=null; //商品类型
+var mobile=null;  //手机号
+var flag=false;   //校验广东手机号
 /**
  * 渲染页面数据入口
  */
 $(function() {
     $("#ssid").val(render_orderInfo.ssid);
+    console.log(render_orderInfo)
     rendData();
 });
 
@@ -31,7 +34,19 @@ function rendData() {
             //alert("success" + data[0].receiverName);
             if (data.status == 200) {
                 addresslist = data.addressInfoList;
-                renderAddress();
+                //———新加 商品类型
+                productType = sessionStorage.getItem("type");
+                //sessionStorage.removeItem("type");
+                console.log(productType)
+                console.log(render_orderInfo.type)
+                if(productType == 2){
+                    //实物商品收货地址
+                    renderAddress();
+                    //mobile = data.addressInfoList[0].mobile;
+                }else if(productType == 3){
+                    //虚拟商品收货
+                    renderVirtual();
+                }
             } else {
                 alert(data.msg);
             }
@@ -109,6 +124,16 @@ function renderShowAddress(addressInfo) {
     //}
     //defAddress.append("</ul>");
     //$("#consigneePanel").html(defAddress.toString());
+}
+//渲染虚拟商品收货手机号
+function renderVirtual() {
+    var source   = $("#virtual_order").html();
+    var template = Handlebars.compile(source);
+    $("#consigneePanel").html(template());
+
+    calcPostageAndAmountTotal();
+    renderProduct();
+    renderTotal();
 }
 
 /**
@@ -265,30 +290,105 @@ function checkForm() {
     }
     return true;
 }
+
+//校验广东电信手机号
+function checkGD(){
+    $.ajax({
+        //contentType: "application/json",
+        url: "http://120.24.153.102:18002/buyer/buyer/isPurchaseMobile",
+        type: 'post',
+        data: {mobile:mobile},
+        dataType:'json',
+        async:false,
+        success: function (data) {
+            if(data.code == 200){
+                flag = data.value;
+                if(data.value == false){
+                    alert("广东电信用户限制购买！");
+                    console.log("广东电信用户限制购买！")
+                }
+            }else{
+                console.log(data.desc);
+            }
+        }
+    })
+
+}
 /**
  * 确认订单
  */
 function orderConfirm() {
-    if (checkForm() == true) {
-        var ssid = render_orderInfo.ssid;
-        checkTYLoginStatus(ssid, function(loginInfo) {
-            //TODO 需要计算
-            var totalPayAmount = Number(Number(render_orderInfo.count) * Number(render_orderInfo.pInfo.curPrice) + Number(render_orderInfo.postage)).toFixed(2);
-            $("input[name='productId']").val(render_orderInfo.productId);
-            $("input[name='count']").val(render_orderInfo.count);
-            $("input[name='storehouseId']").val(render_orderInfo.pInfo.storehouseId);
-            $("input[name='skuNum']").val(render_orderInfo.pInfo.skuNum);
-            $("input[name='curPrice']").val(render_orderInfo.pInfo.curPrice);
-            $("input[name='sellerId']").val(render_orderInfo.sellerId);
-            $("input[name='totalPayAmount']").val(totalPayAmount);
-            $("input[name='postage']").val(render_orderInfo.postage);
-            $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
-            $("#confirmOrderform").submit();
-            var toPayBtn = $("#btnSubmit");
-            toPayBtn.html("提交订单...");
-            toPayBtn.die("click");
-            return false; // 阻止表单自动提交事件
-        });
+    if(productType == 3){
+        if(checkPhone()){
+            mobile = $("#mobilenumber").val();
+            checkGD();
+            if(flag){
+                var ssid = render_orderInfo.ssid;
+                checkTYLoginStatus(ssid, function(loginInfo) {
+                    //TODO 需要计算
+                    var totalPayAmount = Number(Number(render_orderInfo.count) * Number(render_orderInfo.pInfo.curPrice) + Number(render_orderInfo.postage)).toFixed(2);
+                    $("input[name='productId']").val(render_orderInfo.productId);
+                    $("input[name='count']").val(render_orderInfo.count);
+                    $("input[name='storehouseId']").val(render_orderInfo.pInfo.storehouseId);
+                    $("input[name='skuNum']").val(render_orderInfo.pInfo.skuNum) || "1-12";
+                    $("input[name='curPrice']").val(render_orderInfo.pInfo.curPrice);
+                    $("input[name='sellerId']").val(render_orderInfo.sellerId);
+                    $("input[name='totalPayAmount']").val(totalPayAmount);
+                    $("input[name='postage']").val(render_orderInfo.postage);
+                    $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
+                    $("input[name='mobile']").val($("#mobilenumber").val());
+                    $("input[name='type']").val(productType);
+                    $("input[name='tradeCode']").val("Z8001");
+                    console.log($("input[name='mobile']").val())
+                    $("#confirmOrderform").submit();
+                    var toPayBtn = $("#btnSubmit");
+                    toPayBtn.html("提交订单...");
+                    toPayBtn.die("click");
+                    return false; // 阻止表单自动提交事件
+                });
+            }
+
+        }
+    }else if(productType == 2){
+        if (checkForm() == true) {
+            mobile = $("span.mobile").html();
+            checkGD();
+            if(flag){
+                var ssid = render_orderInfo.ssid;
+                checkTYLoginStatus(ssid, function(loginInfo) {
+                    //TODO 需要计算
+                    var totalPayAmount = Number(Number(render_orderInfo.count) * Number(render_orderInfo.pInfo.curPrice) + Number(render_orderInfo.postage)).toFixed(2);
+                    $("input[name='productId']").val(render_orderInfo.productId);
+                    $("input[name='count']").val(render_orderInfo.count);
+                    $("input[name='storehouseId']").val(render_orderInfo.pInfo.storehouseId);
+                    $("input[name='skuNum']").val(render_orderInfo.pInfo.skuNum) || "1-12";
+                    $("input[name='curPrice']").val(render_orderInfo.pInfo.curPrice);
+                    $("input[name='sellerId']").val(render_orderInfo.sellerId);
+                    $("input[name='totalPayAmount']").val(totalPayAmount);
+                    $("input[name='postage']").val(render_orderInfo.postage);
+                    $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
+                    $("#confirmOrderform").submit();
+                    var toPayBtn = $("#btnSubmit");
+                    toPayBtn.html("提交订单...");
+                    toPayBtn.die("click");
+                    return false; // 阻止表单自动提交事件
+                });
+            }
+
+        }
+
+    }
+
+}
+
+//验证手机号
+function checkPhone(){
+    var phone =$('input#mobilenumber').val();
+    if(!(/^1[3|4|5|7|8]\d{9}$/.test(phone))){
+        alert("请正确填写手机号码！");
+        return false;
+    }else{
+        return true;
     }
 }
 

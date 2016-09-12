@@ -31,6 +31,7 @@ var subjectId = null;
 var score2cashAmount = 0;  //100分尊享可低金额
 var productInfo = null;
 var skuInfos = null;
+var productType = null;
 
 //页面库存参数
 var dimstocks=null; //商品库存属性、库存量map的结果信息
@@ -64,6 +65,9 @@ function rendData() {
             subjectId = data.subjectId;
 
            score2cashAmount = Number(data.thirdExchangeRate);
+
+            //商品类型 --- 新加
+            productType = data['type'];
 
             renderBaseInfo();
             renderSkuDims();
@@ -150,6 +154,10 @@ function rendData() {
  * 渲染商品基本信息
  */
 function renderBaseInfo(){
+    //虚拟商品购买 --- 新加
+    if(productType == 3){
+        $("div.t7").hide();
+    }
     $(document).attr("title",productName);
     //create_top_subject(subjectId);
     $("#productName").html("<p>" + productName + "</p>");
@@ -843,7 +851,10 @@ function addToBuyNow() {
             if(empty($("input[name='imgKey']").val())) {
                 $("input[name='imgKey']").val(productInfo.imgKey.split(",")[0]);
             }
-
+            $("input[name='type']").val(productInfo.type);
+            var type = productInfo.type;
+            sessionStorage.setItem("type", type);
+            //跳转提交订单页面
             $("#addProductSkuform").attr("action","/order/add_confirm?ssid="+ssid);
             $("#addProductSkuform").submit();
         });
