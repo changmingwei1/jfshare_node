@@ -267,7 +267,7 @@ router.post('/confirm_order', function(req, res, next) {
     parameters.userName = arg.userName || "";
     //parameters.userId = 17;
     parameters.title = "订单确认结果";
-    logger.error("下单开始,请求参数为：" + arg);
+    logger.error("下单开始,请求参数为：" +  JSON.stringify(arg));
 
     //测试模拟数据
     //arg = {
