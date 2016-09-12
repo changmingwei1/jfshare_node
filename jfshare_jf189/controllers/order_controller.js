@@ -303,7 +303,7 @@ router.post('/confirm_order', function(req, res, next) {
                     arg.subjectId = product.subjectId;
                     arg.thirdExchangeRate = product.thirdExchangeRate;
                     logger.info("22222222222222222222222222222222222222222222222222222222222222222"+ arg.tradeCode);
-                    callback(null, arg);
+                    //callback(null, arg);
                     logger.info("33333333333333333333333333333333333333333333333333333333333333333"+ arg.tradeCode);
 
                 });
@@ -326,7 +326,7 @@ router.post('/confirm_order', function(req, res, next) {
                         }
                         arg.tradeCode = tradeCode;
                         logger.info("555555555555555555555555555555555555555555555555555555555555555555555555555555555"+ arg.tradeCode);
-                        callback(null, arg);
+                        //callback(null, arg);
                         logger.info("6666666666666666666666666666666666666666666666666666666666666666666666666666666666"+ arg.tradeCode);
                         logger.info("tradeCode的值为："+ arg.tradeCode);
                     }
