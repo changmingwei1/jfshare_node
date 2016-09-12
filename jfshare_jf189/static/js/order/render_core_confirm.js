@@ -42,7 +42,7 @@ function rendData() {
                 if(productType == 2){
                     //实物商品收货地址
                     renderAddress();
-                    mobile = data.addressInfoList[0].mobile;
+                    //mobile = data.addressInfoList[0].mobile;
                 }else if(productType == 3){
                     //虚拟商品收货
                     renderVirtual();
@@ -294,6 +294,7 @@ function checkForm() {
 //校验广东电信手机号
 function checkGD(){
     $.ajax({
+        contentType: "application/json",
         url: "http://120.24.153.102:18002/buyer/buyer/isPurchaseMobile",
         type: 'post',
         data: {mobile:mobile},
@@ -303,6 +304,7 @@ function checkGD(){
             if(data.code == 200){
                 flag = data.value;
                 if(data.value == false){
+                    alert("广东电信用户限制购买！");
                     console.log("广东电信用户限制购买！")
                 }
             }else{
@@ -335,6 +337,7 @@ function orderConfirm() {
                     $("input[name='postage']").val(render_orderInfo.postage);
                     $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
                     $("input[name='mobile']").val($("#mobilenumber").val());
+                    $("input[name='tradeCode']").val();
                     console.log($("input[name='mobile']").val())
                     $("#confirmOrderform").submit();
                     var toPayBtn = $("#btnSubmit");
@@ -347,6 +350,7 @@ function orderConfirm() {
         }
     }else if(productType == 2){
         if (checkForm() == true) {
+            mobile = $("span.mobile").html();
             checkGD();
             if(flag){
                 var ssid = render_orderInfo.ssid;
