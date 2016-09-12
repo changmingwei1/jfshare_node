@@ -842,7 +842,9 @@ Product.prototype.queryThirdPartyProduct = function (params, callback) {
             if(data[0]!=null){
                 callback(null, data[0]);
             }else{
-                callback(null, null);
+                res.code = 500;
+                res.desc = "查询第三方商品失败！";
+                callback(res, null);
             }
 
         }
