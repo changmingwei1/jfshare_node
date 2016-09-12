@@ -370,7 +370,8 @@ router.post('/confirm_order', function(req, res, next) {
         deliverInfo: deliverInfo,
         sellerDetailList: [thrift_BuySellerDetail],
         fromSource: arg.fromSource,
-        fromBatch: arg.fromBatch
+        fromBatch: arg.fromBatch,
+        tradeCode: arg.tradeCode
     });
 
     logger.info("调用cartServ-orderConfirm args:" + JSON.stringify(thrift_param));
