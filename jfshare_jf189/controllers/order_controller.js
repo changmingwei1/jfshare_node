@@ -11,6 +11,7 @@ var view_buyer = require('../view_center/buyer/view_buyer');
 var paramValid = require('../lib/models/pub/param_valid');
 var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var Product = require('../lib/models/product');
+var async = require('async');
 
 var address_types = require("../lib/thrift/gen_code/address_types");
 var common_types = require("../lib/thrift/gen_code/common_types");
@@ -283,10 +284,12 @@ router.post('/confirm_order', function(req, res, next) {
     //    totalPayAmount:"30.00"
     //}
 
-    async.series([
+    //async.series([
+    async.waterfall([
             /*根据商品id查找类目id*/
             function(callback){
-                var productId = arg.sellerDetailList[0].productList[0].productId;
+                //var productId = arg.sellerDetailList[0].productList[0].productId;
+                var productId = arg.productId;
                 Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
                     if (err) {
                         return callback(1,null);
@@ -294,7 +297,7 @@ router.post('/confirm_order', function(req, res, next) {
                     var product = data[0].product;
                     arg.subjectId = product.subjectId;
                     arg.thirdExchangeRate = product.thirdExchangeRate;
-                    callback(null, result);
+                    callback(null, arg);
                 });
             },
             /*根据类目id,得到商品类型commodity*/
@@ -314,21 +317,21 @@ router.post('/confirm_order', function(req, res, next) {
                         }
                         arg.tradeCode = tradeCode;
                         logger.info("tradeCode的值为：" + arg.tradeCode);
-                        callback(null,result);
+                        callback(null,arg);
                     }
                 });
             },
         ],
         function (err, results) {
             if (err == 1) {
-                result.code = 500;
-                result.desc = "查询商品类目失败";
-                response.json(result);
+                arg.code = 500;
+                arg.desc = "查询商品类目失败";
+                response.json(arg);
                 return;
             } else if (err == 2) {
-                result.code = 500;
-                result.desc = "查询商品类型失败";
-                response.json(result);
+                arg.code = 500;
+                arg.desc = "查询商品类型失败";
+                response.json(arg);
                 return;
             }
         });
