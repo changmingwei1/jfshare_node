@@ -95,7 +95,7 @@ var opts = {
       //host: zookeeper.getData("redis_host"),
       //port: zookeeper.getData("redis_port"),
       //pass:zookeeper.getData("redis_pwd"),
-      host:'10.24.191.2',
+      host:'10.24.200.181',
       //host:'101.201.39.63',
       port:'6380',
       pass:'JFshare#0328',

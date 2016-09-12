@@ -10,6 +10,7 @@ var view_index = require('../view_center/index/view_index');
 var view_buyer = require('../view_center/buyer/view_buyer');
 var paramValid = require('../lib/models/pub/param_valid');
 var logger = require('../lib/util/log4node').configlog4node.servLog4js();
+var Product = require('../lib/models/product');
 
 var address_types = require("../lib/thrift/gen_code/address_types");
 var common_types = require("../lib/thrift/gen_code/common_types");
@@ -282,9 +283,71 @@ router.post('/confirm_order', function(req, res, next) {
     //    totalPayAmount:"30.00"
     //}
 
-    var deliverInfo  = new order_types.DeliverInfo({
-        addressId: arg.addressId || "",
-    });
+    async.series([
+            /*根据商品id查找类目id*/
+            function(callback){
+                var productId = arg.sellerDetailList[0].productList[0].productId;
+                Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
+                    if (err) {
+                        return callback(1,null);
+                    }
+                    var product = data[0].product;
+                    arg.subjectId = product.subjectId;
+                    arg.thirdExchangeRate = product.thirdExchangeRate;
+                    callback(null, result);
+                });
+            },
+            /*根据类目id,得到商品类型commodity*/
+            function(callback){
+                Product.getById4dis(arg, function(err,data){
+                    if(err){
+                        return callback(2,null);
+                    } else {
+                        var displaySubjectInfo = data[0].displaySubjectInfo;
+                        var commodity = displaySubjectInfo.commodity;
+                        var tradeCode;
+                        if(commodity == 1){
+                            tradeCode = "Z0003";
+                        }
+                        if(commodity == 2){
+                            tradeCode = "Z8001";
+                        }
+                        arg.tradeCode = tradeCode;
+                        logger.info("tradeCode的值为：" + arg.tradeCode);
+                        callback(null,result);
+                    }
+                });
+            },
+        ],
+        function (err, results) {
+            if (err == 1) {
+                result.code = 500;
+                result.desc = "查询商品类目失败";
+                response.json(result);
+                return;
+            } else if (err == 2) {
+                result.code = 500;
+                result.desc = "查询商品类型失败";
+                response.json(result);
+                return;
+            }
+        });
+
+    //var deliverInfo  = new order_types.DeliverInfo({
+    //    addressId: arg.addressId || "",
+    //});
+
+    var deliverInfo;
+
+    if (arg.tradeCode == "Z0002" || arg.tradeCode == "Z8002" || arg.tradeCode == "Z8001") {
+        deliverInfo = new order_types.DeliverInfo({
+            receiverMobile: arg.mobile
+        });
+    } else {
+        var deliverInfo  = new order_types.DeliverInfo({
+            addressId: arg.addressId || "",
+        });
+    }
 
     var thrift_orderInfo = new order_types.OrderInfo({
         productId: arg.productId,
