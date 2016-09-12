@@ -288,25 +288,34 @@ router.post('/confirm_order', function(req, res, next) {
     //}
 
     //async.series([
-    async.waterfall([
+    //async.waterfall([
             /*根据商品id查找类目id*/
-            function(callback){
+            function queryProduct (callback){
                 //var productId = arg.sellerDetailList[0].productList[0].productId;
                 var productId = arg.productId;
                 Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
                     if (err) {
-                        return callback(1,null);
+                        //return callback(1,null);
+                        arg.code = 500;
+                        arg.desc = "查询商品类目失败";
+                        response.json(arg);
+                        return;
                     }
                     var product = data[0].product;
                     arg.subjectId = product.subjectId;
                     arg.thirdExchangeRate = product.thirdExchangeRate;
+
                 });
-            },
+            };
             /*根据类目id,得到商品类型commodity*/
-            function(callback){
+            function getById4dis(callback){
                 Product.getById4dis(arg, function(err,data){
                     if(err){
-                        return callback(2,null);
+                        //return callback(2,null);
+                        arg.code = 500;
+                        arg.desc = "查询商品类型失败";
+                        response.json(arg);
+                        return;
                     } else {
                         var displaySubjectInfo = data[0].displaySubjectInfo;
                         var commodity = displaySubjectInfo.commodity;
@@ -321,21 +330,21 @@ router.post('/confirm_order', function(req, res, next) {
                         logger.info("tradeCode的值为："+ arg.tradeCode);
                     }
                 });
-            },
-        ],
-        function (err, results) {
-            if (err == 1) {
-                arg.code = 500;
-                arg.desc = "查询商品类目失败";
-                response.json(arg);
-                return;
-            } else if (err == 2) {
-                arg.code = 500;
-                arg.desc = "查询商品类型失败";
-                response.json(arg);
-                return;
-            }
-        });
+            };
+        //],
+        //function (err, results) {
+        //    if (err == 1) {
+        //        arg.code = 500;
+        //        arg.desc = "查询商品类目失败";
+        //        response.json(arg);
+        //        return;
+        //    } else if (err == 2) {
+        //        arg.code = 500;
+        //        arg.desc = "查询商品类型失败";
+        //        response.json(arg);
+        //        return;
+        //    }
+        //});
     logger.info("3333333333333333333333333333333333333333333333333333333333333333333333333333333"+ arg.tradeCode);
     var deliverInfo;
     if (arg.tradeCode == "Z0002" || arg.tradeCode == "Z8002" || arg.tradeCode == "Z8001") {
