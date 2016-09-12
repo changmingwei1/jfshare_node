@@ -300,7 +300,6 @@ router.post('/confirm_order', function(req, res, next) {
                     var product = data[0].product;
                     arg.subjectId = product.subjectId;
                     arg.thirdExchangeRate = product.thirdExchangeRate;
-                    callback(null, arg);
                 });
             },
             /*根据类目id,得到商品类型commodity*/
@@ -323,17 +322,6 @@ router.post('/confirm_order', function(req, res, next) {
                     }
                 });
             },
-            function(callback){
-                Order.orderConfirm(arg, function (err, data) {
-                    if (err) {
-                        response.json(err);
-                        return;
-                    }
-                    result.orderIdList = data[0].orderIdList;
-                    //result.extend = JSON.parse(data[0].extend);
-                    response.json(result);
-                });
-            }
         ],
         function (err, results) {
             if (err == 1) {
@@ -348,6 +336,71 @@ router.post('/confirm_order', function(req, res, next) {
                 return;
             }
         });
+    logger.info("3333333333333333333333333333333333333333333333333333333333333333333333333333333"+ arg.tradeCode);
+    var deliverInfo;
+    if (arg.tradeCode == "Z0002" || arg.tradeCode == "Z8002" || arg.tradeCode == "Z8001") {
+        deliverInfo = new order_types.DeliverInfo({
+            receiverMobile: arg.mobile,
+        });
+    } else {
+        deliverInfo  = new order_types.DeliverInfo({
+            addressId: arg.addressId || "",
+        });
+    }
+    var thrift_orderInfo = new order_types.OrderInfo({
+        productId: arg.productId,
+        skuNum: arg.skuNum,
+        count:  arg.count,
+        curPrice: arg.curPrice,
+        storehouseId : arg.storehouseId
+    });
+
+    var thrift_BuySellerDetail = new trade_types.BuySellerDetail({
+        sellerId: arg.sellerId,
+        sellerName: arg.sellerName,
+        buyerComment: arg.buyerComment,
+        productList: [thrift_orderInfo]
+    });
+
+    var thrift_param = new trade_types.BuyInfo({
+        userId: parameters.userId,
+        userName: arg.userName || "",
+        amount: arg.totalPayAmount,
+        deliverInfo: deliverInfo,
+        sellerDetailList: [thrift_BuySellerDetail],
+        fromSource: arg.fromSource,
+        fromBatch: arg.fromBatch
+    });
+
+    logger.info("调用cartServ-orderConfirm args:" + JSON.stringify(thrift_param));
+    // 获取client
+    var tradeServ = new Lich.InvokeBag(Lich.ServiceKey.TradeServer, "orderConfirm", thrift_param);
+    Lich.wicca.invokeClient(tradeServ, function (err, data) {
+        if (err) {
+            logger.error("调用tradeServ-orderConfirm确认订单失败  失败原因 ======" + err);
+            view_index.tip(req, res, next, {message: "提示: 系统异常"});
+            return;
+        }
+
+        if(data[0].result.code == "1") {
+            logger.error("调用tradeServ-orderConfirm确认订单失败  失败原因 ======" + JSON.stringify(data[0].result));
+            var errorMsg = "提示：创建订单失败！";
+            if (!paramValid.empty(data[0].result.failDescList)) {
+                for(var i in data[0].result.failDescList) {
+                    errorMsg += data[0].result.failDescList[i].desc;
+                }
+            }
+            view_index.tip(req, res, next, {message: errorMsg});
+            return;
+        }
+
+        logger.info("调用tradeServ-orderConfirm确认订单成功  result.code =  （" + data[0].result.code + "）  1为失败 0为成功");
+        data[0].title = parameters.title;
+        data[0].ssid = req.ssid;
+        //2.render no data ui
+        view.create_order(req, res, next, data[0]);
+        logger.info("接口返回数据=====" + data[0].extend);
+    });
 });
 
 
