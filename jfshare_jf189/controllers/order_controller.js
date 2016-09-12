@@ -324,6 +324,18 @@ router.post('/confirm_order', function(req, res, next) {
                     }
                 });
             },
+            function(callback){
+                //var productId = arg.sellerDetailList[0].productList[0].productId;
+                var productId = arg.productId;
+                Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
+                    if (err) {
+                        return callback(1,null);
+                    }
+                    var product = data[0].product;
+                    arg.subjectId = product.subjectId;
+                    arg.thirdExchangeRate = product.thirdExchangeRate;
+                });
+            },
         ],
         function (err, results) {
             if (err == 1) {
