@@ -21,6 +21,7 @@ var redPaper = require('./controllers/redpaper_controller');// 积分红包
 var brand = require('./controllers/brand_controller');
 var address = require('./controllers/address_controller');
 var afterSale = require('./controllers/afterSale_controller');
+var slotImage = require('./controllers/slotImage_controller');// 主页和商品模块页面的配置
 var zookeeper = require('./resource/zookeeper_util');
 var app = express();
 
@@ -49,6 +50,8 @@ app.use('/manager/message',message);
 app.use('/manager/seller',seller);
 app.use('/manager/brand',brand);
 app.use('/manager/afterSale',afterSale);
+
+app.use('/manager/slotImage',slotImage);// 主页和商品模块页面的配置
 // error handlers
 
 // catch 404 and forward to error handler

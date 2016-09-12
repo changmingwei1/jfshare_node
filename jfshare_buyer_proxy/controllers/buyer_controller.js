@@ -1691,55 +1691,61 @@ router.post('/queryRechargeCards', function (request, response, next) {
 /*H5第三方登陆*/
 router.post('/H5ThirdLogin', function (request, response, next) {
 
-    logger.info("进入积分充值接口");
+    logger.info("进入H5第三方登陆接口");
     var resContent = {code: 200};
     var param = request.body;
+    logger.info("请求参数信息" + JSON.stringify(param));
     try {
-        if (param.appCode == null || param.appCode == "") {
+        if (param.requestXml == null || param.requestXml == "") {
             resContent.code = 500;
-            resContent.desc = "参数错误";
+            resContent.desc = "NODE层参数错误";
             response.json(resContent);
             return;
         }
-        if (param.requestDate == null || param.requestDate == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        if (param.sign == null || param.sign == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        if (param.mobile == null || param.mobile == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        if (param.wayType == null || param.wayType == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        if (param.redirectUrl == null || param.redirectUrl == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        logger.info("请求参数信息" + JSON.stringify(param));
+        //if (param.requestDate == null || param.requestDate == "") {
+        //    resContent.code = 400;
+        //    resContent.desc = "参数错误";
+        //    response.json(resContent);
+        //    return;
+        //}
+        //if (param.sign == null || param.sign == "") {
+        //    resContent.code = 400;
+        //    resContent.desc = "参数错误";
+
+        //    response.json(resContent);
+        //    return;
+        //}
+        //if (param.mobile == null || param.mobile == "") {
+        //    resContent.code = 400;
+        //    resContent.desc = "参数错误";
+        //    response.json(resContent);
+        //    return;
+        //}
+        //if (param.wayType == null || param.wayType == "") {
+        //    resContent.code = 400;
+        //    resContent.desc = "参数错误";
+        //    response.json(resContent);
+        //    return;
+        //}
+        //if (param.redirectUrl == null || param.redirectUrl == "") {
+        //    resContent.code = 400;
+        //    resContent.desc = "参数错误";
+        //    response.json(resContent);
+        //    return;
+        //}
+
         Buyer.H5ThirdLogin(param, function (error, data) {
             if (error) {
                 response.json(error);
                 return;
             } else {
-                var url = data[0].url;
-                resContent.url = url;
-                response.json(resContent);
+                if(data[0] != "" && data[0] != null){
+                    resContent.userId = data[0].userId;
+                    resContent.token = data[0].token;
+                    resContent.ppInfo = data[0].ppInfo;
+                    resContent.mobile = data[0].mobile;
+                    response.json(resContent);
+                }
                 logger.info("Buyer H5ThirdLogin response:" + JSON.stringify(resContent));
             }
         });
@@ -1750,6 +1756,7 @@ router.post('/H5ThirdLogin', function (request, response, next) {
         response.json(resContent);
     }
 });
+
 
 /*用户是否为广东电信用户*/
 router.post('/isPurchaseMobile', function (request, response, next) {

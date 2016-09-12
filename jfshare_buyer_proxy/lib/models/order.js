@@ -229,9 +229,10 @@ Order.prototype.orderConfirm = function (arg, callback) {
                 skuNum: product.skuNum,
                 skuDesc: product.skuName,
                 count: product.count,
-                curPrice: product.curPrice,
+                curPrice: product.curPrice + "",
                 /*postage:product.postage,*/ /*邮费可以不写入，直接在算进了totalSum中*/
-                storehouseId: product.storehouseId
+                storehouseId: product.storehouseId,
+                thirdExchangeRate:arg.thirdExchangeRate
             }));
         }
         sellerDetailList.push(new trade_types.BuySellerDetail({

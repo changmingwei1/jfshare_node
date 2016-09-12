@@ -193,7 +193,10 @@ router.get('/productInfo', function (req, res, next) {
                         productInfo.type = product.type;
                         productInfo.storehouseIds = product.storehouseIds;
                         productInfo.postageId = product.postageId;
+                        productInfo.thirdExchangeRate = product.thirdExchangeRate;
                         var productSku = product.productSku;
+
+                        logger.info("获取到的商品信息是：" + JSON.stringify(productInfo));
                         if (product.productSku != null) {
                             result.minCurPrice = productSku.minCurPrice;
                             result.maxCurPrice = productSku.maxCurPrice;

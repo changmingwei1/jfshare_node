@@ -70,6 +70,7 @@ router.post('/submit', function (request, response, next) {
                             }
                             var product = data[0].product;
                             arg.subjectId = product.subjectId;
+                            arg.thirdExchangeRate = product.thirdExchangeRate;
                             callback(null, result);
                         });
                     },
