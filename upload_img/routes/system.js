@@ -28,7 +28,7 @@ var fdfs = new FdfsClient({
 });
 
 var redis_host = '10.24.191.2';
-var img_proxy_url = 'http://101.201.39.63/';
+var img_proxy_url = 'http://101.201.48.101/';
 
 /**
  * thrift
