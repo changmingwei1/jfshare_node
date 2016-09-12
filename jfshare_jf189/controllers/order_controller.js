@@ -11,6 +11,7 @@ var view_buyer = require('../view_center/buyer/view_buyer');
 var paramValid = require('../lib/models/pub/param_valid');
 var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var Product = require('../lib/models/product');
+var async = require('async');
 
 var address_types = require("../lib/thrift/gen_code/address_types");
 var common_types = require("../lib/thrift/gen_code/common_types");
@@ -283,7 +284,8 @@ router.post('/confirm_order', function(req, res, next) {
     //    totalPayAmount:"30.00"
     //}
 
-    async.series([
+    //async.series([
+    async.waterfall([
             /*根据商品id查找类目id*/
             function(callback){
                 var productId = arg.sellerDetailList[0].productList[0].productId;
