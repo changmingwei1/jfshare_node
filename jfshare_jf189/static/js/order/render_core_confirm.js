@@ -294,7 +294,7 @@ function checkForm() {
 //校验广东电信手机号
 function checkGD(){
     $.ajax({
-        contentType: "application/json",
+        //contentType: "application/json",
         url: "http://120.24.153.102:18002/buyer/buyer/isPurchaseMobile",
         type: 'post',
         data: {mobile:mobile},
