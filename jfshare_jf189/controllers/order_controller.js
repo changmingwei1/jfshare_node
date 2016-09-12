@@ -267,6 +267,7 @@ router.post('/confirm_order', function(req, res, next) {
     parameters.userName = arg.userName || "";
     //parameters.userId = 17;
     parameters.title = "订单确认结果";
+    logger.error("下单开始,请求参数为：" + arg);
 
     //测试模拟数据
     //arg = {
@@ -316,7 +317,8 @@ router.post('/confirm_order', function(req, res, next) {
                             tradeCode = "Z8001";
                         }
                         arg.tradeCode = tradeCode;
-                        logger.info("tradeCode的值为：" + arg.tradeCode);
+                        logger.info("commodity的值为："+commodity);
+                        logger.info("tradeCode的值为："+tradeCode + arg.tradeCode);
                         callback(null,arg);
                     }
                 });
