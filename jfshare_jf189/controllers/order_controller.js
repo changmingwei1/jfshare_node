@@ -288,7 +288,8 @@ router.post('/confirm_order', function(req, res, next) {
     async.waterfall([
             /*根据商品id查找类目id*/
             function(callback){
-                var productId = arg.sellerDetailList[0].productList[0].productId;
+                //var productId = arg.sellerDetailList[0].productList[0].productId;
+                var productId = arg.productId;
                 Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
                     if (err) {
                         return callback(1,null);
