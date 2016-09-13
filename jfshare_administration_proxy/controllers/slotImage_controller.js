@@ -80,7 +80,7 @@ router.post('/saveAdvertSlotImage', function (request, response, next) {
 
 /* 修改广告位图片 */
 router.post('/updateAdvertSlotImage', function (request, response, next) {
-    logger.info("创建导出卡片excel的流程");
+    logger.info("修改广告位图片");
     var result = {code: 200};
     try {
         var params = request.body;
@@ -204,15 +204,21 @@ router.post('/queryAdvertSlotImage', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.id == null || params.id == "") {
+            result.code = 500;
+            result.desc = "id参数错误";
+            response.json(result);
+            return;
+        }
         
         SlotImage.queryAdvertSlotImage(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            result.sucessNum=data[0].sucessNum;
-            result.failedNum=data[0].failedNum;
-
+            if (data[0] != null && data[0] != "") {
+                result.AdvertSlotImage=data[0].AdvertSlotImage;
+            }
             logger.info("queryAdvertSlotImage result:" + JSON.stringify(data));
             response.json(result);
             return;
@@ -265,7 +271,7 @@ router.post('/deleteAdvertSlotImage', function (request, response, next) {
 
 /*统一发布图片*/
 router.post('/publishAdvertSlot', function (request, response, next) {
-    logger.info("作废批次活动流程");
+    logger.info("发布图片");
     var result = {code: 200};
     try {
         var params = request.body;
@@ -277,15 +283,12 @@ router.post('/publishAdvertSlot', function (request, response, next) {
             response.json(result);
             return;
         }
-
         if (params.slotImageList == null || params.slotImageList == "") {
             result.code = 500;
             result.desc = "slotImageList参数错误";
             response.json(result);
             return;
         }
-
-
         SlotImage.publishAdvertSlot(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -303,9 +306,32 @@ router.post('/publishAdvertSlot', function (request, response, next) {
     }
 });
 
+/* 查询广告位模块列表 -- 管理中心 */
+router.post('/queryAdvertSlotList', function (request, response, next) {
+    logger.info("查询广告模块列表");
+    var result = {code: 200};
+    var AdvertSlotList = [];
+    try {
+        var params = request.body;
 
-
-
+        SlotImage.queryAdvertSlotList(params,function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            AdvertSlotList = data[0].slotList;
+            result.AdvertSlotList = AdvertSlotList;
+            logger.info("queryAdvertSlotList result:" + JSON.stringify(result));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("查询广告位模块异常:" + ex);
+        result.code = 500;
+        result.desc = "查询广告位模块错误";
+        response.json(result);
+    }
+});
 
 
 module.exports = router;
