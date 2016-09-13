@@ -21,6 +21,14 @@
         <div class="orderinfo">
             <ul>
                 <h4>收货信息</h4>
+                <!--新加-->
+                \{{#if mobile}}
+                <li>
+                    <label>收货人：</label>
+                    <span>\{{mobile}}</span>
+                </li>
+                <!--  -->
+                \{{else}}
                 <li>
                     <label>收货人：</label>
                     <span>\{{deliverInfo.receiverName}}</span>
@@ -39,6 +47,7 @@
                         \{{deliverInfo.receiverAddress}}\{{#if deliverInfo.postCode}}，&nbsp;\{{deliverInfo.postCode}}\{{/if}}
                     </span>
                 </li>
+                \{{/if}}
             </ul>
             <ul>
                 <h4>支付信息</h4>
@@ -64,7 +73,7 @@
                 \{{/isShowPayInfo}}
             </ul>
             \{{#if deliverTime}}
-            <ul>
+            <ul class="express">
                 <h4>发货信息</h4>
                 <li>
                     <label>快递/物流名称：</label>
@@ -85,6 +94,12 @@
                 </li>
             </ul>
             \{{/if}}
+            <ul id="virtualCard">
+                <h4>发货信息</h4>
+                <div id="virtualInfo">
+
+                </div>
+            </ul>
             <ul>
                 <h4>其他信息</h4>
                 <li>

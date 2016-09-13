@@ -27,6 +27,7 @@ function renderData() {
                 renderTotal();
                 renderSellerInfo();
                 renderExpressTrace();
+                getVirtual();
             }
         }
     })
@@ -36,6 +37,15 @@ function renderData() {
  * 渲染订单基本信息
  */
 function renderOrder() {
+    //新加---
+    if(orderDetail.productList[0].type == 3){
+        $("ul.express").hide();
+        $("ul#virtualCard").show();
+
+    }else if(orderDetail.productList[0].type == 2){
+        $("ul.express").show();
+        $("ul#virtualCard").hide();
+    }
     $("#myOrderPanel").html(_hbs_order(orderDetail));
 }
 
@@ -135,6 +145,38 @@ function renderExpressTrace(){
                     padding:true
                 };
                 $('a.express-trace').webuiPopover('destroy').webuiPopover($.extend({},settings,listSettings));
+            }
+        }
+    })
+}
+
+//新加
+function getVirtual(){
+    var params = {
+        orderId:orderDetail.orderId,
+        ssid:$("#ssid").val(),
+        productId: orderDetail.productList[0].productId,
+        skuNum: orderDetail.productList[0].skuNum,
+        userId: orderDetail.userId,
+        clientType: 4,
+        version: "",
+        browser: navigator.userAgent
+    };
+    $.ajax({
+        url: "/order/getVirtualCard",
+        type: 'get',
+        data: params,
+        dataType:'json',
+        async:false,
+        success: function (data) {
+            if(data.cardList.length != 0){
+                var vithtml = '';
+                $.each(data.cardList, function (i, val) {
+                    vithtml += "<li>";
+                    vithtml += "券码：" + val.cardNumber + "&nbsp;&nbsp;&nbsp;"+"密码："+val.password;
+                    vithtml += "</li>";
+                });
+                $("#virtualInfo").html(vithtml);
             }
         }
     })
