@@ -647,5 +647,53 @@ router.post('/confirmReceipt', function(req, res, next) {
         view_buyer.my_order_detail(req, res, next, parameters);
     });
 });
+
+/*获取订单中的卡密列表*/
+router.post('/getVirtualCard', function (request, response, next) {
+    logger.info("进入获取订单中的卡密列表");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        params.userId =  req.session.buyer.userId+"" || "";
+        if (params.orderId == "" || params.orderId == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.userId == null || params.userId == "" || params.userId <= 0) {
+            result.code = 400;
+            result.desc = "用户id不能为空";
+            response.json(result);
+            return;
+        }
+        logger.info("进入获取订单中的卡密列表, params:" + JSON.stringify(params));
+        Product.getProductCard(params, function (err, data) {
+                if (err) {
+                    response.json(err);
+                    return;
+                } else {
+                    var cList = data[0].cardList;
+                    var cardList = [];
+                    if (cList != null && cList.length > 0) {
+                        cList.forEach(function (a) {
+                            cardList.push({
+                                cardNumber: a.cardNumber,
+                                password: a.password
+                            });
+                        });
+                    }
+                    result.cardList = cardList;
+                    response.json(result);
+                    logger.info("get virtual-order carlist response: " + JSON.stringify(result));
+                }
+            });
+    } catch (ex) {
+        logger.error("get virtual-order carlist  error:" + ex);
+        result.code = 500;
+        result.desc = "获取订单中的卡密失败";
+        response.json(result);
+    }
+});
 //暴露模块
 module.exports = router;
