@@ -70,13 +70,14 @@
     <div class="titlecon one">
         <div class="per" style="width: 238px;">
             <!--虚拟商品测试-->
-            <a href="http://ct100.jfshare.com/product/render/ze160622170709000088?ssid={{ssid}}">
-            <!--<a href="http://ct100.jfshare.com/product/render/ze160517142642000673?ssid={{ssid}}">-->
+            <!--<a href="http://ct100.jfshare.com/product/render/ze160622170709000088?ssid={{ssid}}">-->
+            <a href="http://ct100.jfshare.com/product/render/ze160517142642000673?ssid={{ssid}}">
                 <img src="http://proxy.jfshare.com/system/v1/jfs_image/C2441343372F202396576B34CCFDE7E4.jpg" alt="">
             </a>
         </div>
         <div class="per">
             <a href="http://ct100.jfshare.com/product/render/ze160415145130000053?ssid={{ssid}}">
+            <!--<a class="goDetial" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/render/ze160415145130000053?ssid={{ssid}}">-->
                 <img src="http://proxy.jfshare.com/system/v1/jfs_image/AC8D40AF04EABBE5CBF946E1D2B8D0F8.jpg" alt="">
             </a>
         </div>
@@ -808,13 +809,25 @@
             }
         }
     });
-
-
+    //跳转商品详情事件  ---新加
+//    $("a.goDetial").on("click",function(){
+//        var ifmurl=$("a.goDetial").attr("data-href");
+//        sessionStorage.setItem("ifmurl",ifmurl);
+//    });
     function resizeIfr() {
         var _tyHostUrl = getTyHostUrl();
         var doc = document;
 //        var height = calcPageHeight(doc);
         var myifr = doc.getElementById('iframeA');
+
+        //---新加  跳转商品详情页ifmurl1
+//        var ifmurl = sessionStorage.getItem("ifmurl");
+//        if(ifmurl){
+//            myifr.src=ifmurl;
+//        }else{
+//            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
+//        }
+
         myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
 //        if (myifr) {
 //            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#' + height;

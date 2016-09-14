@@ -15,7 +15,6 @@ var flag=false;   //校验广东手机号
  */
 $(function() {
     $("#ssid").val(render_orderInfo.ssid);
-    console.log(render_orderInfo)
     rendData();
 });
 
@@ -37,12 +36,9 @@ function rendData() {
                 //———新加 商品类型
                 productType = sessionStorage.getItem("type");
                 //sessionStorage.removeItem("type");
-                console.log(productType)
-                console.log(render_orderInfo.type)
                 if(productType == 2){
                     //实物商品收货地址
                     renderAddress();
-                    //mobile = data.addressInfoList[0].mobile;
                 }else if(productType == 3){
                     //虚拟商品收货
                     renderVirtual();
@@ -294,7 +290,6 @@ function checkForm() {
 //校验广东电信手机号
 function checkGD(){
     $.ajax({
-        //contentType: "application/json",
         url: "http://120.24.153.102:18002/buyer/buyer/isPurchaseMobile",
         type: 'post',
         data: {mobile:mobile},
@@ -305,7 +300,6 @@ function checkGD(){
                 flag = data.value;
                 if(data.value == false){
                     alert("广东电信用户限制购买！");
-                    console.log("广东电信用户限制购买！")
                 }
             }else{
                 console.log(data.desc);
@@ -339,11 +333,15 @@ function orderConfirm() {
                     $("input[name='mobile']").val($("#mobilenumber").val());
                     $("input[name='type']").val(productType);
                     $("input[name='tradeCode']").val("Z8001");
-                    console.log($("input[name='mobile']").val())
                     $("#confirmOrderform").submit();
                     var toPayBtn = $("#btnSubmit");
                     toPayBtn.html("提交订单...");
                     toPayBtn.die("click");
+
+                    //存储成功提交页ifmurl ---新加3
+                    //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
+                    //sessionStorage.setItem("ifmurl", ifmurl);
+
                     return false; // 阻止表单自动提交事件
                 });
             }
@@ -371,6 +369,11 @@ function orderConfirm() {
                     var toPayBtn = $("#btnSubmit");
                     toPayBtn.html("提交订单...");
                     toPayBtn.die("click");
+
+                    //存储成功提交页ifmurl ---新加
+                    //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
+                    //sessionStorage.setItem("ifmurl", ifmurl);
+
                     return false; // 阻止表单自动提交事件
                 });
             }
