@@ -1377,7 +1377,8 @@ router.post('/requestHttps',function(request,response,next){
                 return;
             } else {
                 var remark = data[0].buyer.remark;
-                result.remark = JSON.parse(remark);
+                //result.remark = JSON.parse(remark);  //返回错误时，无啊转换，导致node服务器崩溃
+                result.remark = remark;
                 response.json(result);
             }
         });
