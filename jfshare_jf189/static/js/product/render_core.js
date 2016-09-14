@@ -826,7 +826,7 @@ function checkBuyForm() {
 //校验广东电信手机号
 function checkGD(){
     $.ajax({
-        url: "/buyer/isPurchaseMobile",
+        url: "/order/isPurchaseMobile",
         type: 'post',
         data: {mobile:mobile},
         dataType:'json',
