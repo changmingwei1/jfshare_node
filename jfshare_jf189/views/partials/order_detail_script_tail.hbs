@@ -19,16 +19,8 @@
             </ul>
         </div>
         <div class="orderinfo">
-            <ul>
+            <ul class="receive">
                 <h4>收货信息</h4>
-                <!--新加 ?-->
-                \{{#if tradeCode == "Z8001"}}
-                <li>
-                    <label>收货人：</label>
-                    <span>\{{deliverInfo.receiverMobile}}</span>
-                </li>
-                <!-- end -->
-                \{{else}}
                 <li>
                     <label>收货人：</label>
                     <span>\{{deliverInfo.receiverName}}</span>
@@ -47,7 +39,15 @@
                         \{{deliverInfo.receiverAddress}}\{{#if deliverInfo.postCode}}，&nbsp;\{{deliverInfo.postCode}}\{{/if}}
                     </span>
                 </li>
-                \{{/if}}
+            </ul>
+            <!--新加-->
+            <ul class="receiveVirtual">
+                <h4>收货信息</h4>
+                <li>
+                    <label>收货人：</label>
+                    <span>\{{deliverInfo.receiverMobile}}</span>
+                </li>
+                <!-- end -->
             </ul>
             <ul>
                 <h4>支付信息</h4>

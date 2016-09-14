@@ -40,10 +40,14 @@ function renderOrder() {
     $("#myOrderPanel").html(_hbs_order(orderDetail));
     //新加---
     if(orderDetail.productList[0].type == 3){
+        $("ul.receive").hide();
+        $("ul.receiveVirtual").show();
         $("ul.express").hide();
         $("ul#virtualCard").show();
 
     }else if(orderDetail.productList[0].type == 2){
+        $("ul.receive").show();
+        $("ul.receiveVirtual").hide();
         $("ul.express").show();
         $("ul#virtualCard").hide();
     }
