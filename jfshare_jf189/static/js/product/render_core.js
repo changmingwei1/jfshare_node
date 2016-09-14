@@ -35,6 +35,10 @@ var productType = null;
 
 //页面库存参数
 var dimstocks=null; //商品库存属性、库存量map的结果信息
+
+var mobile=null;  //手机号
+var flag=false;   //校验广东手机号
+
 /**
  * 异步渲染页面各模块动态数据
  * 商品基本信息、库存、详情
@@ -819,6 +823,28 @@ function checkBuyForm() {
     return checkAmount(amount, cartAmount);
 }
 
+//校验广东电信手机号
+function checkGD(){
+    $.ajax({
+        url: "/buyer/isPurchaseMobile",
+        type: 'post',
+        data: {mobile:mobile},
+        dataType:'json',
+        async:false,
+        success: function (data) {
+            if(data.code == 200){
+                flag = data.value;
+                if(data.value == false){
+                    alert("广东电信用户限制购买！");
+                }
+            }else{
+                console.log(data.desc);
+            }
+        }
+    })
+
+}
+
 /**
  * 立即购买
  */
@@ -828,39 +854,45 @@ function addToBuyNow() {
         var ssid = $("#ssid").val();
         var curSkuNum = $("#skuNum").val();
         checkTYLoginStatus(ssid, function(loginInfo){
-            for(var i in skuInfos) {
-                var skuItem = skuInfos[i];
-                if(curSkuNum == skuItem.skuNum && skuItem.storehouseId == storehouseId) {
-                    $("input[name='skuDesc']").val(skuItem.skuName);
-                    $("input[name='curPrice']").val(skuItem.curPrice);
-                    $("input[name='orgPrice']").val(skuItem.orgPrice);
-                    $("input[name='imgKey']").val(skuItem.vPicture);
-                    $("input[name='skuNum']").val(skuItem.skuNum);
-                    $("input[name='storehouseId']").val(skuItem.storehouseId);
-                    $("input[name='weight']").val(skuItem.weight);
-                    break;
+            if(loginInfo.userName){
+                mobile = loginInfo.userName;
+                checkGD();
+            }
+            if(flag){
+                for(var i in skuInfos) {
+                    var skuItem = skuInfos[i];
+                    if(curSkuNum == skuItem.skuNum && skuItem.storehouseId == storehouseId) {
+                        $("input[name='skuDesc']").val(skuItem.skuName);
+                        $("input[name='curPrice']").val(skuItem.curPrice);
+                        $("input[name='orgPrice']").val(skuItem.orgPrice);
+                        $("input[name='imgKey']").val(skuItem.vPicture);
+                        $("input[name='skuNum']").val(skuItem.skuNum);
+                        $("input[name='storehouseId']").val(skuItem.storehouseId);
+                        $("input[name='weight']").val(skuItem.weight);
+                        break;
+                    }
                 }
-            }
 
-            $("input[name='storehouseIds']").val(productInfo.storehouseIds);
-            $("input[name='postageId']").val(productInfo.postageId);
-            $("input[name='sellerId']").val(productInfo.sellerId);
-            $("input[name='productId']").val(productInfo.productId);
-            $("input[name='productName']").val(productInfo.productName);
-            $("input[name='score2cashAmount']").val(Number(score2cashAmount/100).toFixed(2));
-            if(empty($("input[name='imgKey']").val())) {
-                $("input[name='imgKey']").val(productInfo.imgKey.split(",")[0]);
-            }
-            $("input[name='type']").val(productInfo.type);
-            var type = productInfo.type;
-            sessionStorage.setItem("type", type);
-            //跳转提交订单页面
-            $("#addProductSkuform").attr("action","/order/add_confirm?ssid="+ssid);
-            $("#addProductSkuform").submit();
+                $("input[name='storehouseIds']").val(productInfo.storehouseIds);
+                $("input[name='postageId']").val(productInfo.postageId);
+                $("input[name='sellerId']").val(productInfo.sellerId);
+                $("input[name='productId']").val(productInfo.productId);
+                $("input[name='productName']").val(productInfo.productName);
+                $("input[name='score2cashAmount']").val(Number(score2cashAmount/100).toFixed(2));
+                if(empty($("input[name='imgKey']").val())) {
+                    $("input[name='imgKey']").val(productInfo.imgKey.split(",")[0]);
+                }
+                $("input[name='type']").val(productInfo.type);
+                var type = productInfo.type;
+                sessionStorage.setItem("type", type);
+                //跳转提交订单页面
+                $("#addProductSkuform").attr("action","/order/add_confirm?ssid="+ssid);
+                $("#addProductSkuform").submit();
 
-            //存储提交页ifmurl ---新加2
-            //var ifmurl = "http://ct100.jfshare.com/order/add_confirm?ssid="+ssid;
-            //sessionStorage.setItem("ifmurl", ifmurl);
+                //存储提交页ifmurl ---新加2
+                //var ifmurl = "http://ct100.jfshare.com/order/add_confirm?ssid="+ssid;
+                //sessionStorage.setItem("ifmurl", ifmurl);
+            }
         });
     }
 }
