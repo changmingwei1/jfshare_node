@@ -44,7 +44,6 @@ function renderOrder() {
         $("ul.receiveVirtual").show();
         $("ul.express").hide();
         $("ul#virtualCard").show();
-
     }else if(orderDetail.productList[0].type == 2){
         $("ul.receive").show();
         $("ul.receiveVirtual").hide();
@@ -168,7 +167,7 @@ function getVirtual(){
     };
     $.ajax({
         url: "/order/getVirtualCard",
-        type: 'get',
+        type: 'post',
         data: params,
         dataType:'json',
         async:false,
