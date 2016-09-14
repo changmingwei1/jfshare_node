@@ -37,6 +37,7 @@ function renderData() {
  * 渲染订单基本信息
  */
 function renderOrder() {
+    $("#myOrderPanel").html(_hbs_order(orderDetail));
     //新加---
     if(orderDetail.productList[0].type == 3){
         $("ul.express").hide();
@@ -46,7 +47,6 @@ function renderOrder() {
         $("ul.express").show();
         $("ul#virtualCard").hide();
     }
-    $("#myOrderPanel").html(_hbs_order(orderDetail));
 }
 
 function renderOrderInfo() {

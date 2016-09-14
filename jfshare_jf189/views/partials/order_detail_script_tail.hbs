@@ -21,13 +21,13 @@
         <div class="orderinfo">
             <ul>
                 <h4>收货信息</h4>
-                <!--新加-->
-                \{{#if mobile}}
+                <!--新加 ?-->
+                \{{#if tradeCode == "Z8001"}}
                 <li>
                     <label>收货人：</label>
-                    <span>\{{mobile}}</span>
+                    <span>\{{deliverInfo.receiverMobile}}</span>
                 </li>
-                <!--  -->
+                <!-- end -->
                 \{{else}}
                 <li>
                     <label>收货人：</label>
