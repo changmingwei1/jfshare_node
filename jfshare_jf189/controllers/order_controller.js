@@ -703,8 +703,9 @@ router.post('/isPurchaseMobile', function (request, response, next) {
     var param = request.body;
     logger.info("进入用户是否为广东电信用户接口..."+JSON.stringify(param));
     try {
-        param.userId =  request.session.buyer.userId+"" || "";
-        if (param.orderId == "" || param.orderId == null) {
+        var userId =  request.session.buyer.userId+"" || "";
+        logger.info("进入用户是否为广东电信用户接口...session内容："+JSON.stringify(request.session.buyer));
+        if (userId== "" || userId == null) {
             resContent.code = 400;
             resContent.desc = "鉴权失败";
             response.json(resContent);
