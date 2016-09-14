@@ -11,6 +11,6 @@
   ],
   "replaceConsole" : true,
   "levels": {
-    "info":  "info"
+    "warn":  "warn"
   }
 }

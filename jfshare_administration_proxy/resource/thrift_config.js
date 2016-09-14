@@ -202,8 +202,8 @@ module.exports.ServiceFactory = {
      */
     manager: function () {
         logger.info("--------->"+zookeeper.getData("manager_ips")+"--->"+zookeeper.getData("manager_port"));
-        //return new ThriftConfig(zookeeper.getData("manager_ips"),zookeeper.getData("manager_port"));
-        return new ThriftConfig("127.0.0.1","1988");
+        return new ThriftConfig(zookeeper.getData("manager_ips"),zookeeper.getData("manager_port"));
+        //return new ThriftConfig("127.0.0.1","1988");
     },
 
     /**
@@ -231,8 +231,8 @@ module.exports.ServiceFactory = {
      */
     scoreCards: function () {
         logger.info("--------->"+zookeeper.getData("score_cards_serv_ips")+"--->"+zookeeper.getData("score_cards_serv_port"));
-        //return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
-         return new ThriftConfig("127.0.0.1","2005");
+        return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
+         //return new ThriftConfig("127.0.0.1","2005");
     }
 
 
