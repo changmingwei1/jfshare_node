@@ -415,7 +415,7 @@ Buyer.prototype.newResetBuyerPwd = function(param,callback){
 /*HTTPS请求方法*/
 Buyer.prototype.requestHttps = function(param,callback){
 
-    var extInfo = JSON.stringify(param.extInfo);
+    var extInfo = param.extInfo;
 
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'requestHttps',[param.url,extInfo]);
