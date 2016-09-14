@@ -718,7 +718,7 @@ router.post('/isPurchaseMobile', function (request, response, next) {
             return;
         }
         logger.info("传参，arg：" + JSON.stringify(param));
-        Buyer.isPurchaseMobile(param.mobile, function (error, data) {
+        Order.isPurchaseMobile(param.mobile, function (error, data) {
             if (error) {
                 response.json(error);
                 return;

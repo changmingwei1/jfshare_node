@@ -216,4 +216,26 @@ Order.prototype.payApply = function(params, req, mainCallback) {
     });
 }
 
+/*用户是否为广东电信用户*/
+Order.prototype.isPurchaseMobile = function (account, callback) {
+    logger.info("请求参数：" + account);
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer, 'isPurchaseMobile', [account]);
+    Lich.wicca.invokeClient(buyerServ, function (err, data) {
+        logger.info("get isPurchaseMobile result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("can't get isPurchaseMobile because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get isPurchaseMobile";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("can't get isPurchaseMobile, 请求参数arg=" + account);
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else{
+            callback(null, data);
+        }
+    });
+};
 module.exports = new Order();
