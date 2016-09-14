@@ -675,3 +675,714 @@ CommissionerResult.prototype.write = function(output) {
   return;
 };
 
+AdvertSlotImage = module.exports.AdvertSlotImage = function(args) {
+  this.id = null;
+  this.imgKey = null;
+  this.advertId = null;
+  this.slotName = null;
+  this.remark = null;
+  this.jump = null;
+  this.isOnline = null;
+  this.sort = null;
+  this.startTime = null;
+  this.endTime = null;
+  this.createTime = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.imgKey !== undefined) {
+      this.imgKey = args.imgKey;
+    }
+    if (args.advertId !== undefined) {
+      this.advertId = args.advertId;
+    }
+    if (args.slotName !== undefined) {
+      this.slotName = args.slotName;
+    }
+    if (args.remark !== undefined) {
+      this.remark = args.remark;
+    }
+    if (args.jump !== undefined) {
+      this.jump = args.jump;
+    }
+    if (args.isOnline !== undefined) {
+      this.isOnline = args.isOnline;
+    }
+    if (args.sort !== undefined) {
+      this.sort = args.sort;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+  }
+};
+AdvertSlotImage.prototype = {};
+AdvertSlotImage.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.imgKey = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.advertId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.slotName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.remark = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.jump = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.isOnline = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.sort = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdvertSlotImage.prototype.write = function(output) {
+  output.writeStructBegin('AdvertSlotImage');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.imgKey !== null && this.imgKey !== undefined) {
+    output.writeFieldBegin('imgKey', Thrift.Type.STRING, 2);
+    output.writeString(this.imgKey);
+    output.writeFieldEnd();
+  }
+  if (this.advertId !== null && this.advertId !== undefined) {
+    output.writeFieldBegin('advertId', Thrift.Type.I32, 3);
+    output.writeI32(this.advertId);
+    output.writeFieldEnd();
+  }
+  if (this.slotName !== null && this.slotName !== undefined) {
+    output.writeFieldBegin('slotName', Thrift.Type.STRING, 4);
+    output.writeString(this.slotName);
+    output.writeFieldEnd();
+  }
+  if (this.remark !== null && this.remark !== undefined) {
+    output.writeFieldBegin('remark', Thrift.Type.STRING, 5);
+    output.writeString(this.remark);
+    output.writeFieldEnd();
+  }
+  if (this.jump !== null && this.jump !== undefined) {
+    output.writeFieldBegin('jump', Thrift.Type.STRING, 6);
+    output.writeString(this.jump);
+    output.writeFieldEnd();
+  }
+  if (this.isOnline !== null && this.isOnline !== undefined) {
+    output.writeFieldBegin('isOnline', Thrift.Type.I32, 7);
+    output.writeI32(this.isOnline);
+    output.writeFieldEnd();
+  }
+  if (this.sort !== null && this.sort !== undefined) {
+    output.writeFieldBegin('sort', Thrift.Type.I32, 8);
+    output.writeI32(this.sort);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 9);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 10);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 11);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdvertSlot = module.exports.AdvertSlot = function(args) {
+  this.advertId = null;
+  this.slotName = null;
+  this.count = null;
+  this.createTime = null;
+  if (args) {
+    if (args.advertId !== undefined) {
+      this.advertId = args.advertId;
+    }
+    if (args.slotName !== undefined) {
+      this.slotName = args.slotName;
+    }
+    if (args.count !== undefined) {
+      this.count = args.count;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+  }
+};
+AdvertSlot.prototype = {};
+AdvertSlot.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.advertId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.slotName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.count = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdvertSlot.prototype.write = function(output) {
+  output.writeStructBegin('AdvertSlot');
+  if (this.advertId !== null && this.advertId !== undefined) {
+    output.writeFieldBegin('advertId', Thrift.Type.I32, 1);
+    output.writeI32(this.advertId);
+    output.writeFieldEnd();
+  }
+  if (this.slotName !== null && this.slotName !== undefined) {
+    output.writeFieldBegin('slotName', Thrift.Type.STRING, 2);
+    output.writeString(this.slotName);
+    output.writeFieldEnd();
+  }
+  if (this.count !== null && this.count !== undefined) {
+    output.writeFieldBegin('count', Thrift.Type.I32, 3);
+    output.writeI32(this.count);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 4);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdvertSlotImageParam = module.exports.AdvertSlotImageParam = function(args) {
+  this.advertId = null;
+  this.type = null;
+  if (args) {
+    if (args.advertId !== undefined) {
+      this.advertId = args.advertId;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+  }
+};
+AdvertSlotImageParam.prototype = {};
+AdvertSlotImageParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.advertId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdvertSlotImageParam.prototype.write = function(output) {
+  output.writeStructBegin('AdvertSlotImageParam');
+  if (this.advertId !== null && this.advertId !== undefined) {
+    output.writeFieldBegin('advertId', Thrift.Type.I32, 1);
+    output.writeI32(this.advertId);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 2);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdvertSlotImageListResult = module.exports.AdvertSlotImageListResult = function(args) {
+  this.result = null;
+  this.slotImageList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.slotImageList !== undefined) {
+      this.slotImageList = args.slotImageList;
+    }
+  }
+};
+AdvertSlotImageListResult.prototype = {};
+AdvertSlotImageListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size8 = 0;
+        var _rtmp312;
+        this.slotImageList = [];
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        {
+          var elem14 = null;
+          elem14 = new ttypes.AdvertSlotImage();
+          elem14.read(input);
+          this.slotImageList.push(elem14);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdvertSlotImageListResult.prototype.write = function(output) {
+  output.writeStructBegin('AdvertSlotImageListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.slotImageList !== null && this.slotImageList !== undefined) {
+    output.writeFieldBegin('slotImageList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.slotImageList.length);
+    for (var iter15 in this.slotImageList)
+    {
+      if (this.slotImageList.hasOwnProperty(iter15))
+      {
+        iter15 = this.slotImageList[iter15];
+        iter15.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdvertSlotImageResult = module.exports.AdvertSlotImageResult = function(args) {
+  this.result = null;
+  this.slotImage = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.slotImage !== undefined) {
+      this.slotImage = args.slotImage;
+    }
+  }
+};
+AdvertSlotImageResult.prototype = {};
+AdvertSlotImageResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.slotImage = new ttypes.AdvertSlotImage();
+        this.slotImage.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdvertSlotImageResult.prototype.write = function(output) {
+  output.writeStructBegin('AdvertSlotImageResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.slotImage !== null && this.slotImage !== undefined) {
+    output.writeFieldBegin('slotImage', Thrift.Type.STRUCT, 2);
+    this.slotImage.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdvertSlotImageListParam = module.exports.AdvertSlotImageListParam = function(args) {
+  this.slotImageList = null;
+  this.advertId = null;
+  if (args) {
+    if (args.slotImageList !== undefined) {
+      this.slotImageList = args.slotImageList;
+    }
+    if (args.advertId !== undefined) {
+      this.advertId = args.advertId;
+    }
+  }
+};
+AdvertSlotImageListParam.prototype = {};
+AdvertSlotImageListParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size16 = 0;
+        var _rtmp320;
+        this.slotImageList = [];
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        {
+          var elem22 = null;
+          elem22 = new ttypes.AdvertSlotImage();
+          elem22.read(input);
+          this.slotImageList.push(elem22);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.advertId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdvertSlotImageListParam.prototype.write = function(output) {
+  output.writeStructBegin('AdvertSlotImageListParam');
+  if (this.slotImageList !== null && this.slotImageList !== undefined) {
+    output.writeFieldBegin('slotImageList', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.slotImageList.length);
+    for (var iter23 in this.slotImageList)
+    {
+      if (this.slotImageList.hasOwnProperty(iter23))
+      {
+        iter23 = this.slotImageList[iter23];
+        iter23.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.advertId !== null && this.advertId !== undefined) {
+    output.writeFieldBegin('advertId', Thrift.Type.I32, 2);
+    output.writeI32(this.advertId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdvertSlotListResult = module.exports.AdvertSlotListResult = function(args) {
+  this.result = null;
+  this.slotList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.slotList !== undefined) {
+      this.slotList = args.slotList;
+    }
+  }
+};
+AdvertSlotListResult.prototype = {};
+AdvertSlotListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size24 = 0;
+        var _rtmp328;
+        this.slotList = [];
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        {
+          var elem30 = null;
+          elem30 = new ttypes.AdvertSlot();
+          elem30.read(input);
+          this.slotList.push(elem30);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdvertSlotListResult.prototype.write = function(output) {
+  output.writeStructBegin('AdvertSlotListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.slotList !== null && this.slotList !== undefined) {
+    output.writeFieldBegin('slotList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.slotList.length);
+    for (var iter31 in this.slotList)
+    {
+      if (this.slotList.hasOwnProperty(iter31))
+      {
+        iter31 = this.slotList[iter31];
+        iter31.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

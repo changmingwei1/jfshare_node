@@ -156,7 +156,7 @@ router.post('/updateAdvertSlotImage', function (request, response, next) {
     }
 });
 
-/* 查询广告位图片列表 -- 前端/管理中心 */
+/* 查询广告位图片列表 -- 管理中心 */
 router.post('/queryAdvertSlotImageList', function (request, response, next) {
     logger.info("查询广告位图片");
     var result = {code: 200};

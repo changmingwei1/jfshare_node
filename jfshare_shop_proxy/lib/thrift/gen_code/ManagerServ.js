@@ -1214,6 +1214,736 @@ ManagerServ_querySlotImageOne_result.prototype.write = function(output) {
   return;
 };
 
+ManagerServ_saveAdvertSlotImage_args = function(args) {
+  this.slotImage = null;
+  if (args) {
+    if (args.slotImage !== undefined) {
+      this.slotImage = args.slotImage;
+    }
+  }
+};
+ManagerServ_saveAdvertSlotImage_args.prototype = {};
+ManagerServ_saveAdvertSlotImage_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.slotImage = new ttypes.AdvertSlotImage();
+        this.slotImage.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_saveAdvertSlotImage_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_saveAdvertSlotImage_args');
+  if (this.slotImage !== null && this.slotImage !== undefined) {
+    output.writeFieldBegin('slotImage', Thrift.Type.STRUCT, 1);
+    this.slotImage.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_saveAdvertSlotImage_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_saveAdvertSlotImage_result.prototype = {};
+ManagerServ_saveAdvertSlotImage_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_saveAdvertSlotImage_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_saveAdvertSlotImage_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_updateAdvertSlotImage_args = function(args) {
+  this.slotImage = null;
+  if (args) {
+    if (args.slotImage !== undefined) {
+      this.slotImage = args.slotImage;
+    }
+  }
+};
+ManagerServ_updateAdvertSlotImage_args.prototype = {};
+ManagerServ_updateAdvertSlotImage_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.slotImage = new ttypes.AdvertSlotImage();
+        this.slotImage.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_updateAdvertSlotImage_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_updateAdvertSlotImage_args');
+  if (this.slotImage !== null && this.slotImage !== undefined) {
+    output.writeFieldBegin('slotImage', Thrift.Type.STRUCT, 1);
+    this.slotImage.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_updateAdvertSlotImage_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_updateAdvertSlotImage_result.prototype = {};
+ManagerServ_updateAdvertSlotImage_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_updateAdvertSlotImage_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_updateAdvertSlotImage_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotImageList_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ManagerServ_queryAdvertSlotImageList_args.prototype = {};
+ManagerServ_queryAdvertSlotImageList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.AdvertSlotImageParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotImageList_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryAdvertSlotImageList_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotImageList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryAdvertSlotImageList_result.prototype = {};
+ManagerServ_queryAdvertSlotImageList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.AdvertSlotImageListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotImageList_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryAdvertSlotImageList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotImage_args = function(args) {
+  this.slotImage = null;
+  if (args) {
+    if (args.slotImage !== undefined) {
+      this.slotImage = args.slotImage;
+    }
+  }
+};
+ManagerServ_queryAdvertSlotImage_args.prototype = {};
+ManagerServ_queryAdvertSlotImage_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.slotImage = new ttypes.AdvertSlotImage();
+        this.slotImage.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotImage_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryAdvertSlotImage_args');
+  if (this.slotImage !== null && this.slotImage !== undefined) {
+    output.writeFieldBegin('slotImage', Thrift.Type.STRUCT, 1);
+    this.slotImage.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotImage_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryAdvertSlotImage_result.prototype = {};
+ManagerServ_queryAdvertSlotImage_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.AdvertSlotImageResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotImage_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryAdvertSlotImage_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_deleteAdvertSlotImage_args = function(args) {
+  this.slotImage = null;
+  if (args) {
+    if (args.slotImage !== undefined) {
+      this.slotImage = args.slotImage;
+    }
+  }
+};
+ManagerServ_deleteAdvertSlotImage_args.prototype = {};
+ManagerServ_deleteAdvertSlotImage_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.slotImage = new ttypes.AdvertSlotImage();
+        this.slotImage.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_deleteAdvertSlotImage_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_deleteAdvertSlotImage_args');
+  if (this.slotImage !== null && this.slotImage !== undefined) {
+    output.writeFieldBegin('slotImage', Thrift.Type.STRUCT, 1);
+    this.slotImage.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_deleteAdvertSlotImage_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_deleteAdvertSlotImage_result.prototype = {};
+ManagerServ_deleteAdvertSlotImage_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_deleteAdvertSlotImage_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_deleteAdvertSlotImage_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_publishAdvertSlot_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ManagerServ_publishAdvertSlot_args.prototype = {};
+ManagerServ_publishAdvertSlot_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.AdvertSlotImageListParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_publishAdvertSlot_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_publishAdvertSlot_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_publishAdvertSlot_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_publishAdvertSlot_result.prototype = {};
+ManagerServ_publishAdvertSlot_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_publishAdvertSlot_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_publishAdvertSlot_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotList_args = function(args) {
+};
+ManagerServ_queryAdvertSlotList_args.prototype = {};
+ManagerServ_queryAdvertSlotList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    input.skip(ftype);
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotList_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryAdvertSlotList_args');
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryAdvertSlotList_result.prototype = {};
+ManagerServ_queryAdvertSlotList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.AdvertSlotListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryAdvertSlotList_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryAdvertSlotList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ManagerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -1741,6 +2471,334 @@ ManagerServClient.prototype.recv_querySlotImageOne = function(input,mtype,rseqid
   }
   return callback('querySlotImageOne failed: unknown result');
 };
+ManagerServClient.prototype.saveAdvertSlotImage = function(slotImage, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_saveAdvertSlotImage(slotImage);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_saveAdvertSlotImage(slotImage);
+  }
+};
+
+ManagerServClient.prototype.send_saveAdvertSlotImage = function(slotImage) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('saveAdvertSlotImage', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_saveAdvertSlotImage_args();
+  args.slotImage = slotImage;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_saveAdvertSlotImage = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_saveAdvertSlotImage_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('saveAdvertSlotImage failed: unknown result');
+};
+ManagerServClient.prototype.updateAdvertSlotImage = function(slotImage, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateAdvertSlotImage(slotImage);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateAdvertSlotImage(slotImage);
+  }
+};
+
+ManagerServClient.prototype.send_updateAdvertSlotImage = function(slotImage) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('updateAdvertSlotImage', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_updateAdvertSlotImage_args();
+  args.slotImage = slotImage;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_updateAdvertSlotImage = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_updateAdvertSlotImage_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateAdvertSlotImage failed: unknown result');
+};
+ManagerServClient.prototype.queryAdvertSlotImageList = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryAdvertSlotImageList(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryAdvertSlotImageList(param);
+  }
+};
+
+ManagerServClient.prototype.send_queryAdvertSlotImageList = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryAdvertSlotImageList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryAdvertSlotImageList_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryAdvertSlotImageList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryAdvertSlotImageList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryAdvertSlotImageList failed: unknown result');
+};
+ManagerServClient.prototype.queryAdvertSlotImage = function(slotImage, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryAdvertSlotImage(slotImage);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryAdvertSlotImage(slotImage);
+  }
+};
+
+ManagerServClient.prototype.send_queryAdvertSlotImage = function(slotImage) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryAdvertSlotImage', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryAdvertSlotImage_args();
+  args.slotImage = slotImage;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryAdvertSlotImage = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryAdvertSlotImage_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryAdvertSlotImage failed: unknown result');
+};
+ManagerServClient.prototype.deleteAdvertSlotImage = function(slotImage, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_deleteAdvertSlotImage(slotImage);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_deleteAdvertSlotImage(slotImage);
+  }
+};
+
+ManagerServClient.prototype.send_deleteAdvertSlotImage = function(slotImage) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('deleteAdvertSlotImage', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_deleteAdvertSlotImage_args();
+  args.slotImage = slotImage;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_deleteAdvertSlotImage = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_deleteAdvertSlotImage_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('deleteAdvertSlotImage failed: unknown result');
+};
+ManagerServClient.prototype.publishAdvertSlot = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_publishAdvertSlot(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_publishAdvertSlot(param);
+  }
+};
+
+ManagerServClient.prototype.send_publishAdvertSlot = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('publishAdvertSlot', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_publishAdvertSlot_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_publishAdvertSlot = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_publishAdvertSlot_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('publishAdvertSlot failed: unknown result');
+};
+ManagerServClient.prototype.queryAdvertSlotList = function(callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryAdvertSlotList();
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryAdvertSlotList();
+  }
+};
+
+ManagerServClient.prototype.send_queryAdvertSlotList = function() {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryAdvertSlotList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryAdvertSlotList_args();
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryAdvertSlotList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryAdvertSlotList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryAdvertSlotList failed: unknown result');
+};
 ManagerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -2082,6 +3140,216 @@ ManagerServProcessor.prototype.process_querySlotImageOne = function(seqid, input
     this._handler.querySlotImageOne(args.id,  function (err, result) {
       var result = new ManagerServ_querySlotImageOne_result((err != null ? err : {success: result}));
       output.writeMessageBegin("querySlotImageOne", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_saveAdvertSlotImage = function(seqid, input, output) {
+  var args = new ManagerServ_saveAdvertSlotImage_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.saveAdvertSlotImage.length === 1) {
+    Q.fcall(this._handler.saveAdvertSlotImage, args.slotImage)
+      .then(function(result) {
+        var result = new ManagerServ_saveAdvertSlotImage_result({success: result});
+        output.writeMessageBegin("saveAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_saveAdvertSlotImage_result(err);
+        output.writeMessageBegin("saveAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.saveAdvertSlotImage(args.slotImage,  function (err, result) {
+      var result = new ManagerServ_saveAdvertSlotImage_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("saveAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_updateAdvertSlotImage = function(seqid, input, output) {
+  var args = new ManagerServ_updateAdvertSlotImage_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.updateAdvertSlotImage.length === 1) {
+    Q.fcall(this._handler.updateAdvertSlotImage, args.slotImage)
+      .then(function(result) {
+        var result = new ManagerServ_updateAdvertSlotImage_result({success: result});
+        output.writeMessageBegin("updateAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_updateAdvertSlotImage_result(err);
+        output.writeMessageBegin("updateAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.updateAdvertSlotImage(args.slotImage,  function (err, result) {
+      var result = new ManagerServ_updateAdvertSlotImage_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("updateAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryAdvertSlotImageList = function(seqid, input, output) {
+  var args = new ManagerServ_queryAdvertSlotImageList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryAdvertSlotImageList.length === 1) {
+    Q.fcall(this._handler.queryAdvertSlotImageList, args.param)
+      .then(function(result) {
+        var result = new ManagerServ_queryAdvertSlotImageList_result({success: result});
+        output.writeMessageBegin("queryAdvertSlotImageList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_queryAdvertSlotImageList_result(err);
+        output.writeMessageBegin("queryAdvertSlotImageList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryAdvertSlotImageList(args.param,  function (err, result) {
+      var result = new ManagerServ_queryAdvertSlotImageList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryAdvertSlotImageList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryAdvertSlotImage = function(seqid, input, output) {
+  var args = new ManagerServ_queryAdvertSlotImage_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryAdvertSlotImage.length === 1) {
+    Q.fcall(this._handler.queryAdvertSlotImage, args.slotImage)
+      .then(function(result) {
+        var result = new ManagerServ_queryAdvertSlotImage_result({success: result});
+        output.writeMessageBegin("queryAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_queryAdvertSlotImage_result(err);
+        output.writeMessageBegin("queryAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryAdvertSlotImage(args.slotImage,  function (err, result) {
+      var result = new ManagerServ_queryAdvertSlotImage_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_deleteAdvertSlotImage = function(seqid, input, output) {
+  var args = new ManagerServ_deleteAdvertSlotImage_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.deleteAdvertSlotImage.length === 1) {
+    Q.fcall(this._handler.deleteAdvertSlotImage, args.slotImage)
+      .then(function(result) {
+        var result = new ManagerServ_deleteAdvertSlotImage_result({success: result});
+        output.writeMessageBegin("deleteAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_deleteAdvertSlotImage_result(err);
+        output.writeMessageBegin("deleteAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.deleteAdvertSlotImage(args.slotImage,  function (err, result) {
+      var result = new ManagerServ_deleteAdvertSlotImage_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("deleteAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_publishAdvertSlot = function(seqid, input, output) {
+  var args = new ManagerServ_publishAdvertSlot_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.publishAdvertSlot.length === 1) {
+    Q.fcall(this._handler.publishAdvertSlot, args.param)
+      .then(function(result) {
+        var result = new ManagerServ_publishAdvertSlot_result({success: result});
+        output.writeMessageBegin("publishAdvertSlot", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_publishAdvertSlot_result(err);
+        output.writeMessageBegin("publishAdvertSlot", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.publishAdvertSlot(args.param,  function (err, result) {
+      var result = new ManagerServ_publishAdvertSlot_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("publishAdvertSlot", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryAdvertSlotList = function(seqid, input, output) {
+  var args = new ManagerServ_queryAdvertSlotList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryAdvertSlotList.length === 0) {
+    Q.fcall(this._handler.queryAdvertSlotList)
+      .then(function(result) {
+        var result = new ManagerServ_queryAdvertSlotList_result({success: result});
+        output.writeMessageBegin("queryAdvertSlotList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_queryAdvertSlotList_result(err);
+        output.writeMessageBegin("queryAdvertSlotList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryAdvertSlotList( function (err, result) {
+      var result = new ManagerServ_queryAdvertSlotList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryAdvertSlotList", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

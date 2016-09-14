@@ -55,7 +55,7 @@ var  configlog4node = {
          *  logger.setLevel('info');  //  'INFO'
          *
          */
-        logger.setLevel('error');  //  'INFO'
+        logger.setLevel('info');  //  'INFO'
         //app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
         return logger;
     },
