@@ -650,11 +650,11 @@ router.post('/confirmReceipt', function(req, res, next) {
 
 /*获取订单中的卡密列表*/
 router.post('/getVirtualCard', function (request, response, next) {
-    logger.info("进入获取订单中的卡密列表");
     var result = {code: 200};
     try {
         var params = request.body;
-        params.userId =  req.session.buyer.userId+"" || "";
+        logger.info("进入天翼web获取订单中的卡密列表" + JSON.stringify(params));
+        params.userId =  request.session.buyer.userId+"" || "";
         if (params.orderId == "" || params.orderId == null) {
             result.code = 400;
             result.desc = "参数错误";
