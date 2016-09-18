@@ -46,11 +46,6 @@
                             province = rdata.data.provinceId;
                         }
                         window.location.href = _randerUrl + "&provinceId=" + province + "&storehouseId=-1";
-                        var iframewin = parent.document.getElementById('win');
-                        var ifmurl = localStorage.getItem("ifmurl");
-                        if(ifmurl){
-                            iframewin.src=ifmurl;
-                        }
                     }
                 });
             });

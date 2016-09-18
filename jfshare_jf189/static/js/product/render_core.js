@@ -890,8 +890,8 @@ function addToBuyNow() {
                 $("#addProductSkuform").submit();
 
                 //存储提交页ifmurl ---新加2
-                var ifmurl = "http://ct100.jfshare.com/order/add_confirm?ssid="+ssid;
-                localStorage.setItem("ifmurl", ifmurl);
+                //var ifmurl = "http://ct100.jfshare.com/order/add_confirm?ssid="+ssid;
+                //sessionStorage.setItem("ifmurl", ifmurl);
             }
         });
     }
