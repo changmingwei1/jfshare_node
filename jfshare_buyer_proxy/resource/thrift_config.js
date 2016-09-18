@@ -88,198 +88,135 @@ module.exports.ServiceFactory = {
      * @returns {ThriftConfig}
      */
     address: function () {
-        //var ip = zookeeper.getData("address_serv_ips");
-        //var port = zookeeper.getData("address_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1985);
-        //var obj = new ThriftConfig("127.0.0.1",1985);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("address_serv_ips")+"--->"+zookeeper.getData("address_port"));
+        return new ThriftConfig(zookeeper.getData("address_serv_ips"),zookeeper.getData("address_port"));
     },
     /**
      * 科目服务
      * @returns {ThriftConfig}
      */
     subject: function () {
-        //var ip = zookeeper.getData("subject_serv_ips");
-        //var port = zookeeper.getData("subject_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1982);
-        // var obj = new ThriftConfig("127.0.0.1",1982);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("subject_serv_ips")+"--->"+zookeeper.getData("subject_port"));
+        return new ThriftConfig(zookeeper.getData("subject_serv_ips"),zookeeper.getData("subject_port"));
     },
     /**
      * 订单服务
      * @returns {ThriftConfig}
      */
     order: function () {
-        //var ip = zookeeper.getData("order_serv_ips");
-        //var port = zookeeper.getData("order_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("10.10.100.124", 1986);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("order_serv_ips")+"--->"+zookeeper.getData("order_port"));
+        return new ThriftConfig(zookeeper.getData("order_serv_ips"),zookeeper.getData("order_port"));
     },
     /**
      * 买家服务
      * @returns {ThriftConfig}
      */
     buyer: function () {
-        //var ip = zookeeper.getData("buyer_serv_ips");
-        //var port = zookeeper.getData("buyer_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.37.237", 1990);
-        //var obj = new ThriftConfig("127.0.0.1", 1990);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("buyer_ips")+"--->"+zookeeper.getData("buyer_port"));
+        return new ThriftConfig(zookeeper.getData("buyer_ips"),zookeeper.getData("buyer_port"));
     },
     /**
      * 商品服务
      * @returns {ThriftConfig}
      */
     product: function () {
-        //var ip = zookeeper.getData("product_serv_ips");
-        //var port = zookeeper.getData("product_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1980);
-        //var obj = new ThriftConfig("127.0.0.1",1980);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("product_serv_ips")+"--->"+zookeeper.getData("product_port"));
+        return new ThriftConfig(zookeeper.getData("product_serv_ips"),zookeeper.getData("product_port"));
     },
     /**
      * 库存服务
      * @returns {ThriftConfig}
      */
     stock: function () {
-        //var ip = zookeeper.getData("stock_serv_ips");
-        //var port = zookeeper.getData("stock_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1983);
-        //var obj = new ThriftConfig("127.0.0.1",1983);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("stock_serv_ips")+"--->"+zookeeper.getData("stock_port"));
+        return new ThriftConfig(zookeeper.getData("stock_serv_ips"),zookeeper.getData("stock_port"));
     },
     /**
      * 省市区服务
      * @returns {ThriftConfig}
      */
     common: function () {
-        //var ip = zookeeper.getData("common_serv_ips");
-        //var port = zookeeper.getData("common_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.37.237", 1984);
-        //var obj = new ThriftConfig("127.0.0.1",1984);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("common_serv_ips")+"--->"+zookeeper.getData("common_port"));
+        return new ThriftConfig(zookeeper.getData("common_serv_ips"),zookeeper.getData("common_port"));
     },
     /**
      * 交易服务
      * @returns {ThriftConfig}
      */
     trade: function () {
-        //var ip = zookeeper.getData("trade_serv_ips");
-        //var port = zookeeper.getData("trade_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1987);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("trade_serv_ips")+"--->"+zookeeper.getData("trade_port"));
+        return new ThriftConfig(zookeeper.getData("trade_serv_ips"),zookeeper.getData("trade_port"));
     },
     /**
      * 支付服务
      * @returns {ThriftConfig}
      */
     pay: function () {
-        //var ip = zookeeper.getData("pay_serv_ips");
-        //var port = zookeeper.getData("pay_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1993);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("pay_serv_ips")+"--->"+zookeeper.getData("pay_port"));
+        return new ThriftConfig(zookeeper.getData("pay_serv_ips"),zookeeper.getData("pay_port"));
     },
     /**
      * 购物车服务
      * @returns {ThriftConfig}
      */
     cart: function () {
-        //var ip = zookeeper.getData("cart_serv_ips");
-        //var port = zookeeper.getData("cart_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.37.237", 1992);
-        //var obj = new ThriftConfig("127.0.0.1",1992);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("cart_serv_ips")+"--->"+zookeeper.getData("cart_port"));
+        return new ThriftConfig(zookeeper.getData("cart_serv_ips"),zookeeper.getData("cart_port"));
     },
     /**
      * 卖家服务
      * @returns {ThriftConfig}
      */
     seller: function () {
-        //var ip = zookeeper.getData("seller_serv_ips");
-        //var port = zookeeper.getData("seller_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1991);
-        //var obj = new ThriftConfig("127.0.0.1", 1991);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("seller_serv_ips")+"--->"+zookeeper.getData("seller_port"));
+        return new ThriftConfig(zookeeper.getData("seller_serv_ips"),zookeeper.getData("seller_port"));
     },
     /**
      * 管理中心服务
      * @returns {ThriftConfig}
      */
     manager: function () {
-        //var ip = zookeeper.getData("manager_serv_ips");
-        //var port = zookeeper.getData("manager_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1988);
-        //var obj = new ThriftConfig("127.0.0.1", 1988);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("manager_ips")+"--->"+zookeeper.getData("manager_port"));
+        return new ThriftConfig(zookeeper.getData("manager_ips"),zookeeper.getData("manager_port"));
     },
     /**
      * 积分服务
      * @returns {ThriftConfig}
      */
     score: function () {
-        //var ip = zookeeper.getData("score_serv_ips");
-        //var port = zookeeper.getData("score_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("10.10.100.124", 2002);
-        //var obj = new ThriftConfig("127.0.0.1", 2002);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("score_serv_ips")+"--->"+zookeeper.getData("score_serv_port"));
+        return new ThriftConfig(zookeeper.getData("score_serv_ips"),zookeeper.getData("score_serv_port"));
     },
     /**
      * 售后服务
      * @returns {ThriftConfig}
      */
     afterSale: function () {
-        //var ip = zookeeper.getData("afterSale_serv_ips");
-        //var port = zookeeper.getData("afterSale_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 2003);
-        //var obj = new ThriftConfig("127.0.0.1", 2003);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("after_sale_serv_ips")+"--->"+zookeeper.getData("after_sale_serv_port"));
+        return new ThriftConfig(zookeeper.getData("after_sale_serv_ips"),zookeeper.getData("after_sale_serv_port"));
     },
     /**
      * 物流服务
      * @returns {ThriftConfig}
      */
     expresss: function () {
-        //var ip = zookeeper.getData("expresss_serv_ips");
-        //var port = zookeeper.getData("expresss_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.38.182", 1989);
-        //  var obj = new ThriftConfig("127.0.0.1", 1989);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("express_serv_ips")+"--->"+zookeeper.getData("express_port"));
+        return new ThriftConfig(zookeeper.getData("express_serv_ips"),zookeeper.getData("express_port"));
     },
     /**
      * 仓库服务
      * @returns {ThriftConfig}
      */
     template: function () {
-        //var ip = zookeeper.getData("baseTemplate_serv_ips");
-        //var port = zookeeper.getData("baseTemplate_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("101.201.37.237", 2004);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("template_serv_ips")+"--->"+zookeeper.getData("template_serv_port"));
+        return new ThriftConfig(zookeeper.getData("template_serv_ips"),zookeeper.getData("template_serv_port"));
     },
     /**
-     * 积分卡服务
+     * 积分卡服务 
      * @returns {ThriftConfig}
      */
     scoreCards: function () {
-        //var ip = zookeeper.getData("baseTemplate_serv_ips");
-        //var port = zookeeper.getData("baseTemplate_port");
-        //var obj = new ThriftConfig(ip,port);
-        var obj = new ThriftConfig("127.0.0.1", 2005);
-        return obj;
+        logger.info("--------->"+zookeeper.getData("score_cards_serv_ips")+"--->"+zookeeper.getData("score_cards_serv_port"));
+        return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
     }
 };
