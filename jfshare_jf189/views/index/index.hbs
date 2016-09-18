@@ -793,6 +793,15 @@
 
     $(function(){
         window.onload = new function() {
+            //---新加  跳转页面ifmurl1
+            var iframewin = parent.document.getElementById('win');
+            console.log(iframewin)
+            var ifmurl = sessionStorage.getItem("ifmurl");
+            if(ifmurl){
+                iframewin.src=ifmurl;
+            }else{
+                iframewin.src = "http://ct100.jfshare.com/jf189/index";
+            }
 //            contentLoaded(resizeIfr);
             resizeIfr();
             var naturalHeight = document.getElementById("bannerImg_1").naturalHeight || 470;
@@ -822,15 +831,7 @@
         var myifr = doc.getElementById('iframeA');
         myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
 
-        //---新加  跳转页面ifmurl1
-        var iframewin = parent.document.getElementById('win');
-        console.log(iframewin)
-        var ifmurl = sessionStorage.getItem("ifmurl");
-        if(ifmurl){
-            iframewin.src=ifmurl;
-        }else{
-            iframewin.src = "http://ct100.jfshare.com/jf189/index";
-        }
+
 
 //        if (myifr) {
 //            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#' + height;
