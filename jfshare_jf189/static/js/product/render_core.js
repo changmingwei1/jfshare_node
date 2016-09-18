@@ -891,7 +891,7 @@ function addToBuyNow() {
 
                 //存储提交页ifmurl ---新加2
                 var ifmurl = "http://ct100.jfshare.com/order/add_confirm?ssid="+ssid;
-                sessionStorage.setItem("ifmurl", ifmurl);
+                localStorage.setItem("ifmurl", ifmurl);
             }
         });
     }
