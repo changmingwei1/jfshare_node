@@ -312,8 +312,8 @@ function orderConfirm() {
                 toPayBtn.die("click");
 
                 //存储成功提交页ifmurl ---新加3
-                var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
-                sessionStorage.setItem("ifmurl", ifmurl);
+                //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
+                //sessionStorage.setItem("ifmurl", ifmurl);
 
                 return false; // 阻止表单自动提交事件
             });
