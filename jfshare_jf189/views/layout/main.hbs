@@ -46,6 +46,15 @@
                     if (myifr) {
                         myifr.src = '{{tyHostUrl}}/CommPage/fixHeight.html#' + height;
                     }
+                    //---新加  跳转页面ifmurl1
+                    var iframewin = parent.document.getElementById('win');
+                    console.log(iframewin)
+                    var ifmurl = sessionStorage.getItem("ifmurl");
+                    if(ifmurl){
+                        iframewin.src=ifmurl;
+                    }else{
+                        iframewin.src = "http://ct100.jfshare.com/jf189/index";
+                    }
                 },5);
             }
 
@@ -63,7 +72,11 @@
                 return height
             }
         </script>
-
+        <script type="text/javascript">
+            $(function(){
+                resizeIfr();
+            })
+        </script>
     </body>
 </html>
 
