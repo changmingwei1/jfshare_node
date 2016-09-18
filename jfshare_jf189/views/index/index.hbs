@@ -810,7 +810,7 @@
     });
     //跳转商品详情事件  ---新加
     $("a.goDetial").on("click",function(){
-        var ifmurl=$("a.goDetial").attr("data-href");
+        var ifmurl=$("a.goDetial").attr("data_href");
         sessionStorage.setItem("ifmurl",ifmurl);
         window.location.href=ifmurl;
     });
