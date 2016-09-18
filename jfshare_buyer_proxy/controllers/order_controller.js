@@ -1814,11 +1814,11 @@ router.post('/pay_applyTYH5', function(req, res, next) {
             return;
         }
         logger.info("天翼H5申请支付请求参数 request:" + JSON.stringify(arg));
-        //Buyer.validAuth(arg, function (err, data) {
-        //    if (err) {
-        //        response.json(err);
-        //        return;
-        //    }
+        Buyer.validAuth(arg, function (err, data) {
+                if (err) {
+                    response.json(err);
+                    return;
+                }
         //    logger.info("天翼H5申请支付鉴权完成");
         //    Order.payApplyTYH5(arg, function (err, payUrl) {
         //        if (err) {
@@ -1846,6 +1846,7 @@ router.post('/pay_applyTYH5', function(req, res, next) {
                 res.json(result);
                 logger.info("order pay response:" + JSON.stringify(result));
             }
+        });
         });
     } catch (ex) {
         logger.error("ORDER.payApply error:" + ex);

@@ -8,8 +8,6 @@ var deliveryRuleSelector; //配送方式控件对象
 var notDelivery=false; //是否需要配送方式
 var paymentlist=null; //支付方式
 var productType=null; //商品类型
-var mobile=null;  //手机号
-var flag=false;   //校验广东手机号
 /**
  * 渲染页面数据入口
  */
@@ -286,98 +284,66 @@ function checkForm() {
     }
     return true;
 }
-
-//校验广东电信手机号
-function checkGD(){
-    $.ajax({
-        url: "http://120.24.153.102:18002/buyer/buyer/isPurchaseMobile",
-        type: 'post',
-        data: {mobile:mobile},
-        dataType:'json',
-        async:false,
-        success: function (data) {
-            if(data.code == 200){
-                flag = data.value;
-                if(data.value == false){
-                    alert("广东电信用户限制购买！");
-                }
-            }else{
-                console.log(data.desc);
-            }
-        }
-    })
-
-}
 /**
  * 确认订单
  */
 function orderConfirm() {
     if(productType == 3){
         if(checkPhone()){
-            mobile = $("#mobilenumber").val();
-            checkGD();
-            if(flag){
-                var ssid = render_orderInfo.ssid;
-                checkTYLoginStatus(ssid, function(loginInfo) {
-                    //TODO 需要计算
-                    var totalPayAmount = Number(Number(render_orderInfo.count) * Number(render_orderInfo.pInfo.curPrice) + Number(render_orderInfo.postage)).toFixed(2);
-                    $("input[name='productId']").val(render_orderInfo.productId);
-                    $("input[name='count']").val(render_orderInfo.count);
-                    $("input[name='storehouseId']").val(render_orderInfo.pInfo.storehouseId);
-                    $("input[name='skuNum']").val(render_orderInfo.pInfo.skuNum) || "1-12";
-                    $("input[name='curPrice']").val(render_orderInfo.pInfo.curPrice);
-                    $("input[name='sellerId']").val(render_orderInfo.sellerId);
-                    $("input[name='totalPayAmount']").val(totalPayAmount);
-                    $("input[name='postage']").val(render_orderInfo.postage);
-                    $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
-                    $("input[name='mobile']").val($("#mobilenumber").val());
-                    $("input[name='type']").val(productType);
-                    $("input[name='tradeCode']").val("Z8001");
-                    $("#confirmOrderform").submit();
-                    var toPayBtn = $("#btnSubmit");
-                    toPayBtn.html("提交订单...");
-                    toPayBtn.die("click");
+            var ssid = render_orderInfo.ssid;
+            checkTYLoginStatus(ssid, function(loginInfo) {
+                //TODO 需要计算
+                var totalPayAmount = Number(Number(render_orderInfo.count) * Number(render_orderInfo.pInfo.curPrice) + Number(render_orderInfo.postage)).toFixed(2);
+                $("input[name='productId']").val(render_orderInfo.productId);
+                $("input[name='count']").val(render_orderInfo.count);
+                $("input[name='storehouseId']").val(render_orderInfo.pInfo.storehouseId);
+                $("input[name='skuNum']").val(render_orderInfo.pInfo.skuNum) || "1-12";
+                $("input[name='curPrice']").val(render_orderInfo.pInfo.curPrice);
+                $("input[name='sellerId']").val(render_orderInfo.sellerId);
+                $("input[name='totalPayAmount']").val(totalPayAmount);
+                $("input[name='postage']").val(render_orderInfo.postage);
+                $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
+                $("input[name='mobile']").val($("#mobilenumber").val());
+                $("input[name='type']").val(productType);
+                $("input[name='tradeCode']").val("Z8001");
+                $("#confirmOrderform").submit();
+                var toPayBtn = $("#btnSubmit");
+                toPayBtn.html("提交订单...");
+                toPayBtn.die("click");
 
-                    //存储成功提交页ifmurl ---新加3
-                    //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
-                    //sessionStorage.setItem("ifmurl", ifmurl);
+                //存储成功提交页ifmurl ---新加3
+                //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
+                //sessionStorage.setItem("ifmurl", ifmurl);
 
-                    return false; // 阻止表单自动提交事件
-                });
-            }
-
+                return false; // 阻止表单自动提交事件
+            });
         }
     }else if(productType == 2){
         if (checkForm() == true) {
-            mobile = $("span.mobile").html();
-            checkGD();
-            if(flag){
-                var ssid = render_orderInfo.ssid;
-                checkTYLoginStatus(ssid, function(loginInfo) {
-                    //TODO 需要计算
-                    var totalPayAmount = Number(Number(render_orderInfo.count) * Number(render_orderInfo.pInfo.curPrice) + Number(render_orderInfo.postage)).toFixed(2);
-                    $("input[name='productId']").val(render_orderInfo.productId);
-                    $("input[name='count']").val(render_orderInfo.count);
-                    $("input[name='storehouseId']").val(render_orderInfo.pInfo.storehouseId);
-                    $("input[name='skuNum']").val(render_orderInfo.pInfo.skuNum) || "1-12";
-                    $("input[name='curPrice']").val(render_orderInfo.pInfo.curPrice);
-                    $("input[name='sellerId']").val(render_orderInfo.sellerId);
-                    $("input[name='totalPayAmount']").val(totalPayAmount);
-                    $("input[name='postage']").val(render_orderInfo.postage);
-                    $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
-                    $("#confirmOrderform").submit();
-                    var toPayBtn = $("#btnSubmit");
-                    toPayBtn.html("提交订单...");
-                    toPayBtn.die("click");
+            var ssid = render_orderInfo.ssid;
+            checkTYLoginStatus(ssid, function(loginInfo) {
+                //TODO 需要计算
+                var totalPayAmount = Number(Number(render_orderInfo.count) * Number(render_orderInfo.pInfo.curPrice) + Number(render_orderInfo.postage)).toFixed(2);
+                $("input[name='productId']").val(render_orderInfo.productId);
+                $("input[name='count']").val(render_orderInfo.count);
+                $("input[name='storehouseId']").val(render_orderInfo.pInfo.storehouseId);
+                $("input[name='skuNum']").val(render_orderInfo.pInfo.skuNum) || "1-12";
+                $("input[name='curPrice']").val(render_orderInfo.pInfo.curPrice);
+                $("input[name='sellerId']").val(render_orderInfo.sellerId);
+                $("input[name='totalPayAmount']").val(totalPayAmount);
+                $("input[name='postage']").val(render_orderInfo.postage);
+                $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
+                $("#confirmOrderform").submit();
+                var toPayBtn = $("#btnSubmit");
+                toPayBtn.html("提交订单...");
+                toPayBtn.die("click");
 
-                    //存储成功提交页ifmurl ---新加
-                    //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
-                    //sessionStorage.setItem("ifmurl", ifmurl);
+                //存储成功提交页ifmurl ---新加
+                //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
+                //sessionStorage.setItem("ifmurl", ifmurl);
 
-                    return false; // 阻止表单自动提交事件
-                });
-            }
-
+                return false; // 阻止表单自动提交事件
+            });
         }
 
     }
