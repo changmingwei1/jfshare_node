@@ -69,7 +69,9 @@
     </ul>
     <div class="titlecon one">
         <div class="per" style="width: 238px;">
-            <a href="http://ct100.jfshare.com/product/render/ze160517142642000673?ssid={{ssid}}">
+            <!--新加-->
+            <a class="goDetial" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/render/ze160517142642000673?ssid={{ssid}}">
+            <!--<a href="http://ct100.jfshare.com/product/render/ze160517142642000673?ssid={{ssid}}">-->
                 <img src="http://proxy.jfshare.com/system/v1/jfs_image/C2441343372F202396576B34CCFDE7E4.jpg" width="238px" height="286px" alt="">
             </a>
         </div>
@@ -806,20 +808,30 @@
                 $("div.banner").height(divWidth/rate);
             }
         }
-        $("img").lazyload();
     });
     //跳转商品详情事件  ---新加
-//    $("a.goDetial").on("click",function(){
-//        var ifmurl=$("a.goDetial").attr("data-href");
-//        sessionStorage.setItem("ifmurl",ifmurl);
-//        window.location.href=ifmurl;
-//    });
+    $("a.goDetial").on("click",function(){
+        var ifmurl=$("a.goDetial").attr("data-href");
+        sessionStorage.setItem("ifmurl",ifmurl);
+        window.location.href=ifmurl;
+    });
     function resizeIfr() {
         var _tyHostUrl = getTyHostUrl();
         var doc = document;
 //        var height = calcPageHeight(doc);
         var myifr = doc.getElementById('iframeA');
         myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
+
+        //---新加  跳转页面ifmurl1
+        var iframewin = parent.document.getElementById('win');
+        console.log(iframewin)
+        var ifmurl = sessionStorage.getItem("ifmurl");
+        if(ifmurl){
+            iframewin.src=ifmurl;
+        }else{
+            iframewin.src = "http://ct100.jfshare.com/jf189/index";
+        }
+
 //        if (myifr) {
 //            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#' + height;
 //        } else {
