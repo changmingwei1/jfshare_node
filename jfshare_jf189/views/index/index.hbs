@@ -824,11 +824,9 @@
 
         var province = getIP() || 110000;
         $("a.detail").on("click",function(){
-            for(var i=0;i<$("a.detail").length;i++){
-                var href=$("a.detail")[0].attr("data_href")+ "&provinceId=" + province + "&storehouseId=-1";
-                $("a.detail").attr("href",href);
-                console.log(href);
-            }
+            var href=$(this).attr("data_href")+ "&provinceId=" + province + "&storehouseId=-1";
+            $(this).attr("href",href);
+            console.log(href);
         });
     });
     //跳转商品详情事件  ---新加
