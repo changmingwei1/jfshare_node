@@ -835,7 +835,7 @@ function checkGD(){
             if(data.code == 200){
                 flag = data.value;
                 if(data.value == false){
-                    alert("广东电信用户限制购买！");
+                    alert("广东电信用户暂不支持购买！");
                 }
             }else{
                 console.log(data.desc);

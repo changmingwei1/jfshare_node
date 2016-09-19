@@ -250,47 +250,47 @@ router.post('/cannelDefaultTemplate', function (request, response, next) {
 //删除运费模板
 router.post('/delPostageTemplate', function (request, response, next) {
 
-    //logger.info("进入删除运费模板流程");
-    //var result = {code: 200};
-    //
-    //try {
-    //    //var params = request.query;
-    //    var params = request.body;
-    //    //参数校验
-    //    if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
-    //
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //    if (params.id == null || params.id == "" || params.sellerId <= 0) {
-    //        result.code = 500;
-    //        result.desc = "请求参数错误";
-    //        response.json(result);
-    //        return;
-    //    }
-    //
-    //
-    //    logger.info("del freight params:" + JSON.stringify(params));
-    //
-    //    Template.delPostageTemplate(params, function (error, data) {
-    //        if (error) {
-    //            response.json(error);
-    //        } else {
-    //            logger.info("delete freight info response:" + JSON.stringify(data));
-    //            response.json(result);
-    //
-    //        }
-    //    });
-    //} catch (ex) {
-    //    logger.error("删除仓库失败:" + ex);
-    //    result.code = 500;
-    //    result.desc = "删除仓库失败";
-    //
-    //    response.json(result);
-    //}
+    logger.info("进入删除运费模板流程");
+    var result = {code: 200};
+    
+    try {
+       //var params = request.query;
+       var params = request.body;
+       //参数校验
+       if (params.sellerId == null || params.sellerId == "" || params.sellerId <= 0) {
+
+           result.code = 500;
+           result.desc = "请求参数错误";
+           response.json(result);
+           return;
+       }
+
+       if (params.id == null || params.id == "" || params.sellerId <= 0) {
+           result.code = 500;
+           result.desc = "请求参数错误";
+           response.json(result);
+           return;
+       }
+
+
+       logger.info("del delPostageTemplate params:" + JSON.stringify(params));
+
+       Template.delPostageTemplate(params, function (error, data) {
+           if (error) {
+               response.json(error);
+           } else {
+               logger.info("delete freight info response:" + JSON.stringify(data));
+               response.json(result);
+
+           }
+       });
+    } catch (ex) {
+       logger.error("删除运费模板:" + ex);
+       result.code = 500;
+       result.desc = "删除运费模板";
+
+       response.json(result);
+    }
 });
 //运费模板列表
 router.post('/listPostageTemplate', function (request, response, next) {

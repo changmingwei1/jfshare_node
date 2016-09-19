@@ -69,16 +69,14 @@
     </ul>
     <div class="titlecon one">
         <div class="per" style="width: 238px;">
-            <!--虚拟商品测试-->
-            <!--<a href="http://ct100.jfshare.com/product/render/ze160622170709000088?ssid={{ssid}}">-->
             <a href="http://ct100.jfshare.com/product/render/ze160517142642000673?ssid={{ssid}}">
-                <img src="http://proxy.jfshare.com/system/v1/jfs_image/C2441343372F202396576B34CCFDE7E4.jpg" alt="">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/C2441343372F202396576B34CCFDE7E4.jpg" width="238px" height="286px" alt="">
             </a>
         </div>
         <div class="per">
-            <a href="http://ct100.jfshare.com/product/render/ze160415145130000053?ssid={{ssid}}">
+            <a href="http://ct100.jfshare.com/product/render/ze160918170022000926?ssid={{ssid}}">
             <!--<a class="goDetial" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/render/ze160415145130000053?ssid={{ssid}}">-->
-                <img src="http://proxy.jfshare.com/system/v1/jfs_image/AC8D40AF04EABBE5CBF946E1D2B8D0F8.jpg" alt="">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/AC8D40AF04EABBE5CBF946E1D2B8D0F8.jpg" width="236px" height="286px" alt="">
             </a>
         </div>
         <div class="per">
@@ -195,7 +193,7 @@
     <div class="titlecon">
         <div class="per" style="width: 238px;">
             <a href="http://ct100.jfshare.com/product/render/ze160422102234000617?ssid={{ssid}}">
-                <img src="http://proxy.jfshare.com/system/v1/jfs_image/65B959C3BB8275EF2FB45567A7E1FB96.jpg" alt="">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/65B959C3BB8275EF2FB45567A7E1FB96.jpg" width="236px" height="138px" alt="">
             </a>
         </div>
         <div class="per">
@@ -227,7 +225,7 @@
         <div class="left">
             <a href="http://ct100.jfshare.com/product/render/ze160622095756000345?ssid={{ssid}}">
                 <!--<img src="http://proxy.jfshare.com/system/v1/jfs_image/3294192ACCE9C775EEF4380EA5B01DB5.jpg" alt="">-->
-                <img src="http://proxy.jfshare.com/system/v1/jfs_image/E56E6BC0A307F6DD7204780046453720.jpg" alt="">
+                <img src="http://proxy.jfshare.com/system/v1/jfs_image/E56E6BC0A307F6DD7204780046453720.jpg"width="236px" height="443px" alt="">
             </a>
         </div>
         <div class="right">
@@ -813,22 +811,22 @@
 //    $("a.goDetial").on("click",function(){
 //        var ifmurl=$("a.goDetial").attr("data-href");
 //        sessionStorage.setItem("ifmurl",ifmurl);
+//        window.location.href=ifmurl;
 //    });
     function resizeIfr() {
         var _tyHostUrl = getTyHostUrl();
         var doc = document;
 //        var height = calcPageHeight(doc);
         var myifr = doc.getElementById('iframeA');
-
-        //---新加  跳转商品详情页ifmurl1
+        myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
+        //---新加  跳转页面ifmurl1
+//        var iframewin = parent.document.getElementById('win');
 //        var ifmurl = sessionStorage.getItem("ifmurl");
 //        if(ifmurl){
-//            myifr.src=ifmurl;
-//        }else{
-//            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
+//            iframewin.src=ifmurl;
+//            sessionStorage.removeItem("ifmurl");
 //        }
 
-        myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
 //        if (myifr) {
 //            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#' + height;
 //        } else {
