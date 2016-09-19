@@ -241,11 +241,11 @@ router.post('/list', function (req, res, next) {
         }
         logger.info("get cart list request:" + JSON.stringify(param));
 //暂时去掉鉴权信息
-//        Buyer.validAuth(param, function (err, data) {
-//            if (err) {
-//                res.json(err);
-//                return;
-//            }
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                res.json(err);
+                return;
+            }
             var remark;
             var postageId;
             async.series([
@@ -357,7 +357,7 @@ router.post('/list', function (req, res, next) {
                 }
             });
 
-        //});
+        });
     } catch (ex) {
         logger.error("get cart product list error:" + ex);
         result.code = 500;
