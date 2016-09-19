@@ -16,7 +16,7 @@
         <ul class="slides" style="overflow:hidden;">
             <li>
                 <!--<a title="" target="_self" href="http://ct100.jfshare.com/product/render/ze160624111034000910?ssid={{ssid}}">-->
-                <a title="" target="_self" href="http://ct100.jfshare.com/product/render/ze160905173113000229?ssid={{ssid}}">
+                <a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze160905173113000229?ssid={{ssid}}">
                     <!--<img id="bannerImg_1" src="http://proxy.jfshare.com/system/v1/jfs_image/D22BE528E12C9D1CD060A9832A757A03.jpg" width="" height="" alt="" >-->
                     <img id="bannerImg_1" src="http://proxy.jfshare.com/system/v1/jfs_image/8DFD8F04EBC3FC8F59897221420C6D2B.png" width="" height="" alt="" >
                 </a>
@@ -69,7 +69,7 @@
     </ul>
     <div class="titlecon one">
         <div class="per" style="width: 238px;">
-            <a href="http://ct100.jfshare.com/product/render/ze160517142642000673?ssid={{ssid}}">
+            <a class="detail" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze160517142642000673?ssid={{ssid}}">
                 <img src="http://proxy.jfshare.com/system/v1/jfs_image/C2441343372F202396576B34CCFDE7E4.jpg" width="238px" height="286px" alt="">
             </a>
         </div>
@@ -788,7 +788,23 @@
         });
         return _url;
     }
-
+    var getIP = function(){
+        var province = '';
+        var ip = getIPv4(function(ip){
+            $.ajax({
+                url: "/nnc/province?clientIp=" + ip,
+                type: 'get',
+                dataType: 'json',
+                success: function (rdata) {
+                    if(rdata.status === 200) {
+                        province = rdata.data.provinceId;
+                    }
+//                    window.location.href = _randerUrl + "&provinceId=" + province + "&storehouseId=-1";
+                }
+            });
+        });
+        return province;
+    }
     $(function(){
 //            contentLoaded(resizeIfr);
         resizeIfr();
@@ -804,6 +820,15 @@
             var divWidth = $("div.banner").width();
             $("div.banner").height(divWidth/rate);
         }
+
+        var province = getIP() || 110000;
+        $("a.detail").on("click",function(){
+            for(var i=0;i<$("a.detail").length;i++){
+                var href=$("a.detail")[0].attr("data_href")+ "&provinceId=" + province + "&storehouseId=-1";
+                $("a.detail").attr("href",href);
+                console.log(href);
+            }
+        });
     });
     //跳转商品详情事件  ---新加
 //    $("a.goDetial").on("click",function(){
