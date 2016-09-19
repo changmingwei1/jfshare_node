@@ -74,7 +74,7 @@
             </a>
         </div>
         <div class="per">
-            <a href="http://ct100.jfshare.com/product/render/ze160918171428000121?ssid={{ssid}}">
+            <a href="http://ct100.jfshare.com/product/render/ze160415145130000053?ssid={{ssid}}">
             <!--<a class="goDetial" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/render/ze160415145130000053?ssid={{ssid}}">-->
                 <img src="http://proxy.jfshare.com/system/v1/jfs_image/AC8D40AF04EABBE5CBF946E1D2B8D0F8.jpg" width="236px" height="286px" alt="">
             </a>
@@ -790,21 +790,19 @@
     }
 
     $(function(){
-        window.onload = new function() {
 //            contentLoaded(resizeIfr);
-            resizeIfr();
+        resizeIfr();
+        var naturalHeight = document.getElementById("bannerImg_1").naturalHeight || 470;
+        var naturalWidth = document.getElementById("bannerImg_1").naturalWidth || 1200;
+        var rate = naturalWidth/naturalHeight;
+        var divWidth = $("div.banner").width();
+        $("div.banner").height(divWidth/rate);
+        window.onresize = function(){
             var naturalHeight = document.getElementById("bannerImg_1").naturalHeight || 470;
             var naturalWidth = document.getElementById("bannerImg_1").naturalWidth || 1200;
             var rate = naturalWidth/naturalHeight;
             var divWidth = $("div.banner").width();
             $("div.banner").height(divWidth/rate);
-            window.onresize = function(){
-                var naturalHeight = document.getElementById("bannerImg_1").naturalHeight || 470;
-                var naturalWidth = document.getElementById("bannerImg_1").naturalWidth || 1200;
-                var rate = naturalWidth/naturalHeight;
-                var divWidth = $("div.banner").width();
-                $("div.banner").height(divWidth/rate);
-            }
         }
     });
     //跳转商品详情事件  ---新加
