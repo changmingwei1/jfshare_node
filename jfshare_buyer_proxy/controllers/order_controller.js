@@ -930,6 +930,7 @@ router.post('/info', function (req, res, next) {
                                     result.mobile = orderInfo.deliverInfo.receiverMobile;
                                     result.sellerComment = orderInfo.deliverInfo.sellerComment;
                                     result.comment = orderInfo.deliverInfo.buyerComment;
+                                    result.provinceId = orderInfo.deliverInfo.provinceId;
                                 } else {
                                     result.address = orderInfo.deliverInfo.provinceName +
                                         orderInfo.deliverInfo.cityName +
@@ -942,6 +943,7 @@ router.post('/info', function (req, res, next) {
                                     result.expressName = orderInfo.deliverInfo.expressName;
                                     result.sellerComment = orderInfo.deliverInfo.sellerComment;
                                     result.comment = orderInfo.deliverInfo.buyerComment;
+                                    result.provinceId = orderInfo.deliverInfo.provinceId;
                                 }
                                 if (orderInfo.payInfo != null) {
                                     result.payChannel = orderInfo.payInfo.payChannel;
