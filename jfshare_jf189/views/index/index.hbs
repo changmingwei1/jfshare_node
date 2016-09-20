@@ -20,7 +20,7 @@
                 <!--<a title="" target="_self" href="http://ct100.jfshare.com/product/render/ze160624111034000910?ssid={{ssid}}">-->
                 <a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze160905173113000229?ssid={{ssid}}">
                     <!--<img id="bannerImg_1" src="http://proxy.jfshare.com/system/v1/jfs_image/D22BE528E12C9D1CD060A9832A757A03.jpg" width="" height="" alt="" >-->
-                    <img id="bannerImg_1" class="lazy" data-original="http://proxy.jfshare.com/system/v1/jfs_image/8DFD8F04EBC3FC8F59897221420C6D2B.png" width="" height="500px" alt="" >
+                    <img id="bannerImg_1" src="http://proxy.jfshare.com/system/v1/jfs_image/8DFD8F04EBC3FC8F59897221420C6D2B.png" width="" height="" alt="" >
                 </a>
             </li>
             <li>
@@ -814,9 +814,6 @@
         var rate = naturalWidth/naturalHeight;
         var divWidth = $("div.banner").width();
         $("div.banner").height(divWidth/rate);
-        $("img.lazy").lazyload({
-            threshold : 300
-        });
         window.onresize = function(){
             var naturalHeight = document.getElementById("bannerImg_1").naturalHeight || 470;
             var naturalWidth = document.getElementById("bannerImg_1").naturalWidth || 1200;
@@ -824,7 +821,9 @@
             var divWidth = $("div.banner").width();
             $("div.banner").height(divWidth/rate);
         }
-
+        $("img.lazy").lazyload({
+            threshold : 300
+        });
         var province = getIP() || 110000;
         $("a.detail").on("click",function(){
             var href=$(this).attr("data_href")+ "&provinceId=" + province + "&storehouseId=-1";
