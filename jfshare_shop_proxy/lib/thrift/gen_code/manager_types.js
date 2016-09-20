@@ -890,6 +890,7 @@ AdvertSlot = module.exports.AdvertSlot = function(args) {
   this.slotName = null;
   this.count = null;
   this.createTime = null;
+  this.type = null;
   if (args) {
     if (args.advertId !== undefined) {
       this.advertId = args.advertId;
@@ -902,6 +903,9 @@ AdvertSlot = module.exports.AdvertSlot = function(args) {
     }
     if (args.createTime !== undefined) {
       this.createTime = args.createTime;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
     }
   }
 };
@@ -947,6 +951,13 @@ AdvertSlot.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.type = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -978,6 +989,11 @@ AdvertSlot.prototype.write = function(output) {
     output.writeString(this.createTime);
     output.writeFieldEnd();
   }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.STRING, 5);
+    output.writeString(this.type);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -985,10 +1001,14 @@ AdvertSlot.prototype.write = function(output) {
 
 AdvertSlotImageParam = module.exports.AdvertSlotImageParam = function(args) {
   this.advertId = null;
+  this.fromSource = null;
   this.type = null;
   if (args) {
     if (args.advertId !== undefined) {
       this.advertId = args.advertId;
+    }
+    if (args.fromSource !== undefined) {
+      this.fromSource = args.fromSource;
     }
     if (args.type !== undefined) {
       this.type = args.type;
@@ -1018,6 +1038,13 @@ AdvertSlotImageParam.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.I32) {
+        this.fromSource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
         this.type = input.readI32();
       } else {
         input.skip(ftype);
@@ -1039,8 +1066,13 @@ AdvertSlotImageParam.prototype.write = function(output) {
     output.writeI32(this.advertId);
     output.writeFieldEnd();
   }
+  if (this.fromSource !== null && this.fromSource !== undefined) {
+    output.writeFieldBegin('fromSource', Thrift.Type.I32, 2);
+    output.writeI32(this.fromSource);
+    output.writeFieldEnd();
+  }
   if (this.type !== null && this.type !== undefined) {
-    output.writeFieldBegin('type', Thrift.Type.I32, 2);
+    output.writeFieldBegin('type', Thrift.Type.I32, 3);
     output.writeI32(this.type);
     output.writeFieldEnd();
   }

@@ -18,7 +18,8 @@ SlotImage.prototype.queryAdvertSlotImageList = function (params, callback) {
 
     var slotBean = new manager_types.AdvertSlotImageParam({
         advertId: params.advertId,
-        type:1 /*1为前端，2为管理中心*/
+        fromSource:1, /*1为前端，2为管理中心*/
+        type:params.type
     });
 
     //获取客户端
