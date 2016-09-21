@@ -163,12 +163,17 @@ SlotImage.prototype.deleteAdvertSlotImage = function (params, callback) {
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("deleteAdvertSlotImage result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == 1) {
+        if (err) {
             logger.error("slotServ.deleteAdvertSlotImage because: ======" + err);
             res.code = 500;
             res.desc = "删除广告位图片"+"失败";
             callback(res, null);
-        } else {
+        } else if(data[0].code == 1){
+            logger.error("slotServ.deleteAdvertSlotImage because: ======" + JSON.stringify(slotBean));
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
+            callback(res, null);
+        }else {
             callback(null, data);
         }
     });
