@@ -38,8 +38,17 @@
         $("http://www.jfshare.com/img.lazy").lazyload({
             effect : "fadeIn"
         });
+        //模拟触发回到顶部事件
+        console.log(111)
+        console.log($("div.hm-t-go-top"))
+        $("div.hm-t-go-top").trigger("click");
     });
-
+    window.onload=function(){
+        //模拟触发回到顶部事件
+        console.log(111)
+        console.log($("div.hm-t-go-top"))
+        $("div.hm-t-go-top").trigger("click");
+    }
     function highlightPage(){
         if(!document.getElementsByTagName) return false;
         if(!document.getElementById) return false;
