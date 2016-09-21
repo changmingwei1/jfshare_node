@@ -44,6 +44,9 @@ var flag=false;   //校验广东手机号
  * 商品基本信息、库存、详情
  */
 function rendData() {
+    //模拟触发回到顶部事件
+    console.log($("div.hm-t-go-top"))
+    $("div.hm-t-go-top").trigger("click");
     //渲染省份下拉列表
     renderProvinceInfo(provinceId);
     $.ajax({
@@ -884,14 +887,14 @@ function addToBuyNow() {
                 }
                 $("input[name='type']").val(productInfo.type);
                 var type = productInfo.type;
-                sessionStorage.setItem("type", type);
+                localStorage.setItem("type", type);
                 //跳转提交订单页面
                 $("#addProductSkuform").attr("action","/order/add_confirm?ssid="+ssid);
                 $("#addProductSkuform").submit();
 
                 //存储提交页ifmurl ---新加2
                 //var ifmurl = "http://ct100.jfshare.com/order/add_confirm?ssid="+ssid;
-                //sessionStorage.setItem("ifmurl", ifmurl);
+                //localStorage.setItem("ifmurl", ifmurl);
             }
         });
     }
