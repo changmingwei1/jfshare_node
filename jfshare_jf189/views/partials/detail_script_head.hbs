@@ -41,7 +41,7 @@
     });
     window.onunload = unload;
     function unload (e){
-        window.scrollTo(0,0);
+        parent.window.scrollTo(0,0);
     }
     function highlightPage(){
         if(!document.getElementsByTagName) return false;
