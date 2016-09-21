@@ -823,7 +823,8 @@
         var province = getIP() || 110000;
         $("a.detail").on("click",function(){
             var href=$(this).attr("data_href")+ "&provinceId=" + province + "&storehouseId=-1";
-            $(this).attr("href",href);
+//            $(this).attr("href",href);
+            window.location.href=href;
         });
     });
     function resizeIfr() {
