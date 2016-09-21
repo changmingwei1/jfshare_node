@@ -12,15 +12,15 @@ var logger = require('../lib/util/log4node').configlog4node.servLog4js();
 var paramValid = require('../lib/models/pub/param_valid');
 var detailStock = require('../lib/models/product/detail_stock');
 
-//router.get('/render/:productId', function(req, res, next) {
-//  var productId =  req.params["productId"] || "" ;
-//  if(productId) {
-//    res.resData.renderUrl = "/product/"+productId+"?ssid="+req.query.ssid;
-//    res.render("index/render", res.resData)
-//    return;
-//  }
-//  next();
-//});
+router.get('/render/:productId', function(req, res, next) {
+  var productId =  req.params["productId"] || "" ;
+  if(productId) {
+    res.resData.renderUrl = "/product/"+productId+"?ssid="+req.query.ssid+ "&provinceId=" + 110000 + "&storehouseId=-1";
+    //res.render("index/render", res.resData)
+    return;
+  }
+  next();
+});
 
 //get product baseinfo
 router.get('/baseinfo/:productId', function(req, res, next) {

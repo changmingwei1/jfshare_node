@@ -39,19 +39,6 @@
             effect : "fadeIn"
         });
     });
-    window.onunload = unload;
-    function unload (e){
-        parent.window.scrollTo(0,0);
-    }
-    parent.document.onreadystatechange = loadingChange;//当页面加载状态改变的时候执行这个方法.
-    function loadingChange()
-    {
-        if(document.readyState == "complete"){ //当页面加载状态为完全结束时进入
-            console.log(123)
-            $(".hm-t-go-top").trigger("click");
-            parent.window.scrollTo(0,0);
-        }
-    }
     function highlightPage(){
         if(!document.getElementsByTagName) return false;
         if(!document.getElementById) return false;
