@@ -44,9 +44,6 @@ var flag=false;   //校验广东手机号
  * 商品基本信息、库存、详情
  */
 function rendData() {
-    //模拟触发回到顶部事件
-    console.log($("div.hm-t-go-top"))
-    $("div.hm-t-go-top").trigger("click");
     //渲染省份下拉列表
     renderProvinceInfo(provinceId);
     $.ajax({
@@ -154,6 +151,9 @@ function rendData() {
             contentLoaded(resizeIfr);
         }
     })
+    //模拟触发回到顶部事件
+    console.log($("div.hm-t-go-top"))
+    $("div.hm-t-go-top").trigger("click");
 }
 
 //region 渲染基本信息
