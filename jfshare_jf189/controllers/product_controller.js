@@ -17,6 +17,8 @@ router.get('/render/:productId', function(req, res, next) {
   if(productId) {
     res.resData.renderUrl = "/product/"+productId+"?ssid="+req.query.ssid+ "&provinceId=" + 110000 + "&storehouseId=-1";
     //res.render("index/render", res.resData)
+    paramters.tyHostUrl = res.resData.renderUrl;
+    res.render("product/detail", paramters);
     return;
   }
   next();
