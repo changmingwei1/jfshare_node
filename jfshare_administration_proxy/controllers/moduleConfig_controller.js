@@ -38,6 +38,7 @@ router.post('/queryModuleConfig', function (request, response, next) {
 router.post('/queryModuleConfigDetail', function (request, response, next) {
     logger.info("开始查询模块配置明细");
     var result = {code: 200};
+    var ModuleConfigDetailList = [];
     try {
         var params = request.body;
         //参数校验
@@ -53,6 +54,10 @@ router.post('/queryModuleConfigDetail', function (request, response, next) {
                 response.json(err);
                 return;
             }
+            if(data[0] != null || data[0].ModuleConfigDetailList != null){
+                ModuleConfigDetailList = data[0].ModuleConfigDetailList;
+            }
+            result.ModuleConfigDetailList = ModuleConfigDetailList;
             response.json(result);
             return;
         });
@@ -69,6 +74,7 @@ router.post('/importExcel', function (request, response, next) {
     logger.info("查询广告位图片");
     var result = {code: 200};
     var ModuleConfigDetailList = [];
+    var importCount;
     try {
         var params = request.body;
         //参数校验
@@ -85,6 +91,12 @@ router.post('/importExcel', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.moduleType == null || params.moduleType == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         ModuleConfig.importExcel(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -92,8 +104,10 @@ router.post('/importExcel', function (request, response, next) {
             }
             if(data[0] != null || data[0].ModuleConfigDetailList != null){
                 ModuleConfigDetailList = data[0].ModuleConfigDetailList;
+                importCount = data[0].importCount;
             }
             result.ModuleConfigDetailList = ModuleConfigDetailList;
+            result.importCount = importCount;
             logger.info("importExcel result:" + JSON.stringify(result));
             response.json(result);
             return;
@@ -106,17 +120,17 @@ router.post('/importExcel', function (request, response, next) {
     }
 });
 
-/*统一发布图片*/
+/*统一发布模块*/
 router.post('/relase', function (request, response, next) {
     logger.info("发布图片");
     var result = {code: 200};
     try {
         var params = request.body;
         //参数校验
-        logger.info("publishAdvertSlot params:" + JSON.stringify(params));
+        logger.info("relase params:" + JSON.stringify(params));
         if (params.ModuleConfigDetailList == null || params.ModuleConfigDetailList == "" || param.ModuleConfigDetailList.size() <= 0) {
             result.code = 500;
-            result.desc = "slotImageList参数错误";
+            result.desc = "参数错误";
             response.json(result);
             return;
         }
@@ -125,15 +139,13 @@ router.post('/relase', function (request, response, next) {
                 response.json(err);
                 return;
             }
-            result.type = data[0].type;
-            result.relaseCount = data[0].relaseCount;
             response.json(result);
             return;
         });
     } catch (ex) {
-        logger.error("统一发布图片错误:" + ex);
+        logger.error("统一发布模块错误:" + ex);
         result.code = 500;
-        result.desc = "统一发布图片错误";
+        result.desc = "统一发布模块错误";
         response.json(result);
     }
 });

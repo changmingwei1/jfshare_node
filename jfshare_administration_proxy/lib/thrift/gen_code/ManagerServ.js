@@ -1454,7 +1454,7 @@ ManagerServ_relase_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.relaseParam();
+        this.param = new ttypes.RelaseParam();
         this.param.read(input);
       } else {
         input.skip(ftype);
@@ -1508,7 +1508,7 @@ ManagerServ_relase_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.relaseResult();
+        this.success = new ttypes.RelaseResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
@@ -1616,7 +1616,7 @@ ManagerServ_importExcel_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.ModuleConfigDetailResult();
+        this.success = new ttypes.ImportResult();
         this.success.read(input);
       } else {
         input.skip(ftype);

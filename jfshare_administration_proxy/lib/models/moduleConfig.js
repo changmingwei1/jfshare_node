@@ -75,7 +75,7 @@ ModuleConfig.prototype.relase = function (params, callback) {
         });
         iList.push(mcDetail);
     }
-    var bean = new manager_types.relaseParam({
+    var bean = new manager_types.RelaseParam({
         ModuleConfigDetailList: iList
     });
     logger.info("发布模块的参数，bean = " + JSON.stringify(bean));
@@ -105,7 +105,8 @@ ModuleConfig.prototype.importExcel = function (params, callback) {
 
     var bean = new manager_types.ImportParam({
         filePath:params.filePath,   /*获取excel文件的全路径*/
-        moduleId: params.moduleId   /*模块ID*/
+        moduleId: params.moduleId,   /*模块ID*/
+        moduleType: params.moduleType /*模块类型*/
     });
 
     logger.info("导入商品或品牌的参数，bean = " + JSON.stringify(bean));

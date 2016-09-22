@@ -106,7 +106,7 @@ Subject.prototype.update = function (params, callback) {
 Subject.prototype.query = function (params, callback) {
 
     //
-    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTree", [params.pid]);
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTreeForManage", [params.pid]);
     //
     Lich.wicca.invokeClient(subjectServ, function (err, data) {
         logger.info("subjectServ-getSubTree result:" + JSON.stringify(data[0]));
