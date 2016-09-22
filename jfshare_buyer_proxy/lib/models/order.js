@@ -389,7 +389,7 @@ Order.prototype.orderConfirmResult = function (params, callback) {
 
 /*取消订单*/
 Order.prototype.cancelOrder = function (param, callback) {
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [1, param.userId, param.orderId, param.reason]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [1, param.userId, param.orderId, 1]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-cancelOrder  result:" + JSON.stringify(data));
         var res = {};
