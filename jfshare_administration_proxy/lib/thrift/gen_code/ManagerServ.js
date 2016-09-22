@@ -1646,6 +1646,114 @@ ManagerServ_importExcel_result.prototype.write = function(output) {
   return;
 };
 
+ManagerServ_queryImgkey_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ManagerServ_queryImgkey_args.prototype = {};
+ManagerServ_queryImgkey_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.QueryImgkeyParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryImgkey_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryImgkey_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryImgkey_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryImgkey_result.prototype = {};
+ManagerServ_queryImgkey_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.QueryImgkeyResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryImgkey_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryImgkey_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ManagerServ_saveAdvertSlotImage_args = function(args) {
   this.slotImage = null;
   if (args) {
@@ -3091,6 +3199,53 @@ ManagerServClient.prototype.recv_importExcel = function(input,mtype,rseqid) {
   }
   return callback('importExcel failed: unknown result');
 };
+ManagerServClient.prototype.queryImgkey = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryImgkey(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryImgkey(param);
+  }
+};
+
+ManagerServClient.prototype.send_queryImgkey = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryImgkey', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryImgkey_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryImgkey = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryImgkey_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryImgkey failed: unknown result');
+};
 ManagerServClient.prototype.saveAdvertSlotImage = function(slotImage, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -3880,6 +4035,36 @@ ManagerServProcessor.prototype.process_importExcel = function(seqid, input, outp
     this._handler.importExcel(args.param,  function (err, result) {
       var result = new ManagerServ_importExcel_result((err != null ? err : {success: result}));
       output.writeMessageBegin("importExcel", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryImgkey = function(seqid, input, output) {
+  var args = new ManagerServ_queryImgkey_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryImgkey.length === 1) {
+    Q.fcall(this._handler.queryImgkey, args.param)
+      .then(function(result) {
+        var result = new ManagerServ_queryImgkey_result({success: result});
+        output.writeMessageBegin("queryImgkey", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_queryImgkey_result(err);
+        output.writeMessageBegin("queryImgkey", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryImgkey(args.param,  function (err, result) {
+      var result = new ManagerServ_queryImgkey_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryImgkey", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

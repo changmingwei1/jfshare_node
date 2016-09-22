@@ -1508,9 +1508,13 @@ RelaseResult.prototype.write = function(output) {
 
 RelaseParam = module.exports.RelaseParam = function(args) {
   this.ModuleConfigDetailList = null;
+  this.moduleType = null;
   if (args) {
     if (args.ModuleConfigDetailList !== undefined) {
       this.ModuleConfigDetailList = args.ModuleConfigDetailList;
+    }
+    if (args.moduleType !== undefined) {
+      this.moduleType = args.moduleType;
     }
   }
 };
@@ -1549,9 +1553,13 @@ RelaseParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleType = input.readString();
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1575,6 +1583,11 @@ RelaseParam.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.moduleType !== null && this.moduleType !== undefined) {
+    output.writeFieldBegin('moduleType', Thrift.Type.STRING, 2);
+    output.writeString(this.moduleType);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1763,6 +1776,139 @@ ImportResult.prototype.write = function(output) {
   if (this.impCount !== null && this.impCount !== undefined) {
     output.writeFieldBegin('impCount', Thrift.Type.I32, 3);
     output.writeI32(this.impCount);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+QueryImgkeyParam = module.exports.QueryImgkeyParam = function(args) {
+  this.relaId = null;
+  this.moduleType = null;
+  if (args) {
+    if (args.relaId !== undefined) {
+      this.relaId = args.relaId;
+    }
+    if (args.moduleType !== undefined) {
+      this.moduleType = args.moduleType;
+    }
+  }
+};
+QueryImgkeyParam.prototype = {};
+QueryImgkeyParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+QueryImgkeyParam.prototype.write = function(output) {
+  output.writeStructBegin('QueryImgkeyParam');
+  if (this.relaId !== null && this.relaId !== undefined) {
+    output.writeFieldBegin('relaId', Thrift.Type.STRING, 1);
+    output.writeString(this.relaId);
+    output.writeFieldEnd();
+  }
+  if (this.moduleType !== null && this.moduleType !== undefined) {
+    output.writeFieldBegin('moduleType', Thrift.Type.STRING, 2);
+    output.writeString(this.moduleType);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+QueryImgkeyResult = module.exports.QueryImgkeyResult = function(args) {
+  this.result = null;
+  this.imgKey = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.imgKey !== undefined) {
+      this.imgKey = args.imgKey;
+    }
+  }
+};
+QueryImgkeyResult.prototype = {};
+QueryImgkeyResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.imgKey = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+QueryImgkeyResult.prototype.write = function(output) {
+  output.writeStructBegin('QueryImgkeyResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.imgKey !== null && this.imgKey !== undefined) {
+    output.writeFieldBegin('imgKey', Thrift.Type.STRING, 2);
+    output.writeString(this.imgKey);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

@@ -17,7 +17,7 @@ ModuleConfig.prototype.queryModuleConfig = function (params,callback) {
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("queryModuleConfigList result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err) {
             logger.error("managerServ.queryModuleConfigList because: ======" + err);
             res.code = 500;
             res.desc = "查询模块失败";
@@ -45,7 +45,7 @@ ModuleConfig.prototype.queryModuleConfigDetail = function (params, callback) {
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("queryModuleConfigDetail result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err) {
             logger.error("managerServ.queryModuleConfigDetail because: ======" + err);
             res.code = 500;
             res.desc = "查询模块配置信息失败";
@@ -116,7 +116,7 @@ ModuleConfig.prototype.importExcel = function (params, callback) {
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("queryModuleConfigDetail result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err) {
             logger.error("managerServ.queryModuleConfigDetail because: ======" + err);
             res.code = 500;
             res.desc = "导入商品或品牌失败";
@@ -131,5 +131,34 @@ ModuleConfig.prototype.importExcel = function (params, callback) {
     });
 };
 
+/* 查看单个商品或者品牌imgkey */
+ModuleConfig.prototype.queryImgkey = function (params, callback) {
+
+    var bean = new manager_types.QueryImgkeyParam({
+        relaId: params.relaId, /*商品或品牌ID*/
+        moduleType: params.moduleType
+    });
+
+    logger.info("查看单个商品或者品牌imgkey，bean = " + JSON.stringify(bean));
+
+    //获取客户端
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryImgkey', [bean]);
+    Lich.wicca.invokeClient(managerServ, function (err, data) {
+        logger.info("queryImgkey result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("managerServ.queryImgkey because: ======" + err);
+            res.code = 500;
+            res.desc = "查看单个商品或者品牌imgkey失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            logger.warn("查看单个商品或者品牌imgkey失败，参数为：" + JSON.stringify(bean));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new ModuleConfig();

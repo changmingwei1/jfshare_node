@@ -24,7 +24,7 @@ SlotImage.prototype.saveAdvertSlotImage = function (params, callback) {
         remark: params.remark,
         jump: params.jump,
         //isOnline: params.isOnline,
-        //sort: params.sort,
+        sort: params.sort,
         startTime: params.startTime,
         endTime: params.endTime,
         // createTime: params.createTime

@@ -150,5 +150,43 @@ router.post('/relase', function (request, response, next) {
     }
 });
 
+/* 查看单个商品或者品牌imgkey */
+router.post('/queryImgkey', function (request, response, next) {
+    logger.info("查看单个商品或者品牌imgkey");
+    var result = {code: 200};
+    var ModuleConfigDetailList = [];
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("queryImgkey params:" + JSON.stringify(params));
+        if (params.moduleId == null || params.moduleId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.moduleType == null || params.moduleType == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        ModuleConfig.queryImgkey(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.imgKey = data[0].imgKey;
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("查看单个商品或者品牌imgkey错误:" + ex);
+        result.code = 500;
+        result.desc = "查看单个商品或者品牌imgkey错误";
+        response.json(result);
+    }
+});
+
 
 module.exports = router;
