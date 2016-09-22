@@ -159,7 +159,7 @@ router.post('/queryImgkey', function (request, response, next) {
         var params = request.body;
         //参数校验
         logger.info("queryImgkey params:" + JSON.stringify(params));
-        if (params.moduleId == null || params.moduleId == "") {
+        if (params.relaId == null || params.relaId == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
