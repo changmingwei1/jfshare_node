@@ -398,7 +398,7 @@ router.post('/info', function (request, response, next) {
             }
             if (err == 3) {
                 logger.error("查询买家信息异常：" + err);
-                response.json(results[0]);
+                result = results[0];
                 result.afterSaleList = results[1];
                 response.json(result);
                 return;

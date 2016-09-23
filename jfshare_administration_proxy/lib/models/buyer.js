@@ -20,22 +20,31 @@ var common_types = require('../thrift/gen_code/common_types');
 //var soltImage_types = require('../thrift/gen_code/soltImage_types');
 
 function Buyer(){}
-//获取个人用户信息
-Buyer.prototype.getBuyer = function(userId,callback){
 
-    var buyer = new buyer_types.Buyer({userId:userId});
+//获取个人信息
+Buyer.prototype.getBuyer = function(param,callback){
+
+    var buyer = new buyer_types.Buyer({
+        userId:param.userId
+    });
 
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getBuyer',[buyer]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("get buyer result:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].result.code == "1") {
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("can't get buyer because: ======" + err);
             res.code = 500;
             res.desc = "false to get buyer";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data);
         }
     });
