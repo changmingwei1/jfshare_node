@@ -279,6 +279,9 @@ router.post('/info', function (request, response, next) {
                             result.payChannel = orderInfo.payInfo.payChannel;
                             result.payState =  orderInfo.payInfo.payState;
                             result.payTime =  orderInfo.payInfo.payTime; /*0921新增字段*/
+                            if(result.payChannel == 1 || result.payChannel == 10){
+                                result.tradePayId = orderInfo.tradePayId; /*payChannel为1和10的话，是外部订单，返回外部订单号*/
+                            }
                         }
                         // result.curTime = new Date().getTime();
                         result.createTime = orderInfo.createTime;
