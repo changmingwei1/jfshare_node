@@ -14,6 +14,7 @@ var Util = require('../lib/models/util');
 var afterSale = require('../lib/models/afterSale');
 var Express = require('../lib/models/express');
 var Product = require('../lib/models/product');
+var Buyer = require('../lib/models/buyer');
 
 // 查询订单列表
 router.post('/list', function (request, response, next) {
@@ -263,6 +264,7 @@ router.post('/info', function (request, response, next) {
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
                             result.payState =  orderInfo.payInfo.payState;
+                            result.payTime =  orderInfo.payInfo.payTime; /*0921新增字段*/
                         }
 
 
@@ -274,6 +276,7 @@ router.post('/info', function (request, response, next) {
                         result.postage = orderInfo.postage;
                         result.sellerId = orderInfo.sellerId;
                         result.cancelTime = orderInfo.cancelTime;
+                        params.userId = orderInfo.userId;
 
                         if(orderInfo.orderState == 61){
                             result.cancelDesc = "其他原因";
@@ -358,6 +361,26 @@ router.post('/info', function (request, response, next) {
                     logger.info("售后服务异常:" + ex);
                     return callback(2, null);
                 }
+            },
+            function (callback) {
+                /*根据买家id查询买家账户信息 0921新增*/
+                try {
+                    Buyer.getBuyer(params, function (err, data) {
+                        if (err) {
+                            return callback(3, null);
+                        }
+                        var buyer = data[0].buyer;
+                        if (buyer != null) {
+                            var loginName = buyer.loginName;
+                            return callback(null,loginName);
+                        } else {
+                            callback(3,null);
+                        }
+                    });
+                } catch (ex) {
+                    logger.info("买家服务异常:" + ex);
+                    return callback(3, null);
+                }
             }
         ],
         function (err, results) {
@@ -373,17 +396,17 @@ router.post('/info', function (request, response, next) {
                 response.json(results[0]);
                 return;
             }
-
-            if (err == null && err != 3) {
-                logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
+            if (err == 3) {
+                logger.error("查询买家信息异常：" + err);
+                response.json(results[0]);
                 result.afterSaleList = results[1];
                 response.json(result);
                 return;
             } else {
                 logger.info("shuju------------->" + JSON.stringify(results));
                 result = results[0];
-
+                result.afterSaleList = results[1];
+                result.loginName = results[2];
                 response.json(result);
                 return;
             }
