@@ -12,8 +12,10 @@ function ModuleConfig(){}
 /* 查询模块列表 */
 ModuleConfig.prototype.queryModuleConfig = function (params,callback) {
 
+    var bean = new manager_types.ModuleConfigParam({});
+
     //获取客户端
-    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryModuleConfig',[]);
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryModuleConfig',[bean]);
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("queryModuleConfigList result:" + JSON.stringify(data));
         var res = {};

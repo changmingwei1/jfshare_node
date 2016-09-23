@@ -11,7 +11,7 @@ var ModuleConfig = require('../lib/models/moduleConfig');// 广告位功能模�
 router.post('/queryModuleConfig', function (request, response, next) {
     logger.info("开始查询模块");
     var result = {code: 200};
-    var AdvertSlotList = [];
+    var ModuleConfigList = [];
     try {
         var params = request.body;
 
@@ -27,9 +27,9 @@ router.post('/queryModuleConfig', function (request, response, next) {
             return;
         });
     } catch (ex) {
-        logger.error("查询广告位模块异常:" + ex);
+        logger.error("查询模块列表异常:" + ex);
         result.code = 500;
-        result.desc = "查询广告位模块错误";
+        result.desc = "查询模块列表错误";
         response.json(result);
     }
 });
