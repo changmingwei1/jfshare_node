@@ -128,7 +128,7 @@ router.post('/relase', function (request, response, next) {
         var params = request.body;
         //参数校验
         logger.info("relase params:" + JSON.stringify(params));
-        if (params.ModuleConfigDetailList == null || params.ModuleConfigDetailList == "" || param.ModuleConfigDetailList.size() <= 0) {
+        if (params.ModuleConfigDetailList == null || params.ModuleConfigDetailList == "" ) {
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);

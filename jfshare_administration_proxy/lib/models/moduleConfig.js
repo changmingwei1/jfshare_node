@@ -83,7 +83,7 @@ ModuleConfig.prototype.relase = function (params, callback) {
     logger.info("发布模块的参数，bean = " + JSON.stringify(bean));
     //获取客户端
     var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'relase', [bean]);
-    Lich.wicca.invokeClient(slotServ, function (err, data) {
+    Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("relase result:" + JSON.stringify(data));
         var res = {};
         if (err) {
@@ -91,10 +91,10 @@ ModuleConfig.prototype.relase = function (params, callback) {
             res.code = 500;
             res.desc = "发布模块失败";
             callback(res, null);
-        } else if (data[0].code == 1){
+        } else if (data[0].result.code == 1){
             logger.warn("managerServ.relase param: ======" + JSON.stringify(bean));
             res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else{
             callback(null, data);
