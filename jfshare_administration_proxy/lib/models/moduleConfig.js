@@ -78,7 +78,8 @@ ModuleConfig.prototype.relase = function (params, callback) {
         iList.push(mcDetail);
     }
     var bean = new manager_types.RelaseParam({
-        ModuleConfigDetailList: iList
+        ModuleConfigDetailList: iList,
+        moduleType:params.moduleType
     });
     logger.info("发布模块的参数，bean = " + JSON.stringify(bean));
     //获取客户端
