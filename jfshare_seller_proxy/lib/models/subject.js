@@ -369,6 +369,29 @@ Subject.prototype.addSubjectAttribute = function (params, callback) {
 }
 ;
 
+Subject.prototype.getSuperTree = function (params, callback) {
+    logger.info("subjectServ-getSuperTree params:" + JSON.stringify(params));
+
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSuperTree", [params.subjectId]);
+
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("subjectServ-getSuperTree result:" + JSON.stringify(data));
+        if (err || data == null || data[0].result.code == 1 ) {
+            logger.error("subjectServ-getSuperTree result   ======" + err);
+            var result = {};
+            result.code = 500;
+            result.desc = "查询父类目失败";
+            return callback(result, null);
+        }
+
+        if(data!=null && data[0] !=null && data[0].subjectNodes!=null){
+            return callback(null, data[0].subjectNodes);
+        }
+
+    });
+
+}
+;
 
 module.exports = new Subject();
 /**
