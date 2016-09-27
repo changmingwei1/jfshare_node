@@ -110,7 +110,7 @@ router.post('/getAttributesAndSku', function (request, response, next) {
                     skuAndAttributesList.push(attributes)
                 });
 
-              result.list = skuAndAttributesList;
+                result.list = skuAndAttributesList;
                 logger.info("queryAttributes  result:" + JSON.stringify(result));
                 response.json(result);
 
@@ -124,5 +124,36 @@ router.post('/getAttributesAndSku', function (request, response, next) {
     }
 });
 
+//获取类目属性
+router.post('/getSuperTree', function (request, response, next) {
+    var result = {code: 200};
+    result.subjectNodes = [];
+    try {
+        var params = request.body;
+        if (params.subjectId == null || params.subjectId == "" || params.subjectId < 0) {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        logger.info("请求， arg:" + JSON.stringify("subjectId:" + JSON.stringify(params)));
+
+        Subject.getSuperTree(params, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+                logger.info("getSuperTree  result:" + JSON.stringify(result));
+                result.subjectNodes = data;
+                return response.json(result);
+
+            }
+        });
+    } catch (ex) {
+        logger.error("获取 error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        response.json(result);
+    }
+});
 
 module.exports = router;
