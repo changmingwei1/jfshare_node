@@ -183,7 +183,7 @@ SlotImage.prototype.deleteAdvertSlotImage = function (params, callback) {
 SlotImage.prototype.publishAdvertSlot = function (params, callback) {
 
     var list = params.slotImageList;
-    var iList = []
+    var iList = [];
     for(var i = 0; i < list.length; i++){
         var image = new  manager_types.AdvertSlotImage({
                 id:list[i].id,
@@ -233,7 +233,7 @@ SlotImage.prototype.queryAdvertSlotList = function (params,callback) {
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("queryAdvertSlotImageList result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err) {
             logger.error("slotServ.queryAdvertSlotImageList because: ======" + err);
             res.code = 500;
             res.desc = "查询广告位模块"+"失败";

@@ -1916,6 +1916,72 @@ QueryImgkeyResult.prototype.write = function(output) {
   return;
 };
 
+QueryProductRuleImgkeyParam = module.exports.QueryProductRuleImgkeyParam = function(args) {
+  this.moduleId = null;
+  this.ruleType = null;
+  if (args) {
+    if (args.moduleId !== undefined) {
+      this.moduleId = args.moduleId;
+    }
+    if (args.ruleType !== undefined) {
+      this.ruleType = args.ruleType;
+    }
+  }
+};
+QueryProductRuleImgkeyParam.prototype = {};
+QueryProductRuleImgkeyParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.ruleType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+QueryProductRuleImgkeyParam.prototype.write = function(output) {
+  output.writeStructBegin('QueryProductRuleImgkeyParam');
+  if (this.moduleId !== null && this.moduleId !== undefined) {
+    output.writeFieldBegin('moduleId', Thrift.Type.STRING, 1);
+    output.writeString(this.moduleId);
+    output.writeFieldEnd();
+  }
+  if (this.ruleType !== null && this.ruleType !== undefined) {
+    output.writeFieldBegin('ruleType', Thrift.Type.STRING, 2);
+    output.writeString(this.ruleType);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 AdvertSlotImage = module.exports.AdvertSlotImage = function(args) {
   this.id = null;
   this.imgKey = null;
