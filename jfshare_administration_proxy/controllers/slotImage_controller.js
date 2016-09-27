@@ -104,12 +104,6 @@ router.post('/updateAdvertSlotImage', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.slotName == null || params.slotName == "") {
-            result.code = 400;
-            result.desc = "slotName参数错误";
-            response.json(result);
-            return;
-        }
         if (params.remark == null || params.remark == "") {
             result.code = 400;
             result.desc = "remark参数错误";

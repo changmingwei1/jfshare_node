@@ -884,14 +884,14 @@ function addToBuyNow() {
                 }
                 $("input[name='type']").val(productInfo.type);
                 var type = productInfo.type;
-                sessionStorage.setItem("type", type);
+                localStorage.setItem("type", type);
                 //跳转提交订单页面
                 $("#addProductSkuform").attr("action","/order/add_confirm?ssid="+ssid);
                 $("#addProductSkuform").submit();
 
                 //存储提交页ifmurl ---新加2
                 //var ifmurl = "http://ct100.jfshare.com/order/add_confirm?ssid="+ssid;
-                //sessionStorage.setItem("ifmurl", ifmurl);
+                //localStorage.setItem("ifmurl", ifmurl);
             }
         });
     }

@@ -148,20 +148,39 @@ router.post('/cancelOrder', function (req, res, next) {
             res.json(result);
             return;
         }
-        if (arg.reason == null || arg.reason == "") {
+        if (arg.token == "" || arg.token == null) {
             result.code = 400;
-            result.desc = "请选择取消原因";
-            res.json(result);
+            result.desc = "鉴权信息不能为空";
+            response.json(result);
+            return;
+        }
+        if (arg.ppInfo == "" || arg.ppInfo == null) {
+            result.code = 400;
+            result.desc = "鉴权信息不能为空";
+            response.json(result);
+            return;
+        }
+        if (arg.browser == "" || arg.browser == null) {
+            result.code = 400;
+            result.desc = "浏览器标识不能为空";
+            response.json(result);
             return;
         }
 
         logger.info("请求参数，arg：" + JSON.stringify(arg));
-        Order.cancelOrder(arg, function (err, data) {
+        //暂时去掉鉴权信息
+        Buyer.validAuth(arg, function (err, data) {
             if (err) {
                 res.json(err);
                 return;
             }
-            res.json(result);
+            Order.cancelOrder(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                res.json(result);
+            });
         });
     } catch (ex) {
         logger.error("不能取消，原因是:" + ex);

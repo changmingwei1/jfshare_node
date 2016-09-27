@@ -30,7 +30,8 @@ var ServiceKey = {
     ExpresssServer:"Expresss",
     ScoreServer:"Score",
     ScoreCardsServ:"ScoreCards",// 积分卡服务 红包服务
-    StockServer:"Stock"
+    StockServer:"Stock",
+    BuyerServer:"Buyer"
 };
 
 /**

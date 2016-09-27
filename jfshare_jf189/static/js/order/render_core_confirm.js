@@ -32,8 +32,7 @@ function rendData() {
             if (data.status == 200) {
                 addresslist = data.addressInfoList;
                 //———新加 商品类型
-                productType = sessionStorage.getItem("type");
-                //sessionStorage.removeItem("type");
+                productType = localStorage.getItem("type");
                 if(productType == 2){
                     //实物商品收货地址
                     renderAddress();
@@ -311,9 +310,9 @@ function orderConfirm() {
                 toPayBtn.html("提交订单...");
                 toPayBtn.die("click");
 
-                //存储成功提交页ifmurl ---新加3
+                //存储成功提交页ifmurl ---新加33
                 //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
-                //sessionStorage.setItem("ifmurl", ifmurl);
+                //localStorage.setItem("ifmurl", ifmurl);
 
                 return false; // 阻止表单自动提交事件
             });
@@ -338,9 +337,9 @@ function orderConfirm() {
                 toPayBtn.html("提交订单...");
                 toPayBtn.die("click");
 
-                //存储成功提交页ifmurl ---新加
+                //存储成功提交页ifmurl ---新加33
                 //var ifmurl = "http://ct100.jfshare.com/order/confirm_order";
-                //sessionStorage.setItem("ifmurl", ifmurl);
+                //localStorage.setItem("ifmurl", ifmurl);
 
                 return false; // 阻止表单自动提交事件
             });

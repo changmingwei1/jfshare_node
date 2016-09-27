@@ -301,6 +301,8 @@ Buyer = module.exports.Buyer = function(args) {
   this.serial = null;
   this.createTime = null;
   this.lastUpdateTime = null;
+  this.state = null;
+  this.clientType = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -376,6 +378,12 @@ Buyer = module.exports.Buyer = function(args) {
     }
     if (args.lastUpdateTime !== undefined) {
       this.lastUpdateTime = args.lastUpdateTime;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.clientType !== undefined) {
+      this.clientType = args.clientType;
     }
   }
 };
@@ -568,6 +576,20 @@ Buyer.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 26:
+      if (ftype == Thrift.Type.I32) {
+        this.state = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 27:
+      if (ftype == Thrift.Type.I32) {
+        this.clientType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -702,6 +724,16 @@ Buyer.prototype.write = function(output) {
   if (this.lastUpdateTime !== null && this.lastUpdateTime !== undefined) {
     output.writeFieldBegin('lastUpdateTime', Thrift.Type.STRING, 25);
     output.writeString(this.lastUpdateTime);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 26);
+    output.writeI32(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.clientType !== null && this.clientType !== undefined) {
+    output.writeFieldBegin('clientType', Thrift.Type.I32, 27);
+    output.writeI32(this.clientType);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1349,6 +1381,241 @@ UserInfoThird.prototype.write = function(output) {
   if (this.extInfo !== null && this.extInfo !== undefined) {
     output.writeFieldBegin('extInfo', Thrift.Type.STRING, 4);
     output.writeString(this.extInfo);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+H5ThirdLoginParam = module.exports.H5ThirdLoginParam = function(args) {
+  this.requestXml = null;
+  if (args) {
+    if (args.requestXml !== undefined) {
+      this.requestXml = args.requestXml;
+    }
+  }
+};
+H5ThirdLoginParam.prototype = {};
+H5ThirdLoginParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.requestXml = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+H5ThirdLoginParam.prototype.write = function(output) {
+  output.writeStructBegin('H5ThirdLoginParam');
+  if (this.requestXml !== null && this.requestXml !== undefined) {
+    output.writeFieldBegin('requestXml', Thrift.Type.STRING, 1);
+    output.writeString(this.requestXml);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+H5ThirdLoginResult = module.exports.H5ThirdLoginResult = function(args) {
+  this.result = null;
+  this.userId = null;
+  this.token = null;
+  this.ppInfo = null;
+  this.mobile = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.token !== undefined) {
+      this.token = args.token;
+    }
+    if (args.ppInfo !== undefined) {
+      this.ppInfo = args.ppInfo;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+  }
+};
+H5ThirdLoginResult.prototype = {};
+H5ThirdLoginResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.token = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.ppInfo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+H5ThirdLoginResult.prototype.write = function(output) {
+  output.writeStructBegin('H5ThirdLoginResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.token !== null && this.token !== undefined) {
+    output.writeFieldBegin('token', Thrift.Type.STRING, 3);
+    output.writeString(this.token);
+    output.writeFieldEnd();
+  }
+  if (this.ppInfo !== null && this.ppInfo !== undefined) {
+    output.writeFieldBegin('ppInfo', Thrift.Type.STRING, 4);
+    output.writeString(this.ppInfo);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 5);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+PurchaseMobileResult = module.exports.PurchaseMobileResult = function(args) {
+  this.result = null;
+  this.value = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.value !== undefined) {
+      this.value = args.value;
+    }
+  }
+};
+PurchaseMobileResult.prototype = {};
+PurchaseMobileResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.BOOL) {
+        this.value = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+PurchaseMobileResult.prototype.write = function(output) {
+  output.writeStructBegin('PurchaseMobileResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.value !== null && this.value !== undefined) {
+    output.writeFieldBegin('value', Thrift.Type.BOOL, 2);
+    output.writeBool(this.value);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

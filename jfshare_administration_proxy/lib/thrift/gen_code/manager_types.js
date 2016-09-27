@@ -675,6 +675,1247 @@ CommissionerResult.prototype.write = function(output) {
   return;
 };
 
+ModuleConfig = module.exports.ModuleConfig = function(args) {
+  this.id = null;
+  this.moduleName = null;
+  this.moduleDesc = null;
+  this.moduleType = null;
+  this.createTime = null;
+  this.relaseChannel = null;
+  this.relaseStatus = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.moduleName !== undefined) {
+      this.moduleName = args.moduleName;
+    }
+    if (args.moduleDesc !== undefined) {
+      this.moduleDesc = args.moduleDesc;
+    }
+    if (args.moduleType !== undefined) {
+      this.moduleType = args.moduleType;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.relaseChannel !== undefined) {
+      this.relaseChannel = args.relaseChannel;
+    }
+    if (args.relaseStatus !== undefined) {
+      this.relaseStatus = args.relaseStatus;
+    }
+  }
+};
+ModuleConfig.prototype = {};
+ModuleConfig.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleDesc = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaseChannel = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaseStatus = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ModuleConfig.prototype.write = function(output) {
+  output.writeStructBegin('ModuleConfig');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.moduleName !== null && this.moduleName !== undefined) {
+    output.writeFieldBegin('moduleName', Thrift.Type.STRING, 2);
+    output.writeString(this.moduleName);
+    output.writeFieldEnd();
+  }
+  if (this.moduleDesc !== null && this.moduleDesc !== undefined) {
+    output.writeFieldBegin('moduleDesc', Thrift.Type.STRING, 3);
+    output.writeString(this.moduleDesc);
+    output.writeFieldEnd();
+  }
+  if (this.moduleType !== null && this.moduleType !== undefined) {
+    output.writeFieldBegin('moduleType', Thrift.Type.STRING, 4);
+    output.writeString(this.moduleType);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 5);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.relaseChannel !== null && this.relaseChannel !== undefined) {
+    output.writeFieldBegin('relaseChannel', Thrift.Type.STRING, 6);
+    output.writeString(this.relaseChannel);
+    output.writeFieldEnd();
+  }
+  if (this.relaseStatus !== null && this.relaseStatus !== undefined) {
+    output.writeFieldBegin('relaseStatus', Thrift.Type.STRING, 7);
+    output.writeString(this.relaseStatus);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ModuleConfigResult = module.exports.ModuleConfigResult = function(args) {
+  this.result = null;
+  this.moduleConfigList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.moduleConfigList !== undefined) {
+      this.moduleConfigList = args.moduleConfigList;
+    }
+  }
+};
+ModuleConfigResult.prototype = {};
+ModuleConfigResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size8 = 0;
+        var _rtmp312;
+        this.moduleConfigList = [];
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        {
+          var elem14 = null;
+          elem14 = new ttypes.ModuleConfig();
+          elem14.read(input);
+          this.moduleConfigList.push(elem14);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ModuleConfigResult.prototype.write = function(output) {
+  output.writeStructBegin('ModuleConfigResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.moduleConfigList !== null && this.moduleConfigList !== undefined) {
+    output.writeFieldBegin('moduleConfigList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.moduleConfigList.length);
+    for (var iter15 in this.moduleConfigList)
+    {
+      if (this.moduleConfigList.hasOwnProperty(iter15))
+      {
+        iter15 = this.moduleConfigList[iter15];
+        iter15.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ModuleConfigParam = module.exports.ModuleConfigParam = function(args) {
+  this.id = null;
+  this.moduleName = null;
+  this.moduleType = null;
+  this.createTime = null;
+  this.relaseStatus = null;
+  this.relaseChannel = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.moduleName !== undefined) {
+      this.moduleName = args.moduleName;
+    }
+    if (args.moduleType !== undefined) {
+      this.moduleType = args.moduleType;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.relaseStatus !== undefined) {
+      this.relaseStatus = args.relaseStatus;
+    }
+    if (args.relaseChannel !== undefined) {
+      this.relaseChannel = args.relaseChannel;
+    }
+  }
+};
+ModuleConfigParam.prototype = {};
+ModuleConfigParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaseStatus = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaseChannel = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ModuleConfigParam.prototype.write = function(output) {
+  output.writeStructBegin('ModuleConfigParam');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.moduleName !== null && this.moduleName !== undefined) {
+    output.writeFieldBegin('moduleName', Thrift.Type.STRING, 2);
+    output.writeString(this.moduleName);
+    output.writeFieldEnd();
+  }
+  if (this.moduleType !== null && this.moduleType !== undefined) {
+    output.writeFieldBegin('moduleType', Thrift.Type.STRING, 3);
+    output.writeString(this.moduleType);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 4);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.relaseStatus !== null && this.relaseStatus !== undefined) {
+    output.writeFieldBegin('relaseStatus', Thrift.Type.STRING, 5);
+    output.writeString(this.relaseStatus);
+    output.writeFieldEnd();
+  }
+  if (this.relaseChannel !== null && this.relaseChannel !== undefined) {
+    output.writeFieldBegin('relaseChannel', Thrift.Type.STRING, 6);
+    output.writeString(this.relaseChannel);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ModuleConfigDetail = module.exports.ModuleConfigDetail = function(args) {
+  this.id = null;
+  this.moduleId = null;
+  this.createTime = null;
+  this.relaId = null;
+  this.relaImgkey = null;
+  this.productRuleId = null;
+  this.relaSort = null;
+  this.updateTime = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.moduleId !== undefined) {
+      this.moduleId = args.moduleId;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.relaId !== undefined) {
+      this.relaId = args.relaId;
+    }
+    if (args.relaImgkey !== undefined) {
+      this.relaImgkey = args.relaImgkey;
+    }
+    if (args.productRuleId !== undefined) {
+      this.productRuleId = args.productRuleId;
+    }
+    if (args.relaSort !== undefined) {
+      this.relaSort = args.relaSort;
+    }
+    if (args.updateTime !== undefined) {
+      this.updateTime = args.updateTime;
+    }
+  }
+};
+ModuleConfigDetail.prototype = {};
+ModuleConfigDetail.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaImgkey = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.productRuleId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaSort = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.updateTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ModuleConfigDetail.prototype.write = function(output) {
+  output.writeStructBegin('ModuleConfigDetail');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.moduleId !== null && this.moduleId !== undefined) {
+    output.writeFieldBegin('moduleId', Thrift.Type.STRING, 2);
+    output.writeString(this.moduleId);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 3);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.relaId !== null && this.relaId !== undefined) {
+    output.writeFieldBegin('relaId', Thrift.Type.STRING, 4);
+    output.writeString(this.relaId);
+    output.writeFieldEnd();
+  }
+  if (this.relaImgkey !== null && this.relaImgkey !== undefined) {
+    output.writeFieldBegin('relaImgkey', Thrift.Type.STRING, 5);
+    output.writeString(this.relaImgkey);
+    output.writeFieldEnd();
+  }
+  if (this.productRuleId !== null && this.productRuleId !== undefined) {
+    output.writeFieldBegin('productRuleId', Thrift.Type.STRING, 6);
+    output.writeString(this.productRuleId);
+    output.writeFieldEnd();
+  }
+  if (this.relaSort !== null && this.relaSort !== undefined) {
+    output.writeFieldBegin('relaSort', Thrift.Type.STRING, 7);
+    output.writeString(this.relaSort);
+    output.writeFieldEnd();
+  }
+  if (this.updateTime !== null && this.updateTime !== undefined) {
+    output.writeFieldBegin('updateTime', Thrift.Type.STRING, 8);
+    output.writeString(this.updateTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ModuleConfigDetailResult = module.exports.ModuleConfigDetailResult = function(args) {
+  this.result = null;
+  this.ModuleConfigDetailList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.ModuleConfigDetailList !== undefined) {
+      this.ModuleConfigDetailList = args.ModuleConfigDetailList;
+    }
+  }
+};
+ModuleConfigDetailResult.prototype = {};
+ModuleConfigDetailResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size16 = 0;
+        var _rtmp320;
+        this.ModuleConfigDetailList = [];
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        {
+          var elem22 = null;
+          elem22 = new ttypes.ModuleConfigDetail();
+          elem22.read(input);
+          this.ModuleConfigDetailList.push(elem22);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ModuleConfigDetailResult.prototype.write = function(output) {
+  output.writeStructBegin('ModuleConfigDetailResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.ModuleConfigDetailList !== null && this.ModuleConfigDetailList !== undefined) {
+    output.writeFieldBegin('ModuleConfigDetailList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.ModuleConfigDetailList.length);
+    for (var iter23 in this.ModuleConfigDetailList)
+    {
+      if (this.ModuleConfigDetailList.hasOwnProperty(iter23))
+      {
+        iter23 = this.ModuleConfigDetailList[iter23];
+        iter23.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ModuleConfigDetailParam = module.exports.ModuleConfigDetailParam = function(args) {
+  this.moduleId = null;
+  this.createTime = null;
+  this.relaId = null;
+  this.relaImgkey = null;
+  this.productRuleId = null;
+  this.relaSort = null;
+  if (args) {
+    if (args.moduleId !== undefined) {
+      this.moduleId = args.moduleId;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.relaId !== undefined) {
+      this.relaId = args.relaId;
+    }
+    if (args.relaImgkey !== undefined) {
+      this.relaImgkey = args.relaImgkey;
+    }
+    if (args.productRuleId !== undefined) {
+      this.productRuleId = args.productRuleId;
+    }
+    if (args.relaSort !== undefined) {
+      this.relaSort = args.relaSort;
+    }
+  }
+};
+ModuleConfigDetailParam.prototype = {};
+ModuleConfigDetailParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaImgkey = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.productRuleId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaSort = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ModuleConfigDetailParam.prototype.write = function(output) {
+  output.writeStructBegin('ModuleConfigDetailParam');
+  if (this.moduleId !== null && this.moduleId !== undefined) {
+    output.writeFieldBegin('moduleId', Thrift.Type.STRING, 1);
+    output.writeString(this.moduleId);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 2);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.relaId !== null && this.relaId !== undefined) {
+    output.writeFieldBegin('relaId', Thrift.Type.STRING, 3);
+    output.writeString(this.relaId);
+    output.writeFieldEnd();
+  }
+  if (this.relaImgkey !== null && this.relaImgkey !== undefined) {
+    output.writeFieldBegin('relaImgkey', Thrift.Type.STRING, 4);
+    output.writeString(this.relaImgkey);
+    output.writeFieldEnd();
+  }
+  if (this.productRuleId !== null && this.productRuleId !== undefined) {
+    output.writeFieldBegin('productRuleId', Thrift.Type.STRING, 5);
+    output.writeString(this.productRuleId);
+    output.writeFieldEnd();
+  }
+  if (this.relaSort !== null && this.relaSort !== undefined) {
+    output.writeFieldBegin('relaSort', Thrift.Type.STRING, 6);
+    output.writeString(this.relaSort);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+RelaseResult = module.exports.RelaseResult = function(args) {
+  this.result = null;
+  this.type = null;
+  this.relaseCount = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+    if (args.relaseCount !== undefined) {
+      this.relaseCount = args.relaseCount;
+    }
+  }
+};
+RelaseResult.prototype = {};
+RelaseResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.type = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaseCount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+RelaseResult.prototype.write = function(output) {
+  output.writeStructBegin('RelaseResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.STRING, 2);
+    output.writeString(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.relaseCount !== null && this.relaseCount !== undefined) {
+    output.writeFieldBegin('relaseCount', Thrift.Type.STRING, 3);
+    output.writeString(this.relaseCount);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+RelaseParam = module.exports.RelaseParam = function(args) {
+  this.ModuleConfigDetailList = null;
+  this.moduleType = null;
+  if (args) {
+    if (args.ModuleConfigDetailList !== undefined) {
+      this.ModuleConfigDetailList = args.ModuleConfigDetailList;
+    }
+    if (args.moduleType !== undefined) {
+      this.moduleType = args.moduleType;
+    }
+  }
+};
+RelaseParam.prototype = {};
+RelaseParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size24 = 0;
+        var _rtmp328;
+        this.ModuleConfigDetailList = [];
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        {
+          var elem30 = null;
+          elem30 = new ttypes.ModuleConfigDetail();
+          elem30.read(input);
+          this.ModuleConfigDetailList.push(elem30);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+RelaseParam.prototype.write = function(output) {
+  output.writeStructBegin('RelaseParam');
+  if (this.ModuleConfigDetailList !== null && this.ModuleConfigDetailList !== undefined) {
+    output.writeFieldBegin('ModuleConfigDetailList', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.ModuleConfigDetailList.length);
+    for (var iter31 in this.ModuleConfigDetailList)
+    {
+      if (this.ModuleConfigDetailList.hasOwnProperty(iter31))
+      {
+        iter31 = this.ModuleConfigDetailList[iter31];
+        iter31.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.moduleType !== null && this.moduleType !== undefined) {
+    output.writeFieldBegin('moduleType', Thrift.Type.STRING, 2);
+    output.writeString(this.moduleType);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ImportParam = module.exports.ImportParam = function(args) {
+  this.filePath = null;
+  this.moduleId = null;
+  this.moduleType = null;
+  if (args) {
+    if (args.filePath !== undefined) {
+      this.filePath = args.filePath;
+    }
+    if (args.moduleId !== undefined) {
+      this.moduleId = args.moduleId;
+    }
+    if (args.moduleType !== undefined) {
+      this.moduleType = args.moduleType;
+    }
+  }
+};
+ImportParam.prototype = {};
+ImportParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.filePath = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ImportParam.prototype.write = function(output) {
+  output.writeStructBegin('ImportParam');
+  if (this.filePath !== null && this.filePath !== undefined) {
+    output.writeFieldBegin('filePath', Thrift.Type.STRING, 1);
+    output.writeString(this.filePath);
+    output.writeFieldEnd();
+  }
+  if (this.moduleId !== null && this.moduleId !== undefined) {
+    output.writeFieldBegin('moduleId', Thrift.Type.STRING, 2);
+    output.writeString(this.moduleId);
+    output.writeFieldEnd();
+  }
+  if (this.moduleType !== null && this.moduleType !== undefined) {
+    output.writeFieldBegin('moduleType', Thrift.Type.STRING, 3);
+    output.writeString(this.moduleType);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ImportResult = module.exports.ImportResult = function(args) {
+  this.result = null;
+  this.ModuleConfigDetailList = null;
+  this.impCount = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.ModuleConfigDetailList !== undefined) {
+      this.ModuleConfigDetailList = args.ModuleConfigDetailList;
+    }
+    if (args.impCount !== undefined) {
+      this.impCount = args.impCount;
+    }
+  }
+};
+ImportResult.prototype = {};
+ImportResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size32 = 0;
+        var _rtmp336;
+        this.ModuleConfigDetailList = [];
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        {
+          var elem38 = null;
+          elem38 = new ttypes.ModuleConfigDetail();
+          elem38.read(input);
+          this.ModuleConfigDetailList.push(elem38);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.impCount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ImportResult.prototype.write = function(output) {
+  output.writeStructBegin('ImportResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.ModuleConfigDetailList !== null && this.ModuleConfigDetailList !== undefined) {
+    output.writeFieldBegin('ModuleConfigDetailList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.ModuleConfigDetailList.length);
+    for (var iter39 in this.ModuleConfigDetailList)
+    {
+      if (this.ModuleConfigDetailList.hasOwnProperty(iter39))
+      {
+        iter39 = this.ModuleConfigDetailList[iter39];
+        iter39.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.impCount !== null && this.impCount !== undefined) {
+    output.writeFieldBegin('impCount', Thrift.Type.I32, 3);
+    output.writeI32(this.impCount);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+QueryImgkeyParam = module.exports.QueryImgkeyParam = function(args) {
+  this.relaId = null;
+  this.moduleType = null;
+  if (args) {
+    if (args.relaId !== undefined) {
+      this.relaId = args.relaId;
+    }
+    if (args.moduleType !== undefined) {
+      this.moduleType = args.moduleType;
+    }
+  }
+};
+QueryImgkeyParam.prototype = {};
+QueryImgkeyParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.relaId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.moduleType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+QueryImgkeyParam.prototype.write = function(output) {
+  output.writeStructBegin('QueryImgkeyParam');
+  if (this.relaId !== null && this.relaId !== undefined) {
+    output.writeFieldBegin('relaId', Thrift.Type.STRING, 1);
+    output.writeString(this.relaId);
+    output.writeFieldEnd();
+  }
+  if (this.moduleType !== null && this.moduleType !== undefined) {
+    output.writeFieldBegin('moduleType', Thrift.Type.STRING, 2);
+    output.writeString(this.moduleType);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+QueryImgkeyResult = module.exports.QueryImgkeyResult = function(args) {
+  this.result = null;
+  this.imgKey = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.imgKey !== undefined) {
+      this.imgKey = args.imgKey;
+    }
+  }
+};
+QueryImgkeyResult.prototype = {};
+QueryImgkeyResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.imgKey = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+QueryImgkeyResult.prototype.write = function(output) {
+  output.writeStructBegin('QueryImgkeyResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.imgKey !== null && this.imgKey !== undefined) {
+    output.writeFieldBegin('imgKey', Thrift.Type.STRING, 2);
+    output.writeString(this.imgKey);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 AdvertSlotImage = module.exports.AdvertSlotImage = function(args) {
   this.id = null;
   this.imgKey = null;
@@ -890,6 +2131,7 @@ AdvertSlot = module.exports.AdvertSlot = function(args) {
   this.slotName = null;
   this.count = null;
   this.createTime = null;
+  this.type = null;
   if (args) {
     if (args.advertId !== undefined) {
       this.advertId = args.advertId;
@@ -902,6 +2144,9 @@ AdvertSlot = module.exports.AdvertSlot = function(args) {
     }
     if (args.createTime !== undefined) {
       this.createTime = args.createTime;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
     }
   }
 };
@@ -947,6 +2192,13 @@ AdvertSlot.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.type = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -978,6 +2230,11 @@ AdvertSlot.prototype.write = function(output) {
     output.writeString(this.createTime);
     output.writeFieldEnd();
   }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.STRING, 5);
+    output.writeString(this.type);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -985,10 +2242,14 @@ AdvertSlot.prototype.write = function(output) {
 
 AdvertSlotImageParam = module.exports.AdvertSlotImageParam = function(args) {
   this.advertId = null;
+  this.fromSource = null;
   this.type = null;
   if (args) {
     if (args.advertId !== undefined) {
       this.advertId = args.advertId;
+    }
+    if (args.fromSource !== undefined) {
+      this.fromSource = args.fromSource;
     }
     if (args.type !== undefined) {
       this.type = args.type;
@@ -1018,6 +2279,13 @@ AdvertSlotImageParam.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.I32) {
+        this.fromSource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
         this.type = input.readI32();
       } else {
         input.skip(ftype);
@@ -1039,8 +2307,13 @@ AdvertSlotImageParam.prototype.write = function(output) {
     output.writeI32(this.advertId);
     output.writeFieldEnd();
   }
+  if (this.fromSource !== null && this.fromSource !== undefined) {
+    output.writeFieldBegin('fromSource', Thrift.Type.I32, 2);
+    output.writeI32(this.fromSource);
+    output.writeFieldEnd();
+  }
   if (this.type !== null && this.type !== undefined) {
-    output.writeFieldBegin('type', Thrift.Type.I32, 2);
+    output.writeFieldBegin('type', Thrift.Type.I32, 3);
     output.writeI32(this.type);
     output.writeFieldEnd();
   }
@@ -1085,19 +2358,19 @@ AdvertSlotImageListResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
+        var _size40 = 0;
+        var _rtmp344;
         this.slotImageList = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
         {
-          var elem14 = null;
-          elem14 = new ttypes.AdvertSlotImage();
-          elem14.read(input);
-          this.slotImageList.push(elem14);
+          var elem46 = null;
+          elem46 = new ttypes.AdvertSlotImage();
+          elem46.read(input);
+          this.slotImageList.push(elem46);
         }
         input.readListEnd();
       } else {
@@ -1123,12 +2396,12 @@ AdvertSlotImageListResult.prototype.write = function(output) {
   if (this.slotImageList !== null && this.slotImageList !== undefined) {
     output.writeFieldBegin('slotImageList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.slotImageList.length);
-    for (var iter15 in this.slotImageList)
+    for (var iter47 in this.slotImageList)
     {
-      if (this.slotImageList.hasOwnProperty(iter15))
+      if (this.slotImageList.hasOwnProperty(iter47))
       {
-        iter15 = this.slotImageList[iter15];
-        iter15.write(output);
+        iter47 = this.slotImageList[iter47];
+        iter47.write(output);
       }
     }
     output.writeListEnd();
@@ -1235,19 +2508,19 @@ AdvertSlotImageListParam.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
+        var _size48 = 0;
+        var _rtmp352;
         this.slotImageList = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
         {
-          var elem22 = null;
-          elem22 = new ttypes.AdvertSlotImage();
-          elem22.read(input);
-          this.slotImageList.push(elem22);
+          var elem54 = null;
+          elem54 = new ttypes.AdvertSlotImage();
+          elem54.read(input);
+          this.slotImageList.push(elem54);
         }
         input.readListEnd();
       } else {
@@ -1275,12 +2548,12 @@ AdvertSlotImageListParam.prototype.write = function(output) {
   if (this.slotImageList !== null && this.slotImageList !== undefined) {
     output.writeFieldBegin('slotImageList', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.slotImageList.length);
-    for (var iter23 in this.slotImageList)
+    for (var iter55 in this.slotImageList)
     {
-      if (this.slotImageList.hasOwnProperty(iter23))
+      if (this.slotImageList.hasOwnProperty(iter55))
       {
-        iter23 = this.slotImageList[iter23];
-        iter23.write(output);
+        iter55 = this.slotImageList[iter55];
+        iter55.write(output);
       }
     }
     output.writeListEnd();
@@ -1332,19 +2605,19 @@ AdvertSlotListResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
+        var _size56 = 0;
+        var _rtmp360;
         this.slotList = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        var _etype59 = 0;
+        _rtmp360 = input.readListBegin();
+        _etype59 = _rtmp360.etype;
+        _size56 = _rtmp360.size;
+        for (var _i61 = 0; _i61 < _size56; ++_i61)
         {
-          var elem30 = null;
-          elem30 = new ttypes.AdvertSlot();
-          elem30.read(input);
-          this.slotList.push(elem30);
+          var elem62 = null;
+          elem62 = new ttypes.AdvertSlot();
+          elem62.read(input);
+          this.slotList.push(elem62);
         }
         input.readListEnd();
       } else {
@@ -1370,12 +2643,12 @@ AdvertSlotListResult.prototype.write = function(output) {
   if (this.slotList !== null && this.slotList !== undefined) {
     output.writeFieldBegin('slotList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.slotList.length);
-    for (var iter31 in this.slotList)
+    for (var iter63 in this.slotList)
     {
-      if (this.slotList.hasOwnProperty(iter31))
+      if (this.slotList.hasOwnProperty(iter63))
       {
-        iter31 = this.slotList[iter31];
-        iter31.write(output);
+        iter63 = this.slotList[iter63];
+        iter63.write(output);
       }
     }
     output.writeListEnd();

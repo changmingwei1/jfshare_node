@@ -274,6 +274,8 @@ router.post('/list', function (req, res, next) {
                                         cartPrice: itemDetailList[j].product.cartPrice,
                                         skuCount: itemDetailList[j].product.skuCount,
                                         count: itemDetailList[j].product.count,
+                                        sellerId: itemList[i].seller.sellerId,      /*暂时放到productList里面*/
+                                        sellerName: itemList[i].seller.sellerName,
                                         sku: {
                                             skuNum: "",
                                             skuName: "",

@@ -3831,3 +3831,184 @@ BatchDeliverParam.prototype.write = function(output) {
   return;
 };
 
+SellerBatchDeliverParam = module.exports.SellerBatchDeliverParam = function(args) {
+  this.sellerId = null;
+  this.param = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+SellerBatchDeliverParam.prototype = {};
+SellerBatchDeliverParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.BatchDeliverParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerBatchDeliverParam.prototype.write = function(output) {
+  output.writeStructBegin('SellerBatchDeliverParam');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 1);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 2);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OrderSellerQueryParam = module.exports.OrderSellerQueryParam = function(args) {
+  this.mobile = null;
+  this.sellerId = null;
+  this.orderId = null;
+  this.startTime = null;
+  this.endTime = null;
+  if (args) {
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+  }
+};
+OrderSellerQueryParam.prototype = {};
+OrderSellerQueryParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderSellerQueryParam.prototype.write = function(output) {
+  output.writeStructBegin('OrderSellerQueryParam');
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 1);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 2);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 3);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 4);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 5);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

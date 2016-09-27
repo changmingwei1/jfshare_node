@@ -820,33 +820,18 @@
             var divWidth = $("div.banner").width();
             $("div.banner").height(divWidth/rate);
         }
-
         var province = getIP() || 110000;
         $("a.detail").on("click",function(){
             var href=$(this).attr("data_href")+ "&provinceId=" + province + "&storehouseId=-1";
             $(this).attr("href",href);
         });
     });
-    //跳转商品详情事件  ---新加
-//    $("a.goDetial").on("click",function(){
-//        var ifmurl=$("a.goDetial").attr("data-href");
-//        localStorage.setItem("ifmurl",ifmurl);
-//        window.location.href=ifmurl;
-//    });
     function resizeIfr() {
         var _tyHostUrl = getTyHostUrl();
         var doc = document;
 //        var height = calcPageHeight(doc);
         var myifr = doc.getElementById('iframeA');
         myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5711';
-        //---新加  跳转页面ifmurl1
-//        var iframewin = parent.document.getElementById('win');
-//        var ifmurl = localStorage.getItem("ifmurl");
-//        if(ifmurl){
-//            iframewin.src=ifmurl;
-//            localStorage.removeItem("ifmurl");
-//        }
-
 //        if (myifr) {
 //            myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#' + height;
 //        } else {

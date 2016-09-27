@@ -24,7 +24,7 @@ SlotImage.prototype.saveAdvertSlotImage = function (params, callback) {
         remark: params.remark,
         jump: params.jump,
         //isOnline: params.isOnline,
-        //sort: params.sort,
+        sort: params.sort,
         startTime: params.startTime,
         endTime: params.endTime,
         // createTime: params.createTime
@@ -85,7 +85,7 @@ SlotImage.prototype.updateAdvertSlotImage = function (params, callback) {
 SlotImage.prototype.queryAdvertSlotImageList = function (params, callback) {
     var slotBean = new manager_types.AdvertSlotImageParam({
         advertId: params.advertId,
-        type:2 /*1为前端，2为管理中心*/
+        fromSource:2 /*1为前端，2为管理中心*/
     });
 
     //获取客户端
@@ -163,12 +163,17 @@ SlotImage.prototype.deleteAdvertSlotImage = function (params, callback) {
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("deleteAdvertSlotImage result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == 1) {
+        if (err) {
             logger.error("slotServ.deleteAdvertSlotImage because: ======" + err);
             res.code = 500;
             res.desc = "删除广告位图片"+"失败";
             callback(res, null);
-        } else {
+        } else if(data[0].code == 1){
+            logger.error("slotServ.deleteAdvertSlotImage because: ======" + JSON.stringify(slotBean));
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
+            callback(res, null);
+        }else {
             callback(null, data);
         }
     });

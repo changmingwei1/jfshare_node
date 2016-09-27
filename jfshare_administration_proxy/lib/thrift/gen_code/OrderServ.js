@@ -2156,6 +2156,136 @@ OrderServ_batchDeliverOrder_result.prototype.write = function(output) {
   return;
 };
 
+OrderServ_batchDeliverOrderForManager_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+OrderServ_batchDeliverOrderForManager_args.prototype = {};
+OrderServ_batchDeliverOrderForManager_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size72 = 0;
+        var _rtmp376;
+        this.param = [];
+        var _etype75 = 0;
+        _rtmp376 = input.readListBegin();
+        _etype75 = _rtmp376.etype;
+        _size72 = _rtmp376.size;
+        for (var _i77 = 0; _i77 < _size72; ++_i77)
+        {
+          var elem78 = null;
+          elem78 = new ttypes.SellerBatchDeliverParam();
+          elem78.read(input);
+          this.param.push(elem78);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_batchDeliverOrderForManager_args.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_batchDeliverOrderForManager_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.param.length);
+    for (var iter79 in this.param)
+    {
+      if (this.param.hasOwnProperty(iter79))
+      {
+        iter79 = this.param[iter79];
+        iter79.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OrderServ_batchDeliverOrderForManager_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+OrderServ_batchDeliverOrderForManager_result.prototype = {};
+OrderServ_batchDeliverOrderForManager_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.BatchDeliverResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_batchDeliverOrderForManager_result.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_batchDeliverOrderForManager_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 OrderServ_orderProfileQueryFull_args = function(args) {
   this.conditions = null;
   if (args) {
@@ -2527,6 +2657,114 @@ OrderServ_orderProfileQueryOffline_result.prototype.read = function(input) {
 
 OrderServ_orderProfileQueryOffline_result.prototype.write = function(output) {
   output.writeStructBegin('OrderServ_orderProfileQueryOffline_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OrderServ_orderSellerQueryOffline_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+OrderServ_orderSellerQueryOffline_args.prototype = {};
+OrderServ_orderSellerQueryOffline_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.OrderSellerQueryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_orderSellerQueryOffline_args.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_orderSellerQueryOffline_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OrderServ_orderSellerQueryOffline_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+OrderServ_orderSellerQueryOffline_result.prototype = {};
+OrderServ_orderSellerQueryOffline_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.OrderProfileResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_orderSellerQueryOffline_result.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_orderSellerQueryOffline_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -3365,6 +3603,53 @@ OrderServClient.prototype.recv_batchDeliverOrder = function(input,mtype,rseqid) 
   }
   return callback('batchDeliverOrder failed: unknown result');
 };
+OrderServClient.prototype.batchDeliverOrderForManager = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_batchDeliverOrderForManager(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_batchDeliverOrderForManager(param);
+  }
+};
+
+OrderServClient.prototype.send_batchDeliverOrderForManager = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('batchDeliverOrderForManager', Thrift.MessageType.CALL, this.seqid());
+  var args = new OrderServ_batchDeliverOrderForManager_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+OrderServClient.prototype.recv_batchDeliverOrderForManager = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new OrderServ_batchDeliverOrderForManager_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('batchDeliverOrderForManager failed: unknown result');
+};
 OrderServClient.prototype.orderProfileQueryFull = function(conditions, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -3509,6 +3794,53 @@ OrderServClient.prototype.recv_orderProfileQueryOffline = function(input,mtype,r
     return callback(null, result.success);
   }
   return callback('orderProfileQueryOffline failed: unknown result');
+};
+OrderServClient.prototype.orderSellerQueryOffline = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_orderSellerQueryOffline(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_orderSellerQueryOffline(param);
+  }
+};
+
+OrderServClient.prototype.send_orderSellerQueryOffline = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('orderSellerQueryOffline', Thrift.MessageType.CALL, this.seqid());
+  var args = new OrderServ_orderSellerQueryOffline_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+OrderServClient.prototype.recv_orderSellerQueryOffline = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new OrderServ_orderSellerQueryOffline_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('orderSellerQueryOffline failed: unknown result');
 };
 OrderServProcessor = exports.Processor = function(handler) {
   this._handler = handler
@@ -4038,6 +4370,36 @@ OrderServProcessor.prototype.process_batchDeliverOrder = function(seqid, input, 
   }
 }
 
+OrderServProcessor.prototype.process_batchDeliverOrderForManager = function(seqid, input, output) {
+  var args = new OrderServ_batchDeliverOrderForManager_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.batchDeliverOrderForManager.length === 1) {
+    Q.fcall(this._handler.batchDeliverOrderForManager, args.param)
+      .then(function(result) {
+        var result = new OrderServ_batchDeliverOrderForManager_result({success: result});
+        output.writeMessageBegin("batchDeliverOrderForManager", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new OrderServ_batchDeliverOrderForManager_result(err);
+        output.writeMessageBegin("batchDeliverOrderForManager", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.batchDeliverOrderForManager(args.param,  function (err, result) {
+      var result = new OrderServ_batchDeliverOrderForManager_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("batchDeliverOrderForManager", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
 OrderServProcessor.prototype.process_orderProfileQueryFull = function(seqid, input, output) {
   var args = new OrderServ_orderProfileQueryFull_args();
   args.read(input);
@@ -4121,6 +4483,36 @@ OrderServProcessor.prototype.process_orderProfileQueryOffline = function(seqid, 
     this._handler.orderProfileQueryOffline(args.userType, args.userId, args.conditions,  function (err, result) {
       var result = new OrderServ_orderProfileQueryOffline_result((err != null ? err : {success: result}));
       output.writeMessageBegin("orderProfileQueryOffline", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+OrderServProcessor.prototype.process_orderSellerQueryOffline = function(seqid, input, output) {
+  var args = new OrderServ_orderSellerQueryOffline_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.orderSellerQueryOffline.length === 1) {
+    Q.fcall(this._handler.orderSellerQueryOffline, args.param)
+      .then(function(result) {
+        var result = new OrderServ_orderSellerQueryOffline_result({success: result});
+        output.writeMessageBegin("orderSellerQueryOffline", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new OrderServ_orderSellerQueryOffline_result(err);
+        output.writeMessageBegin("orderSellerQueryOffline", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.orderSellerQueryOffline(args.param,  function (err, result) {
+      var result = new OrderServ_orderSellerQueryOffline_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("orderSellerQueryOffline", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
