@@ -27,6 +27,7 @@ ModuleConfig.prototype.queryModuleConfig = function (params,callback) {
         } else if (data[0].result.code == 1) {
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
         } else {
             callback(null, data);
         }
@@ -56,6 +57,7 @@ ModuleConfig.prototype.queryModuleConfigDetail = function (params, callback) {
             logger.warn("查询模块配置信息失败，参数为：" + JSON.stringify(bean));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
         } else {
             callback(null, data);
         }
@@ -128,6 +130,7 @@ ModuleConfig.prototype.importExcel = function (params, callback) {
             logger.warn("导入商品或品牌的参数，参数为：" + JSON.stringify(bean));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
         } else {
             callback(null, data);
         }
@@ -158,6 +161,7 @@ ModuleConfig.prototype.queryImgkey = function (params, callback) {
             logger.warn("查看单个商品或者品牌imgkey失败，参数为：" + JSON.stringify(bean));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
         } else {
             callback(null, data);
         }
