@@ -20,7 +20,8 @@ var buyer_types = require('../thrift/gen_code/buyer_types');
 var common_types = require('../thrift/gen_code/common_types');
 //var express_types = require('../thrift/gen_code/express_types');
 
-function Product() {}
+function Product() {
+}
 
 // 查询商品列表，包含带条件查询：类目、卖家id
 Product.prototype.queryProductList = function (params, callback) {
@@ -109,6 +110,43 @@ Product.prototype.productSurveyBackendQuery = function (params, callback) {
         }
     });
 };
+
+Product.prototype.search = function (params, callback) {
+
+    var thrift_pagination = new pagination_types.Pagination({
+        currentPage: params.curPage || 1,
+        numPerPage: params.perCount
+    });
+    var thrift_params = new product_types.ProductSearchParam({
+        pagination: thrift_pagination,
+        type: params.type,
+        keyword: params.keyword
+    });
+    logger.info("调用productServ-queryProductList args:" + JSON.stringify(thrift_params));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "searchProduct", thrift_params);
+    // 调用 productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用productServ-search result:" + JSON.stringify(data[0]));
+        var ret = {};
+        if (err || data == null || data[0] == null) {
+            logger.error("请求参数：" + JSON.stringify(params));
+            logger.error("调用productServ-search  失败原因 ======" + err);
+            ret.code = 500;
+            ret.desc = "查询商品列表失败！";
+            callback(ret, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            logger.info("调用productServ-search result:" + JSON.stringify(data[0]));
+            return callback(res, null);
+
+        } else {
+            callback(null, data[0].productSearchList);
+        }
+    });
+};
+
 
 // 查询商品
 Product.prototype.queryProduct = function (productId, baseTag, skuTemplateTag, skuTag, attributeTag, callback) {
@@ -261,7 +299,7 @@ Product.prototype.queryHotSKUBatch = function (params, callback) {
     });
     var list = [];
     var skuList = params.productStockAndPriceList;
-   // logger.info("批量查询库存和价格参数111111：" + JSON.stringify(skuList));
+    // logger.info("批量查询库存和价格参数111111：" + JSON.stringify(skuList));
     for (var i = 0; i < skuList.length; i++) {
         if (skuList[i].storehouseId != 0) {
             var ProductSkuParam = new product_types.ProductSkuParam({
@@ -272,13 +310,13 @@ Product.prototype.queryHotSKUBatch = function (params, callback) {
             list.push(ProductSkuParam);
         }
     }
-    if(list.length ==0){
-        var data =[
+    if (list.length == 0) {
+        var data = [
             {
                 "productList": []
             }
         ];
-        callback(null,data);
+        callback(null, data);
         return;
     }
     var productSkuBatchParam = new product_types.ProductSkuBatchParam({
@@ -332,7 +370,7 @@ Product.prototype.getRedisbyKey = function (arg, callback) {
 
     logger.info("请求参数：" + JSON.stringify(arg));
     //获取client
-    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'getRedisbyKey', [arg.key,arg.count]);
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'getRedisbyKey', [arg.key, arg.count]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("get scoreRedis result:" + JSON.stringify(data));
         var res = {};

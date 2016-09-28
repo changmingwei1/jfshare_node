@@ -67,6 +67,61 @@ router.post('/list', function (req, res, next) {
     }
 });
 
+
+/*搜索商品*/
+router.post('/search', function (req, res, next) {
+    logger.info("进入search商品接口");
+    var resContent = {code: 200};
+    resContent.productSearchList = [];
+    try {
+        var arg = req.body;
+        //var arg = req.query;
+        if (arg.perCount == null || arg.perCount == "" || arg.perCount <= 0) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        if (arg.curPage == null || arg.curPage == "" || arg.curPage <= 0) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        if (arg.type == null || arg.type == "" || arg.type <= 0 || arg.type >4) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        if (arg.keyword == null || arg.keyword == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        logger.info("get product list args:" + JSON.stringify(arg));
+        Product.search(arg, function (err, data) {
+                if(err){
+                    return res.json(err);
+                }
+            resContent.productSearchList = data;
+            res.json(resContent);
+            return;
+        });
+    } catch (ex) {
+
+        logger.error("搜索商品失败:" + ex);
+        resContent.code = 500;
+        resContent.desc = "搜索商品失败";
+        res.json(resContent);
+    }
+});
+
 /*查询商品列表*/
 router.post('/listBySeller', function (req, res, next) {
     logger.info("进入获取商品列表接口");
