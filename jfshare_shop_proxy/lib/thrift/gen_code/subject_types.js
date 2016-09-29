@@ -19,6 +19,7 @@ SubjectNode = module.exports.SubjectNode = function(args) {
   this.pid = null;
   this.sorted = null;
   this.isLeaf = null;
+  this.commodity = null;
   this.displayIds = null;
   this.status = null;
   if (args) {
@@ -39,6 +40,9 @@ SubjectNode = module.exports.SubjectNode = function(args) {
     }
     if (args.isLeaf !== undefined) {
       this.isLeaf = args.isLeaf;
+    }
+    if (args.commodity !== undefined) {
+      this.commodity = args.commodity;
     }
     if (args.displayIds !== undefined) {
       this.displayIds = args.displayIds;
@@ -105,13 +109,20 @@ SubjectNode.prototype.read = function(input) {
       }
       break;
       case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.commodity = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
       if (ftype == Thrift.Type.STRING) {
         this.displayIds = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 8:
+      case 9:
       if (ftype == Thrift.Type.I32) {
         this.status = input.readI32();
       } else {
@@ -159,13 +170,18 @@ SubjectNode.prototype.write = function(output) {
     output.writeI32(this.isLeaf);
     output.writeFieldEnd();
   }
+  if (this.commodity !== null && this.commodity !== undefined) {
+    output.writeFieldBegin('commodity', Thrift.Type.I32, 7);
+    output.writeI32(this.commodity);
+    output.writeFieldEnd();
+  }
   if (this.displayIds !== null && this.displayIds !== undefined) {
-    output.writeFieldBegin('displayIds', Thrift.Type.STRING, 7);
+    output.writeFieldBegin('displayIds', Thrift.Type.STRING, 8);
     output.writeString(this.displayIds);
     output.writeFieldEnd();
   }
   if (this.status !== null && this.status !== undefined) {
-    output.writeFieldBegin('status', Thrift.Type.I32, 8);
+    output.writeFieldBegin('status', Thrift.Type.I32, 9);
     output.writeI32(this.status);
     output.writeFieldEnd();
   }
@@ -190,6 +206,7 @@ SubjectInfo = module.exports.SubjectInfo = function(args) {
   this.status = null;
   this.deleted = null;
   this.path = null;
+  this.commodity = null;
   this.attributes = null;
   this.displayIds = null;
   this.subjectNodes = null;
@@ -238,6 +255,9 @@ SubjectInfo = module.exports.SubjectInfo = function(args) {
     }
     if (args.path !== undefined) {
       this.path = args.path;
+    }
+    if (args.commodity !== undefined) {
+      this.commodity = args.commodity;
     }
     if (args.attributes !== undefined) {
       this.attributes = args.attributes;
@@ -370,20 +390,27 @@ SubjectInfo.prototype.read = function(input) {
       }
       break;
       case 16:
-      if (ftype == Thrift.Type.STRING) {
-        this.attributes = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.commodity = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 17:
       if (ftype == Thrift.Type.STRING) {
-        this.displayIds = input.readString();
+        this.attributes = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 18:
+      if (ftype == Thrift.Type.STRING) {
+        this.displayIds = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 19:
       if (ftype == Thrift.Type.LIST) {
         var _size0 = 0;
         var _rtmp34;
@@ -490,18 +517,23 @@ SubjectInfo.prototype.write = function(output) {
     output.writeString(this.path);
     output.writeFieldEnd();
   }
+  if (this.commodity !== null && this.commodity !== undefined) {
+    output.writeFieldBegin('commodity', Thrift.Type.I32, 16);
+    output.writeI32(this.commodity);
+    output.writeFieldEnd();
+  }
   if (this.attributes !== null && this.attributes !== undefined) {
-    output.writeFieldBegin('attributes', Thrift.Type.STRING, 16);
+    output.writeFieldBegin('attributes', Thrift.Type.STRING, 17);
     output.writeString(this.attributes);
     output.writeFieldEnd();
   }
   if (this.displayIds !== null && this.displayIds !== undefined) {
-    output.writeFieldBegin('displayIds', Thrift.Type.STRING, 17);
+    output.writeFieldBegin('displayIds', Thrift.Type.STRING, 18);
     output.writeString(this.displayIds);
     output.writeFieldEnd();
   }
   if (this.subjectNodes !== null && this.subjectNodes !== undefined) {
-    output.writeFieldBegin('subjectNodes', Thrift.Type.LIST, 18);
+    output.writeFieldBegin('subjectNodes', Thrift.Type.LIST, 19);
     output.writeListBegin(Thrift.Type.STRUCT, this.subjectNodes.length);
     for (var iter7 in this.subjectNodes)
     {
@@ -1109,6 +1141,118 @@ SubjectTreeResult.prototype.write = function(output) {
   return;
 };
 
+SubjectTreeBatchResult = module.exports.SubjectTreeBatchResult = function(args) {
+  this.result = null;
+  this.subjectNodeTrees = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.subjectNodeTrees !== undefined) {
+      this.subjectNodeTrees = args.subjectNodeTrees;
+    }
+  }
+};
+SubjectTreeBatchResult.prototype = {};
+SubjectTreeBatchResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size32 = 0;
+        var _rtmp336;
+        this.subjectNodeTrees = [];
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        {
+          var elem38 = null;
+          var _size39 = 0;
+          var _rtmp343;
+          elem38 = [];
+          var _etype42 = 0;
+          _rtmp343 = input.readListBegin();
+          _etype42 = _rtmp343.etype;
+          _size39 = _rtmp343.size;
+          for (var _i44 = 0; _i44 < _size39; ++_i44)
+          {
+            var elem45 = null;
+            elem45 = new ttypes.SubjectNode();
+            elem45.read(input);
+            elem38.push(elem45);
+          }
+          input.readListEnd();
+          this.subjectNodeTrees.push(elem38);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectTreeBatchResult.prototype.write = function(output) {
+  output.writeStructBegin('SubjectTreeBatchResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.subjectNodeTrees !== null && this.subjectNodeTrees !== undefined) {
+    output.writeFieldBegin('subjectNodeTrees', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.LIST, this.subjectNodeTrees.length);
+    for (var iter46 in this.subjectNodeTrees)
+    {
+      if (this.subjectNodeTrees.hasOwnProperty(iter46))
+      {
+        iter46 = this.subjectNodeTrees[iter46];
+        output.writeListBegin(Thrift.Type.STRUCT, iter46.length);
+        for (var iter47 in iter46)
+        {
+          if (iter46.hasOwnProperty(iter47))
+          {
+            iter47 = iter46[iter47];
+            iter47.write(output);
+          }
+        }
+        output.writeListEnd();
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 SubjectQueryParam = module.exports.SubjectQueryParam = function(args) {
   this.pId = null;
   this.name = null;
@@ -1226,18 +1370,18 @@ BrandSubjectParam.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size32 = 0;
-        var _rtmp336;
+        var _size48 = 0;
+        var _rtmp352;
         this.Subjects = [];
-        var _etype35 = 0;
-        _rtmp336 = input.readListBegin();
-        _etype35 = _rtmp336.etype;
-        _size32 = _rtmp336.size;
-        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
         {
-          var elem38 = null;
-          elem38 = input.readI32();
-          this.Subjects.push(elem38);
+          var elem54 = null;
+          elem54 = input.readI32();
+          this.Subjects.push(elem54);
         }
         input.readListEnd();
       } else {
@@ -1263,12 +1407,12 @@ BrandSubjectParam.prototype.write = function(output) {
   if (this.Subjects !== null && this.Subjects !== undefined) {
     output.writeFieldBegin('Subjects', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.I32, this.Subjects.length);
-    for (var iter39 in this.Subjects)
+    for (var iter55 in this.Subjects)
     {
-      if (this.Subjects.hasOwnProperty(iter39))
+      if (this.Subjects.hasOwnProperty(iter55))
       {
-        iter39 = this.Subjects[iter39];
-        output.writeI32(iter39);
+        iter55 = this.Subjects[iter55];
+        output.writeI32(iter55);
       }
     }
     output.writeListEnd();
@@ -1417,19 +1561,19 @@ SubjectQueryResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size40 = 0;
-        var _rtmp344;
+        var _size56 = 0;
+        var _rtmp360;
         this.subjectInfos = [];
-        var _etype43 = 0;
-        _rtmp344 = input.readListBegin();
-        _etype43 = _rtmp344.etype;
-        _size40 = _rtmp344.size;
-        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        var _etype59 = 0;
+        _rtmp360 = input.readListBegin();
+        _etype59 = _rtmp360.etype;
+        _size56 = _rtmp360.size;
+        for (var _i61 = 0; _i61 < _size56; ++_i61)
         {
-          var elem46 = null;
-          elem46 = new ttypes.SubjectInfo();
-          elem46.read(input);
-          this.subjectInfos.push(elem46);
+          var elem62 = null;
+          elem62 = new ttypes.SubjectInfo();
+          elem62.read(input);
+          this.subjectInfos.push(elem62);
         }
         input.readListEnd();
       } else {
@@ -1463,12 +1607,12 @@ SubjectQueryResult.prototype.write = function(output) {
   if (this.subjectInfos !== null && this.subjectInfos !== undefined) {
     output.writeFieldBegin('subjectInfos', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.subjectInfos.length);
-    for (var iter47 in this.subjectInfos)
+    for (var iter63 in this.subjectInfos)
     {
-      if (this.subjectInfos.hasOwnProperty(iter47))
+      if (this.subjectInfos.hasOwnProperty(iter63))
       {
-        iter47 = this.subjectInfos[iter47];
-        iter47.write(output);
+        iter63 = this.subjectInfos[iter63];
+        iter63.write(output);
       }
     }
     output.writeListEnd();
@@ -1491,6 +1635,7 @@ DisplaySubjectNode = module.exports.DisplaySubjectNode = function(args) {
   this.pid = null;
   this.sorted = null;
   this.isLeaf = null;
+  this.commodity = null;
   this.status = null;
   if (args) {
     if (args.id !== undefined) {
@@ -1510,6 +1655,9 @@ DisplaySubjectNode = module.exports.DisplaySubjectNode = function(args) {
     }
     if (args.isLeaf !== undefined) {
       this.isLeaf = args.isLeaf;
+    }
+    if (args.commodity !== undefined) {
+      this.commodity = args.commodity;
     }
     if (args.status !== undefined) {
       this.status = args.status;
@@ -1574,6 +1722,13 @@ DisplaySubjectNode.prototype.read = function(input) {
       break;
       case 7:
       if (ftype == Thrift.Type.I32) {
+        this.commodity = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
         this.status = input.readI32();
       } else {
         input.skip(ftype);
@@ -1620,8 +1775,13 @@ DisplaySubjectNode.prototype.write = function(output) {
     output.writeI32(this.isLeaf);
     output.writeFieldEnd();
   }
+  if (this.commodity !== null && this.commodity !== undefined) {
+    output.writeFieldBegin('commodity', Thrift.Type.I32, 7);
+    output.writeI32(this.commodity);
+    output.writeFieldEnd();
+  }
   if (this.status !== null && this.status !== undefined) {
-    output.writeFieldBegin('status', Thrift.Type.I32, 7);
+    output.writeFieldBegin('status', Thrift.Type.I32, 8);
     output.writeI32(this.status);
     output.writeFieldEnd();
   }
@@ -1647,6 +1807,7 @@ DisplaySubjectInfo = module.exports.DisplaySubjectInfo = function(args) {
   this.deleted = null;
   this.path = null;
   this.attributes = null;
+  this.commodity = null;
   this.subjectNodes = null;
   if (args) {
     if (args.id !== undefined) {
@@ -1696,6 +1857,9 @@ DisplaySubjectInfo = module.exports.DisplaySubjectInfo = function(args) {
     }
     if (args.attributes !== undefined) {
       this.attributes = args.attributes;
+    }
+    if (args.commodity !== undefined) {
+      this.commodity = args.commodity;
     }
     if (args.subjectNodes !== undefined) {
       this.subjectNodes = args.subjectNodes;
@@ -1829,20 +1993,27 @@ DisplaySubjectInfo.prototype.read = function(input) {
       }
       break;
       case 17:
+      if (ftype == Thrift.Type.I32) {
+        this.commodity = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 18:
       if (ftype == Thrift.Type.LIST) {
-        var _size48 = 0;
-        var _rtmp352;
+        var _size64 = 0;
+        var _rtmp368;
         this.subjectNodes = [];
-        var _etype51 = 0;
-        _rtmp352 = input.readListBegin();
-        _etype51 = _rtmp352.etype;
-        _size48 = _rtmp352.size;
-        for (var _i53 = 0; _i53 < _size48; ++_i53)
+        var _etype67 = 0;
+        _rtmp368 = input.readListBegin();
+        _etype67 = _rtmp368.etype;
+        _size64 = _rtmp368.size;
+        for (var _i69 = 0; _i69 < _size64; ++_i69)
         {
-          var elem54 = null;
-          elem54 = new ttypes.SubjectNode();
-          elem54.read(input);
-          this.subjectNodes.push(elem54);
+          var elem70 = null;
+          elem70 = new ttypes.SubjectNode();
+          elem70.read(input);
+          this.subjectNodes.push(elem70);
         }
         input.readListEnd();
       } else {
@@ -1940,15 +2111,20 @@ DisplaySubjectInfo.prototype.write = function(output) {
     output.writeString(this.attributes);
     output.writeFieldEnd();
   }
+  if (this.commodity !== null && this.commodity !== undefined) {
+    output.writeFieldBegin('commodity', Thrift.Type.I32, 17);
+    output.writeI32(this.commodity);
+    output.writeFieldEnd();
+  }
   if (this.subjectNodes !== null && this.subjectNodes !== undefined) {
-    output.writeFieldBegin('subjectNodes', Thrift.Type.LIST, 17);
+    output.writeFieldBegin('subjectNodes', Thrift.Type.LIST, 18);
     output.writeListBegin(Thrift.Type.STRUCT, this.subjectNodes.length);
-    for (var iter55 in this.subjectNodes)
+    for (var iter71 in this.subjectNodes)
     {
-      if (this.subjectNodes.hasOwnProperty(iter55))
+      if (this.subjectNodes.hasOwnProperty(iter71))
       {
-        iter55 = this.subjectNodes[iter55];
-        iter55.write(output);
+        iter71 = this.subjectNodes[iter71];
+        iter71.write(output);
       }
     }
     output.writeListEnd();
@@ -2130,19 +2306,19 @@ DisplaySubjectTreeResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size56 = 0;
-        var _rtmp360;
+        var _size72 = 0;
+        var _rtmp376;
         this.displaySubjectNodes = [];
-        var _etype59 = 0;
-        _rtmp360 = input.readListBegin();
-        _etype59 = _rtmp360.etype;
-        _size56 = _rtmp360.size;
-        for (var _i61 = 0; _i61 < _size56; ++_i61)
+        var _etype75 = 0;
+        _rtmp376 = input.readListBegin();
+        _etype75 = _rtmp376.etype;
+        _size72 = _rtmp376.size;
+        for (var _i77 = 0; _i77 < _size72; ++_i77)
         {
-          var elem62 = null;
-          elem62 = new ttypes.DisplaySubjectNode();
-          elem62.read(input);
-          this.displaySubjectNodes.push(elem62);
+          var elem78 = null;
+          elem78 = new ttypes.DisplaySubjectNode();
+          elem78.read(input);
+          this.displaySubjectNodes.push(elem78);
         }
         input.readListEnd();
       } else {
@@ -2168,12 +2344,124 @@ DisplaySubjectTreeResult.prototype.write = function(output) {
   if (this.displaySubjectNodes !== null && this.displaySubjectNodes !== undefined) {
     output.writeFieldBegin('displaySubjectNodes', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.displaySubjectNodes.length);
-    for (var iter63 in this.displaySubjectNodes)
+    for (var iter79 in this.displaySubjectNodes)
     {
-      if (this.displaySubjectNodes.hasOwnProperty(iter63))
+      if (this.displaySubjectNodes.hasOwnProperty(iter79))
       {
-        iter63 = this.displaySubjectNodes[iter63];
-        iter63.write(output);
+        iter79 = this.displaySubjectNodes[iter79];
+        iter79.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+DisplaySubjectTreeBatchResult = module.exports.DisplaySubjectTreeBatchResult = function(args) {
+  this.result = null;
+  this.displaySubjectNodeTrees = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.displaySubjectNodeTrees !== undefined) {
+      this.displaySubjectNodeTrees = args.displaySubjectNodeTrees;
+    }
+  }
+};
+DisplaySubjectTreeBatchResult.prototype = {};
+DisplaySubjectTreeBatchResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size80 = 0;
+        var _rtmp384;
+        this.displaySubjectNodeTrees = [];
+        var _etype83 = 0;
+        _rtmp384 = input.readListBegin();
+        _etype83 = _rtmp384.etype;
+        _size80 = _rtmp384.size;
+        for (var _i85 = 0; _i85 < _size80; ++_i85)
+        {
+          var elem86 = null;
+          var _size87 = 0;
+          var _rtmp391;
+          elem86 = [];
+          var _etype90 = 0;
+          _rtmp391 = input.readListBegin();
+          _etype90 = _rtmp391.etype;
+          _size87 = _rtmp391.size;
+          for (var _i92 = 0; _i92 < _size87; ++_i92)
+          {
+            var elem93 = null;
+            elem93 = new ttypes.DisplaySubjectNode();
+            elem93.read(input);
+            elem86.push(elem93);
+          }
+          input.readListEnd();
+          this.displaySubjectNodeTrees.push(elem86);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+DisplaySubjectTreeBatchResult.prototype.write = function(output) {
+  output.writeStructBegin('DisplaySubjectTreeBatchResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.displaySubjectNodeTrees !== null && this.displaySubjectNodeTrees !== undefined) {
+    output.writeFieldBegin('displaySubjectNodeTrees', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.LIST, this.displaySubjectNodeTrees.length);
+    for (var iter94 in this.displaySubjectNodeTrees)
+    {
+      if (this.displaySubjectNodeTrees.hasOwnProperty(iter94))
+      {
+        iter94 = this.displaySubjectNodeTrees[iter94];
+        output.writeListBegin(Thrift.Type.STRUCT, iter94.length);
+        for (var iter95 in iter94)
+        {
+          if (iter94.hasOwnProperty(iter95))
+          {
+            iter95 = iter94[iter95];
+            iter95.write(output);
+          }
+        }
+        output.writeListEnd();
       }
     }
     output.writeListEnd();
@@ -2306,19 +2594,19 @@ DisplaySubjectQueryResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size64 = 0;
-        var _rtmp368;
+        var _size96 = 0;
+        var _rtmp3100;
         this.displaySubjectInfos = [];
-        var _etype67 = 0;
-        _rtmp368 = input.readListBegin();
-        _etype67 = _rtmp368.etype;
-        _size64 = _rtmp368.size;
-        for (var _i69 = 0; _i69 < _size64; ++_i69)
+        var _etype99 = 0;
+        _rtmp3100 = input.readListBegin();
+        _etype99 = _rtmp3100.etype;
+        _size96 = _rtmp3100.size;
+        for (var _i101 = 0; _i101 < _size96; ++_i101)
         {
-          var elem70 = null;
-          elem70 = new ttypes.DisplaySubjectInfo();
-          elem70.read(input);
-          this.displaySubjectInfos.push(elem70);
+          var elem102 = null;
+          elem102 = new ttypes.DisplaySubjectInfo();
+          elem102.read(input);
+          this.displaySubjectInfos.push(elem102);
         }
         input.readListEnd();
       } else {
@@ -2352,12 +2640,12 @@ DisplaySubjectQueryResult.prototype.write = function(output) {
   if (this.displaySubjectInfos !== null && this.displaySubjectInfos !== undefined) {
     output.writeFieldBegin('displaySubjectInfos', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.displaySubjectInfos.length);
-    for (var iter71 in this.displaySubjectInfos)
+    for (var iter103 in this.displaySubjectInfos)
     {
-      if (this.displaySubjectInfos.hasOwnProperty(iter71))
+      if (this.displaySubjectInfos.hasOwnProperty(iter103))
       {
-        iter71 = this.displaySubjectInfos[iter71];
-        iter71.write(output);
+        iter103 = this.displaySubjectInfos[iter103];
+        iter103.write(output);
       }
     }
     output.writeListEnd();
@@ -2559,19 +2847,19 @@ DisplaySubjectChannelQueryResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size72 = 0;
-        var _rtmp376;
+        var _size104 = 0;
+        var _rtmp3108;
         this.channelInfos = [];
-        var _etype75 = 0;
-        _rtmp376 = input.readListBegin();
-        _etype75 = _rtmp376.etype;
-        _size72 = _rtmp376.size;
-        for (var _i77 = 0; _i77 < _size72; ++_i77)
+        var _etype107 = 0;
+        _rtmp3108 = input.readListBegin();
+        _etype107 = _rtmp3108.etype;
+        _size104 = _rtmp3108.size;
+        for (var _i109 = 0; _i109 < _size104; ++_i109)
         {
-          var elem78 = null;
-          elem78 = new ttypes.DisplaySubjectChannelInfo();
-          elem78.read(input);
-          this.channelInfos.push(elem78);
+          var elem110 = null;
+          elem110 = new ttypes.DisplaySubjectChannelInfo();
+          elem110.read(input);
+          this.channelInfos.push(elem110);
         }
         input.readListEnd();
       } else {
@@ -2605,12 +2893,12 @@ DisplaySubjectChannelQueryResult.prototype.write = function(output) {
   if (this.channelInfos !== null && this.channelInfos !== undefined) {
     output.writeFieldBegin('channelInfos', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.channelInfos.length);
-    for (var iter79 in this.channelInfos)
+    for (var iter111 in this.channelInfos)
     {
-      if (this.channelInfos.hasOwnProperty(iter79))
+      if (this.channelInfos.hasOwnProperty(iter111))
       {
-        iter79 = this.channelInfos[iter79];
-        iter79.write(output);
+        iter111 = this.channelInfos[iter111];
+        iter111.write(output);
       }
     }
     output.writeListEnd();
@@ -2832,21 +3120,21 @@ SubjectAttributeResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 3:
+      case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size80 = 0;
-        var _rtmp384;
+        var _size112 = 0;
+        var _rtmp3116;
         this.subjectAttributes = [];
-        var _etype83 = 0;
-        _rtmp384 = input.readListBegin();
-        _etype83 = _rtmp384.etype;
-        _size80 = _rtmp384.size;
-        for (var _i85 = 0; _i85 < _size80; ++_i85)
+        var _etype115 = 0;
+        _rtmp3116 = input.readListBegin();
+        _etype115 = _rtmp3116.etype;
+        _size112 = _rtmp3116.size;
+        for (var _i117 = 0; _i117 < _size112; ++_i117)
         {
-          var elem86 = null;
-          elem86 = new ttypes.SubjectAttribute();
-          elem86.read(input);
-          this.subjectAttributes.push(elem86);
+          var elem118 = null;
+          elem118 = new ttypes.SubjectAttribute();
+          elem118.read(input);
+          this.subjectAttributes.push(elem118);
         }
         input.readListEnd();
       } else {
@@ -2870,17 +3158,85 @@ SubjectAttributeResult.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.subjectAttributes !== null && this.subjectAttributes !== undefined) {
-    output.writeFieldBegin('subjectAttributes', Thrift.Type.LIST, 3);
+    output.writeFieldBegin('subjectAttributes', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.subjectAttributes.length);
-    for (var iter87 in this.subjectAttributes)
+    for (var iter119 in this.subjectAttributes)
     {
-      if (this.subjectAttributes.hasOwnProperty(iter87))
+      if (this.subjectAttributes.hasOwnProperty(iter119))
       {
-        iter87 = this.subjectAttributes[iter87];
-        iter87.write(output);
+        iter119 = this.subjectAttributes[iter119];
+        iter119.write(output);
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectAttributeInfoResult = module.exports.SubjectAttributeInfoResult = function(args) {
+  this.result = null;
+  this.subjectAttribute = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.subjectAttribute !== undefined) {
+      this.subjectAttribute = args.subjectAttribute;
+    }
+  }
+};
+SubjectAttributeInfoResult.prototype = {};
+SubjectAttributeInfoResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.subjectAttribute = new ttypes.SubjectAttribute();
+        this.subjectAttribute.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectAttributeInfoResult.prototype.write = function(output) {
+  output.writeStructBegin('SubjectAttributeInfoResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.subjectAttribute !== null && this.subjectAttribute !== undefined) {
+    output.writeFieldBegin('subjectAttribute', Thrift.Type.STRUCT, 2);
+    this.subjectAttribute.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

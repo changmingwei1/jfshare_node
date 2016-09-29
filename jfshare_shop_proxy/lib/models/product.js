@@ -292,6 +292,25 @@ Product.prototype.getSubTree = function (param, callback) {
     });
 };
 
+//获取类目列表
+Product.prototype.getSubTreeRelaProduct = function (param, callback) {
+
+    var subjectServ = new Lich.InvokeBag(Lich.ServiceKey.SubjectServer, "getSubTreeRelaProduct", [param.subjectId]);
+
+    Lich.wicca.invokeClient(subjectServ, function (err, data) {
+        logger.info("调用subjectServ-getSubTreeRelaProduct  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("调用subjectServ-getSubTreeRelaProduct查询子分类失败  失败原因 ======" + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "查询子分类失败";
+            callback(res, null);
+        } else {
+            callback(null, data)
+        }
+    });
+};
 /*批量获取指定sku*/
 Product.prototype.queryHotSKUBatch = function (params, callback) {
     var productRetParam = new product_types.ProductRetParam({
