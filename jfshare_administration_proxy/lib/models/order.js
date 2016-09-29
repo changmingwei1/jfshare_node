@@ -26,8 +26,8 @@ function Order() {
 
 //订单列表
 Order.prototype.orderProfileQuery = function (params, callback) {
-
-    var orderQueryConditions = "";
+    logger.error("调用o参数 ======" +JSON.stringify(params) );
+    var orderQueryConditions = {};
     if (params.orderList != null && params.orderList != "") {
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderStatus || 0,
@@ -35,6 +35,9 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             endTime: params.endTime,
             orderIds: params.orderList,
             sellerId: params.sellerId,
+            sellerIds:params.sellerIds,
+            payTimeStart: params.payTimeStart,
+            payTimeEnd: params.payTimeEnd,
             //orderId: params.orderId,
             count: params.orderList.length,
             curPage: 1
@@ -44,6 +47,10 @@ Order.prototype.orderProfileQuery = function (params, callback) {
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderId: params.orderId
         });
+    }else if(params.userId != null && params.userId != ""){
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            userId: params.userId
+        });
     }else {
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderState: params.orderStatus || 0,
@@ -51,17 +58,20 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             curPage: params.curpage,
             startTime: params.startTime,
             endTime: params.endTime,
+            payTimeStart: params.payTimeStart,
+            payTimeEnd: params.payTimeEnd,
             sellerId: params.sellerId,
-            orderId: params.orderId
+            sellerIds:params.sellerIds,
+            orderId: params.orderId,
+            userId: params.userId
         });
     }
 
-
-    logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(orderQueryConditions));
+    logger.error("调用orderServ-orderProfileQueryFull  params:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
-
     Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(data));
+        logger.error("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(data));
+        logger.error("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
         var res = {};
         if (err || data[0].result.code == "1") {
             logger.error("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
