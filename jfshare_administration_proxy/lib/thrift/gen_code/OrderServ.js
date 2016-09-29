@@ -38,19 +38,19 @@ OrderServ_createOrder_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size64 = 0;
-        var _rtmp368;
+        var _size72 = 0;
+        var _rtmp376;
         this.orderList = [];
-        var _etype67 = 0;
-        _rtmp368 = input.readListBegin();
-        _etype67 = _rtmp368.etype;
-        _size64 = _rtmp368.size;
-        for (var _i69 = 0; _i69 < _size64; ++_i69)
+        var _etype75 = 0;
+        _rtmp376 = input.readListBegin();
+        _etype75 = _rtmp376.etype;
+        _size72 = _rtmp376.size;
+        for (var _i77 = 0; _i77 < _size72; ++_i77)
         {
-          var elem70 = null;
-          elem70 = new ttypes.Order();
-          elem70.read(input);
-          this.orderList.push(elem70);
+          var elem78 = null;
+          elem78 = new ttypes.Order();
+          elem78.read(input);
+          this.orderList.push(elem78);
         }
         input.readListEnd();
       } else {
@@ -74,12 +74,12 @@ OrderServ_createOrder_args.prototype.write = function(output) {
   if (this.orderList !== null && this.orderList !== undefined) {
     output.writeFieldBegin('orderList', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.orderList.length);
-    for (var iter71 in this.orderList)
+    for (var iter79 in this.orderList)
     {
-      if (this.orderList.hasOwnProperty(iter71))
+      if (this.orderList.hasOwnProperty(iter79))
       {
-        iter71 = this.orderList[iter71];
-        iter71.write(output);
+        iter79 = this.orderList[iter79];
+        iter79.write(output);
       }
     }
     output.writeListEnd();
@@ -2180,19 +2180,19 @@ OrderServ_batchDeliverOrderForManager_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size72 = 0;
-        var _rtmp376;
+        var _size80 = 0;
+        var _rtmp384;
         this.param = [];
-        var _etype75 = 0;
-        _rtmp376 = input.readListBegin();
-        _etype75 = _rtmp376.etype;
-        _size72 = _rtmp376.size;
-        for (var _i77 = 0; _i77 < _size72; ++_i77)
+        var _etype83 = 0;
+        _rtmp384 = input.readListBegin();
+        _etype83 = _rtmp384.etype;
+        _size80 = _rtmp384.size;
+        for (var _i85 = 0; _i85 < _size80; ++_i85)
         {
-          var elem78 = null;
-          elem78 = new ttypes.SellerBatchDeliverParam();
-          elem78.read(input);
-          this.param.push(elem78);
+          var elem86 = null;
+          elem86 = new ttypes.SellerBatchDeliverParam();
+          elem86.read(input);
+          this.param.push(elem86);
         }
         input.readListEnd();
       } else {
@@ -2216,12 +2216,12 @@ OrderServ_batchDeliverOrderForManager_args.prototype.write = function(output) {
   if (this.param !== null && this.param !== undefined) {
     output.writeFieldBegin('param', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.param.length);
-    for (var iter79 in this.param)
+    for (var iter87 in this.param)
     {
-      if (this.param.hasOwnProperty(iter79))
+      if (this.param.hasOwnProperty(iter87))
       {
-        iter79 = this.param[iter79];
-        iter79.write(output);
+        iter87 = this.param[iter87];
+        iter87.write(output);
       }
     }
     output.writeListEnd();

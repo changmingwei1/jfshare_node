@@ -135,6 +135,114 @@ SellerServ_querySeller_result.prototype.write = function(output) {
   return;
 };
 
+SellerServ_querySellerBySeller_args = function(args) {
+  this.seller = null;
+  if (args) {
+    if (args.seller !== undefined) {
+      this.seller = args.seller;
+    }
+  }
+};
+SellerServ_querySellerBySeller_args.prototype = {};
+SellerServ_querySellerBySeller_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.seller = new ttypes.Seller();
+        this.seller.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_querySellerBySeller_args.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_querySellerBySeller_args');
+  if (this.seller !== null && this.seller !== undefined) {
+    output.writeFieldBegin('seller', Thrift.Type.STRUCT, 1);
+    this.seller.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerServ_querySellerBySeller_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SellerServ_querySellerBySeller_result.prototype = {};
+SellerServ_querySellerBySeller_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.SellerListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_querySellerBySeller_result.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_querySellerBySeller_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 SellerServ_querySellerList_args = function(args) {
   this.seller = null;
   this.pagination = null;
@@ -285,18 +393,18 @@ SellerServ_querySellerBatch_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size18 = 0;
-        var _rtmp322;
+        var _size26 = 0;
+        var _rtmp330;
         this.sellerIds = [];
-        var _etype21 = 0;
-        _rtmp322 = input.readListBegin();
-        _etype21 = _rtmp322.etype;
-        _size18 = _rtmp322.size;
-        for (var _i23 = 0; _i23 < _size18; ++_i23)
+        var _etype29 = 0;
+        _rtmp330 = input.readListBegin();
+        _etype29 = _rtmp330.etype;
+        _size26 = _rtmp330.size;
+        for (var _i31 = 0; _i31 < _size26; ++_i31)
         {
-          var elem24 = null;
-          elem24 = input.readI32();
-          this.sellerIds.push(elem24);
+          var elem32 = null;
+          elem32 = input.readI32();
+          this.sellerIds.push(elem32);
         }
         input.readListEnd();
       } else {
@@ -325,12 +433,12 @@ SellerServ_querySellerBatch_args.prototype.write = function(output) {
   if (this.sellerIds !== null && this.sellerIds !== undefined) {
     output.writeFieldBegin('sellerIds', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.sellerIds.length);
-    for (var iter25 in this.sellerIds)
+    for (var iter33 in this.sellerIds)
     {
-      if (this.sellerIds.hasOwnProperty(iter25))
+      if (this.sellerIds.hasOwnProperty(iter33))
       {
-        iter25 = this.sellerIds[iter25];
-        output.writeI32(iter25);
+        iter33 = this.sellerIds[iter33];
+        output.writeI32(iter33);
       }
     }
     output.writeListEnd();
@@ -1410,6 +1518,354 @@ SellerServ_resetSellerPwd_result.prototype.write = function(output) {
   return;
 };
 
+SellerServ_insertUserSellerReal_args = function(args) {
+  this.userId = null;
+  this.sellerId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+  }
+};
+SellerServ_insertUserSellerReal_args.prototype = {};
+SellerServ_insertUserSellerReal_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.userId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_insertUserSellerReal_args.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_insertUserSellerReal_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.STRING, 1);
+    output.writeString(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 2);
+    output.writeString(this.sellerId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerServ_insertUserSellerReal_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SellerServ_insertUserSellerReal_result.prototype = {};
+SellerServ_insertUserSellerReal_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_insertUserSellerReal_result.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_insertUserSellerReal_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerServ_deleteUserSellerRealByuserId_args = function(args) {
+  this.userId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+  }
+};
+SellerServ_deleteUserSellerRealByuserId_args.prototype = {};
+SellerServ_deleteUserSellerRealByuserId_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.userId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_deleteUserSellerRealByuserId_args.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_deleteUserSellerRealByuserId_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.STRING, 1);
+    output.writeString(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerServ_deleteUserSellerRealByuserId_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SellerServ_deleteUserSellerRealByuserId_result.prototype = {};
+SellerServ_deleteUserSellerRealByuserId_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_deleteUserSellerRealByuserId_result.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_deleteUserSellerRealByuserId_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerServ_querySellerVipList_args = function(args) {
+  this.sellerId = null;
+  this.pagination = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+SellerServ_querySellerVipList_args.prototype = {};
+SellerServ_querySellerVipList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_querySellerVipList_args.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_querySellerVipList_args');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 1);
+    output.writeString(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerServ_querySellerVipList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SellerServ_querySellerVipList_result.prototype = {};
+SellerServ_querySellerVipList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.SellerVipResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerServ_querySellerVipList_result.prototype.write = function(output) {
+  output.writeStructBegin('SellerServ_querySellerVipList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 SellerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -1466,6 +1922,53 @@ SellerServClient.prototype.recv_querySeller = function(input,mtype,rseqid) {
     return callback(null, result.success);
   }
   return callback('querySeller failed: unknown result');
+};
+SellerServClient.prototype.querySellerBySeller = function(seller, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_querySellerBySeller(seller);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_querySellerBySeller(seller);
+  }
+};
+
+SellerServClient.prototype.send_querySellerBySeller = function(seller) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('querySellerBySeller', Thrift.MessageType.CALL, this.seqid());
+  var args = new SellerServ_querySellerBySeller_args();
+  args.seller = seller;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SellerServClient.prototype.recv_querySellerBySeller = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SellerServ_querySellerBySeller_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('querySellerBySeller failed: unknown result');
 };
 SellerServClient.prototype.querySellerList = function(seller, pagination, callback) {
   this._seqid = this.new_seqid();
@@ -1989,6 +2492,149 @@ SellerServClient.prototype.recv_resetSellerPwd = function(input,mtype,rseqid) {
   }
   return callback('resetSellerPwd failed: unknown result');
 };
+SellerServClient.prototype.insertUserSellerReal = function(userId, sellerId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_insertUserSellerReal(userId, sellerId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_insertUserSellerReal(userId, sellerId);
+  }
+};
+
+SellerServClient.prototype.send_insertUserSellerReal = function(userId, sellerId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('insertUserSellerReal', Thrift.MessageType.CALL, this.seqid());
+  var args = new SellerServ_insertUserSellerReal_args();
+  args.userId = userId;
+  args.sellerId = sellerId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SellerServClient.prototype.recv_insertUserSellerReal = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SellerServ_insertUserSellerReal_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('insertUserSellerReal failed: unknown result');
+};
+SellerServClient.prototype.deleteUserSellerRealByuserId = function(userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_deleteUserSellerRealByuserId(userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_deleteUserSellerRealByuserId(userId);
+  }
+};
+
+SellerServClient.prototype.send_deleteUserSellerRealByuserId = function(userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('deleteUserSellerRealByuserId', Thrift.MessageType.CALL, this.seqid());
+  var args = new SellerServ_deleteUserSellerRealByuserId_args();
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SellerServClient.prototype.recv_deleteUserSellerRealByuserId = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SellerServ_deleteUserSellerRealByuserId_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('deleteUserSellerRealByuserId failed: unknown result');
+};
+SellerServClient.prototype.querySellerVipList = function(sellerId, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_querySellerVipList(sellerId, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_querySellerVipList(sellerId, pagination);
+  }
+};
+
+SellerServClient.prototype.send_querySellerVipList = function(sellerId, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('querySellerVipList', Thrift.MessageType.CALL, this.seqid());
+  var args = new SellerServ_querySellerVipList_args();
+  args.sellerId = sellerId;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SellerServClient.prototype.recv_querySellerVipList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SellerServ_querySellerVipList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('querySellerVipList failed: unknown result');
+};
 SellerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -2030,6 +2676,36 @@ SellerServProcessor.prototype.process_querySeller = function(seqid, input, outpu
     this._handler.querySeller(args.sellerId, args.param,  function (err, result) {
       var result = new SellerServ_querySeller_result((err != null ? err : {success: result}));
       output.writeMessageBegin("querySeller", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SellerServProcessor.prototype.process_querySellerBySeller = function(seqid, input, output) {
+  var args = new SellerServ_querySellerBySeller_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.querySellerBySeller.length === 1) {
+    Q.fcall(this._handler.querySellerBySeller, args.seller)
+      .then(function(result) {
+        var result = new SellerServ_querySellerBySeller_result({success: result});
+        output.writeMessageBegin("querySellerBySeller", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SellerServ_querySellerBySeller_result(err);
+        output.writeMessageBegin("querySellerBySeller", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.querySellerBySeller(args.seller,  function (err, result) {
+      var result = new SellerServ_querySellerBySeller_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("querySellerBySeller", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -2360,6 +3036,96 @@ SellerServProcessor.prototype.process_resetSellerPwd = function(seqid, input, ou
     this._handler.resetSellerPwd(args.newPwd, args.seller,  function (err, result) {
       var result = new SellerServ_resetSellerPwd_result((err != null ? err : {success: result}));
       output.writeMessageBegin("resetSellerPwd", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SellerServProcessor.prototype.process_insertUserSellerReal = function(seqid, input, output) {
+  var args = new SellerServ_insertUserSellerReal_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.insertUserSellerReal.length === 2) {
+    Q.fcall(this._handler.insertUserSellerReal, args.userId, args.sellerId)
+      .then(function(result) {
+        var result = new SellerServ_insertUserSellerReal_result({success: result});
+        output.writeMessageBegin("insertUserSellerReal", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SellerServ_insertUserSellerReal_result(err);
+        output.writeMessageBegin("insertUserSellerReal", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.insertUserSellerReal(args.userId, args.sellerId,  function (err, result) {
+      var result = new SellerServ_insertUserSellerReal_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("insertUserSellerReal", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SellerServProcessor.prototype.process_deleteUserSellerRealByuserId = function(seqid, input, output) {
+  var args = new SellerServ_deleteUserSellerRealByuserId_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.deleteUserSellerRealByuserId.length === 1) {
+    Q.fcall(this._handler.deleteUserSellerRealByuserId, args.userId)
+      .then(function(result) {
+        var result = new SellerServ_deleteUserSellerRealByuserId_result({success: result});
+        output.writeMessageBegin("deleteUserSellerRealByuserId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SellerServ_deleteUserSellerRealByuserId_result(err);
+        output.writeMessageBegin("deleteUserSellerRealByuserId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.deleteUserSellerRealByuserId(args.userId,  function (err, result) {
+      var result = new SellerServ_deleteUserSellerRealByuserId_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("deleteUserSellerRealByuserId", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SellerServProcessor.prototype.process_querySellerVipList = function(seqid, input, output) {
+  var args = new SellerServ_querySellerVipList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.querySellerVipList.length === 2) {
+    Q.fcall(this._handler.querySellerVipList, args.sellerId, args.pagination)
+      .then(function(result) {
+        var result = new SellerServ_querySellerVipList_result({success: result});
+        output.writeMessageBegin("querySellerVipList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SellerServ_querySellerVipList_result(err);
+        output.writeMessageBegin("querySellerVipList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.querySellerVipList(args.sellerId, args.pagination,  function (err, result) {
+      var result = new SellerServ_querySellerVipList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("querySellerVipList", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

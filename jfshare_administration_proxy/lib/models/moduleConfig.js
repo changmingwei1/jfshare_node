@@ -64,6 +64,38 @@ ModuleConfig.prototype.queryModuleConfigDetail = function (params, callback) {
     });
 };
 
+/* 按规则查询商品图片 */
+ModuleConfig.prototype.queryProductRuleImgkey = function (params, callback) {
+
+    var bean = new manager_types.QueryProductRuleImgkeyParam({
+        moduleId: params.moduleId, /*模块ID*/
+        ruleType: params.ruleType,   /*规则类型*/
+        count: params.count         /*显示商品个数*/
+    });
+
+    logger.info("按规则查看商品参数，bean = " + JSON.stringify(bean));
+
+    //获取客户端
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryProductRuleImgkey', [bean]);
+    Lich.wicca.invokeClient(managerServ, function (err, data) {
+        logger.info("queryModuleConfigDetail result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("managerServ.queryModuleConfigDetail because: ======" + err);
+            res.code = 500;
+            res.desc = "按规则查询商品图片";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            logger.warn("按规则查询商品图片，参数为：" + JSON.stringify(bean));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 /* 发布模块 */
 ModuleConfig.prototype.relase = function (params, callback) {
 

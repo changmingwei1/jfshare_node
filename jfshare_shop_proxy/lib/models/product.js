@@ -142,7 +142,7 @@ Product.prototype.search = function (params, callback) {
             return callback(res, null);
 
         } else {
-            callback(null, data[0].productSearchList);
+            callback(null, data[0]);
         }
     });
 };

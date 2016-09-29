@@ -76,18 +76,33 @@ router.post('/list', function (request, response, next) {
                                         totalSales: a.totalSales,
                                         imgUrl: imgUri,
                                         activeState: a.activeState,
-                                        crateTime: a.createTime
+                                        crateTime: a.createTime,
+                                        sellerName: a.sellerName
                                     };
-                                    if(a.orgPrice ==null){
-                                        product.orgPrice =0;
+                                    if(a.minOrgPrice ==null){
+                                        product.minOrgPrice =0;
                                     }else{
-                                        product.orgPrice =(Number(a.orgPrice) / 100).toFixed(2);
+                                        product.minOrgPrice =(Number(a.minOrgPrice) / 100).toFixed(2);
                                     }
-                                    if(a.orgPrice ==null){
-                                        product.curPrice =0;
+                                    if(a.minCurPrice ==null){
+                                        product.minCurPrice =0;
                                     }else{
-                                        product.curPrice =(Number(a.curPrice) / 100).toFixed(2);
+                                        product.minCurPrice =(Number(a.minCurPrice) / 100).toFixed(2);
                                     }
+
+                                    if(a.maxOrgPrice ==null){
+                                        product.maxOrgPrice =0;
+                                    }else{
+                                        product.maxOrgPrice =(Number(a.maxOrgPrice) / 100).toFixed(2);
+                                    }
+                                    if(a.maxCurPrice ==null){
+                                        product.maxCurPrice =0;
+                                    }else{
+                                        product.maxCurPrice =(Number(a.maxCurPrice) / 100).toFixed(2);
+                                    }
+
+
+
                                     dataArr.push(product);
                                     subjectIdList.push(
                                         a.subjectId

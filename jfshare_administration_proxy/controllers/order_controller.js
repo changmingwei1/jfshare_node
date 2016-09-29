@@ -7,6 +7,9 @@ var router = express.Router();
 var async = require('async');
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
+var http = require('http');
+var xlsx = require('node-xlsx');
+var fs = require('fs');
 
 var Order = require('../lib/models/order');
 var Util = require('../lib/models/util');
@@ -14,11 +17,13 @@ var afterSale = require('../lib/models/afterSale');
 var Express = require('../lib/models/express');
 var Product = require('../lib/models/product');
 var Buyer = require('../lib/models/buyer');
+var order_types = require('../lib/thrift/gen_code/order_types');
+var Seller = require('../lib/models/seller');
 // 查询订单列表
 router.post('/list', function (request, response, next) {
     var result = {code: 200};
     var params = request.body;
-    logger.info("查询订单列表请求参数：" + JSON.stringify(params));
+    logger.error("查询订单列表请求参数：" + JSON.stringify(params));
 
     if (params.orderId != null && params.orderId != "") {
         logger.info("根据订单号查询：-----------");
@@ -35,29 +40,101 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.startTime == null || params.startTime == "") {
+        if (params.startTime == null && params.startTime == "" && params.payTimeStart == null && params.payTimeStart == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-        if (params.endTime == null || params.endTime == "") {
+        if (params.endTime == null && params.endTime == "" && params.payTimeEnd == null && params.payTimeEnd == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
     }
-
-
     var afterSaleList = [];
     var orderIdList = [];
+    var sellerIds = [];
     result.orderList = [];
     result.afterSaleList = afterSaleList;
     async.series([
             function (callback) {
+                //params.sellerIds=[1,2,4];
+                logger.info("SELLER--data：" +JSON.stringify(params));
                 try {
+                    if(params.sellerName != null && params.sellerName != ""){
+                        Seller.querySellerBySeller(params, function (err, data) {
+                            logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Seller服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].sellerList !== null && data[0].sellerList.length > 0) {
+                                for (var j = 0; j < data[0].sellerList.length; j++) {
+                                    var seller = data[0].sellerList[j];
+                                    sellerIds.push(seller.sellerId + "");
+                                }
+                            }
+
+                            logger.info("SellerIds-----------------："+sellerIds);
+                            if (sellerIds.length > 0) {
+                                params.sellerIds=sellerIds;
+                                return callback(null, params);
+                            } else {
+                                callback(null, params);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用seller服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                logger.info("BUYER--data：");
+                try {
+                    if(params.loginName != null && params.loginName != ""){
+                        Buyer.getBuyerInfo(params, function (err, data) {
+                            logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Buyer服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].buyer != null) {
+                                var buyer = data[0].buyer;
+                                params.userId= buyer.userId;
+                                return callback(null, params);
+                            } else {
+                                callback(1,null);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用buyer服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                try {
+                    //if(params.loginName != null && params.loginName != ""){
+                    //    Buyer.getBuyerInfo(params, function (err, data) {
+                    //        logger.error("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                    //        if (data[0].buyer != null) {
+                    //            var buyer = data[0].buyer;
+                    //            var userId = buyer.userId;
+                    //            params.userId=userId;
+                    //        } else {
+                    //            callback(1,null);
+                    //        }
+                    //    });
+                    //}
                     Order.orderProfileQuery(params, function (err, orderInfo) {
+                        logger.info("Order-data:"+JSON.stringify(params));
                         if (err) {
                             logger.error("订单服务异常");
                             return callback(1, null);
@@ -205,9 +282,9 @@ router.post('/list', function (request, response, next) {
                 return;
             }
             if (err == null && err != 3) {
-                logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
-                result.afterSaleList = results[1];
+                logger.error("shuju------------->" + JSON.stringify(results));
+                result = results[2];
+                result.afterSaleList = results[3];
                 response.json(result);
                 return;
             } else {
@@ -225,7 +302,6 @@ router.post('/info', function (request, response, next) {
 
     //var params = request.query;
     var params = request.body;
-
 
     var isVirtual = 0;
 
@@ -1224,5 +1300,117 @@ router.post('/getExportOrderResult', function (request, response, next) {
     }
 });
 
+/*批量发货--管理中心*/
+router.post('/batchDeliverOrderForManager', function (request, response, next) {
+    logger.info("进入批量发货流程..");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        if (params.path == "" || params.path == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        logger.info("进入批量发货流程params:" + JSON.stringify(params));
+        params.path ="http://120.24.153.102:3000/system/v1/jfs_image/"+params.path;
+        //logger.error("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
+        var isDownLoad = false;
+        async.series([
+                function (callback) {
+                    try {
+                        Order.downLoad(params, function (err, data) {
+                            if (err) {
+                                return callback(1, null);
+                            } else {
+                                isDownLoad = true;
+                                return callback(null, isDownLoad);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("下载物流单失败:" + ex);
+                        return callback(1, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        if (!isDownLoad) {
+                            return callback(1, null);
+                        }
+                        //var json = xlsx.parse("/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
+                        var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
+                        // console.log(json);
+                        var list = [];
+                        var sellerDeviler = {};
+                        if (json != null && json.length > 0) {
+
+                            var sheetData = json[0];
+
+                            if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
+
+                                for (var i = 1; i < sheetData.data.length; i++) {
+
+                                    if (sheetData.data[i].length >= 3) {
+                                        var sellerId = sheetData.data[i][0] + "";
+                                        var deliverInfo = new order_types.DeliverInfo({
+                                            expressName: sheetData.data[i][3],
+                                            expressNo: sheetData.data[i][2] + "",
+                                            sellerComment: ""
+                                        });
+                                        if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
+                                            deliverInfo.sellerComment = sheetData.data[i][3];
+                                        }
+                                        var order = new order_types.Order({
+                                            orderId: sheetData.data[i][1] + "",
+                                            deliverInfo: deliverInfo
+                                        });
+                                        sellerDeviler.sellerId = sellerId;
+                                        sellerDeviler.order = order;
+                                        list.push(sellerDeviler);
+                                    }
+                                }
+                            }
+                        }
+                        params.list = list;
+                        if (list.length > 0) {
+                            Order.batchDeliverOrderForManager(params, function (err, data) {
+                                if (err) {
+                                    return callback(err, err);
+                                }
+                                return callback(null, data);
+                            });
+                        } else {
+                            callback(2, null);
+                        }
+                    } catch (ex) {
+                        logger.info("批量发货失败:" + ex);
+                        return callback(2, null);
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    if (err == 1 || err == 2) {
+                        result.code = 500;
+                        result.desc = "批量发货失败";
+                        response.json(result);
+                    } else {
+                        response.json(err);
+                    }
+
+                } else {
+                    response.json(result);
+                }
+            });
+
+
+        //});
+    } catch (ex) {
+        logger.error("批量发货 error:" + ex);
+        result.code = 500;
+        result.desc = "批量发货失败";
+        response.json(result);
+    }
+});
 
 module.exports = router;
