@@ -57,11 +57,11 @@ router.post('/list', function (request, response, next) {
     async.series([
             function (callback) {
                 //params.sellerIds=[1,2,4];
-                logger.error("SELLER--data：" +JSON.stringify(params));
+                logger.info("SELLER--data：" +JSON.stringify(params));
                 try {
                     if(params.sellerName != null && params.sellerName != ""){
                         Seller.querySellerBySeller(params, function (err, data) {
-                            logger.error("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
                                 logger.error("Seller服务异常");
                                 return callback(1, null);
@@ -73,7 +73,7 @@ router.post('/list', function (request, response, next) {
                                 }
                             }
 
-                            logger.error("SellerIds-----------------："+sellerIds);
+                            logger.info("SellerIds-----------------："+sellerIds);
                             if (sellerIds.length > 0) {
                                 params.sellerIds=sellerIds;
                                 return callback(null, params);
@@ -90,11 +90,11 @@ router.post('/list', function (request, response, next) {
                 }
             },
             function (callback) {
-                logger.error("BUYER--data：");
+                logger.info("BUYER--data：");
                 try {
                     if(params.loginName != null && params.loginName != ""){
                         Buyer.getBuyerInfo(params, function (err, data) {
-                            logger.error("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
                                 logger.error("Buyer服务异常");
                                 return callback(1, null);
@@ -129,9 +129,8 @@ router.post('/list', function (request, response, next) {
                     //        }
                     //    });
                     //}
-                    logger.error("Order-data1111:"+JSON.stringify(params));
                     Order.orderProfileQuery(params, function (err, orderInfo) {
-                        logger.error("Order-data:"+JSON.stringify(params));
+                        logger.info("Order-data:"+JSON.stringify(params));
                         if (err) {
                             logger.error("订单服务异常");
                             return callback(1, null);

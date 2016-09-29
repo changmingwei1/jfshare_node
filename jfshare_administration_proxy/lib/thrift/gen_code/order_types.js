@@ -1764,6 +1764,7 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
   this.downType = null;
   this.orderIds = null;
   this.sellerIds = null;
+  this.fromSource = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -1869,6 +1870,9 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
     }
     if (args.sellerIds !== undefined) {
       this.sellerIds = args.sellerIds;
+    }
+    if (args.fromSource !== undefined) {
+      this.fromSource = args.fromSource;
     }
   }
 };
@@ -2157,6 +2161,13 @@ OrderQueryConditions.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 36:
+      if (ftype == Thrift.Type.I32) {
+        this.fromSource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2359,6 +2370,11 @@ OrderQueryConditions.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.fromSource !== null && this.fromSource !== undefined) {
+    output.writeFieldBegin('fromSource', Thrift.Type.I32, 36);
+    output.writeI32(this.fromSource);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

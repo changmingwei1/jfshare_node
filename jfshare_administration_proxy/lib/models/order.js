@@ -39,6 +39,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             payTimeStart: params.payTimeStart,
             payTimeEnd: params.payTimeEnd,
             //orderId: params.orderId,
+            fromSource: params.fromSource||1,
             count: params.orderList.length,
             curPage: 1
         });
@@ -63,15 +64,16 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             sellerId: params.sellerId,
             sellerIds:params.sellerIds,
             orderId: params.orderId,
+            fromSource: params.fromSource||1,
             userId: params.userId
         });
     }
 
-    logger.error("调用orderServ-orderProfileQueryFull  params:" + JSON.stringify(orderQueryConditions));
+    logger.info("调用orderServ-orderProfileQueryFull  params:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
-        logger.error("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(data));
-        logger.error("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
+        logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(data));
+        logger.info("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
         var res = {};
         if (err || data[0].result.code == "1") {
             logger.error("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
