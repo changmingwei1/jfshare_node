@@ -109,7 +109,9 @@ router.post('/search', function (req, res, next) {
                 if(err){
                     return res.json(err);
                 }
-            resContent.productSearchList = data;
+            resContent.productSearchList = data.productSearchList;
+            var pagination = data.pagination;
+            resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             res.json(resContent);
             return;
         });

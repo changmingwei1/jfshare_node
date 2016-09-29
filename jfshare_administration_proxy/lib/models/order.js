@@ -85,6 +85,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
         }
     });
 };
+
 //订单状态数量查询 --还需要查询退货中的订单状态
 Order.prototype.orderStateQuery = function (params, callback) {
 
@@ -124,6 +125,7 @@ Order.prototype.orderStateQuery = function (params, callback) {
         }
     });
 };
+
 //订单详情
 Order.prototype.queryOrderDetail = function (param, callback) {
     logger.info("调用orderServ-queryOrderDetail  param:" + JSON.stringify(param));
@@ -143,6 +145,7 @@ Order.prototype.queryOrderDetail = function (param, callback) {
     });
 };
 //	result.Result cancelOrder(1:i32 userType, 2:i32 userId, 3:string orderId, 4:i32 reason)
+
 //取消订单
 Order.prototype.cancelOrder = function (param, callback) {
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "cancelOrder", [3, param.userId, param.orderId, param.account]);
@@ -217,7 +220,6 @@ Order.prototype.updateExpressInfo = function (params, callback) {
     });
 };
 
-
 //导出订单
 Order.prototype.batchExportOrderFull = function (params, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({
@@ -243,7 +245,6 @@ Order.prototype.batchExportOrderFull = function (params, callback) {
     });
 };
 
-
 //查询导出 订单的结果
 Order.prototype.getExportOrderResult = function (params, callback) {
 
@@ -260,6 +261,65 @@ Order.prototype.getExportOrderResult = function (params, callback) {
             callback(null, data[0].value);
         }
     });
+};
+
+//批量发货 --管理中心
+Order.prototype.batchDeliverOrderForManager = function (params, callback) {
+
+    var iList = [];
+    var list = params.list;
+    if(list != null && list.length > 0){
+        for(var i = 0; i < list.length ;i++){
+            var sellerBatch =  new order_types.SellerBatchDeliverParam({
+                sellerId:list[i].sellerId,
+                order:list[i].order
+            });
+            iList.push(sellerBatch);
+        }
+    }
+    logger.info("调用orderServ-batchDeliverParam  params:" + JSON.stringify(iList));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchDeliverOrderForManager", [iList]);
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-batchDeliverParam  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("调用orderServ-batchDeliverParam  失败原因 ======" + err +"返回的数据是"+JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].failInfo;
+            callback(res, null);
+        } else if (data[0].result.code == "1") {
+            logger.warn("调用orderServ-batchDeliverParam  失败原因 ======" + err +"返回的数据是"+JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].failInfo;
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
+
+Order.prototype.downLoad = function (params, callback) {
+    var http = require('follow-redirects').http;
+    var fs = require('fs');
+    var url = require('url');
+    //var html = '/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
+    var html = 'C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
+    var file = fs.createWriteStream(html);//将文件流写入文件
+    var datas = "";
+    try {
+        http.get(params.path, function (res) {
+            res.on('data', function (data) {
+                file.write(data);
+            }).on('end', function () {
+                file.end();
+                callback(null, '');
+            });
+        });
+    } catch (ex) {
+        logger.error("解析物流单出错"+ex);
+    }
+
 };
 
 module.exports = new Order();

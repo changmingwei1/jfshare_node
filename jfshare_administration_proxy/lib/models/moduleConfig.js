@@ -69,7 +69,8 @@ ModuleConfig.prototype.queryProductRuleImgkey = function (params, callback) {
 
     var bean = new manager_types.QueryProductRuleImgkeyParam({
         moduleId: params.moduleId, /*模块ID*/
-        ruleType: params.ruleType   /*规则类型*/
+        ruleType: params.ruleType,   /*规则类型*/
+        count: params.count         /*显示商品个数*/
     });
 
     logger.info("按规则查看商品参数，bean = " + JSON.stringify(bean));
