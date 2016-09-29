@@ -854,5 +854,50 @@ router.post('/freight', function (req, res, next) {
     }
 });
 
+/*获取类目列表*/
+router.post('/subjectListRelaProduct', function (req, res, next) {
+
+    logger.info("进入获取子分类接口");
+    var result = {code: 200};
+
+    try {
+        var arg = req.body;
+
+        if (arg.subjectId == null || arg.subjectId == "" || arg.subjectId < 0) {
+            result.code = 400;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        logger.info("请求的参数，arg：" + JSON.stringify(arg));
+        Product.getSubTreeRelaProduct(arg, function (err, data) {
+            if (err) {
+                res.json(err);
+            } else {
+                var subjectNodes = data[0].subjectNodes;
+                var classList = [];
+                if (subjectNodes !== null && subjectNodes.length > 0) {
+                    subjectNodes.forEach(function (node) {
+                        classList.push({
+                            subjectId: node.id,
+                            subjectName: node.name,
+                            pid: node.pid,
+                            isLeaf: node.isLeaf,
+                            img_key: node.img_key
+                        });
+                    });
+                }
+                result.classList = classList;
+                res.json(result);
+                logger.info("get child class response:" + JSON.stringify(result));
+            }
+        });
+    } catch (ex) {
+        logger.error("get subject child error:" + ex);
+        result.code = 500;
+        result.desc = "获取子类目失败";
+        res.json(result);
+    }
+});
 
 module.exports = router;

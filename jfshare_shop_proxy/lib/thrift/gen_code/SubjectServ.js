@@ -92,7 +92,7 @@ SubjectServ_add_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
+        this.success = new ttypes.SubjectInfoResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
@@ -551,6 +551,113 @@ SubjectServ_getSubTree_result.prototype.write = function(output) {
   return;
 };
 
+SubjectServ_getSubTreeRelaProduct_args = function(args) {
+  this.subjectId = null;
+  if (args) {
+    if (args.subjectId !== undefined) {
+      this.subjectId = args.subjectId;
+    }
+  }
+};
+SubjectServ_getSubTreeRelaProduct_args.prototype = {};
+SubjectServ_getSubTreeRelaProduct_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.subjectId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_getSubTreeRelaProduct_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_getSubTreeRelaProduct_args');
+  if (this.subjectId !== null && this.subjectId !== undefined) {
+    output.writeFieldBegin('subjectId', Thrift.Type.I32, 1);
+    output.writeI32(this.subjectId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_getSubTreeRelaProduct_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_getSubTreeRelaProduct_result.prototype = {};
+SubjectServ_getSubTreeRelaProduct_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.SubjectTreeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_getSubTreeRelaProduct_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_getSubTreeRelaProduct_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 SubjectServ_getSubTreeForManage_args = function(args) {
   this.subjectId = null;
   if (args) {
@@ -755,6 +862,135 @@ SubjectServ_getSuperTree_result.prototype.read = function(input) {
 
 SubjectServ_getSuperTree_result.prototype.write = function(output) {
   output.writeStructBegin('SubjectServ_getSuperTree_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_getBatchSuperTree_args = function(args) {
+  this.subjectIds = null;
+  if (args) {
+    if (args.subjectIds !== undefined) {
+      this.subjectIds = args.subjectIds;
+    }
+  }
+};
+SubjectServ_getBatchSuperTree_args.prototype = {};
+SubjectServ_getBatchSuperTree_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size120 = 0;
+        var _rtmp3124;
+        this.subjectIds = [];
+        var _etype123 = 0;
+        _rtmp3124 = input.readListBegin();
+        _etype123 = _rtmp3124.etype;
+        _size120 = _rtmp3124.size;
+        for (var _i125 = 0; _i125 < _size120; ++_i125)
+        {
+          var elem126 = null;
+          elem126 = input.readI32();
+          this.subjectIds.push(elem126);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_getBatchSuperTree_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_getBatchSuperTree_args');
+  if (this.subjectIds !== null && this.subjectIds !== undefined) {
+    output.writeFieldBegin('subjectIds', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.I32, this.subjectIds.length);
+    for (var iter127 in this.subjectIds)
+    {
+      if (this.subjectIds.hasOwnProperty(iter127))
+      {
+        iter127 = this.subjectIds[iter127];
+        output.writeI32(iter127);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_getBatchSuperTree_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_getBatchSuperTree_result.prototype = {};
+SubjectServ_getBatchSuperTree_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.SubjectTreeBatchResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_getBatchSuperTree_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_getBatchSuperTree_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -1343,7 +1579,7 @@ SubjectServ_add4dis_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
+        this.success = new ttypes.SubjectInfoResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
@@ -1903,6 +2139,136 @@ SubjectServ_getSuperTree4dis_result.prototype.read = function(input) {
 
 SubjectServ_getSuperTree4dis_result.prototype.write = function(output) {
   output.writeStructBegin('SubjectServ_getSuperTree4dis_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_getBatchSuperTree4dis_args = function(args) {
+  this.subjectInfos = null;
+  if (args) {
+    if (args.subjectInfos !== undefined) {
+      this.subjectInfos = args.subjectInfos;
+    }
+  }
+};
+SubjectServ_getBatchSuperTree4dis_args.prototype = {};
+SubjectServ_getBatchSuperTree4dis_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size128 = 0;
+        var _rtmp3132;
+        this.subjectInfos = [];
+        var _etype131 = 0;
+        _rtmp3132 = input.readListBegin();
+        _etype131 = _rtmp3132.etype;
+        _size128 = _rtmp3132.size;
+        for (var _i133 = 0; _i133 < _size128; ++_i133)
+        {
+          var elem134 = null;
+          elem134 = new ttypes.DisplaySubjectInfo();
+          elem134.read(input);
+          this.subjectInfos.push(elem134);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_getBatchSuperTree4dis_args.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_getBatchSuperTree4dis_args');
+  if (this.subjectInfos !== null && this.subjectInfos !== undefined) {
+    output.writeFieldBegin('subjectInfos', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.subjectInfos.length);
+    for (var iter135 in this.subjectInfos)
+    {
+      if (this.subjectInfos.hasOwnProperty(iter135))
+      {
+        iter135 = this.subjectInfos[iter135];
+        iter135.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SubjectServ_getBatchSuperTree4dis_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+SubjectServ_getBatchSuperTree4dis_result.prototype = {};
+SubjectServ_getBatchSuperTree4dis_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.DisplaySubjectTreeBatchResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SubjectServ_getBatchSuperTree4dis_result.prototype.write = function(output) {
+  output.writeStructBegin('SubjectServ_getBatchSuperTree4dis_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -3325,7 +3691,7 @@ SubjectServ_addSubjectAttribute_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
+        this.success = new ttypes.SubjectAttributeInfoResult();
         this.success.read(input);
       } else {
         input.skip(ftype);
@@ -3595,19 +3961,19 @@ SubjectServ_deleteSubjectAttributeBatch_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size88 = 0;
-        var _rtmp392;
+        var _size136 = 0;
+        var _rtmp3140;
         this.atrributeList = [];
-        var _etype91 = 0;
-        _rtmp392 = input.readListBegin();
-        _etype91 = _rtmp392.etype;
-        _size88 = _rtmp392.size;
-        for (var _i93 = 0; _i93 < _size88; ++_i93)
+        var _etype139 = 0;
+        _rtmp3140 = input.readListBegin();
+        _etype139 = _rtmp3140.etype;
+        _size136 = _rtmp3140.size;
+        for (var _i141 = 0; _i141 < _size136; ++_i141)
         {
-          var elem94 = null;
-          elem94 = new ttypes.SubjectAttribute();
-          elem94.read(input);
-          this.atrributeList.push(elem94);
+          var elem142 = null;
+          elem142 = new ttypes.SubjectAttribute();
+          elem142.read(input);
+          this.atrributeList.push(elem142);
         }
         input.readListEnd();
       } else {
@@ -3631,12 +3997,12 @@ SubjectServ_deleteSubjectAttributeBatch_args.prototype.write = function(output) 
   if (this.atrributeList !== null && this.atrributeList !== undefined) {
     output.writeFieldBegin('atrributeList', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.atrributeList.length);
-    for (var iter95 in this.atrributeList)
+    for (var iter143 in this.atrributeList)
     {
-      if (this.atrributeList.hasOwnProperty(iter95))
+      if (this.atrributeList.hasOwnProperty(iter143))
       {
-        iter95 = this.atrributeList[iter95];
-        iter95.write(output);
+        iter143 = this.atrributeList[iter143];
+        iter143.write(output);
       }
     }
     output.writeListEnd();
@@ -4161,6 +4527,53 @@ SubjectServClient.prototype.recv_getSubTree = function(input,mtype,rseqid) {
   }
   return callback('getSubTree failed: unknown result');
 };
+SubjectServClient.prototype.getSubTreeRelaProduct = function(subjectId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getSubTreeRelaProduct(subjectId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getSubTreeRelaProduct(subjectId);
+  }
+};
+
+SubjectServClient.prototype.send_getSubTreeRelaProduct = function(subjectId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getSubTreeRelaProduct', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_getSubTreeRelaProduct_args();
+  args.subjectId = subjectId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_getSubTreeRelaProduct = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_getSubTreeRelaProduct_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getSubTreeRelaProduct failed: unknown result');
+};
 SubjectServClient.prototype.getSubTreeForManage = function(subjectId, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -4254,6 +4667,53 @@ SubjectServClient.prototype.recv_getSuperTree = function(input,mtype,rseqid) {
     return callback(null, result.success);
   }
   return callback('getSuperTree failed: unknown result');
+};
+SubjectServClient.prototype.getBatchSuperTree = function(subjectIds, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getBatchSuperTree(subjectIds);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getBatchSuperTree(subjectIds);
+  }
+};
+
+SubjectServClient.prototype.send_getBatchSuperTree = function(subjectIds) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getBatchSuperTree', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_getBatchSuperTree_args();
+  args.subjectIds = subjectIds;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_getBatchSuperTree = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_getBatchSuperTree_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getBatchSuperTree failed: unknown result');
 };
 SubjectServClient.prototype.getLeavesById = function(subjectId, callback) {
   this._seqid = this.new_seqid();
@@ -4770,6 +5230,53 @@ SubjectServClient.prototype.recv_getSuperTree4dis = function(input,mtype,rseqid)
     return callback(null, result.success);
   }
   return callback('getSuperTree4dis failed: unknown result');
+};
+SubjectServClient.prototype.getBatchSuperTree4dis = function(subjectInfos, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getBatchSuperTree4dis(subjectInfos);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getBatchSuperTree4dis(subjectInfos);
+  }
+};
+
+SubjectServClient.prototype.send_getBatchSuperTree4dis = function(subjectInfos) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getBatchSuperTree4dis', Thrift.MessageType.CALL, this.seqid());
+  var args = new SubjectServ_getBatchSuperTree4dis_args();
+  args.subjectInfos = subjectInfos;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+SubjectServClient.prototype.recv_getBatchSuperTree4dis = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new SubjectServ_getBatchSuperTree4dis_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getBatchSuperTree4dis failed: unknown result');
 };
 SubjectServClient.prototype.getDisplayIdsBySubjectId = function(subjectId, callback) {
   this._seqid = this.new_seqid();
@@ -5788,6 +6295,36 @@ SubjectServProcessor.prototype.process_getSubTree = function(seqid, input, outpu
   }
 }
 
+SubjectServProcessor.prototype.process_getSubTreeRelaProduct = function(seqid, input, output) {
+  var args = new SubjectServ_getSubTreeRelaProduct_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getSubTreeRelaProduct.length === 1) {
+    Q.fcall(this._handler.getSubTreeRelaProduct, args.subjectId)
+      .then(function(result) {
+        var result = new SubjectServ_getSubTreeRelaProduct_result({success: result});
+        output.writeMessageBegin("getSubTreeRelaProduct", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_getSubTreeRelaProduct_result(err);
+        output.writeMessageBegin("getSubTreeRelaProduct", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getSubTreeRelaProduct(args.subjectId,  function (err, result) {
+      var result = new SubjectServ_getSubTreeRelaProduct_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getSubTreeRelaProduct", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
 SubjectServProcessor.prototype.process_getSubTreeForManage = function(seqid, input, output) {
   var args = new SubjectServ_getSubTreeForManage_args();
   args.read(input);
@@ -5841,6 +6378,36 @@ SubjectServProcessor.prototype.process_getSuperTree = function(seqid, input, out
     this._handler.getSuperTree(args.subjectId,  function (err, result) {
       var result = new SubjectServ_getSuperTree_result((err != null ? err : {success: result}));
       output.writeMessageBegin("getSuperTree", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_getBatchSuperTree = function(seqid, input, output) {
+  var args = new SubjectServ_getBatchSuperTree_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getBatchSuperTree.length === 1) {
+    Q.fcall(this._handler.getBatchSuperTree, args.subjectIds)
+      .then(function(result) {
+        var result = new SubjectServ_getBatchSuperTree_result({success: result});
+        output.writeMessageBegin("getBatchSuperTree", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_getBatchSuperTree_result(err);
+        output.writeMessageBegin("getBatchSuperTree", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getBatchSuperTree(args.subjectIds,  function (err, result) {
+      var result = new SubjectServ_getBatchSuperTree_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getBatchSuperTree", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -6171,6 +6738,36 @@ SubjectServProcessor.prototype.process_getSuperTree4dis = function(seqid, input,
     this._handler.getSuperTree4dis(args.displaySubjectParam,  function (err, result) {
       var result = new SubjectServ_getSuperTree4dis_result((err != null ? err : {success: result}));
       output.writeMessageBegin("getSuperTree4dis", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+SubjectServProcessor.prototype.process_getBatchSuperTree4dis = function(seqid, input, output) {
+  var args = new SubjectServ_getBatchSuperTree4dis_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getBatchSuperTree4dis.length === 1) {
+    Q.fcall(this._handler.getBatchSuperTree4dis, args.subjectInfos)
+      .then(function(result) {
+        var result = new SubjectServ_getBatchSuperTree4dis_result({success: result});
+        output.writeMessageBegin("getBatchSuperTree4dis", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new SubjectServ_getBatchSuperTree4dis_result(err);
+        output.writeMessageBegin("getBatchSuperTree4dis", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getBatchSuperTree4dis(args.subjectInfos,  function (err, result) {
+      var result = new SubjectServ_getBatchSuperTree4dis_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getBatchSuperTree4dis", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
