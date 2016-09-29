@@ -3833,13 +3833,17 @@ BatchDeliverParam.prototype.write = function(output) {
 
 SellerBatchDeliverParam = module.exports.SellerBatchDeliverParam = function(args) {
   this.sellerId = null;
-  this.param = null;
+  this.deliverType = null;
+  this.order = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
     }
-    if (args.param !== undefined) {
-      this.param = args.param;
+    if (args.deliverType !== undefined) {
+      this.deliverType = args.deliverType;
+    }
+    if (args.order !== undefined) {
+      this.order = args.order;
     }
   }
 };
@@ -3865,9 +3869,16 @@ SellerBatchDeliverParam.prototype.read = function(input) {
       }
       break;
       case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.deliverType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
       if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.BatchDeliverParam();
-        this.param.read(input);
+        this.order = new ttypes.Order();
+        this.order.read(input);
       } else {
         input.skip(ftype);
       }
@@ -3888,9 +3899,14 @@ SellerBatchDeliverParam.prototype.write = function(output) {
     output.writeI32(this.sellerId);
     output.writeFieldEnd();
   }
-  if (this.param !== null && this.param !== undefined) {
-    output.writeFieldBegin('param', Thrift.Type.STRUCT, 2);
-    this.param.write(output);
+  if (this.deliverType !== null && this.deliverType !== undefined) {
+    output.writeFieldBegin('deliverType', Thrift.Type.I32, 2);
+    output.writeI32(this.deliverType);
+    output.writeFieldEnd();
+  }
+  if (this.order !== null && this.order !== undefined) {
+    output.writeFieldBegin('order', Thrift.Type.STRUCT, 3);
+    this.order.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
