@@ -14,11 +14,12 @@ var afterSale = require('../lib/models/afterSale');
 var Express = require('../lib/models/express');
 var Product = require('../lib/models/product');
 var Buyer = require('../lib/models/buyer');
+var Seller = require('../lib/models/seller');
 // 查询订单列表
 router.post('/list', function (request, response, next) {
     var result = {code: 200};
     var params = request.body;
-    logger.info("查询订单列表请求参数：" + JSON.stringify(params));
+    logger.error("查询订单列表请求参数：" + JSON.stringify(params));
 
     if (params.orderId != null && params.orderId != "") {
         logger.info("根据订单号查询：-----------");
@@ -35,29 +36,102 @@ router.post('/list', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.startTime == null || params.startTime == "") {
+        if (params.startTime == null && params.startTime == "" && params.payTimeStart == null && params.payTimeStart == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-        if (params.endTime == null || params.endTime == "") {
+        if (params.endTime == null && params.endTime == "" && params.payTimeEnd == null && params.payTimeEnd == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
     }
-
-
     var afterSaleList = [];
     var orderIdList = [];
+    var sellerIds = [];
     result.orderList = [];
     result.afterSaleList = afterSaleList;
     async.series([
             function (callback) {
+                //params.sellerIds=[1,2,4];
+                logger.error("SELLER--data：" +JSON.stringify(params));
                 try {
+                    if(params.sellerName != null && params.sellerName != ""){
+                        Seller.querySellerBySeller(params, function (err, data) {
+                            logger.error("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Seller服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].sellerList !== null && data[0].sellerList.length > 0) {
+                                for (var j = 0; j < data[0].sellerList.length; j++) {
+                                    var seller = data[0].sellerList[j];
+                                    sellerIds.push(seller.sellerId + "");
+                                }
+                            }
+
+                            logger.error("SellerIds-----------------："+sellerIds);
+                            if (sellerIds.length > 0) {
+                                params.sellerIds=sellerIds;
+                                return callback(null, params);
+                            } else {
+                                callback(null, params);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用seller服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                logger.error("BUYER--data：");
+                try {
+                    if(params.loginName != null && params.loginName != ""){
+                        Buyer.getBuyerInfo(params, function (err, data) {
+                            logger.error("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Buyer服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].buyer != null) {
+                                var buyer = data[0].buyer;
+                                params.userId= buyer.userId;
+                                return callback(null, params);
+                            } else {
+                                callback(1,null);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用buyer服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                try {
+                    //if(params.loginName != null && params.loginName != ""){
+                    //    Buyer.getBuyerInfo(params, function (err, data) {
+                    //        logger.error("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                    //        if (data[0].buyer != null) {
+                    //            var buyer = data[0].buyer;
+                    //            var userId = buyer.userId;
+                    //            params.userId=userId;
+                    //        } else {
+                    //            callback(1,null);
+                    //        }
+                    //    });
+                    //}
+                    logger.error("Order-data1111:"+JSON.stringify(params));
                     Order.orderProfileQuery(params, function (err, orderInfo) {
+                        logger.error("Order-data:"+JSON.stringify(params));
                         if (err) {
                             logger.error("订单服务异常");
                             return callback(1, null);
@@ -205,9 +279,9 @@ router.post('/list', function (request, response, next) {
                 return;
             }
             if (err == null && err != 3) {
-                logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
-                result.afterSaleList = results[1];
+                logger.error("shuju------------->" + JSON.stringify(results));
+                result = results[2];
+                result.afterSaleList = results[3];
                 response.json(result);
                 return;
             } else {
@@ -225,7 +299,6 @@ router.post('/info', function (request, response, next) {
 
     //var params = request.query;
     var params = request.body;
-
 
     var isVirtual = 0;
 

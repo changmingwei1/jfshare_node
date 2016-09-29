@@ -34,6 +34,7 @@ Seller = module.exports.Seller = function(args) {
   this.mobile = null;
   this.tel = null;
   this.email = null;
+  this.createTime = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -97,6 +98,9 @@ Seller = module.exports.Seller = function(args) {
     }
     if (args.email !== undefined) {
       this.email = args.email;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
     }
   }
 };
@@ -261,6 +265,13 @@ Seller.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 22:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -375,6 +386,11 @@ Seller.prototype.write = function(output) {
   if (this.email !== null && this.email !== undefined) {
     output.writeFieldBegin('email', Thrift.Type.STRING, 21);
     output.writeString(this.email);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 22);
+    output.writeString(this.createTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -892,6 +908,211 @@ SellerListResult.prototype.write = function(output) {
   }
   if (this.pagination !== null && this.pagination !== undefined) {
     output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerVip = module.exports.SellerVip = function(args) {
+  this.favimg = null;
+  this.username = null;
+  this.regedate = null;
+  if (args) {
+    if (args.favimg !== undefined) {
+      this.favimg = args.favimg;
+    }
+    if (args.username !== undefined) {
+      this.username = args.username;
+    }
+    if (args.regedate !== undefined) {
+      this.regedate = args.regedate;
+    }
+  }
+};
+SellerVip.prototype = {};
+SellerVip.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.favimg = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.username = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.regedate = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerVip.prototype.write = function(output) {
+  output.writeStructBegin('SellerVip');
+  if (this.favimg !== null && this.favimg !== undefined) {
+    output.writeFieldBegin('favimg', Thrift.Type.STRING, 1);
+    output.writeString(this.favimg);
+    output.writeFieldEnd();
+  }
+  if (this.username !== null && this.username !== undefined) {
+    output.writeFieldBegin('username', Thrift.Type.STRING, 2);
+    output.writeString(this.username);
+    output.writeFieldEnd();
+  }
+  if (this.regedate !== null && this.regedate !== undefined) {
+    output.writeFieldBegin('regedate', Thrift.Type.STRING, 3);
+    output.writeString(this.regedate);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SellerVipResult = module.exports.SellerVipResult = function(args) {
+  this.result = null;
+  this.vipTotal = null;
+  this.vipList = null;
+  this.pagination = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.vipTotal !== undefined) {
+      this.vipTotal = args.vipTotal;
+    }
+    if (args.vipList !== undefined) {
+      this.vipList = args.vipList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+SellerVipResult.prototype = {};
+SellerVipResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.vipTotal = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size18 = 0;
+        var _rtmp322;
+        this.vipList = [];
+        var _etype21 = 0;
+        _rtmp322 = input.readListBegin();
+        _etype21 = _rtmp322.etype;
+        _size18 = _rtmp322.size;
+        for (var _i23 = 0; _i23 < _size18; ++_i23)
+        {
+          var elem24 = null;
+          elem24 = new ttypes.SellerVip();
+          elem24.read(input);
+          this.vipList.push(elem24);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SellerVipResult.prototype.write = function(output) {
+  output.writeStructBegin('SellerVipResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.vipTotal !== null && this.vipTotal !== undefined) {
+    output.writeFieldBegin('vipTotal', Thrift.Type.I32, 2);
+    output.writeI32(this.vipTotal);
+    output.writeFieldEnd();
+  }
+  if (this.vipList !== null && this.vipList !== undefined) {
+    output.writeFieldBegin('vipList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.vipList.length);
+    for (var iter25 in this.vipList)
+    {
+      if (this.vipList.hasOwnProperty(iter25))
+      {
+        iter25 = this.vipList[iter25];
+        iter25.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 4);
     this.pagination.write(output);
     output.writeFieldEnd();
   }
