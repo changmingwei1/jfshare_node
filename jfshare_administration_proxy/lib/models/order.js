@@ -39,7 +39,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             payTimeStart: params.payTimeStart,
             payTimeEnd: params.payTimeEnd,
             //orderId: params.orderId,
-            fromSource: params.fromSource||1,
+            fromSource: params.fromSource||0,
             count: params.orderList.length,
             curPage: 1
         });
@@ -64,7 +64,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             sellerId: params.sellerId,
             sellerIds:params.sellerIds,
             orderId: params.orderId,
-            fromSource: params.fromSource||1,
+            fromSource: params.fromSource||0,
             userId: params.userId
         });
     }
