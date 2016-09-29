@@ -69,6 +69,53 @@ router.post('/queryModuleConfigDetail', function (request, response, next) {
     }
 });
 
+/* 按规则查询商品图片 */
+router.post('/queryProductRuleImgkey', function (request, response, next) {
+    logger.info("按规则查询商品图片");
+    var result = {code: 200};
+    var ModuleConfigDetailList = [];
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("queryProductRuleImgkey params:" + JSON.stringify(params));
+        if (params.moduleId == null || params.moduleId == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.ruleType == null || params.ruleType == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.count == null || params.count == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        ModuleConfig.queryProductRuleImgkey(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            if(data[0] != null || data[0].ModuleConfigDetailList != null){
+                ModuleConfigDetailList = data[0].ModuleConfigDetailList;
+            }
+            result.ModuleConfigDetailList = ModuleConfigDetailList;
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("按规则查询商品图片:" + ex);
+        result.code = 500;
+        result.desc = "按规则查询商品图片";
+        response.json(result);
+    }
+});
+
 /* 导入商品或品牌ID */
 router.post('/importExcel', function (request, response, next) {
     logger.info("查询广告位图片");
