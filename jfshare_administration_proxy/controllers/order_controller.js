@@ -173,6 +173,7 @@ router.post('/list', function (request, response, next) {
                                     exchangeScore: order.exchangeScore,
                                     activeState: order.activeState,
                                     curTime: order.curTime,
+                                    fromSource: order.fromSource,
                                     payChannel: ""
                                 };
                                 if (order.payInfo != null) {
