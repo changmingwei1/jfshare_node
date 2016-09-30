@@ -265,12 +265,16 @@ Product.prototype.statisticsProductCard = function (params, callback) {
 //卡密列表
 Product.prototype.queryProductCardViewList = function (params, callback) {
 
-
     var ProductCardViewParam = new product_types.ProductCardViewParam({
         sellerId: params.sellerId,
         productId: params.productId,
         cardNumber: params.cardNumber,
-        state: params.state
+        state: params.state,
+        sendBeginTime:params.sendBeginTime,
+        sendEndTime:params.sendEndTime,
+        validateBeginTime:params.validateBeginTime,
+        validateEndTime:params.validateEndTime,
+        sendAccount:params.sendAccount
     });
 
     if(params.skuNum !=""){

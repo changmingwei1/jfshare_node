@@ -566,6 +566,8 @@ Product = module.exports.Product = function(args) {
   this.storehouseIds = null;
   this.postageId = null;
   this.thirdExchangeRate = null;
+  this.thirdPartyIdentify = null;
+  this.thirdPartyProductId = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -644,6 +646,12 @@ Product = module.exports.Product = function(args) {
     }
     if (args.thirdExchangeRate !== undefined) {
       this.thirdExchangeRate = args.thirdExchangeRate;
+    }
+    if (args.thirdPartyIdentify !== undefined) {
+      this.thirdPartyIdentify = args.thirdPartyIdentify;
+    }
+    if (args.thirdPartyProductId !== undefined) {
+      this.thirdPartyProductId = args.thirdPartyProductId;
     }
   }
 };
@@ -844,6 +852,20 @@ Product.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 27:
+      if (ftype == Thrift.Type.I32) {
+        this.thirdPartyIdentify = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 28:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdPartyProductId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -983,6 +1005,16 @@ Product.prototype.write = function(output) {
   if (this.thirdExchangeRate !== null && this.thirdExchangeRate !== undefined) {
     output.writeFieldBegin('thirdExchangeRate', Thrift.Type.STRING, 26);
     output.writeString(this.thirdExchangeRate);
+    output.writeFieldEnd();
+  }
+  if (this.thirdPartyIdentify !== null && this.thirdPartyIdentify !== undefined) {
+    output.writeFieldBegin('thirdPartyIdentify', Thrift.Type.I32, 27);
+    output.writeI32(this.thirdPartyIdentify);
+    output.writeFieldEnd();
+  }
+  if (this.thirdPartyProductId !== null && this.thirdPartyProductId !== undefined) {
+    output.writeFieldBegin('thirdPartyProductId', Thrift.Type.STRING, 28);
+    output.writeString(this.thirdPartyProductId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1317,8 +1349,8 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
   this.productName = null;
   this.subjectId = null;
   this.brandId = null;
-  this.orgPrice = null;
-  this.curPrice = null;
+  this.minOrgPrice = null;
+  this.minCurPrice = null;
   this.activeStock = null;
   this.totalSales = null;
   this.activeState = null;
@@ -1330,6 +1362,9 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
   this.clickRate = null;
   this.storehouseIds = null;
   this.postageId = null;
+  this.maxOrgPrice = null;
+  this.maxCurPrice = null;
+  this.sellerName = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -1343,11 +1378,11 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
     if (args.brandId !== undefined) {
       this.brandId = args.brandId;
     }
-    if (args.orgPrice !== undefined) {
-      this.orgPrice = args.orgPrice;
+    if (args.minOrgPrice !== undefined) {
+      this.minOrgPrice = args.minOrgPrice;
     }
-    if (args.curPrice !== undefined) {
-      this.curPrice = args.curPrice;
+    if (args.minCurPrice !== undefined) {
+      this.minCurPrice = args.minCurPrice;
     }
     if (args.activeStock !== undefined) {
       this.activeStock = args.activeStock;
@@ -1381,6 +1416,15 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
     }
     if (args.postageId !== undefined) {
       this.postageId = args.postageId;
+    }
+    if (args.maxOrgPrice !== undefined) {
+      this.maxOrgPrice = args.maxOrgPrice;
+    }
+    if (args.maxCurPrice !== undefined) {
+      this.maxCurPrice = args.maxCurPrice;
+    }
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
     }
   }
 };
@@ -1428,14 +1472,14 @@ ProductSurvey.prototype.read = function(input) {
       break;
       case 5:
       if (ftype == Thrift.Type.STRING) {
-        this.orgPrice = input.readString();
+        this.minOrgPrice = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 6:
       if (ftype == Thrift.Type.STRING) {
-        this.curPrice = input.readString();
+        this.minCurPrice = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -1517,6 +1561,27 @@ ProductSurvey.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 18:
+      if (ftype == Thrift.Type.STRING) {
+        this.maxOrgPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 19:
+      if (ftype == Thrift.Type.STRING) {
+        this.maxCurPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 20:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1548,14 +1613,14 @@ ProductSurvey.prototype.write = function(output) {
     output.writeI32(this.brandId);
     output.writeFieldEnd();
   }
-  if (this.orgPrice !== null && this.orgPrice !== undefined) {
-    output.writeFieldBegin('orgPrice', Thrift.Type.STRING, 5);
-    output.writeString(this.orgPrice);
+  if (this.minOrgPrice !== null && this.minOrgPrice !== undefined) {
+    output.writeFieldBegin('minOrgPrice', Thrift.Type.STRING, 5);
+    output.writeString(this.minOrgPrice);
     output.writeFieldEnd();
   }
-  if (this.curPrice !== null && this.curPrice !== undefined) {
-    output.writeFieldBegin('curPrice', Thrift.Type.STRING, 6);
-    output.writeString(this.curPrice);
+  if (this.minCurPrice !== null && this.minCurPrice !== undefined) {
+    output.writeFieldBegin('minCurPrice', Thrift.Type.STRING, 6);
+    output.writeString(this.minCurPrice);
     output.writeFieldEnd();
   }
   if (this.activeStock !== null && this.activeStock !== undefined) {
@@ -1611,6 +1676,549 @@ ProductSurvey.prototype.write = function(output) {
   if (this.postageId !== null && this.postageId !== undefined) {
     output.writeFieldBegin('postageId', Thrift.Type.I32, 17);
     output.writeI32(this.postageId);
+    output.writeFieldEnd();
+  }
+  if (this.maxOrgPrice !== null && this.maxOrgPrice !== undefined) {
+    output.writeFieldBegin('maxOrgPrice', Thrift.Type.STRING, 18);
+    output.writeString(this.maxOrgPrice);
+    output.writeFieldEnd();
+  }
+  if (this.maxCurPrice !== null && this.maxCurPrice !== undefined) {
+    output.writeFieldBegin('maxCurPrice', Thrift.Type.STRING, 19);
+    output.writeString(this.maxCurPrice);
+    output.writeFieldEnd();
+  }
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 20);
+    output.writeString(this.sellerName);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductSearch = module.exports.ProductSearch = function(args) {
+  this.productId = null;
+  this.productName = null;
+  this.subjectId = null;
+  this.brandId = null;
+  this.maxOrgPrice = null;
+  this.maxCurPrice = null;
+  this.activeStock = null;
+  this.totalSales = null;
+  this.activeState = null;
+  this.imgUrl = null;
+  this.viceName = null;
+  this.createTime = null;
+  this.sellerId = null;
+  this.type = null;
+  this.clickRate = null;
+  this.storehouseIds = null;
+  this.postageId = null;
+  this.minOrgPrice = null;
+  this.minCurPrice = null;
+  if (args) {
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.productName !== undefined) {
+      this.productName = args.productName;
+    }
+    if (args.subjectId !== undefined) {
+      this.subjectId = args.subjectId;
+    }
+    if (args.brandId !== undefined) {
+      this.brandId = args.brandId;
+    }
+    if (args.maxOrgPrice !== undefined) {
+      this.maxOrgPrice = args.maxOrgPrice;
+    }
+    if (args.maxCurPrice !== undefined) {
+      this.maxCurPrice = args.maxCurPrice;
+    }
+    if (args.activeStock !== undefined) {
+      this.activeStock = args.activeStock;
+    }
+    if (args.totalSales !== undefined) {
+      this.totalSales = args.totalSales;
+    }
+    if (args.activeState !== undefined) {
+      this.activeState = args.activeState;
+    }
+    if (args.imgUrl !== undefined) {
+      this.imgUrl = args.imgUrl;
+    }
+    if (args.viceName !== undefined) {
+      this.viceName = args.viceName;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+    if (args.clickRate !== undefined) {
+      this.clickRate = args.clickRate;
+    }
+    if (args.storehouseIds !== undefined) {
+      this.storehouseIds = args.storehouseIds;
+    }
+    if (args.postageId !== undefined) {
+      this.postageId = args.postageId;
+    }
+    if (args.minOrgPrice !== undefined) {
+      this.minOrgPrice = args.minOrgPrice;
+    }
+    if (args.minCurPrice !== undefined) {
+      this.minCurPrice = args.minCurPrice;
+    }
+  }
+};
+ProductSearch.prototype = {};
+ProductSearch.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.productName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.subjectId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.brandId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.maxOrgPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.maxCurPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.activeStock = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.totalSales = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.I32) {
+        this.activeState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.imgUrl = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.viceName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 15:
+      if (ftype == Thrift.Type.I64) {
+        this.clickRate = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 16:
+      if (ftype == Thrift.Type.STRING) {
+        this.storehouseIds = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 17:
+      if (ftype == Thrift.Type.I32) {
+        this.postageId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 18:
+      if (ftype == Thrift.Type.STRING) {
+        this.minOrgPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 19:
+      if (ftype == Thrift.Type.STRING) {
+        this.minCurPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductSearch.prototype.write = function(output) {
+  output.writeStructBegin('ProductSearch');
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.productName !== null && this.productName !== undefined) {
+    output.writeFieldBegin('productName', Thrift.Type.STRING, 2);
+    output.writeString(this.productName);
+    output.writeFieldEnd();
+  }
+  if (this.subjectId !== null && this.subjectId !== undefined) {
+    output.writeFieldBegin('subjectId', Thrift.Type.I32, 3);
+    output.writeI32(this.subjectId);
+    output.writeFieldEnd();
+  }
+  if (this.brandId !== null && this.brandId !== undefined) {
+    output.writeFieldBegin('brandId', Thrift.Type.I32, 4);
+    output.writeI32(this.brandId);
+    output.writeFieldEnd();
+  }
+  if (this.maxOrgPrice !== null && this.maxOrgPrice !== undefined) {
+    output.writeFieldBegin('maxOrgPrice', Thrift.Type.STRING, 5);
+    output.writeString(this.maxOrgPrice);
+    output.writeFieldEnd();
+  }
+  if (this.maxCurPrice !== null && this.maxCurPrice !== undefined) {
+    output.writeFieldBegin('maxCurPrice', Thrift.Type.STRING, 6);
+    output.writeString(this.maxCurPrice);
+    output.writeFieldEnd();
+  }
+  if (this.activeStock !== null && this.activeStock !== undefined) {
+    output.writeFieldBegin('activeStock', Thrift.Type.I32, 7);
+    output.writeI32(this.activeStock);
+    output.writeFieldEnd();
+  }
+  if (this.totalSales !== null && this.totalSales !== undefined) {
+    output.writeFieldBegin('totalSales', Thrift.Type.I32, 8);
+    output.writeI32(this.totalSales);
+    output.writeFieldEnd();
+  }
+  if (this.activeState !== null && this.activeState !== undefined) {
+    output.writeFieldBegin('activeState', Thrift.Type.I32, 9);
+    output.writeI32(this.activeState);
+    output.writeFieldEnd();
+  }
+  if (this.imgUrl !== null && this.imgUrl !== undefined) {
+    output.writeFieldBegin('imgUrl', Thrift.Type.STRING, 10);
+    output.writeString(this.imgUrl);
+    output.writeFieldEnd();
+  }
+  if (this.viceName !== null && this.viceName !== undefined) {
+    output.writeFieldBegin('viceName', Thrift.Type.STRING, 11);
+    output.writeString(this.viceName);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 12);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 13);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 14);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.clickRate !== null && this.clickRate !== undefined) {
+    output.writeFieldBegin('clickRate', Thrift.Type.I64, 15);
+    output.writeI64(this.clickRate);
+    output.writeFieldEnd();
+  }
+  if (this.storehouseIds !== null && this.storehouseIds !== undefined) {
+    output.writeFieldBegin('storehouseIds', Thrift.Type.STRING, 16);
+    output.writeString(this.storehouseIds);
+    output.writeFieldEnd();
+  }
+  if (this.postageId !== null && this.postageId !== undefined) {
+    output.writeFieldBegin('postageId', Thrift.Type.I32, 17);
+    output.writeI32(this.postageId);
+    output.writeFieldEnd();
+  }
+  if (this.minOrgPrice !== null && this.minOrgPrice !== undefined) {
+    output.writeFieldBegin('minOrgPrice', Thrift.Type.STRING, 18);
+    output.writeString(this.minOrgPrice);
+    output.writeFieldEnd();
+  }
+  if (this.minCurPrice !== null && this.minCurPrice !== undefined) {
+    output.writeFieldBegin('minCurPrice', Thrift.Type.STRING, 19);
+    output.writeString(this.minCurPrice);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductSearchParam = module.exports.ProductSearchParam = function(args) {
+  this.type = null;
+  this.keyword = null;
+  this.pagination = null;
+  if (args) {
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+    if (args.keyword !== undefined) {
+      this.keyword = args.keyword;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ProductSearchParam.prototype = {};
+ProductSearchParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.keyword = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductSearchParam.prototype.write = function(output) {
+  output.writeStructBegin('ProductSearchParam');
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 1);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.keyword !== null && this.keyword !== undefined) {
+    output.writeFieldBegin('keyword', Thrift.Type.STRING, 2);
+    output.writeString(this.keyword);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductSearchResult = module.exports.ProductSearchResult = function(args) {
+  this.result = null;
+  this.pagination = null;
+  this.productSearchList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.productSearchList !== undefined) {
+      this.productSearchList = args.productSearchList;
+    }
+  }
+};
+ProductSearchResult.prototype = {};
+ProductSearchResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size16 = 0;
+        var _rtmp320;
+        this.productSearchList = [];
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        {
+          var elem22 = null;
+          elem22 = new ttypes.ProductSearch();
+          elem22.read(input);
+          this.productSearchList.push(elem22);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductSearchResult.prototype.write = function(output) {
+  output.writeStructBegin('ProductSearchResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.productSearchList !== null && this.productSearchList !== undefined) {
+    output.writeFieldBegin('productSearchList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productSearchList.length);
+    for (var iter23 in this.productSearchList)
+    {
+      if (this.productSearchList.hasOwnProperty(iter23))
+      {
+        iter23 = this.productSearchList[iter23];
+        iter23.write(output);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1735,18 +2343,18 @@ ProductSurveyQueryParam.prototype.read = function(input) {
       break;
       case 9:
       if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
+        var _size24 = 0;
+        var _rtmp328;
         this.subjectIdList = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
         {
-          var elem22 = null;
-          elem22 = input.readI32();
-          this.subjectIdList.push(elem22);
+          var elem30 = null;
+          elem30 = input.readI32();
+          this.subjectIdList.push(elem30);
         }
         input.readListEnd();
       } else {
@@ -1755,18 +2363,18 @@ ProductSurveyQueryParam.prototype.read = function(input) {
       break;
       case 10:
       if (ftype == Thrift.Type.LIST) {
-        var _size23 = 0;
-        var _rtmp327;
+        var _size31 = 0;
+        var _rtmp335;
         this.productIdList = [];
-        var _etype26 = 0;
-        _rtmp327 = input.readListBegin();
-        _etype26 = _rtmp327.etype;
-        _size23 = _rtmp327.size;
-        for (var _i28 = 0; _i28 < _size23; ++_i28)
+        var _etype34 = 0;
+        _rtmp335 = input.readListBegin();
+        _etype34 = _rtmp335.etype;
+        _size31 = _rtmp335.size;
+        for (var _i36 = 0; _i36 < _size31; ++_i36)
         {
-          var elem29 = null;
-          elem29 = input.readString();
-          this.productIdList.push(elem29);
+          var elem37 = null;
+          elem37 = input.readString();
+          this.productIdList.push(elem37);
         }
         input.readListEnd();
       } else {
@@ -1827,12 +2435,12 @@ ProductSurveyQueryParam.prototype.write = function(output) {
   if (this.subjectIdList !== null && this.subjectIdList !== undefined) {
     output.writeFieldBegin('subjectIdList', Thrift.Type.LIST, 9);
     output.writeListBegin(Thrift.Type.I32, this.subjectIdList.length);
-    for (var iter30 in this.subjectIdList)
+    for (var iter38 in this.subjectIdList)
     {
-      if (this.subjectIdList.hasOwnProperty(iter30))
+      if (this.subjectIdList.hasOwnProperty(iter38))
       {
-        iter30 = this.subjectIdList[iter30];
-        output.writeI32(iter30);
+        iter38 = this.subjectIdList[iter38];
+        output.writeI32(iter38);
       }
     }
     output.writeListEnd();
@@ -1841,12 +2449,12 @@ ProductSurveyQueryParam.prototype.write = function(output) {
   if (this.productIdList !== null && this.productIdList !== undefined) {
     output.writeFieldBegin('productIdList', Thrift.Type.LIST, 10);
     output.writeListBegin(Thrift.Type.STRING, this.productIdList.length);
-    for (var iter31 in this.productIdList)
+    for (var iter39 in this.productIdList)
     {
-      if (this.productIdList.hasOwnProperty(iter31))
+      if (this.productIdList.hasOwnProperty(iter39))
       {
-        iter31 = this.productIdList[iter31];
-        output.writeString(iter31);
+        iter39 = this.productIdList[iter39];
+        output.writeString(iter39);
       }
     }
     output.writeListEnd();
@@ -1885,18 +2493,18 @@ ProductSurveyQueryBatchParam.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size32 = 0;
-        var _rtmp336;
+        var _size40 = 0;
+        var _rtmp344;
         this.productIds = [];
-        var _etype35 = 0;
-        _rtmp336 = input.readListBegin();
-        _etype35 = _rtmp336.etype;
-        _size32 = _rtmp336.size;
-        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
         {
-          var elem38 = null;
-          elem38 = input.readString();
-          this.productIds.push(elem38);
+          var elem46 = null;
+          elem46 = input.readString();
+          this.productIds.push(elem46);
         }
         input.readListEnd();
       } else {
@@ -1924,12 +2532,12 @@ ProductSurveyQueryBatchParam.prototype.write = function(output) {
   if (this.productIds !== null && this.productIds !== undefined) {
     output.writeFieldBegin('productIds', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRING, this.productIds.length);
-    for (var iter39 in this.productIds)
+    for (var iter47 in this.productIds)
     {
-      if (this.productIds.hasOwnProperty(iter39))
+      if (this.productIds.hasOwnProperty(iter47))
       {
-        iter39 = this.productIds[iter39];
-        output.writeString(iter39);
+        iter47 = this.productIds[iter47];
+        output.writeString(iter47);
       }
     }
     output.writeListEnd();
@@ -2051,19 +2659,19 @@ ProductSkuBatchParam.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size40 = 0;
-        var _rtmp344;
+        var _size48 = 0;
+        var _rtmp352;
         this.productSkuParams = [];
-        var _etype43 = 0;
-        _rtmp344 = input.readListBegin();
-        _etype43 = _rtmp344.etype;
-        _size40 = _rtmp344.size;
-        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
         {
-          var elem46 = null;
-          elem46 = new ttypes.ProductSkuParam();
-          elem46.read(input);
-          this.productSkuParams.push(elem46);
+          var elem54 = null;
+          elem54 = new ttypes.ProductSkuParam();
+          elem54.read(input);
+          this.productSkuParams.push(elem54);
         }
         input.readListEnd();
       } else {
@@ -2087,12 +2695,12 @@ ProductSkuBatchParam.prototype.write = function(output) {
   if (this.productSkuParams !== null && this.productSkuParams !== undefined) {
     output.writeFieldBegin('productSkuParams', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.productSkuParams.length);
-    for (var iter47 in this.productSkuParams)
+    for (var iter55 in this.productSkuParams)
     {
-      if (this.productSkuParams.hasOwnProperty(iter47))
+      if (this.productSkuParams.hasOwnProperty(iter55))
       {
-        iter47 = this.productSkuParams[iter47];
-        iter47.write(output);
+        iter55 = this.productSkuParams[iter55];
+        iter55.write(output);
       }
     }
     output.writeListEnd();
@@ -2151,19 +2759,19 @@ ProductSurveyResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size48 = 0;
-        var _rtmp352;
+        var _size56 = 0;
+        var _rtmp360;
         this.productSurveyList = [];
-        var _etype51 = 0;
-        _rtmp352 = input.readListBegin();
-        _etype51 = _rtmp352.etype;
-        _size48 = _rtmp352.size;
-        for (var _i53 = 0; _i53 < _size48; ++_i53)
+        var _etype59 = 0;
+        _rtmp360 = input.readListBegin();
+        _etype59 = _rtmp360.etype;
+        _size56 = _rtmp360.size;
+        for (var _i61 = 0; _i61 < _size56; ++_i61)
         {
-          var elem54 = null;
-          elem54 = new ttypes.ProductSurvey();
-          elem54.read(input);
-          this.productSurveyList.push(elem54);
+          var elem62 = null;
+          elem62 = new ttypes.ProductSurvey();
+          elem62.read(input);
+          this.productSurveyList.push(elem62);
         }
         input.readListEnd();
       } else {
@@ -2194,12 +2802,12 @@ ProductSurveyResult.prototype.write = function(output) {
   if (this.productSurveyList !== null && this.productSurveyList !== undefined) {
     output.writeFieldBegin('productSurveyList', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.productSurveyList.length);
-    for (var iter55 in this.productSurveyList)
+    for (var iter63 in this.productSurveyList)
     {
-      if (this.productSurveyList.hasOwnProperty(iter55))
+      if (this.productSurveyList.hasOwnProperty(iter63))
       {
-        iter55 = this.productSurveyList[iter55];
-        iter55.write(output);
+        iter63 = this.productSurveyList[iter63];
+        iter63.write(output);
       }
     }
     output.writeListEnd();
@@ -2362,6 +2970,9 @@ ProductCardView = module.exports.ProductCardView = function(args) {
   this.password = null;
   this.state = null;
   this.skuNum = null;
+  this.sendAccount = null;
+  this.sendTime = null;
+  this.validateTime = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -2377,6 +2988,15 @@ ProductCardView = module.exports.ProductCardView = function(args) {
     }
     if (args.skuNum !== undefined) {
       this.skuNum = args.skuNum;
+    }
+    if (args.sendAccount !== undefined) {
+      this.sendAccount = args.sendAccount;
+    }
+    if (args.sendTime !== undefined) {
+      this.sendTime = args.sendTime;
+    }
+    if (args.validateTime !== undefined) {
+      this.validateTime = args.validateTime;
     }
   }
 };
@@ -2429,6 +3049,27 @@ ProductCardView.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.sendAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.sendTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.validateTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2465,6 +3106,21 @@ ProductCardView.prototype.write = function(output) {
     output.writeString(this.skuNum);
     output.writeFieldEnd();
   }
+  if (this.sendAccount !== null && this.sendAccount !== undefined) {
+    output.writeFieldBegin('sendAccount', Thrift.Type.STRING, 6);
+    output.writeString(this.sendAccount);
+    output.writeFieldEnd();
+  }
+  if (this.sendTime !== null && this.sendTime !== undefined) {
+    output.writeFieldBegin('sendTime', Thrift.Type.STRING, 7);
+    output.writeString(this.sendTime);
+    output.writeFieldEnd();
+  }
+  if (this.validateTime !== null && this.validateTime !== undefined) {
+    output.writeFieldBegin('validateTime', Thrift.Type.STRING, 8);
+    output.writeString(this.validateTime);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -2476,6 +3132,11 @@ ProductCardViewParam = module.exports.ProductCardViewParam = function(args) {
   this.cardNumber = null;
   this.state = null;
   this.skuNum = null;
+  this.sendBeginTime = null;
+  this.sendEndTime = null;
+  this.validateBeginTime = null;
+  this.validateEndTime = null;
+  this.sendAccount = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -2491,6 +3152,21 @@ ProductCardViewParam = module.exports.ProductCardViewParam = function(args) {
     }
     if (args.skuNum !== undefined) {
       this.skuNum = args.skuNum;
+    }
+    if (args.sendBeginTime !== undefined) {
+      this.sendBeginTime = args.sendBeginTime;
+    }
+    if (args.sendEndTime !== undefined) {
+      this.sendEndTime = args.sendEndTime;
+    }
+    if (args.validateBeginTime !== undefined) {
+      this.validateBeginTime = args.validateBeginTime;
+    }
+    if (args.validateEndTime !== undefined) {
+      this.validateEndTime = args.validateEndTime;
+    }
+    if (args.sendAccount !== undefined) {
+      this.sendAccount = args.sendAccount;
     }
   }
 };
@@ -2543,6 +3219,41 @@ ProductCardViewParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.sendBeginTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.sendEndTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.validateBeginTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.validateEndTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.sendAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2579,6 +3290,31 @@ ProductCardViewParam.prototype.write = function(output) {
     output.writeString(this.skuNum);
     output.writeFieldEnd();
   }
+  if (this.sendBeginTime !== null && this.sendBeginTime !== undefined) {
+    output.writeFieldBegin('sendBeginTime', Thrift.Type.STRING, 6);
+    output.writeString(this.sendBeginTime);
+    output.writeFieldEnd();
+  }
+  if (this.sendEndTime !== null && this.sendEndTime !== undefined) {
+    output.writeFieldBegin('sendEndTime', Thrift.Type.STRING, 7);
+    output.writeString(this.sendEndTime);
+    output.writeFieldEnd();
+  }
+  if (this.validateBeginTime !== null && this.validateBeginTime !== undefined) {
+    output.writeFieldBegin('validateBeginTime', Thrift.Type.STRING, 8);
+    output.writeString(this.validateBeginTime);
+    output.writeFieldEnd();
+  }
+  if (this.validateEndTime !== null && this.validateEndTime !== undefined) {
+    output.writeFieldBegin('validateEndTime', Thrift.Type.STRING, 9);
+    output.writeString(this.validateEndTime);
+    output.writeFieldEnd();
+  }
+  if (this.sendAccount !== null && this.sendAccount !== undefined) {
+    output.writeFieldBegin('sendAccount', Thrift.Type.STRING, 10);
+    output.writeString(this.sendAccount);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -2592,6 +3328,8 @@ ProductCardStatistics = module.exports.ProductCardStatistics = function(args) {
   this.unusedNum = null;
   this.createTime = null;
   this.skuNum = null;
+  this.sendNum = null;
+  this.checkedNum = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -2613,6 +3351,12 @@ ProductCardStatistics = module.exports.ProductCardStatistics = function(args) {
     }
     if (args.skuNum !== undefined) {
       this.skuNum = args.skuNum;
+    }
+    if (args.sendNum !== undefined) {
+      this.sendNum = args.sendNum;
+    }
+    if (args.checkedNum !== undefined) {
+      this.checkedNum = args.checkedNum;
     }
   }
 };
@@ -2679,6 +3423,20 @@ ProductCardStatistics.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.sendNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.checkedNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2723,6 +3481,16 @@ ProductCardStatistics.prototype.write = function(output) {
   if (this.skuNum !== null && this.skuNum !== undefined) {
     output.writeFieldBegin('skuNum', Thrift.Type.STRING, 7);
     output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
+  if (this.sendNum !== null && this.sendNum !== undefined) {
+    output.writeFieldBegin('sendNum', Thrift.Type.STRING, 8);
+    output.writeString(this.sendNum);
+    output.writeFieldEnd();
+  }
+  if (this.checkedNum !== null && this.checkedNum !== undefined) {
+    output.writeFieldBegin('checkedNum', Thrift.Type.STRING, 9);
+    output.writeString(this.checkedNum);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3094,19 +3862,19 @@ ProductCardResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size56 = 0;
-        var _rtmp360;
+        var _size64 = 0;
+        var _rtmp368;
         this.cardList = [];
-        var _etype59 = 0;
-        _rtmp360 = input.readListBegin();
-        _etype59 = _rtmp360.etype;
-        _size56 = _rtmp360.size;
-        for (var _i61 = 0; _i61 < _size56; ++_i61)
+        var _etype67 = 0;
+        _rtmp368 = input.readListBegin();
+        _etype67 = _rtmp368.etype;
+        _size64 = _rtmp368.size;
+        for (var _i69 = 0; _i69 < _size64; ++_i69)
         {
-          var elem62 = null;
-          elem62 = new ttypes.ProductCard();
-          elem62.read(input);
-          this.cardList.push(elem62);
+          var elem70 = null;
+          elem70 = new ttypes.ProductCard();
+          elem70.read(input);
+          this.cardList.push(elem70);
         }
         input.readListEnd();
       } else {
@@ -3132,12 +3900,12 @@ ProductCardResult.prototype.write = function(output) {
   if (this.cardList !== null && this.cardList !== undefined) {
     output.writeFieldBegin('cardList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardList.length);
-    for (var iter63 in this.cardList)
+    for (var iter71 in this.cardList)
     {
-      if (this.cardList.hasOwnProperty(iter63))
+      if (this.cardList.hasOwnProperty(iter71))
       {
-        iter63 = this.cardList[iter63];
-        iter63.write(output);
+        iter71 = this.cardList[iter71];
+        iter71.write(output);
       }
     }
     output.writeListEnd();
@@ -3188,19 +3956,19 @@ ProductCardViewListResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size64 = 0;
-        var _rtmp368;
+        var _size72 = 0;
+        var _rtmp376;
         this.cardViewList = [];
-        var _etype67 = 0;
-        _rtmp368 = input.readListBegin();
-        _etype67 = _rtmp368.etype;
-        _size64 = _rtmp368.size;
-        for (var _i69 = 0; _i69 < _size64; ++_i69)
+        var _etype75 = 0;
+        _rtmp376 = input.readListBegin();
+        _etype75 = _rtmp376.etype;
+        _size72 = _rtmp376.size;
+        for (var _i77 = 0; _i77 < _size72; ++_i77)
         {
-          var elem70 = null;
-          elem70 = new ttypes.ProductCardView();
-          elem70.read(input);
-          this.cardViewList.push(elem70);
+          var elem78 = null;
+          elem78 = new ttypes.ProductCardView();
+          elem78.read(input);
+          this.cardViewList.push(elem78);
         }
         input.readListEnd();
       } else {
@@ -3234,12 +4002,12 @@ ProductCardViewListResult.prototype.write = function(output) {
   if (this.cardViewList !== null && this.cardViewList !== undefined) {
     output.writeFieldBegin('cardViewList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardViewList.length);
-    for (var iter71 in this.cardViewList)
+    for (var iter79 in this.cardViewList)
     {
-      if (this.cardViewList.hasOwnProperty(iter71))
+      if (this.cardViewList.hasOwnProperty(iter79))
       {
-        iter71 = this.cardViewList[iter71];
-        iter71.write(output);
+        iter79 = this.cardViewList[iter79];
+        iter79.write(output);
       }
     }
     output.writeListEnd();
@@ -3295,19 +4063,19 @@ ProductCardStatisticsResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size72 = 0;
-        var _rtmp376;
+        var _size80 = 0;
+        var _rtmp384;
         this.cardtatisticsList = [];
-        var _etype75 = 0;
-        _rtmp376 = input.readListBegin();
-        _etype75 = _rtmp376.etype;
-        _size72 = _rtmp376.size;
-        for (var _i77 = 0; _i77 < _size72; ++_i77)
+        var _etype83 = 0;
+        _rtmp384 = input.readListBegin();
+        _etype83 = _rtmp384.etype;
+        _size80 = _rtmp384.size;
+        for (var _i85 = 0; _i85 < _size80; ++_i85)
         {
-          var elem78 = null;
-          elem78 = new ttypes.ProductCardStatistics();
-          elem78.read(input);
-          this.cardtatisticsList.push(elem78);
+          var elem86 = null;
+          elem86 = new ttypes.ProductCardStatistics();
+          elem86.read(input);
+          this.cardtatisticsList.push(elem86);
         }
         input.readListEnd();
       } else {
@@ -3341,12 +4109,12 @@ ProductCardStatisticsResult.prototype.write = function(output) {
   if (this.cardtatisticsList !== null && this.cardtatisticsList !== undefined) {
     output.writeFieldBegin('cardtatisticsList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardtatisticsList.length);
-    for (var iter79 in this.cardtatisticsList)
+    for (var iter87 in this.cardtatisticsList)
     {
-      if (this.cardtatisticsList.hasOwnProperty(iter79))
+      if (this.cardtatisticsList.hasOwnProperty(iter87))
       {
-        iter79 = this.cardtatisticsList[iter79];
-        iter79.write(output);
+        iter87 = this.cardtatisticsList[iter87];
+        iter87.write(output);
       }
     }
     output.writeListEnd();
@@ -4038,19 +4806,19 @@ CaptchaListResult.prototype.read = function(input) {
       break;
       case 5:
       if (ftype == Thrift.Type.LIST) {
-        var _size80 = 0;
-        var _rtmp384;
+        var _size88 = 0;
+        var _rtmp392;
         this.itemList = [];
-        var _etype83 = 0;
-        _rtmp384 = input.readListBegin();
-        _etype83 = _rtmp384.etype;
-        _size80 = _rtmp384.size;
-        for (var _i85 = 0; _i85 < _size80; ++_i85)
+        var _etype91 = 0;
+        _rtmp392 = input.readListBegin();
+        _etype91 = _rtmp392.etype;
+        _size88 = _rtmp392.size;
+        for (var _i93 = 0; _i93 < _size88; ++_i93)
         {
-          var elem86 = null;
-          elem86 = new ttypes.AldCaptchaItem();
-          elem86.read(input);
-          this.itemList.push(elem86);
+          var elem94 = null;
+          elem94 = new ttypes.AldCaptchaItem();
+          elem94.read(input);
+          this.itemList.push(elem94);
         }
         input.readListEnd();
       } else {
@@ -4091,12 +4859,12 @@ CaptchaListResult.prototype.write = function(output) {
   if (this.itemList !== null && this.itemList !== undefined) {
     output.writeFieldBegin('itemList', Thrift.Type.LIST, 5);
     output.writeListBegin(Thrift.Type.STRUCT, this.itemList.length);
-    for (var iter87 in this.itemList)
+    for (var iter95 in this.itemList)
     {
-      if (this.itemList.hasOwnProperty(iter87))
+      if (this.itemList.hasOwnProperty(iter95))
       {
-        iter87 = this.itemList[iter87];
-        iter87.write(output);
+        iter95 = this.itemList[iter95];
+        iter95.write(output);
       }
     }
     output.writeListEnd();
@@ -4177,19 +4945,19 @@ DayCaptchaListResult.prototype.read = function(input) {
       break;
       case 5:
       if (ftype == Thrift.Type.LIST) {
-        var _size88 = 0;
-        var _rtmp392;
+        var _size96 = 0;
+        var _rtmp3100;
         this.dayAldCaptchaCountList = [];
-        var _etype91 = 0;
-        _rtmp392 = input.readListBegin();
-        _etype91 = _rtmp392.etype;
-        _size88 = _rtmp392.size;
-        for (var _i93 = 0; _i93 < _size88; ++_i93)
+        var _etype99 = 0;
+        _rtmp3100 = input.readListBegin();
+        _etype99 = _rtmp3100.etype;
+        _size96 = _rtmp3100.size;
+        for (var _i101 = 0; _i101 < _size96; ++_i101)
         {
-          var elem94 = null;
-          elem94 = new ttypes.DayAldCaptchaCount();
-          elem94.read(input);
-          this.dayAldCaptchaCountList.push(elem94);
+          var elem102 = null;
+          elem102 = new ttypes.DayAldCaptchaCount();
+          elem102.read(input);
+          this.dayAldCaptchaCountList.push(elem102);
         }
         input.readListEnd();
       } else {
@@ -4230,12 +4998,12 @@ DayCaptchaListResult.prototype.write = function(output) {
   if (this.dayAldCaptchaCountList !== null && this.dayAldCaptchaCountList !== undefined) {
     output.writeFieldBegin('dayAldCaptchaCountList', Thrift.Type.LIST, 5);
     output.writeListBegin(Thrift.Type.STRUCT, this.dayAldCaptchaCountList.length);
-    for (var iter95 in this.dayAldCaptchaCountList)
+    for (var iter103 in this.dayAldCaptchaCountList)
     {
-      if (this.dayAldCaptchaCountList.hasOwnProperty(iter95))
+      if (this.dayAldCaptchaCountList.hasOwnProperty(iter103))
       {
-        iter95 = this.dayAldCaptchaCountList[iter95];
-        iter95.write(output);
+        iter103 = this.dayAldCaptchaCountList[iter103];
+        iter103.write(output);
       }
     }
     output.writeListEnd();
@@ -4294,19 +5062,19 @@ DayCaptchaProductResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size96 = 0;
-        var _rtmp3100;
+        var _size104 = 0;
+        var _rtmp3108;
         this.itemList = [];
-        var _etype99 = 0;
-        _rtmp3100 = input.readListBegin();
-        _etype99 = _rtmp3100.etype;
-        _size96 = _rtmp3100.size;
-        for (var _i101 = 0; _i101 < _size96; ++_i101)
+        var _etype107 = 0;
+        _rtmp3108 = input.readListBegin();
+        _etype107 = _rtmp3108.etype;
+        _size104 = _rtmp3108.size;
+        for (var _i109 = 0; _i109 < _size104; ++_i109)
         {
-          var elem102 = null;
-          elem102 = new ttypes.DayAldCaptchaItem();
-          elem102.read(input);
-          this.itemList.push(elem102);
+          var elem110 = null;
+          elem110 = new ttypes.DayAldCaptchaItem();
+          elem110.read(input);
+          this.itemList.push(elem110);
         }
         input.readListEnd();
       } else {
@@ -4337,12 +5105,12 @@ DayCaptchaProductResult.prototype.write = function(output) {
   if (this.itemList !== null && this.itemList !== undefined) {
     output.writeFieldBegin('itemList', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.itemList.length);
-    for (var iter103 in this.itemList)
+    for (var iter111 in this.itemList)
     {
-      if (this.itemList.hasOwnProperty(iter103))
+      if (this.itemList.hasOwnProperty(iter111))
       {
-        iter103 = this.itemList[iter103];
-        iter103.write(output);
+        iter111 = this.itemList[iter111];
+        iter111.write(output);
       }
     }
     output.writeListEnd();
@@ -4404,19 +5172,19 @@ CaptchaDetailResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size104 = 0;
-        var _rtmp3108;
+        var _size112 = 0;
+        var _rtmp3116;
         this.productCards = [];
-        var _etype107 = 0;
-        _rtmp3108 = input.readListBegin();
-        _etype107 = _rtmp3108.etype;
-        _size104 = _rtmp3108.size;
-        for (var _i109 = 0; _i109 < _size104; ++_i109)
+        var _etype115 = 0;
+        _rtmp3116 = input.readListBegin();
+        _etype115 = _rtmp3116.etype;
+        _size112 = _rtmp3116.size;
+        for (var _i117 = 0; _i117 < _size112; ++_i117)
         {
-          var elem110 = null;
-          elem110 = new ttypes.ProductCard();
-          elem110.read(input);
-          this.productCards.push(elem110);
+          var elem118 = null;
+          elem118 = new ttypes.ProductCard();
+          elem118.read(input);
+          this.productCards.push(elem118);
         }
         input.readListEnd();
       } else {
@@ -4455,12 +5223,12 @@ CaptchaDetailResult.prototype.write = function(output) {
   if (this.productCards !== null && this.productCards !== undefined) {
     output.writeFieldBegin('productCards', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.productCards.length);
-    for (var iter111 in this.productCards)
+    for (var iter119 in this.productCards)
     {
-      if (this.productCards.hasOwnProperty(iter111))
+      if (this.productCards.hasOwnProperty(iter119))
       {
-        iter111 = this.productCards[iter111];
-        iter111.write(output);
+        iter119 = this.productCards[iter119];
+        iter119.write(output);
       }
     }
     output.writeListEnd();
@@ -4468,6 +5236,1171 @@ CaptchaDetailResult.prototype.write = function(output) {
   }
   if (this.pagination !== null && this.pagination !== undefined) {
     output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 4);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdPartyProductQueryParam = module.exports.ThirdPartyProductQueryParam = function(args) {
+  this.thirdPartyIdentify = null;
+  this.productName = null;
+  this.activeState = null;
+  this.stockState = null;
+  this.priceState = null;
+  this.offerState = null;
+  if (args) {
+    if (args.thirdPartyIdentify !== undefined) {
+      this.thirdPartyIdentify = args.thirdPartyIdentify;
+    }
+    if (args.productName !== undefined) {
+      this.productName = args.productName;
+    }
+    if (args.activeState !== undefined) {
+      this.activeState = args.activeState;
+    }
+    if (args.stockState !== undefined) {
+      this.stockState = args.stockState;
+    }
+    if (args.priceState !== undefined) {
+      this.priceState = args.priceState;
+    }
+    if (args.offerState !== undefined) {
+      this.offerState = args.offerState;
+    }
+  }
+};
+ThirdPartyProductQueryParam.prototype = {};
+ThirdPartyProductQueryParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.thirdPartyIdentify = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.productName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.activeState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.stockState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.priceState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.offerState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdPartyProductQueryParam.prototype.write = function(output) {
+  output.writeStructBegin('ThirdPartyProductQueryParam');
+  if (this.thirdPartyIdentify !== null && this.thirdPartyIdentify !== undefined) {
+    output.writeFieldBegin('thirdPartyIdentify', Thrift.Type.I32, 1);
+    output.writeI32(this.thirdPartyIdentify);
+    output.writeFieldEnd();
+  }
+  if (this.productName !== null && this.productName !== undefined) {
+    output.writeFieldBegin('productName', Thrift.Type.STRING, 2);
+    output.writeString(this.productName);
+    output.writeFieldEnd();
+  }
+  if (this.activeState !== null && this.activeState !== undefined) {
+    output.writeFieldBegin('activeState', Thrift.Type.I32, 3);
+    output.writeI32(this.activeState);
+    output.writeFieldEnd();
+  }
+  if (this.stockState !== null && this.stockState !== undefined) {
+    output.writeFieldBegin('stockState', Thrift.Type.I32, 4);
+    output.writeI32(this.stockState);
+    output.writeFieldEnd();
+  }
+  if (this.priceState !== null && this.priceState !== undefined) {
+    output.writeFieldBegin('priceState', Thrift.Type.I32, 5);
+    output.writeI32(this.priceState);
+    output.writeFieldEnd();
+  }
+  if (this.offerState !== null && this.offerState !== undefined) {
+    output.writeFieldBegin('offerState', Thrift.Type.I32, 6);
+    output.writeI32(this.offerState);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdPartyProduct = module.exports.ThirdPartyProduct = function(args) {
+  this.productId = null;
+  this.thirdPartyProductId = null;
+  this.thirdPartyIdentify = null;
+  this.name = null;
+  this.imgKey = null;
+  this.sellerClassNum = null;
+  this.curPrice = null;
+  this.priceState = null;
+  this.stockInfo = null;
+  this.activeState = null;
+  this.offerState = null;
+  this.updateTime = null;
+  if (args) {
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.thirdPartyProductId !== undefined) {
+      this.thirdPartyProductId = args.thirdPartyProductId;
+    }
+    if (args.thirdPartyIdentify !== undefined) {
+      this.thirdPartyIdentify = args.thirdPartyIdentify;
+    }
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.imgKey !== undefined) {
+      this.imgKey = args.imgKey;
+    }
+    if (args.sellerClassNum !== undefined) {
+      this.sellerClassNum = args.sellerClassNum;
+    }
+    if (args.curPrice !== undefined) {
+      this.curPrice = args.curPrice;
+    }
+    if (args.priceState !== undefined) {
+      this.priceState = args.priceState;
+    }
+    if (args.stockInfo !== undefined) {
+      this.stockInfo = args.stockInfo;
+    }
+    if (args.activeState !== undefined) {
+      this.activeState = args.activeState;
+    }
+    if (args.offerState !== undefined) {
+      this.offerState = args.offerState;
+    }
+    if (args.updateTime !== undefined) {
+      this.updateTime = args.updateTime;
+    }
+  }
+};
+ThirdPartyProduct.prototype = {};
+ThirdPartyProduct.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdPartyProductId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.thirdPartyIdentify = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.imgKey = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerClassNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.curPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.priceState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.stockInfo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.I32) {
+        this.activeState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.I32) {
+        this.offerState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.updateTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdPartyProduct.prototype.write = function(output) {
+  output.writeStructBegin('ThirdPartyProduct');
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.thirdPartyProductId !== null && this.thirdPartyProductId !== undefined) {
+    output.writeFieldBegin('thirdPartyProductId', Thrift.Type.STRING, 2);
+    output.writeString(this.thirdPartyProductId);
+    output.writeFieldEnd();
+  }
+  if (this.thirdPartyIdentify !== null && this.thirdPartyIdentify !== undefined) {
+    output.writeFieldBegin('thirdPartyIdentify', Thrift.Type.I32, 3);
+    output.writeI32(this.thirdPartyIdentify);
+    output.writeFieldEnd();
+  }
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 4);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.imgKey !== null && this.imgKey !== undefined) {
+    output.writeFieldBegin('imgKey', Thrift.Type.STRING, 5);
+    output.writeString(this.imgKey);
+    output.writeFieldEnd();
+  }
+  if (this.sellerClassNum !== null && this.sellerClassNum !== undefined) {
+    output.writeFieldBegin('sellerClassNum', Thrift.Type.STRING, 6);
+    output.writeString(this.sellerClassNum);
+    output.writeFieldEnd();
+  }
+  if (this.curPrice !== null && this.curPrice !== undefined) {
+    output.writeFieldBegin('curPrice', Thrift.Type.STRING, 7);
+    output.writeString(this.curPrice);
+    output.writeFieldEnd();
+  }
+  if (this.priceState !== null && this.priceState !== undefined) {
+    output.writeFieldBegin('priceState', Thrift.Type.I32, 8);
+    output.writeI32(this.priceState);
+    output.writeFieldEnd();
+  }
+  if (this.stockInfo !== null && this.stockInfo !== undefined) {
+    output.writeFieldBegin('stockInfo', Thrift.Type.STRING, 9);
+    output.writeString(this.stockInfo);
+    output.writeFieldEnd();
+  }
+  if (this.activeState !== null && this.activeState !== undefined) {
+    output.writeFieldBegin('activeState', Thrift.Type.I32, 10);
+    output.writeI32(this.activeState);
+    output.writeFieldEnd();
+  }
+  if (this.offerState !== null && this.offerState !== undefined) {
+    output.writeFieldBegin('offerState', Thrift.Type.I32, 11);
+    output.writeI32(this.offerState);
+    output.writeFieldEnd();
+  }
+  if (this.updateTime !== null && this.updateTime !== undefined) {
+    output.writeFieldBegin('updateTime', Thrift.Type.STRING, 12);
+    output.writeString(this.updateTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdPartyProductQueryResult = module.exports.ThirdPartyProductQueryResult = function(args) {
+  this.result = null;
+  this.thirdPartyProductList = null;
+  this.pagination = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.thirdPartyProductList !== undefined) {
+      this.thirdPartyProductList = args.thirdPartyProductList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ThirdPartyProductQueryResult.prototype = {};
+ThirdPartyProductQueryResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size120 = 0;
+        var _rtmp3124;
+        this.thirdPartyProductList = [];
+        var _etype123 = 0;
+        _rtmp3124 = input.readListBegin();
+        _etype123 = _rtmp3124.etype;
+        _size120 = _rtmp3124.size;
+        for (var _i125 = 0; _i125 < _size120; ++_i125)
+        {
+          var elem126 = null;
+          elem126 = new ttypes.ThirdPartyProduct();
+          elem126.read(input);
+          this.thirdPartyProductList.push(elem126);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdPartyProductQueryResult.prototype.write = function(output) {
+  output.writeStructBegin('ThirdPartyProductQueryResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.thirdPartyProductList !== null && this.thirdPartyProductList !== undefined) {
+    output.writeFieldBegin('thirdPartyProductList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.thirdPartyProductList.length);
+    for (var iter127 in this.thirdPartyProductList)
+    {
+      if (this.thirdPartyProductList.hasOwnProperty(iter127))
+      {
+        iter127 = this.thirdPartyProductList[iter127];
+        iter127.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdPartyProductLog = module.exports.ThirdPartyProductLog = function(args) {
+  this.productState = null;
+  this.curPrice = null;
+  this.updateTime = null;
+  if (args) {
+    if (args.productState !== undefined) {
+      this.productState = args.productState;
+    }
+    if (args.curPrice !== undefined) {
+      this.curPrice = args.curPrice;
+    }
+    if (args.updateTime !== undefined) {
+      this.updateTime = args.updateTime;
+    }
+  }
+};
+ThirdPartyProductLog.prototype = {};
+ThirdPartyProductLog.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.productState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.curPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.updateTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdPartyProductLog.prototype.write = function(output) {
+  output.writeStructBegin('ThirdPartyProductLog');
+  if (this.productState !== null && this.productState !== undefined) {
+    output.writeFieldBegin('productState', Thrift.Type.I32, 1);
+    output.writeI32(this.productState);
+    output.writeFieldEnd();
+  }
+  if (this.curPrice !== null && this.curPrice !== undefined) {
+    output.writeFieldBegin('curPrice', Thrift.Type.STRING, 2);
+    output.writeString(this.curPrice);
+    output.writeFieldEnd();
+  }
+  if (this.updateTime !== null && this.updateTime !== undefined) {
+    output.writeFieldBegin('updateTime', Thrift.Type.STRING, 3);
+    output.writeString(this.updateTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdPartyProductLogParam = module.exports.ThirdPartyProductLogParam = function(args) {
+  this.thirdPartyIdentify = null;
+  this.thirdPartyProductId = null;
+  if (args) {
+    if (args.thirdPartyIdentify !== undefined) {
+      this.thirdPartyIdentify = args.thirdPartyIdentify;
+    }
+    if (args.thirdPartyProductId !== undefined) {
+      this.thirdPartyProductId = args.thirdPartyProductId;
+    }
+  }
+};
+ThirdPartyProductLogParam.prototype = {};
+ThirdPartyProductLogParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.thirdPartyIdentify = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdPartyProductId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdPartyProductLogParam.prototype.write = function(output) {
+  output.writeStructBegin('ThirdPartyProductLogParam');
+  if (this.thirdPartyIdentify !== null && this.thirdPartyIdentify !== undefined) {
+    output.writeFieldBegin('thirdPartyIdentify', Thrift.Type.I32, 1);
+    output.writeI32(this.thirdPartyIdentify);
+    output.writeFieldEnd();
+  }
+  if (this.thirdPartyProductId !== null && this.thirdPartyProductId !== undefined) {
+    output.writeFieldBegin('thirdPartyProductId', Thrift.Type.STRING, 2);
+    output.writeString(this.thirdPartyProductId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdPartyProductLogResult = module.exports.ThirdPartyProductLogResult = function(args) {
+  this.result = null;
+  this.logs = null;
+  this.pagination = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.logs !== undefined) {
+      this.logs = args.logs;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ThirdPartyProductLogResult.prototype = {};
+ThirdPartyProductLogResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size128 = 0;
+        var _rtmp3132;
+        this.logs = [];
+        var _etype131 = 0;
+        _rtmp3132 = input.readListBegin();
+        _etype131 = _rtmp3132.etype;
+        _size128 = _rtmp3132.size;
+        for (var _i133 = 0; _i133 < _size128; ++_i133)
+        {
+          var elem134 = null;
+          elem134 = new ttypes.ThirdPartyProductLog();
+          elem134.read(input);
+          this.logs.push(elem134);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdPartyProductLogResult.prototype.write = function(output) {
+  output.writeStructBegin('ThirdPartyProductLogResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.logs !== null && this.logs !== undefined) {
+    output.writeFieldBegin('logs', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.logs.length);
+    for (var iter135 in this.logs)
+    {
+      if (this.logs.hasOwnProperty(iter135))
+      {
+        iter135 = this.logs[iter135];
+        iter135.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CheckCodeListParam = module.exports.CheckCodeListParam = function(args) {
+  this.sendAccount = null;
+  this.checkBeginTime = null;
+  this.checkEndTime = null;
+  this.sellerId = null;
+  this.sellerName = null;
+  this.productId = null;
+  this.productName = null;
+  if (args) {
+    if (args.sendAccount !== undefined) {
+      this.sendAccount = args.sendAccount;
+    }
+    if (args.checkBeginTime !== undefined) {
+      this.checkBeginTime = args.checkBeginTime;
+    }
+    if (args.checkEndTime !== undefined) {
+      this.checkEndTime = args.checkEndTime;
+    }
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
+    }
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.productName !== undefined) {
+      this.productName = args.productName;
+    }
+  }
+};
+CheckCodeListParam.prototype = {};
+CheckCodeListParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.sendAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.checkBeginTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.checkEndTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.productName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CheckCodeListParam.prototype.write = function(output) {
+  output.writeStructBegin('CheckCodeListParam');
+  if (this.sendAccount !== null && this.sendAccount !== undefined) {
+    output.writeFieldBegin('sendAccount', Thrift.Type.STRING, 1);
+    output.writeString(this.sendAccount);
+    output.writeFieldEnd();
+  }
+  if (this.checkBeginTime !== null && this.checkBeginTime !== undefined) {
+    output.writeFieldBegin('checkBeginTime', Thrift.Type.STRING, 2);
+    output.writeString(this.checkBeginTime);
+    output.writeFieldEnd();
+  }
+  if (this.checkEndTime !== null && this.checkEndTime !== undefined) {
+    output.writeFieldBegin('checkEndTime', Thrift.Type.STRING, 3);
+    output.writeString(this.checkEndTime);
+    output.writeFieldEnd();
+  }
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 4);
+    output.writeString(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 5);
+    output.writeString(this.sellerName);
+    output.writeFieldEnd();
+  }
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 6);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.productName !== null && this.productName !== undefined) {
+    output.writeFieldBegin('productName', Thrift.Type.STRING, 7);
+    output.writeString(this.productName);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CheckCode = module.exports.CheckCode = function(args) {
+  this.sellerId = null;
+  this.sellerName = null;
+  this.productId = null;
+  this.productName = null;
+  this.skuNum = null;
+  this.skuName = null;
+  this.cardName = null;
+  this.password = null;
+  this.sendAccount = null;
+  this.checkTime = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
+    }
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.productName !== undefined) {
+      this.productName = args.productName;
+    }
+    if (args.skuNum !== undefined) {
+      this.skuNum = args.skuNum;
+    }
+    if (args.skuName !== undefined) {
+      this.skuName = args.skuName;
+    }
+    if (args.cardName !== undefined) {
+      this.cardName = args.cardName;
+    }
+    if (args.password !== undefined) {
+      this.password = args.password;
+    }
+    if (args.sendAccount !== undefined) {
+      this.sendAccount = args.sendAccount;
+    }
+    if (args.checkTime !== undefined) {
+      this.checkTime = args.checkTime;
+    }
+  }
+};
+CheckCode.prototype = {};
+CheckCode.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.productName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.cardName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.password = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.sendAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.checkTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CheckCode.prototype.write = function(output) {
+  output.writeStructBegin('CheckCode');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 1);
+    output.writeString(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 2);
+    output.writeString(this.sellerName);
+    output.writeFieldEnd();
+  }
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 3);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.productName !== null && this.productName !== undefined) {
+    output.writeFieldBegin('productName', Thrift.Type.STRING, 4);
+    output.writeString(this.productName);
+    output.writeFieldEnd();
+  }
+  if (this.skuNum !== null && this.skuNum !== undefined) {
+    output.writeFieldBegin('skuNum', Thrift.Type.STRING, 5);
+    output.writeString(this.skuNum);
+    output.writeFieldEnd();
+  }
+  if (this.skuName !== null && this.skuName !== undefined) {
+    output.writeFieldBegin('skuName', Thrift.Type.STRING, 6);
+    output.writeString(this.skuName);
+    output.writeFieldEnd();
+  }
+  if (this.cardName !== null && this.cardName !== undefined) {
+    output.writeFieldBegin('cardName', Thrift.Type.STRING, 7);
+    output.writeString(this.cardName);
+    output.writeFieldEnd();
+  }
+  if (this.password !== null && this.password !== undefined) {
+    output.writeFieldBegin('password', Thrift.Type.STRING, 8);
+    output.writeString(this.password);
+    output.writeFieldEnd();
+  }
+  if (this.sendAccount !== null && this.sendAccount !== undefined) {
+    output.writeFieldBegin('sendAccount', Thrift.Type.STRING, 9);
+    output.writeString(this.sendAccount);
+    output.writeFieldEnd();
+  }
+  if (this.checkTime !== null && this.checkTime !== undefined) {
+    output.writeFieldBegin('checkTime', Thrift.Type.STRING, 10);
+    output.writeString(this.checkTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CheckCodeListResult = module.exports.CheckCodeListResult = function(args) {
+  this.result = null;
+  this.checkCodeList = null;
+  this.pagination = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.checkCodeList !== undefined) {
+      this.checkCodeList = args.checkCodeList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+CheckCodeListResult.prototype = {};
+CheckCodeListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size136 = 0;
+        var _rtmp3140;
+        this.checkCodeList = [];
+        var _etype139 = 0;
+        _rtmp3140 = input.readListBegin();
+        _etype139 = _rtmp3140.etype;
+        _size136 = _rtmp3140.size;
+        for (var _i141 = 0; _i141 < _size136; ++_i141)
+        {
+          var elem142 = null;
+          elem142 = new ttypes.CheckCode();
+          elem142.read(input);
+          this.checkCodeList.push(elem142);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CheckCodeListResult.prototype.write = function(output) {
+  output.writeStructBegin('CheckCodeListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.checkCodeList !== null && this.checkCodeList !== undefined) {
+    output.writeFieldBegin('checkCodeList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.checkCodeList.length);
+    for (var iter143 in this.checkCodeList)
+    {
+      if (this.checkCodeList.hasOwnProperty(iter143))
+      {
+        iter143 = this.checkCodeList[iter143];
+        iter143.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
     this.pagination.write(output);
     output.writeFieldEnd();
   }
