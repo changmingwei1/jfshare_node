@@ -186,6 +186,7 @@ router.post('/relase', function (request, response, next) {
                 response.json(err);
                 return;
             }
+            result.data = data[0];
             response.json(result);
             return;
         });
