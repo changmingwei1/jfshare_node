@@ -814,6 +814,7 @@ router.post('/ticketList', function (request, response, next) {
             response.json(result);
             return;
         }
+
         Product.queryProductCardViewList(params, function (err, data) {
             if (err) {
                 response.json(err);
