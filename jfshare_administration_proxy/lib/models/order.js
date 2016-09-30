@@ -299,27 +299,27 @@ Order.prototype.batchDeliverOrderForManager = function (params, callback) {
 };
 
 
-Order.prototype.downLoad = function (params, callback) {
-    var http = require('follow-redirects').http;
-    var fs = require('fs');
-    var url = require('url');
-    var html = '/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
-    //var html = 'C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
-    var file = fs.createWriteStream(html);//将文件流写入文件
-    var datas = "";
-    try {
-        http.get(params.path, function (res) {
-            res.on('data', function (data) {
-                file.write(data);
-            }).on('end', function () {
-                file.end();
-                callback(null, '');
-            });
-        });
-    } catch (ex) {
-        logger.error("解析物流单出错"+ex);
-    }
-
-};
+//Order.prototype.downLoad = function (params, callback) {
+//    var http = require('follow-redirects').http;
+//    var fs = require('fs');
+//    var url = require('url');
+//    var html = '/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
+//    //var html = 'C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
+//    var file = fs.createWriteStream(html);//将文件流写入文件
+//    var datas = "";
+//    try {
+//        http.get(params.path, function (res) {
+//            res.on('data', function (data) {
+//                file.write(data);
+//            }).on('end', function () {
+//                file.end();
+//                callback(null, '');
+//            });
+//        });
+//    } catch (ex) {
+//        logger.error("解析物流单出错"+ex);
+//    }
+//
+//};
 
 module.exports = new Order();
