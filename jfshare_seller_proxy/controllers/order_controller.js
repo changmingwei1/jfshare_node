@@ -49,11 +49,37 @@ router.post('/list', function (request, response, next) {
     var orderIdList = [];
     async.series([
             function (callback) {
+                logger.info("BUYER--data：");
+                try {
+                    if(params.loginName != null && params.loginName != ""){
+                        Buyer.getBuyerInfo(params, function (err, data) {
+                            logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Buyer服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].buyer != null) {
+                                var buyer = data[0].buyer;
+                                params.userId= buyer.userId;
+                                return callback(null, params);
+                            } else {
+                                callback(1,null);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用buyer服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
                 try {
                     Order.orderProfileQuery(params, function (err, orderInfo) {
                         if (err) {
                             logger.error("订单服务异常");
-                            return callback(1, null);
+                            return callback(2, null);
                         }
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
@@ -157,7 +183,7 @@ router.post('/list', function (request, response, next) {
 
                 } catch (ex) {
                     logger.info("订单服务异常:" + ex);
-                    return callback(1, null);
+                    return callback(2, null);
                 }
             },
             function (callback) {
@@ -165,7 +191,7 @@ router.post('/list', function (request, response, next) {
                     if ((params.orderState == null|| params.orderState == 5) && params.orderIdList != null && params.orderIdList.length > 0 ) {
                         afterSale.queryAfterSale(params, function (err, data) {
                             if (err) {
-                                return callback(2, null);
+                                return callback(3, null);
                             }
                             logger.info("get order list response:" + JSON.stringify(result));
                             afterSaleList = data;
@@ -176,34 +202,28 @@ router.post('/list', function (request, response, next) {
                     }
                 } catch (ex) {
                     logger.info("售后服务异常:" + ex);
-                    return callback(2, null);
+                    return callback(3, null);
                 }
 
             }
         ],
         function (err, results) {
-            if (err == 1) {
+            if (err == 1 || err == 2) {
                 logger.error("查询订单列表失败---订单服务异常：" + err);
                 result.code = 500;
                 result.desc = "查询订单失败";
                 response.json(result);
                 return;
             }
-            if (err == 2) {
-                logger.error("查询售后失败--售后服务异常：" + err);
-                response.json(results[0]);
-                return;
-            }
-
             if (err == null && err != 3) {
                 logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
-                result.afterSaleList = results[1];
+                result = results[1];
+                result.afterSaleList = results[2];
                 response.json(result);
                 return;
             } else {
                 logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
+                result = results[1];
 
                 response.json(result);
                 return;
