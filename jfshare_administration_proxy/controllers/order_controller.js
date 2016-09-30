@@ -1341,7 +1341,9 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
                         var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
                         // console.log(json);
                         var list = [];
-                        var sellerDeviler = {};
+
+
+                        var sellerId;
                         if (json != null && json.length > 0) {
 
                             var sheetData = json[0];
@@ -1349,23 +1351,26 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
                             if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
 
                                 for (var i = 1; i < sheetData.data.length; i++) {
-
+                                    var sellerDeviler = {};
                                     if (sheetData.data[i].length >= 3) {
-                                        var sellerId = sheetData.data[i][0] + "";
+                                        sellerId = sheetData.data[i][0] + "";
+
                                         var deliverInfo = new order_types.DeliverInfo({
                                             expressName: sheetData.data[i][3],
-                                            expressNo: sheetData.data[i][2] + "",
+                                            expressNo: sheetData.data[i][2],
                                             sellerComment: ""
+                                        });
+                                        var order = new order_types.Order({
+                                            orderId: sheetData.data[i][1],
+                                            deliverInfo: deliverInfo
                                         });
                                         if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
                                             deliverInfo.sellerComment = sheetData.data[i][3];
                                         }
-                                        var order = new order_types.Order({
-                                            orderId: sheetData.data[i][1] + "",
-                                            deliverInfo: deliverInfo
-                                        });
+
                                         sellerDeviler.sellerId = sellerId;
                                         sellerDeviler.order = order;
+
                                         list.push(sellerDeviler);
                                     }
                                 }
