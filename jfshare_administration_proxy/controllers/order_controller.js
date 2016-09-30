@@ -1314,7 +1314,7 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
             return;
         }
         logger.info("进入批量发货流程params:" + JSON.stringify(params));
-        params.path ="http://120.24.153.102:3000/system/v1/jfs_image/"+params.path;
+        params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
         //logger.error("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
         var isDownLoad = false;
         async.series([
@@ -1338,8 +1338,8 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
                         if (!isDownLoad) {
                             return callback(1, null);
                         }
-                        //var json = xlsx.parse("/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
-                        var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
+                        var json = xlsx.parse("/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
+                        //var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
                         // console.log(json);
                         var list = [];
 
