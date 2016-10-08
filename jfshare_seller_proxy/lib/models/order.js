@@ -50,7 +50,9 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             endTime: params.endTime,
             sellerId: params.sellerId,
             orderId: params.orderId,
-            userId: params.userId
+            userId: params.userId,
+            receiverMobile: params.receiverMobile,
+            receiverName: params.receiverName
         });
     }
 
