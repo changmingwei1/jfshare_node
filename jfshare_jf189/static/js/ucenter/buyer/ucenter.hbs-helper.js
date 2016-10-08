@@ -8,7 +8,7 @@ Handlebars.registerHelper("showImage",function(imgUrl,options){
 
 //组装商品详情url
 Handlebars.registerHelper("showProductUrl",function(productId,options){
-    var url = "/product/render/"+productId + "?ssid="+$("#ssid").val();
+    var url = "/product/"+productId + "?ssid="+$("#ssid").val();
     return new Handlebars.SafeString(url);
 });
 
