@@ -3330,6 +3330,7 @@ ProductCardStatistics = module.exports.ProductCardStatistics = function(args) {
   this.skuNum = null;
   this.sendNum = null;
   this.checkedNum = null;
+  this.skuName = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -3357,6 +3358,9 @@ ProductCardStatistics = module.exports.ProductCardStatistics = function(args) {
     }
     if (args.checkedNum !== undefined) {
       this.checkedNum = args.checkedNum;
+    }
+    if (args.skuName !== undefined) {
+      this.skuName = args.skuName;
     }
   }
 };
@@ -3437,6 +3441,13 @@ ProductCardStatistics.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.skuName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -3491,6 +3502,11 @@ ProductCardStatistics.prototype.write = function(output) {
   if (this.checkedNum !== null && this.checkedNum !== undefined) {
     output.writeFieldBegin('checkedNum', Thrift.Type.STRING, 9);
     output.writeString(this.checkedNum);
+    output.writeFieldEnd();
+  }
+  if (this.skuName !== null && this.skuName !== undefined) {
+    output.writeFieldBegin('skuName', Thrift.Type.STRING, 10);
+    output.writeString(this.skuName);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
