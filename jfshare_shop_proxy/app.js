@@ -17,6 +17,7 @@ var active = require('./controllers/active_controller');
 var test = require('./controllers/test_controller');
 var zookeeper = require('./resource/zookeeper_util');
 var slotImage = require('./controllers/slotImage_controller');// 主页和商品模块页面的配置
+var moduleConfig = require('./controllers/moduleConfig_controller');// 商品和品牌模块页面的配置
 
 //var view_index = require("./view_center/index/view_index");
 
@@ -43,6 +44,7 @@ app.use('/shop/address', address);
 app.use('/shop/captcha',captcha);
 app.use('/shop/active',active);
 app.use('/shop/slotImage',slotImage);// 主页和商品模块页面的配置
+app.use('/shop/moduleConfig',moduleConfig);
 //app.use('/test', test);
 //app.use('/test', tests);
 
