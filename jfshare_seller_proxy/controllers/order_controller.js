@@ -103,8 +103,8 @@ router.post('/list', function (request, response, next) {
                                     expressNo: order.expressNo,
                                     expressName: order.expressName,
                                     receiverAddress: order.receiverAddress,
-                                    receiverName: order.receiverName,
-                                    receiverMobile: order.receiverMobile,
+                                    receiverName: order.deliverInfo.receiverName,
+                                    receiverMobile: order.deliverInfo.receiverMobile,
                                     receiverTele: order.receiverTele,
                                     orderState: order.orderState,
                                     sellerComment: order.sellerComment,
@@ -120,35 +120,6 @@ router.post('/list', function (request, response, next) {
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
                                 }
-                                // }
-                                //orderInfo.orderProfileList.forEach(function (order) {
-                                //    var orderItem = {
-                                //        orderId: order.orderId,
-                                //        userId: order.userId,
-                                //        orderPrice: order.closingPrice,
-                                //        //添加了应答的数据
-                                //        postage: order.postage,
-                                //        username: order.username,
-                                //        cancelName: order.cancelName,
-                                //        sellerName: order.sellerName,
-                                //        sellerId: order.sellerId,
-                                //        createTime: order.createTime,
-                                //        expressNo: order.expressNo,
-                                //        expressName: order.expressName,
-                                //        receiverAddress: order.receiverAddress,
-                                //        receiverName: order.receiverName,
-                                //        receiverMobile: order.receiverMobile,
-                                //        receiverTele: order.receiverTele,
-                                //        orderState: order.orderState,
-                                //        sellerComment: order.sellerComment,
-                                //        buyerComment: order.buyerComment,
-                                //        deliverTime: order.deliverTime,
-                                //        successTime: order.successTime,
-                                //        exchangeCash: order.exchangeCash,
-                                //        exchangeScore: order.exchangeScore,
-                                //        activeState: order.activeState,
-                                //        curTime: order.curTime
-                                //    };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
                                     for (var i = 0; i < order.productList.length; i++) {
@@ -208,7 +179,14 @@ router.post('/list', function (request, response, next) {
             }
         ],
         function (err, results) {
-            if (err == 1 || err == 2) {
+            if (err == 1) {
+                logger.error("查询账户信息失败---buyer服务异常：" + err);
+                result.code = 500;
+                result.desc = "查询账户信息";
+                response.json(result);
+                return;
+            }
+            if (err == 2) {
                 logger.error("查询订单列表失败---订单服务异常：" + err);
                 result.code = 500;
                 result.desc = "查询订单失败";

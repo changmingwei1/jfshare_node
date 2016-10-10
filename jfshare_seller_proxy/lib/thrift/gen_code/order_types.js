@@ -1764,6 +1764,7 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
   this.downType = null;
   this.orderIds = null;
   this.sellerIds = null;
+  this.fromSource = null;
   this.receiverMobile = null;
   this.receiverName = null;
   if (args) {
@@ -1871,6 +1872,9 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
     }
     if (args.sellerIds !== undefined) {
       this.sellerIds = args.sellerIds;
+    }
+    if (args.fromSource !== undefined) {
+      this.fromSource = args.fromSource;
     }
     if (args.receiverMobile !== undefined) {
       this.receiverMobile = args.receiverMobile;
@@ -2166,13 +2170,20 @@ OrderQueryConditions.prototype.read = function(input) {
       }
       break;
       case 36:
+      if (ftype == Thrift.Type.I32) {
+        this.fromSource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 37:
       if (ftype == Thrift.Type.STRING) {
         this.receiverMobile = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 37:
+      case 38:
       if (ftype == Thrift.Type.STRING) {
         this.receiverName = input.readString();
       } else {
@@ -2383,13 +2394,18 @@ OrderQueryConditions.prototype.write = function(output) {
     output.writeListEnd();
     output.writeFieldEnd();
   }
+  if (this.fromSource !== null && this.fromSource !== undefined) {
+    output.writeFieldBegin('fromSource', Thrift.Type.I32, 36);
+    output.writeI32(this.fromSource);
+    output.writeFieldEnd();
+  }
   if (this.receiverMobile !== null && this.receiverMobile !== undefined) {
-    output.writeFieldBegin('receiverMobile', Thrift.Type.STRING, 36);
+    output.writeFieldBegin('receiverMobile', Thrift.Type.STRING, 37);
     output.writeString(this.receiverMobile);
     output.writeFieldEnd();
   }
   if (this.receiverName !== null && this.receiverName !== undefined) {
-    output.writeFieldBegin('receiverName', Thrift.Type.STRING, 37);
+    output.writeFieldBegin('receiverName', Thrift.Type.STRING, 38);
     output.writeString(this.receiverName);
     output.writeFieldEnd();
   }
