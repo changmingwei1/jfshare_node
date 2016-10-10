@@ -224,6 +224,9 @@ router.post('/queryImgkey', function (request, response, next) {
                 return;
             }
             result.imgKey = data[0].imgKey;
+            result.curPrice = data[0].curPrice;
+            result.orgPrice = data[0].orgPrice;
+            result.title = data[0].title;
             response.json(result);
             return;
         });

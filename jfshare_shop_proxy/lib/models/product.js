@@ -303,6 +303,7 @@ Product.prototype.getSubTreeRelaProduct = function (param, callback) {
         if (err) {
             logger.error("请求参数：" + JSON.stringify(param));
             logger.error("调用subjectServ-getSubTreeRelaProduct查询子分类失败  失败原因 ======" + JSON.stringify(data));
+            logger.error("调用subjectServ-getSubTreeRelaProduct查询子分类失败  失败原因 ======" + JSON.stringify(err));
             res.code = 500;
             res.desc = "查询子分类失败";
             callback(res, null);

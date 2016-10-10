@@ -107,7 +107,10 @@ ModuleConfig.prototype.relase = function (params, callback) {
             relaId:list[i].relaId,
             relaImgkey:list[i].relaImgkey,
             productRuleId:list[i].productRuleId,
-            relaSort:list[i].relaSort
+            relaSort:list[i].relaSort,
+            curPrice:list[i].curPrice,
+            orgPrice:list[i].orgPrice,
+            title:list[i].title
         });
         iList.push(mcDetail);
     }

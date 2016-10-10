@@ -1430,6 +1430,114 @@ ManagerServ_queryModuleConfigDetail_result.prototype.write = function(output) {
   return;
 };
 
+ManagerServ_queryModuleConfigDetailForBuyer_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ManagerServ_queryModuleConfigDetailForBuyer_args.prototype = {};
+ManagerServ_queryModuleConfigDetailForBuyer_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ModuleConfigDetailParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryModuleConfigDetailForBuyer_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryModuleConfigDetailForBuyer_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryModuleConfigDetailForBuyer_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryModuleConfigDetailForBuyer_result.prototype = {};
+ManagerServ_queryModuleConfigDetailForBuyer_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ModuleConfigDetailResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryModuleConfigDetailForBuyer_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryModuleConfigDetailForBuyer_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ManagerServ_relase_args = function(args) {
   this.param = null;
   if (args) {
@@ -3213,6 +3321,53 @@ ManagerServClient.prototype.recv_queryModuleConfigDetail = function(input,mtype,
   }
   return callback('queryModuleConfigDetail failed: unknown result');
 };
+ManagerServClient.prototype.queryModuleConfigDetailForBuyer = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryModuleConfigDetailForBuyer(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryModuleConfigDetailForBuyer(param);
+  }
+};
+
+ManagerServClient.prototype.send_queryModuleConfigDetailForBuyer = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryModuleConfigDetailForBuyer', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryModuleConfigDetailForBuyer_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryModuleConfigDetailForBuyer = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryModuleConfigDetailForBuyer_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryModuleConfigDetailForBuyer failed: unknown result');
+};
 ManagerServClient.prototype.relase = function(param, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -4130,6 +4285,36 @@ ManagerServProcessor.prototype.process_queryModuleConfigDetail = function(seqid,
     this._handler.queryModuleConfigDetail(args.param,  function (err, result) {
       var result = new ManagerServ_queryModuleConfigDetail_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryModuleConfigDetail", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryModuleConfigDetailForBuyer = function(seqid, input, output) {
+  var args = new ManagerServ_queryModuleConfigDetailForBuyer_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryModuleConfigDetailForBuyer.length === 1) {
+    Q.fcall(this._handler.queryModuleConfigDetailForBuyer, args.param)
+      .then(function(result) {
+        var result = new ManagerServ_queryModuleConfigDetailForBuyer_result({success: result});
+        output.writeMessageBegin("queryModuleConfigDetailForBuyer", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_queryModuleConfigDetailForBuyer_result(err);
+        output.writeMessageBegin("queryModuleConfigDetailForBuyer", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryModuleConfigDetailForBuyer(args.param,  function (err, result) {
+      var result = new ManagerServ_queryModuleConfigDetailForBuyer_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryModuleConfigDetailForBuyer", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

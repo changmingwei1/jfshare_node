@@ -1050,6 +1050,9 @@ ModuleConfigDetail = module.exports.ModuleConfigDetail = function(args) {
   this.productRuleId = null;
   this.relaSort = null;
   this.updateTime = null;
+  this.curPrice = null;
+  this.orgPrice = null;
+  this.title = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -1074,6 +1077,15 @@ ModuleConfigDetail = module.exports.ModuleConfigDetail = function(args) {
     }
     if (args.updateTime !== undefined) {
       this.updateTime = args.updateTime;
+    }
+    if (args.curPrice !== undefined) {
+      this.curPrice = args.curPrice;
+    }
+    if (args.orgPrice !== undefined) {
+      this.orgPrice = args.orgPrice;
+    }
+    if (args.title !== undefined) {
+      this.title = args.title;
     }
   }
 };
@@ -1147,6 +1159,27 @@ ModuleConfigDetail.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.curPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.orgPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.title = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1196,6 +1229,21 @@ ModuleConfigDetail.prototype.write = function(output) {
   if (this.updateTime !== null && this.updateTime !== undefined) {
     output.writeFieldBegin('updateTime', Thrift.Type.STRING, 8);
     output.writeString(this.updateTime);
+    output.writeFieldEnd();
+  }
+  if (this.curPrice !== null && this.curPrice !== undefined) {
+    output.writeFieldBegin('curPrice', Thrift.Type.STRING, 9);
+    output.writeString(this.curPrice);
+    output.writeFieldEnd();
+  }
+  if (this.orgPrice !== null && this.orgPrice !== undefined) {
+    output.writeFieldBegin('orgPrice', Thrift.Type.STRING, 10);
+    output.writeString(this.orgPrice);
+    output.writeFieldEnd();
+  }
+  if (this.title !== null && this.title !== undefined) {
+    output.writeFieldBegin('title', Thrift.Type.STRING, 11);
+    output.writeString(this.title);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1852,12 +1900,24 @@ QueryImgkeyParam.prototype.write = function(output) {
 QueryImgkeyResult = module.exports.QueryImgkeyResult = function(args) {
   this.result = null;
   this.imgKey = null;
+  this.curPrice = null;
+  this.orgPrice = null;
+  this.title = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.imgKey !== undefined) {
       this.imgKey = args.imgKey;
+    }
+    if (args.curPrice !== undefined) {
+      this.curPrice = args.curPrice;
+    }
+    if (args.orgPrice !== undefined) {
+      this.orgPrice = args.orgPrice;
+    }
+    if (args.title !== undefined) {
+      this.title = args.title;
     }
   }
 };
@@ -1890,6 +1950,27 @@ QueryImgkeyResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.curPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.orgPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.title = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1911,6 +1992,21 @@ QueryImgkeyResult.prototype.write = function(output) {
     output.writeString(this.imgKey);
     output.writeFieldEnd();
   }
+  if (this.curPrice !== null && this.curPrice !== undefined) {
+    output.writeFieldBegin('curPrice', Thrift.Type.STRING, 3);
+    output.writeString(this.curPrice);
+    output.writeFieldEnd();
+  }
+  if (this.orgPrice !== null && this.orgPrice !== undefined) {
+    output.writeFieldBegin('orgPrice', Thrift.Type.STRING, 4);
+    output.writeString(this.orgPrice);
+    output.writeFieldEnd();
+  }
+  if (this.title !== null && this.title !== undefined) {
+    output.writeFieldBegin('title', Thrift.Type.STRING, 5);
+    output.writeString(this.title);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -1919,12 +2015,16 @@ QueryImgkeyResult.prototype.write = function(output) {
 QueryProductRuleImgkeyParam = module.exports.QueryProductRuleImgkeyParam = function(args) {
   this.moduleId = null;
   this.ruleType = null;
+  this.count = null;
   if (args) {
     if (args.moduleId !== undefined) {
       this.moduleId = args.moduleId;
     }
     if (args.ruleType !== undefined) {
       this.ruleType = args.ruleType;
+    }
+    if (args.count !== undefined) {
+      this.count = args.count;
     }
   }
 };
@@ -1956,6 +2056,13 @@ QueryProductRuleImgkeyParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.count = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1975,6 +2082,11 @@ QueryProductRuleImgkeyParam.prototype.write = function(output) {
   if (this.ruleType !== null && this.ruleType !== undefined) {
     output.writeFieldBegin('ruleType', Thrift.Type.STRING, 2);
     output.writeString(this.ruleType);
+    output.writeFieldEnd();
+  }
+  if (this.count !== null && this.count !== undefined) {
+    output.writeFieldBegin('count', Thrift.Type.I32, 3);
+    output.writeI32(this.count);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
