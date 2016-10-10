@@ -7,9 +7,9 @@ var router = express.Router();
 var async = require('async');
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
-//var http = require('http');
-//var xlsx = require('node-xlsx');
-//var fs = require('fs');
+var http = require('http');
+var xlsx = require('node-xlsx');
+var fs = require('fs');
 
 var Order = require('../lib/models/order');
 var Util = require('../lib/models/util');
@@ -179,35 +179,6 @@ router.post('/list', function (request, response, next) {
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
                                 }
-                                // }
-                                //orderInfo.orderProfileList.forEach(function (order) {
-                                //    var orderItem = {
-                                //        orderId: order.orderId,
-                                //        userId: order.userId,
-                                //        orderPrice: order.closingPrice,
-                                //        //添加了应答的数据
-                                //        postage: order.postage,
-                                //        username: order.username,
-                                //        cancelName: order.cancelName,
-                                //        sellerName: order.sellerName,
-                                //        sellerId: order.sellerId,
-                                //        createTime: order.createTime,
-                                //        expressNo: order.expressNo,
-                                //        expressName: order.expressName,
-                                //        receiverAddress: order.receiverAddress,
-                                //        receiverName: order.receiverName,
-                                //        receiverMobile: order.receiverMobile,
-                                //        receiverTele: order.receiverTele,
-                                //        orderState: order.orderState,
-                                //        sellerComment: order.sellerComment,
-                                //        buyerComment: order.buyerComment,
-                                //        deliverTime: order.deliverTime,
-                                //        successTime: order.successTime,
-                                //        exchangeCash: order.exchangeCash,
-                                //        exchangeScore: order.exchangeScore,
-                                //        activeState: order.activeState,
-                                //        curTime: order.curTime
-                                //    };
                                 var productList = [];
                                 if (order.productList !== null && order.productList.length > 0) {
                                     for (var i = 0; i < order.productList.length; i++) {
@@ -508,8 +479,6 @@ router.post('/info', function (request, response, next) {
         }
     );
 });
-
-
 //查询售后的订单个数
 router.post('/queryafterSaleOrder', function (request, response, next) {
     var result = {code: 200};
@@ -730,7 +699,6 @@ router.post('/cancelOrder', function (request, response, next) {
 //        response.json(result);
 //    }
 //});
-
 //添加物流单-发货
 router.post('/deliver', function (request, response, next) {
     logger.info("进入添加物流单流程");
@@ -869,8 +837,6 @@ router.post('/updateExpressInfo', function (request, response, next) {
         response.json(result);
     }
 });
-
-
 //获取物流单
 router.post('/getExpressInfo', function (request, response, next) {
     logger.info("进入获取物流订单流程");
@@ -924,8 +890,6 @@ router.post('/getExpressInfo', function (request, response, next) {
         response.json(result);
     }
 });
-
-
 //获取物流商列表
 router.post('/expresslist', function (request, response, next) {
     logger.info("进入获取物流商列表");
@@ -1205,18 +1169,13 @@ router.post('/carList', function (request, response, next) {
         response.json(result);
     }
 });
-
 router.post('/queryExportOrderInfo', function (request, response, next) {
     logger.info("进入导出订单的流程");
     var result = {code: 200};
-
     try {
-
         var params = request.body;
         //orderId
-
         if (params.orderId != "" && params.orderId != null) {
-
         }else{
             //因为管理中心和卖家中心用同一个借口，所以去掉
             //if (params.startTime == "" || params.startTime == null) {
@@ -1232,19 +1191,78 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
             //    return;
             //}
         }
-
-
-        Order.batchExportOrderFull(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            } else {
-                result.queryKey = data;
-                response.json(result);
-            }
-
-        });
-
+        async.series([
+            function (callback) {
+                //params.sellerIds=[1,2,4];
+                logger.info("SELLER--data：" +JSON.stringify(params));
+                try {
+                    if(params.sellerName != null && params.sellerName != ""){
+                        Seller.querySellerBySeller(params, function (err, data) {
+                            logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Seller服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].sellerList !== null && data[0].sellerList.length > 0) {
+                                for (var j = 0; j < data[0].sellerList.length; j++) {
+                                    var seller = data[0].sellerList[j];
+                                    sellerIds.push(seller.sellerId + "");
+                                }
+                            }
+                            logger.info("SellerIds-----------------："+sellerIds);
+                            if (sellerIds.length > 0) {
+                                params.sellerIds=sellerIds;
+                                return callback(null, params);
+                            } else {
+                                callback(null, params);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用seller服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                Order.batchExportOrderFull(params, function (err, data) {
+                    if (err) {
+                        response.json(err);
+                        return;
+                    } else {
+                        result.queryKey = data;
+                        response.json(result);
+                    }
+                });
+            }],
+            function (err, results) {
+                if (err == 1) {
+                    logger.error("Seller服务异常" + err);
+                    result.code = 500;
+                    result.desc = "查询卖家信息失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("导出订单失败--订单服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "订单导出失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == null && err != 3) {
+                    logger.error("shuju------------->" + JSON.stringify(results));
+                    result = results[1];
+                    response.json(result);
+                    return;
+                } else {
+                    logger.info("shuju------------->" + JSON.stringify(results));
+                    result = results[0];
+                    response.json(result);
+                    return;
+                }
+            });
     } catch (ex) {
         logger.error("导出订单失败：" + ex);
         result.code = 500;
@@ -1252,8 +1270,6 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
         response.json(result);
     }
 });
-
-
 router.post('/getExportOrderResult', function (request, response, next) {
     logger.info("查询导出订单的进度");
     var result = {code: 200};
@@ -1300,127 +1316,126 @@ router.post('/getExportOrderResult', function (request, response, next) {
         response.json(result);
     }
 });
+/*批量发货--管理中心*/
+router.post('/batchDeliverOrderForManager', function (request, response, next) {
+    logger.info("进入批量发货流程..");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        if (params.path == "" || params.path == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        logger.info("进入批量发货流程params:" + JSON.stringify(params));
+        //params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
+        params.path ="http://120.24.153.102:3000/system/v1/jfs_image/"+params.path;
+        //logger.error("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
+        var isDownLoad = false;
+        async.series([
+                function (callback) {
+                    try {
+                        Order.downLoad(params, function (err, data) {
+                            if (err) {
+                                return callback(1, null);
+                            } else {
+                                isDownLoad = true;
+                                return callback(null, isDownLoad);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("下载物流单失败:" + ex);
+                        return callback(1, null);
+                    }
+                },
+                function (callback) {
+                    try {
+                        if (!isDownLoad) {
+                            return callback(1, null);
+                        }
+                        var json = xlsx.parse("/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
+                        //var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
+                        // console.log(json);
+                        var list = [];
 
-///*批量发货--管理中心*/
-//router.post('/batchDeliverOrderForManager', function (request, response, next) {
-//    logger.info("进入批量发货流程..");
-//    var result = {code: 200};
-//    try {
-//        var params = request.body;
-//        if (params.path == "" || params.path == null) {
-//            result.code = 400;
-//            result.desc = "参数错误";
-//            response.json(result);
-//            return;
-//        }
-//        logger.info("进入批量发货流程params:" + JSON.stringify(params));
-//        params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
-//        //params.path ="http://120.24.153.102:3000/system/v1/jfs_image/"+params.path;
-//        //logger.error("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
-//        var isDownLoad = false;
-//        async.series([
-//                function (callback) {
-//                    try {
-//                        Order.downLoad(params, function (err, data) {
-//                            if (err) {
-//                                return callback(1, null);
-//                            } else {
-//                                isDownLoad = true;
-//                                return callback(null, isDownLoad);
-//                            }
-//                        });
-//                    } catch (ex) {
-//                        logger.info("下载物流单失败:" + ex);
-//                        return callback(1, null);
-//                    }
-//                },
-//                function (callback) {
-//                    try {
-//                        if (!isDownLoad) {
-//                            return callback(1, null);
-//                        }
-//                        var json = xlsx.parse("/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
-//                        //var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
-//                        // console.log(json);
-//                        var list = [];
-//
-//
-//                        var sellerId;
-//                        if (json != null && json.length > 0) {
-//
-//                            var sheetData = json[0];
-//
-//                            if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
-//
-//                                for (var i = 1; i < sheetData.data.length; i++) {
-//                                    var sellerDeviler = {};
-//                                    if (sheetData.data[i].length >= 3) {
-//                                        sellerId = sheetData.data[i][0] + "";
-//
-//                                        var deliverInfo = new order_types.DeliverInfo({
-//                                            expressName: sheetData.data[i][3],
-//                                            expressNo: sheetData.data[i][2],
-//                                            sellerComment: ""
-//                                        });
-//                                        var order = new order_types.Order({
-//                                            orderId: sheetData.data[i][1],
-//                                            deliverInfo: deliverInfo
-//                                        });
-//                                        if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
-//                                            deliverInfo.sellerComment = sheetData.data[i][3];
-//                                        }
-//
-//                                        sellerDeviler.sellerId = sellerId;
-//                                        sellerDeviler.order = order;
-//
-//                                        list.push(sellerDeviler);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        params.list = list;
-//                        if (list.length > 0) {
-//                            Order.batchDeliverOrderForManager(params, function (err, data) {
-//                                if (err) {
-//                                    return callback(err, err);
-//                                }
-//                                if(data[0] != null){
-//                                    result.failInfo = data[0].failInfo;
-//                                }
-//                                return callback(null, result);
-//                            });
-//                        } else {
-//                            callback(2, null);
-//                        }
-//                    } catch (ex) {
-//                        logger.info("批量发货失败:" + ex);
-//                        return callback(2, null);
-//                    }
-//                }
-//            ],
-//            function (err, results) {
-//                if (err) {
-//                    if (err == 1 || err == 2) {
-//                        result.code = 500;
-//                        result.desc = "批量发货失败";
-//                        response.json(result);
-//                    } else {
-//                        response.json(err);
-//                    }
-//
-//                } else {
-//                    response.json(result);
-//                }
-//            });
-//
-//
-//        //});
-//    } catch (ex) {
-//        logger.error("批量发货 error:" + ex);
-//        result.code = 500;
-//        result.desc = "批量发货失败";
-//        response.json(result);
-//    }
-//});
+
+                        var sellerId;
+                        if (json != null && json.length > 0) {
+
+                            var sheetData = json[0];
+
+                            if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
+
+                                for (var i = 1; i < sheetData.data.length; i++) {
+                                    var sellerDeviler = {};
+                                    if (sheetData.data[i].length >= 3) {
+                                        sellerId = sheetData.data[i][0] + "";
+
+                                        var deliverInfo = new order_types.DeliverInfo({
+                                            expressName: sheetData.data[i][3],
+                                            expressNo: sheetData.data[i][2],
+                                            sellerComment: ""
+                                        });
+                                        var order = new order_types.Order({
+                                            orderId: sheetData.data[i][1],
+                                            deliverInfo: deliverInfo
+                                        });
+                                        if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
+                                            deliverInfo.sellerComment = sheetData.data[i][3];
+                                        }
+
+                                        sellerDeviler.sellerId = sellerId;
+                                        sellerDeviler.order = order;
+
+                                        list.push(sellerDeviler);
+                                    }
+                                }
+                            }
+                        }
+                        params.list = list;
+                        if (list.length > 0) {
+                            Order.batchDeliverOrderForManager(params, function (err, data) {
+                                if (err) {
+                                    return callback(err, err);
+                                }
+                                if(data[0] != null){
+                                    result.failInfo = data[0].failInfo;
+                                }
+                                return callback(null, result);
+                            });
+                        } else {
+                            callback(2, null);
+                        }
+                    } catch (ex) {
+                        logger.info("批量发货失败:" + ex);
+                        return callback(2, null);
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    if (err == 1 || err == 2) {
+                        result.code = 500;
+                        result.desc = "批量发货失败";
+                        response.json(result);
+                    } else {
+                        response.json(err);
+                    }
+
+                } else {
+                    response.json(result);
+                }
+            });
+
+
+        //});
+    } catch (ex) {
+        logger.error("批量发货 error:" + ex);
+        result.code = 500;
+        result.desc = "批量发货失败";
+        response.json(result);
+    }
+});
 
 module.exports = router;
