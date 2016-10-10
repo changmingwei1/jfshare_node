@@ -39,7 +39,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             payTimeStart: params.payTimeStart,
             payTimeEnd: params.payTimeEnd,
             //orderId: params.orderId,
-            fromSource: params.fromSource||0,
+            fromSource: params.fromSource+"",
             count: params.orderList.length,
             curPage: 1
         });
