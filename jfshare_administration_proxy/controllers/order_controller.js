@@ -77,11 +77,13 @@ router.post('/list', function (request, response, next) {
                                 }
                             }
 
-                            logger.info("SellerIds-----------------："+sellerIds);
+                            logger.error("SellerIds----shuju-------------："+sellerIds);
                             if (sellerIds.length > 0) {
                                 params.sellerIds=sellerIds;
                                 return callback(null, params);
                             } else {
+                                sellerIds.push("-1");//代表传参了但是没有对应的数据，java层根据此判断是否继续向下执行
+                                params.sellerIds=sellerIds;
                                 callback(null, params);
                             }
                         });
@@ -286,6 +288,7 @@ router.post('/list', function (request, response, next) {
                 logger.error("shuju------------->" + JSON.stringify(results));
                 result = results[2];
                 result.afterSaleList = results[3];
+                logger.error("finle-result:------------->" + JSON.stringify(result));
                 response.json(result);
                 return;
             } else {
