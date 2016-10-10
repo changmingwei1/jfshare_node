@@ -814,6 +814,7 @@ router.post('/ticketList', function (request, response, next) {
             response.json(result);
             return;
         }
+
         Product.queryProductCardViewList(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -1827,5 +1828,55 @@ router.post('/queryCaptchaDetails', function(request, response, next) {
         response.json(result);
     }
 });
+
+
+
+// 导出统计sku产品卡片信息
+router.post('/exportStatisticsSkuProductCard', function(request, response, next) {
+
+    logger.info("导出统计sku产品卡片信息接口");
+    var result = {code: 200};
+    try{
+        var params = request.body;
+        logger.info("入参，params:" + JSON.stringify(params));
+
+        if (params == null || params.sellerId == null||params.sellerId == "") {
+            result.code = 400;
+            result.desc = "sellerId参数错误";
+            response.json(result);
+            return;
+        }
+        if (params == null || params.productId == null||params.productId == "") {
+            result.code = 400;
+            result.desc = "productId参数错误";
+            response.json(result);
+            return;
+        }
+        
+
+
+        Product.exportStatisticsSkuProductCard(params, function (err, data) {
+            if(err){
+                return response.json(err);
+            }else{
+
+                logger.info("导出统计sku产品卡片信息 result" + JSON.stringify(result));
+                result.path = data.value;
+                response.json(result);
+                return;
+            }
+
+        });
+    } catch (ex) {
+        logger.error("导出统计sku产品卡片信息:" + ex);
+        result.code = 500;
+        result.desc = "导出统计sku产品卡片信息";
+        response.json(result);
+    }
+});
+
+
+
+
 
 module.exports = router;

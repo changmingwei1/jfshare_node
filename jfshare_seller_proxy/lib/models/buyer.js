@@ -43,4 +43,34 @@ Buyer.prototype.getBuyer = function(param,callback){
     });
 };
 
+//获取userId by mobile
+Buyer.prototype.getBuyerInfo = function(param,callback){
+
+    var buyer = new buyer_types.Buyer({
+        loginName:param.loginName
+    });
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getBuyerInfo',[buyer]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.error("get buyer result:" + JSON.stringify(buyer));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't get buyer because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get buyer";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.error("请求参数：" + JSON.stringify(param));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
+
 module.exports = new Buyer();

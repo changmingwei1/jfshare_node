@@ -39,7 +39,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             payTimeStart: params.payTimeStart,
             payTimeEnd: params.payTimeEnd,
             //orderId: params.orderId,
-            fromSource: params.fromSource||1,
+            fromSource: params.fromSource+"",
             count: params.orderList.length,
             curPage: 1
         });
@@ -64,7 +64,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             sellerId: params.sellerId,
             sellerIds:params.sellerIds,
             orderId: params.orderId,
-            fromSource: params.fromSource||1,
+            fromSource: params.fromSource||0,
             userId: params.userId
         });
     }
@@ -227,7 +227,11 @@ Order.prototype.batchExportOrderFull = function (params, callback) {
         endTime: params.endTime,
         orderState: params.orderState || 0,
         sellerId: params.sellerId,
-        orderId:params.orderId
+        orderId:params.orderId,
+        sellerIds:params.sellerIds,
+        payTimeStart:params.payTimeStart,
+        payTimeEnd:params.payTimeEnd,
+        fromSource: params.fromSource||0
     });
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFull", [orderQueryConditions]);
@@ -290,7 +294,7 @@ Order.prototype.batchDeliverOrderForManager = function (params, callback) {
         } else if (data[0].result.code == "1") {
             logger.warn("调用orderServ-batchDeliverParam  失败原因 ======" + err +"返回的数据是"+JSON.stringify(data));
             res.code = 500;
-            res.desc = data[0].failInfo;
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         }else{
             callback(null, data);
@@ -303,8 +307,8 @@ Order.prototype.downLoad = function (params, callback) {
     var http = require('follow-redirects').http;
     var fs = require('fs');
     var url = require('url');
-    //var html = '/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
-    var html = 'C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
+    var html = '/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
+    //var html = 'C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx';
     var file = fs.createWriteStream(html);//将文件流写入文件
     var datas = "";
     try {

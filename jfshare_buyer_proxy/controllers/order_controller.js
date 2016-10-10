@@ -623,6 +623,10 @@ router.post('/list', function (request, response, next) {
                                         if(order.orderState>=50){
                                             orderIdList.push(order.orderId);
                                         }
+                                        //临时修改：因安卓没有62状态，所以62状态转换为61
+                                        if(order.orderState==62){
+                                            order.orderState=61;
+                                        }
                                         var orderItem = {
                                             orderId: order.orderId,
                                             closingPrice: order.closingPrice,
@@ -944,7 +948,14 @@ router.post('/info', function (req, res, next) {
                                 result.orderId = orderInfo.orderId;
                                 result.closingPrice = orderInfo.closingPrice;
                                 //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
-                                result.orderState = orderInfo.orderState;
+
+                                //临时修改：因安卓没有62状态，所以62状态转换为61
+                                if(orderInfo.orderState==62){
+                                    result.orderState=61;
+                                }else{
+                                    result.orderState = orderInfo.orderState;
+                                }
+
                                 if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
                                     result.mobile = orderInfo.deliverInfo.receiverMobile;
                                     result.sellerComment = orderInfo.deliverInfo.sellerComment;

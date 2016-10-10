@@ -32,6 +32,8 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             orderState: params.orderState || 0,
             startTime: params.startTime,
             endTime: params.endTime,
+            payTimeStart: params.payTimeStart,
+            payTimeEnd: params.payTimeEnd,
             orderIds: params.orderList,
             sellerId: params.sellerId,
             count: params.orderList.length,
@@ -43,9 +45,14 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             count: params.percount,
             curPage: params.curpage,
             startTime: params.startTime,
+            payTimeStart: params.payTimeStart,
+            payTimeEnd: params.payTimeEnd,
             endTime: params.endTime,
             sellerId: params.sellerId,
-            orderId: params.orderId
+            orderId: params.orderId,
+            userId: params.userId,
+            receiverMobile: params.receiverMobile,
+            receiverName: params.receiverName
         });
     }
 
