@@ -113,8 +113,8 @@ module.exports.ServiceFactory = {
      */
     product: function () {
         logger.info("--------->"+zookeeper.getData("product_serv_ips")+"--->"+zookeeper.getData("product_port"));
-        // return new ThriftConfig(zookeeper.getData("product_serv_ips"),zookeeper.getData("product_port"));
-        return new ThriftConfig("101.201.37.237","1980");
+        return new ThriftConfig(zookeeper.getData("product_serv_ips"),zookeeper.getData("product_port"));
+        // return new ThriftConfig("101.201.37.237","1980");
     },
     /**
      * 库存服务
