@@ -151,11 +151,12 @@ router.post('/importExcel', function (request, response, next) {
             }
             if(data[0] != null || data[0].ModuleConfigDetailList != null){
                 ModuleConfigDetailList = data[0].ModuleConfigDetailList;
-                importCount = data[0].importCount;
+                impCount = data[0].impCount;
             }
             result.ModuleConfigDetailList = ModuleConfigDetailList;
-            result.importCount = importCount;
+            result.impCount = impCount;
             logger.info("importExcel result:" + JSON.stringify(result));
+            logger.info("importExcel impCount:" + JSON.stringify(impCount));
             response.json(result);
             return;
         });
@@ -187,6 +188,7 @@ router.post('/relase', function (request, response, next) {
                 return;
             }
             result.data = data[0];
+            logger.info("relase data[0]:" + JSON.stringify(data[0]));
             response.json(result);
             return;
         });
