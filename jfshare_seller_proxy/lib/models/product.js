@@ -773,4 +773,40 @@ Product.prototype.queryProductForSeller = function (productId, baseTag, skuTempl
         }
     });
 };
+
+
+// 导出统计sku产品卡片信息
+Product.prototype.exportStatisticsSkuProductCard = function (params, callback) {
+
+    var staticParams = new product_types.ProductCardViewParam({
+        sellerId:params.sellerId,
+        productId:params.productId,
+        cardNumber:params.cardNumber,
+        state:params.state,
+        skuNum:params.skuNum,
+        sendBeginTime:params.sendBeginTime,
+        sendEndTime:params.sendEndTime,
+        validateBeginTime:params.validateBeginTime,
+        validateEndTime:params.validateEndTime,
+        sendAccount:params.sendAccount
+    });
+    logger.warn("调用 productServ-exportStatisticsSkuProductCard 入参:" + JSON.stringify(staticParams));
+    // 获取client
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "exportStatisticsSkuProductCard", staticParams);
+
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.warn("调用 productServ-exportStatisticsSkuProductCard result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用 productServ-exportStatisticsSkuProductCard  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "调用productServ-exportStatisticsSkuProductCard 失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
+
 module.exports = new Product();
