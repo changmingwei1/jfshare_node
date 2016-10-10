@@ -1194,6 +1194,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
             //    return;
             //}
         }
+        var sellerIds = [];
         async.series([
             function (callback) {
                 //params.sellerIds=[1,2,4];
@@ -1229,6 +1230,32 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
                 }
             },
             function (callback) {
+                logger.info("BUYER--data：");
+                try {
+                    if(params.loginName != null && params.loginName != ""){
+                        Buyer.getBuyerInfo(params, function (err, data) {
+                            logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Buyer服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].buyer != null) {
+                                var buyer = data[0].buyer;
+                                params.userId= buyer.userId;
+                                return callback(null, params);
+                            } else {
+                                callback(1,null);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用buyer服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
                 Order.batchExportOrderFull(params, function (err, data) {
                     if (err) {
                         response.json(err);
@@ -1256,7 +1283,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
                 }
                 if (err == null && err != 3) {
                     logger.error("shuju------------->" + JSON.stringify(results));
-                    result = results[1];
+                    result = results[2];
                     response.json(result);
                     return;
                 } else {
