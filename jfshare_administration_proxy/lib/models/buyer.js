@@ -249,5 +249,31 @@ Buyer.prototype.getBuyerInfo = function(param,callback){
         }
     });
 };
+//批量获取个人信息
+Buyer.prototype.getListBuyer = function(param,callback){
+
+    logger.info("批量获取个人信息的参数：" + JSON.stringify(param));
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getListBuyer',[param]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("get buyerList result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't get buyerList because: ======" + err);
+            res.code = 500;
+            res.desc = "false to get buyerList";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new Buyer();
