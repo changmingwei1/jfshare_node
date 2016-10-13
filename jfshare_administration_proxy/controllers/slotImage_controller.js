@@ -44,12 +44,6 @@ router.post('/saveAdvertSlotImage', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.jump == null || params.jump == "") {
-            result.code = 400;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
         if (params.startTime == null || params.startTime == "") {
             result.code = 400;
             result.desc = "startTime参数错误";
@@ -107,12 +101,6 @@ router.post('/updateAdvertSlotImage', function (request, response, next) {
         if (params.remark == null || params.remark == "") {
             result.code = 400;
             result.desc = "remark参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.jump == null || params.jump == "") {
-            result.code = 400;
-            result.desc = "参数错误";
             response.json(result);
             return;
         }

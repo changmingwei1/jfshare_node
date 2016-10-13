@@ -69,20 +69,6 @@ router.post('/fileToTY', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.orderId == null || params.orderId == "") {
-            result.code = 400;
-            result.desc = " orderId 参数错误";
-            response.json(result);
-            return;
-        }
-        if (params.sellerId == null || params.sellerId == "") {
-            result.code = 400;
-            result.desc = " sellerId 参数错误";
-            response.json(result);
-            return;
-        }
-
-
 
         fileCards.fileToTY(params, function (err, data) {
             if (err) {
