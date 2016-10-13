@@ -238,4 +238,27 @@ Buyer.prototype.querySellerVipList = function(param,callback){
     });
 };
 
+//查询卖家
+Seller.prototype.querySellerBySeller = function (params, callback) {
+    logger.error("querySellerBySeller params:" + JSON.stringify(params));
+    var sellerParam = new seller_types.Seller({
+        sellerName:params.sellerName
+    });
+
+    logger.error("querySellerBySeller sellerParam-after:" + JSON.stringify(sellerParam));
+    //获取client
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'querySellerBySeller', [sellerParam]);
+    Lich.wicca.invokeClient(sellerServ, function (err, data) {
+        logger.error("querySellerBySeller result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("can't get seller result because: ======" + err);
+            res.code = 500;
+            res.desc = "获取卖家失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 module.exports = new Buyer();
