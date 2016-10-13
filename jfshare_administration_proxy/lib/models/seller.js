@@ -10,7 +10,7 @@ var thrift = require('thrift');
 var pagination_types = require('../thrift/gen_code/pagination_types');
 
 var seller_types = require("../thrift/gen_code/seller_types");
-
+var product_types = require("../thrift/gen_code/product_types");
 
 function Seller() {
 }
@@ -336,4 +336,74 @@ Seller.prototype.querySellerBySeller = function (params, callback) {
         }
     });
 };
+
+
+//checkCodeList
+
+//查询卖家
+Seller.prototype.queryCheckCodeList = function (params, callback) {
+    logger.error("queryCheckCodeList params:" + JSON.stringify(params));
+    var  param = new product_types.CheckCodeListParam({
+        sendAccount:params.sendAccount,
+        checkBeginTime:params.checkBeginTime,
+        checkEndTime :params.checkEndTime,
+        sellerId  :params.sellerId,
+        sellerName :params.sellerName,
+        productId:params.productId,
+        productName:params.productName
+    });
+
+    var pagination = new pagination_types.Pagination({
+        currentPage:params.curPage,
+        numPerPage:params.perCount
+    });
+
+    logger.info("queryCheckCodeList sellerParam-after:" + JSON.stringify(param)+JSON.stringify(pagination));
+    //CheckCodeListResult queryCheckCodeList(1:CheckCodeListParam param,2:pagination.Pagination pagination);
+    //获取client
+    var productServer = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, 'queryCheckCodeList', [param,pagination]);
+    Lich.wicca.invokeClient(productServer, function (err, data) {
+        logger.info("checkCodeList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("checkCodeList 失败 because: ======" + err);
+            res.code = 500;
+            res.desc = "获取验码记录失败 ";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+//exprotCheckCodeList
+
+Seller.prototype.exportCheckCodeList = function (params, callback) {
+    logger.error("exprotCheckCodeList params:" + JSON.stringify(params));
+    var  param = new product_types.CheckCodeListParam({
+        sendAccount:params.sendAccount,
+        checkBeginTime:params.checkBeginTime,
+        checkEndTime :params.checkEndTime,
+        sellerId  :params.sellerId,
+        sellerName :params.sellerName,
+        productId:params.productId,
+        productName:params.productName
+    });
+    logger.info("exportCheckCodeList sellerParam-after:" + JSON.stringify(param));
+    //获取client
+    var productServer = new Lich.InvokeBag(Lich.ServiceKey.ProductServer,'exportCheckCodeList', [param]);
+    Lich.wicca.invokeClient(productServer, function (err, data) {
+        logger.info("checkCodeList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("exportCheckCodeList 失败 because: ======" + err);
+            res.code = 500;
+            res.desc = "导出记录失败 ";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
 module.exports = new Seller();

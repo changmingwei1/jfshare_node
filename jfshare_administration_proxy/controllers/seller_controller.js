@@ -341,4 +341,70 @@ router.post('/list', function (request, response, next) {
     }
 });
 
+//商家验码记录列表
+router.post('/checkCodeList', function (request, response, next) {
+    var result = {code: 200};
+    result.checkCodeList={};
+    try {
+        var params = request.body;
+        if (params.curPage == null || params.curPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        if (params.perCount == null || params.perCount == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Seller.queryCheckCodeList(params, function (err, data) {
+            logger.info("SellerServ-checkCodeList response:" + JSON.stringify(data));
+            if (err) {
+                response.json(err);
+                return;
+            } else {
+                result.checkCodeList = data[0].checkCodeList;
+                result.page = data[0].pagination;
+                logger.info(" SellerServ-checkCodeList response:" + JSON.stringify(result));
+                response.json(result);
+            }
+        });
+
+    } catch (ex) {
+        logger.error("SellerServ-checkCodeList error:" + ex);
+        result.code = 500;
+        result.desc = "获取商家列表失败";
+        response.json(result);
+    }
+});
+
+//导出商家验码记录列表
+router.post('/exportCheckCode', function (request, response, next) {
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        Seller.exportCheckCodeList(params, function (err, data) {
+            logger.info("SellerServ-exportCheckCode response:" + JSON.stringify(data));
+            if (err) {
+                response.json(err);
+                return;
+            } else {
+                result.value = data[0].value;
+                logger.info(" SellerServ-exprotCheckCodeList response:" + JSON.stringify(result));
+                response.json(result);
+            }
+        });
+
+    } catch (ex) {
+        logger.error("SellerServ-exportCheckCode error:" + ex);
+        result.code = 500;
+        result.desc = "导出失败";
+        response.json(result);
+    }
+});
+
 module.exports = router;
