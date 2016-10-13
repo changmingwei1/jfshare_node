@@ -194,5 +194,14 @@ module.exports.ServiceFactory  =  {
     template: function () {
         logger.info("--------->"+zookeeper.getData("template_serv_ips")+"--->"+zookeeper.getData("template_serv_port"));
         return new ThriftConfig(zookeeper.getData("template_serv_ips"),zookeeper.getData("template_serv_port"));
+    },
+
+    /**
+     * 卡密服务
+     * @returns {ThriftConfig}
+     */
+    filecard: function () {
+        logger.info("--------->"+zookeeper.getData("file_card_serv_ips")+"--->"+zookeeper.getData("file_card_serv_port"));
+        return new ThriftConfig(zookeeper.getData("file_card_serv_ips"),zookeeper.getData("file_card_serv_port"));
     }
 };
