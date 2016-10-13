@@ -1361,7 +1361,7 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
         logger.info("进入批量发货流程params:" + JSON.stringify(params));
         //params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
         params.path ="http://120.24.153.102:3000/system/v1/jfs_image/"+params.path;
-        //logger.error("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
+        logger.info("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
         var isDownLoad = false;
         async.series([
                 function (callback) {
@@ -1388,20 +1388,14 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
                         //var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
                         // console.log(json);
                         var list = [];
-
-
                         var sellerId;
                         if (json != null && json.length > 0) {
-
                             var sheetData = json[0];
-
                             if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
-
                                 for (var i = 1; i < sheetData.data.length; i++) {
                                     var sellerDeviler = {};
                                     if (sheetData.data[i].length >= 3) {
                                         sellerId = sheetData.data[i][0] + "";
-
                                         var deliverInfo = new order_types.DeliverInfo({
                                             expressName: sheetData.data[i][3],
                                             expressNo: sheetData.data[i][2],
@@ -1414,10 +1408,8 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
                                         if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
                                             deliverInfo.sellerComment = sheetData.data[i][3];
                                         }
-
                                         sellerDeviler.sellerId = sellerId;
                                         sellerDeviler.order = order;
-
                                         list.push(sellerDeviler);
                                     }
                                 }
@@ -1467,5 +1459,118 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
         response.json(result);
     }
 });
+
+/*批量发货--管理中心*/
+router.post('/batchDeliverOrderForManagerTest', function (request, response, next) {
+    logger.info("进入批量发货流程..");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        if (params.path == "" || params.path == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        logger.info("进入批量发货流程params:" + JSON.stringify(params));
+        //params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
+        params.path ="http://120.24.153.102:3000/system/v1/jfs_image/"+params.path;
+        logger.info("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
+        var isDownLoad = false;
+        async.waterfall([
+                function (callback) {
+                    try {
+                        Order.downLoad(params, function (err, data) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                isDownLoad = true;
+                                callback(null, isDownLoad);
+                            }
+                        });
+                    } catch (ex) {
+                        logger.info("下载物流单失败:" + ex);
+                        result.code = 500;
+                        result.desc = "下载物流单失败";
+                        response.json(result);
+                        return;
+                    }
+                },
+                function (isDownload, callback) {
+                    try {
+                        logger.info("isDownLoad=============" + isDownLoad);
+                        var json = xlsx.parse("/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
+                        //var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
+                         logger.info("excel中的值，json == " + JSON.stringify(json));
+                        var list = [];
+                        var sellerId;
+                        if (json != null && json.length > 0) {
+                            var sheetData = json[0];
+                            if (sheetData != null && sheetData.data != null && sheetData.data.length > 1) {
+                                for (var i = 1; i < sheetData.data.length; i++) {
+                                    var sellerDeviler = {};
+                                    if (sheetData.data[i].length >= 3) {
+                                        sellerId = sheetData.data[i][0] + "";
+                                        var deliverInfo = new order_types.DeliverInfo({
+                                            expressName: sheetData.data[i][3],
+                                            expressNo: sheetData.data[i][2],
+                                            sellerComment: ""
+                                        });
+                                        var order = new order_types.Order({
+                                            orderId: sheetData.data[i][1],
+                                            deliverInfo: deliverInfo
+                                        });
+                                        if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
+                                            deliverInfo.sellerComment = sheetData.data[i][3];
+                                        }
+                                        sellerDeviler.sellerId = sellerId;
+                                        sellerDeviler.order = order;
+                                        list.push(sellerDeviler);
+                                    }
+                                }
+                            }
+                        }
+                        params.list = list;
+                        if (list.length > 0) {
+                            Order.batchDeliverOrderForManager(params, function (err, data) {
+                                if (err) {
+                                    callback(err);
+                                }
+                                if(data[0] != null){
+                                    result.failInfo = data[0].failInfo;
+                                }
+                                response.json(result);
+                                return;
+                            });
+                        } else {
+                            result.code = 500;
+                            result.desc = "列表数据为空";
+                            response.json(result);
+                            return;
+                        }
+                    } catch (ex) {
+                        logger.info("批量发货失败:" + ex);
+                        result.code = 500;
+                        result.desc = "批量发货失败1";
+                        response.json(result);
+                        return;
+                    }
+                }
+            ],
+            function (err) {
+                result.code = 500;
+                result.desc = "批量发货失败2";
+                response.json(result);
+                return;
+            });
+        //});
+    } catch (ex) {
+        logger.error("批量发货 error:" + ex);
+        result.code = 500;
+        result.desc = "批量发货失败3";
+        response.json(result);
+    }
+});
+
 
 module.exports = router;
