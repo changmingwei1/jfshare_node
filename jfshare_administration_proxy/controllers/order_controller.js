@@ -1647,13 +1647,13 @@ router.post('/listOrderOffline', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.startTime == null && params.startTime == "") {
+        if (params.payTimeStart == null || params.payTimeStart == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-        if (params.endTime == null && params.endTime == "") {
+        if (params.payTimeEnd == null || params.payTimeEnd == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
@@ -1673,7 +1673,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                 try {
                     if(params.sellerName != null && params.sellerName != ""){
                         Seller.querySellerBySeller(params, function (err, data) {
-                            logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            //logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
                                 logger.error("Seller服务异常");
                                 return callback(1, null);
@@ -1685,7 +1685,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                                 }
                             }
 
-                            logger.error("SellerIds----shuju-------------："+sellerIds);
+                            logger.info("SellerIds----shuju-------------："+sellerIds);
                             if (sellerIds.length > 0) {
                                 params.sellerIds=sellerIds;
                                 return callback(null, params);
@@ -1708,7 +1708,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                 try {
                     if(params.loginName != null && params.loginName != ""){
                         Buyer.getBuyerInfo(params, function (err, data) {
-                            logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            //logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
                                 logger.error("Buyer服务异常");
                                 return callback(1, null);
@@ -1744,8 +1744,8 @@ router.post('/listOrderOffline', function (request, response, next) {
                     //    });
                     //}
                     Order.orderProfileQuery(params, function (err, orderInfo) {
-                        logger.info("Order-data:"+JSON.stringify(params));
-                        logger.info("Order-orderInfo-orderInfo:"+JSON.stringify(orderInfo));
+                        //logger.info("Order-data:"+JSON.stringify(params));
+                        //logger.info("Order-orderInfo-orderInfo:"+JSON.stringify(orderInfo));
                         if (err) {
                             logger.error("订单服务异常");
                             return callback(1, null);
@@ -1791,7 +1791,8 @@ router.post('/listOrderOffline', function (request, response, next) {
                                 };
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
-                                    logger.info("order.payInfo.payChannel:"+order.payInfo.payChannel);
+                                    orderItem.payTime = order.payInfo.payTime;
+                                    //logger.info("order.payInfo.payChannel:"+order.payInfo.payChannel);
                                     if (order.payInfo.payChannel == "1") {
                                         if(order.exchangeScore>0){
                                             orderItem.payTypeName = "天翼+积分";
@@ -1859,7 +1860,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                             params.orderIdList = orderIdList;
                             params.userIdList=objTemp;
                         }
-                        logger.error("get order list response:" + JSON.stringify(result));
+                        //logger.error("get order list response:" + JSON.stringify(result));
                         return callback(null, result);
                     });
 
@@ -1871,7 +1872,7 @@ router.post('/listOrderOffline', function (request, response, next) {
             function (callback) {
                 try {
 
-                    logger.error("length:" + JSON.stringify(result.orderList.length));
+                    //logger.error("length:" + JSON.stringify(result.orderList.length));
                     Buyer.getListBuyer(params.userIdList, function(err, data){
                         if(err){
                             return callback(1, null);
@@ -1880,12 +1881,12 @@ router.post('/listOrderOffline', function (request, response, next) {
                         if(data != null && data[0] != null && data[0].buyerList != null){
                             for(var i = 0;i < result.orderList.length;i++){
                                 var userId=result.orderList[i].userId;
-                                logger.info("userId:" + JSON.stringify(userId)+" userName:"+result.orderList[i].loginName);
+                                //logger.info("userId:" + JSON.stringify(userId)+" userName:"+result.orderList[i].loginName);
                                 for(var j = 0;j < buyerList.length; j++){
                                     var uid = buyerList[j].userId;
                                     if(userId == uid){
                                         result.orderList[i].loginName=buyerList[j].loginName;
-                                        logger.info("userName:"+result.orderList[i].loginName);
+                                        //logger.info("userName:"+result.orderList[i].loginName);
                                     }
                                 }
                             }
