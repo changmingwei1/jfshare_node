@@ -209,6 +209,7 @@ router.post('/list', function (request, response, next) {
             }
         });
 });
+
 // 查询订单详情
 router.post('/info', function (request, response, next) {
     var result = {code: 200};
@@ -416,7 +417,6 @@ router.post('/info', function (request, response, next) {
     );
 });
 
-
 //查询售后的订单个数
 router.post('/queryafterSaleOrder', function (request, response, next) {
     var result = {code: 200};
@@ -447,6 +447,7 @@ router.post('/queryafterSaleOrder', function (request, response, next) {
         response.json(result);
     }
 });
+
 // 查询订单状态个数
 router.post('/queryOrder', function (request, response, next) {
     var result = {code: 200};
@@ -481,6 +482,7 @@ router.post('/queryOrder', function (request, response, next) {
         response.json(result);
     }
 });
+
 //获取物流信息
 router.post('/queryexpress', function (request, response, next) {
     logger.info("进入获取物流信息流程");
@@ -588,7 +590,6 @@ router.post('/queryexpress', function (request, response, next) {
 //    }
 //});
 
-
 //更新物流单
 router.post('/updateExpressInfo', function (request, response, next) {
     logger.info("进入更新物流单流程");
@@ -654,7 +655,6 @@ router.post('/updateExpressInfo', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 //获取售后的订单列表
 router.post('/afterSalelist', function (request, response, next) {
@@ -842,7 +842,6 @@ router.post('/afterSalelist', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 //查询卖家交易流水
 router.post('/querydealList', function (request, response, next) {
@@ -1225,6 +1224,7 @@ router.post('/querydealDetail', function (request, response, next) {
     }
 });
 
+//导出订单
 router.post('/queryExportOrderInfo', function (request, response, next) {
     logger.info("进入导出订单的流程");
     var result = {code: 200};
@@ -1433,7 +1433,6 @@ router.post('/batchDeliverOrder', function (request, response, next) {
     }
 });
 
-
 //添加物流单-发货
 router.post('/deliver', function (request, response, next) {
     logger.info("进入添加物流单流程");
@@ -1505,6 +1504,7 @@ router.post('/deliver', function (request, response, next) {
         response.json(result);
     }
 });
+
 //更新物流单
 router.post('/updateExpressInfo', function (request, response, next) {
     logger.info("进入更新物流单流程");
@@ -1568,7 +1568,6 @@ router.post('/updateExpressInfo', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 //获取物流单
 router.post('/getExpressInfo', function (request, response, next) {
