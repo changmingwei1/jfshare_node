@@ -90,16 +90,18 @@ router.post('/list', function (request, response, next) {
                                         activeState: a.activeState,
                                         crateTime: a.createTime
                                     };
-                                    if(a.orgPrice ==null){
+                                    if(a.minOrgPrice ==null){
                                         product.orgPrice =0;
                                     }else{
-                                        product.orgPrice =(Number(a.orgPrice) / 100).toFixed(2);
+                                        product.orgPrice =(Number(a.minOrgPrice) / 100).toFixed(2);
                                     }
-                                    if(a.orgPrice ==null){
+                                    if(a.minCurPrice ==null){
                                         product.curPrice =0;
                                     }else{
-                                        product.curPrice =(Number(a.curPrice) / 100).toFixed(2);
+                                        product.curPrice =(Number(a.minCurPrice) / 100).toFixed(2);
                                     }
+
+
                                     dataArr.push(product);
                                     subjectIdList.push(
                                         a.subjectId
