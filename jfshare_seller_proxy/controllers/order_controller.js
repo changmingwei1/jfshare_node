@@ -1957,7 +1957,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            if (err == null && err != 3) {
+            if (err != 3) {
                 result = results[2];
                 // result.afterSaleList = results[3];
                 logger.info("线下收款列表-finle-result:------------->" + JSON.stringify(result));
