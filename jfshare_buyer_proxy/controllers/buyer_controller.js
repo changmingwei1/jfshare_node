@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var async = require('async');
+var fs = require('fs');
 
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
@@ -165,7 +166,30 @@ router.post('/login', function (request, response, next) {
                     }
                 });
             },
+            function (callback){
+                logger.info("kankandaonalile");
+                fs.readFile('/data/run/jfshare_node/jfshare_buyer_proxy/limitMobile.txt','utf-8',function(err, data){
+                    if(err){
+                        callback(err);
+                    } else {
+                        //logger.error(JSON.stringify(data));
+                        var list = data.split("\n");
+                        //logger.info(list);
+                        for(var i = 0; i<= list.length ;i++){
+                            if(list[i] == param.mobile){
+                                logger.info("这是一个标识！");
+                                resContent.code = 500;
+                                resContent.desc = "您的账户异常暂时不能登录，如有问题请联系客服400-800-2383";
+                                return response.json(resContent);
+                                break;
+                            }
+                        }
+                        callback(null);
+                    }
+                });
+            },
             function (callback) {
+                logger.error("guolaide biaoshi");
                 Buyer.loginBySms(param, function (err, data) {
                     if (err) {
                         callback(err);
@@ -190,7 +214,7 @@ router.post('/login', function (request, response, next) {
             if (err) {
                 return response.json(err);
             } else {
-                return response.json({result: true});
+                return response.json({resContent: true});
             }
         });
     } catch (ex) {
@@ -260,6 +284,28 @@ router.post('/login2', function (req, res, next) {
                     });
                 }
             },
+            function (callback){
+                logger.info("kankandaonalile");
+                fs.readFile('/data/run/jfshare_node/jfshare_buyer_proxy/limitMobile.txt','utf-8',function(err, data){
+                    if(err){
+                        callback(err);
+                    } else {
+                        //logger.error(JSON.stringify(data));
+                        var list = data.split("\n");
+                        //logger.info(list);
+                        for(var i = 0; i<= list.length ;i++){
+                            if(list[i] == param.mobile){
+                                logger.info("这是一个标识！");
+                                resContent.code = 500;
+                                resContent.desc = "您的账户异常暂时不能登录，如有问题请联系客服400-800-2383";
+                                return res.json(resContent);
+                                break;
+                            }
+                        }
+                        callback(null);
+                    }
+                });
+            },
             function (callback) {
                 Buyer.newLogin(param, function (err, data) {
                     if (err) {
@@ -285,7 +331,7 @@ router.post('/login2', function (req, res, next) {
             if (err) {
                 return res.json(err);
             } else {
-                return res.json({result: true});
+                return res.json({resContent: true});
             }
         });
     } catch (ex) {

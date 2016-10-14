@@ -18,6 +18,7 @@ var test = require('./controllers/test_controller');
 var zookeeper = require('./resource/zookeeper_util');
 var slotImage = require('./controllers/slotImage_controller');// 主页和商品模块页面的配置
 var moduleConfig = require('./controllers/moduleConfig_controller');// 商品和品牌模块页面的配置
+var fileCard = require('./controllers/filecard_controller');// 第三方卡密上传
 
 //var view_index = require("./view_center/index/view_index");
 
@@ -45,6 +46,7 @@ app.use('/shop/captcha',captcha);
 app.use('/shop/active',active);
 app.use('/shop/slotImage',slotImage);// 主页和商品模块页面的配置
 app.use('/shop/moduleConfig',moduleConfig);
+app.use('/shop/fileCard',fileCard);// 第三方卡密功能
 //app.use('/test', test);
 //app.use('/test', tests);
 

@@ -24,6 +24,7 @@
     "crypto":"latest",
     "parseurl": "latest",
     "path": "latest",
+    "fs":"latest",
     "urlencode": "latest",
     "request":"latest",
     "cookie": "^0.1.2",

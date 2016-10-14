@@ -31,7 +31,8 @@ var ServiceKey = {
     ExpressServer:"Express",
     MessageServer:"Message",
     TemplateServer:"template",
-    ScoreServer:"Score"
+    ScoreServer:"Score",
+    fileCards:"fileCards"
 };
 
 /**

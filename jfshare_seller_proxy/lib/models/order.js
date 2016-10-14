@@ -72,6 +72,68 @@ Order.prototype.orderProfileQuery = function (params, callback) {
         }
     });
 };
+
+//线下seller订单列表
+Order.prototype.orderProfileQueryFull = function (params, callback) {
+    logger.error("调用o参数 ======" +JSON.stringify(params) );
+    var orderQueryConditions = {};
+    if (params.orderList != null && params.orderList != "") {
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderState: params.orderStatus || 0,
+            startTime: params.startTime,
+            endTime: params.endTime,
+            orderIds: params.orderList,
+            sellerId: params.sellerId,
+            sellerIds:params.sellerIds,
+            payTimeStart: params.payTimeStart,
+            payTimeEnd: params.payTimeEnd,
+            //orderId: params.orderId,
+            fromSource: params.fromSource+"",
+            count: params.orderList.length,
+            curPage: 1
+        });
+
+    }else if(params.orderId != null && params.orderId != ""){
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderId: params.orderId
+        });
+    }else if(params.userId != null && params.userId != ""){
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            userId: params.userId
+        });
+    }else {
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            orderState: params.orderStatus || 0,
+            count: params.percount,
+            curPage: params.curpage,
+            startTime: params.startTime,
+            endTime: params.endTime,
+            payTimeStart: params.payTimeStart,
+            payTimeEnd: params.payTimeEnd,
+            sellerId: params.sellerId,
+            sellerIds:params.sellerIds,
+            orderId: params.orderId,
+            fromSource: params.fromSource||0,
+            userId: params.userId
+        });
+    }
+
+    logger.info("调用orderServ-orderProfileQueryFull  params:" + JSON.stringify(orderQueryConditions));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "orderProfileQueryFull", [orderQueryConditions]);
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-orderProfileQueryFull  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用orderServ-orderProfileQueryFull  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询订单列表失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0].orderProfilePage);
+        }
+    });
+};
+
 //订单状态数量查询 --还需要查询退货中的订单状态
 Order.prototype.orderStateQuery = function (param, callback) {
     var orderQueryConditions = new order_types.OrderQueryConditions({count: param.percount, curPage: param.curpage});
