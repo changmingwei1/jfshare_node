@@ -209,6 +209,7 @@ router.post('/list', function (request, response, next) {
             }
         });
 });
+
 // 查询订单详情
 router.post('/info', function (request, response, next) {
     var result = {code: 200};
@@ -416,7 +417,6 @@ router.post('/info', function (request, response, next) {
     );
 });
 
-
 //查询售后的订单个数
 router.post('/queryafterSaleOrder', function (request, response, next) {
     var result = {code: 200};
@@ -447,6 +447,7 @@ router.post('/queryafterSaleOrder', function (request, response, next) {
         response.json(result);
     }
 });
+
 // 查询订单状态个数
 router.post('/queryOrder', function (request, response, next) {
     var result = {code: 200};
@@ -481,6 +482,7 @@ router.post('/queryOrder', function (request, response, next) {
         response.json(result);
     }
 });
+
 //获取物流信息
 router.post('/queryexpress', function (request, response, next) {
     logger.info("进入获取物流信息流程");
@@ -588,7 +590,6 @@ router.post('/queryexpress', function (request, response, next) {
 //    }
 //});
 
-
 //更新物流单
 router.post('/updateExpressInfo', function (request, response, next) {
     logger.info("进入更新物流单流程");
@@ -654,7 +655,6 @@ router.post('/updateExpressInfo', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 //获取售后的订单列表
 router.post('/afterSalelist', function (request, response, next) {
@@ -842,7 +842,6 @@ router.post('/afterSalelist', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 //查询卖家交易流水
 router.post('/querydealList', function (request, response, next) {
@@ -1225,38 +1224,82 @@ router.post('/querydealDetail', function (request, response, next) {
     }
 });
 
+//导出订单
 router.post('/queryExportOrderInfo', function (request, response, next) {
     logger.info("进入导出订单的流程");
     var result = {code: 200};
 
     try {
-
         var params = request.body;
-
+        if (params.orderId != null || params.orderId != "") {
+            logger.info("根据订单号查询：-----------");
+        } else if (params.loginName != null || params.loginName != "") {
+            logger.info("根据买家账号查询：-----------");
+        }
         if (params.sellerId == null || params.sellerId == "") {
-
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-
-        Order.batchExportOrder(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            } else {
-                result.url = "http://101.201.39.63/" + data;
-                response.json(result);
+        async.series([
+            function (callback) {
+                logger.info("BUYER--data：");
+                try {
+                    if(params.loginName != null && params.loginName != ""){
+                        Buyer.getBuyerInfo(params, function (err, data) {
+                            //logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Buyer服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].buyer != null) {
+                                var buyer = data[0].buyer;
+                                params.userId= buyer.userId;
+                                return callback(null, params);
+                            } else {
+                                callback(1,null);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用buyer服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function(callback){
+                Order.batchExportOrder(params, function (err, data) {
+                    if (err) {
+                        return callback(2, null);
+                    } else {
+                        result.queryKey = data;
+                        response.json(result);
+                    }
+                });
             }
-
+        ],function(err, results){
+            if(err == 1){
+                logger.err("查询账户信息失败,buyer服务异常");
+                result.code = 500;
+                result.desc = "调用买家服务异常";
+                response.json(result);
+                return;
+            } else if (err == 2){
+                logger.error("导出订单失败：");
+                result.code = 500;
+                result.desc = "导出订单失败";
+                response.json(result);
+                return;
+            }
         });
-
     } catch (ex) {
         logger.error("导出订单失败：" + ex);
         result.code = 500;
         result.desc = "导出订单失败";
         response.json(result);
+        return;
     }
 });
 
@@ -1433,7 +1476,6 @@ router.post('/batchDeliverOrder', function (request, response, next) {
     }
 });
 
-
 //添加物流单-发货
 router.post('/deliver', function (request, response, next) {
     logger.info("进入添加物流单流程");
@@ -1505,6 +1547,7 @@ router.post('/deliver', function (request, response, next) {
         response.json(result);
     }
 });
+
 //更新物流单
 router.post('/updateExpressInfo', function (request, response, next) {
     logger.info("进入更新物流单流程");
@@ -1569,7 +1612,6 @@ router.post('/updateExpressInfo', function (request, response, next) {
     }
 });
 
-
 //获取物流单
 router.post('/getExpressInfo', function (request, response, next) {
     logger.info("进入获取物流订单流程");
@@ -1632,8 +1674,10 @@ router.post('/listOrderOffline', function (request, response, next) {
     var params = request.body;
     logger.error("查询订单列表请求参数：" + JSON.stringify(params));
 
-    if (params.orderId != null && params.orderId != "") {
+    if (params.orderId != null || params.orderId != "") {
         logger.info("根据订单号查询：-----------");
+    } else if (params.loginName != null || params.loginName != "") {
+        logger.info("根据买家账号查询：-----------");
     } else {
         if (params.percount == null || params.percount == "" || params.percount <= 0) {
             result.code = 400;
@@ -1647,19 +1691,19 @@ router.post('/listOrderOffline', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.startTime == null || params.startTime == "") {
+        if (params.payTimeStart == null || params.payTimeStart == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-        if (params.endTime == null || params.endTime == "") {
+        if (params.payTimeEnd == null || params.payTimeEnd == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-        if (params.sellerId == null && params.sellerId == "") {
+        if (params.sellerId == null || params.sellerId == "") {
             result.code = 400;
             result.desc = "参数错误";
             response.json(result);
@@ -1679,7 +1723,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                 try {
                     if(params.sellerName != null && params.sellerName != ""){
                         Seller.querySellerBySeller(params, function (err, data) {
-                            logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            //logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
                                 logger.error("Seller服务异常");
                                 return callback(1, null);
@@ -1691,7 +1735,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                                 }
                             }
 
-                            logger.error("SellerIds----shuju-------------："+sellerIds);
+                            logger.info("SellerIds----shuju-------------："+sellerIds);
                             if (sellerIds.length > 0) {
                                 params.sellerIds=sellerIds;
                                 return callback(null, params);
@@ -1714,17 +1758,17 @@ router.post('/listOrderOffline', function (request, response, next) {
                 try {
                     if(params.loginName != null && params.loginName != ""){
                         Buyer.getBuyerInfo(params, function (err, data) {
-                            logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            //logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
                                 logger.error("Buyer服务异常");
-                                return callback(1, null);
+                                return callback(2, null);
                             }
                             if (data[0].buyer != null) {
                                 var buyer = data[0].buyer;
                                 params.userId= buyer.userId;
                                 return callback(null, params);
                             } else {
-                                callback(1,null);
+                                callback(2,null);
                             }
                         });
                     }else{
@@ -1732,7 +1776,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                     }
                 } catch (ex) {
                     logger.info("调用buyer服务异常:" + ex);
-                    return callback(1, null);
+                    return callback(2, null);
                 }
             },
             function (callback) {
@@ -1750,11 +1794,11 @@ router.post('/listOrderOffline', function (request, response, next) {
                     //    });
                     //}
                     Order.orderProfileQueryFull(params, function (err, orderInfo) {
-                        logger.info("Order-data:"+JSON.stringify(params));
-                        logger.error("Order-orderInfo-orderInfo:"+JSON.stringify(orderInfo));
+                        //logger.info("Order-data:"+JSON.stringify(params));
+                        //logger.info("Order-orderInfo-orderInfo:"+JSON.stringify(orderInfo));
                         if (err) {
                             logger.error("订单服务异常");
-                            return callback(1, null);
+                            return callback(3, null);
                         }
                         var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                         var orderList = [];
@@ -1797,6 +1841,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                                 };
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
+                                    orderItem.payTime = order.payInfo.payTime;
                                     if (order.payInfo.payChannel == "1") {
                                         if(order.exchangeScore>0){
                                             orderItem.payTypeName = "天翼+积分";
@@ -1864,13 +1909,13 @@ router.post('/listOrderOffline', function (request, response, next) {
                             params.orderIdList = orderIdList;
                             params.userIdList=objTemp;
                         }
-                        logger.error("get order list response:" + JSON.stringify(result));
+                        logger.info("get order list response:" + JSON.stringify(result));
                         return callback(null, result);
                     });
 
                 } catch (ex) {
                     logger.info("订单服务异常:" + ex);
-                    return callback(1, null);
+                    return callback(3, null);
                 }
             },
             function (callback) {
@@ -1878,23 +1923,23 @@ router.post('/listOrderOffline', function (request, response, next) {
                     if(params.userIdList=="" || params.userIdList==null){
                         return callback(null, result);
                     }
-                    logger.error("length:" + JSON.stringify(result.orderList.length));
+                    //logger.error("length:" + JSON.stringify(result.orderList.length));
                     Buyer.getListBuyer(params.userIdList, function(err, data){
                         if(err){
-                            return callback(1, null);
+                            return callback(4, null);
                         }
                         var buyerList = data[0].buyerList;
-                        logger.error("buyerList:" + JSON.stringify(buyerList));
+                        //logger.error("buyerList:" + JSON.stringify(buyerList));
                         if(data != null && data[0] != null && data[0].buyerList != null){
                             for(var i = 0;i < result.orderList.length;i++){
                                 var userId=result.orderList[i].userId;
-                                logger.error("userId:" + JSON.stringify(userId)+" userName:"+result.orderList[i].loginName);
+                                //logger.error("userId:" + JSON.stringify(userId)+" userName:"+result.orderList[i].loginName);
                                 for(var j = 0;j < buyerList.length; j++){
                                     var uid = buyerList[j].userId;
                                     if(userId == uid){
                                         result.orderList[i].loginName=buyerList[j].loginName;
                                         result.orderList[i].userName=buyerList[j].userName;
-                                        logger.error("userName:"+result.orderList[i].loginName);
+                                        //logger.error("userName:"+result.orderList[i].loginName);
                                     }
                                 }
                             }
@@ -1904,7 +1949,7 @@ router.post('/listOrderOffline', function (request, response, next) {
 
                 } catch (ex) {
                     logger.info("调用buyer服务异常:" + ex);
-                    return callback(1, null);
+                    return callback(4, null);
                 }
             }
             //,
@@ -1934,28 +1979,36 @@ router.post('/listOrderOffline', function (request, response, next) {
         ],
         function (err, results) {
             if (err == 1) {
-                logger.error("查询订单列表失败---订单服务异常：" + err);
+                logger.error("查询卖家信息失败---卖家服务异常：" + err);
+                result.code = 500;
+                result.desc = "查询商家信息失败";
+                response.json(result);
+                return;
+            }
+            if (err == 2) {
+                logger.error("查询买家信息失败--买家服务异常：" + err);
+                result.code = 500;
+                result.desc = "查询账户信息失败";
+                response.json(result);
+                return;
+            }
+            if (err == 3) {
+                logger.error("查询订单失败--订单服务异常：" + err);
                 result.code = 500;
                 result.desc = "查询订单失败";
                 response.json(result);
                 return;
             }
-            if (err == 2) {
-                logger.error("查询售后失败--售后服务异常：" + err);
-                response.json(results[0]);
-                return;
-            }
-            if (err == null && err != 3) {
-                logger.error("shuju------------->" + JSON.stringify(results));
+            if (err != 3) {
                 result = results[2];
                 // result.afterSaleList = results[3];
-                logger.error("线下收款列表-finle-result:------------->" + JSON.stringify(result));
+                logger.info("线下收款列表-finle-result:------------->" + JSON.stringify(result));
                 response.json(result);
                 return;
             } else {
-                logger.info("shuju------------->" + JSON.stringify(results));
-                result = results[0];
-
+                logger.error("查询订单失败--订单服务异常：" + err);
+                result.code = 500;
+                result.desc = "查询订单失败";
                 response.json(result);
                 return;
             }

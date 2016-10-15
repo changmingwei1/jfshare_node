@@ -12,14 +12,19 @@ function ModuleConfig(){}
 /* 查询模块配置信息 */
 ModuleConfig.prototype.queryModuleConfigDetail = function (params, callback) {
 
+    var page = new pagination_types.Pagination({
+        currentPage: params.curPage || 1,
+        numPerPage: params.perCount
+    });
     var bean = new manager_types.ModuleConfigDetailParam({
+        pagination:page,
         moduleId: params.moduleId /*模块ID*/
     });
 
     logger.info("查询模块配置信息的参数，bean = " + JSON.stringify(bean));
 
     //获取客户端
-    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryModuleConfigDetail', [bean]);
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryModuleConfigDetailForBuyer', [bean]);
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("queryModuleConfigDetail result:" + JSON.stringify(data));
         var res = {};

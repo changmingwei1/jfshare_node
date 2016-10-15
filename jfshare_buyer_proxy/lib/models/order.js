@@ -18,6 +18,7 @@ var pay_types = require('../thrift/gen_code/pay_types');
 var trade_types = require('../thrift/gen_code/trade_types');
 var buyer_types = require('../thrift/gen_code/buyer_types');
 var common_types = require('../thrift/gen_code/common_types');
+var fileUpload_types = require('../thrift/gen_code/fileUpload_types');
 //var express_types = require('../thrift/gen_code/express_types');
 
 function Order() {}
@@ -400,6 +401,91 @@ Order.prototype.cancelOrder = function (param, callback) {
             callback(res, null);
         } else {
             callback(null, null);
+        }
+    });
+};
+
+/*话费充值的订单提交--无productId*/
+Order.prototype.orderConfirmRecharge = function (arg, callback) {
+
+    var sellerDetailList = [];
+    for (var i = 0; i < arg.sellerDetailList.length; i++) {
+        sellerDetailList.push(new trade_types.BuySellerDetail({
+            sellerId: arg.sellerDetailList[i].sellerId,
+            sellerName: arg.sellerDetailList[i].sellerName
+        }));
+    }
+    var deliverInfo = new order_types.DeliverInfo({
+        receiverMobile: arg.receiverMobile
+    });
+    var param = new trade_types.BuyInfo({
+        userId: arg.userId,
+        userName: arg.userName,
+        amount: arg.totalSum,
+        //payChannel: new pay_types.PayChannel({payChannel:arg.payChannel}),
+        deliverInfo: deliverInfo,
+        sellerDetailList: sellerDetailList,
+        //fromBatch: arg.fromBatch,
+        //fromSource: arg.fromSource,
+        tradeCode: arg.tradeCode
+        /*weight: arg.weight,
+         postageExt:arg.postageExt*/ /*运费扩展信息  JSON 现在还不知道怎么用*/
+    });
+
+    logger.error("调用cartServ-orderConfirmOffline args:" + JSON.stringify(param));
+    var tradeServ = new Lich.InvokeBag(Lich.ServiceKey.TradeServer, "orderConfirmOffline", param);
+
+    Lich.wicca.invokeClient(tradeServ, function (err, data) {
+        logger.error("调用cartServ-orderConfirmOffline result:" + JSON.stringify(data[0]));
+        var res = {};
+        if (err) {
+            logger.error("调用cartServ-orderConfirmOffline失败  失败原因 ======" + err);
+            //logger.error("错误信息:" + JSON.stringify(data[0].result));
+            res.code = 500;
+            res.desc = "提交订单失败！";
+            callback(res, null);
+        } else if (data[0].code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }
+        else {
+            logger.info("orderConfirmOffline response:" + JSON.stringify(data[0]));
+            callback(null, data);
+        }
+    });
+};
+
+/*话费充值第三方回调*/
+Order.prototype.rechargeNotify = function (arg, callback) {
+
+    var param = new fileUpload_types.NotifyRecharge({
+        agtPhone: arg.agtPhone,
+        reqStreamId: arg.reqStreamId,
+        state: arg.state,
+        sign: arg.sign,
+    });
+
+    logger.error("调用FileForCardServ-rechargeNotify args:" + JSON.stringify(param));
+    var fileForCardServ = new Lich.InvokeBag(Lich.ServiceKey.FileForCardServ, "rechargeNotify", param);
+
+    Lich.wicca.invokeClient(fileForCardServ, function (err, data) {
+        logger.error("调用FileForCardServ-rechargeNotify result:" +data);
+        var res = {};
+        if (err) {
+            logger.error("调用FileForCardServ-rechargeNotify失败  失败原因 ======" + err);
+            //logger.error("错误信息:" + JSON.stringify(data[0].result));
+            res.code = 500;
+            res.desc = "处理第三方回调失败！";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc ="处理第三方回调失败！" ;
+            callback(res, null);
+        }
+        else {
+            logger.error("FileForCardServ-rechargeNotify response:" + JSON.stringify(data[0]));
+            callback(null, data);
         }
     });
 };

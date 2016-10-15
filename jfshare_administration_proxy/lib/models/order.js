@@ -46,11 +46,15 @@ Order.prototype.orderProfileQuery = function (params, callback) {
 
     }else if(params.orderId != null && params.orderId != ""){
         orderQueryConditions = new order_types.OrderQueryConditions({
-            orderId: params.orderId
+            orderId: params.orderId,
+            count: params.percount,
+            curPage: params.curpage
         });
     }else if(params.userId != null && params.userId != ""){
         orderQueryConditions = new order_types.OrderQueryConditions({
-            userId: params.userId
+            userId: params.userId,
+            count: params.percount,
+            curPage: params.curpage
         });
     }else {
         orderQueryConditions = new order_types.OrderQueryConditions({
