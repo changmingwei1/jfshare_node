@@ -93,6 +93,7 @@ router.post('/list', function (request, response, next) {
                                 var orderItem = {
                                     orderId: order.orderId,
                                     userId: order.userId,
+                                    tradeCode: order.tradeCode,
                                     orderPrice: order.closingPrice,
                                     //添加了应答的数据
                                     postage: order.postage,
@@ -247,6 +248,7 @@ router.post('/info', function (request, response, next) {
                     Order.queryOrderDetail(params, function (err, orderInfo) {
                         result.orderId = orderInfo.orderId;
                         result.closingPrice = orderInfo.closingPrice;
+                        result.tradeCode = orderInfo.tradeCode;
                         //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                         result.orderState = orderInfo.orderState;
                         if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
@@ -322,6 +324,7 @@ router.post('/info', function (request, response, next) {
                                 productList.push({
                                     productId: orderInfo.productList[i].productId,
                                     productName: orderInfo.productList[i].productName,
+                                    tradeCode: orderInfo.tradeCode,
                                     sku: {
                                         skuNum: orderInfo.productList[i].skuNum,
                                         skuName: orderInfo.productList[i].skuDesc
