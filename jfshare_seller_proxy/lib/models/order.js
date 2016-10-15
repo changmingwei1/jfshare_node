@@ -246,15 +246,24 @@ Order.prototype.payOrderCreates = function (param, callback) {
 
 //导出订单
 Order.prototype.batchExportOrder = function (params, callback) {
-    var orderQueryConditions = new order_types.OrderQueryConditions({
-        startTime: params.startTime,
-        endTime: params.endTime,
-        orderState: params.orderState || 0,
-        orderId:params.orderId
-    });
-
+    var orderQueryConditions = {};
+    if (params.userId != null && params.userId != ""){
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            userId: params.userId
+        });
+    } else {
+        orderQueryConditions = new order_types.OrderQueryConditions({
+            startTime: params.startTime,
+            endTime: params.endTime,
+            orderState: params.orderState || 0,
+            orderId:params.orderId,
+            sellerId:params.sellerId,
+            payTimeStart: params.payTimeStart,
+            payTimeEnd: params.payTimeEnd
+        });
+    }
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
-    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrder", [params.sellerId, orderQueryConditions]);
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFull", [orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-queryExportOrderInfo  result:" + JSON.stringify(data));
         var res = {};
