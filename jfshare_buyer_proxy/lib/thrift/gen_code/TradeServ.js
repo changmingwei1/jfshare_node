@@ -123,6 +123,114 @@ TradeServ_orderConfirm_result.prototype.write = function(output) {
   return;
 };
 
+TradeServ_orderConfirmOffline_args = function(args) {
+  this.buyInfo = null;
+  if (args) {
+    if (args.buyInfo !== undefined) {
+      this.buyInfo = args.buyInfo;
+    }
+  }
+};
+TradeServ_orderConfirmOffline_args.prototype = {};
+TradeServ_orderConfirmOffline_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.buyInfo = new ttypes.BuyInfo();
+        this.buyInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_orderConfirmOffline_args.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_orderConfirmOffline_args');
+  if (this.buyInfo !== null && this.buyInfo !== undefined) {
+    output.writeFieldBegin('buyInfo', Thrift.Type.STRUCT, 1);
+    this.buyInfo.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TradeServ_orderConfirmOffline_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+TradeServ_orderConfirmOffline_result.prototype = {};
+TradeServ_orderConfirmOffline_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.OrderConfirmResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TradeServ_orderConfirmOffline_result.prototype.write = function(output) {
+  output.writeStructBegin('TradeServ_orderConfirmOffline_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 TradeServ_buyCount_args = function(args) {
   this.userId = null;
   this.productId = null;
@@ -597,6 +705,53 @@ TradeServClient.prototype.recv_orderConfirm = function(input,mtype,rseqid) {
   }
   return callback('orderConfirm failed: unknown result');
 };
+TradeServClient.prototype.orderConfirmOffline = function(buyInfo, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_orderConfirmOffline(buyInfo);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_orderConfirmOffline(buyInfo);
+  }
+};
+
+TradeServClient.prototype.send_orderConfirmOffline = function(buyInfo) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('orderConfirmOffline', Thrift.MessageType.CALL, this.seqid());
+  var args = new TradeServ_orderConfirmOffline_args();
+  args.buyInfo = buyInfo;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+TradeServClient.prototype.recv_orderConfirmOffline = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new TradeServ_orderConfirmOffline_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('orderConfirmOffline failed: unknown result');
+};
 TradeServClient.prototype.buyCount = function(userId, productId, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -826,6 +981,36 @@ TradeServProcessor.prototype.process_orderConfirm = function(seqid, input, outpu
     this._handler.orderConfirm(args.buyInfo,  function (err, result) {
       var result = new TradeServ_orderConfirm_result((err != null ? err : {success: result}));
       output.writeMessageBegin("orderConfirm", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+TradeServProcessor.prototype.process_orderConfirmOffline = function(seqid, input, output) {
+  var args = new TradeServ_orderConfirmOffline_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.orderConfirmOffline.length === 1) {
+    Q.fcall(this._handler.orderConfirmOffline, args.buyInfo)
+      .then(function(result) {
+        var result = new TradeServ_orderConfirmOffline_result({success: result});
+        output.writeMessageBegin("orderConfirmOffline", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new TradeServ_orderConfirmOffline_result(err);
+        output.writeMessageBegin("orderConfirmOffline", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.orderConfirmOffline(args.buyInfo,  function (err, result) {
+      var result = new TradeServ_orderConfirmOffline_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("orderConfirmOffline", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

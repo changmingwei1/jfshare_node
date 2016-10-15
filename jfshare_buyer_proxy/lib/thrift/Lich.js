@@ -33,6 +33,7 @@ var ServiceKey = {
     TemplateServer:"template",
     AfterSaleServer:"AfterSale",
     ScoreCardsServ:"ScoreCards",// 积分卡服务 红包服务
+    FileForCardServ:"FileForCardServ"
 };
 
 /**

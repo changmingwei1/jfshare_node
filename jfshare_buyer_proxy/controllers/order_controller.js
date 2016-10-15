@@ -1891,4 +1891,93 @@ router.post('/pay_applyTYH5', function(req, res, next) {
         response.json(result);
     }
 });
+
+/*话费充值的提交订单-无productId*/
+router.post('/payOrderCreates', function (request, response, next) {
+    logger.info("进入提交订单流程..");
+    var result = {code: 200};
+    try {
+        var arg = request.body;
+        if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
+            result.code = 400;
+            result.desc = "没有填写用户ＩＤ";
+            response.json(result);
+            return;
+        }
+        if(arg.receiverMobile == null||arg.receiverMobile == ""){
+            result.code = 400;
+            result.desc = "充值手机号不能为空";
+            response.json(result);
+            return;
+        }
+        //if (arg.token == "" || arg.token == null) {
+        //    result.code = 400;
+        //    result.desc = "鉴权信息不能为空";
+        //    response.json(result);
+        //    return;
+        //}
+        //if (arg.ppInfo == "" || arg.ppInfo == null) {
+        //    result.code = 400;
+        //    result.desc = "鉴权信息不能为空";
+        //    response.json(result);
+        //    return;
+        //}
+        //if (arg.browser == "" || arg.browser == null) {
+        //    result.code = 400;
+        //    result.desc = "浏览器标识不能为空";
+        //    response.json(result);
+        //    return;
+        //}
+        logger.info("提交订单请求， arg:" + JSON.stringify(arg));
+//暂时去掉鉴权信息
+//        Buyer.validAuth(arg, function (err, data) {
+//            if (err) {
+//                response.json(err);
+//                return;
+//            }
+        Order.orderConfirmRecharge(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.orderIdList = data[0].orderIdList;
+            //result.extend = JSON.parse(data[0].extend);
+            response.json(result);
+        });
+        //});
+    } catch (ex) {
+        logger.error("submit order error:" + ex);
+        result.code = 500;
+        result.desc = "提交订单失败";
+        response.json(result);
+    }
+});
+
+/*话费充值第三方回调*/
+router.get('/reChargeNotify', function (request, response, next) {
+    logger.info("话费充值第三方回调...");
+    var result = {code: 200};
+    try {
+        var arg = request.query;
+        logger.error("话费充值第三方回调请求参数 request:" + JSON.stringify(arg));
+        Order.rechargeNotify(arg, function (err, data) {
+            if (err) {
+                response.write(1); //失败
+                response.end();
+                return;
+            }else{
+                response.write(0); //成功
+                response.end();
+                retrun;
+            }
+
+        });
+        //});
+    } catch (ex) {
+        logger.error("submit order error:" + ex);
+        result.code = 500;
+        result.desc = "提交订单失败";
+        response.json(result);
+    }
+});
 module.exports = router;
