@@ -1090,7 +1090,7 @@ ProductResult.prototype.write = function(output) {
   return;
 };
 
-ProductBatchResult = module.exports.ProductBatchResult = function(args) {
+ProductBatchListResult = module.exports.ProductBatchListResult = function(args) {
   this.result = null;
   this.productList = null;
   if (args) {
@@ -1102,8 +1102,8 @@ ProductBatchResult = module.exports.ProductBatchResult = function(args) {
     }
   }
 };
-ProductBatchResult.prototype = {};
-ProductBatchResult.prototype.read = function(input) {
+ProductBatchListResult.prototype = {};
+ProductBatchListResult.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -1154,8 +1154,8 @@ ProductBatchResult.prototype.read = function(input) {
   return;
 };
 
-ProductBatchResult.prototype.write = function(output) {
-  output.writeStructBegin('ProductBatchResult');
+ProductBatchListResult.prototype.write = function(output) {
+  output.writeStructBegin('ProductBatchListResult');
   if (this.result !== null && this.result !== undefined) {
     output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
     this.result.write(output);
@@ -1170,6 +1170,96 @@ ProductBatchResult.prototype.write = function(output) {
       {
         iter15 = this.productList[iter15];
         iter15.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductBatchResult = module.exports.ProductBatchResult = function(args) {
+  this.result = null;
+  this.productList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.productList !== undefined) {
+      this.productList = args.productList;
+    }
+  }
+};
+ProductBatchResult.prototype = {};
+ProductBatchResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size16 = 0;
+        var _rtmp320;
+        this.productList = [];
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        {
+          var elem22 = null;
+          elem22 = new ttypes.Product();
+          elem22.read(input);
+          this.productList.push(elem22);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductBatchResult.prototype.write = function(output) {
+  output.writeStructBegin('ProductBatchResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.productList !== null && this.productList !== undefined) {
+    output.writeFieldBegin('productList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productList.length);
+    for (var iter23 in this.productList)
+    {
+      if (this.productList.hasOwnProperty(iter23))
+      {
+        iter23 = this.productList[iter23];
+        iter23.write(output);
       }
     }
     output.writeListEnd();
@@ -2167,19 +2257,19 @@ ProductSearchResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
+        var _size24 = 0;
+        var _rtmp328;
         this.productSearchList = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
         {
-          var elem22 = null;
-          elem22 = new ttypes.ProductSearch();
-          elem22.read(input);
-          this.productSearchList.push(elem22);
+          var elem30 = null;
+          elem30 = new ttypes.ProductSearch();
+          elem30.read(input);
+          this.productSearchList.push(elem30);
         }
         input.readListEnd();
       } else {
@@ -2210,12 +2300,12 @@ ProductSearchResult.prototype.write = function(output) {
   if (this.productSearchList !== null && this.productSearchList !== undefined) {
     output.writeFieldBegin('productSearchList', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.productSearchList.length);
-    for (var iter23 in this.productSearchList)
+    for (var iter31 in this.productSearchList)
     {
-      if (this.productSearchList.hasOwnProperty(iter23))
+      if (this.productSearchList.hasOwnProperty(iter31))
       {
-        iter23 = this.productSearchList[iter23];
-        iter23.write(output);
+        iter31 = this.productSearchList[iter31];
+        iter31.write(output);
       }
     }
     output.writeListEnd();
@@ -2237,6 +2327,7 @@ ProductSurveyQueryParam = module.exports.ProductSurveyQueryParam = function(args
   this.brandId = null;
   this.subjectIdList = null;
   this.productIdList = null;
+  this.exprotPassword = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -2267,6 +2358,9 @@ ProductSurveyQueryParam = module.exports.ProductSurveyQueryParam = function(args
     }
     if (args.productIdList !== undefined) {
       this.productIdList = args.productIdList;
+    }
+    if (args.exprotPassword !== undefined) {
+      this.exprotPassword = args.exprotPassword;
     }
   }
 };
@@ -2343,18 +2437,18 @@ ProductSurveyQueryParam.prototype.read = function(input) {
       break;
       case 9:
       if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
+        var _size32 = 0;
+        var _rtmp336;
         this.subjectIdList = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
         {
-          var elem30 = null;
-          elem30 = input.readI32();
-          this.subjectIdList.push(elem30);
+          var elem38 = null;
+          elem38 = input.readI32();
+          this.subjectIdList.push(elem38);
         }
         input.readListEnd();
       } else {
@@ -2363,20 +2457,27 @@ ProductSurveyQueryParam.prototype.read = function(input) {
       break;
       case 10:
       if (ftype == Thrift.Type.LIST) {
-        var _size31 = 0;
-        var _rtmp335;
+        var _size39 = 0;
+        var _rtmp343;
         this.productIdList = [];
-        var _etype34 = 0;
-        _rtmp335 = input.readListBegin();
-        _etype34 = _rtmp335.etype;
-        _size31 = _rtmp335.size;
-        for (var _i36 = 0; _i36 < _size31; ++_i36)
+        var _etype42 = 0;
+        _rtmp343 = input.readListBegin();
+        _etype42 = _rtmp343.etype;
+        _size39 = _rtmp343.size;
+        for (var _i44 = 0; _i44 < _size39; ++_i44)
         {
-          var elem37 = null;
-          elem37 = input.readString();
-          this.productIdList.push(elem37);
+          var elem45 = null;
+          elem45 = input.readString();
+          this.productIdList.push(elem45);
         }
         input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.exprotPassword = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -2435,12 +2536,12 @@ ProductSurveyQueryParam.prototype.write = function(output) {
   if (this.subjectIdList !== null && this.subjectIdList !== undefined) {
     output.writeFieldBegin('subjectIdList', Thrift.Type.LIST, 9);
     output.writeListBegin(Thrift.Type.I32, this.subjectIdList.length);
-    for (var iter38 in this.subjectIdList)
+    for (var iter46 in this.subjectIdList)
     {
-      if (this.subjectIdList.hasOwnProperty(iter38))
+      if (this.subjectIdList.hasOwnProperty(iter46))
       {
-        iter38 = this.subjectIdList[iter38];
-        output.writeI32(iter38);
+        iter46 = this.subjectIdList[iter46];
+        output.writeI32(iter46);
       }
     }
     output.writeListEnd();
@@ -2449,15 +2550,20 @@ ProductSurveyQueryParam.prototype.write = function(output) {
   if (this.productIdList !== null && this.productIdList !== undefined) {
     output.writeFieldBegin('productIdList', Thrift.Type.LIST, 10);
     output.writeListBegin(Thrift.Type.STRING, this.productIdList.length);
-    for (var iter39 in this.productIdList)
+    for (var iter47 in this.productIdList)
     {
-      if (this.productIdList.hasOwnProperty(iter39))
+      if (this.productIdList.hasOwnProperty(iter47))
       {
-        iter39 = this.productIdList[iter39];
-        output.writeString(iter39);
+        iter47 = this.productIdList[iter47];
+        output.writeString(iter47);
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.exprotPassword !== null && this.exprotPassword !== undefined) {
+    output.writeFieldBegin('exprotPassword', Thrift.Type.STRING, 11);
+    output.writeString(this.exprotPassword);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -2493,18 +2599,18 @@ ProductSurveyQueryBatchParam.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size40 = 0;
-        var _rtmp344;
+        var _size48 = 0;
+        var _rtmp352;
         this.productIds = [];
-        var _etype43 = 0;
-        _rtmp344 = input.readListBegin();
-        _etype43 = _rtmp344.etype;
-        _size40 = _rtmp344.size;
-        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
         {
-          var elem46 = null;
-          elem46 = input.readString();
-          this.productIds.push(elem46);
+          var elem54 = null;
+          elem54 = input.readString();
+          this.productIds.push(elem54);
         }
         input.readListEnd();
       } else {
@@ -2532,12 +2638,12 @@ ProductSurveyQueryBatchParam.prototype.write = function(output) {
   if (this.productIds !== null && this.productIds !== undefined) {
     output.writeFieldBegin('productIds', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRING, this.productIds.length);
-    for (var iter47 in this.productIds)
+    for (var iter55 in this.productIds)
     {
-      if (this.productIds.hasOwnProperty(iter47))
+      if (this.productIds.hasOwnProperty(iter55))
       {
-        iter47 = this.productIds[iter47];
-        output.writeString(iter47);
+        iter55 = this.productIds[iter55];
+        output.writeString(iter55);
       }
     }
     output.writeListEnd();
@@ -2659,19 +2765,19 @@ ProductSkuBatchParam.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size48 = 0;
-        var _rtmp352;
+        var _size56 = 0;
+        var _rtmp360;
         this.productSkuParams = [];
-        var _etype51 = 0;
-        _rtmp352 = input.readListBegin();
-        _etype51 = _rtmp352.etype;
-        _size48 = _rtmp352.size;
-        for (var _i53 = 0; _i53 < _size48; ++_i53)
+        var _etype59 = 0;
+        _rtmp360 = input.readListBegin();
+        _etype59 = _rtmp360.etype;
+        _size56 = _rtmp360.size;
+        for (var _i61 = 0; _i61 < _size56; ++_i61)
         {
-          var elem54 = null;
-          elem54 = new ttypes.ProductSkuParam();
-          elem54.read(input);
-          this.productSkuParams.push(elem54);
+          var elem62 = null;
+          elem62 = new ttypes.ProductSkuParam();
+          elem62.read(input);
+          this.productSkuParams.push(elem62);
         }
         input.readListEnd();
       } else {
@@ -2695,12 +2801,12 @@ ProductSkuBatchParam.prototype.write = function(output) {
   if (this.productSkuParams !== null && this.productSkuParams !== undefined) {
     output.writeFieldBegin('productSkuParams', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.productSkuParams.length);
-    for (var iter55 in this.productSkuParams)
+    for (var iter63 in this.productSkuParams)
     {
-      if (this.productSkuParams.hasOwnProperty(iter55))
+      if (this.productSkuParams.hasOwnProperty(iter63))
       {
-        iter55 = this.productSkuParams[iter55];
-        iter55.write(output);
+        iter63 = this.productSkuParams[iter63];
+        iter63.write(output);
       }
     }
     output.writeListEnd();
@@ -2759,19 +2865,19 @@ ProductSurveyResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size56 = 0;
-        var _rtmp360;
+        var _size64 = 0;
+        var _rtmp368;
         this.productSurveyList = [];
-        var _etype59 = 0;
-        _rtmp360 = input.readListBegin();
-        _etype59 = _rtmp360.etype;
-        _size56 = _rtmp360.size;
-        for (var _i61 = 0; _i61 < _size56; ++_i61)
+        var _etype67 = 0;
+        _rtmp368 = input.readListBegin();
+        _etype67 = _rtmp368.etype;
+        _size64 = _rtmp368.size;
+        for (var _i69 = 0; _i69 < _size64; ++_i69)
         {
-          var elem62 = null;
-          elem62 = new ttypes.ProductSurvey();
-          elem62.read(input);
-          this.productSurveyList.push(elem62);
+          var elem70 = null;
+          elem70 = new ttypes.ProductSurvey();
+          elem70.read(input);
+          this.productSurveyList.push(elem70);
         }
         input.readListEnd();
       } else {
@@ -2802,12 +2908,12 @@ ProductSurveyResult.prototype.write = function(output) {
   if (this.productSurveyList !== null && this.productSurveyList !== undefined) {
     output.writeFieldBegin('productSurveyList', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.productSurveyList.length);
-    for (var iter63 in this.productSurveyList)
+    for (var iter71 in this.productSurveyList)
     {
-      if (this.productSurveyList.hasOwnProperty(iter63))
+      if (this.productSurveyList.hasOwnProperty(iter71))
       {
-        iter63 = this.productSurveyList[iter63];
-        iter63.write(output);
+        iter71 = this.productSurveyList[iter71];
+        iter71.write(output);
       }
     }
     output.writeListEnd();
@@ -3137,6 +3243,7 @@ ProductCardViewParam = module.exports.ProductCardViewParam = function(args) {
   this.validateBeginTime = null;
   this.validateEndTime = null;
   this.sendAccount = null;
+  this.exportPassword = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -3167,6 +3274,9 @@ ProductCardViewParam = module.exports.ProductCardViewParam = function(args) {
     }
     if (args.sendAccount !== undefined) {
       this.sendAccount = args.sendAccount;
+    }
+    if (args.exportPassword !== undefined) {
+      this.exportPassword = args.exportPassword;
     }
   }
 };
@@ -3254,6 +3364,13 @@ ProductCardViewParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.exportPassword = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -3313,6 +3430,11 @@ ProductCardViewParam.prototype.write = function(output) {
   if (this.sendAccount !== null && this.sendAccount !== undefined) {
     output.writeFieldBegin('sendAccount', Thrift.Type.STRING, 10);
     output.writeString(this.sendAccount);
+    output.writeFieldEnd();
+  }
+  if (this.exportPassword !== null && this.exportPassword !== undefined) {
+    output.writeFieldBegin('exportPassword', Thrift.Type.STRING, 11);
+    output.writeString(this.exportPassword);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3878,19 +4000,19 @@ ProductCardResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size64 = 0;
-        var _rtmp368;
+        var _size72 = 0;
+        var _rtmp376;
         this.cardList = [];
-        var _etype67 = 0;
-        _rtmp368 = input.readListBegin();
-        _etype67 = _rtmp368.etype;
-        _size64 = _rtmp368.size;
-        for (var _i69 = 0; _i69 < _size64; ++_i69)
+        var _etype75 = 0;
+        _rtmp376 = input.readListBegin();
+        _etype75 = _rtmp376.etype;
+        _size72 = _rtmp376.size;
+        for (var _i77 = 0; _i77 < _size72; ++_i77)
         {
-          var elem70 = null;
-          elem70 = new ttypes.ProductCard();
-          elem70.read(input);
-          this.cardList.push(elem70);
+          var elem78 = null;
+          elem78 = new ttypes.ProductCard();
+          elem78.read(input);
+          this.cardList.push(elem78);
         }
         input.readListEnd();
       } else {
@@ -3916,12 +4038,12 @@ ProductCardResult.prototype.write = function(output) {
   if (this.cardList !== null && this.cardList !== undefined) {
     output.writeFieldBegin('cardList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardList.length);
-    for (var iter71 in this.cardList)
+    for (var iter79 in this.cardList)
     {
-      if (this.cardList.hasOwnProperty(iter71))
+      if (this.cardList.hasOwnProperty(iter79))
       {
-        iter71 = this.cardList[iter71];
-        iter71.write(output);
+        iter79 = this.cardList[iter79];
+        iter79.write(output);
       }
     }
     output.writeListEnd();
@@ -3972,19 +4094,19 @@ ProductCardViewListResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size72 = 0;
-        var _rtmp376;
+        var _size80 = 0;
+        var _rtmp384;
         this.cardViewList = [];
-        var _etype75 = 0;
-        _rtmp376 = input.readListBegin();
-        _etype75 = _rtmp376.etype;
-        _size72 = _rtmp376.size;
-        for (var _i77 = 0; _i77 < _size72; ++_i77)
+        var _etype83 = 0;
+        _rtmp384 = input.readListBegin();
+        _etype83 = _rtmp384.etype;
+        _size80 = _rtmp384.size;
+        for (var _i85 = 0; _i85 < _size80; ++_i85)
         {
-          var elem78 = null;
-          elem78 = new ttypes.ProductCardView();
-          elem78.read(input);
-          this.cardViewList.push(elem78);
+          var elem86 = null;
+          elem86 = new ttypes.ProductCardView();
+          elem86.read(input);
+          this.cardViewList.push(elem86);
         }
         input.readListEnd();
       } else {
@@ -4018,12 +4140,12 @@ ProductCardViewListResult.prototype.write = function(output) {
   if (this.cardViewList !== null && this.cardViewList !== undefined) {
     output.writeFieldBegin('cardViewList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardViewList.length);
-    for (var iter79 in this.cardViewList)
+    for (var iter87 in this.cardViewList)
     {
-      if (this.cardViewList.hasOwnProperty(iter79))
+      if (this.cardViewList.hasOwnProperty(iter87))
       {
-        iter79 = this.cardViewList[iter79];
-        iter79.write(output);
+        iter87 = this.cardViewList[iter87];
+        iter87.write(output);
       }
     }
     output.writeListEnd();
@@ -4079,19 +4201,19 @@ ProductCardStatisticsResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size80 = 0;
-        var _rtmp384;
+        var _size88 = 0;
+        var _rtmp392;
         this.cardtatisticsList = [];
-        var _etype83 = 0;
-        _rtmp384 = input.readListBegin();
-        _etype83 = _rtmp384.etype;
-        _size80 = _rtmp384.size;
-        for (var _i85 = 0; _i85 < _size80; ++_i85)
+        var _etype91 = 0;
+        _rtmp392 = input.readListBegin();
+        _etype91 = _rtmp392.etype;
+        _size88 = _rtmp392.size;
+        for (var _i93 = 0; _i93 < _size88; ++_i93)
         {
-          var elem86 = null;
-          elem86 = new ttypes.ProductCardStatistics();
-          elem86.read(input);
-          this.cardtatisticsList.push(elem86);
+          var elem94 = null;
+          elem94 = new ttypes.ProductCardStatistics();
+          elem94.read(input);
+          this.cardtatisticsList.push(elem94);
         }
         input.readListEnd();
       } else {
@@ -4125,12 +4247,12 @@ ProductCardStatisticsResult.prototype.write = function(output) {
   if (this.cardtatisticsList !== null && this.cardtatisticsList !== undefined) {
     output.writeFieldBegin('cardtatisticsList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.cardtatisticsList.length);
-    for (var iter87 in this.cardtatisticsList)
+    for (var iter95 in this.cardtatisticsList)
     {
-      if (this.cardtatisticsList.hasOwnProperty(iter87))
+      if (this.cardtatisticsList.hasOwnProperty(iter95))
       {
-        iter87 = this.cardtatisticsList[iter87];
-        iter87.write(output);
+        iter95 = this.cardtatisticsList[iter95];
+        iter95.write(output);
       }
     }
     output.writeListEnd();
@@ -4822,19 +4944,19 @@ CaptchaListResult.prototype.read = function(input) {
       break;
       case 5:
       if (ftype == Thrift.Type.LIST) {
-        var _size88 = 0;
-        var _rtmp392;
+        var _size96 = 0;
+        var _rtmp3100;
         this.itemList = [];
-        var _etype91 = 0;
-        _rtmp392 = input.readListBegin();
-        _etype91 = _rtmp392.etype;
-        _size88 = _rtmp392.size;
-        for (var _i93 = 0; _i93 < _size88; ++_i93)
+        var _etype99 = 0;
+        _rtmp3100 = input.readListBegin();
+        _etype99 = _rtmp3100.etype;
+        _size96 = _rtmp3100.size;
+        for (var _i101 = 0; _i101 < _size96; ++_i101)
         {
-          var elem94 = null;
-          elem94 = new ttypes.AldCaptchaItem();
-          elem94.read(input);
-          this.itemList.push(elem94);
+          var elem102 = null;
+          elem102 = new ttypes.AldCaptchaItem();
+          elem102.read(input);
+          this.itemList.push(elem102);
         }
         input.readListEnd();
       } else {
@@ -4875,12 +4997,12 @@ CaptchaListResult.prototype.write = function(output) {
   if (this.itemList !== null && this.itemList !== undefined) {
     output.writeFieldBegin('itemList', Thrift.Type.LIST, 5);
     output.writeListBegin(Thrift.Type.STRUCT, this.itemList.length);
-    for (var iter95 in this.itemList)
+    for (var iter103 in this.itemList)
     {
-      if (this.itemList.hasOwnProperty(iter95))
+      if (this.itemList.hasOwnProperty(iter103))
       {
-        iter95 = this.itemList[iter95];
-        iter95.write(output);
+        iter103 = this.itemList[iter103];
+        iter103.write(output);
       }
     }
     output.writeListEnd();
@@ -4961,19 +5083,19 @@ DayCaptchaListResult.prototype.read = function(input) {
       break;
       case 5:
       if (ftype == Thrift.Type.LIST) {
-        var _size96 = 0;
-        var _rtmp3100;
+        var _size104 = 0;
+        var _rtmp3108;
         this.dayAldCaptchaCountList = [];
-        var _etype99 = 0;
-        _rtmp3100 = input.readListBegin();
-        _etype99 = _rtmp3100.etype;
-        _size96 = _rtmp3100.size;
-        for (var _i101 = 0; _i101 < _size96; ++_i101)
+        var _etype107 = 0;
+        _rtmp3108 = input.readListBegin();
+        _etype107 = _rtmp3108.etype;
+        _size104 = _rtmp3108.size;
+        for (var _i109 = 0; _i109 < _size104; ++_i109)
         {
-          var elem102 = null;
-          elem102 = new ttypes.DayAldCaptchaCount();
-          elem102.read(input);
-          this.dayAldCaptchaCountList.push(elem102);
+          var elem110 = null;
+          elem110 = new ttypes.DayAldCaptchaCount();
+          elem110.read(input);
+          this.dayAldCaptchaCountList.push(elem110);
         }
         input.readListEnd();
       } else {
@@ -5014,12 +5136,12 @@ DayCaptchaListResult.prototype.write = function(output) {
   if (this.dayAldCaptchaCountList !== null && this.dayAldCaptchaCountList !== undefined) {
     output.writeFieldBegin('dayAldCaptchaCountList', Thrift.Type.LIST, 5);
     output.writeListBegin(Thrift.Type.STRUCT, this.dayAldCaptchaCountList.length);
-    for (var iter103 in this.dayAldCaptchaCountList)
+    for (var iter111 in this.dayAldCaptchaCountList)
     {
-      if (this.dayAldCaptchaCountList.hasOwnProperty(iter103))
+      if (this.dayAldCaptchaCountList.hasOwnProperty(iter111))
       {
-        iter103 = this.dayAldCaptchaCountList[iter103];
-        iter103.write(output);
+        iter111 = this.dayAldCaptchaCountList[iter111];
+        iter111.write(output);
       }
     }
     output.writeListEnd();
@@ -5078,19 +5200,19 @@ DayCaptchaProductResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size104 = 0;
-        var _rtmp3108;
+        var _size112 = 0;
+        var _rtmp3116;
         this.itemList = [];
-        var _etype107 = 0;
-        _rtmp3108 = input.readListBegin();
-        _etype107 = _rtmp3108.etype;
-        _size104 = _rtmp3108.size;
-        for (var _i109 = 0; _i109 < _size104; ++_i109)
+        var _etype115 = 0;
+        _rtmp3116 = input.readListBegin();
+        _etype115 = _rtmp3116.etype;
+        _size112 = _rtmp3116.size;
+        for (var _i117 = 0; _i117 < _size112; ++_i117)
         {
-          var elem110 = null;
-          elem110 = new ttypes.DayAldCaptchaItem();
-          elem110.read(input);
-          this.itemList.push(elem110);
+          var elem118 = null;
+          elem118 = new ttypes.DayAldCaptchaItem();
+          elem118.read(input);
+          this.itemList.push(elem118);
         }
         input.readListEnd();
       } else {
@@ -5121,12 +5243,12 @@ DayCaptchaProductResult.prototype.write = function(output) {
   if (this.itemList !== null && this.itemList !== undefined) {
     output.writeFieldBegin('itemList', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.itemList.length);
-    for (var iter111 in this.itemList)
+    for (var iter119 in this.itemList)
     {
-      if (this.itemList.hasOwnProperty(iter111))
+      if (this.itemList.hasOwnProperty(iter119))
       {
-        iter111 = this.itemList[iter111];
-        iter111.write(output);
+        iter119 = this.itemList[iter119];
+        iter119.write(output);
       }
     }
     output.writeListEnd();
@@ -5188,19 +5310,19 @@ CaptchaDetailResult.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size112 = 0;
-        var _rtmp3116;
+        var _size120 = 0;
+        var _rtmp3124;
         this.productCards = [];
-        var _etype115 = 0;
-        _rtmp3116 = input.readListBegin();
-        _etype115 = _rtmp3116.etype;
-        _size112 = _rtmp3116.size;
-        for (var _i117 = 0; _i117 < _size112; ++_i117)
+        var _etype123 = 0;
+        _rtmp3124 = input.readListBegin();
+        _etype123 = _rtmp3124.etype;
+        _size120 = _rtmp3124.size;
+        for (var _i125 = 0; _i125 < _size120; ++_i125)
         {
-          var elem118 = null;
-          elem118 = new ttypes.ProductCard();
-          elem118.read(input);
-          this.productCards.push(elem118);
+          var elem126 = null;
+          elem126 = new ttypes.ProductCard();
+          elem126.read(input);
+          this.productCards.push(elem126);
         }
         input.readListEnd();
       } else {
@@ -5239,12 +5361,12 @@ CaptchaDetailResult.prototype.write = function(output) {
   if (this.productCards !== null && this.productCards !== undefined) {
     output.writeFieldBegin('productCards', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.productCards.length);
-    for (var iter119 in this.productCards)
+    for (var iter127 in this.productCards)
     {
-      if (this.productCards.hasOwnProperty(iter119))
+      if (this.productCards.hasOwnProperty(iter127))
       {
-        iter119 = this.productCards[iter119];
-        iter119.write(output);
+        iter127 = this.productCards[iter127];
+        iter127.write(output);
       }
     }
     output.writeListEnd();
@@ -5656,19 +5778,19 @@ ThirdPartyProductQueryResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size120 = 0;
-        var _rtmp3124;
+        var _size128 = 0;
+        var _rtmp3132;
         this.thirdPartyProductList = [];
-        var _etype123 = 0;
-        _rtmp3124 = input.readListBegin();
-        _etype123 = _rtmp3124.etype;
-        _size120 = _rtmp3124.size;
-        for (var _i125 = 0; _i125 < _size120; ++_i125)
+        var _etype131 = 0;
+        _rtmp3132 = input.readListBegin();
+        _etype131 = _rtmp3132.etype;
+        _size128 = _rtmp3132.size;
+        for (var _i133 = 0; _i133 < _size128; ++_i133)
         {
-          var elem126 = null;
-          elem126 = new ttypes.ThirdPartyProduct();
-          elem126.read(input);
-          this.thirdPartyProductList.push(elem126);
+          var elem134 = null;
+          elem134 = new ttypes.ThirdPartyProduct();
+          elem134.read(input);
+          this.thirdPartyProductList.push(elem134);
         }
         input.readListEnd();
       } else {
@@ -5702,12 +5824,12 @@ ThirdPartyProductQueryResult.prototype.write = function(output) {
   if (this.thirdPartyProductList !== null && this.thirdPartyProductList !== undefined) {
     output.writeFieldBegin('thirdPartyProductList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.thirdPartyProductList.length);
-    for (var iter127 in this.thirdPartyProductList)
+    for (var iter135 in this.thirdPartyProductList)
     {
-      if (this.thirdPartyProductList.hasOwnProperty(iter127))
+      if (this.thirdPartyProductList.hasOwnProperty(iter135))
       {
-        iter127 = this.thirdPartyProductList[iter127];
-        iter127.write(output);
+        iter135 = this.thirdPartyProductList[iter135];
+        iter135.write(output);
       }
     }
     output.writeListEnd();
@@ -5911,19 +6033,19 @@ ThirdPartyProductLogResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size128 = 0;
-        var _rtmp3132;
+        var _size136 = 0;
+        var _rtmp3140;
         this.logs = [];
-        var _etype131 = 0;
-        _rtmp3132 = input.readListBegin();
-        _etype131 = _rtmp3132.etype;
-        _size128 = _rtmp3132.size;
-        for (var _i133 = 0; _i133 < _size128; ++_i133)
+        var _etype139 = 0;
+        _rtmp3140 = input.readListBegin();
+        _etype139 = _rtmp3140.etype;
+        _size136 = _rtmp3140.size;
+        for (var _i141 = 0; _i141 < _size136; ++_i141)
         {
-          var elem134 = null;
-          elem134 = new ttypes.ThirdPartyProductLog();
-          elem134.read(input);
-          this.logs.push(elem134);
+          var elem142 = null;
+          elem142 = new ttypes.ThirdPartyProductLog();
+          elem142.read(input);
+          this.logs.push(elem142);
         }
         input.readListEnd();
       } else {
@@ -5957,12 +6079,12 @@ ThirdPartyProductLogResult.prototype.write = function(output) {
   if (this.logs !== null && this.logs !== undefined) {
     output.writeFieldBegin('logs', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.logs.length);
-    for (var iter135 in this.logs)
+    for (var iter143 in this.logs)
     {
-      if (this.logs.hasOwnProperty(iter135))
+      if (this.logs.hasOwnProperty(iter143))
       {
-        iter135 = this.logs[iter135];
-        iter135.write(output);
+        iter143 = this.logs[iter143];
+        iter143.write(output);
       }
     }
     output.writeListEnd();
@@ -6358,19 +6480,19 @@ CheckCodeListResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size136 = 0;
-        var _rtmp3140;
+        var _size144 = 0;
+        var _rtmp3148;
         this.checkCodeList = [];
-        var _etype139 = 0;
-        _rtmp3140 = input.readListBegin();
-        _etype139 = _rtmp3140.etype;
-        _size136 = _rtmp3140.size;
-        for (var _i141 = 0; _i141 < _size136; ++_i141)
+        var _etype147 = 0;
+        _rtmp3148 = input.readListBegin();
+        _etype147 = _rtmp3148.etype;
+        _size144 = _rtmp3148.size;
+        for (var _i149 = 0; _i149 < _size144; ++_i149)
         {
-          var elem142 = null;
-          elem142 = new ttypes.CheckCode();
-          elem142.read(input);
-          this.checkCodeList.push(elem142);
+          var elem150 = null;
+          elem150 = new ttypes.CheckCode();
+          elem150.read(input);
+          this.checkCodeList.push(elem150);
         }
         input.readListEnd();
       } else {
@@ -6404,12 +6526,12 @@ CheckCodeListResult.prototype.write = function(output) {
   if (this.checkCodeList !== null && this.checkCodeList !== undefined) {
     output.writeFieldBegin('checkCodeList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.checkCodeList.length);
-    for (var iter143 in this.checkCodeList)
+    for (var iter151 in this.checkCodeList)
     {
-      if (this.checkCodeList.hasOwnProperty(iter143))
+      if (this.checkCodeList.hasOwnProperty(iter151))
       {
-        iter143 = this.checkCodeList[iter143];
-        iter143.write(output);
+        iter151 = this.checkCodeList[iter151];
+        iter151.write(output);
       }
     }
     output.writeListEnd();
@@ -6418,6 +6540,81 @@ CheckCodeListResult.prototype.write = function(output) {
   if (this.pagination !== null && this.pagination !== undefined) {
     output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
     this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+QueryBatchProductParam = module.exports.QueryBatchProductParam = function(args) {
+  this.idList = null;
+  if (args) {
+    if (args.idList !== undefined) {
+      this.idList = args.idList;
+    }
+  }
+};
+QueryBatchProductParam.prototype = {};
+QueryBatchProductParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size152 = 0;
+        var _rtmp3156;
+        this.idList = [];
+        var _etype155 = 0;
+        _rtmp3156 = input.readListBegin();
+        _etype155 = _rtmp3156.etype;
+        _size152 = _rtmp3156.size;
+        for (var _i157 = 0; _i157 < _size152; ++_i157)
+        {
+          var elem158 = null;
+          elem158 = input.readString();
+          this.idList.push(elem158);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+QueryBatchProductParam.prototype.write = function(output) {
+  output.writeStructBegin('QueryBatchProductParam');
+  if (this.idList !== null && this.idList !== undefined) {
+    output.writeFieldBegin('idList', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRING, this.idList.length);
+    for (var iter159 in this.idList)
+    {
+      if (this.idList.hasOwnProperty(iter159))
+      {
+        iter159 = this.idList[iter159];
+        output.writeString(iter159);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   output.writeFieldStop();
