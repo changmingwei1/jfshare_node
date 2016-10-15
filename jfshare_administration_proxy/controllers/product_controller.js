@@ -478,4 +478,30 @@ router.post('/exportThirdPartyProduct', function (request, response, next) {
     }
 });
 
+
+//商品导出
+router.post('/exportProduct', function (request, response, next) {
+    logger.info("导出商品");
+    var result = {code: 200};
+
+    try {
+        var params = request.body;
+        logger.info("进入商品:" + params);
+        Product.exportProduct(params, function(err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.value = data;
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("导出商品 error:" + ex);
+        result.code = 500;
+        result.desc = "导出商品失败";
+        response.json(result);
+    }
+});
+
 module.exports = router;

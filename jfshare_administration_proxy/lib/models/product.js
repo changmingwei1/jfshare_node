@@ -946,4 +946,30 @@ Product.prototype.offerThirdPartyProduct = function (params, callback) {
     });
 };
 
+// 查询商品列表，包含带条件查询：商品名称，商品id，商品状态
+Product.prototype.exportProduct = function (params, callback) {
+    var thrift_params = new product_types.ProductSurveyQueryParam({});
+    thrift_params.sellerId = params.sellerId;
+    thrift_params.productName = params.productName;
+    thrift_params.activeState = params.activeState;
+    thrift_params.productId = params.productId;
+    thrift_params.sort = "create_time DESC";
+
+    logger.info("调用productServ-exportProduct args:" + JSON.stringify(thrift_params));
+    // 获取client//Product ProductServer
+    var productServ = new Lich.InvokeBag(Lich.ServiceKey.ProductServer, "exportProduct", thrift_params);
+    // 调用 productServ
+    Lich.wicca.invokeClient(productServ, function (err, data) {
+        logger.info("调用productServ-exportProduct result:" + JSON.stringify(data[0]));
+        var ret = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("调用productServ-exportProduct  失败原因 ======" + err+JSON.stringify(data));
+            ret.code = 500;
+            ret.desc = "导出商品列表失败！";
+
+            return callback(ret, null);
+        }
+        callback(null, data[0].value);
+    });
+};
 module.exports = new Product();
