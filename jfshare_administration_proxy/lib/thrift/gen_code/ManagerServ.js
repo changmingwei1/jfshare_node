@@ -9,6 +9,7 @@ var Q = thrift.Q;
 
 var slotImage_ttypes = require('./slotImage_types')
 var result_ttypes = require('./result_types')
+var pagination_ttypes = require('./pagination_types')
 
 
 var ttypes = require('./manager_types');
