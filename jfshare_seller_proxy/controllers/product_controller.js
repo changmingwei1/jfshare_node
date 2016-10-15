@@ -1854,7 +1854,12 @@ router.post('/exportStatisticsSkuProductCard', function(request, response, next)
             response.json(result);
             return;
         }
-        
+        if (params == null || params.exportPassword == null||params.exportPassword == "") {
+            result.code = 400;
+            result.desc = "productId参数错误";
+            response.json(result);
+            return;
+        }
 
 
         Product.exportStatisticsSkuProductCard(params, function (err, data) {

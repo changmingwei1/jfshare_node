@@ -788,7 +788,8 @@ Product.prototype.exportStatisticsSkuProductCard = function (params, callback) {
         sendEndTime:params.sendEndTime,
         validateBeginTime:params.validateBeginTime,
         validateEndTime:params.validateEndTime,
-        sendAccount:params.sendAccount
+        sendAccount:params.sendAccount,
+        exportPassword:params.exportPassword
     });
     logger.warn("调用 productServ-exportStatisticsSkuProductCard 入参:" + JSON.stringify(staticParams));
     // 获取client

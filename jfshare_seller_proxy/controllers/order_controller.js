@@ -1230,33 +1230,76 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
     var result = {code: 200};
 
     try {
-
         var params = request.body;
-
+        if (params.orderId != null || params.orderId != "") {
+            logger.info("根据订单号查询：-----------");
+        } else if (params.loginName != null || params.loginName != "") {
+            logger.info("根据买家账号查询：-----------");
+        }
         if (params.sellerId == null || params.sellerId == "") {
-
             result.code = 500;
             result.desc = "参数错误";
             response.json(result);
             return;
         }
-
-        Order.batchExportOrder(params, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            } else {
-                result.url = "http://101.201.39.63/" + data;
-                response.json(result);
+        async.series([
+            function (callback) {
+                logger.info("BUYER--data：");
+                try {
+                    if(params.loginName != null && params.loginName != ""){
+                        Buyer.getBuyerInfo(params, function (err, data) {
+                            //logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Buyer服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].buyer != null) {
+                                var buyer = data[0].buyer;
+                                params.userId= buyer.userId;
+                                return callback(null, params);
+                            } else {
+                                callback(1,null);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
+                    }
+                } catch (ex) {
+                    logger.info("调用buyer服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function(callback){
+                Order.batchExportOrder(params, function (err, data) {
+                    if (err) {
+                        return callback(2, null);
+                    } else {
+                        result.queryKey = data;
+                        response.json(result);
+                    }
+                });
             }
-
+        ],function(err, results){
+            if(err == 1){
+                logger.err("查询账户信息失败,buyer服务异常");
+                result.code = 500;
+                result.desc = "调用买家服务异常";
+                response.json(result);
+                return;
+            } else if (err == 2){
+                logger.error("导出订单失败：");
+                result.code = 500;
+                result.desc = "导出订单失败";
+                response.json(result);
+                return;
+            }
         });
-
     } catch (ex) {
         logger.error("导出订单失败：" + ex);
         result.code = 500;
         result.desc = "导出订单失败";
         response.json(result);
+        return;
     }
 });
 
@@ -1667,6 +1710,7 @@ router.post('/listOrderOffline', function (request, response, next) {
             return;
         }
     }
+    params.orderType = 1;
     var afterSaleList = [];
     var orderIdList = [];
     var sellerIds = [];

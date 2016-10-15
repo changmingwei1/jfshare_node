@@ -41,20 +41,23 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             //orderId: params.orderId,
             fromSource: params.fromSource+"",
             count: params.orderList.length,
-            curPage: 1
+            curPage: 1,
+            orderType: params.orderType
         });
 
     }else if(params.orderId != null && params.orderId != ""){
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderId: params.orderId,
             count: params.percount,
-            curPage: params.curpage
+            curPage: params.curpage,
+            orderType: params.orderType
         });
     }else if(params.userId != null && params.userId != ""){
         orderQueryConditions = new order_types.OrderQueryConditions({
             userId: params.userId,
             count: params.percount,
-            curPage: params.curpage
+            curPage: params.curpage,
+            orderType: params.orderType
         });
     }else {
         orderQueryConditions = new order_types.OrderQueryConditions({
@@ -69,7 +72,8 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             sellerIds:params.sellerIds,
             orderId: params.orderId,
             fromSource: params.fromSource||0,
-            userId: params.userId
+            userId: params.userId,
+            orderType: params.orderType
         });
     }
 
@@ -235,7 +239,8 @@ Order.prototype.batchExportOrderFull = function (params, callback) {
         sellerIds:params.sellerIds,
         payTimeStart:params.payTimeStart,
         payTimeEnd:params.payTimeEnd,
-        fromSource: params.fromSource||0
+        fromSource: params.fromSource||0,
+        orderType: params.orderType
     });
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFull", [orderQueryConditions]);
