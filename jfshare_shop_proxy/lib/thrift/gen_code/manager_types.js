@@ -9,6 +9,7 @@ var Q = thrift.Q;
 
 var slotImage_ttypes = require('./slotImage_types')
 var result_ttypes = require('./result_types')
+var pagination_ttypes = require('./pagination_types')
 
 
 var ttypes = module.exports = {};
@@ -1254,12 +1255,16 @@ ModuleConfigDetail.prototype.write = function(output) {
 ModuleConfigDetailResult = module.exports.ModuleConfigDetailResult = function(args) {
   this.result = null;
   this.ModuleConfigDetailList = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.ModuleConfigDetailList !== undefined) {
       this.ModuleConfigDetailList = args.ModuleConfigDetailList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -1306,6 +1311,14 @@ ModuleConfigDetailResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1336,6 +1349,11 @@ ModuleConfigDetailResult.prototype.write = function(output) {
     output.writeListEnd();
     output.writeFieldEnd();
   }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -1348,6 +1366,7 @@ ModuleConfigDetailParam = module.exports.ModuleConfigDetailParam = function(args
   this.relaImgkey = null;
   this.productRuleId = null;
   this.relaSort = null;
+  this.pagination = null;
   if (args) {
     if (args.moduleId !== undefined) {
       this.moduleId = args.moduleId;
@@ -1366,6 +1385,9 @@ ModuleConfigDetailParam = module.exports.ModuleConfigDetailParam = function(args
     }
     if (args.relaSort !== undefined) {
       this.relaSort = args.relaSort;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -1425,6 +1447,14 @@ ModuleConfigDetailParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 7:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1464,6 +1494,11 @@ ModuleConfigDetailParam.prototype.write = function(output) {
   if (this.relaSort !== null && this.relaSort !== undefined) {
     output.writeFieldBegin('relaSort', Thrift.Type.STRING, 6);
     output.writeString(this.relaSort);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 7);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

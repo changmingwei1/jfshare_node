@@ -22,6 +22,18 @@ router.post('/queryModuleConfigDetail', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.curPage == null || params.curPage == "") {
+            result.code = 400;
+            result.desc = "分页信息为空";
+            response.json(result);
+            return;
+        }
+        if (params.perCount == null || params.perCount == "") {
+            result.code = 400;
+            result.desc = "分页信息为空";
+            response.json(result);
+            return;
+        }
         ModuleConfig.queryModuleConfigDetail(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -30,6 +42,8 @@ router.post('/queryModuleConfigDetail', function (request, response, next) {
             if(data[0] != null || data[0].ModuleConfigDetailList != null){
                 ModuleConfigDetailList = data[0].ModuleConfigDetailList;
             }
+            var pagination = data[0].pagination;
+            result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             result.ModuleConfigDetailList = ModuleConfigDetailList;
             response.json(result);
             return;
