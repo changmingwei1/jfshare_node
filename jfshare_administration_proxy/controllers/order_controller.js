@@ -154,6 +154,7 @@ router.post('/list', function (request, response, next) {
                                     orderId: order.orderId,
                                     userId: order.userId,
                                     orderPrice: order.closingPrice,
+                                    tradeCode: order.tradeCode,
                                     //添加了应答的数据
                                     postage: order.postage,
                                     username: order.username,
@@ -350,6 +351,7 @@ router.post('/info', function (request, response, next) {
                             return callback(1, null);
                         }
                         result.orderId = orderInfo.orderId;
+                        result.tradeCode = orderInfo.tradeCode;
                         result.closingPrice = orderInfo.closingPrice;
                         //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                         result.orderState = orderInfo.orderState;
@@ -427,6 +429,7 @@ router.post('/info', function (request, response, next) {
                             for (var i = 0; i < orderInfo.productList.length; i++) {
                                 productList.push({
                                     productId: orderInfo.productList[i].productId,
+                                    tradeCode : orderInfo.tradeCode,
                                     productName: orderInfo.productList[i].productName,
                                     sku: {
                                         skuNum: orderInfo.productList[i].skuNum,
