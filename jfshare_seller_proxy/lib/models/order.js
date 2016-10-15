@@ -90,20 +90,23 @@ Order.prototype.orderProfileQueryFull = function (params, callback) {
             //orderId: params.orderId,
             fromSource: params.fromSource+"",
             count: params.orderList.length,
-            curPage: 1
+            curPage: 1,
+            orderType: params.orderType
         });
 
     }else if(params.orderId != null && params.orderId != ""){
         orderQueryConditions = new order_types.OrderQueryConditions({
             orderId: params.orderId,
             count: params.percount,
-            curPage: params.curpage
+            curPage: params.curpage,
+            orderType: params.orderType
         });
     }else if(params.userId != null && params.userId != ""){
         orderQueryConditions = new order_types.OrderQueryConditions({
             userId: params.userId,
             count: params.percount,
-            curPage: params.curpage
+            curPage: params.curpage,
+            orderType: params.orderType
         });
     }else {
         orderQueryConditions = new order_types.OrderQueryConditions({
@@ -118,7 +121,8 @@ Order.prototype.orderProfileQueryFull = function (params, callback) {
             sellerIds:params.sellerIds,
             orderId: params.orderId,
             fromSource: params.fromSource||0,
-            userId: params.userId
+            userId: params.userId,
+            orderType: params.orderType
         });
     }
 
@@ -156,6 +160,7 @@ Order.prototype.orderStateQuery = function (param, callback) {
         }
     });
 };
+
 //订单详情
 Order.prototype.queryOrderDetail = function (param, callback) {
 
@@ -249,7 +254,8 @@ Order.prototype.batchExportOrder = function (params, callback) {
     var orderQueryConditions = {};
     if (params.userId != null && params.userId != ""){
         orderQueryConditions = new order_types.OrderQueryConditions({
-            userId: params.userId
+            userId: params.userId,
+            orderType: params.orderType
         });
     } else {
         orderQueryConditions = new order_types.OrderQueryConditions({
@@ -259,7 +265,8 @@ Order.prototype.batchExportOrder = function (params, callback) {
             orderId:params.orderId,
             sellerId:params.sellerId,
             payTimeStart: params.payTimeStart,
-            payTimeEnd: params.payTimeEnd
+            payTimeEnd: params.payTimeEnd,
+            orderType: params.orderType
         });
     }
     logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions) + "-----sellerId---->" + params.sellerId);
@@ -327,9 +334,6 @@ Order.prototype.orderConfirm = function (arg, callback) {
     });
 };
 
-//BatchDeliverResult batchDeliverOrder(1:i32 sellerId, 2:BatchDeliverParam param);
-
-
 //批量发货
 Order.prototype.batchDeliverOrder = function (params, callback) {
     var batchDeliverParam = new order_types.BatchDeliverParam({
@@ -350,7 +354,6 @@ Order.prototype.batchDeliverOrder = function (params, callback) {
         }
     });
 };
-
 
 Order.prototype.downLoad = function (params, callback) {
     var http = require('follow-redirects').http;
@@ -373,6 +376,7 @@ Order.prototype.downLoad = function (params, callback) {
     }
 
 };
+
 //发货，其实就是添加物流单
 Order.prototype.deliver = function (params, callback) {
 
@@ -400,8 +404,6 @@ Order.prototype.deliver = function (params, callback) {
         }
     });
 };
-
-//result.Result updateExpressInfo(1:i32 sellerId, 2:string orderId, 3:string expressId, 4:string expressNo, 5:string expressName)
 
 //更新物流单
 Order.prototype.updateExpressInfo = function (params, callback) {

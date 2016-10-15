@@ -1662,6 +1662,7 @@ router.post('/listOrderOffline', function (request, response, next) {
             return;
         }
     }
+    params.orderType = 1;
     var afterSaleList = [];
     var orderIdList = [];
     var sellerIds = [];
