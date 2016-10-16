@@ -230,24 +230,24 @@ router.get('/queryMobileInfo',function(request,response,next){
     }
     var options = {
         hostname: 'apis.baidu.com',
-        path: '/apistore/mobilenumber/mobilenumber?phone=' + params.mobile,
+        //path: '/apistore/mobilenumber/mobilenumber?phone=' + params.mobile,
+        path: '/chazhao/mobilesearch/phonesearch?phone=' + params.mobile,
         //hostname: 'tcc.taobao.com',
         //path: '/cc/json/mobile_tel_segment.htm?tel=' + params.mobile,
         method: 'GET',
         headers:{
-            apikey:"3b91060430c4be4b1504e0d272f306a4"
+            apikey:"3b91060430c4be4b1504e0d272f306a4",
+            'Content-Type':'application/x-www-form-urlencoded'
         }
     };
+    //console.log(options);
     var req = http.request(options, function (res) {
         //logger.error('Status:',res.statusCode);
         //logger.error('headers:',JSON.stringify(res.headers));
         res.setEncoding('utf-8');
         res.on('data', function (chunk) {
-            var data = JSON.parse(chunk);
-            result.errNUm = data.errNum;
-            result.retMsg = data.retMsg;
-            result.retData = data.retData;
-            logger.info(chunk);
+            result.data = JSON.parse(chunk).data;
+            logger.error(chunk);
             response.json(result);
         });
         res.on('end',function(){
