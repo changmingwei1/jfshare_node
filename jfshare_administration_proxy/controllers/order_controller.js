@@ -1757,6 +1757,9 @@ router.post('/listOrderOffline', function (request, response, next) {
                         if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
                             for (var j = 0; j < orderInfo.orderProfileList.length; j++) {
                                 var order = orderInfo.orderProfileList[j];
+                                if (order.orderState == 10) {
+                                    continue;
+                                }
                                 if (order.orderState >= 50) {
                                     orderIdList.push(order.orderId);
                                 }
