@@ -216,4 +216,52 @@ router.get('/toExchangeDianXin',function(request,response,next){
     return;
 });
 
+var http = require('http');
+/*查询号码归属地查询 for 前端*/
+router.get('/queryMobileInfo',function(request,response,next){
+
+    var result = {code:200};
+    var params = request.query;
+    if(params.mobile == null || params.mobile == ""){
+        result.code = 400;
+        result.desc = "参数错误";
+        response.json(result);
+        return;
+    }
+    var options = {
+        hostname: 'apis.baidu.com',
+        path: '/apistore/mobilenumber/mobilenumber?phone=' + params.mobile,
+        //hostname: 'tcc.taobao.com',
+        //path: '/cc/json/mobile_tel_segment.htm?tel=' + params.mobile,
+        method: 'GET',
+        headers:{
+            apikey:"3b91060430c4be4b1504e0d272f306a4"
+        }
+    };
+    var req = http.request(options, function (res) {
+        //logger.error('Status:',res.statusCode);
+        //logger.error('headers:',JSON.stringify(res.headers));
+        res.setEncoding('utf-8');
+        res.on('data', function (chunk) {
+            var data = JSON.parse(chunk);
+            result.errNUm = data.errNum;
+            result.retMsg = data.retMsg;
+            result.retData = data.retData;
+            logger.info(chunk);
+            response.json(result);
+        });
+        res.on('end',function(){
+            console.log('响应结束********');
+        });
+    });
+    req.on('error', function (e) {
+        logger.error('problem with request: ' + e.message);
+        result.code = 500;
+        result.desc = "查询号码归属地异常";
+        response.json(result);
+    });
+    req.end();
+
+});
+
 module.exports = router;
