@@ -752,6 +752,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                     var orderItem = {
                                         orderId: order.orderId,
                                         userId: order.userId,
+                                        tradeCode: order.tradeCode,
                                         orderPrice: order.closingPrice,
                                         //添加了应答的数据
                                         postage: order.postage,
@@ -785,9 +786,12 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 skunum: order.productList[i].skuNum,
                                                 skuDesc: order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
-                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                imgUrl: "",
                                                 count: order.productList[i].count
                                             };
+                                            if (order.productList[i].imagesUrl != null) {
+                                                productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
+                                            }
                                             productList.push(productItem);
                                         }
                                         orderItem.productList = productList;

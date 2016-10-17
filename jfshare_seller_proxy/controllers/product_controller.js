@@ -84,7 +84,7 @@ router.post('/list', function (request, response, next) {
                                         productId: a.productId,
                                         sellerId: a.sellerId,
                                         productName: a.productName,
-                                        subjectName:"",
+                                        subjectName: a.subjectPath,
                                         totalSales: a.totalSales,
                                         imgUrl: imgUri,
                                         activeState: a.activeState,
@@ -100,8 +100,6 @@ router.post('/list', function (request, response, next) {
                                     }else{
                                         product.curPrice =(Number(a.minCurPrice) / 100).toFixed(2);
                                     }
-
-
                                     dataArr.push(product);
                                     subjectIdList.push(
                                         a.subjectId
@@ -118,48 +116,6 @@ router.post('/list', function (request, response, next) {
                     } catch (ex) {
                         logger.info("获取订单列表异常:" + ex);
                         return callback(1, null);
-                    }
-                },
-                function (callback) {
-                    try {
-                        if(!isExist){
-                            return callback(null,dataArr);
-                        }
-                        Subject.getBatchSuperTree(subjectIdList, function (error, data) {
-                            //logger.info("get product list response:" + JSON.stringify(data));
-                            if (error) {
-                                callback(2, null);
-                            } else {
-                                //组装list
-                                var partsNames = [];
-                                var subjectNodeTrees = data[0].subjectNodeTrees;
-                                if(subjectNodeTrees!=null){
-                                    subjectNodeTrees.forEach(function (subjectList) {
-                                        //logger.info("get subjectList list response-----:" + JSON.stringify(subjectList));
-                                        if (subjectList != null) {
-                                            var subjectpath = "";
-                                            for (var i = 0; i < subjectList.length; i++) {
-                                                if (i == subjectList.length - 1) {
-                                                    subjectpath += subjectList[i].name;
-                                                } else {
-                                                    subjectpath += subjectList[i].name + "-";
-
-                                                }
-                                            }
-                                            subjectName.push(subjectpath);
-                                        } else {
-                                            subjectName.push("");
-                                        }
-                                    });
-                                }
-
-                                callback(null, subjectName);
-                            }
-                        });
-
-                    } catch (ex) {
-                        logger.info("获取批量类目异常:" + ex);
-                        return callback(2, null);
                     }
                 },
                 function (callback) {
@@ -204,23 +160,12 @@ router.post('/list', function (request, response, next) {
                     response.json(result);
                     return;
                 }
-                if (err == 2) {
-                    logger.error("获取批量类目异常--类目服务异常：" + err);
+                if (err == 3) {
+                    logger.error("批量获取库存异常--库存服务异常：" + err);
                     response.json(results[0]);
                     return;
                 }
-
                 if (err == null) {
-                    logger.info("shuju------------->" + JSON.stringify(results));
-                    for (var i = 0; i < results[0].length; i++) {
-
-                        if(results[1].length>0&&results[1][i]!=null &&results[1][i]!=""){
-                            results[0][i].subjectName = results[1][i];
-                        }
-
-                        logger.info("get product list response:" + JSON.stringify(dataArr));
-                        logger.info("get product list response:" + JSON.stringify(subjectName));
-                    }
                     result.productList = results[0];
                     response.json(result);
                     return;

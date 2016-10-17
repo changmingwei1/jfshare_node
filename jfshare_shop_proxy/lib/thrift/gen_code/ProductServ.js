@@ -135,6 +135,128 @@ ProductServ_queryProduct_result.prototype.write = function(output) {
   return;
 };
 
+ProductServ_queryBatchProduct_args = function(args) {
+  this.queryBatchProductParam = null;
+  this.productRetParam = null;
+  if (args) {
+    if (args.queryBatchProductParam !== undefined) {
+      this.queryBatchProductParam = args.queryBatchProductParam;
+    }
+    if (args.productRetParam !== undefined) {
+      this.productRetParam = args.productRetParam;
+    }
+  }
+};
+ProductServ_queryBatchProduct_args.prototype = {};
+ProductServ_queryBatchProduct_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.queryBatchProductParam = new ttypes.QueryBatchProductParam();
+        this.queryBatchProductParam.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.productRetParam = new ttypes.ProductRetParam();
+        this.productRetParam.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryBatchProduct_args.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryBatchProduct_args');
+  if (this.queryBatchProductParam !== null && this.queryBatchProductParam !== undefined) {
+    output.writeFieldBegin('queryBatchProductParam', Thrift.Type.STRUCT, 1);
+    this.queryBatchProductParam.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.productRetParam !== null && this.productRetParam !== undefined) {
+    output.writeFieldBegin('productRetParam', Thrift.Type.STRUCT, 2);
+    this.productRetParam.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_queryBatchProduct_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ProductServ_queryBatchProduct_result.prototype = {};
+ProductServ_queryBatchProduct_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ProductBatchListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_queryBatchProduct_result.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_queryBatchProduct_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ProductServ_queryProductSku_args = function(args) {
   this.productId = null;
   if (args) {
@@ -3391,6 +3513,114 @@ ProductServ_exportCheckCodeList_result.prototype.write = function(output) {
   return;
 };
 
+ProductServ_exportProduct_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ProductServ_exportProduct_args.prototype = {};
+ProductServ_exportProduct_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ProductSurveyQueryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_exportProduct_args.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_exportProduct_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductServ_exportProduct_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ProductServ_exportProduct_result.prototype = {};
+ProductServ_exportProduct_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductServ_exportProduct_result.prototype.write = function(output) {
+  output.writeStructBegin('ProductServ_exportProduct_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ProductServ_queryThirdPartyProduct_args = function(args) {
   this.param = null;
   this.pagination = null;
@@ -3907,6 +4137,54 @@ ProductServClient.prototype.recv_queryProduct = function(input,mtype,rseqid) {
     return callback(null, result.success);
   }
   return callback('queryProduct failed: unknown result');
+};
+ProductServClient.prototype.queryBatchProduct = function(queryBatchProductParam, productRetParam, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryBatchProduct(queryBatchProductParam, productRetParam);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryBatchProduct(queryBatchProductParam, productRetParam);
+  }
+};
+
+ProductServClient.prototype.send_queryBatchProduct = function(queryBatchProductParam, productRetParam) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryBatchProduct', Thrift.MessageType.CALL, this.seqid());
+  var args = new ProductServ_queryBatchProduct_args();
+  args.queryBatchProductParam = queryBatchProductParam;
+  args.productRetParam = productRetParam;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ProductServClient.prototype.recv_queryBatchProduct = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ProductServ_queryBatchProduct_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryBatchProduct failed: unknown result');
 };
 ProductServClient.prototype.queryProductSku = function(productId, callback) {
   this._seqid = this.new_seqid();
@@ -5280,6 +5558,53 @@ ProductServClient.prototype.recv_exportCheckCodeList = function(input,mtype,rseq
   }
   return callback('exportCheckCodeList failed: unknown result');
 };
+ProductServClient.prototype.exportProduct = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exportProduct(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exportProduct(param);
+  }
+};
+
+ProductServClient.prototype.send_exportProduct = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exportProduct', Thrift.MessageType.CALL, this.seqid());
+  var args = new ProductServ_exportProduct_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ProductServClient.prototype.recv_exportProduct = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ProductServ_exportProduct_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exportProduct failed: unknown result');
+};
 ProductServClient.prototype.queryThirdPartyProduct = function(param, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -5511,6 +5836,36 @@ ProductServProcessor.prototype.process_queryProduct = function(seqid, input, out
     this._handler.queryProduct(args.productId, args.param,  function (err, result) {
       var result = new ProductServ_queryProduct_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryProduct", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ProductServProcessor.prototype.process_queryBatchProduct = function(seqid, input, output) {
+  var args = new ProductServ_queryBatchProduct_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryBatchProduct.length === 2) {
+    Q.fcall(this._handler.queryBatchProduct, args.queryBatchProductParam, args.productRetParam)
+      .then(function(result) {
+        var result = new ProductServ_queryBatchProduct_result({success: result});
+        output.writeMessageBegin("queryBatchProduct", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ProductServ_queryBatchProduct_result(err);
+        output.writeMessageBegin("queryBatchProduct", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryBatchProduct(args.queryBatchProductParam, args.productRetParam,  function (err, result) {
+      var result = new ProductServ_queryBatchProduct_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryBatchProduct", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -6381,6 +6736,36 @@ ProductServProcessor.prototype.process_exportCheckCodeList = function(seqid, inp
     this._handler.exportCheckCodeList(args.param,  function (err, result) {
       var result = new ProductServ_exportCheckCodeList_result((err != null ? err : {success: result}));
       output.writeMessageBegin("exportCheckCodeList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ProductServProcessor.prototype.process_exportProduct = function(seqid, input, output) {
+  var args = new ProductServ_exportProduct_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exportProduct.length === 1) {
+    Q.fcall(this._handler.exportProduct, args.param)
+      .then(function(result) {
+        var result = new ProductServ_exportProduct_result({success: result});
+        output.writeMessageBegin("exportProduct", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ProductServ_exportProduct_result(err);
+        output.writeMessageBegin("exportProduct", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exportProduct(args.param,  function (err, result) {
+      var result = new ProductServ_exportProduct_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exportProduct", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

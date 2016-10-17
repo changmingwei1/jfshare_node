@@ -17,19 +17,12 @@ function FileCards() {}
 FileCards.prototype.fileToTY = function (params, callback) {
 
     var params4Upload = new manager_types.FileParam({
-        ProductName: params.productName,
-        ProductNo: params.productNo,
-        DataType: params.dataType,
-        ExpDate_Flag: params.expDate_Flag, 
-        CardNumber: params.cardNumber,
-        StartDate: params.startDate,
-        FaceValue: params.faceValue,
-        RealValue: params.realValue,
-        excelKeyUrl: params.excelKeyUrl,
-        orderId: params.orderId,
-        sellerId: params.sellerId
-
-        
+        productType: params.productType,
+        DataType: params.DataType + "",
+        ExpDate_Flag: params.ExpDate_Flag + "",
+        CardNumber: params.CardNumber,
+        StartDate: params.StartDate,
+        excelKeyUrl: params.excelKeyUrl
     });
 
     //获取客户端
