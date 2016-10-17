@@ -1804,7 +1804,6 @@ router.post('/H5ThirdLogin', function (request, response, next) {
     }
 });
 
-
 /*用户是否为广东电信用户*/
 router.post('/isPurchaseMobile', function (request, response, next) {
     var resContent = {code: 200};
@@ -1836,4 +1835,45 @@ router.post('/isPurchaseMobile', function (request, response, next) {
         response.json(resContent);
     }
 });
+
+/*获取二维码*/
+router.get('/getQRCodeForSeller', function (request, response, next) {
+    logger.info("进入获取验证码接口");
+    var resContent = {code: 200};
+    try {
+        var param = request.query;
+        var sellerId = param.sellerId;
+        var sellerName = param.sellerName;
+        var sellerJson = {
+            "sellerId":sellerId,
+            "sellerName":sellerName,
+            "tradeCode":"Z0010"
+        };
+        var id = JSON.stringify(sellerJson);
+        Common.getQRCode(id, function (err, data) {
+            if (err) {
+                logger.error("请求参数：" + JSON.stringify(param));
+                response.json(err);
+                return;
+            } else {
+                var cb = data[0].captcha.captchaBytes;
+                response.writeHead('200', {'Content-Type': 'image/jpeg'});    //写http头部信息
+                response.write(cb, 'binary');
+                //var id = data[0].captcha.id;
+                //var value = data[0].captcha.value;
+                //resContent.id = id;
+                //resContent.value = value;
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+                response.end();
+            }
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("获取验证码失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "不能获取验证码";
+        response.json(resContent);
+    }
+});
+
 module.exports = router;
