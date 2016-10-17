@@ -93,6 +93,7 @@ router.post('/list', function (request, response, next) {
                                 var orderItem = {
                                     orderId: order.orderId,
                                     userId: order.userId,
+                                    tradeCode: order.tradeCode,
                                     orderPrice: order.closingPrice,
                                     //添加了应答的数据
                                     postage: order.postage,
@@ -247,6 +248,7 @@ router.post('/info', function (request, response, next) {
                     Order.queryOrderDetail(params, function (err, orderInfo) {
                         result.orderId = orderInfo.orderId;
                         result.closingPrice = orderInfo.closingPrice;
+                        result.tradeCode = orderInfo.tradeCode;
                         //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                         result.orderState = orderInfo.orderState;
                         if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
@@ -322,6 +324,7 @@ router.post('/info', function (request, response, next) {
                                 productList.push({
                                     productId: orderInfo.productList[i].productId,
                                     productName: orderInfo.productList[i].productName,
+                                    tradeCode: orderInfo.tradeCode,
                                     sku: {
                                         skuNum: orderInfo.productList[i].skuNum,
                                         skuName: orderInfo.productList[i].skuDesc
@@ -749,6 +752,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                     var orderItem = {
                                         orderId: order.orderId,
                                         userId: order.userId,
+                                        tradeCode: order.tradeCode,
                                         orderPrice: order.closingPrice,
                                         //添加了应答的数据
                                         postage: order.postage,
@@ -782,9 +786,12 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 skunum: order.productList[i].skuNum,
                                                 skuDesc: order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
-                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                imgUrl: "",
                                                 count: order.productList[i].count
                                             };
+                                            if (order.productList[i].imagesUrl != null) {
+                                                productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
+                                            }
                                             productList.push(productItem);
                                         }
                                         orderItem.productList = productList;
@@ -1710,6 +1717,7 @@ router.post('/listOrderOffline', function (request, response, next) {
             return;
         }
     }
+    params.orderType = 1;
     var afterSaleList = [];
     var orderIdList = [];
     var sellerIds = [];
@@ -1805,6 +1813,9 @@ router.post('/listOrderOffline', function (request, response, next) {
                         if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
                             for (var j = 0; j < orderInfo.orderProfileList.length; j++) {
                                 var order = orderInfo.orderProfileList[j];
+                                if (order.orderState == 10) {
+                                    continue;
+                                }
                                 if (order.orderState >= 50) {
                                     orderIdList.push(order.orderId);
                                 }

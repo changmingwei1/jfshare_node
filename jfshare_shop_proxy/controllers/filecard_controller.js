@@ -16,51 +16,44 @@ router.post('/fileToTY', function (request, response, next) {
         //参数校验
         logger.info("fileToTY params:" + JSON.stringify(params));
         //供应商平台商品编号
-        if (params.productName == null || params.productName == "") {
+        if (params.productType == null || params.productType == "") {
             result.code = 400;
-            result.desc = " ProductName 参数错误";
-            response.json(result);
-            return;
-        }
-        //供应商平台商品名称
-        if (params.productNo == null || params.productNo == "") {
-            result.code = 400;
-            result.desc = " ProductNo 参数错误";
+            result.desc = " productType 参数错误";
             response.json(result);
             return;
         }
         //1：卡号卡密组合 2：仅有卡号 3：仅有卡密
-        if (params.dataType == null || params.dataType == "") {
+        if (params.DataType == null || params.DataType == "") {
             result.code = 400;
             result.desc = " DataType 参数错误";
             response.json(result);
             return;
         }
         //是否有有效期：0：有  1：没有
-        if (params.expDate_Flag == null || params.expDate_Flag == "") {
+        if (params.ExpDate_Flag == null || params.ExpDate_Flag == "") {
             result.code = 400;
             result.desc = " ExpDate_Flag 参数错误";
             response.json(result);
             return;
         }
         //本文件中的点券数量
-        if (params.cardNumber == null || params.cardNumber == "") {
+        if (params.CardNumber == null || params.CardNumber == "") {
             result.code = 400;
             result.desc = " CardNumber 参数错误";
             response.json(result);
             return;
         }
         //生成本文件时间，格式YYYYMMDD
-        if (params.startDate == null || params.startDate == "") {
+        if (params.StartDate == null || params.StartDate == "") {
             result.code = 400;
-            result.desc = " startDate 参数错误";
+            result.desc = " StartDate 参数错误";
             response.json(result);
             return;
         }
         //卡券面值，单位分
-        if (params.faceValue == null || params.faceValue == "") {
+        if (params.excelKeyUrl == null || params.excelKeyUrl == "") {
             result.code = 400;
-            result.desc = " ExpDate_Flag 参数错误";
+            result.desc = " excelKeyUrl 参数错误";
             response.json(result);
             return;
         }
@@ -70,12 +63,12 @@ router.post('/fileToTY', function (request, response, next) {
         //     response.json(result);
         //     return;
         // }
-        if (params.excelKeyUrl == null || params.excelKeyUrl == "") {
-            result.code = 400;
-            result.desc = " excelKeyUrl 参数错误";
-            response.json(result);
-            return;
-        }
+        //if (params.excelKeyUrl == null || params.excelKeyUrl == "") {
+        //    result.code = 400;
+        //    result.desc = " excelKeyUrl 参数错误";
+        //    response.json(result);
+        //    return;
+        //}
 
 
 

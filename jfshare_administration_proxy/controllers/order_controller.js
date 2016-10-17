@@ -154,6 +154,7 @@ router.post('/list', function (request, response, next) {
                                     orderId: order.orderId,
                                     userId: order.userId,
                                     orderPrice: order.closingPrice,
+                                    tradeCode: order.tradeCode,
                                     //添加了应答的数据
                                     postage: order.postage,
                                     username: order.username,
@@ -350,6 +351,7 @@ router.post('/info', function (request, response, next) {
                             return callback(1, null);
                         }
                         result.orderId = orderInfo.orderId;
+                        result.tradeCode = orderInfo.tradeCode;
                         result.closingPrice = orderInfo.closingPrice;
                         //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                         result.orderState = orderInfo.orderState;
@@ -427,6 +429,7 @@ router.post('/info', function (request, response, next) {
                             for (var i = 0; i < orderInfo.productList.length; i++) {
                                 productList.push({
                                     productId: orderInfo.productList[i].productId,
+                                    tradeCode : orderInfo.tradeCode,
                                     productName: orderInfo.productList[i].productName,
                                     sku: {
                                         skuNum: orderInfo.productList[i].skuNum,
@@ -1087,6 +1090,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                     var orderItem = {
                                         orderId: order.orderId,
                                         userId: order.userId,
+                                        tradeCode: order.tradeCode,
                                         orderPrice: order.closingPrice,
                                         //添加了应答的数据
                                         postage: order.postage,
@@ -1662,6 +1666,7 @@ router.post('/listOrderOffline', function (request, response, next) {
             return;
         }
     }
+    params.orderType = 1;
     var afterSaleList = [];
     var orderIdList = [];
     var sellerIds = [];
@@ -1756,6 +1761,9 @@ router.post('/listOrderOffline', function (request, response, next) {
                         if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
                             for (var j = 0; j < orderInfo.orderProfileList.length; j++) {
                                 var order = orderInfo.orderProfileList[j];
+                                if (order.orderState == 10) {
+                                    continue;
+                                }
                                 if (order.orderState >= 50) {
                                     orderIdList.push(order.orderId);
                                 }
