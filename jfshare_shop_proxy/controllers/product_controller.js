@@ -44,8 +44,8 @@ router.post('/list', function (req, res, next) {
                         productId: a.productId,
                         productName: a.productName,
                         viceName: a.viceName,
-                        curPrice: (Number(a.curPrice) / 100).toFixed(2),
-                        orgPrice: (Number(a.orgPrice) / 100).toFixed(2),
+                        curPrice: (Number(a.minCurPrice) / 100).toFixed(2),
+                        orgPrice: (Number(a.minOrgPrice) / 100).toFixed(2),
                         //sellerId: a.sellerId,   //测试用,没意义
                         imgKey: imgUri,
                         type: a.type || 2

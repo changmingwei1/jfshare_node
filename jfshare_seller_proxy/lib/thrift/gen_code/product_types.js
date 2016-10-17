@@ -1455,6 +1455,7 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
   this.maxOrgPrice = null;
   this.maxCurPrice = null;
   this.sellerName = null;
+  this.subjectPath = null;
   if (args) {
     if (args.productId !== undefined) {
       this.productId = args.productId;
@@ -1515,6 +1516,9 @@ ProductSurvey = module.exports.ProductSurvey = function(args) {
     }
     if (args.sellerName !== undefined) {
       this.sellerName = args.sellerName;
+    }
+    if (args.subjectPath !== undefined) {
+      this.subjectPath = args.subjectPath;
     }
   }
 };
@@ -1672,6 +1676,13 @@ ProductSurvey.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 21:
+      if (ftype == Thrift.Type.STRING) {
+        this.subjectPath = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1781,6 +1792,11 @@ ProductSurvey.prototype.write = function(output) {
   if (this.sellerName !== null && this.sellerName !== undefined) {
     output.writeFieldBegin('sellerName', Thrift.Type.STRING, 20);
     output.writeString(this.sellerName);
+    output.writeFieldEnd();
+  }
+  if (this.subjectPath !== null && this.subjectPath !== undefined) {
+    output.writeFieldBegin('subjectPath', Thrift.Type.STRING, 21);
+    output.writeString(this.subjectPath);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
