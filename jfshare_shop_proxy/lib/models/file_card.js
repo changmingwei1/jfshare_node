@@ -18,8 +18,8 @@ FileCards.prototype.fileToTY = function (params, callback) {
 
     var params4Upload = new manager_types.FileParam({
         productType: params.productType,
-        DataType: params.DataType,
-        ExpDate_Flag: params.ExpDate_Flag,
+        DataType: params.DataType + "",
+        ExpDate_Flag: params.ExpDate_Flag + "",
         CardNumber: params.CardNumber,
         StartDate: params.StartDate,
         excelKeyUrl: params.excelKeyUrl
