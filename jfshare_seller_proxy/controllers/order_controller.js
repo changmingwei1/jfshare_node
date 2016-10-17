@@ -752,6 +752,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                     var orderItem = {
                                         orderId: order.orderId,
                                         userId: order.userId,
+                                        tradeCode: order.tradeCode,
                                         orderPrice: order.closingPrice,
                                         //添加了应答的数据
                                         postage: order.postage,
