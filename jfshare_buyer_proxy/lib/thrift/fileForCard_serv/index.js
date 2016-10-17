@@ -11,17 +11,17 @@ var reservoir = require("../reservoir.js");
 /**
  * 根据应用不同获取配置  名字不要变： Config
  */
-var Config = thrifgtConfig.ServiceFactory.trade();
+var Config = thrifgtConfig.ServiceFactory.fileForCard();
 /**
  *根据应用不同获取配置
  * @type {string}
  */
-Config.key = lich.ServiceKey.TradeServer;
+Config.key = lich.ServiceKey.FileForCardServ;
 /**
  * 赋值  所有的都加这个名字  ： thriftService
  * @type {exports|module.exports}
  */
-var thriftService = TradeServ;
+var thriftService = FileForCardServ;
 
 
 /*********************************************这里不用动了 直接copy**********************************************************************************************/

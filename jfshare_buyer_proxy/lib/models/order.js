@@ -479,7 +479,7 @@ Order.prototype.rechargeNotify = function (arg, callback) {
             res.code = 500;
             res.desc = "处理第三方回调失败！";
             callback(res, null);
-        } else if (data[0].result.code == 1) {
+        } else if (data[0].code == 1) {
             res.code = 500;
             res.desc ="处理第三方回调失败！" ;
             callback(res, null);

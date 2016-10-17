@@ -1968,11 +1968,11 @@ router.get('/reChargeNotify', function (request, response, next) {
         logger.error("话费充值第三方回调请求参数 request:" + JSON.stringify(arg));
         Order.rechargeNotify(arg, function (err, data) {
             if (err) {
-                response.write(1); //失败
+                response.write("1"); //失败
                 response.end();
                 return;
             }else{
-                response.write(0); //成功
+                response.write("0"); //成功
                 response.end();
                 retrun;
             }
