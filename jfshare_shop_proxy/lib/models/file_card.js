@@ -22,7 +22,9 @@ FileCards.prototype.fileToTY = function (params, callback) {
         ExpDate_Flag: params.ExpDate_Flag + "",
         CardNumber: params.CardNumber,
         StartDate: params.StartDate,
-        excelKeyUrl: params.excelKeyUrl
+        excelKeyUrl: params.excelKeyUrl,
+        notEncryptFlag: params.notEncryptFlag,  //前端传递此参数,后端不解密
+        isTestFlag: params.isTestFlag           //测试接口 值为false
     });
 
     //获取客户端

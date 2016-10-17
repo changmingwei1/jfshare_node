@@ -18,6 +18,8 @@ FileParam = module.exports.FileParam = function(args) {
   this.CardNumber = null;
   this.StartDate = null;
   this.excelKeyUrl = null;
+  this.notEncryptFlag = null;
+  this.isTestFlag = null;
   if (args) {
     if (args.productType !== undefined) {
       this.productType = args.productType;
@@ -36,6 +38,12 @@ FileParam = module.exports.FileParam = function(args) {
     }
     if (args.excelKeyUrl !== undefined) {
       this.excelKeyUrl = args.excelKeyUrl;
+    }
+    if (args.notEncryptFlag !== undefined) {
+      this.notEncryptFlag = args.notEncryptFlag;
+    }
+    if (args.isTestFlag !== undefined) {
+      this.isTestFlag = args.isTestFlag;
     }
   }
 };
@@ -95,6 +103,20 @@ FileParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 7:
+      if (ftype == Thrift.Type.BOOL) {
+        this.notEncryptFlag = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.BOOL) {
+        this.isTestFlag = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -134,6 +156,16 @@ FileParam.prototype.write = function(output) {
   if (this.excelKeyUrl !== null && this.excelKeyUrl !== undefined) {
     output.writeFieldBegin('excelKeyUrl', Thrift.Type.STRING, 6);
     output.writeString(this.excelKeyUrl);
+    output.writeFieldEnd();
+  }
+  if (this.notEncryptFlag !== null && this.notEncryptFlag !== undefined) {
+    output.writeFieldBegin('notEncryptFlag', Thrift.Type.BOOL, 7);
+    output.writeBool(this.notEncryptFlag);
+    output.writeFieldEnd();
+  }
+  if (this.isTestFlag !== null && this.isTestFlag !== undefined) {
+    output.writeFieldBegin('isTestFlag', Thrift.Type.BOOL, 8);
+    output.writeBool(this.isTestFlag);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
