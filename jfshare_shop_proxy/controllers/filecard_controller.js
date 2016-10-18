@@ -23,30 +23,30 @@ router.post('/fileToTY', function (request, response, next) {
             return;
         }
         //1：卡号卡密组合 2：仅有卡号 3：仅有卡密
-        if (params.DataType == null || params.DataType == "") {
+        if (params.dataType == null || params.dataType == "") {
             result.code = 400;
-            result.desc = " DataType 参数错误";
+            result.desc = " dataType 参数错误";
             response.json(result);
             return;
         }
         //是否有有效期：0：有  1：没有
-        if (params.ExpDate_Flag == null || params.ExpDate_Flag == "") {
+        if (params.expDate_Flag == null || params.expDate_Flag == "") {
             result.code = 400;
-            result.desc = " ExpDate_Flag 参数错误";
+            result.desc = " expDate_Flag 参数错误";
             response.json(result);
             return;
         }
         //本文件中的点券数量
-        if (params.CardNumber == null || params.CardNumber == "") {
+        if (params.cardNumber == null || params.cardNumber == "") {
             result.code = 400;
-            result.desc = " CardNumber 参数错误";
+            result.desc = " cardNumber 参数错误";
             response.json(result);
             return;
         }
         //生成本文件时间，格式YYYYMMDD
-        if (params.StartDate == null || params.StartDate == "") {
+        if (params.startDate == null || params.startDate == "") {
             result.code = 400;
-            result.desc = " StartDate 参数错误";
+            result.desc = " startDate 参数错误";
             response.json(result);
             return;
         }

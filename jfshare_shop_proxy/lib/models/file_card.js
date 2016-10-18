@@ -18,15 +18,15 @@ FileCards.prototype.fileToTY = function (params, callback) {
 
     var params4Upload = new manager_types.FileParam({
         productType: params.productType,
-        DataType: params.DataType + "",
-        ExpDate_Flag: params.ExpDate_Flag + "",
-        CardNumber: params.CardNumber,
-        StartDate: params.StartDate,
+        DataType: params.dataType + "",
+        ExpDate_Flag: params.expDate_Flag + "",
+        CardNumber: params.cardNumber,
+        StartDate: params.startDate,
         excelKeyUrl: params.excelKeyUrl,
         notEncryptFlag: params.notEncryptFlag,  //前端传递此参数,后端不解密
         isTestFlag: params.isTestFlag           //测试接口 值为false
     });
-
+    logger.info("params4Upload >>>>>>>>>>>  " + JSON.stringify(params4Upload));
     //获取客户端
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'fileToTY', [params4Upload]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
