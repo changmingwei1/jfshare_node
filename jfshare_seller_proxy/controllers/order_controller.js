@@ -686,6 +686,18 @@ router.post('/afterSalelist', function (request, response, next) {
             response.json(result);
             return;
         }
+        if (params.startTime == null && params.startTime == "" && params.payTimeStart == null && params.payTimeStart == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.endTime == null && params.endTime == "" && params.payTimeEnd == null && params.payTimeEnd == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
         var page = {total: 0, pageCount: 0};
         var isExist = 0;
         var afterSaleList = [];

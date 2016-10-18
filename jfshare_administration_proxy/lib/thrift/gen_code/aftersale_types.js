@@ -895,6 +895,9 @@ AfterSaleOrderParam = module.exports.AfterSaleOrderParam = function(args) {
   this.sellerId = null;
   this.startTime = null;
   this.endTime = null;
+  this.payTimeStart = null;
+  this.payTimeEnd = null;
+  this.fromSource = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -910,6 +913,15 @@ AfterSaleOrderParam = module.exports.AfterSaleOrderParam = function(args) {
     }
     if (args.endTime !== undefined) {
       this.endTime = args.endTime;
+    }
+    if (args.payTimeStart !== undefined) {
+      this.payTimeStart = args.payTimeStart;
+    }
+    if (args.payTimeEnd !== undefined) {
+      this.payTimeEnd = args.payTimeEnd;
+    }
+    if (args.fromSource !== undefined) {
+      this.fromSource = args.fromSource;
     }
   }
 };
@@ -962,6 +974,27 @@ AfterSaleOrderParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.payTimeStart = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.payTimeEnd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.fromSource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -996,6 +1029,21 @@ AfterSaleOrderParam.prototype.write = function(output) {
   if (this.endTime !== null && this.endTime !== undefined) {
     output.writeFieldBegin('endTime', Thrift.Type.STRING, 5);
     output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  if (this.payTimeStart !== null && this.payTimeStart !== undefined) {
+    output.writeFieldBegin('payTimeStart', Thrift.Type.STRING, 6);
+    output.writeString(this.payTimeStart);
+    output.writeFieldEnd();
+  }
+  if (this.payTimeEnd !== null && this.payTimeEnd !== undefined) {
+    output.writeFieldBegin('payTimeEnd', Thrift.Type.STRING, 7);
+    output.writeString(this.payTimeEnd);
+    output.writeFieldEnd();
+  }
+  if (this.fromSource !== null && this.fromSource !== undefined) {
+    output.writeFieldBegin('fromSource', Thrift.Type.I32, 8);
+    output.writeI32(this.fromSource);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

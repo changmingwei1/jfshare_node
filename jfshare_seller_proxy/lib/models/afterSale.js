@@ -66,9 +66,13 @@ AfterSale.prototype.queryAfterSaleOrderListBySellerId = function (params, callba
 
     var afterSaleQueryParam = new afterSale_types.AfterSaleOrderParam({
         sellerId: params.sellerId,
+        userId: params.userId,
         orderId: params.orderId,
         startTime: params.startTime,
-        endTime: params.endTime
+        endTime: params.endTime,
+        fromSource: params.fromSource,
+        payTimeStart: params.payTimeStart,
+        payTimeEnd: params.payTimeEnd
     });
 
     var page = new pagination_types.Pagination({

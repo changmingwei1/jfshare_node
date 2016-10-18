@@ -87,7 +87,6 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
             //加上sku
         });
     } else {
-
         afterSaleQueryParam = new afterSale_types.AfterSaleQueryParam({
             orderIdList:params.orderIdList
         });
@@ -161,7 +160,10 @@ AfterSale.prototype.queryAfterSaleOrderListBySellerId = function (params, callba
         userId: params.userId,
         orderId: params.orderId,
         startTime: params.startTime,
-        endTime: params.endTime
+        endTime: params.endTime,
+        fromSource: params.fromSource,
+        payTimeStart: params.payTimeStart,
+        payTimeEnd: params.payTimeEnd
     });
 
     var page = new pagination_types.Pagination({
