@@ -38,19 +38,44 @@ router.post('/list', function (req, res, next) {
             } else {
                 logger.info("调用productServ-queryProductList result:" + JSON.stringify(data));
                 var productSurveyList = data[0].productSurveyList;
-                productSurveyList.forEach(function (a) {
-                    var imgUri = a.imgUrl.split(",")[0];
-                    dataArr.push({
-                        productId: a.productId,
-                        productName: a.productName,
-                        viceName: a.viceName,
-                        curPrice: (Number(a.minCurPrice) / 100).toFixed(2),
-                        orgPrice: (Number(a.minOrgPrice) / 100).toFixed(2),
-                        //sellerId: a.sellerId,   //测试用,没意义
-                        imgKey: imgUri,
-                        type: a.type || 2
-                    });
-                });
+
+                //====================================================20161019
+                if(productSurveyList != null){
+                    for(var i = 0; i < productSurveyList.length ; i++){
+                        var imgUri = productSurveyList[i].imgUrl.split(",")[0];
+                        //发布会演示无法下架商品--紧急处理20161019
+                        if(productSurveyList[i].productId=="ze160920104638000777" || productSurveyList[i].productId=="ze161017112401000815" || productSurveyList[i].productId== "ze160918180638000156" || productSurveyList[i].productId== "ze161018010256000053"){
+                            continue;
+                        }
+                        dataArr.push({
+                            productId: productSurveyList[i].productId,
+                            productName: productSurveyList[i].productName,
+                            viceName: productSurveyList[i].viceName,
+                            curPrice: (Number(productSurveyList[i].minCurPrice) / 100).toFixed(2),
+                            orgPrice: (Number(productSurveyList[i].minOrgPrice) / 100).toFixed(2),
+                            //sellerId: a.sellerId,   //测试用,没意义
+                            imgKey: imgUri,
+                            type: productSurveyList[i].type || 2
+                        });
+                    }
+                }
+
+                //==============================================================20161019
+
+
+                //productSurveyList.forEach(function (a) {
+                //    var imgUri = a.imgUrl.split(",")[0];
+                //    dataArr.push({
+                //        productId: a.productId,
+                //        productName: a.productName,
+                //        viceName: a.viceName,
+                //        curPrice: (Number(a.minCurPrice) / 100).toFixed(2),
+                //        orgPrice: (Number(a.minOrgPrice) / 100).toFixed(2),
+                //        //sellerId: a.sellerId,   //测试用,没意义
+                //        imgKey: imgUri,
+                //        type: a.type || 2
+                //    });
+                //});
                 var pagination = data[0].pagination;
                 resContent.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                 resContent.productList = dataArr;
