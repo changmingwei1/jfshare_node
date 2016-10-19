@@ -708,6 +708,7 @@ router.post('/cancelOrder', function (request, response, next) {
         response.json(result);
     }
 });
+
 ////导出订单
 //router.post('/queryExportOrderInfo', function (request, response, next) {
 //    logger.info("进入导出订单流程");
@@ -750,6 +751,7 @@ router.post('/cancelOrder', function (request, response, next) {
 //        response.json(result);
 //    }
 //});
+
 //添加物流单-发货
 router.post('/deliver', function (request, response, next) {
     logger.info("进入添加物流单流程");
