@@ -666,6 +666,12 @@ router.post('/list', function (request, response, next) {
                                                 if(order.productList[i].imagesUrl != null){
                                                     productItem.imgKey = order.productList[i].imagesUrl.split(',')[0];
                                                 }
+                                                if(order.tradeCode=="Z8003"){
+                                                    productItem.productName="话费充值";
+                                                }
+                                                if(order.tradeCode=="Z8004"){
+                                                    productItem.productName="流量充值";
+                                                }
                                                 productList.push(productItem);
                                             }
                                             orderItem.productList = productList;
@@ -1000,7 +1006,7 @@ router.post('/info', function (req, res, next) {
                                 var productList = [];
                                 if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
                                     for (var i = 0; i < orderInfo.productList.length; i++) {
-                                        productList.push({
+                                        var product = {
                                             productId: orderInfo.productList[i].productId,
                                             productName: orderInfo.productList[i].productName,
                                             sku: {
@@ -1011,7 +1017,14 @@ router.post('/info', function (req, res, next) {
                                             orgPrice: orderInfo.productList[i].orgPrice,
                                             imgKey: orderInfo.productList[i].imagesUrl,
                                             count: orderInfo.productList[i].count
-                                        });
+                                        };
+                                        if(orderInfo.tradeCode=="Z8003"){
+                                            product.productName="话费充值";
+                                        }
+                                        if(orderInfo.tradeCode=="Z8004"){
+                                            product.productName="流量充值";
+                                        }
+                                        productList.push(product);
                                     }
                                     result.productList = productList;
                                 }
