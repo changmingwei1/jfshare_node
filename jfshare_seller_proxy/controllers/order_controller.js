@@ -752,6 +752,7 @@ router.post('/afterSalelist', function (request, response, next) {
                             orderIdList.push(afterOrderList[i].orderId);
                         }
                         params.orderList = orderIdList;
+                        params.orderIdList = orderIdList;
                         Order.orderProfileQuery(params, function (err, orderInfo) {
                             if (err) {
                                 logger.error("订单服务异常");
