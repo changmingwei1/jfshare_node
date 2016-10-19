@@ -714,6 +714,7 @@ router.post('/afterSalelist', function (request, response, next) {
                                 isExist = 1;
                                 return callback(null, 2);
                             } else {
+                                afterOrderList = data.afterSaleOrders;
                                 if(data.pagination!=null){
                                     page.total = data.pagination.totalCount;
                                     page.pageCount = data.pagination.pageNumCount;
@@ -753,6 +754,7 @@ router.post('/afterSalelist', function (request, response, next) {
                         }
                         params.orderList = orderIdList;
                         params.orderIdList = orderIdList;
+                        logger.warn("查看请求的参数：" + JSON.stringify(params));
                         Order.orderProfileQuery(params, function (err, orderInfo) {
                             if (err) {
                                 logger.error("订单服务异常");
