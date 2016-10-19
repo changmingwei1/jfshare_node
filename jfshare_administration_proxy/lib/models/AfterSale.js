@@ -171,6 +171,7 @@ AfterSale.prototype.queryAfterSaleOrderListBySellerId = function (params, callba
         numPerPage: params.percount,
         currentPage: params.curpage
     });
+
     logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
 
     var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [afterSaleQueryParam, page]);
