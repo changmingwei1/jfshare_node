@@ -186,7 +186,7 @@ router.get('/getAppUpgradeInfoStr', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        logger.info("It's test______" + JSON.stringify(param));
+        logger.warn("It's test______" + JSON.stringify(param));
 
         Message.getAppUpgradeInfoStr(param, function (err, data) {
             if (err) {
@@ -196,7 +196,7 @@ router.get('/getAppUpgradeInfoStr', function (request, response, next) {
             var upgradeInfo = data[0].upgradeInfo;
             resContent.upgradeInfo = upgradeInfo;
             response.json(resContent);
-            logger.info("响应的结果:" + JSON.stringify(resContent));
+            logger.warn("响应的结果:" + JSON.stringify(resContent));
         });
 
     } catch (ex) {
