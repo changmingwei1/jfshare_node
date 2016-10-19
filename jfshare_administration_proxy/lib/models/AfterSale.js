@@ -177,7 +177,7 @@ AfterSale.prototype.queryAfterSaleOrderListBySellerId = function (params, callba
     var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSaleOrder", [afterSaleQueryParam, page]);
 
     Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
-        logger.info("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
+        logger.error("AfterSaleServ-queryAfterSaleOrderList  result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == "1") {
             logger.error("AfterSaleServ-queryAfterSaleOrderList  失败原因 ======" + err);
