@@ -34,7 +34,7 @@ AfterSale.prototype.queryAfterSale = function (params, callback) {
             orderIdList:params.orderIdList
         });
     }
-    logger.info("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
+    logger.error("AfterSaleServ-queryAfterSale  args:" + JSON.stringify(afterSaleQueryParam));
     try {
         var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryAfterSale", afterSaleQueryParam);
 
