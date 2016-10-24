@@ -3,6 +3,8 @@
  */
 var express = require('express');
 var router = express.Router();
+var request = require('request');
+
 var async = require('async');
 var slotImage_types = require('../lib/thrift/gen_code/slotImage_types');
 var log4node = require('../log4node');
@@ -228,15 +230,23 @@ router.get('/queryMobileInfo',function(request,response,next){
         response.json(result);
         return;
     }
+    //else {
+    //    //重定向到淘宝的api，比百度的好使，因app已上线，字段都不一致，所以使用
+    //    response.redirect("http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + params.mobile);
+    //}
+
+
     var options = {
-        hostname: 'apis.baidu.com',
+        //hostname: 'apis.baidu.com',
         //path: '/apistore/mobilenumber/mobilenumber?phone=' + params.mobile,
-        path: '/chazhao/mobilesearch/phonesearch?phone=' + params.mobile,
-        //hostname: 'tcc.taobao.com',
-        //path: '/cc/json/mobile_tel_segment.htm?tel=' + params.mobile,
+        //path: '/chazhao/mobilesearch/phonesearch?phone=' + params.mobile,
+        //hostname:'tcc.taobao.com',
+        url:'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=' + params.mobile,
+        hostname:'apis.juhe.cn',
+        path:'/mobile/get?phone=' + params.mobile + "&key=3a36c566db407b6e8079dab2a5ad6d78",
         method: 'GET',
         headers:{
-            apikey:"3b91060430c4be4b1504e0d272f306a4",
+            //apikey:"3b91060430c4be4b1504e0d272f306a4",  //百度api调用的key
             'Content-Type':'application/x-www-form-urlencoded'
         }
     };
@@ -244,10 +254,16 @@ router.get('/queryMobileInfo',function(request,response,next){
     var req = http.request(options, function (res) {
         //logger.error('Status:',res.statusCode);
         //logger.error('headers:',JSON.stringify(res.headers));
-        res.setEncoding('utf-8');
+        res.setEncoding('utf8');
         res.on('data', function (chunk) {
-            result.data = JSON.parse(chunk).data;
-            logger.error(chunk);
+            var msg = JSON.parse(chunk).result;
+            var data = {
+                operator: msg.company,
+                province: msg.province,
+                city: msg.city
+            };
+            result.data = data;
+            logger.error(result);
             response.json(result);
         });
         res.on('end',function(){
