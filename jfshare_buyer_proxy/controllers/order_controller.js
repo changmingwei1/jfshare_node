@@ -357,24 +357,24 @@ router.post('/afterSaleList', function (request, response, next) {
                             logger.info("商家服务异常:" + ex);
                             return callback(3, null);
                         }
+                    },
+                    function (callback) {
+                        try {
+                            logger.info("++++++++++++++" + JSON.stringify(params));
+                            AfterSale.queryAfterSale(params, function (err, data) {
+                                if (err) {
+                                    return callback(4, null);
+                                }
+                                logger.info("get order list response:" + JSON.stringify(result));
+                                var afterSaleList = data;
+                                result.afterSaleList = afterSaleList;/*注掉,不用了；主站还是需要用到列表中的state字段去判断售后的状态*/
+                                return callback(null, result);
+                            });
+                        } catch (ex) {
+                            logger.info("售后服务异常:" + ex);
+                            return callback(4, null);
+                        }
                     }
-                    //function (callback) {
-                    //    try {
-                    //        logger.info("++++++++++++++" + JSON.stringify(params));
-                    //        AfterSale.queryAfterSale(params, function (err, data) {
-                    //            if (err) {
-                    //                return callback(4, null);
-                    //            }
-                    //            logger.info("get order list response:" + JSON.stringify(result));
-                    //            var afterSaleList = data;
-                    //            //result.afterSaleList = afterSaleList;/*注掉,不用了*/
-                    //            return callback(null, result);
-                    //        });
-                    //    } catch (ex) {
-                    //        logger.info("售后服务异常:" + ex);
-                    //        return callback(4, null);
-                    //    }
-                    //}
                 ],
                 function (err, results) {
                     if (err == 5) {
