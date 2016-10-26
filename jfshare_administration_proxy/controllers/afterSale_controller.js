@@ -55,7 +55,7 @@ router.post('/review', function (request, response, next) {
         }
         AfterSale.auditPass(params, function (err, data) {
             if (err) {
-                res.json(err);
+                response.json(err);
                 return;
             }
             logger.info(" AfterSale.auditPass response:" + JSON.stringify(result));
