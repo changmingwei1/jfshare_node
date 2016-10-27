@@ -365,4 +365,33 @@ Order.prototype.downLoad = function (params, callback) {
 
 };
 
+//线下扫码导出订单
+Order.prototype.batchExportOrderFullOffline = function (params, callback) {
+    var orderQueryConditions = new order_types.OrderQueryConditions({
+        startTime: params.startTime,
+        endTime: params.endTime,
+        orderState: params.orderState || 0,
+        sellerId: params.sellerId,
+        orderId:params.orderId,
+        sellerIds:params.sellerIds,
+        payTimeStart:params.payTimeStart,
+        payTimeEnd:params.payTimeEnd,
+        fromSource: params.fromSource||0,
+        orderType: params.orderType
+    });
+    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFullOffline", [orderQueryConditions]);
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-batchExportOrderFullOffline  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("调用orderServ-batchExportOrderFullOffline  失败原因 ======" + err + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "线下扫码导出订单失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0].value);
+        }
+    });
+};
 module.exports = new Order();
