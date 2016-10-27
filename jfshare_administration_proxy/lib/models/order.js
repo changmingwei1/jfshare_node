@@ -311,6 +311,34 @@ Order.prototype.batchDeliverOrderForManager = function (params, callback) {
     });
 };
 
+//批量发货 --管理中心
+Order.prototype.batchDeliverOrder = function (params, callback) {
+
+    var param =  new order_types.DeliverParam({
+        path:params.path
+    });
+
+    logger.info("调用orderServ-batchDeliverParam  params:" + JSON.stringify(param));
+    var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchDeliverForManager", [param]);
+    Lich.wicca.invokeClient(orderServ, function (err, data) {
+        logger.info("调用orderServ-batchDeliverParam  result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("调用orderServ-batchDeliverParam  失败原因 ======" + err +"返回的数据是"+JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].failInfo;
+            callback(res, null);
+        } else if (data[0].result.code == "1") {
+            logger.warn("调用orderServ-batchDeliverParam  失败原因 ======" + err +"返回的数据是"+JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
 
 Order.prototype.downLoad = function (params, callback) {
     var http = require('follow-redirects').http;

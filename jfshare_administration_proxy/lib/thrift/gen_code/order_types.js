@@ -562,6 +562,9 @@ OrderInfo = module.exports.OrderInfo = function(args) {
   this.thirdExchangeRate = null;
   this.postageExt = null;
   this.weight = null;
+  this.ext1 = null;
+  this.ext2 = null;
+  this.ext3 = null;
   if (args) {
     if (args.orderId !== undefined) {
       this.orderId = args.orderId;
@@ -652,6 +655,15 @@ OrderInfo = module.exports.OrderInfo = function(args) {
     }
     if (args.weight !== undefined) {
       this.weight = args.weight;
+    }
+    if (args.ext1 !== undefined) {
+      this.ext1 = args.ext1;
+    }
+    if (args.ext2 !== undefined) {
+      this.ext2 = args.ext2;
+    }
+    if (args.ext3 !== undefined) {
+      this.ext3 = args.ext3;
     }
   }
 };
@@ -879,6 +891,27 @@ OrderInfo.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 31:
+      if (ftype == Thrift.Type.STRING) {
+        this.ext1 = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 32:
+      if (ftype == Thrift.Type.STRING) {
+        this.ext2 = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 33:
+      if (ftype == Thrift.Type.STRING) {
+        this.ext3 = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1038,6 +1071,21 @@ OrderInfo.prototype.write = function(output) {
   if (this.weight !== null && this.weight !== undefined) {
     output.writeFieldBegin('weight', Thrift.Type.STRING, 30);
     output.writeString(this.weight);
+    output.writeFieldEnd();
+  }
+  if (this.ext1 !== null && this.ext1 !== undefined) {
+    output.writeFieldBegin('ext1', Thrift.Type.STRING, 31);
+    output.writeString(this.ext1);
+    output.writeFieldEnd();
+  }
+  if (this.ext2 !== null && this.ext2 !== undefined) {
+    output.writeFieldBegin('ext2', Thrift.Type.STRING, 32);
+    output.writeString(this.ext2);
+    output.writeFieldEnd();
+  }
+  if (this.ext3 !== null && this.ext3 !== undefined) {
+    output.writeFieldBegin('ext3', Thrift.Type.STRING, 33);
+    output.writeString(this.ext3);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1765,6 +1813,8 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
   this.orderIds = null;
   this.sellerIds = null;
   this.fromSource = null;
+  this.receiverMobile = null;
+  this.receiverName = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -1873,6 +1923,12 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
     }
     if (args.fromSource !== undefined) {
       this.fromSource = args.fromSource;
+    }
+    if (args.receiverMobile !== undefined) {
+      this.receiverMobile = args.receiverMobile;
+    }
+    if (args.receiverName !== undefined) {
+      this.receiverName = args.receiverName;
     }
   }
 };
@@ -2168,6 +2224,20 @@ OrderQueryConditions.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 37:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiverMobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 38:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiverName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2375,6 +2445,16 @@ OrderQueryConditions.prototype.write = function(output) {
   if (this.fromSource !== null && this.fromSource !== undefined) {
     output.writeFieldBegin('fromSource', Thrift.Type.I32, 36);
     output.writeI32(this.fromSource);
+    output.writeFieldEnd();
+  }
+  if (this.receiverMobile !== null && this.receiverMobile !== undefined) {
+    output.writeFieldBegin('receiverMobile', Thrift.Type.STRING, 37);
+    output.writeString(this.receiverMobile);
+    output.writeFieldEnd();
+  }
+  if (this.receiverName !== null && this.receiverName !== undefined) {
+    output.writeFieldBegin('receiverName', Thrift.Type.STRING, 38);
+    output.writeString(this.receiverName);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -4075,6 +4155,59 @@ OrderSellerQueryParam.prototype.write = function(output) {
   if (this.endTime !== null && this.endTime !== undefined) {
     output.writeFieldBegin('endTime', Thrift.Type.STRING, 5);
     output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+DeliverParam = module.exports.DeliverParam = function(args) {
+  this.path = null;
+  if (args) {
+    if (args.path !== undefined) {
+      this.path = args.path;
+    }
+  }
+};
+DeliverParam.prototype = {};
+DeliverParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.path = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+DeliverParam.prototype.write = function(output) {
+  output.writeStructBegin('DeliverParam');
+  if (this.path !== null && this.path !== undefined) {
+    output.writeFieldBegin('path', Thrift.Type.STRING, 1);
+    output.writeString(this.path);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

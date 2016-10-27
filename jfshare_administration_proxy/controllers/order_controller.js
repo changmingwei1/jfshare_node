@@ -1631,6 +1631,39 @@ router.post('/batchDeliverOrderForManagerTest', function (request, response, nex
     }
 });
 
+/*批量发货--管理中心new*/
+router.post('/bacthDeliverOrder',function(request, response, next){
+    logger.info("进入批量发货流程 >>>>>> java处理excel");
+    var result = {code : 200};
+
+    try {
+        var param = request.body;
+        if (param.path == null || param.path == "") {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Order.batchDeliverOrder(param, function(err, data){
+           if (err){
+               response.json(err);
+               return;
+           }
+           if(data[0] != null){
+               result.failInfo = data[0].failInfo;
+           }
+           response.json(result);
+           return;
+        });
+    } catch (ex) {
+        logger.error("批量发货 error:" + ex);
+        result.code = 500;
+        result.desc = "批量发货失败";
+        response.json(result);
+    }
+
+});
+
 //-------------------------------------------------------------------------------------
 // 查询线下收款数据
 router.post('/listOrderOffline', function (request, response, next) {
