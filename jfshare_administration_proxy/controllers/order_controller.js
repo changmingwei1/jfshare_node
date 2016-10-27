@@ -372,6 +372,7 @@ router.post('/info', function (request, response, next) {
                         }
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
+                            result.payId = orderInfo.payInfo.payId;
                             result.payState =  orderInfo.payInfo.payState;
                             result.payTime =  orderInfo.payInfo.payTime; /*0921新增字段*/
                             if(result.payChannel == 1 || result.payChannel == 10){
