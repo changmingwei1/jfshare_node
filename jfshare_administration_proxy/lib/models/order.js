@@ -42,6 +42,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             fromSource: params.fromSource+"",
             count: params.orderList.length,
             curPage: 1,
+            payId:params.payId,
             orderType: params.orderType
         });
 
@@ -73,6 +74,7 @@ Order.prototype.orderProfileQuery = function (params, callback) {
             orderId: params.orderId,
             fromSource: params.fromSource||0,
             userId: params.userId,
+            payId:params.payId,
             orderType: params.orderType
         });
     }

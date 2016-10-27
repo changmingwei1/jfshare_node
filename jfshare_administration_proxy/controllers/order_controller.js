@@ -183,6 +183,7 @@ router.post('/list', function (request, response, next) {
                                 };
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
+                                    orderItem.payId = order.payInfo.payId;
                                     logger.error("order.payInfo.payChannel:"+order.payInfo.payChannel);
                                     if (order.payInfo.payChannel == "1") {
                                         if(order.exchangeScore>0){

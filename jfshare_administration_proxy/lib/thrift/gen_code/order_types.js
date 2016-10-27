@@ -1815,6 +1815,7 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
   this.fromSource = null;
   this.receiverMobile = null;
   this.receiverName = null;
+  this.payId = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -1929,6 +1930,9 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
     }
     if (args.receiverName !== undefined) {
       this.receiverName = args.receiverName;
+    }
+    if (args.payId !== undefined) {
+      this.payId = args.payId;
     }
   }
 };
@@ -2238,6 +2242,13 @@ OrderQueryConditions.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 39:
+      if (ftype == Thrift.Type.STRING) {
+        this.payId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2455,6 +2466,11 @@ OrderQueryConditions.prototype.write = function(output) {
   if (this.receiverName !== null && this.receiverName !== undefined) {
     output.writeFieldBegin('receiverName', Thrift.Type.STRING, 38);
     output.writeString(this.receiverName);
+    output.writeFieldEnd();
+  }
+  if (this.payId !== null && this.payId !== undefined) {
+    output.writeFieldBegin('payId', Thrift.Type.STRING, 39);
+    output.writeString(this.payId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
