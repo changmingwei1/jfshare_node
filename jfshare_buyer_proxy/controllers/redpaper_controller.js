@@ -12,6 +12,7 @@ var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 var RedPaper = require('../lib/models/redPaper');/*积分红包功能*/
 var Buyer = require('../lib/models/buyer');/*主要获取用户信息*/
+var Common = require('../lib/models/common');/*领取红包接口增加短验*/
 
 /*查询单个红包活动的信息*/
 router.post('/queryRedPaperActivity', function (request, response, next) {
@@ -76,21 +77,34 @@ router.post('/receiveRedbag', function (request, response, next) {
             response.json(result);
             return;
         }
-
-        RedPaper.receiveRedbag(params, function (err, data) {
+        if (params.captchaDesc == null || params.captchaDesc == "") {
+            result.code = 500;
+            result.desc = "验证码不能为空";
+            response.json(result);
+            return;
+        }
+        Common.validateMsgCaptcha(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
+            } else {
+                RedPaper.receiveRedbag(params, function (err, data) {
+                    if (err) {
+                        response.json(err);
+                        return;
+                    }
+                    result.value = data[0].value;
+                    logger.info("receiveRedbag result:" + JSON.stringify(data));
+                    response.json(result);
+                    return;
+                });
             }
-            result.value = data[0].value;
-            logger.info("receiveRedbag result:" + JSON.stringify(data));
-            response.json(result);
-            return;
         });
+
     } catch (ex) {
         logger.error("领取积分活动:" + ex);
         result.code = 500;
-        result.desc = "领取积分活动";
+        result.desc = "领取积分失败";
         response.json(result);
     }
 });
