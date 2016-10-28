@@ -1911,10 +1911,10 @@ router.post('/payOrderCreates', function (request, response, next) {
     logger.info("进入提交订单流程..");
     var result = {code: 200};
     try {
-        result.code = 500;
-        result.desc = "话费充值服务暂不可使用";
-        response.json(result);
-        return;
+        //result.code = 500;
+        //result.desc = "话费充值服务暂不可使用";
+        //response.json(result);
+        //return;
 
         var arg = request.body;
         if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
