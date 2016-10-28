@@ -504,13 +504,13 @@ router.post('/queryexpress', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (params.num == null || params.num == "") {
-
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
+        //if (params.num == null || params.num == "") {
+        //
+        //    result.code = 500;
+        //    result.desc = "参数错误";
+        //    response.json(result);
+        //    return;
+        //}
 
         if (params.comId == null || params.comId == "") {
 
