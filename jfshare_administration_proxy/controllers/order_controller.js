@@ -2007,135 +2007,135 @@ router.post('/listOrderOffline', function (request, response, next) {
             }
         });
 
-    router.post('/queryExportOrderInfoOffline', function (request, response, next) {
-        logger.info("进入导出订单的流程");
-        var result = {code: 200};
-        try {
-            var params = request.body;
-            //orderId
-            if (params.orderId != "" && params.orderId != null) {
-            }else{
-                //因为管理中心和卖家中心用同一个借口，所以去掉
-                //if (params.startTime == "" || params.startTime == null) {
-                //    result.code = 400;
-                //    result.desc = "参数错误";
-                //    response.json(result);
-                //    return;
-                //}
-                //if (params.endTime == "" || params.endTime == null) {
-                //    result.code = 400;
-                //    result.desc = "参数错误";
-                //    response.json(result);
-                //    return;
-                //}
-            }
-            var sellerIds = [];
-            async.series([
-                    function (callback) {
-                        //params.sellerIds=[1,2,4];
-                        logger.info("SELLER--data：" +JSON.stringify(params));
-                        try {
-                            if(params.sellerName != null && params.sellerName != ""){
-                                Seller.querySellerBySeller(params, function (err, data) {
-                                    logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
-                                    if (err) {
-                                        logger.error("Seller服务异常");
-                                        return callback(1, null);
-                                    }
-                                    if (data[0].sellerList !== null && data[0].sellerList.length > 0) {
-                                        for (var j = 0; j < data[0].sellerList.length; j++) {
-                                            var seller = data[0].sellerList[j];
-                                            sellerIds.push(seller.sellerId + "");
-                                        }
-                                    }
-                                    logger.info("SellerIds-----------------："+sellerIds);
-                                    if (sellerIds.length > 0) {
-                                        params.sellerIds=sellerIds;
-                                        return callback(null, params);
-                                    } else {
-                                        callback(null, params);
-                                    }
-                                });
-                            }else{
-                                callback(null,params);
-                            }
-                        } catch (ex) {
-                            logger.info("调用seller服务异常:" + ex);
-                            return callback(1, null);
-                        }
-                    },
-                    function (callback) {
-                        logger.info("BUYER--data：");
-                        try {
-                            if(params.loginName != null && params.loginName != ""){
-                                Buyer.getBuyerInfo(params, function (err, data) {
-                                    logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
-                                    if (err) {
-                                        logger.error("Buyer服务异常");
-                                        return callback(1, null);
-                                    }
-                                    if (data[0].buyer != null) {
-                                        var buyer = data[0].buyer;
-                                        params.userId= buyer.userId;
-                                        return callback(null, params);
-                                    } else {
-                                        callback(1,null);
-                                    }
-                                });
-                            }else{
-                                callback(null,params);
-                            }
-                        } catch (ex) {
-                            logger.info("调用buyer服务异常:" + ex);
-                            return callback(1, null);
-                        }
-                    },
-                    function (callback) {
-                        Order.batchExportOrderFullOffline(params, function (err, data) {
-                            if (err) {
-                                response.json(err);
-                                return;
-                            } else {
-                                result.queryKey = data;
-                                response.json(result);
-                            }
-                        });
-                    }],
-                function (err, results) {
-                    if (err == 1) {
-                        logger.error("Seller服务异常" + err);
-                        result.code = 500;
-                        result.desc = "查询卖家信息失败";
-                        response.json(result);
-                        return;
-                    }
-                    if (err == 2) {
-                        logger.error("导出订单失败--订单服务异常：" + err);
-                        result.code = 500;
-                        result.desc = "订单导出失败";
-                        response.json(result);
-                        return;
-                    }
-                    if (err == null && err != 3) {
-                        logger.error("shuju------------->" + JSON.stringify(results));
-                        result = results[2];
-                        response.json(result);
-                        return;
-                    } else {
-                        logger.info("shuju------------->" + JSON.stringify(results));
-                        result = results[0];
-                        response.json(result);
-                        return;
-                    }
-                });
-        } catch (ex) {
-            logger.error("导出订单失败：" + ex);
-            result.code = 500;
-            result.desc = "导出订单失败";
-            response.json(result);
-        }
-    });
+
 
 });
-
+router.post('/queryExportOrderInfoOffline', function (request, response, next) {
+    logger.info("进入导出订单的流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //orderId
+        if (params.orderId != "" && params.orderId != null) {
+        }else{
+            //因为管理中心和卖家中心用同一个借口，所以去掉
+            //if (params.startTime == "" || params.startTime == null) {
+            //    result.code = 400;
+            //    result.desc = "参数错误";
+            //    response.json(result);
+            //    return;
+            //}
+            //if (params.endTime == "" || params.endTime == null) {
+            //    result.code = 400;
+            //    result.desc = "参数错误";
+            //    response.json(result);
+            //    return;
+            //}
+        }
+        var sellerIds = [];
+        async.series([
+                function (callback) {
+                    //params.sellerIds=[1,2,4];
+                    logger.info("SELLER--data：" +JSON.stringify(params));
+                    try {
+                        if(params.sellerName != null && params.sellerName != ""){
+                            Seller.querySellerBySeller(params, function (err, data) {
+                                logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                                if (err) {
+                                    logger.error("Seller服务异常");
+                                    return callback(1, null);
+                                }
+                                if (data[0].sellerList !== null && data[0].sellerList.length > 0) {
+                                    for (var j = 0; j < data[0].sellerList.length; j++) {
+                                        var seller = data[0].sellerList[j];
+                                        sellerIds.push(seller.sellerId + "");
+                                    }
+                                }
+                                logger.info("SellerIds-----------------："+sellerIds);
+                                if (sellerIds.length > 0) {
+                                    params.sellerIds=sellerIds;
+                                    return callback(null, params);
+                                } else {
+                                    callback(null, params);
+                                }
+                            });
+                        }else{
+                            callback(null,params);
+                        }
+                    } catch (ex) {
+                        logger.info("调用seller服务异常:" + ex);
+                        return callback(1, null);
+                    }
+                },
+                function (callback) {
+                    logger.info("BUYER--data：");
+                    try {
+                        if(params.loginName != null && params.loginName != ""){
+                            Buyer.getBuyerInfo(params, function (err, data) {
+                                logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                                if (err) {
+                                    logger.error("Buyer服务异常");
+                                    return callback(1, null);
+                                }
+                                if (data[0].buyer != null) {
+                                    var buyer = data[0].buyer;
+                                    params.userId= buyer.userId;
+                                    return callback(null, params);
+                                } else {
+                                    callback(1,null);
+                                }
+                            });
+                        }else{
+                            callback(null,params);
+                        }
+                    } catch (ex) {
+                        logger.info("调用buyer服务异常:" + ex);
+                        return callback(1, null);
+                    }
+                },
+                function (callback) {
+                    Order.batchExportOrderFullOffline(params, function (err, data) {
+                        if (err) {
+                            response.json(err);
+                            return;
+                        } else {
+                            result.queryKey = data;
+                            response.json(result);
+                        }
+                    });
+                }],
+            function (err, results) {
+                if (err == 1) {
+                    logger.error("Seller服务异常" + err);
+                    result.code = 500;
+                    result.desc = "查询卖家信息失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == 2) {
+                    logger.error("导出订单失败--订单服务异常：" + err);
+                    result.code = 500;
+                    result.desc = "订单导出失败";
+                    response.json(result);
+                    return;
+                }
+                if (err == null && err != 3) {
+                    logger.error("shuju------------->" + JSON.stringify(results));
+                    result = results[2];
+                    response.json(result);
+                    return;
+                } else {
+                    logger.info("shuju------------->" + JSON.stringify(results));
+                    result = results[0];
+                    response.json(result);
+                    return;
+                }
+            });
+    } catch (ex) {
+        logger.error("导出订单失败：" + ex);
+        result.code = 500;
+        result.desc = "导出订单失败";
+        response.json(result);
+    }
+});
 module.exports = router;
