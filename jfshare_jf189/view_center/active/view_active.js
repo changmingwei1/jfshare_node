@@ -1,5 +1,6 @@
 exports.active = function(req, res, next) {
-    res.render("active/201611baoyou", res.resData);
+    parameters.tyHostUrl = res.resData.tyHostUrl;
+    res.render("active/201611baoyou", res.paramters);
 }
 
 
