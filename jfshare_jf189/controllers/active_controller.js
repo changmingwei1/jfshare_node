@@ -2,8 +2,6 @@
 var express = require('express');
 var router = express.Router();
 
-var logger = require('../lib/util/log4node').configlog4node.servLog4js();
-
 router.get('/', function(req, res, next) {
     res.render("active/view_active",res.resData);
 });
