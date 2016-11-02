@@ -106,7 +106,8 @@ Order.prototype.orderProfileQueryFull = function (params, callback) {
             userId: params.userId,
             count: params.percount,
             curPage: params.curpage,
-            orderType: params.orderType
+            orderType: params.orderType,
+            sellerId: params.sellerId
         });
     }else {
         orderQueryConditions = new order_types.OrderQueryConditions({

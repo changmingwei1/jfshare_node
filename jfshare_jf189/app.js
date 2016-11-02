@@ -21,6 +21,7 @@ var signup = require('./controllers/signup_controller');
 var buyers = require('./controllers/buyer_controller');
 var test = require('./controllers/test_controller');
 var jf189 = require('./controllers/jf189_controller');
+var active = require('./controllers/active_controller');
 //订单
 var orders = require("./controllers/order_controller");
 var commons = require("./controllers/common_controller");
@@ -132,6 +133,7 @@ app.use('/jf189',jf189);
 app.use('/seller', sellers);
 app.use('/', index);
 app.use('/nnc', commons);
+app.use('/active', active);
 
 app.use(SessionInterceptor.ajaxValid());
 app.use(SessionInterceptor.nomalValid());
