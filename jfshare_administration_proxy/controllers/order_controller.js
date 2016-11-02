@@ -2011,7 +2011,7 @@ router.post('/listOrderOffline', function (request, response, next) {
 
 });
 router.post('/queryExportOrderInfoOffline', function (request, response, next) {
-    logger.info("进入导出订单的流程");
+    logger.info("进入线下扫码导出订单的流程");
     var result = {code: 200};
     try {
         var params = request.body;

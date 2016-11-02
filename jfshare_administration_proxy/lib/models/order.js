@@ -372,6 +372,7 @@ Order.prototype.batchExportOrderFullOffline = function (params, callback) {
         endTime: params.endTime,
         orderState: params.orderState || 0,
         sellerId: params.sellerId,
+        userId:params.userId,
         orderId:params.orderId,
         sellerIds:params.sellerIds,
         payTimeStart:params.payTimeStart,
@@ -379,7 +380,7 @@ Order.prototype.batchExportOrderFullOffline = function (params, callback) {
         fromSource: params.fromSource||0,
         orderType: params.orderType
     });
-    logger.info("调用orderServ-queryExportOrderInfo  params:" + JSON.stringify(orderQueryConditions));
+    logger.info("调用orderServ-queryExportOrderInfoOffline  params:" + JSON.stringify(orderQueryConditions));
     var orderServ = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "batchExportOrderFullOffline", [orderQueryConditions]);
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-batchExportOrderFullOffline  result:" + JSON.stringify(data));
