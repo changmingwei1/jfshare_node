@@ -33,6 +33,7 @@ var sellers = require("./controllers/seller_controller");
 
 var view_index = require("./view_center/index/view_index");
 var view_buyer = require("./view_center/buyer/view_buyer");
+var view_active = require("./view_center/active/view_active");
 
 var app = express();
 
