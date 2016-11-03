@@ -110,7 +110,8 @@ ModuleConfig.prototype.relase = function (params, callback) {
             relaSort:list[i].relaSort,
             curPrice:list[i].curPrice,
             orgPrice:list[i].orgPrice,
-            title:list[i].title
+            title:list[i].title,
+            viceName:list[i].viceName
         });
         iList.push(mcDetail);
     }
