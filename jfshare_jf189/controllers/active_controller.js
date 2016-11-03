@@ -2,8 +2,9 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/active', function(req, res, next) {
-    res.render("active/view_active",res.resData);
+var view_active = require('../view_center/active/view_active');
+router.get('/actives', function(req, res, next) {
+    view_active.baoyou(req, res, next);
 });
 
 //暴露模块
