@@ -1054,6 +1054,7 @@ ModuleConfigDetail = module.exports.ModuleConfigDetail = function(args) {
   this.curPrice = null;
   this.orgPrice = null;
   this.title = null;
+  this.viceName = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -1087,6 +1088,9 @@ ModuleConfigDetail = module.exports.ModuleConfigDetail = function(args) {
     }
     if (args.title !== undefined) {
       this.title = args.title;
+    }
+    if (args.viceName !== undefined) {
+      this.viceName = args.viceName;
     }
   }
 };
@@ -1181,6 +1185,13 @@ ModuleConfigDetail.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.viceName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1245,6 +1256,11 @@ ModuleConfigDetail.prototype.write = function(output) {
   if (this.title !== null && this.title !== undefined) {
     output.writeFieldBegin('title', Thrift.Type.STRING, 11);
     output.writeString(this.title);
+    output.writeFieldEnd();
+  }
+  if (this.viceName !== null && this.viceName !== undefined) {
+    output.writeFieldBegin('viceName', Thrift.Type.STRING, 12);
+    output.writeString(this.viceName);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1938,6 +1954,7 @@ QueryImgkeyResult = module.exports.QueryImgkeyResult = function(args) {
   this.curPrice = null;
   this.orgPrice = null;
   this.title = null;
+  this.viceName = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
@@ -1953,6 +1970,9 @@ QueryImgkeyResult = module.exports.QueryImgkeyResult = function(args) {
     }
     if (args.title !== undefined) {
       this.title = args.title;
+    }
+    if (args.viceName !== undefined) {
+      this.viceName = args.viceName;
     }
   }
 };
@@ -2006,6 +2026,13 @@ QueryImgkeyResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.viceName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2040,6 +2067,11 @@ QueryImgkeyResult.prototype.write = function(output) {
   if (this.title !== null && this.title !== undefined) {
     output.writeFieldBegin('title', Thrift.Type.STRING, 5);
     output.writeString(this.title);
+    output.writeFieldEnd();
+  }
+  if (this.viceName !== null && this.viceName !== undefined) {
+    output.writeFieldBegin('viceName', Thrift.Type.STRING, 6);
+    output.writeString(this.viceName);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
