@@ -221,11 +221,11 @@ Seller.prototype.querySellerVipList = function(param,callback){
         currentPage:param.curPage,
         numPerPage:param.perCount
     });
-    logger.info("调用 sellerServ-querySellerVipList params:" + JSON.stringify(param));
+    logger.error("调用 sellerServ-querySellerVipList params:" + JSON.stringify(param));
     //获取client
     var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer,'querySellerVipList',[param.sellerId+"",paginationParms]);
     Lich.wicca.invokeClient(sellerServ, function(err, data){
-        logger.info("会员信息列表信息:" + JSON.stringify(data));
+        logger.error("会员信息列表信息:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == "1") {
             logger.error("会员信息列表获取失败，因为: ======" + err);
