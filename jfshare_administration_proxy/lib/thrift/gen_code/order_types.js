@@ -562,9 +562,6 @@ OrderInfo = module.exports.OrderInfo = function(args) {
   this.thirdExchangeRate = null;
   this.postageExt = null;
   this.weight = null;
-  this.ext1 = null;
-  this.ext2 = null;
-  this.ext3 = null;
   if (args) {
     if (args.orderId !== undefined) {
       this.orderId = args.orderId;
@@ -655,15 +652,6 @@ OrderInfo = module.exports.OrderInfo = function(args) {
     }
     if (args.weight !== undefined) {
       this.weight = args.weight;
-    }
-    if (args.ext1 !== undefined) {
-      this.ext1 = args.ext1;
-    }
-    if (args.ext2 !== undefined) {
-      this.ext2 = args.ext2;
-    }
-    if (args.ext3 !== undefined) {
-      this.ext3 = args.ext3;
     }
   }
 };
@@ -891,27 +879,6 @@ OrderInfo.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 31:
-      if (ftype == Thrift.Type.STRING) {
-        this.ext1 = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 32:
-      if (ftype == Thrift.Type.STRING) {
-        this.ext2 = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 33:
-      if (ftype == Thrift.Type.STRING) {
-        this.ext3 = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
       default:
         input.skip(ftype);
     }
@@ -1071,21 +1038,6 @@ OrderInfo.prototype.write = function(output) {
   if (this.weight !== null && this.weight !== undefined) {
     output.writeFieldBegin('weight', Thrift.Type.STRING, 30);
     output.writeString(this.weight);
-    output.writeFieldEnd();
-  }
-  if (this.ext1 !== null && this.ext1 !== undefined) {
-    output.writeFieldBegin('ext1', Thrift.Type.STRING, 31);
-    output.writeString(this.ext1);
-    output.writeFieldEnd();
-  }
-  if (this.ext2 !== null && this.ext2 !== undefined) {
-    output.writeFieldBegin('ext2', Thrift.Type.STRING, 32);
-    output.writeString(this.ext2);
-    output.writeFieldEnd();
-  }
-  if (this.ext3 !== null && this.ext3 !== undefined) {
-    output.writeFieldBegin('ext3', Thrift.Type.STRING, 33);
-    output.writeString(this.ext3);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

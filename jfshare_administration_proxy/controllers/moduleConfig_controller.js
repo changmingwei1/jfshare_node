@@ -229,6 +229,7 @@ router.post('/queryImgkey', function (request, response, next) {
             result.imgKey = data[0].imgKey;
             result.curPrice = data[0].curPrice;
             result.orgPrice = data[0].orgPrice;
+            result.viceName = data[0].viceName;
             result.title = data[0].title;
             response.json(result);
             return;

@@ -71,12 +71,16 @@ router.post('/validateCaptcha', function (request, response, next) {
     }
 });
 
-/*获取短信验证码*/
+/*获取短信验证码----以后不用这个接口了20161031*/
 router.get('/sms', function (request, response, next) {
     logger.info("进入获取验证码接口");
     var resContent = {code: 200};
     var param = request.query;
     try {
+        resContent.code = 500;
+        resContent.desc = "短信服务暂停,如需登陆,请使用其他方式登陆";
+        response.json(resContent);
+        return;
         if (param == null || param.mobile == null) {
             resContent.code = 400;
             resContent.desc = "请求参数错误";
@@ -84,13 +88,55 @@ router.get('/sms', function (request, response, next) {
             return;
         }
         logger.info("获取短信验证码请求参数：" + JSON.stringify(param));
-        Common.sendMsgCaptcha(param, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
+
+        async.waterfall([
+            function (callback){
+                logger.info("kankandaonalile");
+                fs.readFile('/data/run/jfshare_node/jfshare_buyer_proxy/limitMobile.txt','utf-8',function(err, data){
+                    if(err){
+                        callback(err);
+                    } else {
+                        //logger.error(JSON.stringify(data));
+                        var list = data.split("\n");
+                        //logger.info(list);
+                        for(var i = 0; i<= list.length ;i++){
+                            if(list[i] == param.mobile){
+                                logger.info("这是一个标识！");
+                                resContent.code = 500;
+                                resContent.desc = "获取短信验证码失败，如有问题请联系客服400-800-2383";
+                                return response.json(resContent);
+                                break;
+                            }
+                        }
+                        callback(null);
+                    }
+                });
+            },
+            function (callback) {
+                logger.error("guolaide biaoshi");
+                Common.sendMsgCaptcha(param, function (err, data) {
+                    if (err) {
+                        response.json(err);
+                        return;
+                    }
+                    response.json(resContent);
+                });
             }
-            response.json(resContent);
+        ], function (err) {
+            if (err) {
+                return response.json(err);
+            } else {
+                return response.json({resContent: true});
+            }
         });
+
+        //Common.sendMsgCaptcha(param, function (err, data) {
+        //    if (err) {
+        //        response.json(err);
+        //        return;
+        //    }
+        //    response.json(resContent);
+        //});
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("获取验证码失败，because :" + ex);
@@ -1872,6 +1918,54 @@ router.get('/getQRCodeForSeller', function (request, response, next) {
         logger.error("获取验证码失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "不能获取验证码";
+        response.json(resContent);
+    }
+});
+
+/*获取短信验证码接口,先校验图形验证码*/
+router.post('/sendMs', function (request, response, next) {
+    logger.info("进入获取短验接口");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param.id == null || param.id == "") {
+            resContent.code = 400;
+            resContent.desc = "param error";
+            response.json(resContent);
+            return;
+        }
+        if (param.value == null || param.value == "") {
+            resContent.code = 400;
+            resContent.desc = "param error";
+            response.json(resContent);
+            return;
+        }
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 400;
+            resContent.desc = "param error";
+            response.json(resContent);
+            return;
+        }
+        logger.info("验证图形验证码请求参数：" + JSON.stringify(param));
+        Common.validateCaptcha(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                Common.sendMsgCaptcha(param, function (err, data) {
+                    if (err) {
+                        response.json(err);
+                        return;
+                    }
+                    response.json(resContent);
+                });
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("验证失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "验证失败";
         response.json(resContent);
     }
 });

@@ -43,7 +43,7 @@ Seller.prototype.getBuyer = function(userId,callback){
 };
 
 //更新用户信息(包含修改注册手机)
-Buyer.prototype.updateBuyer = function(param,callback){
+Seller.prototype.updateBuyer = function(param,callback){
 
     var value = new common_types.Captcha({value:param.value});
 
@@ -93,7 +93,7 @@ Buyer.prototype.updateBuyer = function(param,callback){
 };
 
 //获取用户积分==积分类均需要thrift提供接口
-Buyer.prototype.getBuyerScore = function(userId,callback){
+Seller.prototype.getBuyerScore = function(userId,callback){
 
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getBuyerScore',userId);
@@ -112,7 +112,7 @@ Buyer.prototype.getBuyerScore = function(userId,callback){
 };
 
 //获取积分列表
-Buyer.prototype.getBuyerScoreList = function(param,callback){
+Seller.prototype.getBuyerScoreList = function(param,callback){
     var thrift_pagination = new pagination_types.Pagination({currentPage:params.curpage,numPerPage:params.percount});
     //新增BuyerScoreListParm
     var params = new buyer_types.getBuyerScoreList({
@@ -137,7 +137,7 @@ Buyer.prototype.getBuyerScoreList = function(param,callback){
 };
 
 //首页轮播图的获取,soltImage_types在thrift/gen_code/中缺少模块
-Buyer.prototype.querySlotImageList = function(param,callback){
+Seller.prototype.querySlotImageList = function(param,callback){
     var imageParm = new soltImage_types.QuerySlotImageParam({
         type:param.type
     });
@@ -159,7 +159,7 @@ Buyer.prototype.querySlotImageList = function(param,callback){
 };
 
 //用户名（即手机号）/密码登录
-Buyer.prototype.loginByNameAndPwd = function(param,callback){
+Seller.prototype.loginByNameAndPwd = function(param,callback){
 
     var buyer = new buyer_types.Buyer({
         mobile:param.mobile,
@@ -187,7 +187,7 @@ Buyer.prototype.loginByNameAndPwd = function(param,callback){
 };
 
 //用户名、密码注册
-Buyer.prototype.singin = function(param,callback){
+Seller.prototype.singin = function(param,callback){
 
     var buyer = new buyer_types.Buyer({
         mobile:param.mobile,
@@ -215,17 +215,17 @@ Buyer.prototype.singin = function(param,callback){
 };
 
 //会员信息列表
-Buyer.prototype.querySellerVipList = function(param,callback){
+Seller.prototype.querySellerVipList = function(param,callback){
 
     var paginationParms = new pagination_types.Pagination({
         currentPage:param.curPage,
         numPerPage:param.perCount
     });
-    logger.info("调用 sellerServ-querySellerVipList params:" + JSON.stringify(param));
+    logger.error("调用 sellerServ-querySellerVipList params:" + JSON.stringify(param));
     //获取client
     var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer,'querySellerVipList',[param.sellerId+"",paginationParms]);
     Lich.wicca.invokeClient(sellerServ, function(err, data){
-        logger.info("会员信息列表信息:" + JSON.stringify(data));
+        logger.error("会员信息列表信息:" + JSON.stringify(data));
         var res = {};
         if (err||data[0].result.code == "1") {
             logger.error("会员信息列表获取失败，因为: ======" + err);
@@ -250,30 +250,7 @@ Seller.prototype.queryCheckCodeList = function (params, callback) {
         productName:params.productName
     });
 
-//查询卖家
-Seller.prototype.querySellerBySeller = function (params, callback) {
-    logger.error("querySellerBySeller params:" + JSON.stringify(params));
-    var sellerParam = new seller_types.Seller({
-        sellerName:params.sellerName
-    });
-
-    logger.error("querySellerBySeller sellerParam-after:" + JSON.stringify(sellerParam));
-    //获取client
-    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'querySellerBySeller', [sellerParam]);
-    Lich.wicca.invokeClient(sellerServ, function (err, data) {
-        logger.error("querySellerBySeller result:" + JSON.stringify(data));
-        var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("can't get seller result because: ======" + err);
-            res.code = 500;
-            res.desc = "获取卖家失败";
-            callback(res, null);
-        } else {
-            callback(null, data);
-        }
-    });
-};
-module.exports = new Buyer();    var pagination = new pagination_types.Pagination({
+    var pagination = new pagination_types.Pagination({
         currentPage:params.curPage,
         numPerPage:params.perCount
     });
@@ -295,8 +272,8 @@ module.exports = new Buyer();    var pagination = new pagination_types.Paginatio
         }
     });
 };
-//exprotCheckCodeList
 
+//exprotCheckCodeList
 Seller.prototype.exportCheckCodeList = function (params, callback) {
     logger.error("exprotCheckCodeList params:" + JSON.stringify(params));
     var  param = new product_types.CheckCodeListParam({
@@ -324,4 +301,29 @@ Seller.prototype.exportCheckCodeList = function (params, callback) {
         }
     });
 };
+
+//查询卖家
+Seller.prototype.querySellerBySeller = function (params, callback) {
+    logger.error("querySellerBySeller params:" + JSON.stringify(params));
+    var sellerParam = new seller_types.Seller({
+        sellerName:params.sellerName
+    });
+
+    logger.error("querySellerBySeller sellerParam-after:" + JSON.stringify(sellerParam));
+    //获取client
+    var sellerServ = new Lich.InvokeBag(Lich.ServiceKey.SellerServer, 'querySellerBySeller', [sellerParam]);
+    Lich.wicca.invokeClient(sellerServ, function (err, data) {
+        logger.error("querySellerBySeller result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("can't get seller result because: ======" + err);
+            res.code = 500;
+            res.desc = "获取卖家失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Seller();
