@@ -42,11 +42,17 @@ router.post('/list', function (req, res, next) {
                 //====================================================20161019
                 if(productSurveyList != null){
                     for(var i = 0; i < productSurveyList.length ; i++){
-                        var imgUri = productSurveyList[i].imgUrl.split(",")[0];
-                        //发布会演示无法下架商品--紧急处理20161019
-                        if(productSurveyList[i].productId=="ze160920104638000777" || productSurveyList[i].productId=="ze161017112401000815" || productSurveyList[i].productId== "ze160918180638000156" || productSurveyList[i].productId== "ze161018010256000053"){
-                            continue;
+
+                        var imgUri = "";
+
+                        if(productSurveyList[i].imgUrl!=null){
+                            imgUri = productSurveyList[i].imgUrl.split(",")[0];
                         }
+
+                        //发布会演示无法下架商品--紧急处理20161019
+                        //if(productSurveyList[i].productId=="ze160920104638000777" || productSurveyList[i].productId=="ze161017112401000815" || productSurveyList[i].productId== "ze160918180638000156" || productSurveyList[i].productId== "ze161018010256000053"){
+                        //    continue;
+                        //}
                         dataArr.push({
                             productId: productSurveyList[i].productId,
                             productName: productSurveyList[i].productName,
