@@ -121,6 +121,222 @@ FileForCardServ_fileToTY_result.prototype.write = function(output) {
   return;
 };
 
+FileForCardServ_auditPass_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+FileForCardServ_auditPass_args.prototype = {};
+FileForCardServ_auditPass_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.AuditParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_auditPass_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_auditPass_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_auditPass_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_auditPass_result.prototype = {};
+FileForCardServ_auditPass_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_auditPass_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_auditPass_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryCardsList_args = function(args) {
+  this.conditions = null;
+  if (args) {
+    if (args.conditions !== undefined) {
+      this.conditions = args.conditions;
+    }
+  }
+};
+FileForCardServ_queryCardsList_args.prototype = {};
+FileForCardServ_queryCardsList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.conditions = new ttypes.QueryConditions();
+        this.conditions.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryCardsList_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryCardsList_args');
+  if (this.conditions !== null && this.conditions !== undefined) {
+    output.writeFieldBegin('conditions', Thrift.Type.STRUCT, 1);
+    this.conditions.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryCardsList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryCardsList_result.prototype = {};
+FileForCardServ_queryCardsList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ThirdPartyCardResultList();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryCardsList_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryCardsList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 FileForCardServ_addRecharge_args = function(args) {
   this.recharge = null;
   if (args) {
@@ -473,18 +689,18 @@ FileForCardServ_rechargeList_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
+        var _size16 = 0;
+        var _rtmp320;
         this.states = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
         {
-          var elem14 = null;
-          elem14 = input.readI32();
-          this.states.push(elem14);
+          var elem22 = null;
+          elem22 = input.readI32();
+          this.states.push(elem22);
         }
         input.readListEnd();
       } else {
@@ -512,12 +728,12 @@ FileForCardServ_rechargeList_args.prototype.write = function(output) {
   if (this.states !== null && this.states !== undefined) {
     output.writeFieldBegin('states', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.states.length);
-    for (var iter15 in this.states)
+    for (var iter23 in this.states)
     {
-      if (this.states.hasOwnProperty(iter15))
+      if (this.states.hasOwnProperty(iter23))
       {
-        iter15 = this.states[iter15];
-        output.writeI32(iter15);
+        iter23 = this.states[iter23];
+        output.writeI32(iter23);
       }
     }
     output.writeListEnd();
@@ -642,6 +858,100 @@ FileForCardServClient.prototype.recv_fileToTY = function(input,mtype,rseqid) {
     return callback(null, result.success);
   }
   return callback('fileToTY failed: unknown result');
+};
+FileForCardServClient.prototype.auditPass = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_auditPass(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_auditPass(param);
+  }
+};
+
+FileForCardServClient.prototype.send_auditPass = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('auditPass', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_auditPass_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_auditPass = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_auditPass_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('auditPass failed: unknown result');
+};
+FileForCardServClient.prototype.queryCardsList = function(conditions, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCardsList(conditions);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCardsList(conditions);
+  }
+};
+
+FileForCardServClient.prototype.send_queryCardsList = function(conditions) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCardsList', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryCardsList_args();
+  args.conditions = conditions;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryCardsList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryCardsList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCardsList failed: unknown result');
 };
 FileForCardServClient.prototype.addRecharge = function(recharge, callback) {
   this._seqid = this.new_seqid();
@@ -873,6 +1183,66 @@ FileForCardServProcessor.prototype.process_fileToTY = function(seqid, input, out
     this._handler.fileToTY(args.param,  function (err, result) {
       var result = new FileForCardServ_fileToTY_result((err != null ? err : {success: result}));
       output.writeMessageBegin("fileToTY", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_auditPass = function(seqid, input, output) {
+  var args = new FileForCardServ_auditPass_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.auditPass.length === 1) {
+    Q.fcall(this._handler.auditPass, args.param)
+      .then(function(result) {
+        var result = new FileForCardServ_auditPass_result({success: result});
+        output.writeMessageBegin("auditPass", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_auditPass_result(err);
+        output.writeMessageBegin("auditPass", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.auditPass(args.param,  function (err, result) {
+      var result = new FileForCardServ_auditPass_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("auditPass", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryCardsList = function(seqid, input, output) {
+  var args = new FileForCardServ_queryCardsList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCardsList.length === 1) {
+    Q.fcall(this._handler.queryCardsList, args.conditions)
+      .then(function(result) {
+        var result = new FileForCardServ_queryCardsList_result({success: result});
+        output.writeMessageBegin("queryCardsList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryCardsList_result(err);
+        output.writeMessageBegin("queryCardsList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCardsList(args.conditions,  function (err, result) {
+      var result = new FileForCardServ_queryCardsList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCardsList", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

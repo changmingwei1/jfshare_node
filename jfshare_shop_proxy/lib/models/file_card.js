@@ -24,7 +24,8 @@ FileCards.prototype.fileToTY = function (params, callback) {
         StartDate: params.startDate,
         excelKeyUrl: params.excelKeyUrl,
         notEncryptFlag: params.notEncryptFlag,  //前端传递此参数,后端不解密
-        isTestFlag: params.isTestFlag           //测试接口 值为false
+        isTestFlag: params.isTestFlag,           //测试接口 值为false
+        sellerName: params.sellerName           //商家名称
     });
     logger.info("params4Upload >>>>>>>>>>>  " + JSON.stringify(params4Upload));
     //获取客户端
@@ -39,6 +40,71 @@ FileCards.prototype.fileToTY = function (params, callback) {
             callback(res, null);
         } else if (data[0].result.code == 1) {
             logger.warn("上传第三方卡密，参数为：" + JSON.stringify(params4Upload));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else {
+            callback(null, data);
+        }
+    });
+
+};
+
+/** 管理中心审核 */
+FileCards.prototype.auditPass = function (params, callback) {
+
+    var param = new manager_types.AuditParam({
+        id: params.id,
+        type: params.type
+    });
+    logger.info("param >>>>>>>>>>>  " + JSON.stringify(param));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'auditPass', [param]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("fileToTY result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].code == 1) {
+            logger.error("slotServ.fileToTY because: ======" + err);
+            res.code = 500;
+            res.desc = "审核失败";
+            callback(res, null);
+        } else if (data[0].code == 1) {
+            logger.warn("审核失败，参数为：" + JSON.stringify(params4Upload));
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
+        } else {
+            callback(null, data);
+        }
+    });
+
+};
+
+/** 查询卡密商家信息列表 */
+FileCards.prototype.queryCardsList = function (params, callback) {
+
+    var conditions = new manager_types.QueryConditions({
+        productName: params.productName,
+        sellerName: params.sellerName,
+        status: params.status
+    });
+    var thrift_pagination = new pagination_types.Pagination({
+        currentPage: params.curPage || 1,
+        numPerPage: params.perCount
+    });
+
+    logger.info("conditions >>>>>>>>>>>  " + JSON.stringify(conditions));
+    logger.info("conditions >>>>>>>>>>>  " + JSON.stringify(thrift_pagination));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'queryCardsList', [conditions,thrift_pagination]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("fileToTY result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("slotServ.fileToTY because: ======" + err);
+            res.code = 500;
+            res.desc = "查询列表失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            logger.warn("查询列表失败，参数为：" + JSON.stringify(params4Upload));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
         } else {
