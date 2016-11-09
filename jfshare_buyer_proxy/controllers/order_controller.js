@@ -1961,6 +1961,14 @@ router.post('/payOrderCreates', function (request, response, next) {
              response.json(result);
              return;
          }
+
+        if (arg.totalSum =="30") {
+            result.code = 400;
+            result.desc = "该面值已售罄";
+            response.json(result);
+            return;
+        }
+
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息
         Buyer.validAuth(arg, function (err, data) {
