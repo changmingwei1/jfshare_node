@@ -1963,7 +1963,7 @@ router.post('/payOrderCreates', function (request, response, next) {
          }
 
         if (arg.totalSum =="30") {
-            result.code = 400;
+            result.code = 500;
             result.desc = "该面值已售罄";
             response.json(result);
             return;
