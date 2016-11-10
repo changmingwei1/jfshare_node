@@ -668,6 +668,7 @@ router.post('/list', function (request, response, next) {
                                                 }
                                                 if(order.tradeCode=="Z8003"){
                                                     productItem.productName="话费充值";
+                                                    productItem.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
                                                 }
                                                 if(order.tradeCode=="Z8004"){
                                                     productItem.productName="流量充值";
@@ -1021,6 +1022,7 @@ router.post('/info', function (req, res, next) {
                                         };
                                         if(orderInfo.tradeCode=="Z8003"){
                                             product.productName="话费充值";
+                                            product.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
                                         }
                                         if(orderInfo.tradeCode=="Z8004"){
                                             product.productName="流量充值";
