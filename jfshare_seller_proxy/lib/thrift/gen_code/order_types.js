@@ -1085,6 +1085,7 @@ Order = module.exports.Order = function(args) {
   this.postageExt = null;
   this.orderType = null;
   this.thirdPrice = null;
+  this.virRechargeState = null;
   if (args) {
     if (args.orderId !== undefined) {
       this.orderId = args.orderId;
@@ -1202,6 +1203,9 @@ Order = module.exports.Order = function(args) {
     }
     if (args.thirdPrice !== undefined) {
       this.thirdPrice = args.thirdPrice;
+    }
+    if (args.virRechargeState !== undefined) {
+      this.virRechargeState = args.virRechargeState;
     }
   }
 };
@@ -1508,6 +1512,13 @@ Order.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 40:
+      if (ftype == Thrift.Type.STRING) {
+        this.virRechargeState = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1723,6 +1734,11 @@ Order.prototype.write = function(output) {
     output.writeString(this.thirdPrice);
     output.writeFieldEnd();
   }
+  if (this.virRechargeState !== null && this.virRechargeState !== undefined) {
+    output.writeFieldBegin('virRechargeState', Thrift.Type.STRING, 40);
+    output.writeString(this.virRechargeState);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -1767,6 +1783,7 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
   this.fromSource = null;
   this.receiverMobile = null;
   this.receiverName = null;
+  this.payId = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -1881,6 +1898,9 @@ OrderQueryConditions = module.exports.OrderQueryConditions = function(args) {
     }
     if (args.receiverName !== undefined) {
       this.receiverName = args.receiverName;
+    }
+    if (args.payId !== undefined) {
+      this.payId = args.payId;
     }
   }
 };
@@ -2190,6 +2210,13 @@ OrderQueryConditions.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 39:
+      if (ftype == Thrift.Type.STRING) {
+        this.payId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2407,6 +2434,11 @@ OrderQueryConditions.prototype.write = function(output) {
   if (this.receiverName !== null && this.receiverName !== undefined) {
     output.writeFieldBegin('receiverName', Thrift.Type.STRING, 38);
     output.writeString(this.receiverName);
+    output.writeFieldEnd();
+  }
+  if (this.payId !== null && this.payId !== undefined) {
+    output.writeFieldBegin('payId', Thrift.Type.STRING, 39);
+    output.writeString(this.payId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -4107,6 +4139,59 @@ OrderSellerQueryParam.prototype.write = function(output) {
   if (this.endTime !== null && this.endTime !== undefined) {
     output.writeFieldBegin('endTime', Thrift.Type.STRING, 5);
     output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+DeliverParam = module.exports.DeliverParam = function(args) {
+  this.path = null;
+  if (args) {
+    if (args.path !== undefined) {
+      this.path = args.path;
+    }
+  }
+};
+DeliverParam.prototype = {};
+DeliverParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.path = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+DeliverParam.prototype.write = function(output) {
+  output.writeStructBegin('DeliverParam');
+  if (this.path !== null && this.path !== undefined) {
+    output.writeFieldBegin('path', Thrift.Type.STRING, 1);
+    output.writeString(this.path);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
