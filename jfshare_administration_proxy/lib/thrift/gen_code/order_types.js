@@ -1085,6 +1085,7 @@ Order = module.exports.Order = function(args) {
   this.postageExt = null;
   this.orderType = null;
   this.thirdPrice = null;
+  this.virRechargeState = null;
   if (args) {
     if (args.orderId !== undefined) {
       this.orderId = args.orderId;
@@ -1202,6 +1203,9 @@ Order = module.exports.Order = function(args) {
     }
     if (args.thirdPrice !== undefined) {
       this.thirdPrice = args.thirdPrice;
+    }
+    if (args.virRechargeState !== undefined) {
+      this.virRechargeState = args.virRechargeState;
     }
   }
 };
@@ -1508,6 +1512,13 @@ Order.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 40:
+      if (ftype == Thrift.Type.STRING) {
+        this.virRechargeState = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1721,6 +1732,11 @@ Order.prototype.write = function(output) {
   if (this.thirdPrice !== null && this.thirdPrice !== undefined) {
     output.writeFieldBegin('thirdPrice', Thrift.Type.STRING, 39);
     output.writeString(this.thirdPrice);
+    output.writeFieldEnd();
+  }
+  if (this.virRechargeState !== null && this.virRechargeState !== undefined) {
+    output.writeFieldBegin('virRechargeState', Thrift.Type.STRING, 40);
+    output.writeString(this.virRechargeState);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
