@@ -14,7 +14,7 @@ var Active = require('../lib/models/active');
 var Message = require('../lib/models/message');
 var Product = require('../lib/models/product');
 var Score = require('../lib/models/score');
-
+var zookeeper = require('../resource/zookeeper_util');
 
 /*压力测试*/
 router.post('/jmeterTest',function(request,response,next){
@@ -277,6 +277,22 @@ router.get('/queryMobileInfo',function(request,response,next){
         response.json(result);
     });
     req.end();
+
+});
+
+//移动端需要的动态的图,放在zk中,方便配置
+router.get('/queryImgForApp',function(request,response,next){
+
+    var result = {code:200};
+    var imgKey = "";
+    try{
+        imgKey = zookeeper.getData("imgkey4app");
+    } catch (ex) {
+        result.imgKey = "http://120.24.153.102:3000/system/v1/jfs_image/0F102D89A1432FE58BE9D98B7A027655.jpg";
+        response.json(result);
+    }
+    result.imgKey = imgKey;
+    response.json(result);
 
 });
 
