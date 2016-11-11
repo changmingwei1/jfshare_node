@@ -8,6 +8,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var result_ttypes = require('./result_types')
+var pagination_ttypes = require('./pagination_types')
 
 
 var ttypes = module.exports = {};
@@ -348,6 +349,7 @@ ThirdPartyCard = module.exports.ThirdPartyCard = function(args) {
   this.applyTime = null;
   this.approveTime = null;
   this.status = null;
+  this.expData = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -378,6 +380,9 @@ ThirdPartyCard = module.exports.ThirdPartyCard = function(args) {
     }
     if (args.status !== undefined) {
       this.status = args.status;
+    }
+    if (args.expData !== undefined) {
+      this.expData = args.expData;
     }
   }
 };
@@ -465,6 +470,13 @@ ThirdPartyCard.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.expData = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -526,6 +538,11 @@ ThirdPartyCard.prototype.write = function(output) {
     output.writeI32(this.status);
     output.writeFieldEnd();
   }
+  if (this.expData !== null && this.expData !== undefined) {
+    output.writeFieldBegin('expData', Thrift.Type.STRING, 11);
+    output.writeString(this.expData);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -534,12 +551,16 @@ ThirdPartyCard.prototype.write = function(output) {
 ThirdPartyCardResultList = module.exports.ThirdPartyCardResultList = function(args) {
   this.result = null;
   this.thirdPartyCards = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.thirdPartyCards !== undefined) {
       this.thirdPartyCards = args.thirdPartyCards;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -586,6 +607,14 @@ ThirdPartyCardResultList.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -616,6 +645,11 @@ ThirdPartyCardResultList.prototype.write = function(output) {
     output.writeListEnd();
     output.writeFieldEnd();
   }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -641,6 +675,11 @@ Recharge = module.exports.Recharge = function(args) {
   this.createTime = null;
   this.updateTime = null;
   this.reqOutNo = null;
+  this.company = null;
+  this.flowno = null;
+  this.ext1 = null;
+  this.ext2 = null;
+  this.ext3 = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -698,6 +737,21 @@ Recharge = module.exports.Recharge = function(args) {
     }
     if (args.reqOutNo !== undefined) {
       this.reqOutNo = args.reqOutNo;
+    }
+    if (args.company !== undefined) {
+      this.company = args.company;
+    }
+    if (args.flowno !== undefined) {
+      this.flowno = args.flowno;
+    }
+    if (args.ext1 !== undefined) {
+      this.ext1 = args.ext1;
+    }
+    if (args.ext2 !== undefined) {
+      this.ext2 = args.ext2;
+    }
+    if (args.ext3 !== undefined) {
+      this.ext3 = args.ext3;
     }
   }
 };
@@ -848,6 +902,41 @@ Recharge.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 20:
+      if (ftype == Thrift.Type.STRING) {
+        this.company = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 21:
+      if (ftype == Thrift.Type.STRING) {
+        this.flowno = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 22:
+      if (ftype == Thrift.Type.STRING) {
+        this.ext1 = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 23:
+      if (ftype == Thrift.Type.STRING) {
+        this.ext2 = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 24:
+      if (ftype == Thrift.Type.STRING) {
+        this.ext3 = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -952,6 +1041,31 @@ Recharge.prototype.write = function(output) {
   if (this.reqOutNo !== null && this.reqOutNo !== undefined) {
     output.writeFieldBegin('reqOutNo', Thrift.Type.STRING, 19);
     output.writeString(this.reqOutNo);
+    output.writeFieldEnd();
+  }
+  if (this.company !== null && this.company !== undefined) {
+    output.writeFieldBegin('company', Thrift.Type.STRING, 20);
+    output.writeString(this.company);
+    output.writeFieldEnd();
+  }
+  if (this.flowno !== null && this.flowno !== undefined) {
+    output.writeFieldBegin('flowno', Thrift.Type.STRING, 21);
+    output.writeString(this.flowno);
+    output.writeFieldEnd();
+  }
+  if (this.ext1 !== null && this.ext1 !== undefined) {
+    output.writeFieldBegin('ext1', Thrift.Type.STRING, 22);
+    output.writeString(this.ext1);
+    output.writeFieldEnd();
+  }
+  if (this.ext2 !== null && this.ext2 !== undefined) {
+    output.writeFieldBegin('ext2', Thrift.Type.STRING, 23);
+    output.writeString(this.ext2);
+    output.writeFieldEnd();
+  }
+  if (this.ext3 !== null && this.ext3 !== undefined) {
+    output.writeFieldBegin('ext3', Thrift.Type.STRING, 24);
+    output.writeString(this.ext3);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

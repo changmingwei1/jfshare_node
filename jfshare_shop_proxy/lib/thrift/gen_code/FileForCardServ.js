@@ -8,6 +8,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var result_ttypes = require('./result_types')
+var pagination_ttypes = require('./pagination_types')
 
 
 var ttypes = require('./fileUpload_types');
@@ -231,9 +232,13 @@ FileForCardServ_auditPass_result.prototype.write = function(output) {
 
 FileForCardServ_queryCardsList_args = function(args) {
   this.conditions = null;
+  this.pagination = null;
   if (args) {
     if (args.conditions !== undefined) {
       this.conditions = args.conditions;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -259,9 +264,14 @@ FileForCardServ_queryCardsList_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -276,6 +286,11 @@ FileForCardServ_queryCardsList_args.prototype.write = function(output) {
   if (this.conditions !== null && this.conditions !== undefined) {
     output.writeFieldBegin('conditions', Thrift.Type.STRUCT, 1);
     this.conditions.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -663,13 +678,13 @@ FileForCardServ_rechargeNotify_result.prototype.write = function(output) {
 
 FileForCardServ_rechargeList_args = function(args) {
   this.states = null;
-  this.reqOutNo = null;
+  this.recharge = null;
   if (args) {
     if (args.states !== undefined) {
       this.states = args.states;
     }
-    if (args.reqOutNo !== undefined) {
-      this.reqOutNo = args.reqOutNo;
+    if (args.recharge !== undefined) {
+      this.recharge = args.recharge;
     }
   }
 };
@@ -708,8 +723,9 @@ FileForCardServ_rechargeList_args.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.reqOutNo = input.readString();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.recharge = new ttypes.Recharge();
+        this.recharge.read(input);
       } else {
         input.skip(ftype);
       }
@@ -739,9 +755,9 @@ FileForCardServ_rechargeList_args.prototype.write = function(output) {
     output.writeListEnd();
     output.writeFieldEnd();
   }
-  if (this.reqOutNo !== null && this.reqOutNo !== undefined) {
-    output.writeFieldBegin('reqOutNo', Thrift.Type.STRING, 2);
-    output.writeString(this.reqOutNo);
+  if (this.recharge !== null && this.recharge !== undefined) {
+    output.writeFieldBegin('recharge', Thrift.Type.STRUCT, 2);
+    this.recharge.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -906,7 +922,7 @@ FileForCardServClient.prototype.recv_auditPass = function(input,mtype,rseqid) {
   }
   return callback('auditPass failed: unknown result');
 };
-FileForCardServClient.prototype.queryCardsList = function(conditions, callback) {
+FileForCardServClient.prototype.queryCardsList = function(conditions, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -917,19 +933,20 @@ FileForCardServClient.prototype.queryCardsList = function(conditions, callback) 
         _defer.resolve(result);
       }
     };
-    this.send_queryCardsList(conditions);
+    this.send_queryCardsList(conditions, pagination);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_queryCardsList(conditions);
+    this.send_queryCardsList(conditions, pagination);
   }
 };
 
-FileForCardServClient.prototype.send_queryCardsList = function(conditions) {
+FileForCardServClient.prototype.send_queryCardsList = function(conditions, pagination) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('queryCardsList', Thrift.MessageType.CALL, this.seqid());
   var args = new FileForCardServ_queryCardsList_args();
   args.conditions = conditions;
+  args.pagination = pagination;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -1094,7 +1111,7 @@ FileForCardServClient.prototype.recv_rechargeNotify = function(input,mtype,rseqi
   }
   return callback('rechargeNotify failed: unknown result');
 };
-FileForCardServClient.prototype.rechargeList = function(states, reqOutNo, callback) {
+FileForCardServClient.prototype.rechargeList = function(states, recharge, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -1105,20 +1122,20 @@ FileForCardServClient.prototype.rechargeList = function(states, reqOutNo, callba
         _defer.resolve(result);
       }
     };
-    this.send_rechargeList(states, reqOutNo);
+    this.send_rechargeList(states, recharge);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_rechargeList(states, reqOutNo);
+    this.send_rechargeList(states, recharge);
   }
 };
 
-FileForCardServClient.prototype.send_rechargeList = function(states, reqOutNo) {
+FileForCardServClient.prototype.send_rechargeList = function(states, recharge) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('rechargeList', Thrift.MessageType.CALL, this.seqid());
   var args = new FileForCardServ_rechargeList_args();
   args.states = states;
-  args.reqOutNo = reqOutNo;
+  args.recharge = recharge;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -1224,8 +1241,8 @@ FileForCardServProcessor.prototype.process_queryCardsList = function(seqid, inpu
   var args = new FileForCardServ_queryCardsList_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.queryCardsList.length === 1) {
-    Q.fcall(this._handler.queryCardsList, args.conditions)
+  if (this._handler.queryCardsList.length === 2) {
+    Q.fcall(this._handler.queryCardsList, args.conditions, args.pagination)
       .then(function(result) {
         var result = new FileForCardServ_queryCardsList_result({success: result});
         output.writeMessageBegin("queryCardsList", Thrift.MessageType.REPLY, seqid);
@@ -1240,7 +1257,7 @@ FileForCardServProcessor.prototype.process_queryCardsList = function(seqid, inpu
         output.flush();
       });
   } else {
-    this._handler.queryCardsList(args.conditions,  function (err, result) {
+    this._handler.queryCardsList(args.conditions, args.pagination,  function (err, result) {
       var result = new FileForCardServ_queryCardsList_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryCardsList", Thrift.MessageType.REPLY, seqid);
       result.write(output);
@@ -1345,7 +1362,7 @@ FileForCardServProcessor.prototype.process_rechargeList = function(seqid, input,
   args.read(input);
   input.readMessageEnd();
   if (this._handler.rechargeList.length === 2) {
-    Q.fcall(this._handler.rechargeList, args.states, args.reqOutNo)
+    Q.fcall(this._handler.rechargeList, args.states, args.recharge)
       .then(function(result) {
         var result = new FileForCardServ_rechargeList_result({success: result});
         output.writeMessageBegin("rechargeList", Thrift.MessageType.REPLY, seqid);
@@ -1360,7 +1377,7 @@ FileForCardServProcessor.prototype.process_rechargeList = function(seqid, input,
         output.flush();
       });
   } else {
-    this._handler.rechargeList(args.states, args.reqOutNo,  function (err, result) {
+    this._handler.rechargeList(args.states, args.recharge,  function (err, result) {
       var result = new FileForCardServ_rechargeList_result((err != null ? err : {success: result}));
       output.writeMessageBegin("rechargeList", Thrift.MessageType.REPLY, seqid);
       result.write(output);
