@@ -1957,20 +1957,27 @@ router.post('/payOrderCreates', function (request, response, next) {
             response.json(result);
             return;
         }
-
-         if (arg.totalSum == "" || (arg.totalSum !="30"&& arg.totalSum !="50"
-             && arg.totalSum !="100" && arg.totalSum !="300"&&arg.totalSum !="500")) {
-             result.code = 400;
-             result.desc = "充值金额不合法";
-             response.json(result);
-             return;
-         }
-
-        if (arg.totalSum =="30") {
-            result.code = 500;
-            result.desc = "该面值已售罄";
+        if (arg.totalSum == "") {
+            result.code = 400;
+            result.desc = "充值金额不合法";
             response.json(result);
             return;
+        }
+        if (arg.tradeCode == "Z8003") {
+            if (arg.totalSum == "" || (arg.totalSum !="30"&& arg.totalSum !="50"
+                && arg.totalSum !="100" && arg.totalSum !="300"&&arg.totalSum !="500")) {
+                result.code = 400;
+                result.desc = "充值金额不合法";
+                response.json(result);
+                return;
+            }
+
+            if (arg.totalSum =="30") {
+                result.code = 500;
+                result.desc = "该面值已售罄";
+                response.json(result);
+                return;
+            }
         }
 
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));

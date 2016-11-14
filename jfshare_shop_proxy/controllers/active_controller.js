@@ -241,7 +241,7 @@ router.get('/queryMobileInfo',function(request,response,next){
         //path: '/apistore/mobilenumber/mobilenumber?phone=' + params.mobile,
         //path: '/chazhao/mobilesearch/phonesearch?phone=' + params.mobile,
         //hostname:'tcc.taobao.com',
-        url:'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=' + params.mobile,
+        //url:'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=' + params.mobile,
         hostname:'apis.juhe.cn',
         path:'/mobile/get?phone=' + params.mobile + "&key=3a36c566db407b6e8079dab2a5ad6d78",
         method: 'GET',
@@ -263,7 +263,7 @@ router.get('/queryMobileInfo',function(request,response,next){
                 city: msg.city
             };
             result.data = data;
-            logger.error(result);
+            logger.error("号码归属地查询到的信息（不是错）：" + JSON.stringify(result));
             response.json(result);
         });
         res.on('end',function(){

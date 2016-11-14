@@ -416,7 +416,9 @@ Order.prototype.orderConfirmRecharge = function (arg, callback) {
         }));
     }
     var deliverInfo = new order_types.DeliverInfo({
-        receiverMobile: arg.receiverMobile
+        receiverMobile: arg.receiverMobile,
+        receiverName:arg.flowno,    //流量代码简写：30,50,100
+        receiverAddress:arg.company //供应商名称: 中国移动,中国联通,中国电信
     });
     var param = new trade_types.BuyInfo({
         userId: arg.userId,
