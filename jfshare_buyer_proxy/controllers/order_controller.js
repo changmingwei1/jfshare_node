@@ -667,11 +667,12 @@ router.post('/list', function (request, response, next) {
                                                     productItem.imgKey = order.productList[i].imagesUrl.split(',')[0];
                                                 }
                                                 if(order.tradeCode=="Z8003"){
-                                                    productItem.productName="话费充值";
+                                                    productItem.productName="手机话费充值 " + order.closingPrice + "元";
                                                     productItem.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
                                                 }
                                                 if(order.tradeCode=="Z8004"){
-                                                    productItem.productName="流量充值";
+                                                    productItem.productName=order.deliverInfo.receiverAddress + "手机流量充值 " + order.deliverInfo.receiverName;
+                                                    productItem.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
                                                 }
                                                 productList.push(productItem);
                                             }
@@ -1021,11 +1022,12 @@ router.post('/info', function (req, res, next) {
                                             count: orderInfo.productList[i].count
                                         };
                                         if(orderInfo.tradeCode=="Z8003"){
-                                            product.productName="话费充值";
+                                            product.productName="手机话费充值 " + orderInfo.closingPrice + "元";
                                             product.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
                                         }
                                         if(orderInfo.tradeCode=="Z8004"){
-                                            product.productName="流量充值";
+                                            product.productName=orderInfo.deliverInfo.receiverAddress + "手机流量充值 " + orderInfo.deliverInfo.receiverName;
+                                            product.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
                                         }
                                         productList.push(product);
                                     }
@@ -1914,13 +1916,14 @@ router.post('/payOrderCreates', function (request, response, next) {
     logger.info("进入提交订单流程..");
     var result = {code: 200};
     try {
-        result.code = 500;
-        //result.desc = "话费充值服务暂不可使用";
-        result.desc = "运营商系统维护，话费充值服务暂不可用";
-        response.json(result);
-        return;
-
         var arg = request.body;
+        if (arg.tradeCode == "Z8003") {
+            result.code = 500;
+            //result.desc = "话费充值服务暂不可使用";
+            result.desc = "运营商系统维护，话费充值服务暂不可用";
+            response.json(result);
+            return;
+        }
         if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
