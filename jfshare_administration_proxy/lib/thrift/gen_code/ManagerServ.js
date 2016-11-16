@@ -2701,6 +2701,771 @@ ManagerServ_queryAdvertSlotList_result.prototype.write = function(output) {
   return;
 };
 
+ManagerServ_queryPermissionByCsId_args = function(args) {
+  this.csId = null;
+  if (args) {
+    if (args.csId !== undefined) {
+      this.csId = args.csId;
+    }
+  }
+};
+ManagerServ_queryPermissionByCsId_args.prototype = {};
+ManagerServ_queryPermissionByCsId_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.csId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryPermissionByCsId_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryPermissionByCsId_args');
+  if (this.csId !== null && this.csId !== undefined) {
+    output.writeFieldBegin('csId', Thrift.Type.I32, 1);
+    output.writeI32(this.csId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryPermissionByCsId_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryPermissionByCsId_result.prototype = {};
+ManagerServ_queryPermissionByCsId_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryPermissionByCsId_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryPermissionByCsId_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryAllCommissioner_args = function(args) {
+  this.pagination = null;
+  if (args) {
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ManagerServ_queryAllCommissioner_args.prototype = {};
+ManagerServ_queryAllCommissioner_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryAllCommissioner_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryAllCommissioner_args');
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 1);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryAllCommissioner_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryAllCommissioner_result.prototype = {};
+ManagerServ_queryAllCommissioner_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.CommissionerListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryAllCommissioner_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryAllCommissioner_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryCommissionerByCsId_args = function(args) {
+  this.csId = null;
+  if (args) {
+    if (args.csId !== undefined) {
+      this.csId = args.csId;
+    }
+  }
+};
+ManagerServ_queryCommissionerByCsId_args.prototype = {};
+ManagerServ_queryCommissionerByCsId_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.csId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryCommissionerByCsId_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryCommissionerByCsId_args');
+  if (this.csId !== null && this.csId !== undefined) {
+    output.writeFieldBegin('csId', Thrift.Type.I32, 1);
+    output.writeI32(this.csId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryCommissionerByCsId_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryCommissionerByCsId_result.prototype = {};
+ManagerServ_queryCommissionerByCsId_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.Commissioner();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryCommissionerByCsId_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryCommissionerByCsId_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_modifyCommissionerByCsId_args = function(args) {
+  this.cs = null;
+  if (args) {
+    if (args.cs !== undefined) {
+      this.cs = args.cs;
+    }
+  }
+};
+ManagerServ_modifyCommissionerByCsId_args.prototype = {};
+ManagerServ_modifyCommissionerByCsId_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.cs = new ttypes.Commissioner();
+        this.cs.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_modifyCommissionerByCsId_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_modifyCommissionerByCsId_args');
+  if (this.cs !== null && this.cs !== undefined) {
+    output.writeFieldBegin('cs', Thrift.Type.STRUCT, 1);
+    this.cs.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_modifyCommissionerByCsId_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_modifyCommissionerByCsId_result.prototype = {};
+ManagerServ_modifyCommissionerByCsId_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_modifyCommissionerByCsId_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_modifyCommissionerByCsId_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_resetCommissionerPwd_args = function(args) {
+  this.csId = null;
+  this.newPwd = null;
+  if (args) {
+    if (args.csId !== undefined) {
+      this.csId = args.csId;
+    }
+    if (args.newPwd !== undefined) {
+      this.newPwd = args.newPwd;
+    }
+  }
+};
+ManagerServ_resetCommissionerPwd_args.prototype = {};
+ManagerServ_resetCommissionerPwd_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.csId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.newPwd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_resetCommissionerPwd_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_resetCommissionerPwd_args');
+  if (this.csId !== null && this.csId !== undefined) {
+    output.writeFieldBegin('csId', Thrift.Type.I32, 1);
+    output.writeI32(this.csId);
+    output.writeFieldEnd();
+  }
+  if (this.newPwd !== null && this.newPwd !== undefined) {
+    output.writeFieldBegin('newPwd', Thrift.Type.STRING, 2);
+    output.writeString(this.newPwd);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_resetCommissionerPwd_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_resetCommissionerPwd_result.prototype = {};
+ManagerServ_resetCommissionerPwd_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_resetCommissionerPwd_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_resetCommissionerPwd_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_validateResult_args = function(args) {
+  this.validate = null;
+  if (args) {
+    if (args.validate !== undefined) {
+      this.validate = args.validate;
+    }
+  }
+};
+ManagerServ_validateResult_args.prototype = {};
+ManagerServ_validateResult_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.validate = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_validateResult_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_validateResult_args');
+  if (this.validate !== null && this.validate !== undefined) {
+    output.writeFieldBegin('validate', Thrift.Type.I32, 1);
+    output.writeI32(this.validate);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_validateResult_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_validateResult_result.prototype = {};
+ManagerServ_validateResult_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_validateResult_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_validateResult_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_insert_args = function(args) {
+  this.cs = null;
+  if (args) {
+    if (args.cs !== undefined) {
+      this.cs = args.cs;
+    }
+  }
+};
+ManagerServ_insert_args.prototype = {};
+ManagerServ_insert_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.cs = new ttypes.Commissioner();
+        this.cs.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_insert_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_insert_args');
+  if (this.cs !== null && this.cs !== undefined) {
+    output.writeFieldBegin('cs', Thrift.Type.STRUCT, 1);
+    this.cs.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_insert_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_insert_result.prototype = {};
+ManagerServ_insert_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_insert_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_insert_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ManagerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -3885,6 +4650,336 @@ ManagerServClient.prototype.recv_queryAdvertSlotList = function(input,mtype,rseq
   }
   return callback('queryAdvertSlotList failed: unknown result');
 };
+ManagerServClient.prototype.queryPermissionByCsId = function(csId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryPermissionByCsId(csId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryPermissionByCsId(csId);
+  }
+};
+
+ManagerServClient.prototype.send_queryPermissionByCsId = function(csId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryPermissionByCsId', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryPermissionByCsId_args();
+  args.csId = csId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryPermissionByCsId = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryPermissionByCsId_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryPermissionByCsId failed: unknown result');
+};
+ManagerServClient.prototype.queryAllCommissioner = function(pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryAllCommissioner(pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryAllCommissioner(pagination);
+  }
+};
+
+ManagerServClient.prototype.send_queryAllCommissioner = function(pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryAllCommissioner', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryAllCommissioner_args();
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryAllCommissioner = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryAllCommissioner_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryAllCommissioner failed: unknown result');
+};
+ManagerServClient.prototype.queryCommissionerByCsId = function(csId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCommissionerByCsId(csId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCommissionerByCsId(csId);
+  }
+};
+
+ManagerServClient.prototype.send_queryCommissionerByCsId = function(csId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCommissionerByCsId', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryCommissionerByCsId_args();
+  args.csId = csId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryCommissionerByCsId = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryCommissionerByCsId_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCommissionerByCsId failed: unknown result');
+};
+ManagerServClient.prototype.modifyCommissionerByCsId = function(cs, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_modifyCommissionerByCsId(cs);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_modifyCommissionerByCsId(cs);
+  }
+};
+
+ManagerServClient.prototype.send_modifyCommissionerByCsId = function(cs) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('modifyCommissionerByCsId', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_modifyCommissionerByCsId_args();
+  args.cs = cs;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_modifyCommissionerByCsId = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_modifyCommissionerByCsId_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('modifyCommissionerByCsId failed: unknown result');
+};
+ManagerServClient.prototype.resetCommissionerPwd = function(csId, newPwd, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_resetCommissionerPwd(csId, newPwd);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_resetCommissionerPwd(csId, newPwd);
+  }
+};
+
+ManagerServClient.prototype.send_resetCommissionerPwd = function(csId, newPwd) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('resetCommissionerPwd', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_resetCommissionerPwd_args();
+  args.csId = csId;
+  args.newPwd = newPwd;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_resetCommissionerPwd = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_resetCommissionerPwd_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('resetCommissionerPwd failed: unknown result');
+};
+ManagerServClient.prototype.validateResult = function(validate, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_validateResult(validate);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_validateResult(validate);
+  }
+};
+
+ManagerServClient.prototype.send_validateResult = function(validate) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('validateResult', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_validateResult_args();
+  args.validate = validate;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_validateResult = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_validateResult_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('validateResult failed: unknown result');
+};
+ManagerServClient.prototype.insert = function(cs, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_insert(cs);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_insert(cs);
+  }
+};
+
+ManagerServClient.prototype.send_insert = function(cs) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('insert', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_insert_args();
+  args.cs = cs;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_insert = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_insert_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('insert failed: unknown result');
+};
 ManagerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -4646,6 +5741,216 @@ ManagerServProcessor.prototype.process_queryAdvertSlotList = function(seqid, inp
     this._handler.queryAdvertSlotList( function (err, result) {
       var result = new ManagerServ_queryAdvertSlotList_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryAdvertSlotList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryPermissionByCsId = function(seqid, input, output) {
+  var args = new ManagerServ_queryPermissionByCsId_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryPermissionByCsId.length === 1) {
+    Q.fcall(this._handler.queryPermissionByCsId, args.csId)
+      .then(function(result) {
+        var result = new ManagerServ_queryPermissionByCsId_result({success: result});
+        output.writeMessageBegin("queryPermissionByCsId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_queryPermissionByCsId_result(err);
+        output.writeMessageBegin("queryPermissionByCsId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryPermissionByCsId(args.csId,  function (err, result) {
+      var result = new ManagerServ_queryPermissionByCsId_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryPermissionByCsId", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryAllCommissioner = function(seqid, input, output) {
+  var args = new ManagerServ_queryAllCommissioner_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryAllCommissioner.length === 1) {
+    Q.fcall(this._handler.queryAllCommissioner, args.pagination)
+      .then(function(result) {
+        var result = new ManagerServ_queryAllCommissioner_result({success: result});
+        output.writeMessageBegin("queryAllCommissioner", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_queryAllCommissioner_result(err);
+        output.writeMessageBegin("queryAllCommissioner", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryAllCommissioner(args.pagination,  function (err, result) {
+      var result = new ManagerServ_queryAllCommissioner_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryAllCommissioner", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryCommissionerByCsId = function(seqid, input, output) {
+  var args = new ManagerServ_queryCommissionerByCsId_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCommissionerByCsId.length === 1) {
+    Q.fcall(this._handler.queryCommissionerByCsId, args.csId)
+      .then(function(result) {
+        var result = new ManagerServ_queryCommissionerByCsId_result({success: result});
+        output.writeMessageBegin("queryCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_queryCommissionerByCsId_result(err);
+        output.writeMessageBegin("queryCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCommissionerByCsId(args.csId,  function (err, result) {
+      var result = new ManagerServ_queryCommissionerByCsId_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_modifyCommissionerByCsId = function(seqid, input, output) {
+  var args = new ManagerServ_modifyCommissionerByCsId_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.modifyCommissionerByCsId.length === 1) {
+    Q.fcall(this._handler.modifyCommissionerByCsId, args.cs)
+      .then(function(result) {
+        var result = new ManagerServ_modifyCommissionerByCsId_result({success: result});
+        output.writeMessageBegin("modifyCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_modifyCommissionerByCsId_result(err);
+        output.writeMessageBegin("modifyCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.modifyCommissionerByCsId(args.cs,  function (err, result) {
+      var result = new ManagerServ_modifyCommissionerByCsId_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("modifyCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_resetCommissionerPwd = function(seqid, input, output) {
+  var args = new ManagerServ_resetCommissionerPwd_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.resetCommissionerPwd.length === 2) {
+    Q.fcall(this._handler.resetCommissionerPwd, args.csId, args.newPwd)
+      .then(function(result) {
+        var result = new ManagerServ_resetCommissionerPwd_result({success: result});
+        output.writeMessageBegin("resetCommissionerPwd", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_resetCommissionerPwd_result(err);
+        output.writeMessageBegin("resetCommissionerPwd", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.resetCommissionerPwd(args.csId, args.newPwd,  function (err, result) {
+      var result = new ManagerServ_resetCommissionerPwd_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("resetCommissionerPwd", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_validateResult = function(seqid, input, output) {
+  var args = new ManagerServ_validateResult_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.validateResult.length === 1) {
+    Q.fcall(this._handler.validateResult, args.validate)
+      .then(function(result) {
+        var result = new ManagerServ_validateResult_result({success: result});
+        output.writeMessageBegin("validateResult", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_validateResult_result(err);
+        output.writeMessageBegin("validateResult", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.validateResult(args.validate,  function (err, result) {
+      var result = new ManagerServ_validateResult_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("validateResult", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_insert = function(seqid, input, output) {
+  var args = new ManagerServ_insert_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.insert.length === 1) {
+    Q.fcall(this._handler.insert, args.cs)
+      .then(function(result) {
+        var result = new ManagerServ_insert_result({success: result});
+        output.writeMessageBegin("insert", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ManagerServ_insert_result(err);
+        output.writeMessageBegin("insert", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.insert(args.cs,  function (err, result) {
+      var result = new ManagerServ_insert_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("insert", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
