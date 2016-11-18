@@ -138,6 +138,14 @@ router.post('/list', function (request, response, next) {
                                         if (order.productList[i].imagesUrl != null) {
                                             productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
                                         }
+                                        if(order.tradeCode=="Z8003"){
+                                            productItem.productName="手机话费充值 " + order.closingPrice + "元";
+                                            //productItem.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
+                                        }
+                                        if(order.tradeCode=="Z8004"){
+                                            productItem.productName=order.deliverInfo.receiverAddress + "手机流量充值 " + order.deliverInfo.receiverName;
+                                            //productItem.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
+                                        }
                                         productList.push(productItem);
                                     }
                                     orderItem.productList = productList;
@@ -321,10 +329,24 @@ router.post('/info', function (request, response, next) {
                         if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
 
                             for (var i = 0; i < orderInfo.productList.length; i++) {
-                                productList.push({
+                                //productList.push({
+                                //    productId: orderInfo.productList[i].productId,
+                                //    productName: orderInfo.productList[i].productName,
+                                //    tradeCode: orderInfo.tradeCode,
+                                //    sku: {
+                                //        skuNum: orderInfo.productList[i].skuNum,
+                                //        skuName: orderInfo.productList[i].skuDesc
+                                //    },
+                                //    curPrice: orderInfo.productList[i].curPrice,
+                                //    orgPrice: orderInfo.productList[i].orgPrice,
+                                //    imgKey: orderInfo.productList[i].imagesUrl,
+                                //    thirdExchangeRate: orderInfo.productList[i].thirdExchangeRate,
+                                //    count: orderInfo.productList[i].count
+                                //});
+                                var product = {
                                     productId: orderInfo.productList[i].productId,
+                                    tradeCode : orderInfo.tradeCode,
                                     productName: orderInfo.productList[i].productName,
-                                    tradeCode: orderInfo.tradeCode,
                                     sku: {
                                         skuNum: orderInfo.productList[i].skuNum,
                                         skuName: orderInfo.productList[i].skuDesc
@@ -332,9 +354,18 @@ router.post('/info', function (request, response, next) {
                                     curPrice: orderInfo.productList[i].curPrice,
                                     orgPrice: orderInfo.productList[i].orgPrice,
                                     imgKey: orderInfo.productList[i].imagesUrl,
-                                    thirdExchangeRate: orderInfo.productList[i].thirdExchangeRate,
-                                    count: orderInfo.productList[i].count
-                                });
+                                    count: orderInfo.productList[i].count,
+                                    thirdExchangeRate: orderInfo.productList[i].thirdExchangeRate
+                                };
+                                if(orderInfo.tradeCode=="Z8003"){
+                                    product.productName="手机话费充值 " + orderInfo.closingPrice + "元";
+                                    //product.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
+                                }
+                                if(orderInfo.tradeCode=="Z8004"){
+                                    product.productName=orderInfo.deliverInfo.receiverAddress + "手机流量充值 " + orderInfo.deliverInfo.receiverName;
+                                    //product.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
+                                }
+                                productList.push(product);
                             }
                             result.productList = productList;
                         }

@@ -1982,6 +1982,39 @@ router.post('/payOrderCreates', function (request, response, next) {
                 return;
             }
         }
+        if (arg.tradeCode == "Z8004") {
+            if (arg.company == "" || arg.company == null) {
+                result.code = 400;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+            if (arg.flowno == "" || arg.flowno == null) {
+                result.code = 400;
+                result.desc = "请输入需要充值的面额";
+                response.json(result);
+                return;
+            }
+            //手机号与运营商二次判断,以防出现不匹配问题
+            var yd = "^1(3[4-9]|4[7]|5[0-27-9]|7[08]|8[2-478])\\d{8}$"; //移动
+            var lt = "^1(3[0-2]|4[5]|5[56]|7[0156]|8[56])\\d{8}$";  //联通
+            var dx = "^1(3[3]|4[9]|53|7[037]|8[019])\\d{8}$";   //电信
+            var mobile = arg.receiverMobile;
+            var com = "";
+            if (mobile.match(yd)) {
+                com = "中国移动";
+            } else if (mobile.match(lt)) {
+                com = "中国联通";
+            } else if (mobile.match(dx)) {
+                com = "中国电信";
+            }
+            if (arg.company != com) {
+                result.code = 400;
+                result.desc = "当前运营商与您输入的面额不匹配";
+                response.json(result);
+                return;
+            }
+        }
 
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息

@@ -218,67 +218,71 @@ router.get('/toExchangeDianXin',function(request,response,next){
     return;
 });
 
-var http = require('http');
-/*查询号码归属地查询 for 前端*/
-router.get('/queryMobileInfo',function(request,response,next){
 
-    var result = {code:200};
-    var params = request.query;
-    if(params.mobile == null || params.mobile == ""){
-        result.code = 400;
-        result.desc = "参数错误";
-        response.json(result);
-        return;
-    }
-    //else {
-    //    //重定向到淘宝的api，比百度的好使，因app已上线，字段都不一致，所以使用
-    //    response.redirect("http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + params.mobile);
-    //}
-
-
-    var options = {
-        //hostname: 'apis.baidu.com',
-        //path: '/apistore/mobilenumber/mobilenumber?phone=' + params.mobile,
-        //path: '/chazhao/mobilesearch/phonesearch?phone=' + params.mobile,
-        //hostname:'tcc.taobao.com',
-        //url:'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=' + params.mobile,
-        hostname:'apis.juhe.cn',
-        path:'/mobile/get?phone=' + params.mobile + "&key=3a36c566db407b6e8079dab2a5ad6d78",
-        method: 'GET',
-        headers:{
-            //apikey:"3b91060430c4be4b1504e0d272f306a4",  //百度api调用的key
-            'Content-Type':'application/x-www-form-urlencoded'
-        }
-    };
-    //console.log(options);
-    var req = http.request(options, function (res) {
-        //logger.error('Status:',res.statusCode);
-        //logger.error('headers:',JSON.stringify(res.headers));
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            var msg = JSON.parse(chunk).result;
-            var data = {
-                operator: msg.company,
-                province: msg.province,
-                city: msg.city
-            };
-            result.data = data;
-            logger.error("号码归属地查询到的信息（不是错）：" + JSON.stringify(result));
-            response.json(result);
-        });
-        res.on('end',function(){
-            console.log('响应结束********');
-        });
-    });
-    req.on('error', function (e) {
-        logger.error('problem with request: ' + e.message);
-        result.code = 500;
-        result.desc = "查询号码归属地异常";
-        response.json(result);
-    });
-    req.end();
-
-});
+/*因查询归属地的api不稳定,且流量充值时必须得知道运营商,因此使用下面正则去校验*/
+//var http = require('http');
+///*查询号码归属地查询 for 前端*/
+//router.get('/queryMobileInfo',function(request,response,next){
+//
+//    var result = {code:200};
+//    var params = request.query;
+//    if(params.mobile == null || params.mobile == ""){
+//        result.code = 400;
+//        result.desc = "参数错误";
+//        response.json(result);
+//        return;
+//    }
+//    //else {
+//    //    //重定向到淘宝的api，比百度的好使，因app已上线，字段都不一致，所以使用
+//    //    response.redirect("http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + params.mobile);
+//    //}
+//
+//
+//    var options = {
+//        hostname: 'apis.baidu.com',
+//        path: '/apistore/mobilenumber/mobilenumber?phone=' + params.mobile,
+//        //path: '/chazhao/mobilesearch/phonesearch?phone=' + params.mobile,
+//        //hostname:'tcc.taobao.com',
+//        //url:'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=' + params.mobile,
+//        //hostname:'apis.juhe.cn',      //不支持部分177号段的号码
+//        //path:'/mobile/get?phone=' + params.mobile + "&key=3a36c566db407b6e8079dab2a5ad6d78",
+//        method: 'GET',
+//        headers:{
+//            apikey:"3b91060430c4be4b1504e0d272f306a4",  //百度api调用的key
+//            'Content-Type':'application/x-www-form-urlencoded'
+//        }
+//    };
+//    //console.log(options);
+//    var req = http.request(options, function (res) {
+//        //logger.error('Status:',res.statusCode);
+//        //logger.error('headers:',JSON.stringify(res.headers));
+//        res.setEncoding('utf8');
+//        res.on('data', function (chunk) {
+//            //var msg = JSON.parse(chunk).result;
+//            //var data = {
+//            //    operator: msg.company,
+//            //    province: msg.province,
+//            //    city: msg.city
+//            //};
+//            //result.data = data;
+//            var data = JSON.parse(chunk);
+//            result.data = data;
+//            logger.error(result);
+//            response.json(result);
+//        });
+//        res.on('end',function(){
+//            console.log('响应结束********');
+//        });
+//    });
+//    req.on('error', function (e) {
+//        logger.error('problem with request: ' + e.message);
+//        result.code = 500;
+//        result.desc = "查询号码归属地异常";
+//        response.json(result);
+//    });
+//    req.end();
+//
+//});
 
 //移动端需要的动态的图,放在zk中,方便配置
 router.get('/queryImgForApp',function(request,response,next){
@@ -293,6 +297,45 @@ router.get('/queryImgForApp',function(request,response,next){
     }
     result.imgKey = imgKey;
     response.json(result);
+
+});
+
+//运营商校验
+router.get('/queryMobileInfo',function(request,response,next){
+
+    var result = {code:200};
+    var arg = request.query;
+    //18537045282
+    var yd = "^1(3[4-9]|4[7]|5[0-27-9]|7[08]|8[2-478])\\d{8}$"; //移动
+    var lt = "^1(3[0-2]|4[5]|5[56]|7[0156]|8[56])\\d{8}$";  //联通
+    var dx = "^1(3[3]|4[9]|53|7[037]|8[019])\\d{8}$";   //电信
+    var mobile = arg.mobile;
+    if (mobile.match(yd)) {
+        var data = {};
+        data.operator = "中国移动";
+        data.province = "";
+        data.city = "";
+        result.data = data;
+        response.json(result);
+    } else if (mobile.match(lt)) {
+        var data = {};
+        data.operator = "中国联通";
+        data.province = "";
+        data.city = "";
+        result.data = data;
+        response.json(result);
+    } else if (mobile.match(dx)) {
+        var data = {};
+        data.operator = "中国电信";
+        data.province = "";
+        data.city = "";
+        result.data = data;
+        response.json(result);
+    } else {
+        result.code = 500;
+        result.desc = "查询运营商失败";
+        response.json(result);
+    }
 
 });
 
