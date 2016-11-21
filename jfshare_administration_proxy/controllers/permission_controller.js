@@ -7,7 +7,7 @@ var router = express.Router();
 var async = require('async');
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
-//var jf_permission = require('../lib/models/jf_permission');// 广告位功能模块
+var permission = require('../lib/models/permission');// 广告位功能模块
 
 
 
@@ -35,7 +35,7 @@ router.post('/queryAllCommissioner', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                result.id = data[0].subjectInfo.id;
+                result.data = data[0].commissioner;
                 response.json(result);
                 logger.error("queryAllCommissioner subject  result:" + JSON.stringify(result));
             }

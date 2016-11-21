@@ -41,4 +41,3 @@ var thriftService = ManagerServ;
 
 
 
-

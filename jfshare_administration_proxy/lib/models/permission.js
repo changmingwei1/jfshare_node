@@ -1,7 +1,6 @@
-/*
-/!**
+/**
  * Created by huapengpeng on 2016/4/22.
- *!/
+ */
 
 
 
@@ -21,8 +20,8 @@ function Permission() {
 Permission.prototype.queryAllCommissioner = function (params, callback) {
 
     var paginationParms = new pagination_types.Pagination({
-        currentPage:param.curPage,
-        numPerPage:param.perCount
+        currentPage:params.currentPage,
+        numPerPage:params.numPerPage
     });
 
 
@@ -33,7 +32,8 @@ Permission.prototype.queryAllCommissioner = function (params, callback) {
         var res = {};
         if (err || data[0].code == "1") {
             res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
+            // res.desc = data[0].failDescList[0].desc;
+            res.desc = "desc";
             callback(res, null);
         } else {
             callback(null, data);
@@ -41,8 +41,3 @@ Permission.prototype.queryAllCommissioner = function (params, callback) {
     });
 };
 module.exports =  new Permission();
-/!**
- *
- *!/
-/!**
-*/

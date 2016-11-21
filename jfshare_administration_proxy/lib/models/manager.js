@@ -33,12 +33,11 @@ function Manager() {
 
 Manager.prototype.queryAllCommissioner = function (params, callback) {
 
-    //var paginationParms = new pagination_types.Pagination({
-    //    currentPage:params.currentPage,
-    //    numPerPage:params.numPerPage
-    //});
+    var paginationParms = new pagination_types.Pagination({
+       currentPage:params.currentPage,
+       numPerPage:params.numPerPage
+    });
 
-    var paginationParms ={};
 
 
     //ªÒ»°client
@@ -48,7 +47,7 @@ Manager.prototype.queryAllCommissioner = function (params, callback) {
         var res = {};
         if (err || data[0].code == "1") {
             res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
+            // res.desc = data[0].failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);

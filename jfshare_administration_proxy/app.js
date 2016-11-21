@@ -23,7 +23,7 @@ var address = require('./controllers/address_controller');
 var afterSale = require('./controllers/afterSale_controller');
 var slotImage = require('./controllers/slotImage_controller');// 主页轮播图模块页面的配置
 var moduleConfig = require('./controllers/moduleConfig_controller');// 商品和品牌模块页面的配置
-//var permission = require('./controllers/permission_controller');// 权限管理
+var permission = require('./controllers/permission_controller');// 权限管理
 var zookeeper = require('./resource/zookeeper_util');
 var app = express();
 
@@ -40,7 +40,7 @@ app.use('/manager',user);
 app.use('/manager/product',product);
 app.use('/manager/order',order);
 app.use('/manager/address',address);
-//app.use('/manager/permission',permission);
+app.use('/manager/permission',permission);
 
 app.use('/manager/score',score);
 
