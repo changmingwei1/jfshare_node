@@ -7,7 +7,10 @@ var router = express.Router();
 var async = require('async');
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
-var permission = require('../lib/models/permission');// 广告位功能模块
+//var jf_permission = require('../lib/models/jf_permission');// 广告位功能模块
+
+
+
 //增加类目
 router.post('/queryAllCommissioner', function (request, response, next) {
 

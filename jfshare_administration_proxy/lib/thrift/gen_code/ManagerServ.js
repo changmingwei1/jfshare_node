@@ -3251,16 +3251,16 @@ ManagerServ_resetCommissionerPwd_result.prototype.write = function(output) {
   return;
 };
 
-ManagerServ_validateResult_args = function(args) {
-  this.validate = null;
+ManagerServ_changeValidate_args = function(args) {
+  this.cs = null;
   if (args) {
-    if (args.validate !== undefined) {
-      this.validate = args.validate;
+    if (args.cs !== undefined) {
+      this.cs = args.cs;
     }
   }
 };
-ManagerServ_validateResult_args.prototype = {};
-ManagerServ_validateResult_args.prototype.read = function(input) {
+ManagerServ_changeValidate_args.prototype = {};
+ManagerServ_changeValidate_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -3274,8 +3274,9 @@ ManagerServ_validateResult_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.validate = input.readI32();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.cs = new ttypes.Commissioner();
+        this.cs.read(input);
       } else {
         input.skip(ftype);
       }
@@ -3292,11 +3293,11 @@ ManagerServ_validateResult_args.prototype.read = function(input) {
   return;
 };
 
-ManagerServ_validateResult_args.prototype.write = function(output) {
-  output.writeStructBegin('ManagerServ_validateResult_args');
-  if (this.validate !== null && this.validate !== undefined) {
-    output.writeFieldBegin('validate', Thrift.Type.I32, 1);
-    output.writeI32(this.validate);
+ManagerServ_changeValidate_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_changeValidate_args');
+  if (this.cs !== null && this.cs !== undefined) {
+    output.writeFieldBegin('cs', Thrift.Type.STRUCT, 1);
+    this.cs.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3304,7 +3305,7 @@ ManagerServ_validateResult_args.prototype.write = function(output) {
   return;
 };
 
-ManagerServ_validateResult_result = function(args) {
+ManagerServ_changeValidate_result = function(args) {
   this.success = null;
   if (args) {
     if (args.success !== undefined) {
@@ -3312,8 +3313,8 @@ ManagerServ_validateResult_result = function(args) {
     }
   }
 };
-ManagerServ_validateResult_result.prototype = {};
-ManagerServ_validateResult_result.prototype.read = function(input) {
+ManagerServ_changeValidate_result.prototype = {};
+ManagerServ_changeValidate_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -3346,8 +3347,8 @@ ManagerServ_validateResult_result.prototype.read = function(input) {
   return;
 };
 
-ManagerServ_validateResult_result.prototype.write = function(output) {
-  output.writeStructBegin('ManagerServ_validateResult_result');
+ManagerServ_changeValidate_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_changeValidate_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -4886,7 +4887,7 @@ ManagerServClient.prototype.recv_resetCommissionerPwd = function(input,mtype,rse
   }
   return callback('resetCommissionerPwd failed: unknown result');
 };
-ManagerServClient.prototype.validateResult = function(validate, callback) {
+ManagerServClient.prototype.changeValidate = function(cs, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -4897,25 +4898,25 @@ ManagerServClient.prototype.validateResult = function(validate, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_validateResult(validate);
+    this.send_changeValidate(cs);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_validateResult(validate);
+    this.send_changeValidate(cs);
   }
 };
 
-ManagerServClient.prototype.send_validateResult = function(validate) {
+ManagerServClient.prototype.send_changeValidate = function(cs) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('validateResult', Thrift.MessageType.CALL, this.seqid());
-  var args = new ManagerServ_validateResult_args();
-  args.validate = validate;
+  output.writeMessageBegin('changeValidate', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_changeValidate_args();
+  args.cs = cs;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-ManagerServClient.prototype.recv_validateResult = function(input,mtype,rseqid) {
+ManagerServClient.prototype.recv_changeValidate = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -4924,14 +4925,14 @@ ManagerServClient.prototype.recv_validateResult = function(input,mtype,rseqid) {
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new ManagerServ_validateResult_result();
+  var result = new ManagerServ_changeValidate_result();
   result.read(input);
   input.readMessageEnd();
 
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('validateResult failed: unknown result');
+  return callback('changeValidate failed: unknown result');
 };
 ManagerServClient.prototype.insert = function(cs, callback) {
   this._seqid = this.new_seqid();
@@ -5898,29 +5899,29 @@ ManagerServProcessor.prototype.process_resetCommissionerPwd = function(seqid, in
   }
 }
 
-ManagerServProcessor.prototype.process_validateResult = function(seqid, input, output) {
-  var args = new ManagerServ_validateResult_args();
+ManagerServProcessor.prototype.process_changeValidate = function(seqid, input, output) {
+  var args = new ManagerServ_changeValidate_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.validateResult.length === 1) {
-    Q.fcall(this._handler.validateResult, args.validate)
+  if (this._handler.changeValidate.length === 1) {
+    Q.fcall(this._handler.changeValidate, args.cs)
       .then(function(result) {
-        var result = new ManagerServ_validateResult_result({success: result});
-        output.writeMessageBegin("validateResult", Thrift.MessageType.REPLY, seqid);
+        var result = new ManagerServ_changeValidate_result({success: result});
+        output.writeMessageBegin("changeValidate", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       }, function (err) {
-        var result = new ManagerServ_validateResult_result(err);
-        output.writeMessageBegin("validateResult", Thrift.MessageType.REPLY, seqid);
+        var result = new ManagerServ_changeValidate_result(err);
+        output.writeMessageBegin("changeValidate", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       });
   } else {
-    this._handler.validateResult(args.validate,  function (err, result) {
-      var result = new ManagerServ_validateResult_result((err != null ? err : {success: result}));
-      output.writeMessageBegin("validateResult", Thrift.MessageType.REPLY, seqid);
+    this._handler.changeValidate(args.cs,  function (err, result) {
+      var result = new ManagerServ_changeValidate_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("changeValidate", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

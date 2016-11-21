@@ -22,7 +22,27 @@ Message.prototype.add = function(params,callback){
         pushTarget:params.pushTarget
    });
 
+    Message.prototype.get = function(params,callback){
 
+
+        var message = new message_types.SystemMessage({
+            id:params.id
+        });
+        logger.info("get message params:" + JSON.stringify(message));
+        //获取client
+        var messageServ = new Lich.InvokeBag(Lich.ServiceKey.MessageServer,'getSystemMessage',[message]);
+        Lich.wicca.invokeClient(messageServ, function(err, data){
+            logger.info("get message result:" + JSON.stringify(data));
+            var res = {};
+            if (err||data[0].result.code == "1") {
+                res.code = 500;
+                res.desc = data[0].result.failDescList[0].desc;
+                callback(res, null);
+            } else {
+                callback(null, data);
+            }
+        });
+    };
     //获取client
     var messageServ = new Lich.InvokeBag(Lich.ServiceKey.MessageServer,'addSystemMessage',[message]);
     Lich.wicca.invokeClient(messageServ, function(err, data){
@@ -41,27 +61,7 @@ Message.prototype.add = function(params,callback){
 
 
 //获取系统消息
-Message.prototype.get = function(params,callback){
 
-
-    var message = new message_types.SystemMessage({
-        id:params.id
-    });
-    logger.info("get message params:" + JSON.stringify(message));
-    //获取client
-    var messageServ = new Lich.InvokeBag(Lich.ServiceKey.MessageServer,'getSystemMessage',[message]);
-    Lich.wicca.invokeClient(messageServ, function(err, data){
-        logger.info("get message result:" + JSON.stringify(data));
-        var res = {};
-        if (err||data[0].result.code == "1") {
-            res.code = 500;
-            res.desc = data[0].result.failDescList[0].desc;
-            callback(res, null);
-        } else {
-            callback(null, data);
-        }
-    });
-};
 //更新系统消息
 Message.prototype.update = function(params,callback){
 

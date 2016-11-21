@@ -12,6 +12,71 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 var Manager = require('../lib/models/manager');
 
 
+//查询所有用户权限url
+router.post('/queryAllCommissioner', function (request, response, next) {
+
+    var result = {code: 200};
+    try {
+        var params = request.body;
+
+
+        logger.error("add subject 请求， params:" + JSON.stringify(params));
+        Manager.queryAllCommissioner(params, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+                result.id = data[0].subjectInfo.id;
+                response.json(result);
+                logger.error("queryAllCommissioner subject  result:" + JSON.stringify(result));
+            }
+        });
+    } catch (ex) {
+        logger.error("queryAllCommissioner subject error:" + ex);
+        result.code = 500;
+        result.desc = "查询用户失败";
+        response.json(result);
+    }
+});
+
+
+//获取管理员用户信息
+router.post('/get', function(request, response, next) {
+
+
+    var result = {code: 200};
+    var params = request.body;
+    try{
+        //参数校验
+        if(params.id =="" || params.id==null || params.id<=0){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        Manager.get(params, function(error,data){
+            if(error){
+                respnose.json(error);
+                return;
+            }
+
+            if(data[0].jf_manager[0]!=null ||data[0].jf_manager[0]!=""){
+                result.message = data[0].jf_manager[0];
+            }
+            response.json(result);
+            logger.info("get  response:" + JSON.stringify(data));
+        });
+
+    } catch (ex) {
+        logger.error("获取用户信息 error:" + ex);
+        result.code = 500;
+        result.desc = "获取用户信息";
+        response.json(result);
+    }
+});
+
+
+
+
 //登录
 router.post('/login', function(request, response, next) {
     var result = {code: 200};
