@@ -68,7 +68,7 @@ FileCards.prototype.auditPass = function (params, callback) {
             res.desc = "审核失败";
             callback(res, null);
         } else if (data[0].code == 1) {
-            logger.warn("审核失败，参数为：" + JSON.stringify(params4Upload));
+            logger.warn("审核失败，参数为：" + JSON.stringify(param));
             res.code = 500;
             res.desc = data[0].failDescList[0].desc;
         } else {
