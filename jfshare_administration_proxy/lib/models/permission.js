@@ -119,6 +119,7 @@ Permission.prototype.updateManager = function (params, callback) {
         deptId: params.deptId,
         mobile: params.mobile,
         email: params.email,
+        validate:params.validate,
         url: params.url
     });
 
