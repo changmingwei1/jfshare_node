@@ -35,7 +35,7 @@ router.post('/queryAllCommissioner', function (request, response, next) {
             if (error) {
                 response.json(error);
             } else {
-                result.commissioner = data[0].commissioner;
+                result.commissioner = data[0].commissioners;
                 result.pagination = data[0].pagination;
                 response.json(result);
                 logger.info("queryAllCommissioner subject  result:" + JSON.stringify(result));

@@ -29,7 +29,7 @@ Permission.prototype.queryAllCommissioner = function (params, callback) {
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.error("queryAllCommissioner  result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == "1") {
+        if (err) {
             res.code = 500;
             res.desc = "desc";
             callback(res, null);

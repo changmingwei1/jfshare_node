@@ -774,14 +774,14 @@ CommissionerResult.prototype.write = function(output) {
 
 CommissionerListResult = module.exports.CommissionerListResult = function(args) {
   this.result = null;
-  this.commissioner = null;
+  this.commissioners = null;
   this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
-    if (args.commissioner !== undefined) {
-      this.commissioner = args.commissioner;
+    if (args.commissioners !== undefined) {
+      this.commissioners = args.commissioners;
     }
     if (args.pagination !== undefined) {
       this.pagination = args.pagination;
@@ -814,7 +814,7 @@ CommissionerListResult.prototype.read = function(input) {
       if (ftype == Thrift.Type.LIST) {
         var _size8 = 0;
         var _rtmp312;
-        this.commissioner = [];
+        this.commissioners = [];
         var _etype11 = 0;
         _rtmp312 = input.readListBegin();
         _etype11 = _rtmp312.etype;
@@ -824,7 +824,7 @@ CommissionerListResult.prototype.read = function(input) {
           var elem14 = null;
           elem14 = new ttypes.Commissioner();
           elem14.read(input);
-          this.commissioner.push(elem14);
+          this.commissioners.push(elem14);
         }
         input.readListEnd();
       } else {
@@ -855,14 +855,14 @@ CommissionerListResult.prototype.write = function(output) {
     this.result.write(output);
     output.writeFieldEnd();
   }
-  if (this.commissioner !== null && this.commissioner !== undefined) {
-    output.writeFieldBegin('commissioner', Thrift.Type.LIST, 2);
-    output.writeListBegin(Thrift.Type.STRUCT, this.commissioner.length);
-    for (var iter15 in this.commissioner)
+  if (this.commissioners !== null && this.commissioners !== undefined) {
+    output.writeFieldBegin('commissioners', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.commissioners.length);
+    for (var iter15 in this.commissioners)
     {
-      if (this.commissioner.hasOwnProperty(iter15))
+      if (this.commissioners.hasOwnProperty(iter15))
       {
-        iter15 = this.commissioner[iter15];
+        iter15 = this.commissioners[iter15];
         iter15.write(output);
       }
     }
