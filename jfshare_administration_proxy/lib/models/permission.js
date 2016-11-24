@@ -196,4 +196,25 @@ Permission.prototype.changeValidate = function (params, callback) {
     });
 };
 
+
+Permission.prototype.isLoginNameExist = function (params, callback) {
+    logger.info("参数params:" + JSON.stringify(params));
+    logger.info("参数loginName:" + JSON.stringify(params.loginName));
+    //获取客户端
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'isLoginNameExist', [params.loginName]);
+    Lich.wicca.invokeClient(managerServ, function (err, data) {
+        logger.info("isLoginNameExist result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("checkAccountName fail because: ======" + err);
+            res.code = 500;
+            res.desc = "false to checkAccountName";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
 module.exports =  new Permission();

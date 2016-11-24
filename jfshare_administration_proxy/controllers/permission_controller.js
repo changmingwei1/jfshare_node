@@ -307,6 +307,42 @@ router.post('/changeValidate', function (request, response, next) {
     }
 });
 
+// 查看用户名是否存在
+router.get('/isLoginNameExist', function (request, response, next) {
+    var result = {code: 200};
+
+    try {
+        var params = request.query;
+        logger.info("参数:" + JSON.stringify(params));
+
+        logger.info("ManagerServ-update params:" + JSON.stringify(params));
+
+
+        if (params.loginName == null || params.loginName == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        permission.isLoginNameExist(params, function (err, data) {
+            logger.info("ManagerServ-checkAccountName response:" + JSON.stringify(data));
+            var brandInfo = [];
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.value = data[0].value;
+            logger.info(" ManagerServ-checkAccountName response:" + JSON.stringify(result));
+            response.json(result);
+        });
+    } catch (ex) {
+        logger.error("checkAccountName error:" + ex);
+        result.code = 500;
+        result.desc = "查询用户姓名失败";
+        response.json(result);
+    }
+});
 
 module.exports = router;
 
