@@ -40,7 +40,9 @@ User.prototype.login = function (params, callback) {
         fromSource: params.fromSource,
         loginAuto: params.loginAuto,
         loginTime: params.loginTime,
-        logoutTime: params.logoutTime
+        logoutTime: params.logoutTime,
+        validate:params.validate,
+        url:params.url
     });
 
 
@@ -49,7 +51,7 @@ User.prototype.login = function (params, callback) {
     Lich.wicca.invokeClient(userServ, function (err, data) {
         logger.info("isLoginNameExist result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "500") {
+        if (err || data[0].result.code == "1") {
             logger.error("signin fail because: ======" + err);
             res.code = 500;
             res.desc = "false to signin";

@@ -518,6 +518,8 @@ LoginLog = module.exports.LoginLog = function(args) {
   this.loginAuto = null;
   this.loginTime = null;
   this.logoutTime = null;
+  this.validate = null;
+  this.url = null;
   if (args) {
     if (args.csId !== undefined) {
       this.csId = args.csId;
@@ -542,6 +544,12 @@ LoginLog = module.exports.LoginLog = function(args) {
     }
     if (args.logoutTime !== undefined) {
       this.logoutTime = args.logoutTime;
+    }
+    if (args.validate !== undefined) {
+      this.validate = args.validate;
+    }
+    if (args.url !== undefined) {
+      this.url = args.url;
     }
   }
 };
@@ -615,6 +623,20 @@ LoginLog.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 9:
+      if (ftype == Thrift.Type.I32) {
+        this.validate = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -664,6 +686,16 @@ LoginLog.prototype.write = function(output) {
   if (this.logoutTime !== null && this.logoutTime !== undefined) {
     output.writeFieldBegin('logoutTime', Thrift.Type.STRING, 8);
     output.writeString(this.logoutTime);
+    output.writeFieldEnd();
+  }
+  if (this.validate !== null && this.validate !== undefined) {
+    output.writeFieldBegin('validate', Thrift.Type.I32, 9);
+    output.writeI32(this.validate);
+    output.writeFieldEnd();
+  }
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 10);
+    output.writeString(this.url);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
