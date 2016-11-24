@@ -626,7 +626,7 @@ router.post('/list', function (request, response, next) {
                                         }
                                         //临时修改：因安卓没有62状态，所以62状态转换为61
                                         //if(order.orderState==62){
-                                            order.orderState=61;
+                                        //    order.orderState=61;
                                         //}
                                         var orderItem = {
                                             orderId: order.orderId,
