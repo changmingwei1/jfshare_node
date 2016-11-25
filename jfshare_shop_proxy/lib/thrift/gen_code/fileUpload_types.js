@@ -67,68 +67,68 @@ FileParam.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.productType = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.productType = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.DataType = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.DataType = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.ExpDate_Flag = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.ExpDate_Flag = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 4:
-      if (ftype == Thrift.Type.I64) {
-        this.CardNumber = input.readI64();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I64) {
+          this.CardNumber = input.readI64();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 5:
-      if (ftype == Thrift.Type.STRING) {
-        this.StartDate = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.StartDate = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 6:
-      if (ftype == Thrift.Type.STRING) {
-        this.excelKeyUrl = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.excelKeyUrl = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 7:
-      if (ftype == Thrift.Type.BOOL) {
-        this.notEncryptFlag = input.readBool();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.BOOL) {
+          this.notEncryptFlag = input.readBool();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 8:
-      if (ftype == Thrift.Type.BOOL) {
-        this.isTestFlag = input.readBool();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.BOOL) {
+          this.isTestFlag = input.readBool();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 9:
-      if (ftype == Thrift.Type.STRING) {
-        this.sellerName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.sellerName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -217,19 +217,19 @@ AuditParam.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.id = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.id = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.type = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.type = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -287,26 +287,26 @@ QueryConditions.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.sellerName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.sellerName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.productName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.productName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.I32) {
-        this.status = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.status = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -401,82 +401,82 @@ ThirdPartyCard.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.id = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.id = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.orderId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.orderId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.sellerName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.sellerName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 4:
-      if (ftype == Thrift.Type.STRING) {
-        this.productName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.productName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 5:
-      if (ftype == Thrift.Type.STRING) {
-        this.productNo = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.productNo = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 6:
-      if (ftype == Thrift.Type.I32) {
-        this.faceValue = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.faceValue = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 7:
-      if (ftype == Thrift.Type.I32) {
-        this.cardNumber = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.cardNumber = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 8:
-      if (ftype == Thrift.Type.STRING) {
-        this.applyTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.applyTime = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 9:
-      if (ftype == Thrift.Type.STRING) {
-        this.approveTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.approveTime = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 10:
-      if (ftype == Thrift.Type.I32) {
-        this.status = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.status = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 11:
-      if (ftype == Thrift.Type.STRING) {
-        this.expData = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.expData = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -579,42 +579,42 @@ ThirdPartyCardResultList.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.result = new result_ttypes.Result();
-        this.result.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.LIST) {
-        var _size0 = 0;
-        var _rtmp34;
-        this.thirdPartyCards = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readListBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
-        {
-          var elem6 = null;
-          elem6 = new ttypes.ThirdPartyCard();
-          elem6.read(input);
-          this.thirdPartyCards.push(elem6);
+        if (ftype == Thrift.Type.STRUCT) {
+          this.result = new result_ttypes.Result();
+          this.result.read(input);
+        } else {
+          input.skip(ftype);
         }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        break;
+      case 2:
+        if (ftype == Thrift.Type.LIST) {
+          var _size0 = 0;
+          var _rtmp34;
+          this.thirdPartyCards = [];
+          var _etype3 = 0;
+          _rtmp34 = input.readListBegin();
+          _etype3 = _rtmp34.etype;
+          _size0 = _rtmp34.size;
+          for (var _i5 = 0; _i5 < _size0; ++_i5)
+          {
+            var elem6 = null;
+            elem6 = new ttypes.ThirdPartyCard();
+            elem6.read(input);
+            this.thirdPartyCards.push(elem6);
+          }
+          input.readListEnd();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.pagination = new pagination_ttypes.Pagination();
-        this.pagination.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.pagination = new pagination_ttypes.Pagination();
+          this.pagination.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -770,173 +770,173 @@ Recharge.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.id = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.id = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.orderId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.orderId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.I32) {
-        this.userId = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.userId = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 4:
-      if (ftype == Thrift.Type.I32) {
-        this.chargeType = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.chargeType = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 5:
-      if (ftype == Thrift.Type.I32) {
-        this.chargeChannel = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.chargeChannel = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 6:
-      if (ftype == Thrift.Type.I32) {
-        this.state1 = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.state1 = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 7:
-      if (ftype == Thrift.Type.I32) {
-        this.state2 = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.state2 = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 8:
-      if (ftype == Thrift.Type.STRING) {
-        this.chargeReqdate = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.chargeReqdate = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 9:
-      if (ftype == Thrift.Type.STRING) {
-        this.chargeNotifydate = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.chargeNotifydate = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 10:
-      if (ftype == Thrift.Type.STRING) {
-        this.chargeMoney = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.chargeMoney = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 11:
-      if (ftype == Thrift.Type.STRING) {
-        this.businessCode = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.businessCode = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 12:
-      if (ftype == Thrift.Type.STRING) {
-        this.chargeAddr = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.chargeAddr = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 13:
-      if (ftype == Thrift.Type.STRING) {
-        this.thirdOrderNo = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.thirdOrderNo = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 14:
-      if (ftype == Thrift.Type.STRING) {
-        this.blance = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.blance = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 15:
-      if (ftype == Thrift.Type.STRING) {
-        this.applyTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.applyTime = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 16:
-      if (ftype == Thrift.Type.STRING) {
-        this.chargeNumblance = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.chargeNumblance = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 17:
-      if (ftype == Thrift.Type.STRING) {
-        this.createTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.createTime = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 18:
-      if (ftype == Thrift.Type.STRING) {
-        this.updateTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.updateTime = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 19:
-      if (ftype == Thrift.Type.STRING) {
-        this.reqOutNo = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.reqOutNo = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 20:
-      if (ftype == Thrift.Type.STRING) {
-        this.company = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.company = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 21:
-      if (ftype == Thrift.Type.STRING) {
-        this.flowno = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.flowno = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 22:
-      if (ftype == Thrift.Type.STRING) {
-        this.ext1 = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.ext1 = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 23:
-      if (ftype == Thrift.Type.STRING) {
-        this.ext2 = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.ext2 = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 24:
-      if (ftype == Thrift.Type.STRING) {
-        this.ext3 = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.ext3 = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -1100,34 +1100,34 @@ RechargeListResult.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.result = new result_ttypes.Result();
-        this.result.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
-        this.recharges = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
-        {
-          var elem14 = null;
-          elem14 = new ttypes.Recharge();
-          elem14.read(input);
-          this.recharges.push(elem14);
+        if (ftype == Thrift.Type.STRUCT) {
+          this.result = new result_ttypes.Result();
+          this.result.read(input);
+        } else {
+          input.skip(ftype);
         }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        break;
+      case 2:
+        if (ftype == Thrift.Type.LIST) {
+          var _size8 = 0;
+          var _rtmp312;
+          this.recharges = [];
+          var _etype11 = 0;
+          _rtmp312 = input.readListBegin();
+          _etype11 = _rtmp312.etype;
+          _size8 = _rtmp312.size;
+          for (var _i13 = 0; _i13 < _size8; ++_i13)
+          {
+            var elem14 = null;
+            elem14 = new ttypes.Recharge();
+            elem14.read(input);
+            this.recharges.push(elem14);
+          }
+          input.readListEnd();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -1198,33 +1198,33 @@ NotifyRecharge.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.agtPhone = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.agtPhone = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.reqStreamId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.reqStreamId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.state = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.state = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 4:
-      if (ftype == Thrift.Type.STRING) {
-        this.sign = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.sign = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -1292,26 +1292,26 @@ ThirdGameParam.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.thirdGameId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.thirdGameId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.firstpy = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.firstpy = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.name = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.name = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -1355,6 +1355,7 @@ ThirdGame = module.exports.ThirdGame = function(args) {
   this.gameunit = null;
   this.name = null;
   this.needparam = null;
+  this.mprice = null;
   if (args) {
     if (args.thirdGameId !== undefined) {
       this.thirdGameId = args.thirdGameId;
@@ -1389,6 +1390,9 @@ ThirdGame = module.exports.ThirdGame = function(args) {
     if (args.needparam !== undefined) {
       this.needparam = args.needparam;
     }
+    if (args.mprice !== undefined) {
+      this.mprice = args.mprice;
+    }
   }
 };
 ThirdGame.prototype = {};
@@ -1406,82 +1410,89 @@ ThirdGame.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.thirdGameId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.thirdGameId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.corp = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.corp = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.code = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.code = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 4:
-      if (ftype == Thrift.Type.I32) {
-        this.startbuy = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.startbuy = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 5:
-      if (ftype == Thrift.Type.I32) {
-        this.endbuy = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.endbuy = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 6:
-      if (ftype == Thrift.Type.STRING) {
-        this.contbuy = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.contbuy = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 7:
-      if (ftype == Thrift.Type.I32) {
-        this.spacenum = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.spacenum = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 8:
-      if (ftype == Thrift.Type.STRING) {
-        this.buyunit = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.buyunit = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 9:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameunit = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.gameunit = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 10:
-      if (ftype == Thrift.Type.STRING) {
-        this.name = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.name = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 11:
-      if (ftype == Thrift.Type.STRING) {
-        this.needparam = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.needparam = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 12:
+        if (ftype == Thrift.Type.STRING) {
+          this.mprice = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -1546,6 +1557,11 @@ ThirdGame.prototype.write = function(output) {
   if (this.needparam !== null && this.needparam !== undefined) {
     output.writeFieldBegin('needparam', Thrift.Type.STRING, 11);
     output.writeString(this.needparam);
+    output.writeFieldEnd();
+  }
+  if (this.mprice !== null && this.mprice !== undefined) {
+    output.writeFieldBegin('mprice', Thrift.Type.STRING, 12);
+    output.writeString(this.mprice);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1616,82 +1632,82 @@ ThirdGameRechargeParam.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.thirdGameId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.thirdGameId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.account = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameAreaId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.gameAreaId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 4:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameAreaName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.gameAreaName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 5:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameServerId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.gameServerId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 6:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameServerName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.gameServerName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 7:
-      if (ftype == Thrift.Type.STRING) {
-        this.buyNum = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.buyNum = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 8:
-      if (ftype == Thrift.Type.STRING) {
-        this.totalAmount = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.totalAmount = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 9:
-      if (ftype == Thrift.Type.STRING) {
-        this.price = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.price = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 10:
-      if (ftype == Thrift.Type.STRING) {
-        this.roleId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.roleId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 11:
-      if (ftype == Thrift.Type.STRING) {
-        this.roleName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.roleName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -1790,33 +1806,33 @@ PYGameList.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.py = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
-        this.listGame = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
-        {
-          var elem22 = null;
-          elem22 = new ttypes.ThirdGame();
-          elem22.read(input);
-          this.listGame.push(elem22);
+        if (ftype == Thrift.Type.STRING) {
+          this.py = input.readString();
+        } else {
+          input.skip(ftype);
         }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        break;
+      case 2:
+        if (ftype == Thrift.Type.LIST) {
+          var _size16 = 0;
+          var _rtmp320;
+          this.listGame = [];
+          var _etype19 = 0;
+          _rtmp320 = input.readListBegin();
+          _etype19 = _rtmp320.etype;
+          _size16 = _rtmp320.size;
+          for (var _i21 = 0; _i21 < _size16; ++_i21)
+          {
+            var elem22 = null;
+            elem22 = new ttypes.ThirdGame();
+            elem22.read(input);
+            this.listGame.push(elem22);
+          }
+          input.readListEnd();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -1887,63 +1903,63 @@ ThirdGameListResult.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.result = new result_ttypes.Result();
-        this.result.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.result = new result_ttypes.Result();
+          this.result.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.ThirdGame = new ttypes.ThirdGame();
-        this.ThirdGame.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.ThirdGame = new ttypes.ThirdGame();
+          this.ThirdGame.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
-        this.pyThirdGameList = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
-        {
-          var elem30 = null;
-          elem30 = new ttypes.PYGameList();
-          elem30.read(input);
-          this.pyThirdGameList.push(elem30);
+        if (ftype == Thrift.Type.LIST) {
+          var _size24 = 0;
+          var _rtmp328;
+          this.pyThirdGameList = [];
+          var _etype27 = 0;
+          _rtmp328 = input.readListBegin();
+          _etype27 = _rtmp328.etype;
+          _size24 = _rtmp328.size;
+          for (var _i29 = 0; _i29 < _size24; ++_i29)
+          {
+            var elem30 = null;
+            elem30 = new ttypes.PYGameList();
+            elem30.read(input);
+            this.pyThirdGameList.push(elem30);
+          }
+          input.readListEnd();
+        } else {
+          input.skip(ftype);
         }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        break;
       case 4:
-      if (ftype == Thrift.Type.LIST) {
-        var _size31 = 0;
-        var _rtmp335;
-        this.thirdGameList = [];
-        var _etype34 = 0;
-        _rtmp335 = input.readListBegin();
-        _etype34 = _rtmp335.etype;
-        _size31 = _rtmp335.size;
-        for (var _i36 = 0; _i36 < _size31; ++_i36)
-        {
-          var elem37 = null;
-          elem37 = new ttypes.ThirdGame();
-          elem37.read(input);
-          this.thirdGameList.push(elem37);
+        if (ftype == Thrift.Type.LIST) {
+          var _size31 = 0;
+          var _rtmp335;
+          this.thirdGameList = [];
+          var _etype34 = 0;
+          _rtmp335 = input.readListBegin();
+          _etype34 = _rtmp335.etype;
+          _size31 = _rtmp335.size;
+          for (var _i36 = 0; _i36 < _size31; ++_i36)
+          {
+            var elem37 = null;
+            elem37 = new ttypes.ThirdGame();
+            elem37.read(input);
+            this.thirdGameList.push(elem37);
+          }
+          input.readListEnd();
+        } else {
+          input.skip(ftype);
         }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        break;
       default:
         input.skip(ftype);
     }
@@ -2025,19 +2041,19 @@ GameSeaver.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameSeaverName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.gameSeaverName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameSeaverId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.gameSeaverId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -2095,40 +2111,40 @@ GameArea.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameAreaName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.gameAreaId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
-      if (ftype == Thrift.Type.LIST) {
-        var _size40 = 0;
-        var _rtmp344;
-        this.gameSeaverList = [];
-        var _etype43 = 0;
-        _rtmp344 = input.readListBegin();
-        _etype43 = _rtmp344.etype;
-        _size40 = _rtmp344.size;
-        for (var _i45 = 0; _i45 < _size40; ++_i45)
-        {
-          var elem46 = null;
-          elem46 = new ttypes.GameSeaver();
-          elem46.read(input);
-          this.gameSeaverList.push(elem46);
+        if (ftype == Thrift.Type.STRING) {
+          this.gameAreaName = input.readString();
+        } else {
+          input.skip(ftype);
         }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        break;
+      case 2:
+        if (ftype == Thrift.Type.STRING) {
+          this.gameAreaId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == Thrift.Type.LIST) {
+          var _size40 = 0;
+          var _rtmp344;
+          this.gameSeaverList = [];
+          var _etype43 = 0;
+          _rtmp344 = input.readListBegin();
+          _etype43 = _rtmp344.etype;
+          _size40 = _rtmp344.size;
+          for (var _i45 = 0; _i45 < _size40; ++_i45)
+          {
+            var elem46 = null;
+            elem46 = new ttypes.GameSeaver();
+            elem46.read(input);
+            this.gameSeaverList.push(elem46);
+          }
+          input.readListEnd();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -2196,34 +2212,34 @@ GameAreaListResult.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.result = new result_ttypes.Result();
-        this.result.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.LIST) {
-        var _size48 = 0;
-        var _rtmp352;
-        this.gameAreaList = [];
-        var _etype51 = 0;
-        _rtmp352 = input.readListBegin();
-        _etype51 = _rtmp352.etype;
-        _size48 = _rtmp352.size;
-        for (var _i53 = 0; _i53 < _size48; ++_i53)
-        {
-          var elem54 = null;
-          elem54 = new ttypes.GameArea();
-          elem54.read(input);
-          this.gameAreaList.push(elem54);
+        if (ftype == Thrift.Type.STRUCT) {
+          this.result = new result_ttypes.Result();
+          this.result.read(input);
+        } else {
+          input.skip(ftype);
         }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        break;
+      case 2:
+        if (ftype == Thrift.Type.LIST) {
+          var _size48 = 0;
+          var _rtmp352;
+          this.gameAreaList = [];
+          var _etype51 = 0;
+          _rtmp352 = input.readListBegin();
+          _etype51 = _rtmp352.etype;
+          _size48 = _rtmp352.size;
+          for (var _i53 = 0; _i53 < _size48; ++_i53)
+          {
+            var elem54 = null;
+            elem54 = new ttypes.GameArea();
+            elem54.read(input);
+            this.gameAreaList.push(elem54);
+          }
+          input.readListEnd();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -2290,27 +2306,27 @@ GameRoleResult.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.result = new result_ttypes.Result();
-        this.result.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.result = new result_ttypes.Result();
+          this.result.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.roleName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.roleName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.roleId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.roleId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
