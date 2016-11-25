@@ -181,7 +181,7 @@ FileCards.prototype.thirdgameCallBack = function (params, callback) {
         sign:params.sign
     });
 
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'thirdgameCallBack', [thirdGameParam]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'callBackGame', [thirdGameParam]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("thirdgameCallBack result:" + JSON.stringify(data));
         var res = {};
