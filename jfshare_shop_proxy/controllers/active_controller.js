@@ -313,7 +313,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     if (mobile.match(yd)) {
         var data = {};
         data.operator = "中国移动";
-        data.support = "移动号码目前仅支持广东、湖南、江苏、安徽、内蒙用户充值";
+        data.support = "移动号码目前仅支持广东、湖南、江苏、安徽、浙江用户充值";
         data.province = "";
         data.city = "";
         result.data = data;

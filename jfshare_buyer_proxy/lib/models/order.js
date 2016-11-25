@@ -418,7 +418,8 @@ Order.prototype.orderConfirmRecharge = function (arg, callback) {
     var deliverInfo = new order_types.DeliverInfo({
         receiverMobile: arg.receiverMobile,
         receiverName:arg.flowno,    //流量代码简写：30,50,100
-        receiverAddress:arg.company //供应商名称: 中国移动,中国联通,中国电信
+        receiverAddress:arg.company, //供应商名称: 中国移动,中国联通,中国电信
+        provinceName:arg.provinceName //玩家ip,如果是Qb充值则必须填写
     });
     var param = new trade_types.BuyInfo({
         userId: arg.userId,
