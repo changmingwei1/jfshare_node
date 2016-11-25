@@ -674,6 +674,10 @@ router.post('/list', function (request, response, next) {
                                                     productItem.productName=order.deliverInfo.receiverAddress + "手机流量充值 " + order.deliverInfo.receiverName;
                                                     productItem.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
                                                 }
+                                                if(order.tradeCode=="Z8005"){
+                                                    productItem.productName = "腾讯Q币充值 " + Number(order.closingPrice) + "Q币";
+                                                    productItem.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
+                                                }
                                                 productList.push(productItem);
                                             }
                                             orderItem.productList = productList;
@@ -1028,6 +1032,10 @@ router.post('/info', function (req, res, next) {
                                         if(orderInfo.tradeCode=="Z8004"){
                                             product.productName=orderInfo.deliverInfo.receiverAddress + "手机流量充值 " + orderInfo.deliverInfo.receiverName;
                                             product.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
+                                        }
+                                        if(orderInfo.tradeCode=="Z8005"){
+                                            product.productName = "腾讯Q币充值 " + Number(orderInfo.closingPrice) + "Q币";
+                                            product.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
                                         }
                                         productList.push(product);
                                     }
