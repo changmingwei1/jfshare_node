@@ -271,9 +271,8 @@ router.post('/queryCardsList', function (request, response, next) {
 
 /*查询游戏列表*/
 router.post('/queryGames', function (request, response, next) {
-    logger.info("进入管理中心审核接口");
+    logger.info("进入查询游戏列表接口");
     var result = {code: 200};
-    var AdvertSlotImageList = [];
     try {
         var params = request.body;
 
@@ -304,26 +303,29 @@ router.post('/queryGames', function (request, response, next) {
 });
 
 /*查询游戏列表*/
-router.post('/queryGames', function (request, response, next) {
-    logger.info("进入管理中心审核接口");
+router.post('/queryAreas', function (request, response, next) {
+    logger.info("进入查询游戏列表接口");
     var result = {code: 200};
-    var AdvertSlotImageList = [];
     try {
         var params = request.body;
 
         //参数校验
-        logger.info("queryGame params:" + JSON.stringify(params));
+        logger.info("queryAreas params:" + JSON.stringify(params));
 
-        fileCards.queryGames(params, function (err, data) {
+        if(params.gameId==null || params.gameId==""){
+            result.code = 500;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        fileCards.queryAreas(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
-            var ThirdCardList = data[0].thirdPartyCards;
-            var pagination = data[0].pagination;
-            result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
-            result.ThirdCardList = ThirdCardList;
-            logger.info("queryCardsList result:" + JSON.stringify(result));
+            logger.info("queryCardsList result:" + JSON.stringify(data));
+            result.gameAreaList=data.gameAreaList;
             response.json(result);
             return;
         });
