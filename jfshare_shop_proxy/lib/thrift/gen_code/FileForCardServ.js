@@ -704,18 +704,18 @@ FileForCardServ_rechargeList_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
+        var _size56 = 0;
+        var _rtmp360;
         this.states = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        var _etype59 = 0;
+        _rtmp360 = input.readListBegin();
+        _etype59 = _rtmp360.etype;
+        _size56 = _rtmp360.size;
+        for (var _i61 = 0; _i61 < _size56; ++_i61)
         {
-          var elem22 = null;
-          elem22 = input.readI32();
-          this.states.push(elem22);
+          var elem62 = null;
+          elem62 = input.readI32();
+          this.states.push(elem62);
         }
         input.readListEnd();
       } else {
@@ -744,12 +744,12 @@ FileForCardServ_rechargeList_args.prototype.write = function(output) {
   if (this.states !== null && this.states !== undefined) {
     output.writeFieldBegin('states', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.states.length);
-    for (var iter23 in this.states)
+    for (var iter63 in this.states)
     {
-      if (this.states.hasOwnProperty(iter23))
+      if (this.states.hasOwnProperty(iter63))
       {
-        iter23 = this.states[iter23];
-        output.writeI32(iter23);
+        iter63 = this.states[iter63];
+        output.writeI32(iter63);
       }
     }
     output.writeListEnd();
@@ -809,6 +809,481 @@ FileForCardServ_rechargeList_result.prototype.read = function(input) {
 
 FileForCardServ_rechargeList_result.prototype.write = function(output) {
   output.writeStructBegin('FileForCardServ_rechargeList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameList_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+FileForCardServ_queryGameList_args.prototype = {};
+FileForCardServ_queryGameList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ThirdGameParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameList_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryGameList_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryGameList_result.prototype = {};
+FileForCardServ_queryGameList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ThirdGameListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameList_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryGameList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameAreaList_args = function(args) {
+  this.thirdGameId = null;
+  if (args) {
+    if (args.thirdGameId !== undefined) {
+      this.thirdGameId = args.thirdGameId;
+    }
+  }
+};
+FileForCardServ_queryGameAreaList_args.prototype = {};
+FileForCardServ_queryGameAreaList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdGameId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameAreaList_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryGameAreaList_args');
+  if (this.thirdGameId !== null && this.thirdGameId !== undefined) {
+    output.writeFieldBegin('thirdGameId', Thrift.Type.STRING, 1);
+    output.writeString(this.thirdGameId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameAreaList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryGameAreaList_result.prototype = {};
+FileForCardServ_queryGameAreaList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.GameAreaListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameAreaList_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryGameAreaList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameRole_args = function(args) {
+  this.account = null;
+  this.gamearea = null;
+  this.gameserver = null;
+  this.thirdGameId = null;
+  if (args) {
+    if (args.account !== undefined) {
+      this.account = args.account;
+    }
+    if (args.gamearea !== undefined) {
+      this.gamearea = args.gamearea;
+    }
+    if (args.gameserver !== undefined) {
+      this.gameserver = args.gameserver;
+    }
+    if (args.thirdGameId !== undefined) {
+      this.thirdGameId = args.thirdGameId;
+    }
+  }
+};
+FileForCardServ_queryGameRole_args.prototype = {};
+FileForCardServ_queryGameRole_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.account = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.gamearea = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameserver = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdGameId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameRole_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryGameRole_args');
+  if (this.account !== null && this.account !== undefined) {
+    output.writeFieldBegin('account', Thrift.Type.STRING, 1);
+    output.writeString(this.account);
+    output.writeFieldEnd();
+  }
+  if (this.gamearea !== null && this.gamearea !== undefined) {
+    output.writeFieldBegin('gamearea', Thrift.Type.STRING, 2);
+    output.writeString(this.gamearea);
+    output.writeFieldEnd();
+  }
+  if (this.gameserver !== null && this.gameserver !== undefined) {
+    output.writeFieldBegin('gameserver', Thrift.Type.STRING, 3);
+    output.writeString(this.gameserver);
+    output.writeFieldEnd();
+  }
+  if (this.thirdGameId !== null && this.thirdGameId !== undefined) {
+    output.writeFieldBegin('thirdGameId', Thrift.Type.STRING, 4);
+    output.writeString(this.thirdGameId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameRole_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryGameRole_result.prototype = {};
+FileForCardServ_queryGameRole_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.GameRoleResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryGameRole_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryGameRole_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_validateRechargeGame_args = function(args) {
+  this.params = null;
+  if (args) {
+    if (args.params !== undefined) {
+      this.params = args.params;
+    }
+  }
+};
+FileForCardServ_validateRechargeGame_args.prototype = {};
+FileForCardServ_validateRechargeGame_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.params = new ttypes.ThirdGameRechargeParam();
+        this.params.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_validateRechargeGame_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_validateRechargeGame_args');
+  if (this.params !== null && this.params !== undefined) {
+    output.writeFieldBegin('params', Thrift.Type.STRUCT, 1);
+    this.params.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_validateRechargeGame_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_validateRechargeGame_result.prototype = {};
+FileForCardServ_validateRechargeGame_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_validateRechargeGame_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_validateRechargeGame_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -1159,6 +1634,197 @@ FileForCardServClient.prototype.recv_rechargeList = function(input,mtype,rseqid)
   }
   return callback('rechargeList failed: unknown result');
 };
+FileForCardServClient.prototype.queryGameList = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryGameList(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryGameList(param);
+  }
+};
+
+FileForCardServClient.prototype.send_queryGameList = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryGameList', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryGameList_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryGameList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryGameList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryGameList failed: unknown result');
+};
+FileForCardServClient.prototype.queryGameAreaList = function(thirdGameId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryGameAreaList(thirdGameId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryGameAreaList(thirdGameId);
+  }
+};
+
+FileForCardServClient.prototype.send_queryGameAreaList = function(thirdGameId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryGameAreaList', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryGameAreaList_args();
+  args.thirdGameId = thirdGameId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryGameAreaList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryGameAreaList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryGameAreaList failed: unknown result');
+};
+FileForCardServClient.prototype.queryGameRole = function(account, gamearea, gameserver, thirdGameId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryGameRole(account, gamearea, gameserver, thirdGameId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryGameRole(account, gamearea, gameserver, thirdGameId);
+  }
+};
+
+FileForCardServClient.prototype.send_queryGameRole = function(account, gamearea, gameserver, thirdGameId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryGameRole', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryGameRole_args();
+  args.account = account;
+  args.gamearea = gamearea;
+  args.gameserver = gameserver;
+  args.thirdGameId = thirdGameId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryGameRole = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryGameRole_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryGameRole failed: unknown result');
+};
+FileForCardServClient.prototype.validateRechargeGame = function(params, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_validateRechargeGame(params);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_validateRechargeGame(params);
+  }
+};
+
+FileForCardServClient.prototype.send_validateRechargeGame = function(params) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('validateRechargeGame', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_validateRechargeGame_args();
+  args.params = params;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_validateRechargeGame = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_validateRechargeGame_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('validateRechargeGame failed: unknown result');
+};
 FileForCardServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -1380,6 +2046,126 @@ FileForCardServProcessor.prototype.process_rechargeList = function(seqid, input,
     this._handler.rechargeList(args.states, args.recharge,  function (err, result) {
       var result = new FileForCardServ_rechargeList_result((err != null ? err : {success: result}));
       output.writeMessageBegin("rechargeList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryGameList = function(seqid, input, output) {
+  var args = new FileForCardServ_queryGameList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryGameList.length === 1) {
+    Q.fcall(this._handler.queryGameList, args.param)
+      .then(function(result) {
+        var result = new FileForCardServ_queryGameList_result({success: result});
+        output.writeMessageBegin("queryGameList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryGameList_result(err);
+        output.writeMessageBegin("queryGameList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryGameList(args.param,  function (err, result) {
+      var result = new FileForCardServ_queryGameList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryGameList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryGameAreaList = function(seqid, input, output) {
+  var args = new FileForCardServ_queryGameAreaList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryGameAreaList.length === 1) {
+    Q.fcall(this._handler.queryGameAreaList, args.thirdGameId)
+      .then(function(result) {
+        var result = new FileForCardServ_queryGameAreaList_result({success: result});
+        output.writeMessageBegin("queryGameAreaList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryGameAreaList_result(err);
+        output.writeMessageBegin("queryGameAreaList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryGameAreaList(args.thirdGameId,  function (err, result) {
+      var result = new FileForCardServ_queryGameAreaList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryGameAreaList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryGameRole = function(seqid, input, output) {
+  var args = new FileForCardServ_queryGameRole_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryGameRole.length === 4) {
+    Q.fcall(this._handler.queryGameRole, args.account, args.gamearea, args.gameserver, args.thirdGameId)
+      .then(function(result) {
+        var result = new FileForCardServ_queryGameRole_result({success: result});
+        output.writeMessageBegin("queryGameRole", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryGameRole_result(err);
+        output.writeMessageBegin("queryGameRole", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryGameRole(args.account, args.gamearea, args.gameserver, args.thirdGameId,  function (err, result) {
+      var result = new FileForCardServ_queryGameRole_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryGameRole", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_validateRechargeGame = function(seqid, input, output) {
+  var args = new FileForCardServ_validateRechargeGame_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.validateRechargeGame.length === 1) {
+    Q.fcall(this._handler.validateRechargeGame, args.params)
+      .then(function(result) {
+        var result = new FileForCardServ_validateRechargeGame_result({success: result});
+        output.writeMessageBegin("validateRechargeGame", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_validateRechargeGame_result(err);
+        output.writeMessageBegin("validateRechargeGame", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.validateRechargeGame(args.params,  function (err, result) {
+      var result = new FileForCardServ_validateRechargeGame_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("validateRechargeGame", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

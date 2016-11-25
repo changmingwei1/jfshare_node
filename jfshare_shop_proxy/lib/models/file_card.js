@@ -113,5 +113,37 @@ FileCards.prototype.queryCardsList = function (params, callback) {
     });
 
 };
+//
+
+FileCards.prototype.queryGames = function (params, callback) {
+
+    var thirdGameParam = new manager_types.ThirdGameParam({
+       thirdGameId:params.thirdGameId,
+        firstpy:params.firstpy,
+        name:params.name
+    });
+
+    logger.info("conditions >>>>>>>>>>>  " + JSON.stringify(thirdGameParam));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'queryGameList', [thirdGameParam]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("queryGames result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("queryGames because: ======" + err);
+            res.code = 500;
+            res.desc = "查询游戏列表失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            logger.warn("查询游戏列表失败，参数为：" + JSON.stringify(thirdGameParam));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else {
+            callback(null, data[0]);
+        }
+    });
+
+};
+
 
 module.exports = new FileCards();

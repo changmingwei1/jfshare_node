@@ -1261,3 +1261,1084 @@ NotifyRecharge.prototype.write = function(output) {
   return;
 };
 
+ThirdGameParam = module.exports.ThirdGameParam = function(args) {
+  this.thirdGameId = null;
+  this.firstpy = null;
+  this.name = null;
+  if (args) {
+    if (args.thirdGameId !== undefined) {
+      this.thirdGameId = args.thirdGameId;
+    }
+    if (args.firstpy !== undefined) {
+      this.firstpy = args.firstpy;
+    }
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+  }
+};
+ThirdGameParam.prototype = {};
+ThirdGameParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdGameId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.firstpy = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdGameParam.prototype.write = function(output) {
+  output.writeStructBegin('ThirdGameParam');
+  if (this.thirdGameId !== null && this.thirdGameId !== undefined) {
+    output.writeFieldBegin('thirdGameId', Thrift.Type.STRING, 1);
+    output.writeString(this.thirdGameId);
+    output.writeFieldEnd();
+  }
+  if (this.firstpy !== null && this.firstpy !== undefined) {
+    output.writeFieldBegin('firstpy', Thrift.Type.STRING, 2);
+    output.writeString(this.firstpy);
+    output.writeFieldEnd();
+  }
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 3);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdGame = module.exports.ThirdGame = function(args) {
+  this.thirdGameId = null;
+  this.corp = null;
+  this.code = null;
+  this.startbuy = null;
+  this.endbuy = null;
+  this.contbuy = null;
+  this.spacenum = null;
+  this.buyunit = null;
+  this.gameunit = null;
+  this.name = null;
+  this.needparam = null;
+  if (args) {
+    if (args.thirdGameId !== undefined) {
+      this.thirdGameId = args.thirdGameId;
+    }
+    if (args.corp !== undefined) {
+      this.corp = args.corp;
+    }
+    if (args.code !== undefined) {
+      this.code = args.code;
+    }
+    if (args.startbuy !== undefined) {
+      this.startbuy = args.startbuy;
+    }
+    if (args.endbuy !== undefined) {
+      this.endbuy = args.endbuy;
+    }
+    if (args.contbuy !== undefined) {
+      this.contbuy = args.contbuy;
+    }
+    if (args.spacenum !== undefined) {
+      this.spacenum = args.spacenum;
+    }
+    if (args.buyunit !== undefined) {
+      this.buyunit = args.buyunit;
+    }
+    if (args.gameunit !== undefined) {
+      this.gameunit = args.gameunit;
+    }
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.needparam !== undefined) {
+      this.needparam = args.needparam;
+    }
+  }
+};
+ThirdGame.prototype = {};
+ThirdGame.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdGameId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.corp = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.code = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.startbuy = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.endbuy = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.contbuy = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.spacenum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.buyunit = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameunit = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.needparam = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdGame.prototype.write = function(output) {
+  output.writeStructBegin('ThirdGame');
+  if (this.thirdGameId !== null && this.thirdGameId !== undefined) {
+    output.writeFieldBegin('thirdGameId', Thrift.Type.STRING, 1);
+    output.writeString(this.thirdGameId);
+    output.writeFieldEnd();
+  }
+  if (this.corp !== null && this.corp !== undefined) {
+    output.writeFieldBegin('corp', Thrift.Type.STRING, 2);
+    output.writeString(this.corp);
+    output.writeFieldEnd();
+  }
+  if (this.code !== null && this.code !== undefined) {
+    output.writeFieldBegin('code', Thrift.Type.STRING, 3);
+    output.writeString(this.code);
+    output.writeFieldEnd();
+  }
+  if (this.startbuy !== null && this.startbuy !== undefined) {
+    output.writeFieldBegin('startbuy', Thrift.Type.I32, 4);
+    output.writeI32(this.startbuy);
+    output.writeFieldEnd();
+  }
+  if (this.endbuy !== null && this.endbuy !== undefined) {
+    output.writeFieldBegin('endbuy', Thrift.Type.I32, 5);
+    output.writeI32(this.endbuy);
+    output.writeFieldEnd();
+  }
+  if (this.contbuy !== null && this.contbuy !== undefined) {
+    output.writeFieldBegin('contbuy', Thrift.Type.STRING, 6);
+    output.writeString(this.contbuy);
+    output.writeFieldEnd();
+  }
+  if (this.spacenum !== null && this.spacenum !== undefined) {
+    output.writeFieldBegin('spacenum', Thrift.Type.I32, 7);
+    output.writeI32(this.spacenum);
+    output.writeFieldEnd();
+  }
+  if (this.buyunit !== null && this.buyunit !== undefined) {
+    output.writeFieldBegin('buyunit', Thrift.Type.STRING, 8);
+    output.writeString(this.buyunit);
+    output.writeFieldEnd();
+  }
+  if (this.gameunit !== null && this.gameunit !== undefined) {
+    output.writeFieldBegin('gameunit', Thrift.Type.STRING, 9);
+    output.writeString(this.gameunit);
+    output.writeFieldEnd();
+  }
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 10);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.needparam !== null && this.needparam !== undefined) {
+    output.writeFieldBegin('needparam', Thrift.Type.STRING, 11);
+    output.writeString(this.needparam);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdGameRechargeParam = module.exports.ThirdGameRechargeParam = function(args) {
+  this.thirdGameId = null;
+  this.account = null;
+  this.gameAreaId = null;
+  this.gameAreaName = null;
+  this.gameServerId = null;
+  this.gameServerName = null;
+  this.buyNum = null;
+  this.totalAmount = null;
+  this.price = null;
+  this.roleId = null;
+  this.roleName = null;
+  if (args) {
+    if (args.thirdGameId !== undefined) {
+      this.thirdGameId = args.thirdGameId;
+    }
+    if (args.account !== undefined) {
+      this.account = args.account;
+    }
+    if (args.gameAreaId !== undefined) {
+      this.gameAreaId = args.gameAreaId;
+    }
+    if (args.gameAreaName !== undefined) {
+      this.gameAreaName = args.gameAreaName;
+    }
+    if (args.gameServerId !== undefined) {
+      this.gameServerId = args.gameServerId;
+    }
+    if (args.gameServerName !== undefined) {
+      this.gameServerName = args.gameServerName;
+    }
+    if (args.buyNum !== undefined) {
+      this.buyNum = args.buyNum;
+    }
+    if (args.totalAmount !== undefined) {
+      this.totalAmount = args.totalAmount;
+    }
+    if (args.price !== undefined) {
+      this.price = args.price;
+    }
+    if (args.roleId !== undefined) {
+      this.roleId = args.roleId;
+    }
+    if (args.roleName !== undefined) {
+      this.roleName = args.roleName;
+    }
+  }
+};
+ThirdGameRechargeParam.prototype = {};
+ThirdGameRechargeParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdGameId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.account = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameAreaId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameAreaName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameServerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameServerName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.buyNum = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.totalAmount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.price = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.roleId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.roleName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdGameRechargeParam.prototype.write = function(output) {
+  output.writeStructBegin('ThirdGameRechargeParam');
+  if (this.thirdGameId !== null && this.thirdGameId !== undefined) {
+    output.writeFieldBegin('thirdGameId', Thrift.Type.STRING, 1);
+    output.writeString(this.thirdGameId);
+    output.writeFieldEnd();
+  }
+  if (this.account !== null && this.account !== undefined) {
+    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
+    output.writeString(this.account);
+    output.writeFieldEnd();
+  }
+  if (this.gameAreaId !== null && this.gameAreaId !== undefined) {
+    output.writeFieldBegin('gameAreaId', Thrift.Type.STRING, 3);
+    output.writeString(this.gameAreaId);
+    output.writeFieldEnd();
+  }
+  if (this.gameAreaName !== null && this.gameAreaName !== undefined) {
+    output.writeFieldBegin('gameAreaName', Thrift.Type.STRING, 4);
+    output.writeString(this.gameAreaName);
+    output.writeFieldEnd();
+  }
+  if (this.gameServerId !== null && this.gameServerId !== undefined) {
+    output.writeFieldBegin('gameServerId', Thrift.Type.STRING, 5);
+    output.writeString(this.gameServerId);
+    output.writeFieldEnd();
+  }
+  if (this.gameServerName !== null && this.gameServerName !== undefined) {
+    output.writeFieldBegin('gameServerName', Thrift.Type.STRING, 6);
+    output.writeString(this.gameServerName);
+    output.writeFieldEnd();
+  }
+  if (this.buyNum !== null && this.buyNum !== undefined) {
+    output.writeFieldBegin('buyNum', Thrift.Type.STRING, 7);
+    output.writeString(this.buyNum);
+    output.writeFieldEnd();
+  }
+  if (this.totalAmount !== null && this.totalAmount !== undefined) {
+    output.writeFieldBegin('totalAmount', Thrift.Type.STRING, 8);
+    output.writeString(this.totalAmount);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.STRING, 9);
+    output.writeString(this.price);
+    output.writeFieldEnd();
+  }
+  if (this.roleId !== null && this.roleId !== undefined) {
+    output.writeFieldBegin('roleId', Thrift.Type.STRING, 10);
+    output.writeString(this.roleId);
+    output.writeFieldEnd();
+  }
+  if (this.roleName !== null && this.roleName !== undefined) {
+    output.writeFieldBegin('roleName', Thrift.Type.STRING, 11);
+    output.writeString(this.roleName);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+PYGameList = module.exports.PYGameList = function(args) {
+  this.py = null;
+  this.listGame = null;
+  if (args) {
+    if (args.py !== undefined) {
+      this.py = args.py;
+    }
+    if (args.listGame !== undefined) {
+      this.listGame = args.listGame;
+    }
+  }
+};
+PYGameList.prototype = {};
+PYGameList.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.py = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size16 = 0;
+        var _rtmp320;
+        this.listGame = [];
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        {
+          var elem22 = null;
+          elem22 = new ttypes.ThirdGame();
+          elem22.read(input);
+          this.listGame.push(elem22);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+PYGameList.prototype.write = function(output) {
+  output.writeStructBegin('PYGameList');
+  if (this.py !== null && this.py !== undefined) {
+    output.writeFieldBegin('py', Thrift.Type.STRING, 1);
+    output.writeString(this.py);
+    output.writeFieldEnd();
+  }
+  if (this.listGame !== null && this.listGame !== undefined) {
+    output.writeFieldBegin('listGame', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.listGame.length);
+    for (var iter23 in this.listGame)
+    {
+      if (this.listGame.hasOwnProperty(iter23))
+      {
+        iter23 = this.listGame[iter23];
+        iter23.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdGameListResult = module.exports.ThirdGameListResult = function(args) {
+  this.result = null;
+  this.ThirdGame = null;
+  this.pyThirdGameList = null;
+  this.thirdGameList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.ThirdGame !== undefined) {
+      this.ThirdGame = args.ThirdGame;
+    }
+    if (args.pyThirdGameList !== undefined) {
+      this.pyThirdGameList = args.pyThirdGameList;
+    }
+    if (args.thirdGameList !== undefined) {
+      this.thirdGameList = args.thirdGameList;
+    }
+  }
+};
+ThirdGameListResult.prototype = {};
+ThirdGameListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.ThirdGame = new ttypes.ThirdGame();
+        this.ThirdGame.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size24 = 0;
+        var _rtmp328;
+        this.pyThirdGameList = [];
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        {
+          var elem30 = null;
+          elem30 = new ttypes.PYGameList();
+          elem30.read(input);
+          this.pyThirdGameList.push(elem30);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.LIST) {
+        var _size31 = 0;
+        var _rtmp335;
+        this.thirdGameList = [];
+        var _etype34 = 0;
+        _rtmp335 = input.readListBegin();
+        _etype34 = _rtmp335.etype;
+        _size31 = _rtmp335.size;
+        for (var _i36 = 0; _i36 < _size31; ++_i36)
+        {
+          var elem37 = null;
+          elem37 = new ttypes.ThirdGame();
+          elem37.read(input);
+          this.thirdGameList.push(elem37);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdGameListResult.prototype.write = function(output) {
+  output.writeStructBegin('ThirdGameListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.ThirdGame !== null && this.ThirdGame !== undefined) {
+    output.writeFieldBegin('ThirdGame', Thrift.Type.STRUCT, 2);
+    this.ThirdGame.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pyThirdGameList !== null && this.pyThirdGameList !== undefined) {
+    output.writeFieldBegin('pyThirdGameList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.pyThirdGameList.length);
+    for (var iter38 in this.pyThirdGameList)
+    {
+      if (this.pyThirdGameList.hasOwnProperty(iter38))
+      {
+        iter38 = this.pyThirdGameList[iter38];
+        iter38.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.thirdGameList !== null && this.thirdGameList !== undefined) {
+    output.writeFieldBegin('thirdGameList', Thrift.Type.LIST, 4);
+    output.writeListBegin(Thrift.Type.STRUCT, this.thirdGameList.length);
+    for (var iter39 in this.thirdGameList)
+    {
+      if (this.thirdGameList.hasOwnProperty(iter39))
+      {
+        iter39 = this.thirdGameList[iter39];
+        iter39.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+GameSeaver = module.exports.GameSeaver = function(args) {
+  this.gameSeaverName = null;
+  this.gameSeaverId = null;
+  if (args) {
+    if (args.gameSeaverName !== undefined) {
+      this.gameSeaverName = args.gameSeaverName;
+    }
+    if (args.gameSeaverId !== undefined) {
+      this.gameSeaverId = args.gameSeaverId;
+    }
+  }
+};
+GameSeaver.prototype = {};
+GameSeaver.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameSeaverName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameSeaverId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+GameSeaver.prototype.write = function(output) {
+  output.writeStructBegin('GameSeaver');
+  if (this.gameSeaverName !== null && this.gameSeaverName !== undefined) {
+    output.writeFieldBegin('gameSeaverName', Thrift.Type.STRING, 1);
+    output.writeString(this.gameSeaverName);
+    output.writeFieldEnd();
+  }
+  if (this.gameSeaverId !== null && this.gameSeaverId !== undefined) {
+    output.writeFieldBegin('gameSeaverId', Thrift.Type.STRING, 2);
+    output.writeString(this.gameSeaverId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+GameArea = module.exports.GameArea = function(args) {
+  this.gameAreaName = null;
+  this.gameAreaId = null;
+  this.gameSeaverList = null;
+  if (args) {
+    if (args.gameAreaName !== undefined) {
+      this.gameAreaName = args.gameAreaName;
+    }
+    if (args.gameAreaId !== undefined) {
+      this.gameAreaId = args.gameAreaId;
+    }
+    if (args.gameSeaverList !== undefined) {
+      this.gameSeaverList = args.gameSeaverList;
+    }
+  }
+};
+GameArea.prototype = {};
+GameArea.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameAreaName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.gameAreaId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size40 = 0;
+        var _rtmp344;
+        this.gameSeaverList = [];
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        {
+          var elem46 = null;
+          elem46 = new ttypes.GameSeaver();
+          elem46.read(input);
+          this.gameSeaverList.push(elem46);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+GameArea.prototype.write = function(output) {
+  output.writeStructBegin('GameArea');
+  if (this.gameAreaName !== null && this.gameAreaName !== undefined) {
+    output.writeFieldBegin('gameAreaName', Thrift.Type.STRING, 1);
+    output.writeString(this.gameAreaName);
+    output.writeFieldEnd();
+  }
+  if (this.gameAreaId !== null && this.gameAreaId !== undefined) {
+    output.writeFieldBegin('gameAreaId', Thrift.Type.STRING, 2);
+    output.writeString(this.gameAreaId);
+    output.writeFieldEnd();
+  }
+  if (this.gameSeaverList !== null && this.gameSeaverList !== undefined) {
+    output.writeFieldBegin('gameSeaverList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.gameSeaverList.length);
+    for (var iter47 in this.gameSeaverList)
+    {
+      if (this.gameSeaverList.hasOwnProperty(iter47))
+      {
+        iter47 = this.gameSeaverList[iter47];
+        iter47.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+GameAreaListResult = module.exports.GameAreaListResult = function(args) {
+  this.result = null;
+  this.gameAreaList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.gameAreaList !== undefined) {
+      this.gameAreaList = args.gameAreaList;
+    }
+  }
+};
+GameAreaListResult.prototype = {};
+GameAreaListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size48 = 0;
+        var _rtmp352;
+        this.gameAreaList = [];
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
+        {
+          var elem54 = null;
+          elem54 = new ttypes.GameArea();
+          elem54.read(input);
+          this.gameAreaList.push(elem54);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+GameAreaListResult.prototype.write = function(output) {
+  output.writeStructBegin('GameAreaListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.gameAreaList !== null && this.gameAreaList !== undefined) {
+    output.writeFieldBegin('gameAreaList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.gameAreaList.length);
+    for (var iter55 in this.gameAreaList)
+    {
+      if (this.gameAreaList.hasOwnProperty(iter55))
+      {
+        iter55 = this.gameAreaList[iter55];
+        iter55.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+GameRoleResult = module.exports.GameRoleResult = function(args) {
+  this.result = null;
+  this.roleName = null;
+  this.roleId = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.roleName !== undefined) {
+      this.roleName = args.roleName;
+    }
+    if (args.roleId !== undefined) {
+      this.roleId = args.roleId;
+    }
+  }
+};
+GameRoleResult.prototype = {};
+GameRoleResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.roleName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.roleId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+GameRoleResult.prototype.write = function(output) {
+  output.writeStructBegin('GameRoleResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.roleName !== null && this.roleName !== undefined) {
+    output.writeFieldBegin('roleName', Thrift.Type.STRING, 2);
+    output.writeString(this.roleName);
+    output.writeFieldEnd();
+  }
+  if (this.roleId !== null && this.roleId !== undefined) {
+    output.writeFieldBegin('roleId', Thrift.Type.STRING, 3);
+    output.writeString(this.roleId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
