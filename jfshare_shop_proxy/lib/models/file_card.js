@@ -168,5 +168,37 @@ FileCards.prototype.queryAreas = function (params, callback) {
     });
 
 };
+//thirdgameCallBack
+
+FileCards.prototype.thirdgameCallBack = function (params, callback) {
+    //获取客户端
+    var thirdGameParam = new manager_types.ThirdGameCallBackParam({
+        retcode:params.retcode,
+        username:params.username,
+        gameapi:params.gameapi,
+        sporderid:params.sporderid,
+        money:params.money,
+        sign:params.sign
+    });
+
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'thirdgameCallBack', [thirdGameParam]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("thirdgameCallBack result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("thirdgameCallBack: ======" + err);
+            res.code = 500;
+            res.desc = "";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            logger.warn("thirdgameCallBack，参数为：" + JSON.stringify(thirdGameParam));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else {
+            callback(null, data[0]);
+        }
+    });
+
+};
 
 module.exports = new FileCards();
