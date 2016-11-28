@@ -448,7 +448,7 @@ Order.prototype.orderConfirmRecharge = function (arg, callback) {
             res.code = 500;
             res.desc = "提交订单失败！";
             callback(res, null);
-        } else if (data[0].code == 1) {
+        } else if (data[0].result.code == 1) {
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
