@@ -105,8 +105,7 @@ module.exports.ServiceFactory = {
      */
     order: function () {
         logger.info("--------->"+zookeeper.getData("order_serv_ips")+"--->"+zookeeper.getData("order_port"));
-        //return new ThriftConfig(zookeeper.getData("order_serv_ips"),zookeeper.getData("order_port"));
-        return new ThriftConfig("127.0.0.1",1986);
+        return new ThriftConfig(zookeeper.getData("order_serv_ips"),zookeeper.getData("order_port"));
     },
     /**
      * 买家服务
@@ -115,7 +114,6 @@ module.exports.ServiceFactory = {
     buyer: function () {
         logger.info("--------->"+zookeeper.getData("buyer_ips")+"--->"+zookeeper.getData("buyer_port"));
         return new ThriftConfig(zookeeper.getData("buyer_ips"),zookeeper.getData("buyer_port"));
-        //return new ThriftConfig("127.0.0.1",1990);
     },
     /**
      * 商品服务
@@ -139,8 +137,7 @@ module.exports.ServiceFactory = {
      */
     common: function () {
         logger.info("--------->"+zookeeper.getData("common_serv_ips")+"--->"+zookeeper.getData("common_port"));
-        //return new ThriftConfig(zookeeper.getData("common_serv_ips"),zookeeper.getData("common_port"));
-        return new ThriftConfig("127.0.0.1",1984);
+        return new ThriftConfig(zookeeper.getData("common_serv_ips"),zookeeper.getData("common_port"));
     },
     /**
      * 交易服务
@@ -148,8 +145,7 @@ module.exports.ServiceFactory = {
      */
     trade: function () {
         logger.info("--------->"+zookeeper.getData("trade_serv_ips")+"--->"+zookeeper.getData("trade_port"));
-        //return new ThriftConfig(zookeeper.getData("trade_serv_ips"),zookeeper.getData("trade_port"));
-        return new ThriftConfig("127.0.0.1",1987);
+        return new ThriftConfig(zookeeper.getData("trade_serv_ips"),zookeeper.getData("trade_port"));
     },
     /**
      * 支付服务
@@ -216,7 +212,7 @@ module.exports.ServiceFactory = {
         return new ThriftConfig(zookeeper.getData("template_serv_ips"),zookeeper.getData("template_serv_port"));
     },
     /**
-     * 积分卡服务 
+     * 积分卡服务
      * @returns {ThriftConfig}
      */
     scoreCards: function () {
