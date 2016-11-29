@@ -212,7 +212,7 @@ module.exports.ServiceFactory = {
         return new ThriftConfig(zookeeper.getData("template_serv_ips"),zookeeper.getData("template_serv_port"));
     },
     /**
-     * 积分卡服务 
+     * 积分卡服务
      * @returns {ThriftConfig}
      */
     scoreCards: function () {
