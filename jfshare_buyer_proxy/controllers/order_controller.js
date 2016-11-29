@@ -1925,13 +1925,13 @@ router.post('/payOrderCreates', function (request, response, next) {
     var result = {code: 200};
     try {
         var arg = request.body;
-        if (arg.tradeCode == "Z8003") {
-            result.code = 500;
-            //result.desc = "话费充值服务暂不可使用";
-            result.desc = "运营商系统维护，话费充值服务暂不可用";
-            response.json(result);
-            return;
-        }
+        //if (arg.tradeCode == "Z8003") {
+        //    result.code = 500;
+        //    //result.desc = "话费充值服务暂不可使用";
+        //    result.desc = "运营商系统维护，话费充值服务暂不可用";
+        //    response.json(result);
+        //    return;
+        //}
         if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
