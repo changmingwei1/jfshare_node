@@ -1431,15 +1431,15 @@ ThirdGame.prototype.read = function(input) {
       }
       break;
       case 4:
-      if (ftype == Thrift.Type.I32) {
-        this.startbuy = input.readI32();
+      if (ftype == Thrift.Type.STRING) {
+        this.startbuy = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 5:
-      if (ftype == Thrift.Type.I32) {
-        this.endbuy = input.readI32();
+      if (ftype == Thrift.Type.STRING) {
+        this.endbuy = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -1520,13 +1520,13 @@ ThirdGame.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.startbuy !== null && this.startbuy !== undefined) {
-    output.writeFieldBegin('startbuy', Thrift.Type.I32, 4);
-    output.writeI32(this.startbuy);
+    output.writeFieldBegin('startbuy', Thrift.Type.STRING, 4);
+    output.writeString(this.startbuy);
     output.writeFieldEnd();
   }
   if (this.endbuy !== null && this.endbuy !== undefined) {
-    output.writeFieldBegin('endbuy', Thrift.Type.I32, 5);
-    output.writeI32(this.endbuy);
+    output.writeFieldBegin('endbuy', Thrift.Type.STRING, 5);
+    output.writeString(this.endbuy);
     output.writeFieldEnd();
   }
   if (this.contbuy !== null && this.contbuy !== undefined) {
