@@ -2042,6 +2042,12 @@ router.post('/payOrderCreates', function (request, response, next) {
                 response.json(result);
                 return;
             }
+            if (arg.totalSum == "1") {
+                result.code = 400;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
         }
 
         if(arg.tradeCode =="Z8006"){
