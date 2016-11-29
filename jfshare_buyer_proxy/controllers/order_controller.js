@@ -1975,8 +1975,7 @@ router.post('/payOrderCreates', function (request, response, next) {
             return;
         }
         if (arg.tradeCode == "Z8003") {
-            if (arg.totalSum == "" || (arg.totalSum !="30"&& arg.totalSum !="50"
-                && arg.totalSum !="100" && arg.totalSum !="300"&&arg.totalSum !="500")) {
+            if (arg.totalSum == "" || (arg.totalSum !="100" && arg.totalSum !="300"&&arg.totalSum !="500")) {
                 result.code = 400;
                 result.desc = "充值金额不合法";
                 response.json(result);
