@@ -369,7 +369,7 @@ router.post('/info', function (request, response, next) {
                                     product.productName=orderInfo.deliverInfo.receiverAddress + "手机流量充值 " + orderInfo.deliverInfo.receiverName;
                                     //product.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
                                 }
-                                if(order.tradeCode=="Z8005"){
+                                if(orderInfo.tradeCode=="Z8005"){
                                     product.productName = "腾讯Q币充值 " + Number(orderInfo.closingPrice) + "Q币";
                                     //product.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
                                 }
