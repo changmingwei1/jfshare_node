@@ -2040,6 +2040,15 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
         }
 
+        if(arg.tradeCode =="Z8006"){
+            if(arg.sellerComment=="" || arg.sellerComment ==null){
+                result.code = 400;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+        }
+
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息
         Buyer.validAuth(arg, function (err, data) {

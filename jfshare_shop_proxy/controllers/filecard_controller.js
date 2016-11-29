@@ -346,13 +346,6 @@ router.get('/thirdgameCallBack', function (request, response, next) {
         //参数校验
         logger.info("queryAreas params:" + JSON.stringify(params));
 
-        if(params.gameId==null || params.gameId==""){
-            result.code = 500;
-            result.desc = "参数错误";
-            response.json(result);
-            return;
-        }
-
         fileCards.thirdgameCallBack(params, function (err, data) {
             if (err) {
                 response.json(err);
