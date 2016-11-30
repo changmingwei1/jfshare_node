@@ -204,15 +204,28 @@ Permission.prototype.isLoginNameExist = function (params, callback) {
     var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'isLoginNameExist', [params.loginName]);
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("isLoginNameExist result:" + JSON.stringify(data));
+
         var res = {};
-        if (err || data[0].result.code == "1") {
-            logger.error("checkAccountName fail because: ======" + err);
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't isLoginNameExist because: ======" + err);
             res.code = 500;
-            res.desc = "false to checkAccountName";
+            res.desc = "false to isLoginNameExist";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == "1"){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data);
         }
+
+
+
+
+
+
     });
 };
 

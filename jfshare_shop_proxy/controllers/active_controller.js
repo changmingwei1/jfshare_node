@@ -310,10 +310,20 @@ router.get('/queryMobileInfo',function(request,response,next){
     var lt = "^1(3[0-2]|4[5]|5[56]|7[0156]|8[56])\\d{8}$";  //联通
     var dx = "^1(3[3]|4[9]|53|7[037]|8[019])\\d{8}$";   //电信
     var mobile = arg.mobile;
+    var flowList = [];
     if (mobile.match(yd)) {
         var data = {};
         data.operator = "中国移动";
         data.support = "移动号码目前仅支持安徽、湖南、内蒙古用户充值";
+        var flow1 = {flowName:"10M", flowno:"10", pieceValue:"3"};
+        var flow2 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
+        var flow3 = {flowName:"2G", flowno:"2048", pieceValue:"70"};
+        var flow4 = {flowName:"3G", flowno:"3072", pieceValue:"100"};
+        var flow5 = {flowName:"4G", flowno:"4096", pieceValue:"130"};
+        var flow6 = {flowName:"6G", flowno:"6144", pieceValue:"180"};
+        var flow7 = {flowName:"11G", flowno:"11264", pieceValue:"280"};
+        flowList.push(flow1,flow2,flow3,flow4,flow5,flow6,flow7);
+        data.flowList = flowList;
         data.province = "";
         data.city = "";
         result.data = data;
@@ -321,7 +331,11 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(lt)) {
         var data = {};
         data.operator = "中国联通";
-        data.support = "";
+        data.support = "联通系统维护，暂不支持充值";
+        var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
+        var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
+        flowList.push(flow,flow1);
+        data.flowList = flowList;
         data.province = "";
         data.city = "";
         result.data = data;
@@ -329,7 +343,11 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(dx)) {
         var data = {};
         data.operator = "中国电信";
-        data.support = "";
+        data.support = "电信号码目前仅支持广东、浙江、江苏、上海、福建、安徽、广西，吉林用户充值";
+        var flow = {flowName:"5M", flowno:"5", pieceValue:"1"};
+        var flow1 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
+        flowList.push(flow,flow1);
+        data.flowList = flowList;
         data.province = "";
         data.city = "";
         result.data = data;

@@ -20,13 +20,13 @@ router.post('/queryAllCommissioner', function (request, response, next) {
 
         if (params.currentPage == null || params.currentPage == "" ||params.currentPage<0) {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "当前页参数错误";
             response.json(result);
             return;
         }
         if (params.numPerPage == null || params.numPerPage == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "每页显示记录数参数错误";
             response.json(result);
             return;
         }
@@ -60,7 +60,7 @@ router.post('/get', function(request, response, next) {
         //参数校验
         if(params.id =="" || params.id==null || params.id<=0){
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "用户id 参数错误";
             response.json(result);
             return;
         }
@@ -95,7 +95,7 @@ router.post('/getUrls', function(request, response, next) {
         //参数校验
         if(params.id =="" || params.id==null || params.id<=0){
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "用户id 参数错误";
             response.json(result);
             return;
         }
@@ -131,13 +131,13 @@ router.post('/editpwd', function (request, response, next) {
 
         if (params.csId == null || params.csId == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "用户id 参数错误";
             response.json(result);
             return;
         }
         if (params.pwdEnc == null || params.pwdEnc == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "新密码 参数错误";
             response.json(result);
             return;
         }
@@ -172,7 +172,7 @@ router.post('/updateManager', function (request, response, next) {
 
         if (params.csId == null || params.csId == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "用户id 参数错误";
             response.json(result);
             return;
         }
@@ -204,44 +204,44 @@ router.post('/add', function (request, response, next) {
 
         if (params.loginName == null || params.loginName == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "账户名称 参数错误";
             response.json(result);
             return;
         }
 
         if (params.pwdEnc == null || params.pwdEnc == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "密码 参数错误";
             response.json(result);
             return;
         }
         if (params.deptId == null || params.deptId == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "部门 参数错误";
             response.json(result);
             return;
         }
         if (params.csName == null || params.deptId == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "客服姓名 参数错误";
             response.json(result);
             return;
         }
         if (params.mobile == null || params.mobile == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "手机号 参数错误";
             response.json(result);
             return;
         }
         if (params.email == null || params.email == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "邮箱 参数错误";
             response.json(result);
             return;
         }
         if (params.url == null || params.url == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "权限 参数错误";
             response.json(result);
             return;
         }
@@ -278,13 +278,13 @@ router.post('/changeValidate', function (request, response, next) {
 
         if (params.csId == null || params.csId == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "用户id 参数错误";
             response.json(result);
             return;
         }
         if (params.validate == null || params.validate == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "状态 参数错误";
             response.json(result);
             return;
         }
@@ -320,7 +320,7 @@ router.get('/isLoginNameExist', function (request, response, next) {
 
         if (params.loginName == null || params.loginName == "") {
             result.code = 500;
-            result.desc = "参数错误";
+            result.desc = "账户名 参数错误";
             response.json(result);
             return;
         }

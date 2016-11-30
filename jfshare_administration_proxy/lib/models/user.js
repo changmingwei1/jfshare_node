@@ -51,14 +51,26 @@ User.prototype.login = function (params, callback) {
     Lich.wicca.invokeClient(userServ, function (err, data) {
         logger.info("isLoginNameExist result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == "1") {
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
             logger.error("signin fail because: ======" + err);
             res.code = 500;
             res.desc = "false to signin";
             callback(res, null);
-        } else {
+        } else if(data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }else{
             callback(null, data);
         }
+
+
+
+
+
+
     });
 };
 
