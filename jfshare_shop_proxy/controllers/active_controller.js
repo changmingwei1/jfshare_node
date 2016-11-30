@@ -343,7 +343,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(dx)) {
         var data = {};
         data.operator = "中国电信";
-        data.support = "";
+        data.support = "电信号码目前仅支持广东、浙江、江苏、上海、福建、安徽、广西，吉林用户充值";
         var flow = {flowName:"5M", flowno:"5", pieceValue:"1"};
         var flow1 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
         flowList.push(flow,flow1);
