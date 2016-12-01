@@ -2006,8 +2006,8 @@ router.post('/payOrderCreates', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            if (arg.flowno == "" || arg.flowno == null || (arg.flowno != "5" &&
-                arg.flowno != "10" && arg.flowno != "20" &&
+            if (arg.flowno == "" || arg.flowno == null || (
+                //arg.flowno != "5" && arg.flowno != "10" && arg.flowno != "20" &&
                 arg.flowno != "1024" && arg.flowno != "2048" && arg.flowno != "3072" &&
                 arg.flowno != "4096" && arg.flowno != "6144" && arg.flowno != "11264") ) {
                 result.code = 400;
