@@ -1995,11 +1995,11 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
         }
         if (arg.tradeCode == "Z8004") {
-            result.code = 500;
-            //result.desc = "话费充值服务暂不可使用";
-            result.desc = "运营商系统维护，流量充值服务暂不可用";
-            response.json(result);
-            return;
+            //result.code = 500;
+            ////result.desc = "话费充值服务暂不可使用";
+            //result.desc = "运营商系统维护，流量充值服务暂不可用";
+            //response.json(result);
+            //return;
             if (arg.company == "" || arg.company == null) {
                 result.code = 400;
                 result.desc = "参数错误";
