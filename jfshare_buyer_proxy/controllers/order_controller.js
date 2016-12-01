@@ -1037,9 +1037,6 @@ router.post('/info', function (req, res, next) {
                                             product.productName = "腾讯Q币充值 " + Number(orderInfo.closingPrice) + "Q币";
                                             product.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
                                         }
-                                        if(orderInfo.tradeCode=="Z8006"){
-                                            product.imgKey = "A23589CD9715CCFB796EC70B9B3772F0.png";
-                                        }
                                         productList.push(product);
                                     }
                                     result.productList = productList;
