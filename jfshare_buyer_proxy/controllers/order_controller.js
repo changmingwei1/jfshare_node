@@ -1925,7 +1925,7 @@ router.post('/payOrderCreates', function (request, response, next) {
     var result = {code: 200};
 
     //获取ip
-    var ip = req.headers['x-real-ip'];
+    var ip = request.headers['x-real-ip'];
 
     logger.error("这不是错误,只是显示------------->ip地址"+ip);
 
