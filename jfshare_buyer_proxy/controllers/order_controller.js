@@ -2055,7 +2055,7 @@ router.post('/payOrderCreates', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            if (Number(arg.totalSum) < 1 || Number(arg.totalSum) > 500) {
+            if (Number(arg.totalSum) < 50 || Number(arg.totalSum) > 500) {
                 result.code = 400;
                 result.desc = "参数错误";
                 response.json(result);
