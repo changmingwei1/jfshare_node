@@ -1356,6 +1356,7 @@ ThirdGame = module.exports.ThirdGame = function(args) {
   this.name = null;
   this.needparam = null;
   this.mprice = null;
+  this.point = null;
   if (args) {
     if (args.thirdGameId !== undefined) {
       this.thirdGameId = args.thirdGameId;
@@ -1392,6 +1393,9 @@ ThirdGame = module.exports.ThirdGame = function(args) {
     }
     if (args.mprice !== undefined) {
       this.mprice = args.mprice;
+    }
+    if (args.point !== undefined) {
+      this.point = args.point;
     }
   }
 };
@@ -1493,6 +1497,13 @@ ThirdGame.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.point = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1562,6 +1573,11 @@ ThirdGame.prototype.write = function(output) {
   if (this.mprice !== null && this.mprice !== undefined) {
     output.writeFieldBegin('mprice', Thrift.Type.STRING, 12);
     output.writeString(this.mprice);
+    output.writeFieldEnd();
+  }
+  if (this.point !== null && this.point !== undefined) {
+    output.writeFieldBegin('point', Thrift.Type.STRING, 13);
+    output.writeString(this.point);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
