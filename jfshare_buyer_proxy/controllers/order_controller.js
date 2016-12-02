@@ -1928,6 +1928,7 @@ router.post('/payOrderCreates', function (request, response, next) {
     var ip = request.headers['x-real-ip'];
 
     logger.error("这不是错误,只是显示------------->ip地址"+ip);
+    var arg = req.body;
 
     if(arg.tradeCode =="Z8006" ||arg.tradeCode =="Z8005"){
         //公司内网测试的时候ip获取不到，因此给一个默认值
