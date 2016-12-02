@@ -1935,8 +1935,6 @@ router.post('/payOrderCreates', function (request, response, next) {
         if(ip == undefined || ip=="undefined"){
             arg.provinceName = "117.114.151.190";
         }
-
-        arg.provinceName = ip;
     }
     try {
         var arg = request.body;
