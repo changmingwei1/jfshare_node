@@ -1923,6 +1923,20 @@ router.post('/pay_applyTYH5', function(req, res, next) {
 router.post('/payOrderCreates', function (request, response, next) {
     logger.info("进入提交订单流程..");
     var result = {code: 200};
+
+    //获取ip
+    var ip = req.headers['x-real-ip'];
+
+    logger.error("这不是错误,只是显示------------->ip地址"+ip);
+
+    if(arg.tradeCode =="Z8006" ||arg.tradeCode =="Z8005"){
+        //公司内网测试的时候ip获取不到，因此给一个默认值
+        if(ip == undefined || ip=="undefined"){
+            arg.provinceName = "117.114.151.190";
+        }
+
+        arg.provinceName = ip;
+    }
     try {
         var arg = request.body;
         //if (arg.tradeCode == "Z8003") {
