@@ -1990,8 +1990,8 @@ router.post('/payOrderCreates', function (request, response, next) {
         }
         if (arg.tradeCode == "Z8003") {
             if (arg.totalSum == "" || (arg.totalSum !="100" && arg.totalSum !="300"&&arg.totalSum !="500")) {
-                result.code = 400;
-                result.desc = "充值金额不合法";
+                result.code = 500;
+                result.desc = "该面值已售罄";
                 response.json(result);
                 return;
             }
@@ -2009,19 +2009,19 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
         }
         if (arg.tradeCode == "Z8004") {
-            result.code = 500;
-            //result.desc = "话费充值服务暂不可使用";
-            result.desc = "运营商系统维护，流量充值服务暂不可用";
-            response.json(result);
-            return;
+            //result.code = 500;
+            ////result.desc = "话费充值服务暂不可使用";
+            //result.desc = "运营商系统维护，流量充值服务暂不可用";
+            //response.json(result);
+            //return;
             if (arg.company == "" || arg.company == null) {
                 result.code = 400;
                 result.desc = "参数错误";
                 response.json(result);
                 return;
             }
-            if (arg.flowno == "" || arg.flowno == null || (arg.flowno != "5" &&
-                arg.flowno != "10" && arg.flowno != "20" &&
+            if (arg.flowno == "" || arg.flowno == null || (
+                //arg.flowno != "5" && arg.flowno != "10" && arg.flowno != "20" &&
                 arg.flowno != "1024" && arg.flowno != "2048" && arg.flowno != "3072" &&
                 arg.flowno != "4096" && arg.flowno != "6144" && arg.flowno != "11264") ) {
                 result.code = 400;
