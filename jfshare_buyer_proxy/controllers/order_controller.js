@@ -1926,8 +1926,9 @@ router.post('/payOrderCreates', function (request, response, next) {
 
     //获取ip
     var ip = request.headers['x-real-ip'];
+    var ips = req.headers['x-forwarded-for'];
 
-    logger.error("这不是错误,只是显示------------->ip地址"+ip);
+    logger.error("这不是错误,只是显示------------->ip地址"+ip+"---->"+ips);
     var arg = request.body;
 
     if(arg.tradeCode =="Z8006" ||arg.tradeCode =="Z8005"){
