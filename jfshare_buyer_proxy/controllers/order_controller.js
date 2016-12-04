@@ -62,11 +62,11 @@ router.post('/submit', function (request, response, next) {
             }
             async.series([
                     /*根据商品id查找类目id*/
-                    function(callback){
+                    function (callback) {
                         var productId = arg.sellerDetailList[0].productList[0].productId;
                         Product.queryProduct(productId, 1, 1, 1, 1, function (err, data) {
                             if (err) {
-                                return callback(1,null);
+                                return callback(1, null);
                             }
                             var product = data[0].product;
                             arg.subjectId = product.subjectId;
@@ -75,27 +75,27 @@ router.post('/submit', function (request, response, next) {
                         });
                     },
                     /*根据类目id,得到商品类型commodity*/
-                    function(callback){
-                        Product.getById4dis(arg, function(err,data){
-                            if(err){
-                                return callback(2,null);
+                    function (callback) {
+                        Product.getById4dis(arg, function (err, data) {
+                            if (err) {
+                                return callback(2, null);
                             } else {
                                 var displaySubjectInfo = data[0].displaySubjectInfo;
                                 var commodity = displaySubjectInfo.commodity;
                                 var tradeCode;
-                                if(commodity == 1){
+                                if (commodity == 1) {
                                     tradeCode = "Z0003";
                                 }
-                                if(commodity == 2){
+                                if (commodity == 2) {
                                     tradeCode = "Z8001";
                                 }
                                 arg.tradeCode = tradeCode;
                                 logger.info("tradeCode的值为：" + arg.tradeCode);
-                                callback(null,result);
+                                callback(null, result);
                             }
                         });
                     },
-                    function(callback){
+                    function (callback) {
                         Order.orderConfirm(arg, function (err, data) {
                             if (err) {
                                 response.json(err);
@@ -119,7 +119,7 @@ router.post('/submit', function (request, response, next) {
                         response.json(result);
                         return;
                     }
-            });
+                });
         });
     } catch (ex) {
         logger.error("submit order error:" + ex);
@@ -367,7 +367,8 @@ router.post('/afterSaleList', function (request, response, next) {
                                 }
                                 logger.info("get order list response:" + JSON.stringify(result));
                                 var afterSaleList = data;
-                                result.afterSaleList = afterSaleList;/*注掉,不用了；主站还是需要用到列表中的state字段去判断售后的状态*/
+                                result.afterSaleList = afterSaleList;
+                                /*注掉,不用了；主站还是需要用到列表中的state字段去判断售后的状态*/
                                 return callback(null, result);
                             });
                         } catch (ex) {
@@ -618,10 +619,10 @@ router.post('/list', function (request, response, next) {
                                 }
                                 var page = {total: orderInfo.total, pageCount: orderInfo.pageCount};
                                 var orderList = [];
-                                if (orderInfo.orderProfileList !== null  && orderInfo.orderProfileList.length > 0) {
-                                    for(var j=0;j<orderInfo.orderProfileList.length;j++) {
+                                if (orderInfo.orderProfileList !== null && orderInfo.orderProfileList.length > 0) {
+                                    for (var j = 0; j < orderInfo.orderProfileList.length; j++) {
                                         var order = orderInfo.orderProfileList[j];
-                                        if(order.orderState>=50){
+                                        if (order.orderState >= 50) {
                                             orderIdList.push(order.orderId);
                                         }
                                         //临时修改：因安卓没有62状态，所以62状态转换为61
@@ -630,7 +631,7 @@ router.post('/list', function (request, response, next) {
                                         //}
                                         var orderItem = {
                                             orderId: order.orderId,
-                                            tradeCode:order.tradeCode,
+                                            tradeCode: order.tradeCode,
                                             closingPrice: order.closingPrice,
                                             //添加了应答的数据
                                             postage: order.postage,
@@ -647,7 +648,7 @@ router.post('/list', function (request, response, next) {
                                             postage: order.postage,
                                             type: order.productList[0].type  //5.17测没有type
                                         };
-                                        if(order.deliverInfo != null ){
+                                        if (order.deliverInfo != null) {
                                             orderItem.expressId = order.deliverInfo.expressId;
                                             orderItem.expressNo = order.deliverInfo.expressNo;
                                         }
@@ -663,18 +664,18 @@ router.post('/list', function (request, response, next) {
                                                     imgKey: "",
                                                     count: order.productList[i].count
                                                 };
-                                                if(order.productList[i].imagesUrl != null){
+                                                if (order.productList[i].imagesUrl != null) {
                                                     productItem.imgKey = order.productList[i].imagesUrl.split(',')[0];
                                                 }
-                                                if(order.tradeCode=="Z8003"){
-                                                    productItem.productName="手机话费充值 " + order.closingPrice + "元";
-                                                    productItem.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
+                                                if (order.tradeCode == "Z8003") {
+                                                    productItem.productName = "手机话费充值 " + order.closingPrice + "元";
+                                                    productItem.imgKey = "4EF66DB6D245554C206E645A278E03A7.png";
                                                 }
-                                                if(order.tradeCode=="Z8004"){
-                                                    productItem.productName=order.deliverInfo.receiverAddress + "手机流量充值 " + order.deliverInfo.receiverName;
-                                                    productItem.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
+                                                if (order.tradeCode == "Z8004") {
+                                                    productItem.productName = order.deliverInfo.receiverAddress + "手机流量充值 " + order.deliverInfo.receiverName;
+                                                    productItem.imgKey = "A177197080704C3AC2BE21A4D67EBD21.png";
                                                 }
-                                                if(order.tradeCode=="Z8005"){
+                                                if (order.tradeCode == "Z8005") {
                                                     productItem.productName = "腾讯Q币充值 " + Number(order.closingPrice) + "Q币";
                                                     productItem.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
                                                 }
@@ -723,7 +724,7 @@ router.post('/list', function (request, response, next) {
                     },
                     function (callback) {
                         try {
-                            if (params.orderState == null && params.orderIdList!=null && params.orderIdList.length > 0) {
+                            if (params.orderState == null && params.orderIdList != null && params.orderIdList.length > 0) {
                                 AfterSale.queryAfterSale(params, function (err, data) {
                                     if (err) {
                                         return callback(2, null);
@@ -970,7 +971,7 @@ router.post('/info', function (req, res, next) {
                                 //if(orderInfo.orderState==62){
                                 //    result.orderState=61;
                                 //}else{
-                                    result.orderState = orderInfo.orderState;
+                                result.orderState = orderInfo.orderState;
                                 //}
 
                                 if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
@@ -1008,7 +1009,7 @@ router.post('/info', function (req, res, next) {
                                 /*运费扩展信息  JSON*/
                                 result.exchangeScore = orderInfo.exchangeScore; //添加字段
                                 result.exchangeCash = orderInfo.exchangeCash; //添加字段
-                                result.virRechargeState =  orderInfo.virRechargeState;//第三方状态
+                                result.virRechargeState = orderInfo.virRechargeState;//第三方状态
                                 result.type = orderInfo.productList[0].type;
                                 var productList = [];
                                 if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
@@ -1025,15 +1026,15 @@ router.post('/info', function (req, res, next) {
                                             imgKey: orderInfo.productList[i].imagesUrl,
                                             count: orderInfo.productList[i].count
                                         };
-                                        if(orderInfo.tradeCode=="Z8003"){
-                                            product.productName="手机话费充值 " + orderInfo.closingPrice + "元";
-                                            product.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
+                                        if (orderInfo.tradeCode == "Z8003") {
+                                            product.productName = "手机话费充值 " + orderInfo.closingPrice + "元";
+                                            product.imgKey = "4EF66DB6D245554C206E645A278E03A7.png";
                                         }
-                                        if(orderInfo.tradeCode=="Z8004"){
-                                            product.productName=orderInfo.deliverInfo.receiverAddress + "手机流量充值 " + orderInfo.deliverInfo.receiverName;
-                                            product.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
+                                        if (orderInfo.tradeCode == "Z8004") {
+                                            product.productName = orderInfo.deliverInfo.receiverAddress + "手机流量充值 " + orderInfo.deliverInfo.receiverName;
+                                            product.imgKey = "A177197080704C3AC2BE21A4D67EBD21.png";
                                         }
-                                        if(orderInfo.tradeCode=="Z8005"){
+                                        if (orderInfo.tradeCode == "Z8005") {
                                             product.productName = "腾讯Q币充值 " + Number(orderInfo.closingPrice) + "Q币";
                                             product.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
                                         }
@@ -1466,7 +1467,7 @@ router.get('/notify/alipay', function (request, response, next) {
     var result = {code: 200};
     try {
         var params = request.query;
-        if(params != null && params != ""){
+        if (params != null && params != "") {
             response.redirect('http://www.jfshare.com/view/paySuccess.html?body=' + params.body +
                 '&buyer_email=' + params.buyer_email + '&exterface=' + params.exterface +
                 '&is_success=' + params.is_success + '&notify_id=' + params.notify_id +
@@ -1487,16 +1488,16 @@ router.post('/notify/alipay', function (request, response, next) {
     var result = {code: 200};
     try {
         var params = request.body;
-        if(params != null && params != ""){
+        if (params != null && params != "") {
             response.redirect('http://www.jfshare.com/view/paySuccess.html?body=' + params.body +
-            '&buyer_email=' + params.buyer_email + '&exterface=' + params.exterface +
-            '&is_success=' + params.is_success + '&notify_id=' + params.notify_id +
-            '&notify_time=' + params.notify_time + '&notify_type=' + params.notify_type +
-            '&out_trade_no=' + params.out_trade_no + '&payment_type=' + params.payment_type +
-            '&seller_email=' + params.seller_email + '&seller_id=' + params.seller_id +
-            '&subject=' + params.subject + '&total_fee=' + params.total_fee +
-            '&trade_no=' + params.trade_no + '&trade_status=' + params.trade_status +
-            '&sign=' + params.sign + '&sign_type=' + params.sign_type);
+                '&buyer_email=' + params.buyer_email + '&exterface=' + params.exterface +
+                '&is_success=' + params.is_success + '&notify_id=' + params.notify_id +
+                '&notify_time=' + params.notify_time + '&notify_type=' + params.notify_type +
+                '&out_trade_no=' + params.out_trade_no + '&payment_type=' + params.payment_type +
+                '&seller_email=' + params.seller_email + '&seller_id=' + params.seller_id +
+                '&subject=' + params.subject + '&total_fee=' + params.total_fee +
+                '&trade_no=' + params.trade_no + '&trade_status=' + params.trade_status +
+                '&sign=' + params.sign + '&sign_type=' + params.sign_type);
             logger.info("接收到的支付完成通知信息，params:" + JSON.stringify(params));
         }
         //if(params != null && params != ""){
@@ -1521,7 +1522,7 @@ router.post('/notify/hebaopay', function (request, response, next) {
     var result = {code: 200};
     try {
         var params = request.body;
-        if(params != null && params != ""){
+        if (params != null && params != "") {
             response.redirect('http://www.jfshare.com/view/paySuccess.html?hmac=' + params.hmac +
                 '&merchantId=' + params.merchantId + '&payNo=' + params.payNo +
                 '&returnCode=' + params.returnCode + '&message=' + params.message +
@@ -1545,7 +1546,7 @@ router.get('/notify/hebaopay', function (request, response, next) {
     var result = {code: 200};
     try {
         var params = request.query;
-        if(params != null && params != ""){
+        if (params != null && params != "") {
             response.redirect('http://www.jfshare.com/view/paySuccess.html?hmac=' + params.hmac +
                 '&merchantId=' + params.merchantId + '&payNo=' + params.payNo +
                 '&returnCode=' + params.returnCode + '&message=' + params.message +
@@ -1836,7 +1837,7 @@ router.post('/orderConfirmResult', function (request, response, next) {
 /*
  天翼H5买家支付申请
  */
-router.post('/pay_applyTYH5', function(req, res, next) {
+router.post('/pay_applyTYH5', function (req, res, next) {
     logger.info("进入天翼H5申请支付接口..");
     var result = {code: 200};
     try {
@@ -1870,7 +1871,8 @@ router.post('/pay_applyTYH5', function(req, res, next) {
             result.desc = "浏览器标识不能为空";
             res.json(result);
             return;
-        }if (arg.clientType == "" || arg.clientType == null) {
+        }
+        if (arg.clientType == "" || arg.clientType == null) {
             result.code = 400;
             result.desc = "终端标识不能为空";
             res.json(result);
@@ -1878,38 +1880,38 @@ router.post('/pay_applyTYH5', function(req, res, next) {
         }
         logger.info("天翼H5申请支付请求参数 request:" + JSON.stringify(arg));
         Buyer.validAuth(arg, function (err, data) {
-                if (err) {
-                    response.json(err);
-                    return;
-                }
-        //    logger.info("天翼H5申请支付鉴权完成");
-        //    Order.payApplyTYH5(arg, function (err, payUrl) {
-        //        if (err) {
-        //            res.json(err);
-        //            return;
-        //        }
-        //    });
-        //});
-        Order.payApplyTYH5(arg, function (err, payUrl) {
             if (err) {
-                res.json(err);
+                response.json(err);
                 return;
             }
-            if (payUrl !== null) {
-                logger.info("payApply ==> 调用orderServ-payApply申请支付成功");
-                //var formInfo = JSON.parse(payUrl.value);
-                //var payApplyFormStr = ''
-                //    +'<form id="payApplyForm" method="post" action="'+formInfo.action+'">'
-                //    +'<input type="hidden" name="requestXml" value="'+formInfo.requestXml+'">'
-                //    +'</form>';
-                //res.json(payApplyFormStr);
-               // return callback(null, payApplyFormStr);
-                var urlInfo = JSON.parse(payUrl.value);
-                result.payUrl = urlInfo;
-                res.json(result);
-                logger.info("order pay response:" + JSON.stringify(result));
-            }
-        });
+            //    logger.info("天翼H5申请支付鉴权完成");
+            //    Order.payApplyTYH5(arg, function (err, payUrl) {
+            //        if (err) {
+            //            res.json(err);
+            //            return;
+            //        }
+            //    });
+            //});
+            Order.payApplyTYH5(arg, function (err, payUrl) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                if (payUrl !== null) {
+                    logger.info("payApply ==> 调用orderServ-payApply申请支付成功");
+                    //var formInfo = JSON.parse(payUrl.value);
+                    //var payApplyFormStr = ''
+                    //    +'<form id="payApplyForm" method="post" action="'+formInfo.action+'">'
+                    //    +'<input type="hidden" name="requestXml" value="'+formInfo.requestXml+'">'
+                    //    +'</form>';
+                    //res.json(payApplyFormStr);
+                    // return callback(null, payApplyFormStr);
+                    var urlInfo = JSON.parse(payUrl.value);
+                    result.payUrl = urlInfo;
+                    res.json(result);
+                    logger.info("order pay response:" + JSON.stringify(result));
+                }
+            });
         });
     } catch (ex) {
         logger.error("ORDER.payApply error:" + ex);
@@ -1928,12 +1930,14 @@ router.post('/payOrderCreates', function (request, response, next) {
     var ip = request.headers['X-Real-IP'];
     var ips = request.headers['X-Forwarded-For'];
 
-    logger.error("这不是错误,只是显示------------->ip地址"+ip+"---->"+ips);
+    var test = request.headers['x-forwarded-for'] || request.connection.remoteAddress || request.socket.remoteAddress || request.connection.socket.remoteAddress;
+    logger.error("request.socket.remoteAddress-->" + request.socket.remoteAddress + "request.connection.socket.remoteAddress-->" + request.connection.socket.remoteAddress);
+    logger.error("这不是错误,只是显示------------->ip地址" + ip + "---->" + ips + "--->" + test + "request.connection.remoteAddress-->" + request.connection.remoteAddress);
     var arg = request.body;
 
-    if(arg.tradeCode =="Z8006" ||arg.tradeCode =="Z8005"){
+    if (arg.tradeCode == "Z8006" || arg.tradeCode == "Z8005") {
         //公司内网测试的时候ip获取不到，因此给一个默认值
-        if(ip == undefined || ip=="undefined"){
+        if (ip == undefined || ip == "undefined") {
             arg.provinceName = "117.114.151.190";
         }
     }
@@ -1952,13 +1956,13 @@ router.post('/payOrderCreates', function (request, response, next) {
             response.json(result);
             return;
         }
-        if(arg.receiverMobile == null||arg.receiverMobile == ""){
+        if (arg.receiverMobile == null || arg.receiverMobile == "") {
             result.code = 400;
             result.desc = "充值手机号不能为空";
             response.json(result);
             return;
         }
-        if(arg.fromSource == null||arg.fromSource == ""){
+        if (arg.fromSource == null || arg.fromSource == "") {
             result.code = 400;
             result.desc = "订单来源不能为空";
             response.json(result);
@@ -1989,19 +1993,19 @@ router.post('/payOrderCreates', function (request, response, next) {
             return;
         }
         if (arg.tradeCode == "Z8003") {
-            if (arg.totalSum == "" || (arg.totalSum !="100" && arg.totalSum !="300"&&arg.totalSum !="500")) {
+            if (arg.totalSum == "" || (arg.totalSum != "100" && arg.totalSum != "300" && arg.totalSum != "500")) {
                 result.code = 500;
                 result.desc = "该面值已售罄";
                 response.json(result);
                 return;
             }
-            if (arg.totalSum =="30") {
+            if (arg.totalSum == "30") {
                 result.code = 500;
                 result.desc = "该面值已售罄";
                 response.json(result);
                 return;
             }
-            if (arg.totalSum =="50") {
+            if (arg.totalSum == "50") {
                 result.code = 500;
                 result.desc = "该面值已售罄";
                 response.json(result);
@@ -2021,9 +2025,9 @@ router.post('/payOrderCreates', function (request, response, next) {
                 return;
             }
             if (arg.flowno == "" || arg.flowno == null || (
-                //arg.flowno != "5" && arg.flowno != "10" && arg.flowno != "20" &&
+                    //arg.flowno != "5" && arg.flowno != "10" && arg.flowno != "20" &&
                 arg.flowno != "1024" && arg.flowno != "2048" && arg.flowno != "3072" &&
-                arg.flowno != "4096" && arg.flowno != "6144" && arg.flowno != "11264") ) {
+                arg.flowno != "4096" && arg.flowno != "6144" && arg.flowno != "11264")) {
                 result.code = 400;
                 result.desc = "当前面额不支持充值";
                 response.json(result);
@@ -2064,8 +2068,8 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
         }
 
-        if(arg.tradeCode =="Z8006"){
-            if(arg.sellerComment=="" || arg.sellerComment ==null){
+        if (arg.tradeCode == "Z8006") {
+            if (arg.sellerComment == "" || arg.sellerComment == null) {
                 result.code = 400;
                 result.desc = "参数错误";
                 response.json(result);
@@ -2110,7 +2114,7 @@ router.get('/reChargeNotify', function (request, response, next) {
                 response.write("1"); //失败
                 response.end();
                 return;
-            }else{
+            } else {
                 response.write("0"); //成功
                 response.end();
                 retrun;
