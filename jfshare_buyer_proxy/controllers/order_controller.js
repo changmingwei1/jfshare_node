@@ -1931,7 +1931,7 @@ router.post('/payOrderCreates', function (request, response, next) {
     var ips = request.headers['X-Forwarded-For'];
 
     var test = request.headers['x-forwarded-for'] || request.connection.remoteAddress || request.socket.remoteAddress || request.connection.socket.remoteAddress;
-    logger.error("request.socket.remoteAddress-->" + request.socket.remoteAddress + "request.connection.socket.remoteAddress-->" + request.connection.socket.remoteAddress);
+
     logger.error("这不是错误,只是显示------------->ip地址" + ip + "---->" + ips + "--->" + test + "request.connection.remoteAddress-->" + request.connection.remoteAddress);
     var arg = request.body;
 
