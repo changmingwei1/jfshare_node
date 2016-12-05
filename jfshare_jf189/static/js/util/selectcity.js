@@ -98,7 +98,7 @@ function initCitylistEvent() {
                         var f = new StringBuffer();
                         f.append("<li>"),
                             $.each(c.data, function (a, b) {
-                                f.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.shortName + "</a>  ")
+                                f.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ")
                             }),
                             f.append("</li>"), e.find(".citybox").html("").append(f.toString()), e.find(".provbox").attr("temid") && "" != e.find(".provbox").attr("temid") && (d.parents(".citylistinfo").find(".citybox [pid=" + e.find(".provbox").attr("temid") + "]").click(), e.find(".provbox").removeAttr("temid"))
                     }
@@ -121,7 +121,7 @@ function initCitylistEvent() {
                         var f =  new StringBuffer();
                         f.append("<li>"),
                             $.each(e.data, function (a, b) {
-                                f.append('  <a pid="' + b.id + '" pcode="' + b.postCode + '"  href="javascript:void(0)">' + b.shortName + "</a>  ")
+                                f.append('  <a pid="' + b.id + '" pcode="' + b.postCode + '"  href="javascript:void(0)">' + b.name + "</a>  ")
                             }),
                             f.append("</li>"), d.find(".distbox").html("").append(f.toString()), d.find(".citybox").attr("temid") && "" != d.find(".citybox").attr("temid") && (c.parents(".citylistinfo").find(".distbox [pid=" + d.find(".citybox").attr("temid") + "]").click(), d.find(".citybox").removeAttr("temid"))
                     }
@@ -150,7 +150,7 @@ function initCitylistEvent() {
                         var d = new StringBuffer(), e = new StringBuffer(), f = new StringBuffer(), g = new StringBuffer();
                         //alert(p.data[0]);
                         d.append("<li><label>A-G</label>"), e.append("<li><label>H-K</label>"), f.append("<li><label>L-S</label>"), g.append("<li><label>T-Z</label>"), $.each(p.data, function (a, b) {
-                            b.initial = b.initial.toUpperCase(), b.initial <= "G" ? d.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.shortName + "</a>  ") : b.initial > "G" && b.initial <= "K" ? e.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.shortName + "</a>  ") : b.initial > "K" && b.initial <= "S" ? f.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.shortName + "</a>  ") : b.initial > "S" && b.initial <= "Z" && g.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.shortName + "</a>  ")
+                            b.initial = b.initial.toUpperCase(), b.initial <= "G" ? d.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ") : b.initial > "G" && b.initial <= "K" ? e.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ") : b.initial > "K" && b.initial <= "S" ? f.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ") : b.initial > "S" && b.initial <= "Z" && g.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ")
                         }), d.append("</li>"), e.append("</li>"), f.append("</li>"), g.append("</li>"), c.find(".citylistinfo").find("ul.provbox").html("").append(d.toString() + e.toString() + f.toString() + g.toString());
                     } else c.find(".citylistinfo").find("ul.provbox").html("");
                 }
