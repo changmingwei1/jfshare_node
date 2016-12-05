@@ -940,7 +940,7 @@ function renderProvinceInfo(curProvince) {
             if(rdata.status == 200) {
                 for (var i in rdata.data) {
                     var province = rdata.data[i];
-                    $("#provinceId").append('<option value="'+ province.id+'">'+ province.shortName + '</option>');
+                    $("#provinceId").append('<option value="'+ province.id+'">'+ province.name + '</option>');
                 }
 
                 $("#provinceId").val(curProvince);
