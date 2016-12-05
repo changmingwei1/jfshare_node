@@ -1929,7 +1929,13 @@ router.post('/payOrderCreates', function (request, response, next) {
     //获取ip
     var ip = request.headers['X-Real-IP'];
     var ips = request.headers['X-Forwarded-For'];
-
+    /**
+     * var ip = request.headers['x-real-ip'];
+     var ips = request.headers['x-forwarded-for'];
+     *
+     *
+     * @type {*|string}
+     */
     var test = request.headers['x-forwarded-for'] || request.connection.remoteAddress || request.socket.remoteAddress || request.connection.socket.remoteAddress;
 
     logger.error("这不是错误,只是显示------------->ip地址" + ip + "---->" + ips + "--->" + test + "request.connection.remoteAddress-->" + request.connection.remoteAddress);
