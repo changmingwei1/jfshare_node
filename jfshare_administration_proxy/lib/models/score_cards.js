@@ -29,8 +29,9 @@ ScoreCard.prototype.createOneActivity = function (params, callback) {
         endTime: params.endTime,
         /* 状态：0可用 1作废 2过期 */
         // curStatus:params.curStatus,
-        multiRechargeEnable: params.multiRechargeEnable
-
+        multiRechargeEnable: params.multiRechargeEnable,
+        //渠道 1、天翼积分商城 2、测试
+        channel:params.channel
     });
 
     //获取客户端
@@ -208,4 +209,60 @@ ScoreCard.prototype.invalidOneActivity = function (params, callback) {
 };
 
 
+
+
+ScoreCard.prototype.activityStatistic = function (params, callback) {
+    var queryParams = new score_types.ActivityStatisticParam({
+            endTime: params.endTime,
+            startTime: params.startTime,
+            channel: params.channel
+        }
+    );
+
+    var page = new pagination_types.Pagination({
+        numPerPage: params.numPerPage,
+        currentPage: params.currentPage
+    });
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'activityStatistic', [queryParams, page]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("activityStatistic result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("scoreServ.activityStatistic 失败 because: ======" + err +data);
+            res.code = 500;
+            res.desc = "积分卡统计列表失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
+//导出记录
+ScoreCard.prototype.exprotActivityStatistic = function (params, callback) {
+    var exprotParam = new score_types.ExprotParam({
+        startTime:params.startTime,/*开始时间*/
+        endTime:params.endTime,/*结束时间*/
+        channel:params.channel,/*渠道*/
+
+    });
+
+    logger.info("请求参数param :" + JSON.stringify(exprotParam));
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'exprotActivityStatistic', [exprotParam]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("ScoreCardsServ.exprotActivityStatistic result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("ScoreCardsServ.exprotActivityStatistic because: ======" + err);
+            res.code = 500;
+            res.desc = "导出积分卡统计记录错误";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 module.exports = new ScoreCard();

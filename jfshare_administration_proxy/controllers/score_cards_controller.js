@@ -67,7 +67,12 @@ router.post('/createOneActivity', function (request, response, next) {
             response.json(result);
             return;
         }
-
+        if (params.channel == null || params.channel == "") {
+            result.code = 500;
+            result.desc = "channel 参数错误";
+            response.json(result);
+            return;
+        }
         ScoreCards.createOneActivity(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -362,5 +367,83 @@ router.post('/getActivityCardsList', function (request, response, next) {
     }
 });
 
+//积分卡统计
+router.post('/activityStatistic', function (request, response, next) {
+    logger.info("积分卡统计列表");
+    //设置默认值
+    var result = {code: 200};
+    result.activityStatisticList = [];
+    result.pagination = {
+        totalCount: 0,
+        pageNumCount: 0,
+        numPerPage: 0,
+        currentPage: 0
+    };
+    try {
+        var params = request.body;
+        if (params.numPerPage == null || params.numPerPage == "") {
+            result.code = 500;
+            result.desc = "每页条数参数错误";
+            response.json(result);
+            return;
+        }
+        if (params.currentPage == null || params.currentPage == "") {
+            result.code = 500;
+            result.desc = "当前页参数错误";
+            response.json(result);
+            return;
+        }
 
+        ScoreCards.activityStatistic(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+
+            if (data != null && data[0] != null && data[0].activityStatisticList != null) {
+                result.activityStatisticList = data[0].activityStatisticList;
+                result.sumScore = data[0].sumScore
+            }
+            if (data != null && data[0] != null && data[0].pagination != null) {
+                result.pagination = data[0].pagination;
+            }
+            logger.info("activityStatistic result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("积分卡统计列表失败:" + ex);
+        result.code = 500;
+        result.desc = "积分卡统计列表失败";
+        response.json(result);
+    }
+});
+
+
+//积分卡统计导出记录
+router.post('/exprotActivityStatistic', function (request, response, next) {
+    logger.info("进入导出积分卡统计记录流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("exprotActivityStatistic params:" + JSON.stringify(params));
+
+        ScoreCards.exprotActivityStatistic(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.path = data[0].path;
+            logger.info("exprotActivityStatistic result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("导出积分卡统计记录错误:" + ex);
+        result.code = 500;
+        result.desc = "导出积分卡统计记录错误";
+        response.json(result);
+    }
+});
 module.exports = router;
