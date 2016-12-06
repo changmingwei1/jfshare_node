@@ -1927,8 +1927,7 @@ router.post('/payOrderCreates', function (request, response, next) {
     var result = {code: 200};
 
     //获取ip
-    var ip = request.headers['X-Real-IP'];
-    var ips = request.headers['X-Forwarded-For'];
+    var ip1 = request.headers['x-real-ip'];
     /**
      * var ip = request.headers['x-real-ip'];
      var ips = request.headers['x-forwarded-for'];
@@ -1936,19 +1935,15 @@ router.post('/payOrderCreates', function (request, response, next) {
      *
      * @type {*|string}
      */
-    var test = request.headers['x-forwarded-for'] || request.connection.remoteAddress || request.socket.remoteAddress || request.connection.socket.remoteAddress;
-
-    logger.error("这不是错误,只是显示------------->ip地址" + ip + "---->" + ips + "--->" + test + "request.connection.remoteAddress-->" + request.connection.remoteAddress);
+    logger.error("这不是错误,只是显示------------->ip地址" + ip1);
     var arg = request.body;
 
     if (arg.tradeCode == "Z8006" || arg.tradeCode == "Z8005") {
-        //公司内网测试的时候ip获取不到，因此给一个默认值
-        if (ip == undefined || ip == "undefined") {
-            arg.provinceName = "117.114.151.190";
+        if(arg.fromSource != 1){
+            arg.provinceName = ip1;
         }
     }
     try {
-        var arg = request.body;
         //if (arg.tradeCode == "Z8003") {
         //    result.code = 500;
         //    //result.desc = "话费充值服务暂不可使用";
