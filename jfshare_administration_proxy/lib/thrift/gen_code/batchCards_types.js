@@ -26,6 +26,7 @@ BatchActivity = module.exports.BatchActivity = function(args) {
   this.multiRechargeEnable = null;
   this.UsedCount = null;
   this.SendCount = null;
+  this.channel = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
@@ -65,6 +66,9 @@ BatchActivity = module.exports.BatchActivity = function(args) {
     }
     if (args.SendCount !== undefined) {
       this.SendCount = args.SendCount;
+    }
+    if (args.channel !== undefined) {
+      this.channel = args.channel;
     }
   }
 };
@@ -173,6 +177,13 @@ BatchActivity.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 14:
+      if (ftype == Thrift.Type.STRING) {
+        this.channel = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -247,6 +258,11 @@ BatchActivity.prototype.write = function(output) {
   if (this.SendCount !== null && this.SendCount !== undefined) {
     output.writeFieldBegin('SendCount', Thrift.Type.I32, 13);
     output.writeI32(this.SendCount);
+    output.writeFieldEnd();
+  }
+  if (this.channel !== null && this.channel !== undefined) {
+    output.writeFieldBegin('channel', Thrift.Type.STRING, 14);
+    output.writeString(this.channel);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1621,6 +1637,7 @@ ActivityBean = module.exports.ActivityBean = function(args) {
   this.curStatus = null;
   this.password = null;
   this.multiRechargeEnable = null;
+  this.channel = null;
   if (args) {
     if (args.name !== undefined) {
       this.name = args.name;
@@ -1648,6 +1665,9 @@ ActivityBean = module.exports.ActivityBean = function(args) {
     }
     if (args.multiRechargeEnable !== undefined) {
       this.multiRechargeEnable = args.multiRechargeEnable;
+    }
+    if (args.channel !== undefined) {
+      this.channel = args.channel;
     }
   }
 };
@@ -1728,6 +1748,13 @@ ActivityBean.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.channel = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1782,6 +1809,11 @@ ActivityBean.prototype.write = function(output) {
   if (this.multiRechargeEnable !== null && this.multiRechargeEnable !== undefined) {
     output.writeFieldBegin('multiRechargeEnable', Thrift.Type.STRING, 9);
     output.writeString(this.multiRechargeEnable);
+    output.writeFieldEnd();
+  }
+  if (this.channel !== null && this.channel !== undefined) {
+    output.writeFieldBegin('channel', Thrift.Type.STRING, 10);
+    output.writeString(this.channel);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3321,6 +3353,474 @@ GenerateParam.prototype.write = function(output) {
   if (this.activityId !== null && this.activityId !== undefined) {
     output.writeFieldBegin('activityId', Thrift.Type.STRING, 1);
     output.writeString(this.activityId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActivityStatisticParam = module.exports.ActivityStatisticParam = function(args) {
+  this.channel = null;
+  this.startTime = null;
+  this.endTime = null;
+  if (args) {
+    if (args.channel !== undefined) {
+      this.channel = args.channel;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+  }
+};
+ActivityStatisticParam.prototype = {};
+ActivityStatisticParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.channel = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActivityStatisticParam.prototype.write = function(output) {
+  output.writeStructBegin('ActivityStatisticParam');
+  if (this.channel !== null && this.channel !== undefined) {
+    output.writeFieldBegin('channel', Thrift.Type.STRING, 1);
+    output.writeString(this.channel);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 2);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 3);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExprotParam = module.exports.ExprotParam = function(args) {
+  this.channel = null;
+  this.startTime = null;
+  this.endTime = null;
+  if (args) {
+    if (args.channel !== undefined) {
+      this.channel = args.channel;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+  }
+};
+ExprotParam.prototype = {};
+ExprotParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.channel = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExprotParam.prototype.write = function(output) {
+  output.writeStructBegin('ExprotParam');
+  if (this.channel !== null && this.channel !== undefined) {
+    output.writeFieldBegin('channel', Thrift.Type.STRING, 1);
+    output.writeString(this.channel);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 2);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 3);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActivityStatistic = module.exports.ActivityStatistic = function(args) {
+  this.createTime = null;
+  this.pieceValue = null;
+  this.sumTotalCount = null;
+  this.channel = null;
+  this.sumAmount = null;
+  if (args) {
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.pieceValue !== undefined) {
+      this.pieceValue = args.pieceValue;
+    }
+    if (args.sumTotalCount !== undefined) {
+      this.sumTotalCount = args.sumTotalCount;
+    }
+    if (args.channel !== undefined) {
+      this.channel = args.channel;
+    }
+    if (args.sumAmount !== undefined) {
+      this.sumAmount = args.sumAmount;
+    }
+  }
+};
+ActivityStatistic.prototype = {};
+ActivityStatistic.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.pieceValue = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.sumTotalCount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.channel = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.sumAmount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActivityStatistic.prototype.write = function(output) {
+  output.writeStructBegin('ActivityStatistic');
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 1);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.pieceValue !== null && this.pieceValue !== undefined) {
+    output.writeFieldBegin('pieceValue', Thrift.Type.STRING, 2);
+    output.writeString(this.pieceValue);
+    output.writeFieldEnd();
+  }
+  if (this.sumTotalCount !== null && this.sumTotalCount !== undefined) {
+    output.writeFieldBegin('sumTotalCount', Thrift.Type.I32, 3);
+    output.writeI32(this.sumTotalCount);
+    output.writeFieldEnd();
+  }
+  if (this.channel !== null && this.channel !== undefined) {
+    output.writeFieldBegin('channel', Thrift.Type.STRING, 4);
+    output.writeString(this.channel);
+    output.writeFieldEnd();
+  }
+  if (this.sumAmount !== null && this.sumAmount !== undefined) {
+    output.writeFieldBegin('sumAmount', Thrift.Type.I32, 5);
+    output.writeI32(this.sumAmount);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActivityStatisticResult = module.exports.ActivityStatisticResult = function(args) {
+  this.result = null;
+  this.activityStatisticList = null;
+  this.pagination = null;
+  this.sumScore = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.activityStatisticList !== undefined) {
+      this.activityStatisticList = args.activityStatisticList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.sumScore !== undefined) {
+      this.sumScore = args.sumScore;
+    }
+  }
+};
+ActivityStatisticResult.prototype = {};
+ActivityStatisticResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size40 = 0;
+        var _rtmp344;
+        this.activityStatisticList = [];
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        {
+          var elem46 = null;
+          elem46 = new ttypes.ActivityStatistic();
+          elem46.read(input);
+          this.activityStatisticList.push(elem46);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.sumScore = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActivityStatisticResult.prototype.write = function(output) {
+  output.writeStructBegin('ActivityStatisticResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.activityStatisticList !== null && this.activityStatisticList !== undefined) {
+    output.writeFieldBegin('activityStatisticList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.activityStatisticList.length);
+    for (var iter47 in this.activityStatisticList)
+    {
+      if (this.activityStatisticList.hasOwnProperty(iter47))
+      {
+        iter47 = this.activityStatisticList[iter47];
+        iter47.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.sumScore !== null && this.sumScore !== undefined) {
+    output.writeFieldBegin('sumScore', Thrift.Type.I32, 4);
+    output.writeI32(this.sumScore);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExprotResult = module.exports.ExprotResult = function(args) {
+  this.path = null;
+  this.result = null;
+  if (args) {
+    if (args.path !== undefined) {
+      this.path = args.path;
+    }
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+  }
+};
+ExprotResult.prototype = {};
+ExprotResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.path = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExprotResult.prototype.write = function(output) {
+  output.writeStructBegin('ExprotResult');
+  if (this.path !== null && this.path !== undefined) {
+    output.writeFieldBegin('path', Thrift.Type.STRING, 1);
+    output.writeString(this.path);
+    output.writeFieldEnd();
+  }
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 2);
+    this.result.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
