@@ -331,7 +331,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(lt)) {
         var data = {};
         data.operator = "中国联通";
-        data.support = "";
+        data.support = "因运营商系统维护，12月8日22:00-12月9日6:00期间暂不支持辽宁用户充值";
         //var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
         var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
         flowList.push(flow1);
