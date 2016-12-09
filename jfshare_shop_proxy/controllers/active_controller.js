@@ -314,7 +314,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     if (mobile.match(yd)) {
         var data = {};
         data.operator = "中国移动";
-        data.support = "移动号码目前不支持湖南、陕西、宁夏、江西、山东用户充值";
+        data.support = "1G面值暂不支持宁夏、江西、内蒙古、陕西、湖南、云南、西藏、四川用户充值";
         //var flow1 = {flowName:"10M", flowno:"10", pieceValue:"3"};
         var flow2 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
         var flow3 = {flowName:"2G", flowno:"2048", pieceValue:"70"};
@@ -331,7 +331,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(lt)) {
         var data = {};
         data.operator = "中国联通";
-        data.support = "系统升级维护中，暂不支持联通用户充值";
+        data.support = "";
         //var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
         var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
         flowList.push(flow1);
