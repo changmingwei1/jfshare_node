@@ -104,7 +104,7 @@ router.post('/scoreinfolist', function (request, response, next) {
                     });
                 }
 
-                var pagination = data[0].pageination;
+                var pagination = data[0].pagination;
                 if(pagination!=null){
                     result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
                 }
