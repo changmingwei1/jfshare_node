@@ -37,7 +37,7 @@ router.post('/socrelist', function (request, response, next) {
                 return;
             }
             result.scoreList = data[0].scoreUsers;
-            var pagination = data[0].pageination;
+            var pagination = data[0].pagination;
             if(pagination!=null){
                 result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
             }
@@ -293,7 +293,7 @@ router.post('/scoreTotalStatistic', function (request, response, next) {
 
 
 //积分累计增长消费导出
-router.post('/exprotTotalScoreStatistic', function (request, response, next) {
+router.post('/exprotScoreTotalStatistic', function (request, response, next) {
     logger.info("进入导出积分累计增长消费统计流程");
     var result = {code: 200};
     try {
@@ -312,15 +312,15 @@ router.post('/exprotTotalScoreStatistic', function (request, response, next) {
         }
 
         //参数校验
-        logger.info("exprotTotalScoreStatistic params:" + JSON.stringify(params));
+        logger.info("exprotScoreTotalStatistic params:" + JSON.stringify(params));
 
-        Score.exprotTotalScoreStatistic(params, function (err, data) {
+        Score.exprotScoreTotalStatistic(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
             result.path = data[0].path;
-            logger.info("exprotTotalScoreStatistic result:" + JSON.stringify(data));
+            logger.info("exprotScoreTotalStatistic result:" + JSON.stringify(data));
             response.json(result);
             return;
         });
