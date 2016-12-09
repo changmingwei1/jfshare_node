@@ -1927,8 +1927,7 @@ router.post('/payOrderCreates', function (request, response, next) {
     var result = {code: 200};
 
     //获取ip
-    var ip = request.headers['X-Real-IP'];
-    var ips = request.headers['X-Forwarded-For'];
+    var ip1 = request.headers['x-real-ip'];
     /**
      * var ip = request.headers['x-real-ip'];
      var ips = request.headers['x-forwarded-for'];
@@ -1936,19 +1935,23 @@ router.post('/payOrderCreates', function (request, response, next) {
      *
      * @type {*|string}
      */
-    var test = request.headers['x-forwarded-for'] || request.connection.remoteAddress || request.socket.remoteAddress || request.connection.socket.remoteAddress;
-
-    logger.error("这不是错误,只是显示------------->ip地址" + ip + "---->" + ips + "--->" + test + "request.connection.remoteAddress-->" + request.connection.remoteAddress);
+    logger.error("这不是错误,只是显示------------->ip地址" + ip1);
     var arg = request.body;
 
     if (arg.tradeCode == "Z8006" || arg.tradeCode == "Z8005") {
-        //公司内网测试的时候ip获取不到，因此给一个默认值
-        if (ip == undefined || ip == "undefined") {
-            arg.provinceName = "117.114.151.190";
+        if(arg.fromSource != 1){
+            arg.provinceName = ip1;
         }
     }
     try {
-        var arg = request.body;
+
+        if(arg.tradeCode == "Z8005" || arg.tradeCode == "Z8006"){
+            result.code = 500;
+            result.desc = "系统升级中";
+            response.json(result);
+            return;
+        }
+
         //if (arg.tradeCode == "Z8003") {
         //    result.code = 500;
         //    //result.desc = "话费充值服务暂不可使用";
@@ -2032,8 +2035,11 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
             if (arg.flowno == "" || arg.flowno == null || (
                     //arg.flowno != "5" && arg.flowno != "10" && arg.flowno != "20" &&
-                arg.flowno != "1024" && arg.flowno != "2048" && arg.flowno != "3072" &&
-                arg.flowno != "4096" && arg.flowno != "6144" && arg.flowno != "11264")) {
+                    arg.flowno != "500" &&
+                arg.flowno != "1024" && arg.flowno != "2048"
+                //&& arg.flowno != "3072" && arg.flowno != "4096"
+                //&& arg.flowno != "6144" && arg.flowno != "11264"
+                )) {
                 result.code = 400;
                 result.desc = "当前面额不支持充值";
                 response.json(result);
