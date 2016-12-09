@@ -202,7 +202,7 @@ Score.prototype.scoreTotalStatistic = function (params, callback) {
 
 
 //导出累计增长和消耗统计记录
-Score.prototype.exprotTotalScoreStatistic = function (params, callback) {
+Score.prototype.exprotScoreTotalStatistic = function (params, callback) {
     var exprotParam = new score_types.ExprotScoreTotalStatisticParam({
         startTime:params.startTime,/*开始时间*/
         endTime:params.endTime,/*结束时间*/
