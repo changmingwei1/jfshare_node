@@ -314,15 +314,15 @@ router.get('/queryMobileInfo',function(request,response,next){
     if (mobile.match(yd)) {
         var data = {};
         data.operator = "中国移动";
-        data.support = "移动号码目前仅支持江苏、湖南、广东、浙江用户充值";
+        data.support = "1G面值暂不支持宁夏、江西、内蒙古、陕西、湖南、云南、西藏、四川用户充值";
         //var flow1 = {flowName:"10M", flowno:"10", pieceValue:"3"};
         var flow2 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
         var flow3 = {flowName:"2G", flowno:"2048", pieceValue:"70"};
-        var flow4 = {flowName:"3G", flowno:"3072", pieceValue:"100"};
-        var flow5 = {flowName:"4G", flowno:"4096", pieceValue:"130"};
-        var flow6 = {flowName:"6G", flowno:"6144", pieceValue:"180"};
-        var flow7 = {flowName:"11G", flowno:"11264", pieceValue:"280"};
-        flowList.push(flow2,flow3,flow4,flow5,flow6,flow7);
+        //var flow4 = {flowName:"3G", flowno:"3072", pieceValue:"100"};
+        //var flow5 = {flowName:"4G", flowno:"4096", pieceValue:"130"};
+        //var flow6 = {flowName:"6G", flowno:"6144", pieceValue:"180"};
+        //var flow7 = {flowName:"11G", flowno:"11264", pieceValue:"280"};
+        flowList.push(flow2,flow3);
         data.flowList = flowList;
         data.province = "";
         data.city = "";
@@ -331,7 +331,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(lt)) {
         var data = {};
         data.operator = "中国联通";
-        data.support = "联通系统维护，暂不支持充值";
+        data.support = "";
         //var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
         var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
         flowList.push(flow1);

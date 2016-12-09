@@ -2035,8 +2035,11 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
             if (arg.flowno == "" || arg.flowno == null || (
                     //arg.flowno != "5" && arg.flowno != "10" && arg.flowno != "20" &&
-                arg.flowno != "1024" && arg.flowno != "2048" && arg.flowno != "3072" &&
-                arg.flowno != "4096" && arg.flowno != "6144" && arg.flowno != "11264")) {
+                    arg.flowno != "500" &&
+                arg.flowno != "1024" && arg.flowno != "2048"
+                //&& arg.flowno != "3072" && arg.flowno != "4096"
+                //&& arg.flowno != "6144" && arg.flowno != "11264"
+                )) {
                 result.code = 400;
                 result.desc = "当前面额不支持充值";
                 response.json(result);
