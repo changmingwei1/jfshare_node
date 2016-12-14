@@ -80,13 +80,6 @@ function renderAddress() {
     addressEditor.show();
 }
 
-//点击选择内容框
-$(".citylists p").click(function () {
-    var a = $(this), c = a.parents("li").find(".citylistinfo"), d = a.parents("li");
-    var d =$("p.txt span");
-    return void c.toggle().find(".hd span").eq(0).click();
-})
-
 /**
  * 渲染用户当前使用的收货地址信息 #consignee_show_template
  * @param addressInfo  //addressInfo:AddressInfo(userId:1111, id:1, receiverName:张三丰, mobile:13810201919,
