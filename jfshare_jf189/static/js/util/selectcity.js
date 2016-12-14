@@ -163,6 +163,7 @@ function initCitylistEvent() {
         }
         //alert("切换省市区" + b.index());
         return c.find(".citylistinfo ul").eq(b.index()).find("a").length < 1 ? !1 : c.find(".citylistinfo").show(),(c.find(".citylistinfo .hd span").removeClass("cur").eq(b.index()).addClass("cur"), void c.find(".citylistinfo ul").hide().eq(b.index()).show())
+
     })
 
     //初始化已选组件
