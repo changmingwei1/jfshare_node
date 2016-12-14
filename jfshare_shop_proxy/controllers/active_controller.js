@@ -331,7 +331,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(lt)) {
         var data = {};
         data.operator = "中国联通";
-        data.support = "";
+        data.support = "仅限江西和上海用户充值";
         //var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
         var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
         flowList.push(flow1);
