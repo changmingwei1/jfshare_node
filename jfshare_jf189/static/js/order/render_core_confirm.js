@@ -84,7 +84,8 @@ function renderAddress() {
 $("body").on("click", ".citylists p", function () {  //或 $(".citylists p").click(function () {
     //alert("加载选择框！");
     var a = $(this), c = a.parents("li").find(".citylistinfo"), d = a.parents("li");
-    console.log(c.is(":visible"))
+    var d =$("p.txt span").html();
+    d = "";
     return !c.is(":visible") || "" != d.find(".prov").val() && "" != d.find(".city").val() && "" != d.find(".dist").val() ? void c.toggle().find(".hd span").eq(0).click() : !1;
 })
 
