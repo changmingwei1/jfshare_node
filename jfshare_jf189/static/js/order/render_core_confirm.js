@@ -36,6 +36,7 @@ function rendData() {
                 if(productType == 2){
                     //实物商品收货地址
                     renderAddress();
+                    initCitylistEvent();
                 }else if(productType == 3){
                     //虚拟商品收货
                     renderVirtual();
@@ -79,7 +80,108 @@ function renderAddress() {
     addressEditor = new $.AddressEditor(addresslist, $("#consigneePanel"), "show");
     addressEditor.show();
 }
+function initCitylistEvent() {
+    //点击选择省
+    $("body").on("click", "ul.provbox a", function (c) {
+        //alert("点击省 cc" + c);
+        var d = $(this), e = d.parents("li");
+        e.find(".js_postcode").val(""), e.find(".prov,.city,.dist").val("").end().find(".prov").val(d.attr("pid")).attr("txt", d.text()), e.find(".citylists .txt span").text(e.find(".prov").attr("txt")), e.find(".citylistinfo .hd span").removeClass("cur").eq(1).addClass("cur"), e.find(".provbox,.citybox,.distbox").hide(), e.find(".citybox").show().html(""), e.find(".distbox").html(""),
+            //加载市
+            $.ajax({
+                url: "/nnc/citys.json?pid=" + d.attr("pid"),
+                type: 'get',
+                async: false,
+                dataType: "json",
+                success: function (c) {
+                    if (200 == c.status && c.data.length > 0) {
+                        //alert(e.find(".provbox"));
+                        var f = new StringBuffer();
+                        f.append("<li>"),
+                            $.each(c.data, function (a, b) {
+                                f.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ")
+                            }),
+                            f.append("</li>"), e.find(".citybox").html("").append(f.toString()), e.find(".provbox").attr("temid") && "" != e.find(".provbox").attr("temid") && (d.parents(".citylistinfo").find(".citybox [pid=" + e.find(".provbox").attr("temid") + "]").click(), e.find(".provbox").removeAttr("temid"))
+                    }
+                }
+            })
+    })
 
+    //点击选择市
+    $("body").on("click", "ul.citybox a", function () {
+        var c = $(this), d = c.parents("li");
+        d.find(".js_postcode").val(""), d.find(".city,.dist").val("").end().find(".city").val(c.attr("pid")).attr("txt", c.text()), d.find(".citylists .txt span").text(d.find(".prov").attr("txt") + "/" + d.find(".city").attr("txt")), d.find(".citylistinfo .hd span").removeClass("cur").eq(2).addClass("cur"), d.find(".provbox,.citybox,.distbox").hide(), d.find(".distbox").show().html(""),
+            //加载区县
+            $.ajax({
+                url: "/nnc/countries.json?pid=" + c.attr("pid"),
+                type: 'get',
+                async: false,
+                dataType: "json",
+                success: function (e) {
+                    if (200 == e.status && e.data.length > 0) {
+                        var f =  new StringBuffer();
+                        f.append("<li>"),
+                            $.each(e.data, function (a, b) {
+                                f.append('  <a pid="' + b.id + '" pcode="' + b.postCode + '"  href="javascript:void(0)">' + b.name + "</a>  ")
+                            }),
+                            f.append("</li>"), d.find(".distbox").html("").append(f.toString()), d.find(".citybox").attr("temid") && "" != d.find(".citybox").attr("temid") && (c.parents(".citylistinfo").find(".distbox [pid=" + d.find(".citybox").attr("temid") + "]").click(), d.find(".citybox").removeAttr("temid"))
+                    }
+                }
+            })
+    })
+
+    //点击区县
+    $("body").on("click", "ul.distbox a", function () {
+        var b = $(this), c = b.parents("li");
+        return b.attr("pid") == c.find(".dist").val() ? !1 : (c.find(".dist").val(b.attr("pid")).attr("txt", b.text()), c.find(".citylists .txt span").text(c.find(".prov").attr("txt") + "/" + c.find(".city").attr("txt") + "/" + c.find(".dist").attr("txt")), c.find(".citylistinfo").hide(), void c.find(".js_postcode").val(b.attr("pcode")))
+    })
+
+    //切换省市区选择器页签
+    $("body").on("click", ".citylistinfo .hd span", function () {
+        var b = $(this), c = b.parents("li");
+        if (b.index() == 0) {
+            //加载省份
+            $.ajax({
+                url: "/nnc/provinces.json", // + JSON.stringify(queryParam),
+                type: 'get',
+                async: false,
+                dataType: "json",
+                success: function (p) {
+                    if (200 == p.status && p.data.length > 0) {
+                        var d = new StringBuffer(), e = new StringBuffer(), f = new StringBuffer(), g = new StringBuffer();
+                        //alert(p.data[0]);
+                        d.append("<li><label>A-G</label>"), e.append("<li><label>H-K</label>"), f.append("<li><label>L-S</label>"), g.append("<li><label>T-Z</label>"), $.each(p.data, function (a, b) {
+                            b.initial = b.initial.toUpperCase(), b.initial <= "G" ? d.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ") : b.initial > "G" && b.initial <= "K" ? e.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ") : b.initial > "K" && b.initial <= "S" ? f.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ") : b.initial > "S" && b.initial <= "Z" && g.append('  <a pid="' + b.id + '" href="javascript:void(0)">' + b.name + "</a>  ")
+                        }), d.append("</li>"), e.append("</li>"), f.append("</li>"), g.append("</li>"), c.find(".citylistinfo").find("ul.provbox").html("").append(d.toString() + e.toString() + f.toString() + g.toString());
+                    } else c.find(".citylistinfo").find("ul.provbox").html("");
+                }
+            })
+        } else if (b.index() == 1) {
+            $(".provbox [pid=" + $(".provbox").attr("temid") + "]").click();
+        } else if (b.index() == 2) {
+            $(".provbox [pid=" + $(".provbox").attr("temid") + "]").click();
+            $(".citybox [pid=" + $(".citybox").attr("temid") + "]").click();
+        }
+        //alert("切换省市区" + b.index());
+        return b.hasClass("cur") ? !1 : c.find(".citylistinfo ul").eq(b.index()).find("a").length < 1 ? !1 : (c.find(".citylistinfo .hd span").removeClass("cur").eq(b.index()).addClass("cur"), void c.find(".citylistinfo ul").hide().eq(b.index()).show())
+    })
+
+    //初始化已选组件
+    var b = $("#js_selectcity").find(".citylists").attr("prov-data");
+    var c = $("#js_selectcity").find(".citylists").attr("city-data");
+    var d = $("#js_selectcity").find(".citylists").attr("dist-data");
+    if (b != '' && c != '' && d != '') {
+        ($(".citybox").attr("temid", c), $(".provbox").attr("temid", b), $(".distbox").attr("temid", d));
+    }
+
+    //点击选择内容框
+    $("body").on("click", ".citylists p", function () {  //或 $(".citylists p").click(function () {
+        //alert("加载选择框！");
+        var a = $(this), c = a.parents("li").find(".citylistinfo"), d = a.parents("li");
+        console.log(c.is(":visible"))
+        return !c.is(":visible") || "" != d.find(".prov").val() && "" != d.find(".city").val() && "" != d.find(".dist").val() ? void c.toggle().find(".hd span").eq(0).click() : !1;
+    })
+    //console.log("-----------------------------"+  $("#jsSelectcityPanel").html()); //输出到浏览器控制台
+}
 /**
  * 渲染用户当前使用的收货地址信息 #consignee_show_template
  * @param addressInfo  //addressInfo:AddressInfo(userId:1111, id:1, receiverName:张三丰, mobile:13810201919,
