@@ -132,7 +132,7 @@ function initCitylistEvent() {
     //点击区县
     $("body").on("click", "ul.distbox a", function () {
         var b = $(this), c = b.parents("li");
-        return b.attr("pid") == c.find(".dist").val() ? !1 : (c.find(".dist").val(b.attr("pid")).attr("txt", b.text()), c.find(".citylists .txt span").text(c.find(".prov").attr("txt") + "/" + c.find(".city").attr("txt") + "/" + c.find(".dist").attr("txt")), c.find(".citylistinfo").hide(), void c.find(".js_postcode").val((b.attr("pcode") == "null" ? " ":b.attr("pcode") )))
+        return b.attr("pid") == c.find(".dist").val() ? !1 : (c.find(".dist").val(b.attr("pid")).attr("txt", b.text()), c.find(".citylists .txt span").text(c.find(".prov").attr("txt") + "/" + c.find(".city").attr("txt") + "/" + c.find(".dist").attr("txt")), c.find(".citylistinfo").hide(), void c.find(".js_postcode").val((b.attr("pcode") == "null" ?"":b.attr("pcode") )))
     })
 
     //切换省市区选择器页签
