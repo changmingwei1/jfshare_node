@@ -1,5 +1,5 @@
 exports.baoyou = function(req, res, next) {
-    res.render("active/201611baoyou", res.resData);
+    res.render("active/201701shangpin", res.resData);
 }
 
 
