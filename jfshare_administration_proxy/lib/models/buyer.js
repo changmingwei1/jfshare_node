@@ -276,4 +276,28 @@ Buyer.prototype.getListBuyer = function(param,callback){
     });
 };
 
+//启用禁用用户
+Buyer.prototype.isDisableUser = function(param,callback){
+    var isDisableUserParam = new buyer_types.IsDisableUseParam({
+        userId:param.userId,
+        id:param.id,
+        serial:param.serial
+    });
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'isDisableUser',[isDisableUserParam]);
+
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("isDisableUser result:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].code == "1") {
+            logger.error("can't isDisableUserParam because: ======" + err);
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 module.exports = new Buyer();

@@ -189,7 +189,7 @@ Buyer.prototype.loginBySms = function(param,callback){
             logger.error("请求参数：" + JSON.stringify(param));
             logger.error("不能登录，因为: " + JSON.stringify(data));
             res.code = 500;
-            res.desc = "登录失败";
+            res.desc = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
@@ -299,7 +299,13 @@ Buyer.prototype.isExitsThirdUser = function(param,callback){
             res.failCode = data[0].result.failDescList[0].failCode;
             res.remark = data[0].result.failDescList[0].desc;
             callback(res, null);
-        } else {
+        }else if (data[0].result.code == 1 && data[0].result.failDescList[0].failCode == 1999){//账号禁用
+            res.code = 200;
+            res.failCode = data[0].result.failDescList[0].failCode;
+            res.remark = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }
+        else {
            callback(null, data);
         }
     });

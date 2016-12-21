@@ -518,6 +518,8 @@ ScoreUser = module.exports.ScoreUser = function(args) {
   this.mobile = null;
   this.createTime = null;
   this.amount = null;
+  this.state = null;
+  this.serial = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -530,6 +532,12 @@ ScoreUser = module.exports.ScoreUser = function(args) {
     }
     if (args.amount !== undefined) {
       this.amount = args.amount;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.serial !== undefined) {
+      this.serial = args.serial;
     }
   }
 };
@@ -575,6 +583,20 @@ ScoreUser.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.state = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.serial = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -606,6 +628,16 @@ ScoreUser.prototype.write = function(output) {
     output.writeI32(this.amount);
     output.writeFieldEnd();
   }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 5);
+    output.writeI32(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.serial !== null && this.serial !== undefined) {
+    output.writeFieldBegin('serial', Thrift.Type.I32, 6);
+    output.writeI32(this.serial);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -617,6 +649,8 @@ ScoreUserQueryParam = module.exports.ScoreUserQueryParam = function(args) {
   this.startTime = null;
   this.endTime = null;
   this.amount = null;
+  this.state = null;
+  this.serial = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -632,6 +666,12 @@ ScoreUserQueryParam = module.exports.ScoreUserQueryParam = function(args) {
     }
     if (args.amount !== undefined) {
       this.amount = args.amount;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.serial !== undefined) {
+      this.serial = args.serial;
     }
   }
 };
@@ -684,6 +724,20 @@ ScoreUserQueryParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.state = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.serial = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -718,6 +772,16 @@ ScoreUserQueryParam.prototype.write = function(output) {
   if (this.amount !== null && this.amount !== undefined) {
     output.writeFieldBegin('amount', Thrift.Type.I32, 5);
     output.writeI32(this.amount);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.STRING, 6);
+    output.writeString(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.serial !== null && this.serial !== undefined) {
+    output.writeFieldBegin('serial', Thrift.Type.STRING, 7);
+    output.writeString(this.serial);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -2157,6 +2221,8 @@ ExprotVipScoreParam = module.exports.ExprotVipScoreParam = function(args) {
   this.startTime = null;
   this.endTime = null;
   this.amount = null;
+  this.state = null;
+  this.serial = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -2172,6 +2238,12 @@ ExprotVipScoreParam = module.exports.ExprotVipScoreParam = function(args) {
     }
     if (args.amount !== undefined) {
       this.amount = args.amount;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.serial !== undefined) {
+      this.serial = args.serial;
     }
   }
 };
@@ -2224,6 +2296,20 @@ ExprotVipScoreParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.state = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.serial = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2258,6 +2344,16 @@ ExprotVipScoreParam.prototype.write = function(output) {
   if (this.amount !== null && this.amount !== undefined) {
     output.writeFieldBegin('amount', Thrift.Type.I32, 5);
     output.writeI32(this.amount);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.STRING, 6);
+    output.writeString(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.serial !== null && this.serial !== undefined) {
+    output.writeFieldBegin('serial', Thrift.Type.STRING, 7);
+    output.writeString(this.serial);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3350,6 +3446,155 @@ ExprotScoreStockHistoryParam.prototype.write = function(output) {
   if (this.endTime !== null && this.endTime !== undefined) {
     output.writeFieldBegin('endTime', Thrift.Type.STRING, 2);
     output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+UserAuthorizeParam = module.exports.UserAuthorizeParam = function(args) {
+  this.clientTye = null;
+  this.score = null;
+  if (args) {
+    if (args.clientTye !== undefined) {
+      this.clientTye = args.clientTye;
+    }
+    if (args.score !== undefined) {
+      this.score = args.score;
+    }
+  }
+};
+UserAuthorizeParam.prototype = {};
+UserAuthorizeParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.clientTye = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.score = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserAuthorizeParam.prototype.write = function(output) {
+  output.writeStructBegin('UserAuthorizeParam');
+  if (this.clientTye !== null && this.clientTye !== undefined) {
+    output.writeFieldBegin('clientTye', Thrift.Type.I32, 1);
+    output.writeI32(this.clientTye);
+    output.writeFieldEnd();
+  }
+  if (this.score !== null && this.score !== undefined) {
+    output.writeFieldBegin('score', Thrift.Type.STRING, 2);
+    output.writeString(this.score);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+UserAuthorizeResult = module.exports.UserAuthorizeResult = function(args) {
+  this.result = null;
+  this.action = null;
+  this.requestXml = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.action !== undefined) {
+      this.action = args.action;
+    }
+    if (args.requestXml !== undefined) {
+      this.requestXml = args.requestXml;
+    }
+  }
+};
+UserAuthorizeResult.prototype = {};
+UserAuthorizeResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.action = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.requestXml = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserAuthorizeResult.prototype.write = function(output) {
+  output.writeStructBegin('UserAuthorizeResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.action !== null && this.action !== undefined) {
+    output.writeFieldBegin('action', Thrift.Type.STRING, 2);
+    output.writeString(this.action);
+    output.writeFieldEnd();
+  }
+  if (this.requestXml !== null && this.requestXml !== undefined) {
+    output.writeFieldBegin('requestXml', Thrift.Type.STRING, 3);
+    output.writeString(this.requestXml);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
