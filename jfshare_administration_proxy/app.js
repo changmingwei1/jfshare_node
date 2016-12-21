@@ -6,7 +6,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 
-
+var buyer = require('./controllers/buyer_controller');// 启用禁用用户
 var user = require('./controllers/user_controller');// 增加权限功能
 var product=require('./controllers/product_controller');
 var order  = require('./controllers/order_controller');
@@ -41,6 +41,7 @@ app.use('/manager/product',product);
 app.use('/manager/order',order);
 app.use('/manager/address',address);
 app.use('/manager/permission',permission);
+app.use('/manager/buyer',buyer);
 
 app.use('/manager/score',score);
 

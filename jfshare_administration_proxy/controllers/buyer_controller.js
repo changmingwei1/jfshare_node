@@ -186,4 +186,33 @@ router.get('/querySlotImageList', function(request, response, next) {
     }
 });
 
+//启用禁用用户
+router.post('/isDisableUser', function(request, response, next) {
+
+    logger.info("进入启用禁用用户接口");
+    var resContent = {code:200};
+
+    try{
+        var param = request.body;
+        logger.info("It's test_____" + param);
+
+        Buyer.isDisableUser(param,function(error, data){
+
+            if(error){
+                response.json(error);
+            }else{
+                response.json(resContent);
+                logger.info("get buyer response:" + JSON.stringify(resContent));
+            }
+        });
+    }catch(ex){
+        logger.error("不能启/禁用用户，原因是:" + ex);
+        resContent.code = 500;
+        resContent.desc = "启/禁用用户失败";
+        response.json(resContent);
+    }
+});
+
+
+
 module.exports = router;

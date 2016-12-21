@@ -68,7 +68,9 @@ Score.prototype.queryScoreUser = function (params, callback) {
         mobile:params.mobile,
         startTime:params.startTime,
         endTime:params.endTime,
-        amount:params.amount/*积分值  0:全部   1: 0积分  2:0以上积分 */
+        amount:params.amount,/*积分值  0:全部   1: 0积分  2:0以上积分 */
+        state:params.state, /*用户来源 ：0.聚分享, 1.电信web2.电信H53.第三方积分抵扣 97红包活动用户 98积分充值用户 99老系统导入 */
+        serial:params.serial /*0启用 1禁用 */
     });
     var pagination = new pagination_types.Pagination({
         currentPage: params.curpage,
@@ -98,6 +100,8 @@ Score.prototype.exprotVipScore = function (params, callback) {
         startTime:params.startTime,/*开始时间*/
         endTime:params.endTime,/*结束时间 */
         amount:params.amount/*积分值  0:全部   1: 0积分  2:0以上积分 */
+        state:params.state, /*用户来源 ：0.聚分享, 1.电信web2.电信H53.第三方积分抵扣 97红包活动用户 98积分充值用户 99老系统导入 */
+        serial:params.serial /*0启用 1禁用 */
     });
 
 
