@@ -50,7 +50,7 @@ Buyer.prototype.getAuthInfo = function(param,callback){
             logger.error("请求参数：" + JSON.stringify(param));
             logger.error("can't getAuthInfo because: " + JSON.stringify(data));
             res.code = 500;
-            res.desc = "false to getAuthInfo";
+            res.desc = data[0].result.failDescList[0].desc;;
             callback(res,null);
         } else {
             callback(null,data);
