@@ -314,7 +314,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     if (mobile.match(yd)) {
         var data = {};
         data.operator = "中国移动";
-        data.support = "仅限陕西、广东、浙江移动用户充值";
+        data.support = "仅限安徽、山东、陕西、广东、浙江移动用户充值";
         //var flow1 = {flowName:"10M", flowno:"10", pieceValue:"3"};
         var flow2 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
         var flow3 = {flowName:"2G", flowno:"2048", pieceValue:"70"};
