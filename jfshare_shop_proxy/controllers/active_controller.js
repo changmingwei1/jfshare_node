@@ -314,7 +314,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     if (mobile.match(yd)) {
         var data = {};
         data.operator = "中国移动";
-        data.support = "仅限安徽、山东、陕西、广东、浙江移动用户充值";
+        data.support = "仅支持江苏、安徽、山东、陕西、广东、浙江移动用户充值";
         //var flow1 = {flowName:"30M", flowno:"30", pieceValue:"5"};
         //var flow2 = {flowName:"70M", flowno:"70", pieceValue:"10"};
         //var flow3 = {flowName:"150M", flowno:"150", pieceValue:"20"};
@@ -362,7 +362,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(dx)) {
         var data = {};
         data.operator = "中国电信";
-        data.support = "";
+        data.support = "仅支持广东、浙江、江苏、上海、福建、安徽、广西、吉林、天津电信用户充值";
         //var flow = {flowName:"5M", flowno:"5", pieceValue:"1"};
         //var flow1 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
         flowList.push(
