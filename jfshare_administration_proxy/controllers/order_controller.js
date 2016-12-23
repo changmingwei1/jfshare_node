@@ -241,15 +241,15 @@ router.post('/list', function (request, response, next) {
                                         }
                                         if(order.tradeCode=="Z8003"){
                                             productItem.productName="手机话费充值 " + order.closingPrice + "元";
-                                            //productItem.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
+                                            productItem.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
                                         }
                                         if(order.tradeCode=="Z8004"){
                                             productItem.productName=order.deliverInfo.receiverAddress + "手机流量充值 " + order.deliverInfo.receiverName;
-                                            //productItem.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
+                                            productItem.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
                                         }
                                         if(order.tradeCode=="Z8005"){
                                             productItem.productName = "腾讯Q币充值 " + Number(order.closingPrice) + "Q币";
-                                            //productItem.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
+                                            productItem.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
                                         }
                                         productList.push(productItem);
                                     }
