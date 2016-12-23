@@ -1945,12 +1945,12 @@ router.post('/payOrderCreates', function (request, response, next) {
     }
     try {
 
-        if(arg.tradeCode == "Z8005" || arg.tradeCode == "Z8006"){
-            result.code = 500;
-            result.desc = "系统升级中";
-            response.json(result);
-            return;
-        }
+        //if(arg.tradeCode == "Z8005" || arg.tradeCode == "Z8006"){
+        //    result.code = 500;
+        //    result.desc = "系统升级中";
+        //    response.json(result);
+        //    return;
+        //}
 
         if (arg.tradeCode == "Z8003") {
             result.code = 500;
