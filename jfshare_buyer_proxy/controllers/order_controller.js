@@ -2088,7 +2088,7 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
             if (Number(arg.totalSum) < 30 || Number(arg.totalSum) > 500) {
                 result.code = 400;
-                result.desc = "Q币仅支持30元以上的充值";
+                result.desc = "Q币仅支持30-500元的充值";
                 response.json(result);
                 return;
             }
