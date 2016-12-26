@@ -1952,13 +1952,13 @@ router.post('/payOrderCreates', function (request, response, next) {
         //    return;
         //}
 
-        if (arg.tradeCode == "Z8003") {
-            result.code = 500;
-            //result.desc = "话费充值服务暂不可使用";
-            result.desc = "运营商系统维护，话费充值服务暂不可用";
-            response.json(result);
-            return;
-        }
+        //if (arg.tradeCode == "Z8003") {
+        //    result.code = 500;
+        //    //result.desc = "话费充值服务暂不可使用";
+        //    result.desc = "运营商系统维护，话费充值服务暂不可用";
+        //    response.json(result);
+        //    return;
+        //}
         if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
             result.code = 400;
             result.desc = "没有填写用户ＩＤ";
@@ -2086,9 +2086,9 @@ router.post('/payOrderCreates', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            if (Number(arg.totalSum) < 30 || Number(arg.totalSum) > 500) {
+            if (Number(arg.totalSum) < 50 || Number(arg.totalSum) > 500) {
                 result.code = 400;
-                result.desc = "Q币仅支持30-500元的充值";
+                result.desc = "Q币仅支持50-500元的充值";
                 response.json(result);
                 return;
             }
