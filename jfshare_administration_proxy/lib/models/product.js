@@ -885,7 +885,7 @@ Product.prototype.getThirdPartyProductLog = function (params, callback) {
 //exportThirdPartyProduct
 Product.prototype.exportThirdPartyProduct = function (params, callback) {
     var productCardParam = new product_types.ThirdPartyProductQueryParam({
-        thirdPartyIdentify:1,
+        thirdPartyIdentify:params.thirdPartyIdentify,
         productName :params.productName,
         activeState:params.activeState,
         stockState:params.stockState,
