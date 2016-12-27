@@ -1945,12 +1945,12 @@ router.post('/payOrderCreates', function (request, response, next) {
     }
     try {
 
-        if(arg.tradeCode == "Z8005" || arg.tradeCode == "Z8006"){
-            result.code = 500;
-            result.desc = "系统升级中";
-            response.json(result);
-            return;
-        }
+        //if(arg.tradeCode == "Z8005" || arg.tradeCode == "Z8006"){
+        //    result.code = 500;
+        //    result.desc = "系统升级中";
+        //    response.json(result);
+        //    return;
+        //}
 
         //if (arg.tradeCode == "Z8003") {
         //    result.code = 500;
@@ -2001,14 +2001,20 @@ router.post('/payOrderCreates', function (request, response, next) {
             response.json(result);
             return;
         }
-        if (arg.tradeCode == "Z8003") {
-            if (arg.totalSum == "" || ( arg.totalSum != "300" && arg.totalSum != "500")) {
+        if (arg.tradeCode == "Z8003") { //话费
+            if (arg.totalSum == "" || (
+                //arg.totalSum != "30" &&
+                arg.totalSum != "50" &&
+                arg.totalSum != "100" &&
+                arg.totalSum != "300" &&
+                arg.totalSum != "500"
+                )) {
                 result.code = 500;
                 result.desc = "该面值已售罄";
                 response.json(result);
                 return;
             }
-            if (arg.totalSum == "30") {
+            /*if (arg.totalSum == "30") {
                 result.code = 500;
                 result.desc = "该面值已售罄";
                 response.json(result);
@@ -2019,9 +2025,9 @@ router.post('/payOrderCreates', function (request, response, next) {
                 result.desc = "该面值已售罄";
                 response.json(result);
                 return;
-            }
+            }*/
         }
-        if (arg.tradeCode == "Z8004") {
+        if (arg.tradeCode == "Z8004") { //流量
             //result.code = 500;
             ////result.desc = "话费充值服务暂不可使用";
             //result.desc = "运营商系统维护，流量充值服务暂不可用";
@@ -2034,11 +2040,19 @@ router.post('/payOrderCreates', function (request, response, next) {
                 return;
             }
             if (arg.flowno == "" || arg.flowno == null || (
-                    //arg.flowno != "5" && arg.flowno != "10" && arg.flowno != "20" &&
+                    arg.flowno != "30" &&
+                    arg.flowno != "50" &&
+                    arg.flowno != "70" &&
+                    arg.flowno != "100" &&
+                    arg.flowno != "150" &&
+                    arg.flowno != "200" &&
                     arg.flowno != "500" &&
-                arg.flowno != "1024" && arg.flowno != "2048"
-                //&& arg.flowno != "3072" && arg.flowno != "4096"
-                //&& arg.flowno != "6144" && arg.flowno != "11264"
+                    arg.flowno != "1024" &&
+                    arg.flowno != "2048" &&
+                    arg.flowno != "3072" &&
+                    arg.flowno != "4096" &&
+                    arg.flowno != "6144" &&
+                    arg.flowno != "11264"
                 )) {
                 result.code = 400;
                 result.desc = "当前面额不支持充值";
@@ -2065,7 +2079,7 @@ router.post('/payOrderCreates', function (request, response, next) {
                 return;
             }
         }
-        if (arg.tradeCode == "Z8005") {
+        if (arg.tradeCode == "Z8005") { //Q币
             if (arg.provinceName == "") {
                 result.code = 400;
                 result.desc = "参数错误";
@@ -2074,7 +2088,7 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
             if (Number(arg.totalSum) < 50 || Number(arg.totalSum) > 500) {
                 result.code = 400;
-                result.desc = "参数错误";
+                result.desc = "Q币仅支持50-500元的充值";
                 response.json(result);
                 return;
             }

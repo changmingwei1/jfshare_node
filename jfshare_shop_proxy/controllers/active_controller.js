@@ -314,15 +314,29 @@ router.get('/queryMobileInfo',function(request,response,next){
     if (mobile.match(yd)) {
         var data = {};
         data.operator = "中国移动";
-        data.support = "仅限陕西、广东、浙江移动用户充值";
-        //var flow1 = {flowName:"10M", flowno:"10", pieceValue:"3"};
-        var flow2 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
-        var flow3 = {flowName:"2G", flowno:"2048", pieceValue:"70"};
-        //var flow4 = {flowName:"3G", flowno:"3072", pieceValue:"100"};
-        //var flow5 = {flowName:"4G", flowno:"4096", pieceValue:"130"};
-        //var flow6 = {flowName:"6G", flowno:"6144", pieceValue:"180"};
-        //var flow7 = {flowName:"11G", flowno:"11264", pieceValue:"280"};
-        flowList.push(flow2,flow3);
+        data.support = "仅支持安徽、江苏、山东、陕西、广东和浙江移动用户充值";
+        //var flow1 = {flowName:"30M", flowno:"30", pieceValue:"5"};
+        //var flow2 = {flowName:"70M", flowno:"70", pieceValue:"10"};
+        //var flow3 = {flowName:"150M", flowno:"150", pieceValue:"20"};
+        //var flow4 = {flowName:"500M", flowno:"500", pieceValue:"30"};
+        //var flow5 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
+        //var flow6 = {flowName:"2G", flowno:"2048", pieceValue:"70"};
+        //var flow7 = {flowName:"3G", flowno:"3072", pieceValue:"100"};
+        //var flow8 = {flowName:"4G", flowno:"4096", pieceValue:"130"};
+        //var flow9 = {flowName:"6G", flowno:"6144", pieceValue:"180"};
+        //var flow10 = {flowName:"11G", flowno:"11264", pieceValue:"280"};
+        flowList.push(
+            {flowName:"30M", flowno:"30", pieceValue:"5"},
+            {flowName:"70M", flowno:"70", pieceValue:"10"},
+            {flowName:"150M", flowno:"150", pieceValue:"20"},
+            {flowName:"500M", flowno:"500", pieceValue:"30"},
+            {flowName:"1G", flowno:"1024", pieceValue:"50"},
+            {flowName:"2G", flowno:"2048", pieceValue:"70"}
+            //{flowName:"3G", flowno:"3072", pieceValue:"100"},
+            //{flowName:"4G", flowno:"4096", pieceValue:"130"},
+            //{flowName:"6G", flowno:"6144", pieceValue:"180"},
+            //{flowName:"11G", flowno:"11264", pieceValue:"280"}
+        );
         data.flowList = flowList;
         data.province = "";
         data.city = "";
@@ -333,8 +347,13 @@ router.get('/queryMobileInfo',function(request,response,next){
         data.operator = "中国联通";
         data.support = "";
         //var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
-        var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
-        flowList.push(flow1);
+        //var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
+        flowList.push(
+            {flowName:"50M", flowno:"50", pieceValue:"6"},
+            {flowName:"100M", flowno:"100", pieceValue:"10"},
+            {flowName:"200M", flowno:"200", pieceValue:"15"},
+            {flowName:"500M", flowno:"500", pieceValue:"30"}
+        );
         data.flowList = flowList;
         data.province = "";
         data.city = "";
@@ -345,8 +364,15 @@ router.get('/queryMobileInfo',function(request,response,next){
         data.operator = "中国电信";
         data.support = "";
         //var flow = {flowName:"5M", flowno:"5", pieceValue:"1"};
-        var flow1 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
-        flowList.push(flow1);
+        //var flow1 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
+        flowList.push(
+            {flowName:"30M", flowno:"30", pieceValue:"5"},
+            {flowName:"50M", flowno:"50", pieceValue:"7"},
+            {flowName:"100M", flowno:"100", pieceValue:"10"},
+            {flowName:"200M", flowno:"200", pieceValue:"15"},
+            {flowName:"500M", flowno:"500", pieceValue:"30"},
+            {flowName:"1G", flowno:"1024", pieceValue:"50"}
+        );
         data.flowList = flowList;
         data.province = "";
         data.city = "";
