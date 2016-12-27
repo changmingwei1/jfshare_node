@@ -1056,6 +1056,11 @@ router.post('/queryCachAmount', function (request, response, next) {
     logger.info("兑出积分查询调用接口");
     var resContent = {code: 200};
     var param = request.body;
+
+    //获取ip
+    //var ip = request.headers['x-real-ip'];
+    var ip = request.headers['X-Forwarded-Fo'];
+
     try {
         if (param.userId == null || param.userId == "") {
             resContent.code = 400;
@@ -1069,18 +1074,15 @@ router.post('/queryCachAmount', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if (param.browser == null || param.browser == "") {
+
+        if (param.clientType == null || param.clientType == "") {
             resContent.code = 400;
             resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
         }
-        if (param.ppInfo == null || param.ppInfo == "") {
-            resContent.code = 400;
-            resContent.desc = "鉴权参数错误";
-            response.json(resContent);
-            return;
-        }
+
+
         logger.info("请求参数信息" + JSON.stringify(param));
         Buyer.validAuth(param, function (err, data) {
             if (err) {
@@ -1150,21 +1152,88 @@ router.post('/cachAmountCall', function (request, response, next) {
             resContent.desc = "鉴权参数错误";
             response.json(resContent);
             return;
+        }if (param.custId == null || param.custId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }if (param.deviceNo == null || param.deviceNo == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }if (param.deviceTye == null || param.deviceTye == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }if (param.provicneId == null || param.provicneId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }if (param.cityId == null || param.cityId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }if (param.starLevel == null || param.starLevel == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }if (param.requestTime == null || param.requestTime == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }if (param.sign== null || param.sign == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 500;
+            resContent.desc = "验证码不能为空";
+            response.json(resContent);
+            return;
         }
         logger.info("请求参数信息" + JSON.stringify(param));
-        Buyer.validAuth(param, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
+        async.waterfall([
+            function (callback) {
+                Common.validateMsgCaptcha(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+            },
+            function (callback){
+                Buyer.validAuth(param, function (err, data) {
+                    if (err) {
+                        response.json(err);
+                        return;
+                    }
+                });
+            },
+            function (callback) {
+                Score.cachAmountCall(param, function (error, data) {
+                    if (error) {
+                        response.json(error);
+                    } else {
+                        response.json(resContent);
+                        logger.info("Score cachAmountCall response:" + JSON.stringify(resContent));
+                    }
+                });
             }
-            Score.cachAmountCall(param, function (error, data) {
-                if (error) {
-                    response.json(error);
-                } else {
-                    response.json(resContent);
-                    logger.info("Score cachAmountCall response:" + JSON.stringify(resContent));
-                }
-            });
+        ], function (err) {
+            if (err) {
+                return response.json(err);
+            } else {
+                return response.json({resContent: true});
+            }
         });
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
@@ -1272,16 +1341,16 @@ router.post('/enterAmountCall', function (request, response, next) {
         //        response.json(err);
         //        return;
         //    }
-            Score.enterAmountCall(param, function (error, data) {
-                if (error) {
-                    response.json(error);
-                } else {
-                    //var score = data[0].responseScore;
-                    //resContent.responseScore = score;
-                    response.json(resContent);
-                    logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
-                }
-            });
+        Score.enterAmountCall(param, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+                //var score = data[0].responseScore;
+                //resContent.responseScore = score;
+                response.json(resContent);
+                logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
+            }
+        });
         //});
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
@@ -1501,6 +1570,8 @@ router.post('/isUserIdRela', function (request, response, next) {
                 response.json(error);
                 return;
             } else {
+                //resContent.scoreAccount = data[0].scoreAccount;
+                //resContent.value = data[0].value;
                 var scoreAccountResult = data[0];
                 resContent.scoreAccountResult = scoreAccountResult;
                 response.json(resContent);
@@ -1527,7 +1598,7 @@ router.post('/isAccountRela', function (request, response, next) {
             resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
-             return;
+            return;
         }
         logger.info("传参，arg：" + JSON.stringify(param));
         Score.isAccountRela(param.account, function (error, data) {
@@ -1966,6 +2037,71 @@ router.post('/sendMs', function (request, response, next) {
         logger.error("验证失败，because :" + ex);
         resContent.code = 500;
         resContent.desc = "验证失败";
+        response.json(resContent);
+    }
+});
+
+
+/*兑出积分鉴权登陆*/
+router.post('/userAuthorize', function (request, response, next) {
+
+    logger.info("兑出积分鉴权登陆调用接口");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param.userId == null || param.userId == "") {
+            resContent.code = 500;
+            resContent.desc = "用户ID参数为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.token == null || param.token == "") {
+            resContent.code = 500;
+            resContent.desc = "token参数为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.clientType == null || param.clientType == "") {
+            resContent.code = 500;
+            resContent.desc = "用户标识参数为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.score == null || param.score == "") {
+            resContent.code = 500;
+            resContent.desc = "兑出积分额不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.h5Type == null || param.h5Type == "") {
+            resContent.code = 500;
+            resContent.desc = "h5Type参数不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数信息" + JSON.stringify(param));
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            Score.userAuthorize(param, function (error, data) {
+                if (error) {
+                    response.json(error);
+                } else {
+                    resContent.action = data[0].action;
+                    resContent.requestXml = data[0].requestXml;
+                    response.json(resContent);
+                    logger.info("Score userAuthorize response:" + JSON.stringify(resContent));
+                }
+            });
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("兑出积分鉴权登陆异常，原因是======:" + ex);
+        resContent.code = 500;
+        resContent.desc = "兑出积分鉴权登陆失败";
         response.json(resContent);
     }
 });

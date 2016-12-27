@@ -153,10 +153,20 @@ Score.prototype.queryCachAmount = function (param, callback) {
 
 //积分兑出
 Score.prototype.cachAmountCall = function (param, callback) {
+
     var params = new score_types.CachAmountCallParam({
-        userId: param.userId,
-        CachAmount: param.CachAmount,
-        mobile: param.mobile
+
+         userId: param.userId,
+         CachAmount: param.CachAmount,
+         mobile: param.mobile,
+         custId:param.custId,
+         deviceNo: param.deviceNo,
+         deviceTye: param.deviceType,
+         provicneId : param.proviceId,
+         cityId: param.cityId,
+         starLevel: param.starLevel,
+         requestTime:param.requestTime,
+         sign: param.sign,
     });
 
     logger.info("Score cachAmountCall  params:" + JSON.stringify(params));
@@ -314,5 +324,35 @@ Score.prototype.relaAccountCall = function (params, callback) {
     });
 };
 
+
+/*电信账号绑定接口*/
+Score.prototype.userAuthorize = function (params, callback) {
+
+    var param = new score_types.UserAuthorizeParam({
+        score:params.score,
+        clientType:params.clientType,
+        h5Type:params.h5Type,
+    });
+
+    logger.info("请求参数：" + JSON.stringify(param));
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'userAuthorize', [param]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get userAuthorize result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("can't get userAuthorize because: ======" + err);
+            res.code = 500;
+            res.desc = "Error to get userAuthorize ";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("can't get userAuthorize, 请求参数arg=" + JSON.stringify(params));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else{
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new Score();
