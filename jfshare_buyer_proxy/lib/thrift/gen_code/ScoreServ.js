@@ -1347,6 +1347,1205 @@ ScoreServ_relaAccountCall_result.prototype.write = function(output) {
   return;
 };
 
+ScoreServ_delRedisbyKey_args = function(args) {
+  this.key = null;
+  if (args) {
+    if (args.key !== undefined) {
+      this.key = args.key;
+    }
+  }
+};
+ScoreServ_delRedisbyKey_args.prototype = {};
+ScoreServ_delRedisbyKey_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.key = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_delRedisbyKey_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_delRedisbyKey_args');
+  if (this.key !== null && this.key !== undefined) {
+    output.writeFieldBegin('key', Thrift.Type.STRING, 1);
+    output.writeString(this.key);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_delRedisbyKey_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_delRedisbyKey_result.prototype = {};
+ScoreServ_delRedisbyKey_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_delRedisbyKey_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_delRedisbyKey_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_returnScore_args = function(args) {
+  this.orderId = null;
+  if (args) {
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+  }
+};
+ScoreServ_returnScore_args.prototype = {};
+ScoreServ_returnScore_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_returnScore_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_returnScore_args');
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 1);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_returnScore_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_returnScore_result.prototype = {};
+ScoreServ_returnScore_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_returnScore_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_returnScore_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exprotVipScore_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_exprotVipScore_args.prototype = {};
+ScoreServ_exprotVipScore_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ExprotVipScoreParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exprotVipScore_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exprotVipScore_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exprotVipScore_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_exprotVipScore_result.prototype = {};
+ScoreServ_exprotVipScore_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExprotResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exprotVipScore_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exprotVipScore_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_scoreStatistic_args = function(args) {
+  this.param = null;
+  this.pagination = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ScoreServ_scoreStatistic_args.prototype = {};
+ScoreServ_scoreStatistic_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ScoreStatisticParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_scoreStatistic_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_scoreStatistic_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_scoreStatistic_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_scoreStatistic_result.prototype = {};
+ScoreServ_scoreStatistic_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ScoreStatisticResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_scoreStatistic_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_scoreStatistic_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreStatistic_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_exprotScoreStatistic_args.prototype = {};
+ScoreServ_exprotScoreStatistic_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ExprotScoreStatisticParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreStatistic_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exprotScoreStatistic_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreStatistic_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_exprotScoreStatistic_result.prototype = {};
+ScoreServ_exprotScoreStatistic_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExprotResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreStatistic_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exprotScoreStatistic_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_scoreTotalStatistic_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_scoreTotalStatistic_args.prototype = {};
+ScoreServ_scoreTotalStatistic_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ScoreTotalStatisticParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_scoreTotalStatistic_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_scoreTotalStatistic_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_scoreTotalStatistic_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_scoreTotalStatistic_result.prototype = {};
+ScoreServ_scoreTotalStatistic_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ScoreTotalStatisticResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_scoreTotalStatistic_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_scoreTotalStatistic_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreTotalStatistic_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_exprotScoreTotalStatistic_args.prototype = {};
+ScoreServ_exprotScoreTotalStatistic_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ExprotScoreTotalStatisticParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreTotalStatistic_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exprotScoreTotalStatistic_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreTotalStatistic_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_exprotScoreTotalStatistic_result.prototype = {};
+ScoreServ_exprotScoreTotalStatistic_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExprotResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreTotalStatistic_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exprotScoreTotalStatistic_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreStockHistory_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_queryScoreStockHistory_args.prototype = {};
+ScoreServ_queryScoreStockHistory_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.QueryScoreStockHistoryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreStockHistory_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_queryScoreStockHistory_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreStockHistory_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_queryScoreStockHistory_result.prototype = {};
+ScoreServ_queryScoreStockHistory_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ScoreStockHistoryResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreStockHistory_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_queryScoreStockHistory_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreStockHistory_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_exprotScoreStockHistory_args.prototype = {};
+ScoreServ_exprotScoreStockHistory_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ExprotScoreStockHistoryParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreStockHistory_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exprotScoreStockHistory_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreStockHistory_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_exprotScoreStockHistory_result.prototype = {};
+ScoreServ_exprotScoreStockHistory_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExprotResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exprotScoreStockHistory_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exprotScoreStockHistory_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_userAuthorize_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_userAuthorize_args.prototype = {};
+ScoreServ_userAuthorize_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.UserAuthorizeParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_userAuthorize_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_userAuthorize_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_userAuthorize_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_userAuthorize_result.prototype = {};
+ScoreServ_userAuthorize_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.UserAuthorizeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_userAuthorize_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_userAuthorize_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_enterUserAuthorize_args = function(args) {
+  this.requestXml = null;
+  if (args) {
+    if (args.requestXml !== undefined) {
+      this.requestXml = args.requestXml;
+    }
+  }
+};
+ScoreServ_enterUserAuthorize_args.prototype = {};
+ScoreServ_enterUserAuthorize_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.requestXml = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_enterUserAuthorize_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_enterUserAuthorize_args');
+  if (this.requestXml !== null && this.requestXml !== undefined) {
+    output.writeFieldBegin('requestXml', Thrift.Type.STRING, 1);
+    output.writeString(this.requestXml);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_enterUserAuthorize_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_enterUserAuthorize_result.prototype = {};
+ScoreServ_enterUserAuthorize_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.EnterUserAuthorizeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_enterUserAuthorize_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_enterUserAuthorize_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -1923,6 +3122,524 @@ ScoreServClient.prototype.recv_relaAccountCall = function(input,mtype,rseqid) {
   }
   return callback('relaAccountCall failed: unknown result');
 };
+ScoreServClient.prototype.delRedisbyKey = function(key, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_delRedisbyKey(key);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_delRedisbyKey(key);
+  }
+};
+
+ScoreServClient.prototype.send_delRedisbyKey = function(key) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('delRedisbyKey', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_delRedisbyKey_args();
+  args.key = key;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_delRedisbyKey = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_delRedisbyKey_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('delRedisbyKey failed: unknown result');
+};
+ScoreServClient.prototype.returnScore = function(orderId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_returnScore(orderId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_returnScore(orderId);
+  }
+};
+
+ScoreServClient.prototype.send_returnScore = function(orderId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('returnScore', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_returnScore_args();
+  args.orderId = orderId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_returnScore = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_returnScore_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('returnScore failed: unknown result');
+};
+ScoreServClient.prototype.exprotVipScore = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exprotVipScore(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exprotVipScore(param);
+  }
+};
+
+ScoreServClient.prototype.send_exprotVipScore = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exprotVipScore', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_exprotVipScore_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_exprotVipScore = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_exprotVipScore_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exprotVipScore failed: unknown result');
+};
+ScoreServClient.prototype.scoreStatistic = function(param, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_scoreStatistic(param, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_scoreStatistic(param, pagination);
+  }
+};
+
+ScoreServClient.prototype.send_scoreStatistic = function(param, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('scoreStatistic', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_scoreStatistic_args();
+  args.param = param;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_scoreStatistic = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_scoreStatistic_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('scoreStatistic failed: unknown result');
+};
+ScoreServClient.prototype.exprotScoreStatistic = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exprotScoreStatistic(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exprotScoreStatistic(param);
+  }
+};
+
+ScoreServClient.prototype.send_exprotScoreStatistic = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exprotScoreStatistic', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_exprotScoreStatistic_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_exprotScoreStatistic = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_exprotScoreStatistic_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exprotScoreStatistic failed: unknown result');
+};
+ScoreServClient.prototype.scoreTotalStatistic = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_scoreTotalStatistic(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_scoreTotalStatistic(param);
+  }
+};
+
+ScoreServClient.prototype.send_scoreTotalStatistic = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('scoreTotalStatistic', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_scoreTotalStatistic_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_scoreTotalStatistic = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_scoreTotalStatistic_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('scoreTotalStatistic failed: unknown result');
+};
+ScoreServClient.prototype.exprotScoreTotalStatistic = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exprotScoreTotalStatistic(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exprotScoreTotalStatistic(param);
+  }
+};
+
+ScoreServClient.prototype.send_exprotScoreTotalStatistic = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exprotScoreTotalStatistic', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_exprotScoreTotalStatistic_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_exprotScoreTotalStatistic = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_exprotScoreTotalStatistic_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exprotScoreTotalStatistic failed: unknown result');
+};
+ScoreServClient.prototype.queryScoreStockHistory = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryScoreStockHistory(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryScoreStockHistory(param);
+  }
+};
+
+ScoreServClient.prototype.send_queryScoreStockHistory = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryScoreStockHistory', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_queryScoreStockHistory_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_queryScoreStockHistory = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_queryScoreStockHistory_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryScoreStockHistory failed: unknown result');
+};
+ScoreServClient.prototype.exprotScoreStockHistory = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exprotScoreStockHistory(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exprotScoreStockHistory(param);
+  }
+};
+
+ScoreServClient.prototype.send_exprotScoreStockHistory = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exprotScoreStockHistory', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_exprotScoreStockHistory_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_exprotScoreStockHistory = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_exprotScoreStockHistory_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exprotScoreStockHistory failed: unknown result');
+};
+ScoreServClient.prototype.userAuthorize = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_userAuthorize(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_userAuthorize(param);
+  }
+};
+
+ScoreServClient.prototype.send_userAuthorize = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('userAuthorize', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_userAuthorize_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_userAuthorize = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_userAuthorize_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('userAuthorize failed: unknown result');
+};
+ScoreServClient.prototype.enterUserAuthorize = function(requestXml, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_enterUserAuthorize(requestXml);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_enterUserAuthorize(requestXml);
+  }
+};
+
+ScoreServClient.prototype.send_enterUserAuthorize = function(requestXml) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('enterUserAuthorize', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_enterUserAuthorize_args();
+  args.requestXml = requestXml;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_enterUserAuthorize = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_enterUserAuthorize_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('enterUserAuthorize failed: unknown result');
+};
 ScoreServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -2294,6 +4011,336 @@ ScoreServProcessor.prototype.process_relaAccountCall = function(seqid, input, ou
     this._handler.relaAccountCall(args.param,  function (err, result) {
       var result = new ScoreServ_relaAccountCall_result((err != null ? err : {success: result}));
       output.writeMessageBegin("relaAccountCall", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_delRedisbyKey = function(seqid, input, output) {
+  var args = new ScoreServ_delRedisbyKey_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.delRedisbyKey.length === 1) {
+    Q.fcall(this._handler.delRedisbyKey, args.key)
+      .then(function(result) {
+        var result = new ScoreServ_delRedisbyKey_result({success: result});
+        output.writeMessageBegin("delRedisbyKey", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_delRedisbyKey_result(err);
+        output.writeMessageBegin("delRedisbyKey", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.delRedisbyKey(args.key,  function (err, result) {
+      var result = new ScoreServ_delRedisbyKey_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("delRedisbyKey", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_returnScore = function(seqid, input, output) {
+  var args = new ScoreServ_returnScore_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.returnScore.length === 1) {
+    Q.fcall(this._handler.returnScore, args.orderId)
+      .then(function(result) {
+        var result = new ScoreServ_returnScore_result({success: result});
+        output.writeMessageBegin("returnScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_returnScore_result(err);
+        output.writeMessageBegin("returnScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.returnScore(args.orderId,  function (err, result) {
+      var result = new ScoreServ_returnScore_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("returnScore", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_exprotVipScore = function(seqid, input, output) {
+  var args = new ScoreServ_exprotVipScore_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exprotVipScore.length === 1) {
+    Q.fcall(this._handler.exprotVipScore, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_exprotVipScore_result({success: result});
+        output.writeMessageBegin("exprotVipScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_exprotVipScore_result(err);
+        output.writeMessageBegin("exprotVipScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exprotVipScore(args.param,  function (err, result) {
+      var result = new ScoreServ_exprotVipScore_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exprotVipScore", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_scoreStatistic = function(seqid, input, output) {
+  var args = new ScoreServ_scoreStatistic_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.scoreStatistic.length === 2) {
+    Q.fcall(this._handler.scoreStatistic, args.param, args.pagination)
+      .then(function(result) {
+        var result = new ScoreServ_scoreStatistic_result({success: result});
+        output.writeMessageBegin("scoreStatistic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_scoreStatistic_result(err);
+        output.writeMessageBegin("scoreStatistic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.scoreStatistic(args.param, args.pagination,  function (err, result) {
+      var result = new ScoreServ_scoreStatistic_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("scoreStatistic", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_exprotScoreStatistic = function(seqid, input, output) {
+  var args = new ScoreServ_exprotScoreStatistic_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exprotScoreStatistic.length === 1) {
+    Q.fcall(this._handler.exprotScoreStatistic, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_exprotScoreStatistic_result({success: result});
+        output.writeMessageBegin("exprotScoreStatistic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_exprotScoreStatistic_result(err);
+        output.writeMessageBegin("exprotScoreStatistic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exprotScoreStatistic(args.param,  function (err, result) {
+      var result = new ScoreServ_exprotScoreStatistic_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exprotScoreStatistic", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_scoreTotalStatistic = function(seqid, input, output) {
+  var args = new ScoreServ_scoreTotalStatistic_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.scoreTotalStatistic.length === 1) {
+    Q.fcall(this._handler.scoreTotalStatistic, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_scoreTotalStatistic_result({success: result});
+        output.writeMessageBegin("scoreTotalStatistic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_scoreTotalStatistic_result(err);
+        output.writeMessageBegin("scoreTotalStatistic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.scoreTotalStatistic(args.param,  function (err, result) {
+      var result = new ScoreServ_scoreTotalStatistic_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("scoreTotalStatistic", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_exprotScoreTotalStatistic = function(seqid, input, output) {
+  var args = new ScoreServ_exprotScoreTotalStatistic_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exprotScoreTotalStatistic.length === 1) {
+    Q.fcall(this._handler.exprotScoreTotalStatistic, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_exprotScoreTotalStatistic_result({success: result});
+        output.writeMessageBegin("exprotScoreTotalStatistic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_exprotScoreTotalStatistic_result(err);
+        output.writeMessageBegin("exprotScoreTotalStatistic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exprotScoreTotalStatistic(args.param,  function (err, result) {
+      var result = new ScoreServ_exprotScoreTotalStatistic_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exprotScoreTotalStatistic", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_queryScoreStockHistory = function(seqid, input, output) {
+  var args = new ScoreServ_queryScoreStockHistory_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryScoreStockHistory.length === 1) {
+    Q.fcall(this._handler.queryScoreStockHistory, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_queryScoreStockHistory_result({success: result});
+        output.writeMessageBegin("queryScoreStockHistory", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_queryScoreStockHistory_result(err);
+        output.writeMessageBegin("queryScoreStockHistory", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryScoreStockHistory(args.param,  function (err, result) {
+      var result = new ScoreServ_queryScoreStockHistory_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryScoreStockHistory", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_exprotScoreStockHistory = function(seqid, input, output) {
+  var args = new ScoreServ_exprotScoreStockHistory_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exprotScoreStockHistory.length === 1) {
+    Q.fcall(this._handler.exprotScoreStockHistory, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_exprotScoreStockHistory_result({success: result});
+        output.writeMessageBegin("exprotScoreStockHistory", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_exprotScoreStockHistory_result(err);
+        output.writeMessageBegin("exprotScoreStockHistory", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exprotScoreStockHistory(args.param,  function (err, result) {
+      var result = new ScoreServ_exprotScoreStockHistory_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exprotScoreStockHistory", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_userAuthorize = function(seqid, input, output) {
+  var args = new ScoreServ_userAuthorize_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.userAuthorize.length === 1) {
+    Q.fcall(this._handler.userAuthorize, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_userAuthorize_result({success: result});
+        output.writeMessageBegin("userAuthorize", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_userAuthorize_result(err);
+        output.writeMessageBegin("userAuthorize", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.userAuthorize(args.param,  function (err, result) {
+      var result = new ScoreServ_userAuthorize_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("userAuthorize", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_enterUserAuthorize = function(seqid, input, output) {
+  var args = new ScoreServ_enterUserAuthorize_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.enterUserAuthorize.length === 1) {
+    Q.fcall(this._handler.enterUserAuthorize, args.requestXml)
+      .then(function(result) {
+        var result = new ScoreServ_enterUserAuthorize_result({success: result});
+        output.writeMessageBegin("enterUserAuthorize", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_enterUserAuthorize_result(err);
+        output.writeMessageBegin("enterUserAuthorize", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.enterUserAuthorize(args.requestXml,  function (err, result) {
+      var result = new ScoreServ_enterUserAuthorize_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("enterUserAuthorize", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
