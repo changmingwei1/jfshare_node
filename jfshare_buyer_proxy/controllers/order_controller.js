@@ -982,7 +982,7 @@ router.post('/info', function (req, res, next) {
 
                                 //如果待支付
                                 if(orderInfo.orderState ==10){
-                                    if(order.sellerId == 115){
+                                    if(orderInfo.sellerId == 115){
                                         result.timeOutLimit = 10;
                                     }else{
                                         result.timeOutLimit = 2880;
