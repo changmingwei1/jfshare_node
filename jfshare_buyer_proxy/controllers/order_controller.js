@@ -981,7 +981,7 @@ router.post('/info', function (req, res, next) {
                                 result.tradeCode = orderInfo.tradeCode;
 
                                 //如果待支付
-                                if(orderInfo.tradeCode.orderState ==10){
+                                if(orderInfo.orderState ==10){
                                     if(order.sellerId == 115){
                                         result.timeOutLimit = 10;
                                     }else{
