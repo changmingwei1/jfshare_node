@@ -979,6 +979,18 @@ router.post('/info', function (req, res, next) {
                                 result.closingPrice = orderInfo.closingPrice;
                                 //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                                 result.tradeCode = orderInfo.tradeCode;
+
+                                //如果待支付
+                                if(orderInfo.tradeCode.orderState ==10){
+                                    if(order.sellerId == 115){
+                                        result.timeOutLimit = 10;
+                                    }else{
+                                        result.timeOutLimit = 2880;
+                                    }
+                                }
+
+
+
                                 //临时修改：因安卓没有62状态，所以62状态转换为61
                                 //if(orderInfo.orderState==62){
                                 //    result.orderState=61;
