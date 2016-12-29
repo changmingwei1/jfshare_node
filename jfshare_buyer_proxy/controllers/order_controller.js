@@ -646,8 +646,20 @@ router.post('/list', function (request, response, next) {
                                             successTime: order.successTime,
                                             activeState: order.activeState,
                                             postage: order.postage,
+                                            timeOutLimit:0,//待支付超时时间
                                             type: order.productList[0].type  //5.17测没有type
                                         };
+                                        //如果待支付
+                                        if(order.orderState ==10){
+                                            if(order.sellerId == 115){
+                                                orderItem.timeOutLimit = 10;
+                                            }else{
+                                                orderItem.timeOutLimit = 2880;
+                                            }
+                                        }
+
+
+
                                         if (order.deliverInfo != null) {
                                             orderItem.expressId = order.deliverInfo.expressId;
                                             orderItem.expressNo = order.deliverInfo.expressNo;
@@ -967,6 +979,18 @@ router.post('/info', function (req, res, next) {
                                 result.closingPrice = orderInfo.closingPrice;
                                 //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                                 result.tradeCode = orderInfo.tradeCode;
+
+                                //如果待支付
+                                if(orderInfo.orderState ==10){
+                                    if(orderInfo.sellerId == 115){
+                                        result.timeOutLimit = 10;
+                                    }else{
+                                        result.timeOutLimit = 2880;
+                                    }
+                                }
+
+
+
                                 //临时修改：因安卓没有62状态，所以62状态转换为61
                                 //if(orderInfo.orderState==62){
                                 //    result.orderState=61;
