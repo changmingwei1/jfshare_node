@@ -345,7 +345,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(lt)) {
         var data = {};
         data.operator = "中国联通";
-        data.support = "";
+        data.support = "仅支持江西、江苏和上海联通用户充值";
         //var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
         //var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
         flowList.push(
