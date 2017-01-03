@@ -314,7 +314,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     if (mobile.match(yd)) {
         var data = {};
         data.operator = "中国移动";
-        data.support = "仅支持安徽和江苏移动用户充值";
+        data.support = "仅支持安徽、江苏、广东和浙江移动用户充值";
         //var flow1 = {flowName:"30M", flowno:"30", pieceValue:"5"};
         //var flow2 = {flowName:"70M", flowno:"70", pieceValue:"10"};
         //var flow3 = {flowName:"150M", flowno:"150", pieceValue:"20"};
@@ -326,12 +326,12 @@ router.get('/queryMobileInfo',function(request,response,next){
         //var flow9 = {flowName:"6G", flowno:"6144", pieceValue:"180"};
         //var flow10 = {flowName:"11G", flowno:"11264", pieceValue:"280"};
         flowList.push(
-            //{flowName:"30M", flowno:"30", pieceValue:"5"},
-            //{flowName:"70M", flowno:"70", pieceValue:"10"},
-            //{flowName:"150M", flowno:"150", pieceValue:"20"},
+            {flowName:"30M", flowno:"30", pieceValue:"5"},
+            {flowName:"70M", flowno:"70", pieceValue:"10"},
+            {flowName:"150M", flowno:"150", pieceValue:"20"},
             {flowName:"500M", flowno:"500", pieceValue:"30"},
-            {flowName:"1G", flowno:"1024", pieceValue:"50"}
-            //{flowName:"2G", flowno:"2048", pieceValue:"70"}
+            {flowName:"1G", flowno:"1024", pieceValue:"50"},
+            {flowName:"2G", flowno:"2048", pieceValue:"70"}
             //{flowName:"3G", flowno:"3072", pieceValue:"100"},
             //{flowName:"4G", flowno:"4096", pieceValue:"130"},
             //{flowName:"6G", flowno:"6144", pieceValue:"180"},
@@ -345,7 +345,7 @@ router.get('/queryMobileInfo',function(request,response,next){
     } else if (mobile.match(lt)) {
         var data = {};
         data.operator = "中国联通";
-        data.support = "仅支持江西、江苏和上海联通用户充值";
+        data.support = "";
         //var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
         //var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
         flowList.push(
