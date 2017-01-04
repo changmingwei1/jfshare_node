@@ -1086,6 +1086,7 @@ Order = module.exports.Order = function(args) {
   this.orderType = null;
   this.thirdPrice = null;
   this.virRechargeState = null;
+  this.thirdOrderId = null;
   if (args) {
     if (args.orderId !== undefined) {
       this.orderId = args.orderId;
@@ -1206,6 +1207,9 @@ Order = module.exports.Order = function(args) {
     }
     if (args.virRechargeState !== undefined) {
       this.virRechargeState = args.virRechargeState;
+    }
+    if (args.thirdOrderId !== undefined) {
+      this.thirdOrderId = args.thirdOrderId;
     }
   }
 };
@@ -1519,6 +1523,13 @@ Order.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 41:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdOrderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1737,6 +1748,11 @@ Order.prototype.write = function(output) {
   if (this.virRechargeState !== null && this.virRechargeState !== undefined) {
     output.writeFieldBegin('virRechargeState', Thrift.Type.STRING, 40);
     output.writeString(this.virRechargeState);
+    output.writeFieldEnd();
+  }
+  if (this.thirdOrderId !== null && this.thirdOrderId !== undefined) {
+    output.writeFieldBegin('thirdOrderId', Thrift.Type.STRING, 41);
+    output.writeString(this.thirdOrderId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

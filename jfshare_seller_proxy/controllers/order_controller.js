@@ -261,6 +261,7 @@ router.post('/info', function (request, response, next) {
                         result.orderId = orderInfo.orderId;
                         result.closingPrice = orderInfo.closingPrice;
                         result.tradeCode = orderInfo.tradeCode;
+                        result.thirdOrderId=orderInfo.thirdOrderId;
                         //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                         result.orderState = orderInfo.orderState;
                         if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {

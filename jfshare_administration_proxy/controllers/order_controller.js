@@ -179,7 +179,7 @@ router.post('/list', function (request, response, next) {
                                     curTime: order.curTime,
                                     fromSource: order.fromSource,
                                     payChannel: "",
-                                    payTypeName:""
+                                    payTypeName:"",
                                 };
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
@@ -366,6 +366,7 @@ router.post('/info', function (request, response, next) {
                         result.orderId = orderInfo.orderId;
                         result.tradeCode = orderInfo.tradeCode;
                         result.closingPrice = orderInfo.closingPrice;
+                        result.thirdOrderId=orderInfo.thirdOrderId;
                         //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                         result.orderState = orderInfo.orderState;
                         if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {

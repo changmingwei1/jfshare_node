@@ -652,9 +652,11 @@ router.post('/list', function (request, response, next) {
                                         //如果待支付
                                         if(order.orderState ==10){
                                             if(order.sellerId == 115){
-                                                orderItem.timeOutLimit = 10;
+                                               orderItem.timeOutLimit = 10;
+                                                //  orderItem.timeOutLimit = 11;
                                             }else{
                                                 orderItem.timeOutLimit = 2880;
+                                                // orderItem.timeOutLimit = 1440;
                                             }
                                         }
 
@@ -983,9 +985,11 @@ router.post('/info', function (req, res, next) {
                                 //如果待支付
                                 if(orderInfo.orderState ==10){
                                     if(orderInfo.sellerId == 115){
+                                        // result.timeOutLimit = 11;
                                         result.timeOutLimit = 10;
                                     }else{
-                                        result.timeOutLimit = 2880;
+                                       result.timeOutLimit = 2880;
+                                        //  result.timeOutLimit = 1440;
                                     }
                                 }
 
