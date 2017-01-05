@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script type="text/javascript">
+        var _oztime = (new Date()).getTime();
+    </script>
+    <script type="text/javascript" src="/js/jquery/jquery.js"></script>
+    <link rel="stylesheet" href="/active/css/actives.css">
+    <script src="/js/slider.js" type="text/javascript"></script>
+    <script src="/js/util/tools.js" type="text/javascript"></script>
+</head>
+<body>
+<!--活动页内容-->
+<div class="actives" style="overflow:-Scroll;overflow-x:hidden">
+    <div class="activesBan">
+        <img src="/active/images/201701xingzhan/banner.jpg" alt="" />
+    </div>
+
+
+   <div class="fenlei" >
+   <div class="fenleiPic">
+	<a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze161230102602000129?ssid={{ssid}}">
+         <img src="/active/images/201701xingzhan/02.jpg" alt="" />
+	 </a>
+         </div>
+
+   <div class="fenleiPic">
+	<a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze161230102156000040?ssid={{ssid}}">
+         <img src="/active/images/201701xingzhan/03.jpg" alt="" />
+	 </a>
+         </div>
+
+   <div class="fenleiPic">
+	<a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze161230151159000005?ssid={{ssid}}">
+         <img src="/active/images/201701xingzhan/04.jpg" alt="" />
+	 </a>
+         </div>
+
+   <div class="fenleiPic">
+	<a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze161230102957000843?ssid={{ssid}}">
+         <img src="/active/images/201701xingzhan/05.jpg" alt="" />
+	 </a>
+         </div>
+
+   <div class="fenleiPic">
+	<a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze161230103308000345?ssid={{ssid}}">
+         <img src="/active/images/201701xingzhan/06.jpg" alt="" />
+	 </a>
+         </div>
+
+   <div class="fenleiPic">
+	<a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze161230104140000637?ssid={{ssid}}">
+         <img src="/active/images/201701xingzhan/07.jpg" alt="" />
+	 </a>
+         </div>
+
+   <div class="fenleiPic">
+	<a class="detail" title="" target="_self" href="javascript:void(0);" data_href="http://ct100.jfshare.com/product/ze161230104902000952?ssid={{ssid}}">
+         <img src="/active/images/201701xingzhan/08.jpg" alt="" />
+	 </a>
+         </div>
+	
+   
+
+         </div>
+        </div>
+       </div>
+      </div>
+
+<!--站长统计-->
+<div style="display:none;">
+    <script src="http://s95.cnzz.com/z_stat.php?id=1259904039&web_id=1259904039" language="JavaScript"></script>
+</div>
+<iframe src="#" id="iframeA" name="iframeA" style="display: none;"></iframe>
+
+<!--<script type="text/javascript" src="/js/jquery/jquery.timers.js"></script>-->
+<script type="text/javascript" src="/js/util/contentloaded.js"></script>
+<script type="text/javascript">
+    /**
+     * 获取fixHeightUrl
+     * @returns {string}
+     */
+    var getTyHostUrl = function() {
+        var _url = "";
+        $.ajax({
+            url: "/jf189/ty/hostUrl",
+            type: 'get',
+            async: false,
+            dataType:'json',
+            success: function (data) {
+                _url = data.url;
+            }
+        });
+        return _url;
+    }
+    var getIP = function(){
+        var province = '';
+        var ip = getIPv4(function(ip){
+            $.ajax({
+                url: "/nnc/province?clientIp=" + ip,
+                type: 'get',
+                dataType: 'json',
+                success: function (rdata) {
+                    if(rdata.status === 200) {
+                        province = rdata.data.provinceId;
+                    }
+//                    window.location.href = _randerUrl + "&provinceId=" + province + "&storehouseId=-1";
+                }
+            });
+        });
+        return province;
+    }
+    $(function(){
+//            contentLoaded(resizeIfr);
+        resizeIfr();
+        var province = getIP() || 110000;
+        $("a.detail").on("click",function(){
+            var href=$(this).attr("data_href")+ "&provinceId=" + province + "&storehouseId=-1";
+            $(this).attr("href",href);
+        });
+    });
+    function resizeIfr() {
+        var _tyHostUrl = getTyHostUrl();
+        var doc = document;
+//        var height = calcPageHeight(doc);
+        var myifr = doc.getElementById('iframeA');
+        myifr.src = _tyHostUrl + '/CommPage/fixHeight.html#5409';
+    }
+
+    // 计算页面的实际高度，iframe自适应会用到
+    function calcPageHeight(doc) {
+        var h = $(document.body).height();
+
+        var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+        var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+        var height  = Math.max(cHeight, sHeight)
+        console.log("cH:"+cHeight+"| sH:"+sHeight+"| h:" +h);
+        return height;
+    }
+</script>
+</body>
+</html>
