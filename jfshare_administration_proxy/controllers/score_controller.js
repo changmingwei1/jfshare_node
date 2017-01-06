@@ -150,7 +150,6 @@ router.post('/exprotVipScore', function (request, response, next) {
     }
 });
 
-
 //积分增长消费明细统计
 router.post('/scoreStatistic', function (request, response, next) {
     logger.info("积分增长消费统计");
@@ -209,7 +208,6 @@ router.post('/scoreStatistic', function (request, response, next) {
     }
 });
 
-
 //积分增长消耗明细导出
 router.post('/exprotScoreStatistic', function (request, response, next) {
     logger.info("进入导出积分增长消费统计流程");
@@ -243,7 +241,6 @@ router.post('/exprotScoreStatistic', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 //积分累计增长消费统计
 router.post('/scoreTotalStatistic', function (request, response, next) {
@@ -291,7 +288,6 @@ router.post('/scoreTotalStatistic', function (request, response, next) {
     }
 });
 
-
 //积分累计增长消费导出
 router.post('/exprotScoreTotalStatistic', function (request, response, next) {
     logger.info("进入导出积分累计增长消费统计流程");
@@ -331,7 +327,6 @@ router.post('/exprotScoreTotalStatistic', function (request, response, next) {
         response.json(result);
     }
 });
-
 
 //积分存量统计
 router.post('/queryScoreStockHistory', function (request, response, next) {
@@ -379,7 +374,6 @@ router.post('/queryScoreStockHistory', function (request, response, next) {
     }
 });
 
-
 //积分存量统计导出
 router.post('/exprotScoreStockHistory', function (request, response, next) {
     logger.info("进入导出积分存量统计流程");
@@ -416,6 +410,76 @@ router.post('/exprotScoreStockHistory', function (request, response, next) {
         logger.error("导出积分存量统计错误:" + ex);
         result.code = 500;
         result.desc = "导出积分存量统计错误";
+        response.json(result);
+    }
+});
+
+//查询积分互通交易数据
+router.post('/queryScoreCachEnterLog', function (request, response, next) {
+    logger.info("进入积分互通列表流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("socrelist params:" + JSON.stringify(params));
+        if(params.perCount ==null || params.perCount ==""){
+            result.code = 500;
+            result.desc = "每页显示条数不能为空";
+            response.json(result);
+            return;
+        }
+
+        if(params.curPage ==null || params.curPage ==""){
+            result.code = 500;
+            result.desc = "分页页数不能为空";
+            response.json(result);
+            return;
+        }
+        Score.queryScoreCachEnterLog(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.listLog = data[0].listLog;
+            var pagination = data[0].pagination;
+            if(pagination!=null){
+                result.page = {total: pagination.totalCount, pageCount: pagination.pageNumCount};
+            }
+            logger.info("queryScoreCachEnterLog result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("获取积分互通交易列表错误:" + ex);
+        result.code = 500;
+        result.desc = "获取积分互通交易列表错误";
+        response.json(result);
+    }
+});
+
+//导出积分互通交易数据
+router.post('/exproScoreCachEnterLog', function (request, response, next) {
+    logger.info("进入导出积分互通交易数据流程");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("exproScoreCachEnterLog params:" + JSON.stringify(params));
+
+        Score.exproScoreCachEnterLog(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.path = data[0].path;
+            logger.info("exproScoreCachEnterLog result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error("导出积分互通交易数据错误:" + ex);
+        result.code = 500;
+        result.desc = "导出积分互通交易数据错误";
         response.json(result);
     }
 });

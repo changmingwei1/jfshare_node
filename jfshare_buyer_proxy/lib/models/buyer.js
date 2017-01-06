@@ -505,4 +505,28 @@ Buyer.prototype.isPurchaseMobile = function (account, callback) {
     });
 };
 
+
+//积分兑入短信登录
+Buyer.prototype.smsLoginEnterAmount = function(param,callback){
+    //参数
+    var smsParam = new buyer_types.SmsLoginEnterAmountParam({
+        mobile:param.mobile,
+        encryptyParam:param.encryptyParam,
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'smsLoginEnterAmount',[smsParam]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到登录信息:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == "1") {
+            logger.error("不能登录，因为: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            //res.desc = "积分兑入登陆鉴权失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 module.exports = new Buyer();

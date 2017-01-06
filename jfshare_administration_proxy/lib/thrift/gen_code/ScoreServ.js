@@ -2439,6 +2439,343 @@ ScoreServ_userAuthorize_result.prototype.write = function(output) {
   return;
 };
 
+ScoreServ_enterUserAuthorize_args = function(args) {
+  this.requestXml = null;
+  if (args) {
+    if (args.requestXml !== undefined) {
+      this.requestXml = args.requestXml;
+    }
+  }
+};
+ScoreServ_enterUserAuthorize_args.prototype = {};
+ScoreServ_enterUserAuthorize_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.requestXml = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_enterUserAuthorize_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_enterUserAuthorize_args');
+  if (this.requestXml !== null && this.requestXml !== undefined) {
+    output.writeFieldBegin('requestXml', Thrift.Type.STRING, 1);
+    output.writeString(this.requestXml);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_enterUserAuthorize_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_enterUserAuthorize_result.prototype = {};
+ScoreServ_enterUserAuthorize_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.EnterUserAuthorizeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_enterUserAuthorize_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_enterUserAuthorize_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreCachEnterLog_args = function(args) {
+  this.param = null;
+  this.pagination = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ScoreServ_queryScoreCachEnterLog_args.prototype = {};
+ScoreServ_queryScoreCachEnterLog_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ScoreCachEnterLogParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreCachEnterLog_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_queryScoreCachEnterLog_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreCachEnterLog_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_queryScoreCachEnterLog_result.prototype = {};
+ScoreServ_queryScoreCachEnterLog_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ScoreCachEnterLogResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreCachEnterLog_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_queryScoreCachEnterLog_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exproScoreCachEnterLog_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreServ_exproScoreCachEnterLog_args.prototype = {};
+ScoreServ_exproScoreCachEnterLog_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ExprotCachEnterLogParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exproScoreCachEnterLog_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exproScoreCachEnterLog_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_exproScoreCachEnterLog_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_exproScoreCachEnterLog_result.prototype = {};
+ScoreServ_exproScoreCachEnterLog_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExprotResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_exproScoreCachEnterLog_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_exproScoreCachEnterLog_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -3486,6 +3823,148 @@ ScoreServClient.prototype.recv_userAuthorize = function(input,mtype,rseqid) {
   }
   return callback('userAuthorize failed: unknown result');
 };
+ScoreServClient.prototype.enterUserAuthorize = function(requestXml, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_enterUserAuthorize(requestXml);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_enterUserAuthorize(requestXml);
+  }
+};
+
+ScoreServClient.prototype.send_enterUserAuthorize = function(requestXml) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('enterUserAuthorize', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_enterUserAuthorize_args();
+  args.requestXml = requestXml;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_enterUserAuthorize = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_enterUserAuthorize_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('enterUserAuthorize failed: unknown result');
+};
+ScoreServClient.prototype.queryScoreCachEnterLog = function(param, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryScoreCachEnterLog(param, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryScoreCachEnterLog(param, pagination);
+  }
+};
+
+ScoreServClient.prototype.send_queryScoreCachEnterLog = function(param, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryScoreCachEnterLog', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_queryScoreCachEnterLog_args();
+  args.param = param;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_queryScoreCachEnterLog = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_queryScoreCachEnterLog_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryScoreCachEnterLog failed: unknown result');
+};
+ScoreServClient.prototype.exproScoreCachEnterLog = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exproScoreCachEnterLog(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exproScoreCachEnterLog(param);
+  }
+};
+
+ScoreServClient.prototype.send_exproScoreCachEnterLog = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exproScoreCachEnterLog', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_exproScoreCachEnterLog_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_exproScoreCachEnterLog = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_exproScoreCachEnterLog_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exproScoreCachEnterLog failed: unknown result');
+};
 ScoreServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -4157,6 +4636,96 @@ ScoreServProcessor.prototype.process_userAuthorize = function(seqid, input, outp
     this._handler.userAuthorize(args.param,  function (err, result) {
       var result = new ScoreServ_userAuthorize_result((err != null ? err : {success: result}));
       output.writeMessageBegin("userAuthorize", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_enterUserAuthorize = function(seqid, input, output) {
+  var args = new ScoreServ_enterUserAuthorize_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.enterUserAuthorize.length === 1) {
+    Q.fcall(this._handler.enterUserAuthorize, args.requestXml)
+      .then(function(result) {
+        var result = new ScoreServ_enterUserAuthorize_result({success: result});
+        output.writeMessageBegin("enterUserAuthorize", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_enterUserAuthorize_result(err);
+        output.writeMessageBegin("enterUserAuthorize", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.enterUserAuthorize(args.requestXml,  function (err, result) {
+      var result = new ScoreServ_enterUserAuthorize_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("enterUserAuthorize", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_queryScoreCachEnterLog = function(seqid, input, output) {
+  var args = new ScoreServ_queryScoreCachEnterLog_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryScoreCachEnterLog.length === 2) {
+    Q.fcall(this._handler.queryScoreCachEnterLog, args.param, args.pagination)
+      .then(function(result) {
+        var result = new ScoreServ_queryScoreCachEnterLog_result({success: result});
+        output.writeMessageBegin("queryScoreCachEnterLog", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_queryScoreCachEnterLog_result(err);
+        output.writeMessageBegin("queryScoreCachEnterLog", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryScoreCachEnterLog(args.param, args.pagination,  function (err, result) {
+      var result = new ScoreServ_queryScoreCachEnterLog_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryScoreCachEnterLog", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_exproScoreCachEnterLog = function(seqid, input, output) {
+  var args = new ScoreServ_exproScoreCachEnterLog_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exproScoreCachEnterLog.length === 1) {
+    Q.fcall(this._handler.exproScoreCachEnterLog, args.param)
+      .then(function(result) {
+        var result = new ScoreServ_exproScoreCachEnterLog_result({success: result});
+        output.writeMessageBegin("exproScoreCachEnterLog", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_exproScoreCachEnterLog_result(err);
+        output.writeMessageBegin("exproScoreCachEnterLog", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exproScoreCachEnterLog(args.param,  function (err, result) {
+      var result = new ScoreServ_exproScoreCachEnterLog_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exproScoreCachEnterLog", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

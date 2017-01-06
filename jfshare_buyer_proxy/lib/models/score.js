@@ -155,18 +155,18 @@ Score.prototype.queryCachAmount = function (param, callback) {
 Score.prototype.cachAmountCall = function (param, callback) {
 
     var params = new score_types.CachAmountCallParam({
-
          userId: param.userId,
          CachAmount: param.CachAmount,
          mobile: param.mobile,
          custId:param.custId,
          deviceNo: param.deviceNo,
-         deviceTye: param.deviceType,
-         provicneId : param.proviceId,
+         deviceType: param.deviceType,
+         provicneId : param.provicneId,
          cityId: param.cityId,
          starLevel: param.starLevel,
          requestTime:param.requestTime,
          sign: param.sign,
+         isFirst: param.isFirst,
     });
 
     logger.info("Score cachAmountCall  params:" + JSON.stringify(params));
@@ -349,6 +349,29 @@ Score.prototype.userAuthorize = function (params, callback) {
             logger.warn("can't get userAuthorize, 请求参数arg=" + JSON.stringify(params));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
+        } else{
+            callback(null, data);
+        }
+    });
+};
+
+/*电信账号绑定接口*/
+Score.prototype.enterUserAuthorize = function (param, callback) {
+    logger.info("请求参数：" + JSON.stringify(param));
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'enterUserAuthorize', [param]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get enterUserAuthorize result结果:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("can't get enterUserAuthorize because: ======" + err);
+            res.ErrCode = 9999;
+            res.ErrMsg = "申请登陆请求异常";
+            callback(res, null);
+        } else if(data[0].result.code == 1){
+            logger.warn("can't get enterUserAuthorize, 请求参数arg=" + JSON.stringify(params));
+            res.ErrCode = 9999;
+            res.ErrMsg = data[0].result.failDescList[0].desc;
         } else{
             callback(null, data);
         }

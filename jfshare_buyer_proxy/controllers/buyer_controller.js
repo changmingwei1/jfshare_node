@@ -866,10 +866,9 @@ router.post('/scoreTrade', function (request, response, next) {
 router.post('/socrelist', function (request, response, next) {
     logger.info("进入积分列表流程");
     var result = {code: 200};
+    var params = request.body;
+    //参数校验
     try {
-        var params = request.body;
-        //参数校验
-
         if (params.percount == null || params.percount == "") {
             result.code = 500;
             result.desc = "参数错误";
@@ -1057,10 +1056,6 @@ router.post('/queryCachAmount', function (request, response, next) {
     var resContent = {code: 200};
     var param = request.body;
 
-    //获取ip
-    //var ip = request.headers['x-real-ip'];
-    var ip = request.headers['X-Forwarded-Fo'];
-
     try {
         if (param.userId == null || param.userId == "") {
             resContent.code = 400;
@@ -1118,78 +1113,42 @@ router.post('/cachAmountCall', function (request, response, next) {
     try {
         if (param.userId == null || param.userId == "") {
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "用户ID参数错误";
             response.json(resContent);
             return;
         }
         if (param.CachAmount == null || param.CachAmount == "") {
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "兑出积分额参数错误";
             response.json(resContent);
             return;
         }
         if (param.mobile == null || param.mobile == "") {
             resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "验证码手机号参数错误";
+            response.json(resContent);
+            return;
+        }if (param.deviceNo == null || param.deviceNo == "") {
+            resContent.code = 400;
+            resContent.desc = "兑出手机号参数错误";
             response.json(resContent);
             return;
         }
-
         if (param.token == null || param.token == "") {
             resContent.code = 400;
-            resContent.desc = "鉴权参数错误";
+            resContent.desc = "token鉴权参数错误";
             response.json(resContent);
             return;
         }
         if (param.browser == null || param.browser == "") {
             resContent.code = 400;
-            resContent.desc = "鉴权参数错误";
+            resContent.desc = "browser鉴权参数错误";
             response.json(resContent);
             return;
         }
         if (param.ppInfo == null || param.ppInfo == "") {
             resContent.code = 400;
-            resContent.desc = "鉴权参数错误";
-            response.json(resContent);
-            return;
-        }if (param.custId == null || param.custId == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }if (param.deviceNo == null || param.deviceNo == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }if (param.deviceTye == null || param.deviceTye == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }if (param.provicneId == null || param.provicneId == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }if (param.cityId == null || param.cityId == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }if (param.starLevel == null || param.starLevel == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }if (param.requestTime == null || param.requestTime == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }if (param.sign== null || param.sign == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.desc = "ppInfo鉴权参数错误";
             response.json(resContent);
             return;
         }
@@ -1199,35 +1158,92 @@ router.post('/cachAmountCall', function (request, response, next) {
             response.json(resContent);
             return;
         }
+        if (param.isFirst == null || param.isFirst == "") {
+            resContent.code = 500;
+            resContent.desc = "确定首次登陆参数不能为空";
+            response.json(resContent);
+            return;
+        }
+        if(param.isFirst == "0"){
+            if (param.custId == null || param.custId == "") {
+                resContent.code = 400;
+                resContent.desc = "天翼用户ID参数错误";
+                response.json(resContent);
+                return;
+            }if (param.mobile == null || param.mobile == "") {
+                resContent.code = 400;
+                resContent.desc = "验证码手机号参数错误";
+                response.json(resContent);
+                return;
+            }
+            if (param.deviceNo == null || param.deviceNo == "") {
+                resContent.code = 400;
+                resContent.desc = "兑出手机号参数错误";
+                response.json(resContent);
+                return;
+            }if (param.deviceType == null || param.deviceType == "") {
+                resContent.code = 400;
+                resContent.desc = "设备类型参数错误";
+                response.json(resContent);
+                return;
+            }if (param.provicneId == null || param.provicneId == "") {
+                resContent.code = 400;
+                resContent.desc = "省份编码参数错误";
+                response.json(resContent);
+                return;
+            }if (param.cityId == null || param.cityId == "") {
+                resContent.code = 400;
+                resContent.desc = "城市编码参数错误";
+                response.json(resContent);
+                return;
+            }if (param.starLevel == null || param.starLevel == "") {
+                resContent.code = 400;
+                resContent.desc = "客户星级参数错误";
+                response.json(resContent);
+                return;
+            }if (param.requestTime == null || param.requestTime == "") {
+                resContent.code = 400;
+                resContent.desc = "请求时间参数错误";
+                response.json(resContent);
+                return;
+            }if (param.sign== null || param.sign == "") {
+                resContent.code = 400;
+                resContent.desc = "请求签名参数错误";
+                response.json(resContent);
+                return;
+            }
+        }
+
         logger.info("请求参数信息" + JSON.stringify(param));
         async.waterfall([
             function (callback) {
-                Common.validateMsgCaptcha(param, function (err, data) {
+                Common.validateMsgCaptchaByCach(param, function (err, data) {
                     if (err) {
-                        callback(err);
+                        response.json(err);
+                        return;
                     } else {
                         callback(null);
                     }
                 });
             },
             function (callback){
+                logger.info("验证鉴权开始" + JSON.stringify(param));
                 Buyer.validAuth(param, function (err, data) {
                     if (err) {
                         response.json(err);
                         return;
                     }
+                    logger.info("验证鉴权信息通过，准备积分兑出" + JSON.stringify(param));
+                    Score.cachAmountCall(param, function (error, data) {
+                        if (error) {
+                            response.json(error);
+                        } else {
+                            response.json(resContent);
+                            logger.info("Score cachAmountCall response:" + JSON.stringify(resContent));
+                        }
+                    });
                 });
             },
-            function (callback) {
-                Score.cachAmountCall(param, function (error, data) {
-                    if (error) {
-                        response.json(error);
-                    } else {
-                        response.json(resContent);
-                        logger.info("Score cachAmountCall response:" + JSON.stringify(resContent));
-                    }
-                });
-            }
         ], function (err) {
             if (err) {
                 return response.json(err);
@@ -1236,7 +1252,6 @@ router.post('/cachAmountCall', function (request, response, next) {
             }
         });
     } catch (ex) {
-        //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("兑出积分调用异常，原因是======:" + ex);
         resContent.code = 500;
         resContent.desc = "兑出积分调用失败";
@@ -1250,7 +1265,16 @@ router.post('/enterAmountCall', function (request, response, next) {
     logger.info("进入兑入积分调用接口");
     var resContent = {code: 200};
     var param = request.body;
+    //var ip = request.headers['x-real-ip'];
+    var ip = getClientIP(request);
     try {
+        logger.info("请求IP"+ip);
+        if (ip != "::ffff:124.42.103.132") {
+            resContent.code = 400;
+            resContent.desc = "访问IP不在配置范围内";
+            response.json(resContent);
+            return;
+        }
         if (param.AppCode == null || param.AppCode == "") {
             resContent.code = 400;
             resContent.desc = "参数错误";
@@ -1627,7 +1651,17 @@ router.post('/relaAccountCall', function (request, response, next) {
     logger.info("进入电信账号绑定接口...");
     var resContent = {code: 200};
     var param = request.body;
+    //var ip = request.headers['x-real-ip'];
+    var ip = getClientIP(request);
     try {
+
+        logger.info("兑入积分鉴权登陆调用接口"+ip);
+        if (ip != "::ffff:124.42.103.132") {
+            resContent.code = 400;
+            resContent.desc = "访问IP不在配置范围内";
+            response.json(resContent);
+            return;
+        }
         if (param == null || param.AppCode == null || param.AppCode == "") {
             resContent.code = 400;
             resContent.desc = "应用编码不能为空";
@@ -2102,6 +2136,163 @@ router.post('/userAuthorize', function (request, response, next) {
         logger.error("兑出积分鉴权登陆异常，原因是======:" + ex);
         resContent.code = 500;
         resContent.desc = "兑出积分鉴权登陆失败";
+        response.json(resContent);
+    }
+});
+
+
+//function getClientIp(request) {
+//    return request.headers['x-forwarded-for'] ||
+//        request.connection.remoteAddress ||
+//        request.socket.remoteAddress ||
+//        request.connection.socket.remoteAddress;
+//};
+
+/*获取请求IP公共方法*/
+function getClientIP(request){
+    var ipAddress;
+    var headers = request.headers;
+    var forwardedIpsStr = headers['x-real-ip'] || headers['x-forwarded-for'];
+    forwardedIpsStr ? ipAddress = forwardedIpsStr : ipAddress = null;
+    if (!ipAddress) {
+        ipAddress = request.connection.remoteAddress;
+    }
+    return ipAddress;
+};
+
+/*兑入积分鉴权登陆*/
+router.post('/enterUserAuthorize', function (request, response, next) {
+
+    logger.info("兑入积分鉴权登陆调用接口");
+    var resContent = {code: 200};
+    var param = request.body;
+    //var ip = request.headers['x-real-ip'];
+    var ip = getClientIP(request);
+    try {
+
+        logger.info("兑入积分鉴权登陆调用接口"+ip);
+        if (ip != "::ffff:124.42.103.132"  && ip != "::ffff:124.42.103.131") {
+            resContent.code = 400;
+            resContent.desc = "访问IP不在配置范围内";
+            response.json(resContent);
+            return;
+        }
+        if (param.requestXml == null || param.requestXml == "") {
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "请求参数为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数信息" + JSON.stringify(param));
+        Score.enterUserAuthorize(param.requestXml, function (error, data) {
+                if (error) {
+                    response.json(error);
+                } else {
+                    resContent.action = data[0].action;
+                    resContent.encryptyParam = data[0].encryptyParam;
+                    resContent.ErrCode = data[0].ErrCode;
+                    resContent.ErrMsg = data[0].ErrMsg;
+                    response.json(resContent);
+                    logger.info("Score userAuthorize response:" + JSON.stringify(resContent));
+                }
+            });
+    } catch (ex) {
+        logger.error("兑出积分鉴权登陆异常，原因是======:" + ex);
+        resContent.ErrCode = 9999;
+        resContent.ErrMsg = "兑入积分鉴权登陆异常";
+        response.json(resContent);
+    }
+});
+
+/*积分兑入登陆*/
+router.post('/smsLoginEnterAmount', function (request, response, next) {
+    logger.info("进入积分兑入短信登录接口..");
+    var resContent = {code: 200};
+    var param = request.body;
+    //var ip = request.headers['x-real-ip'];
+    var ip = getClientIP(request);
+    try {
+        logger.info("请求IP"+ip);
+        if (ip != "::ffff:124.42.103.132") {
+            resContent.code = 400;
+            resContent.desc = "访问IP不在配置范围内";
+            response.json(resContent);
+            return;
+        }
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 500;
+            resContent.desc = "手机号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 500;
+            resContent.desc = "验证码不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.encryptyParam == null || param.encryptyParam == "") {
+            resContent.code = 500;
+            resContent.desc = "加密参数不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数：" + JSON.stringify(param));
+
+        async.waterfall([
+            function (callback) {
+                Common.validateMsgCaptcha(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+            },
+            function (callback){
+                logger.info("kankandaonalile");
+                fs.readFile('/data/run/jfshare_node/jfshare_buyer_proxy/limitMobile.txt','utf-8',function(err, data){
+                    if(err){
+                        callback(err);
+                    } else {
+                        var list = data.split("\n");
+                        for(var i = 0; i<= list.length ;i++){
+                            if(list[i] == param.mobile){
+                                logger.info("这是一个标识！");
+                                resContent.code = 500;
+                                resContent.desc = "您的账户异常暂时不能登录，如有问题请联系客服400-800-2383";
+                                return response.json(resContent);
+                                break;
+                            }
+                        }
+                        callback(null);
+                    }
+                });
+            },
+            function (callback) {
+                Buyer.smsLoginEnterAmount(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        resContent.url = data[0].url;
+                        response.json(resContent);
+                        logger.info("响应的结果:" + JSON.stringify(resContent));
+                    }
+                });
+            }
+        ], function (err) {
+            if (err) {
+                return response.json(err);
+            } else {
+                return response.json({resContent: true});
+            }
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("登录失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "登录失败";
         response.json(resContent);
     }
 });

@@ -125,6 +125,38 @@ Common.prototype.validateMsgCaptcha = function(param, callback){
     });
 };
 
+//验证短信验证码
+Common.prototype.validateMsgCaptchaByCach = function(param, callback){
+    //参数
+    var msgCaptcha = new common_types.MsgCaptcha({
+        type:param.type || "buyer_signin",
+        mobile:param.mobile,
+        captchaDesc:param.captchaDesc
+    });
+    logger.error("请求参数param：" + JSON.stringify(param));
+    logger.error("请求参数msgCaptcha：" + JSON.stringify(msgCaptcha));
+    //获取client
+    var commonServ = new Lich.InvokeBag(Lich.ServiceKey.CommonServer,'validateMsgCaptcha',[msgCaptcha]);
+    Lich.wicca.invokeClient(commonServ,function(err,data){
+        logger.info("getCaptcha result: " + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't getCaptcha because: ======" + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "验证短信验证码失败";
+            callback(res,null);
+        } else if(data[0].code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            res.code = 505;
+            res.desc = data[0].failDescList[0].desc;
+            callback(res,null);
+        }else{
+            callback(null,data);
+        }
+    });
+};
+
 //获取二维码
 Common.prototype.getQRCode = function(id,callback){
     //获取client

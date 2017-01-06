@@ -1202,11 +1202,14 @@ CachAmountCallParam = module.exports.CachAmountCallParam = function(args) {
   this.CachAmount = null;
   this.mobile = null;
   this.custId = null;
-  this.proviceId = null;
+  this.provicneId = null;
   this.cityId = null;
   this.starLevel = null;
   this.deviceType = null;
   this.requestTime = null;
+  this.sign = null;
+  this.deviceNo = null;
+  this.isFirst = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -1220,8 +1223,8 @@ CachAmountCallParam = module.exports.CachAmountCallParam = function(args) {
     if (args.custId !== undefined) {
       this.custId = args.custId;
     }
-    if (args.proviceId !== undefined) {
-      this.proviceId = args.proviceId;
+    if (args.provicneId !== undefined) {
+      this.provicneId = args.provicneId;
     }
     if (args.cityId !== undefined) {
       this.cityId = args.cityId;
@@ -1234,6 +1237,15 @@ CachAmountCallParam = module.exports.CachAmountCallParam = function(args) {
     }
     if (args.requestTime !== undefined) {
       this.requestTime = args.requestTime;
+    }
+    if (args.sign !== undefined) {
+      this.sign = args.sign;
+    }
+    if (args.deviceNo !== undefined) {
+      this.deviceNo = args.deviceNo;
+    }
+    if (args.isFirst !== undefined) {
+      this.isFirst = args.isFirst;
     }
   }
 };
@@ -1281,7 +1293,7 @@ CachAmountCallParam.prototype.read = function(input) {
       break;
       case 5:
       if (ftype == Thrift.Type.STRING) {
-        this.proviceId = input.readString();
+        this.provicneId = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -1310,6 +1322,27 @@ CachAmountCallParam.prototype.read = function(input) {
       case 9:
       if (ftype == Thrift.Type.STRING) {
         this.requestTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.sign = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.deviceNo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.isFirst = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -1345,9 +1378,9 @@ CachAmountCallParam.prototype.write = function(output) {
     output.writeString(this.custId);
     output.writeFieldEnd();
   }
-  if (this.proviceId !== null && this.proviceId !== undefined) {
-    output.writeFieldBegin('proviceId', Thrift.Type.STRING, 5);
-    output.writeString(this.proviceId);
+  if (this.provicneId !== null && this.provicneId !== undefined) {
+    output.writeFieldBegin('provicneId', Thrift.Type.STRING, 5);
+    output.writeString(this.provicneId);
     output.writeFieldEnd();
   }
   if (this.cityId !== null && this.cityId !== undefined) {
@@ -1368,6 +1401,21 @@ CachAmountCallParam.prototype.write = function(output) {
   if (this.requestTime !== null && this.requestTime !== undefined) {
     output.writeFieldBegin('requestTime', Thrift.Type.STRING, 9);
     output.writeString(this.requestTime);
+    output.writeFieldEnd();
+  }
+  if (this.sign !== null && this.sign !== undefined) {
+    output.writeFieldBegin('sign', Thrift.Type.STRING, 10);
+    output.writeString(this.sign);
+    output.writeFieldEnd();
+  }
+  if (this.deviceNo !== null && this.deviceNo !== undefined) {
+    output.writeFieldBegin('deviceNo', Thrift.Type.STRING, 11);
+    output.writeString(this.deviceNo);
+    output.writeFieldEnd();
+  }
+  if (this.isFirst !== null && this.isFirst !== undefined) {
+    output.writeFieldBegin('isFirst', Thrift.Type.STRING, 12);
+    output.writeString(this.isFirst);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

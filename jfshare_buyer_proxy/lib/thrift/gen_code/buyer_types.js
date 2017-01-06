@@ -1623,3 +1623,234 @@ PurchaseMobileResult.prototype.write = function(output) {
   return;
 };
 
+IsDisableUseParam = module.exports.IsDisableUseParam = function(args) {
+  this.serial = null;
+  this.userId = null;
+  this.id = null;
+  if (args) {
+    if (args.serial !== undefined) {
+      this.serial = args.serial;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+  }
+};
+IsDisableUseParam.prototype = {};
+IsDisableUseParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.serial = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.userId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.id = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+IsDisableUseParam.prototype.write = function(output) {
+  output.writeStructBegin('IsDisableUseParam');
+  if (this.serial !== null && this.serial !== undefined) {
+    output.writeFieldBegin('serial', Thrift.Type.STRING, 1);
+    output.writeString(this.serial);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.STRING, 2);
+    output.writeString(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.STRING, 3);
+    output.writeString(this.id);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SmsLoginEnterAmountParam = module.exports.SmsLoginEnterAmountParam = function(args) {
+  this.mobile = null;
+  this.encryptyParam = null;
+  this.captchaDesc = null;
+  if (args) {
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.encryptyParam !== undefined) {
+      this.encryptyParam = args.encryptyParam;
+    }
+    if (args.captchaDesc !== undefined) {
+      this.captchaDesc = args.captchaDesc;
+    }
+  }
+};
+SmsLoginEnterAmountParam.prototype = {};
+SmsLoginEnterAmountParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.encryptyParam = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.captchaDesc = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SmsLoginEnterAmountParam.prototype.write = function(output) {
+  output.writeStructBegin('SmsLoginEnterAmountParam');
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 1);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.encryptyParam !== null && this.encryptyParam !== undefined) {
+    output.writeFieldBegin('encryptyParam', Thrift.Type.STRING, 2);
+    output.writeString(this.encryptyParam);
+    output.writeFieldEnd();
+  }
+  if (this.captchaDesc !== null && this.captchaDesc !== undefined) {
+    output.writeFieldBegin('captchaDesc', Thrift.Type.STRING, 3);
+    output.writeString(this.captchaDesc);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SmsLoginEnterAmountResult = module.exports.SmsLoginEnterAmountResult = function(args) {
+  this.result = null;
+  this.url = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.url !== undefined) {
+      this.url = args.url;
+    }
+  }
+};
+SmsLoginEnterAmountResult.prototype = {};
+SmsLoginEnterAmountResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SmsLoginEnterAmountResult.prototype.write = function(output) {
+  output.writeStructBegin('SmsLoginEnterAmountResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 2);
+    output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

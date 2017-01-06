@@ -61,6 +61,39 @@ Score.prototype.getScoreDetail = function (params, callback) {
     });
 };
 
+
+//查询积分记录
+Score.prototype.queryScoreCachEnterLog = function (params, callback) {
+    var scoreCachEnterLogParam = new score_types.ScoreCachEnterLogParam({
+        type:params.type,/*类型 1：兑出    0：兑入*/
+        custId:params.custId,/*聚分享账号*/
+        startTime:params.startTime,/*开始时间*/
+        endTime:params.endTime,/*结束时间*/
+        deviceNo:params.deviceNo,/*合作平台账号*/
+        reperrCode:params.reperrCode, /*交易状态*/
+        outOrderId:params.outOrderId,  /*交易流水号*/
+        sysCode:params.sysCode,  /*渠道编码*/
+    });
+    var pagination = new pagination_types.Pagination({
+        currentPage: params.curPage,
+        numPerPage: params.perCount
+    });
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreCachEnterLog', [scoreCachEnterLogParam,pagination]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("scoreServ.queryScoreCachEnterLog result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.queryScoreCachEnterLog because: ======" + err);
+            res.code = 500;
+            res.desc = "查询积分互通交易数据错误";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 //查询积分记录
 Score.prototype.queryScoreUser = function (params, callback) {
     var scoreUserQueryParam = new score_types.ScoreUserQueryParam({
@@ -121,6 +154,38 @@ Score.prototype.exprotVipScore = function (params, callback) {
         }
     });
 };
+
+//导出积分互通记录
+Score.prototype.exproScoreCachEnterLog = function (params, callback) {
+    var exprotCachEnterLogParam = new score_types.ExprotCachEnterLogParam({
+        type:params.type,/*类型 1：兑出    0：兑入*/
+        custId:params.custId,/*聚分享账号*/
+        startTime:params.startTime,/*开始时间*/
+        endTime:params.endTime,/*结束时间*/
+        deviceNo:params.deviceNo,/*合作平台账号*/
+        reperrCode:params.reperrCode, /*交易状态*/
+        outOrderId:params.outOrderId,  /*交易流水号*/
+        sysCode:params.sysCode,  /*渠道编码*/
+    });
+
+
+    logger.info("请求参数param :" + JSON.stringify(exprotCachEnterLogParam));
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'exproScoreCachEnterLog', [exprotCachEnterLogParam]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("scoreServ.exproScoreCachEnterLog result:" + JSON.stringify(data));
+        var res = {};
+        if (err|| data[0].result.code == 1) {
+            logger.error("scoreServ.exproScoreCachEnterLog because: ======" + err);
+            res.code = 500;
+            res.desc = "导出积分互通交易记录错误";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 
 //统计记录
 Score.prototype.scoreStatistic = function (params, callback) {
