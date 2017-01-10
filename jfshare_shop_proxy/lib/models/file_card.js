@@ -11,7 +11,8 @@ var thrift = require('thrift');
 var pagination_types = require('../thrift/gen_code/pagination_types');
 var manager_types = require("../thrift/gen_code/fileUpload_types");
 
-function FileCards() {}
+function FileCards() {
+}
 
 /** 上传第三方卡密 */
 FileCards.prototype.fileToTY = function (params, callback) {
@@ -36,7 +37,7 @@ FileCards.prototype.fileToTY = function (params, callback) {
         if (err || data[0].result.code == 1) {
             logger.error("slotServ.fileToTY because: ======" + err);
             res.code = 500;
-            res.desc = "上传第三方卡密"+"失败";
+            res.desc = "上传第三方卡密" + "失败";
             callback(res, null);
         } else if (data[0].result.code == 1) {
             logger.warn("上传第三方卡密，参数为：" + JSON.stringify(params4Upload));
@@ -94,7 +95,7 @@ FileCards.prototype.queryCardsList = function (params, callback) {
     logger.info("conditions >>>>>>>>>>>  " + JSON.stringify(conditions));
     logger.info("conditions >>>>>>>>>>>  " + JSON.stringify(thrift_pagination));
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'queryCardsList', [conditions,thrift_pagination]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'queryCardsList', [conditions, thrift_pagination]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("fileToTY result:" + JSON.stringify(data));
         var res = {};
@@ -118,9 +119,9 @@ FileCards.prototype.queryCardsList = function (params, callback) {
 FileCards.prototype.queryGames = function (params, callback) {
 
     var thirdGameParam = new manager_types.ThirdGameParam({
-       thirdGameId:params.thirdGameId,
-        firstpy:params.firstpy,
-        name:params.name
+        thirdGameId: params.thirdGameId,
+        firstpy: params.firstpy,
+        name: params.name
     });
 
     logger.info("conditions >>>>>>>>>>>  " + JSON.stringify(thirdGameParam));
@@ -170,15 +171,59 @@ FileCards.prototype.queryAreas = function (params, callback) {
 };
 //thirdgameCallBack
 
+FileCards.prototype.flowCallBack = function (params, callback) {
+    /*******
+     *
+     * status": "8",
+     "orderNo": "FLOW14718295444424574",
+     "cstmOrderNo": "test12345678",
+     "msg ": "4G用户暂不能订购"
+     *
+     * *********/
+    var status = "";
+
+    if (params.status == "8") {
+
+        status = 11;
+
+    }
+    if (params.stauts == "7") {
+        status = 1;
+    }
+
+
+
+
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'callBackFlow', [params.orderNo, params.cstmOrderNo, status, params.msg]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("flowCallBack result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("flowCallBack: ======" + err);
+            res.code = 500;
+            res.desc = "";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            logger.warn("flowCallBack，参数为：" + JSON.stringify(thirdGameParam));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else {
+            callback(null, data[0]);
+        }
+    });
+
+};
+
+
 FileCards.prototype.thirdgameCallBack = function (params, callback) {
     //获取客户端
     var thirdGameParam = new manager_types.ThirdGameCallBackParam({
-        retcode:params.retcode,
-        username:params.username,
-        gameapi:params.gameapi,
-        sporderid:params.sporderid,
-        money:params.money,
-        sign:params.sign
+        retcode: params.retcode,
+        username: params.username,
+        gameapi: params.gameapi,
+        sporderid: params.sporderid,
+        money: params.money,
+        sign: params.sign
     });
 
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'callBackGame', [thirdGameParam]);
@@ -200,5 +245,6 @@ FileCards.prototype.thirdgameCallBack = function (params, callback) {
     });
 
 };
+
 
 module.exports = new FileCards();

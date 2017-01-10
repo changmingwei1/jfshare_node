@@ -2504,3 +2504,362 @@ ThirdGameCallBackParam.prototype.write = function(output) {
   return;
 };
 
+ThirdGameOrderParam = module.exports.ThirdGameOrderParam = function(args) {
+  this.orderId = null;
+  if (args) {
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+  }
+};
+ThirdGameOrderParam.prototype = {};
+ThirdGameOrderParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdGameOrderParam.prototype.write = function(output) {
+  output.writeStructBegin('ThirdGameOrderParam');
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 1);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdGameOrder = module.exports.ThirdGameOrder = function(args) {
+  this.orderId = null;
+  this.account = null;
+  this.state = null;
+  if (args) {
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+    if (args.account !== undefined) {
+      this.account = args.account;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+  }
+};
+ThirdGameOrder.prototype = {};
+ThirdGameOrder.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.account = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.state = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdGameOrder.prototype.write = function(output) {
+  output.writeStructBegin('ThirdGameOrder');
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 1);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  if (this.account !== null && this.account !== undefined) {
+    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
+    output.writeString(this.account);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.STRING, 3);
+    output.writeString(this.state);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ThirdGameOrderListResult = module.exports.ThirdGameOrderListResult = function(args) {
+  this.result = null;
+  this.thirdGameOrder = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.thirdGameOrder !== undefined) {
+      this.thirdGameOrder = args.thirdGameOrder;
+    }
+  }
+};
+ThirdGameOrderListResult.prototype = {};
+ThirdGameOrderListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size56 = 0;
+        var _rtmp360;
+        this.thirdGameOrder = [];
+        var _etype59 = 0;
+        _rtmp360 = input.readListBegin();
+        _etype59 = _rtmp360.etype;
+        _size56 = _rtmp360.size;
+        for (var _i61 = 0; _i61 < _size56; ++_i61)
+        {
+          var elem62 = null;
+          elem62 = new ttypes.ThirdGameOrder();
+          elem62.read(input);
+          this.thirdGameOrder.push(elem62);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ThirdGameOrderListResult.prototype.write = function(output) {
+  output.writeStructBegin('ThirdGameOrderListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.thirdGameOrder !== null && this.thirdGameOrder !== undefined) {
+    output.writeFieldBegin('thirdGameOrder', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.thirdGameOrder.length);
+    for (var iter63 in this.thirdGameOrder)
+    {
+      if (this.thirdGameOrder.hasOwnProperty(iter63))
+      {
+        iter63 = this.thirdGameOrder[iter63];
+        iter63.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+MobileDic = module.exports.MobileDic = function(args) {
+  this.province = null;
+  this.operator = null;
+  if (args) {
+    if (args.province !== undefined) {
+      this.province = args.province;
+    }
+    if (args.operator !== undefined) {
+      this.operator = args.operator;
+    }
+  }
+};
+MobileDic.prototype = {};
+MobileDic.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.province = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.operator = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MobileDic.prototype.write = function(output) {
+  output.writeStructBegin('MobileDic');
+  if (this.province !== null && this.province !== undefined) {
+    output.writeFieldBegin('province', Thrift.Type.STRING, 1);
+    output.writeString(this.province);
+    output.writeFieldEnd();
+  }
+  if (this.operator !== null && this.operator !== undefined) {
+    output.writeFieldBegin('operator', Thrift.Type.STRING, 2);
+    output.writeString(this.operator);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+MobileDicResult = module.exports.MobileDicResult = function(args) {
+  this.result = null;
+  this.mobileDic = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.mobileDic !== undefined) {
+      this.mobileDic = args.mobileDic;
+    }
+  }
+};
+MobileDicResult.prototype = {};
+MobileDicResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.mobileDic = new ttypes.MobileDic();
+        this.mobileDic.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MobileDicResult.prototype.write = function(output) {
+  output.writeStructBegin('MobileDicResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.mobileDic !== null && this.mobileDic !== undefined) {
+    output.writeFieldBegin('mobileDic', Thrift.Type.STRUCT, 2);
+    this.mobileDic.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

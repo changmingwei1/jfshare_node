@@ -362,4 +362,33 @@ router.get('/thirdgameCallBack', function (request, response, next) {
         response.json(result);
     }
 });
+
+
+
+//thirdgameCallBack flowCallBack
+router.post('/flowCallBack', function (request, response, next) {
+    logger.info("进入流量充值回调接口");
+    var result = {code: 200};
+    try {
+        var params = request.body;
+//retcode={}&username={}&gameapi={}&sporderid={}&money={}&sign={}
+        //参数校验
+        logger.info("queryAreas params:" + JSON.stringify(params));
+
+        fileCards.flowCallBack(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            logger.info("queryCardsList result:" + JSON.stringify(data));
+            response.json(result);
+            return;
+        });
+    } catch (ex) {
+        logger.error(" 查询列表异常:" + ex);
+        result.code = 500;
+        result.desc = " 查询列表异常";
+        response.json(result);
+    }
+});
 module.exports = router;

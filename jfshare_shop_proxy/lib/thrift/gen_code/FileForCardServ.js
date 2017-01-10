@@ -704,18 +704,18 @@ FileForCardServ_rechargeList_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size56 = 0;
-        var _rtmp360;
+        var _size64 = 0;
+        var _rtmp368;
         this.states = [];
-        var _etype59 = 0;
-        _rtmp360 = input.readListBegin();
-        _etype59 = _rtmp360.etype;
-        _size56 = _rtmp360.size;
-        for (var _i61 = 0; _i61 < _size56; ++_i61)
+        var _etype67 = 0;
+        _rtmp368 = input.readListBegin();
+        _etype67 = _rtmp368.etype;
+        _size64 = _rtmp368.size;
+        for (var _i69 = 0; _i69 < _size64; ++_i69)
         {
-          var elem62 = null;
-          elem62 = input.readI32();
-          this.states.push(elem62);
+          var elem70 = null;
+          elem70 = input.readI32();
+          this.states.push(elem70);
         }
         input.readListEnd();
       } else {
@@ -744,12 +744,12 @@ FileForCardServ_rechargeList_args.prototype.write = function(output) {
   if (this.states !== null && this.states !== undefined) {
     output.writeFieldBegin('states', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.states.length);
-    for (var iter63 in this.states)
+    for (var iter71 in this.states)
     {
-      if (this.states.hasOwnProperty(iter63))
+      if (this.states.hasOwnProperty(iter71))
       {
-        iter63 = this.states[iter63];
-        output.writeI32(iter63);
+        iter71 = this.states[iter71];
+        output.writeI32(iter71);
       }
     }
     output.writeListEnd();
@@ -1294,6 +1294,114 @@ FileForCardServ_validateRechargeGame_result.prototype.write = function(output) {
   return;
 };
 
+FileForCardServ_queryOrderList_args = function(args) {
+  this.params = null;
+  if (args) {
+    if (args.params !== undefined) {
+      this.params = args.params;
+    }
+  }
+};
+FileForCardServ_queryOrderList_args.prototype = {};
+FileForCardServ_queryOrderList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.params = new ttypes.ThirdGameOrderParam();
+        this.params.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryOrderList_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryOrderList_args');
+  if (this.params !== null && this.params !== undefined) {
+    output.writeFieldBegin('params', Thrift.Type.STRUCT, 1);
+    this.params.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryOrderList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryOrderList_result.prototype = {};
+FileForCardServ_queryOrderList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ThirdGameOrderListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryOrderList_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryOrderList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 FileForCardServ_callBackGame_args = function(args) {
   this.params = null;
   if (args) {
@@ -1392,6 +1500,265 @@ FileForCardServ_callBackGame_result.prototype.read = function(input) {
 
 FileForCardServ_callBackGame_result.prototype.write = function(output) {
   output.writeStructBegin('FileForCardServ_callBackGame_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryMobileDic_args = function(args) {
+  this.mobile = null;
+  if (args) {
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+  }
+};
+FileForCardServ_queryMobileDic_args.prototype = {};
+FileForCardServ_queryMobileDic_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryMobileDic_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryMobileDic_args');
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 1);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryMobileDic_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryMobileDic_result.prototype = {};
+FileForCardServ_queryMobileDic_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.MobileDicResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryMobileDic_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryMobileDic_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_callBackFlow_args = function(args) {
+  this.orderNo = null;
+  this.cstmOrderNo = null;
+  this.status = null;
+  this.msg = null;
+  if (args) {
+    if (args.orderNo !== undefined) {
+      this.orderNo = args.orderNo;
+    }
+    if (args.cstmOrderNo !== undefined) {
+      this.cstmOrderNo = args.cstmOrderNo;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.msg !== undefined) {
+      this.msg = args.msg;
+    }
+  }
+};
+FileForCardServ_callBackFlow_args.prototype = {};
+FileForCardServ_callBackFlow_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderNo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.cstmOrderNo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.msg = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_callBackFlow_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_callBackFlow_args');
+  if (this.orderNo !== null && this.orderNo !== undefined) {
+    output.writeFieldBegin('orderNo', Thrift.Type.STRING, 1);
+    output.writeString(this.orderNo);
+    output.writeFieldEnd();
+  }
+  if (this.cstmOrderNo !== null && this.cstmOrderNo !== undefined) {
+    output.writeFieldBegin('cstmOrderNo', Thrift.Type.STRING, 2);
+    output.writeString(this.cstmOrderNo);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 3);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.msg !== null && this.msg !== undefined) {
+    output.writeFieldBegin('msg', Thrift.Type.STRING, 4);
+    output.writeString(this.msg);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_callBackFlow_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_callBackFlow_result.prototype = {};
+FileForCardServ_callBackFlow_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_callBackFlow_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_callBackFlow_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -1933,6 +2300,53 @@ FileForCardServClient.prototype.recv_validateRechargeGame = function(input,mtype
   }
   return callback('validateRechargeGame failed: unknown result');
 };
+FileForCardServClient.prototype.queryOrderList = function(params, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryOrderList(params);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryOrderList(params);
+  }
+};
+
+FileForCardServClient.prototype.send_queryOrderList = function(params) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryOrderList', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryOrderList_args();
+  args.params = params;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryOrderList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryOrderList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryOrderList failed: unknown result');
+};
 FileForCardServClient.prototype.callBackGame = function(params, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -1979,6 +2393,103 @@ FileForCardServClient.prototype.recv_callBackGame = function(input,mtype,rseqid)
     return callback(null, result.success);
   }
   return callback('callBackGame failed: unknown result');
+};
+FileForCardServClient.prototype.queryMobileDic = function(mobile, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryMobileDic(mobile);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryMobileDic(mobile);
+  }
+};
+
+FileForCardServClient.prototype.send_queryMobileDic = function(mobile) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryMobileDic', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryMobileDic_args();
+  args.mobile = mobile;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryMobileDic = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryMobileDic_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryMobileDic failed: unknown result');
+};
+FileForCardServClient.prototype.callBackFlow = function(orderNo, cstmOrderNo, status, msg, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_callBackFlow(orderNo, cstmOrderNo, status, msg);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_callBackFlow(orderNo, cstmOrderNo, status, msg);
+  }
+};
+
+FileForCardServClient.prototype.send_callBackFlow = function(orderNo, cstmOrderNo, status, msg) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('callBackFlow', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_callBackFlow_args();
+  args.orderNo = orderNo;
+  args.cstmOrderNo = cstmOrderNo;
+  args.status = status;
+  args.msg = msg;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_callBackFlow = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_callBackFlow_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('callBackFlow failed: unknown result');
 };
 FileForCardServProcessor = exports.Processor = function(handler) {
   this._handler = handler
@@ -2328,6 +2839,36 @@ FileForCardServProcessor.prototype.process_validateRechargeGame = function(seqid
   }
 }
 
+FileForCardServProcessor.prototype.process_queryOrderList = function(seqid, input, output) {
+  var args = new FileForCardServ_queryOrderList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryOrderList.length === 1) {
+    Q.fcall(this._handler.queryOrderList, args.params)
+      .then(function(result) {
+        var result = new FileForCardServ_queryOrderList_result({success: result});
+        output.writeMessageBegin("queryOrderList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryOrderList_result(err);
+        output.writeMessageBegin("queryOrderList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryOrderList(args.params,  function (err, result) {
+      var result = new FileForCardServ_queryOrderList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryOrderList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
 FileForCardServProcessor.prototype.process_callBackGame = function(seqid, input, output) {
   var args = new FileForCardServ_callBackGame_args();
   args.read(input);
@@ -2351,6 +2892,66 @@ FileForCardServProcessor.prototype.process_callBackGame = function(seqid, input,
     this._handler.callBackGame(args.params,  function (err, result) {
       var result = new FileForCardServ_callBackGame_result((err != null ? err : {success: result}));
       output.writeMessageBegin("callBackGame", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryMobileDic = function(seqid, input, output) {
+  var args = new FileForCardServ_queryMobileDic_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryMobileDic.length === 1) {
+    Q.fcall(this._handler.queryMobileDic, args.mobile)
+      .then(function(result) {
+        var result = new FileForCardServ_queryMobileDic_result({success: result});
+        output.writeMessageBegin("queryMobileDic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryMobileDic_result(err);
+        output.writeMessageBegin("queryMobileDic", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryMobileDic(args.mobile,  function (err, result) {
+      var result = new FileForCardServ_queryMobileDic_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryMobileDic", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_callBackFlow = function(seqid, input, output) {
+  var args = new FileForCardServ_callBackFlow_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.callBackFlow.length === 4) {
+    Q.fcall(this._handler.callBackFlow, args.orderNo, args.cstmOrderNo, args.status, args.msg)
+      .then(function(result) {
+        var result = new FileForCardServ_callBackFlow_result({success: result});
+        output.writeMessageBegin("callBackFlow", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_callBackFlow_result(err);
+        output.writeMessageBegin("callBackFlow", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.callBackFlow(args.orderNo, args.cstmOrderNo, args.status, args.msg,  function (err, result) {
+      var result = new FileForCardServ_callBackFlow_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("callBackFlow", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
