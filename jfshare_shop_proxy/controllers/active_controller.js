@@ -15,9 +15,9 @@ var Message = require('../lib/models/message');
 var Product = require('../lib/models/product');
 var Score = require('../lib/models/score');
 var zookeeper = require('../resource/zookeeper_util');
-
+var fileCards = require('../lib/models/file_card')
 /*压力测试*/
-router.post('/jmeterTest',function(request,response,next){
+router.post('/jmeterTest', function (request, response, next) {
     logger.info("进入获取子分类接口");
     var result = {code: 200};
     try {
@@ -39,14 +39,11 @@ router.post('/jmeterTest',function(request,response,next){
     }
 });
 /*压力测试2*/
-router.post('/jmeterTest1',function(request,response,next){
+router.post('/jmeterTest1', function (request, response, next) {
     logger.info("进入获取子分类接口");
     var result = {code: 200};
     response.json(result);
 });
-
-
-
 
 
 /*获取首页轮播图列表*/
@@ -107,9 +104,9 @@ router.get('/messageList', function (request, response, next) {
             }
             var messageList = data[0].messages;
             var messages = [];
-            if(messageList != null && messageList.length > 0){
-                for(var i = 0; i < messageList.length; i++){
-                    if(messageList[i].status == 2){
+            if (messageList != null && messageList.length > 0) {
+                for (var i = 0; i < messageList.length; i++) {
+                    if (messageList[i].status == 2) {
                         messages.push(messageList[i]);
                     }
                 }
@@ -210,8 +207,8 @@ router.get('/getAppUpgradeInfoStr', function (request, response, next) {
 });
 
 /*电信跳转链接*/
-router.get('/toExchangeDianXin',function(request,response,next){
-    var result = {code:200};
+router.get('/toExchangeDianXin', function (request, response, next) {
+    var result = {code: 200};
     //var param = request.query;
     result.url = "http://active.jfshare.com/android/comesoon.html";
     response.json(result);
@@ -285,11 +282,11 @@ router.get('/toExchangeDianXin',function(request,response,next){
 //});
 
 //移动端需要的动态的图,放在zk中,方便配置
-router.get('/queryImgForApp',function(request,response,next){
+router.get('/queryImgForApp', function (request, response, next) {
 
-    var result = {code:200};
+    var result = {code: 200};
     var imgKey = "";
-    try{
+    try {
         imgKey = zookeeper.getData("imgkey4app");
     } catch (ex) {
         result.imgKey = "http://120.24.153.102:3000/system/v1/jfs_image/0F102D89A1432FE58BE9D98B7A027655.jpg";
@@ -301,88 +298,53 @@ router.get('/queryImgForApp',function(request,response,next){
 });
 
 //运营商校验
-router.get('/queryMobileInfo',function(request,response,next){
+router.get('/queryMobileInfo', function (request, response, next) {
 
-    var result = {code:200};
+
+    var result = {code: 200};
     var arg = request.query;
-    //18537045282
-    var yd = "^1(3[4-9]|4[7]|5[0-27-9]|7[08]|8[2-478])\\d{8}$"; //移动
-    var lt = "^1(3[0-2]|4[5]|5[56]|7[0156]|8[56])\\d{8}$";  //联通
-    var dx = "^1(3[3]|4[9]|53|7[037]|8[019])\\d{8}$";   //电信
-    var mobile = arg.mobile;
-    var flowList = [];
-    if (mobile.match(yd)) {
-        var data = {};
-        data.operator = "中国移动";
-        data.support = "暂不支持河北和四川移动用户充值";
-        //var flow1 = {flowName:"30M", flowno:"30", pieceValue:"5"};
-        //var flow2 = {flowName:"70M", flowno:"70", pieceValue:"10"};
-        //var flow3 = {flowName:"150M", flowno:"150", pieceValue:"20"};
-        //var flow4 = {flowName:"500M", flowno:"500", pieceValue:"30"};
-        //var flow5 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
-        //var flow6 = {flowName:"2G", flowno:"2048", pieceValue:"70"};
-        //var flow7 = {flowName:"3G", flowno:"3072", pieceValue:"100"};
-        //var flow8 = {flowName:"4G", flowno:"4096", pieceValue:"130"};
-        //var flow9 = {flowName:"6G", flowno:"6144", pieceValue:"180"};
-        //var flow10 = {flowName:"11G", flowno:"11264", pieceValue:"280"};
-        flowList.push(
-            {flowName:"30M", flowno:"30", pieceValue:"5"},
-            {flowName:"70M", flowno:"70", pieceValue:"10"},
-            {flowName:"150M", flowno:"150", pieceValue:"20"},
-            {flowName:"500M", flowno:"500", pieceValue:"30"},
-            {flowName:"1G", flowno:"1024", pieceValue:"50"},
-            {flowName:"2G", flowno:"2048", pieceValue:"70"}
-            //{flowName:"3G", flowno:"3072", pieceValue:"100"},
-            //{flowName:"4G", flowno:"4096", pieceValue:"130"},
-            //{flowName:"6G", flowno:"6144", pieceValue:"180"},
-            //{flowName:"11G", flowno:"11264", pieceValue:"280"}
-        );
-        data.flowList = flowList;
-        data.province = "";
-        data.city = "";
-        result.data = data;
+
+
+    fileCards.queryMobile(arg, function (err, data) {
+
+        if (err) {
+            response.json(err);
+            return;
+        }
+        logger.error("flowCallBack result:" + JSON.stringify(data));
+        //18537045282
+        var data2 = {};
+        //运营商 手机号码所属运营商 1：电信，2：移动，3：联通
+        if(data.mobileDic!=null){
+            data2.operator = data.mobileDic.operator;
+            data2.province = data.mobileDic.province;
+            if(data2.operator=="2"){
+                data2.operator = "中国移动";
+            }else if(data2.operator=="1"){
+                data2.operator = "中国电信";
+            }else if(data2.operator=="3"){
+                data2.operator = "中国联通";
+            }
+
+        }
+
+        var flowList = [];
+        data2.support = "";
+
+        data.flowList.forEach(function(flow,index){
+
+            flowList.push(
+                {flowName: flow.flowName,flowno: flow.flowCode, pieceValue: flow.flowPrice}
+            );
+        });
+        //flowList
+        data2.localList =  data.localList;
+        data2.flowList = flowList;
+        result.data = data2;
         response.json(result);
-    } else if (mobile.match(lt)) {
-        var data = {};
-        data.operator = "中国联通";
-        data.support = "";
-        //var flow = {flowName:"20M", flowno:"20", pieceValue:"3"};
-        //var flow1 = {flowName:"500M", flowno:"500", pieceValue:"30"};
-        flowList.push(
-            {flowName:"50M", flowno:"50", pieceValue:"6"},
-            {flowName:"100M", flowno:"100", pieceValue:"10"},
-            {flowName:"200M", flowno:"200", pieceValue:"15"},
-            {flowName:"500M", flowno:"500", pieceValue:"30"}
-        );
-        data.flowList = flowList;
-        data.province = "";
-        data.city = "";
-        result.data = data;
-        response.json(result);
-    } else if (mobile.match(dx)) {
-        var data = {};
-        data.operator = "中国电信";
-        data.support = "";
-        //var flow = {flowName:"5M", flowno:"5", pieceValue:"1"};
-        //var flow1 = {flowName:"1G", flowno:"1024", pieceValue:"50"};
-        flowList.push(
-            {flowName:"30M", flowno:"30", pieceValue:"5"},
-            {flowName:"50M", flowno:"50", pieceValue:"7"},
-            {flowName:"100M", flowno:"100", pieceValue:"10"},
-            {flowName:"200M", flowno:"200", pieceValue:"15"},
-            {flowName:"500M", flowno:"500", pieceValue:"30"},
-            {flowName:"1G", flowno:"1024", pieceValue:"50"}
-        );
-        data.flowList = flowList;
-        data.province = "";
-        data.city = "";
-        result.data = data;
-        response.json(result);
-    } else {
-        result.code = 500;
-        result.desc = "查询运营商失败";
-        response.json(result);
-    }
+        return;
+    });
+
 
 });
 

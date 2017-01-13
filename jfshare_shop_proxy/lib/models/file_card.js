@@ -190,10 +190,6 @@ FileCards.prototype.flowCallBack = function (params, callback) {
     if (params.stauts == "7") {
         status = 1;
     }
-
-
-
-
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'callBackFlow', [params.orderNo, params.cstmOrderNo, status, params.msg]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("flowCallBack result:" + JSON.stringify(data));
@@ -237,6 +233,40 @@ FileCards.prototype.thirdgameCallBack = function (params, callback) {
             callback(res, null);
         } else if (data[0].result.code == 1) {
             logger.warn("thirdgameCallBack，参数为：" + JSON.stringify(thirdGameParam));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else {
+            callback(null, data[0]);
+        }
+    });
+
+};
+/***
+ *
+ * 查询手机的运行商和归宿地
+ *
+ *
+ *
+ * @param params
+ * @param callback
+ */
+
+FileCards.prototype.queryMobile = function (params, callback) {
+
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'queryMobileDic', [params.mobile]);
+
+
+
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("flowCallBack result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == 1) {
+            logger.error("flowCallBack: ======" + err);
+            res.code = 500;
+            res.desc = "";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            logger.warn("flowCallBack，参数为：" + JSON.stringify(thirdGameParam));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
         } else {

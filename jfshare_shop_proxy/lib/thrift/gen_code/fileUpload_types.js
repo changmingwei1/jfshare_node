@@ -2795,15 +2795,221 @@ MobileDic.prototype.write = function(output) {
   return;
 };
 
+Flow = module.exports.Flow = function(args) {
+  this.flowCode = null;
+  this.flowPrice = null;
+  this.flowName = null;
+  this.operator = null;
+  this.type = null;
+  this.province = null;
+  if (args) {
+    if (args.flowCode !== undefined) {
+      this.flowCode = args.flowCode;
+    }
+    if (args.flowPrice !== undefined) {
+      this.flowPrice = args.flowPrice;
+    }
+    if (args.flowName !== undefined) {
+      this.flowName = args.flowName;
+    }
+    if (args.operator !== undefined) {
+      this.operator = args.operator;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+    if (args.province !== undefined) {
+      this.province = args.province;
+    }
+  }
+};
+Flow.prototype = {};
+Flow.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.flowCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.flowPrice = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.flowName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.operator = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.type = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.province = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Flow.prototype.write = function(output) {
+  output.writeStructBegin('Flow');
+  if (this.flowCode !== null && this.flowCode !== undefined) {
+    output.writeFieldBegin('flowCode', Thrift.Type.STRING, 1);
+    output.writeString(this.flowCode);
+    output.writeFieldEnd();
+  }
+  if (this.flowPrice !== null && this.flowPrice !== undefined) {
+    output.writeFieldBegin('flowPrice', Thrift.Type.STRING, 2);
+    output.writeString(this.flowPrice);
+    output.writeFieldEnd();
+  }
+  if (this.flowName !== null && this.flowName !== undefined) {
+    output.writeFieldBegin('flowName', Thrift.Type.STRING, 3);
+    output.writeString(this.flowName);
+    output.writeFieldEnd();
+  }
+  if (this.operator !== null && this.operator !== undefined) {
+    output.writeFieldBegin('operator', Thrift.Type.STRING, 4);
+    output.writeString(this.operator);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.STRING, 5);
+    output.writeString(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.province !== null && this.province !== undefined) {
+    output.writeFieldBegin('province', Thrift.Type.STRING, 6);
+    output.writeString(this.province);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FlowResult = module.exports.FlowResult = function(args) {
+  this.result = null;
+  this.flow = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.flow !== undefined) {
+      this.flow = args.flow;
+    }
+  }
+};
+FlowResult.prototype = {};
+FlowResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.flow = new ttypes.Flow();
+        this.flow.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FlowResult.prototype.write = function(output) {
+  output.writeStructBegin('FlowResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.flow !== null && this.flow !== undefined) {
+    output.writeFieldBegin('flow', Thrift.Type.STRUCT, 2);
+    this.flow.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 MobileDicResult = module.exports.MobileDicResult = function(args) {
   this.result = null;
   this.mobileDic = null;
+  this.flowList = null;
+  this.localList = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.mobileDic !== undefined) {
       this.mobileDic = args.mobileDic;
+    }
+    if (args.flowList !== undefined) {
+      this.flowList = args.flowList;
+    }
+    if (args.localList !== undefined) {
+      this.localList = args.localList;
     }
   }
 };
@@ -2837,6 +3043,48 @@ MobileDicResult.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size64 = 0;
+        var _rtmp368;
+        this.flowList = [];
+        var _etype67 = 0;
+        _rtmp368 = input.readListBegin();
+        _etype67 = _rtmp368.etype;
+        _size64 = _rtmp368.size;
+        for (var _i69 = 0; _i69 < _size64; ++_i69)
+        {
+          var elem70 = null;
+          elem70 = new ttypes.Flow();
+          elem70.read(input);
+          this.flowList.push(elem70);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.LIST) {
+        var _size71 = 0;
+        var _rtmp375;
+        this.localList = [];
+        var _etype74 = 0;
+        _rtmp375 = input.readListBegin();
+        _etype74 = _rtmp375.etype;
+        _size71 = _rtmp375.size;
+        for (var _i76 = 0; _i76 < _size71; ++_i76)
+        {
+          var elem77 = null;
+          elem77 = new ttypes.Flow();
+          elem77.read(input);
+          this.localList.push(elem77);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2856,6 +3104,34 @@ MobileDicResult.prototype.write = function(output) {
   if (this.mobileDic !== null && this.mobileDic !== undefined) {
     output.writeFieldBegin('mobileDic', Thrift.Type.STRUCT, 2);
     this.mobileDic.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.flowList !== null && this.flowList !== undefined) {
+    output.writeFieldBegin('flowList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.flowList.length);
+    for (var iter78 in this.flowList)
+    {
+      if (this.flowList.hasOwnProperty(iter78))
+      {
+        iter78 = this.flowList[iter78];
+        iter78.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.localList !== null && this.localList !== undefined) {
+    output.writeFieldBegin('localList', Thrift.Type.LIST, 4);
+    output.writeListBegin(Thrift.Type.STRUCT, this.localList.length);
+    for (var iter79 in this.localList)
+    {
+      if (this.localList.hasOwnProperty(iter79))
+      {
+        iter79 = this.localList[iter79];
+        iter79.write(output);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   output.writeFieldStop();

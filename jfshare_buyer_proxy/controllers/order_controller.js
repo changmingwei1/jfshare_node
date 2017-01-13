@@ -2061,51 +2061,7 @@ router.post('/payOrderCreates', function (request, response, next) {
             //result.desc = "运营商系统维护，流量充值服务暂不可用";
             //response.json(result);
             //return;
-            if (arg.company == "" || arg.company == null) {
-                result.code = 400;
-                result.desc = "参数错误";
-                response.json(result);
-                return;
-            }
-            if (arg.flowno == "" || arg.flowno == null || (
-                    arg.flowno != "30" &&
-                    arg.flowno != "50" &&
-                    arg.flowno != "70" &&
-                    arg.flowno != "100" &&
-                    arg.flowno != "150" &&
-                    arg.flowno != "200" &&
-                    arg.flowno != "500" &&
-                    arg.flowno != "1024" &&
-                    arg.flowno != "2048" &&
-                    arg.flowno != "3072" &&
-                    arg.flowno != "4096" &&
-                    arg.flowno != "6144" &&
-                    arg.flowno != "11264"
-                )) {
-                result.code = 400;
-                result.desc = "当前面额不支持充值";
-                response.json(result);
-                return;
-            }
-            //手机号与运营商二次判断,以防出现不匹配问题
-            var yd = "^1(3[4-9]|4[7]|5[0-27-9]|7[08]|8[2-478])\\d{8}$"; //移动
-            var lt = "^1(3[0-2]|4[5]|5[56]|7[0156]|8[56])\\d{8}$";  //联通
-            var dx = "^1(3[3]|4[9]|53|7[037]|8[019])\\d{8}$";   //电信
-            var mobile = arg.receiverMobile;
-            var com = "";
-            if (mobile.match(yd)) {
-                com = "中国移动";
-            } else if (mobile.match(lt)) {
-                com = "中国联通";
-            } else if (mobile.match(dx)) {
-                com = "中国电信";
-            }
-            if (arg.company != com) {
-                result.code = 400;
-                result.desc = "当前运营商与您输入的面额不匹配";
-                response.json(result);
-                return;
-            }
+
         }
         if (arg.tradeCode == "Z8005") { //Q币
             if (arg.provinceName == "") {
