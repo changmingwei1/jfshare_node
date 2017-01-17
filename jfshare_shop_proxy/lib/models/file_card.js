@@ -180,29 +180,29 @@ FileCards.prototype.flowCallBack = function (params, callback) {
      "msg ": "4G用户暂不能订购"
      *
      * *********/
-    var status = "";
-
-    if (params.status == "8") {
-
-        status = 11;
-
-    }
-    if (params.stauts == "7") {
-        status = 1;
-    }
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'callBackFlow', [params.orderNo, params.cstmOrderNo, status, params.msg]);
+    //var status = "";
+    //
+    //if (params.status == 8 ) {
+    //
+    //    status = "11";
+    //
+    //}
+    //if (params.stauts == 7) {
+    //    status = "1";
+    //}
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'callBackFlow', [params.orderNo, params.cstmOrderNo, params.status, params.msg]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("flowCallBack result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err || data[0].code == 1) {
             logger.error("flowCallBack: ======" + err);
             res.code = 500;
             res.desc = "";
             callback(res, null);
-        } else if (data[0].result.code == 1) {
+        } else if (data[0].code == 1) {
             logger.warn("flowCallBack，参数为：" + JSON.stringify(thirdGameParam));
             res.code = 500;
-            res.desc = data[0].result.failDescList[0].desc;
+            res.desc = data[0].failDescList[0].desc;
         } else {
             callback(null, data[0]);
         }
@@ -258,15 +258,15 @@ FileCards.prototype.queryMobile = function (params, callback) {
 
 
     Lich.wicca.invokeClient(slotServ, function (err, data) {
-        logger.info("flowCallBack result:" + JSON.stringify(data));
+        logger.info("queryMobile result:" + JSON.stringify(data));
         var res = {};
         if (err || data[0].result.code == 1) {
-            logger.error("flowCallBack: ======" + err);
+            logger.error("queryMobile: ======" + err);
             res.code = 500;
             res.desc = "";
             callback(res, null);
         } else if (data[0].result.code == 1) {
-            logger.warn("flowCallBack，参数为：" + JSON.stringify(thirdGameParam));
+            logger.warn("queryMobile，参数为：" + JSON.stringify(thirdGameParam));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
         } else {

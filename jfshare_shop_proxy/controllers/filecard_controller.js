@@ -385,9 +385,9 @@ router.post('/flowCallBack', function (request, response, next) {
             return;
         });
     } catch (ex) {
-        logger.error(" 查询列表异常:" + ex);
+        logger.error(" 流量回调异常:" + ex);
         result.code = 500;
-        result.desc = " 查询列表异常";
+        result.desc = " 流量回调异常异常";
         response.json(result);
     }
 });

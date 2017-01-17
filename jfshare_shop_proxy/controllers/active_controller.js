@@ -311,7 +311,7 @@ router.get('/queryMobileInfo', function (request, response, next) {
             response.json(err);
             return;
         }
-        logger.error("flowCallBack result:" + JSON.stringify(data));
+        logger.info("queryMobileInfo result:" + JSON.stringify(data));
         //18537045282
         var data2 = {};
         //运营商 手机号码所属运营商 1：电信，2：移动，3：联通
