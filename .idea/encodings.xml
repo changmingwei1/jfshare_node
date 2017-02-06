@@ -6,6 +6,8 @@
     <file url="file://$PROJECT_DIR$/jfshare_administration_proxy/lib/models/subject.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jfshare_buyer_proxy/lib/models/afterSale.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jfshare_buyer_proxy/lib/models/baseTemplate.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jfshare_buyer_proxy8081/lib/models/afterSale.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jfshare_buyer_proxy8081/lib/models/baseTemplate.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jfshare_seller_proxy/lib/models/brand.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jfshare_seller_proxy/lib/models/express.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jfshare_seller_proxy/lib/models/order.js" charset="UTF-8" />

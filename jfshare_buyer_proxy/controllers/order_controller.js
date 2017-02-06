@@ -1278,7 +1278,32 @@ router.post('/pay', function (req, res, next) {
                 res.json(result);
                 return;
             }
-        } else {
+        }else if (arg.payChannel == 11) {
+            try {
+                Order.payApply(arg, function (err, data) {
+                    if (err) {
+                        res.json(err);
+                        return;
+                    }
+                    if (data !== null) {
+
+                        var payUrl = {"jsonRequestData":data.value};
+                        //result.paramName = "jsonRequestData";
+                        result.payUrl = payUrl;
+                        result.action = "http://61.144.248.29:801/netpayment/BaseHttp.dll?MB_EUserPay";
+                        res.json(result);
+                        logger.info("order pay response:" + JSON.stringify(result));
+                    }
+                });
+            } catch (ex) {
+                logger.error("获取支付信息失败：" + ex);
+                result.code = 500;
+                result.desc = "获取支付URL失败";
+                res.json(result);
+                return;
+            }
+        }
+        else {
             try {
                 Order.payApply(arg, function (err, payUrl) {
                     if (err) {
