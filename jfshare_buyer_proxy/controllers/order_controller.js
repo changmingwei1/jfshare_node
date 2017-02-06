@@ -1039,6 +1039,7 @@ router.post('/info', function (req, res, next) {
                                 result.exchangeCash = orderInfo.exchangeCash; //添加字段
                                 result.virRechargeState = orderInfo.virRechargeState;//第三方状态
                                 result.type = orderInfo.productList[0].type;
+                                result.orderType = orderInfo.orderType;
                                 var productList = [];
                                 if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
                                     for (var i = 0; i < orderInfo.productList.length; i++) {
