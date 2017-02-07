@@ -645,6 +645,7 @@ router.post('/list', function (request, response, next) {
                                             deliverTime: order.deliverTime,
                                             successTime: order.successTime,
                                             activeState: order.activeState,
+                                            orderType: order.orderType,
                                             postage: order.postage,
                                             timeOutLimit:0,//待支付超时时间
                                             type: order.productList[0].type  //5.17测没有type
