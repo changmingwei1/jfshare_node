@@ -645,6 +645,7 @@ router.post('/list', function (request, response, next) {
                                             deliverTime: order.deliverTime,
                                             successTime: order.successTime,
                                             activeState: order.activeState,
+                                            orderType: order.orderType,
                                             postage: order.postage,
                                             timeOutLimit:0,//待支付超时时间
                                             type: order.productList[0].type  //5.17测没有type
@@ -1039,6 +1040,7 @@ router.post('/info', function (req, res, next) {
                                 result.exchangeCash = orderInfo.exchangeCash; //添加字段
                                 result.virRechargeState = orderInfo.virRechargeState;//第三方状态
                                 result.type = orderInfo.productList[0].type;
+                                result.orderType = orderInfo.orderType;
                                 var productList = [];
                                 if (orderInfo.productList !== null && orderInfo.productList.length > 0) {
                                     for (var i = 0; i < orderInfo.productList.length; i++) {
@@ -1278,7 +1280,32 @@ router.post('/pay', function (req, res, next) {
                 res.json(result);
                 return;
             }
-        } else {
+        }else if (arg.payChannel == 11) {
+            try {
+                Order.payApply(arg, function (err, data) {
+                    if (err) {
+                        res.json(err);
+                        return;
+                    }
+                    if (data !== null) {
+
+                        var payUrl = {"jsonRequestData":data.value};
+                        //result.paramName = "jsonRequestData";
+                        result.payUrl = payUrl;
+                        result.action = "http://61.144.248.29:801/netpayment/BaseHttp.dll?MB_EUserPay";
+                        res.json(result);
+                        logger.info("order pay response:" + JSON.stringify(result));
+                    }
+                });
+            } catch (ex) {
+                logger.error("获取支付信息失败：" + ex);
+                result.code = 500;
+                result.desc = "获取支付URL失败";
+                res.json(result);
+                return;
+            }
+        }
+        else {
             try {
                 Order.payApply(arg, function (err, payUrl) {
                     if (err) {
@@ -1981,11 +2008,11 @@ router.post('/payOrderCreates', function (request, response, next) {
         //}
 
         if (arg.tradeCode == "Z8003") {
-            result.code = 500;
+           // result.code = 500;
             //result.desc = "话费充值服务暂不可使用";
-            result.desc = "运营商系统维护，话费充值服务暂不可用";
-            response.json(result);
-            return;
+           // result.desc = "运营商系统维护，话费充值服务暂不可用";
+           // response.json(result);
+          //  return;
         }
         if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
             result.code = 400;
