@@ -388,7 +388,7 @@ router.post('/info', function (request, response, next) {
                             result.payId = orderInfo.payInfo.payId;
                             result.payState =  orderInfo.payInfo.payState;
                             result.payTime =  orderInfo.payInfo.payTime; /*0921新增字段*/
-                            if(result.payChannel == 1 || result.payChannel == 10){
+                            if(result.payChannel == 1 || result.payChannel == 10 || result.payChannel == 11){//天翼weh和app 招商一网通
                                 result.tradePayId = orderInfo.tradePayId; /*payChannel为1和10的话，是外部订单，返回外部订单号*/
                             }
                         }

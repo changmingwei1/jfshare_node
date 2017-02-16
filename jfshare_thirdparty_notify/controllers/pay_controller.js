@@ -430,7 +430,16 @@ router.post('/notify/cmbpay', function(req, res, next) {
         var ret = {};
         var arg = req.body;
         var resObj = arg.jsonRequestData;
-        logger.info("########post接收到第三方支付[cmbapp]的resObj通知：" + JSON.stringify(arg.jsonRequestData));
+        logger.info("########post接收到第三方支付完成[cmbapp]的resObj通知：" + JSON.stringify(arg.jsonRequestData));
+
+        var ip = getClientIP(req);
+        logger.info("招行支付完成回调IP为"+ip);
+        if (ip != "::ffff:61.144.248.17") { //::ffff:124.42.103.132
+            ret.code = 400;
+            ret.desc = "访问IP不在配置范围内";
+            response.json(ret);
+            return;
+        }
         if (paramValid.empty(resObj)) {
             logger.warn("获取支付通知参数有误, arg");
             ret.status = 500;
@@ -481,13 +490,34 @@ router.post('/notify/cmbpay', function(req, res, next) {
     }
 });
 
+/*获取请求IP公共方法*/
+function getClientIP(request){
+    var ipAddress;
+    var headers = request.headers;
+    var forwardedIpsStr = headers['x-real-ip'] || headers['x-forwarded-for'];
+    forwardedIpsStr ? ipAddress = forwardedIpsStr : ipAddress = null;
+    if (!ipAddress) {
+        ipAddress = request.connection.remoteAddress;
+    }
+    return ipAddress;
+};
+
 router.post('/notify/cmbpayNotifySign', function(req, res, next) {
     try {
         var ret = {};
         var arg = req.body;
         var resObj = arg.jsonRequestData;
-        logger.info("########post接收到第三方签约[cmbapp]的arg通知：" + arg);
         logger.info("########post接收到第三方签约[cmbapp]的resObj通知：" + resObj);
+
+        var ip = getClientIP(req);
+        logger.info("招行签约完成回调IP为"+ip);
+        if (ip != "::ffff:61.144.248.17") { //::ffff:124.42.103.132
+            ret.code = 400;
+            ret.desc = "访问IP不在配置范围内";
+            response.json(ret);
+            return;
+        }
+
         if (paramValid.empty(resObj)) {
             logger.warn("获取支付通知参数有误, arg");
             ret.status = 500;
