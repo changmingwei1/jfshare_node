@@ -16,6 +16,8 @@ PayChannel = module.exports.PayChannel = function(args) {
   this.payIp = null;
   this.returnUrl = null;
   this.custId = null;
+  this.custType = null;
+  this.procustID = null;
   if (args) {
     if (args.payChannel !== undefined) {
       this.payChannel = args.payChannel;
@@ -28,6 +30,12 @@ PayChannel = module.exports.PayChannel = function(args) {
     }
     if (args.custId !== undefined) {
       this.custId = args.custId;
+    }
+    if (args.custType !== undefined) {
+      this.custType = args.custType;
+    }
+    if (args.procustID !== undefined) {
+      this.procustID = args.procustID;
     }
   }
 };
@@ -73,6 +81,20 @@ PayChannel.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.custType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.procustID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -104,6 +126,16 @@ PayChannel.prototype.write = function(output) {
     output.writeString(this.custId);
     output.writeFieldEnd();
   }
+  if (this.custType !== null && this.custType !== undefined) {
+    output.writeFieldBegin('custType', Thrift.Type.STRING, 5);
+    output.writeString(this.custType);
+    output.writeFieldEnd();
+  }
+  if (this.procustID !== null && this.procustID !== undefined) {
+    output.writeFieldBegin('procustID', Thrift.Type.STRING, 6);
+    output.writeString(this.procustID);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -121,6 +153,10 @@ PayReq = module.exports.PayReq = function(args) {
   this.returnUrl = null;
   this.remark = null;
   this.custId = null;
+  this.custType = null;
+  this.procustID = null;
+  this.score2cashAmount = null;
+  this.userId = null;
   if (args) {
     if (args.tokenId !== undefined) {
       this.tokenId = args.tokenId;
@@ -154,6 +190,18 @@ PayReq = module.exports.PayReq = function(args) {
     }
     if (args.custId !== undefined) {
       this.custId = args.custId;
+    }
+    if (args.custType !== undefined) {
+      this.custType = args.custType;
+    }
+    if (args.procustID !== undefined) {
+      this.procustID = args.procustID;
+    }
+    if (args.score2cashAmount !== undefined) {
+      this.score2cashAmount = args.score2cashAmount;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
     }
   }
 };
@@ -248,6 +296,34 @@ PayReq.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.custType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.procustID = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.I32) {
+        this.score2cashAmount = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 15:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -312,6 +388,26 @@ PayReq.prototype.write = function(output) {
   if (this.custId !== null && this.custId !== undefined) {
     output.writeFieldBegin('custId', Thrift.Type.STRING, 11);
     output.writeString(this.custId);
+    output.writeFieldEnd();
+  }
+  if (this.custType !== null && this.custType !== undefined) {
+    output.writeFieldBegin('custType', Thrift.Type.STRING, 12);
+    output.writeString(this.custType);
+    output.writeFieldEnd();
+  }
+  if (this.procustID !== null && this.procustID !== undefined) {
+    output.writeFieldBegin('procustID', Thrift.Type.STRING, 13);
+    output.writeString(this.procustID);
+    output.writeFieldEnd();
+  }
+  if (this.score2cashAmount !== null && this.score2cashAmount !== undefined) {
+    output.writeFieldBegin('score2cashAmount', Thrift.Type.I32, 14);
+    output.writeI32(this.score2cashAmount);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 15);
+    output.writeI32(this.userId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -385,9 +481,62 @@ PayRes.prototype.write = function(output) {
   return;
 };
 
+payRetQueryParams = module.exports.payRetQueryParams = function(args) {
+  this.payId = null;
+  if (args) {
+    if (args.payId !== undefined) {
+      this.payId = args.payId;
+    }
+  }
+};
+payRetQueryParams.prototype = {};
+payRetQueryParams.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.payId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+payRetQueryParams.prototype.write = function(output) {
+  output.writeStructBegin('payRetQueryParams');
+  if (this.payId !== null && this.payId !== undefined) {
+    output.writeFieldBegin('payId', Thrift.Type.STRING, 1);
+    output.writeString(this.payId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 PayRet = module.exports.PayRet = function(args) {
   this.payId = null;
-  this.tokeId = null;
+  this.tokenId = null;
   this.orderNo = null;
   this.extraParam = null;
   this.price = null;
@@ -406,8 +555,8 @@ PayRet = module.exports.PayRet = function(args) {
     if (args.payId !== undefined) {
       this.payId = args.payId;
     }
-    if (args.tokeId !== undefined) {
-      this.tokeId = args.tokeId;
+    if (args.tokenId !== undefined) {
+      this.tokenId = args.tokenId;
     }
     if (args.orderNo !== undefined) {
       this.orderNo = args.orderNo;
@@ -476,7 +625,7 @@ PayRet.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRING) {
-        this.tokeId = input.readString();
+        this.tokenId = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -595,9 +744,9 @@ PayRet.prototype.write = function(output) {
     output.writeString(this.payId);
     output.writeFieldEnd();
   }
-  if (this.tokeId !== null && this.tokeId !== undefined) {
-    output.writeFieldBegin('tokeId', Thrift.Type.STRING, 2);
-    output.writeString(this.tokeId);
+  if (this.tokenId !== null && this.tokenId !== undefined) {
+    output.writeFieldBegin('tokenId', Thrift.Type.STRING, 2);
+    output.writeString(this.tokenId);
     output.writeFieldEnd();
   }
   if (this.orderNo !== null && this.orderNo !== undefined) {
