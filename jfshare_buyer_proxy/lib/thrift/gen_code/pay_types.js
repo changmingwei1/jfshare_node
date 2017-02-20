@@ -156,6 +156,7 @@ PayReq = module.exports.PayReq = function(args) {
   this.custType = null;
   this.procustID = null;
   this.score2cashAmount = null;
+  this.userId = null;
   if (args) {
     if (args.tokenId !== undefined) {
       this.tokenId = args.tokenId;
@@ -198,6 +199,9 @@ PayReq = module.exports.PayReq = function(args) {
     }
     if (args.score2cashAmount !== undefined) {
       this.score2cashAmount = args.score2cashAmount;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
     }
   }
 };
@@ -313,6 +317,13 @@ PayReq.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 15:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -394,6 +405,11 @@ PayReq.prototype.write = function(output) {
     output.writeI32(this.score2cashAmount);
     output.writeFieldEnd();
   }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 15);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -458,6 +474,59 @@ PayRes.prototype.write = function(output) {
   if (this.resUrl !== null && this.resUrl !== undefined) {
     output.writeFieldBegin('resUrl', Thrift.Type.STRING, 2);
     output.writeString(this.resUrl);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+payRetQueryParams = module.exports.payRetQueryParams = function(args) {
+  this.payId = null;
+  if (args) {
+    if (args.payId !== undefined) {
+      this.payId = args.payId;
+    }
+  }
+};
+payRetQueryParams.prototype = {};
+payRetQueryParams.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.payId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+payRetQueryParams.prototype.write = function(output) {
+  output.writeStructBegin('payRetQueryParams');
+  if (this.payId !== null && this.payId !== undefined) {
+    output.writeFieldBegin('payId', Thrift.Type.STRING, 1);
+    output.writeString(this.payId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
