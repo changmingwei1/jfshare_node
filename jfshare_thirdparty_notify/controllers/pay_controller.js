@@ -434,12 +434,12 @@ router.post('/notify/cmbpay', function(req, res, next) {
 
         var ip = getClientIP(req);
         logger.info("招行支付完成回调IP为"+ip);
-        if (ip != "::ffff:61.144.248.17") { //::ffff:124.42.103.132
-            ret.code = 400;
-            ret.desc = "访问IP不在配置范围内";
-            response.json(ret);
-            return;
-        }
+        //if (ip != "::ffff:61.144.248.17") { //::ffff:124.42.103.132
+        //    ret.code = 400;
+        //    ret.desc = "访问IP不在配置范围内";
+        //    response.json(ret);
+        //    return;
+        //}
         if (paramValid.empty(resObj)) {
             logger.warn("获取支付通知参数有误, arg");
             ret.status = 500;
@@ -511,12 +511,12 @@ router.post('/notify/cmbpayNotifySign', function(req, res, next) {
 
         var ip = getClientIP(req);
         logger.info("招行签约完成回调IP为"+ip);
-        if (ip != "::ffff:61.144.248.17") { //::ffff:124.42.103.132
-            ret.code = 400;
-            ret.desc = "访问IP不在配置范围内";
-            response.json(ret);
-            return;
-        }
+        //if (ip != "::ffff:61.144.248.17") { //::ffff:124.42.103.132
+        //    ret.code = 400;
+        //    ret.desc = "访问IP不在配置范围内";
+        //    response.json(ret);
+        //    return;
+        //}
 
         if (paramValid.empty(resObj)) {
             logger.warn("获取支付通知参数有误, arg");
