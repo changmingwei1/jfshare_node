@@ -77,18 +77,18 @@ router.post('/list', function (request, response, next) {
                                 }
                             }
 
-                            logger.error("SellerIds----shuju-------------：" + sellerIds);
+                            logger.error("SellerIds----shuju-------------："+sellerIds);
                             if (sellerIds.length > 0) {
-                                params.sellerIds = sellerIds;
+                                params.sellerIds=sellerIds;
                                 return callback(null, params);
                             } else {
                                 sellerIds.push("-1");//代表传参了但是没有对应的数据，java层根据此判断是否继续向下执行
-                                params.sellerIds = sellerIds;
+                                params.sellerIds=sellerIds;
                                 callback(null, params);
                             }
                         });
-                    } else {
-                        callback(null, params);
+                    }else{
+                        callback(null,params);
                     }
                 } catch (ex) {
                     logger.info("调用seller服务异常:" + ex);
@@ -98,23 +98,23 @@ router.post('/list', function (request, response, next) {
             function (callback) {
                 logger.info("BUYER--data：");
                 try {
-                    if (params.loginName != null && params.loginName != "") {
+                    if(params.loginName != null && params.loginName != ""){
                         Buyer.getBuyerInfo(params, function (err, data) {
-                            logger.info("BUYER--data：" + JSON.stringify(data) + "  -----:params:" + JSON.stringify(params));
+                            logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
                                 logger.error("Buyer服务异常");
                                 return callback(1, null);
                             }
                             if (data[0].buyer != null) {
                                 var buyer = data[0].buyer;
-                                params.userId = buyer.userId;
+                                params.userId= buyer.userId;
                                 return callback(null, params);
                             } else {
-                                callback(1, null);
+                                callback(1,null);
                             }
                         });
-                    } else {
-                        callback(null, params);
+                    }else{
+                        callback(null,params);
                     }
                 } catch (ex) {
                     logger.info("调用buyer服务异常:" + ex);
@@ -386,11 +386,11 @@ router.post('/info', function (request, response, next) {
                         if (orderInfo.payInfo != null) {
                             result.payChannel = orderInfo.payInfo.payChannel;
                             result.payId = orderInfo.payInfo.payId;
-                            result.payState = orderInfo.payInfo.payState;
-                            result.payTime = orderInfo.payInfo.payTime;
+                            result.payState =  orderInfo.payInfo.payState;
+                            result.payTime =  orderInfo.payInfo.payTime; 
                             /*0921新增字段*/
-                            if (result.payChannel == 1 || result.payChannel == 10) {
-                                result.tradePayId = orderInfo.tradePayId;
+                            if(result.payChannel == 1 || result.payChannel == 10 || result.payChannel == 11){//天翼weh和app 招商一网通
+                                result.tradePayId = orderInfo.tradePayId; 
                                 /*payChannel为1和10的话，是外部订单，返回外部订单号*/
                             }
                         }
@@ -403,14 +403,14 @@ router.post('/info', function (request, response, next) {
                         result.sellerId = orderInfo.sellerId;
                         result.cancelTime = orderInfo.cancelTime;
                         result.thirdScore = orderInfo.thirdScore;
-                        result.thirdPrice = orderInfo.thirdPrice;
-                        result.virRechargeState = orderInfo.virRechargeState;//第三方状态
-                        if (orderInfo.orderState == 61) {
+                        result.thirdPrice =  orderInfo.thirdPrice;
+                        result.virRechargeState =  orderInfo.virRechargeState;//第三方状态
+                        if(orderInfo.orderState == 61){
                             result.cancelDesc = "其他原因";
-                            if (orderInfo.orderStateType == 1) {
+                            if(orderInfo.orderStateType ==1){
                                 result.cancelDesc = "用户主动要求取消"
                             }
-                            if (orderInfo.orderStateType == 4) {
+                            if(orderInfo.orderStateType ==4){
                                 result.cancelDesc = "卖家缺货"
                             }
 
@@ -435,9 +435,9 @@ router.post('/info', function (request, response, next) {
                         /*运费扩展信息  JSON*/
                         result.exchangeScore = orderInfo.exchangeScore; //添加字段
                         result.exchangeCash = orderInfo.exchangeCash; //添加字段
-                        if (orderInfo.productList != null) {
+                        if(orderInfo.productList!=null){
                             result.type = orderInfo.productList[0].type;
-                        } else {
+                        }else{
 
                             result.type = -1;
                         }
@@ -447,7 +447,7 @@ router.post('/info', function (request, response, next) {
                             for (var i = 0; i < orderInfo.productList.length; i++) {
                                 var product = {
                                     productId: orderInfo.productList[i].productId,
-                                    tradeCode: orderInfo.tradeCode,
+                                    tradeCode : orderInfo.tradeCode,
                                     productName: orderInfo.productList[i].productName,
                                     sku: {
                                         skuNum: orderInfo.productList[i].skuNum,
@@ -459,15 +459,15 @@ router.post('/info', function (request, response, next) {
                                     count: orderInfo.productList[i].count,
                                     thirdExchangeRate: orderInfo.productList[i].thirdExchangeRate
                                 };
-                                if (orderInfo.tradeCode == "Z8003") {
-                                    product.productName = "手机话费充值 " + orderInfo.closingPrice + "元";
+                                if(orderInfo.tradeCode=="Z8003"){
+                                    product.productName="手机话费充值 " + orderInfo.closingPrice + "元";
                                     //product.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
                                 }
-                                if (orderInfo.tradeCode == "Z8004") {
-                                    product.productName = orderInfo.deliverInfo.receiverAddress + "手机流量充值 " + orderInfo.deliverInfo.receiverName;
+                                if(orderInfo.tradeCode=="Z8004"){
+                                    product.productName=orderInfo.deliverInfo.receiverAddress + "手机流量充值 " + orderInfo.deliverInfo.receiverName;
                                     //product.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
                                 }
-                                if (orderInfo.tradeCode == "Z8005") {
+                                if(orderInfo.tradeCode=="Z8005"){
                                     product.productName = "腾讯Q币充值 " + Number(orderInfo.closingPrice) + "Q币";
                                     //product.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
                                 }
@@ -516,9 +516,9 @@ router.post('/info', function (request, response, next) {
                         var buyer = data[0].buyer;
                         if (buyer != null) {
                             var loginName = buyer.loginName;
-                            return callback(null, loginName);
+                            return callback(null,loginName);
                         } else {
-                            callback(3, null);
+                            callback(3,null);
                         }
                     });
                 } catch (ex) {
@@ -542,7 +542,7 @@ router.post('/info', function (request, response, next) {
             }
             if (err == 3) {
                 logger.error("查询买家信息异常：" + err);
-                result = results[0];
+                result =  results[0];
                 result.afterSaleList = results[1];
                 response.json(result);
                 return;
@@ -1073,12 +1073,12 @@ router.post('/afterSalelist', function (request, response, next) {
                                 return callback(null, 2);
                             } else {
                                 afterOrderList = data.afterSaleOrders;
-                                if (data.pagination != null) {
+                                if(data.pagination!=null){
                                     page.total = data.pagination.totalCount;
                                     page.pageCount = data.pagination.pageNumCount;
                                     callback(null, 1);
                                     return;
-                                } else {
+                                }else{
                                     page.total = 0;
                                     page.pageCount = 0;
                                     callback(null, 1);
@@ -1267,7 +1267,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
         var params = request.body;
         //orderId
         if (params.orderId != "" && params.orderId != null) {
-        } else {
+        }else{
             //因为管理中心和卖家中心用同一个借口，所以去掉
             //if (params.startTime == "" || params.startTime == null) {
             //    result.code = 400;
@@ -1284,76 +1284,76 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
         }
         var sellerIds = [];
         async.series([
-                function (callback) {
-                    //params.sellerIds=[1,2,4];
-                    logger.info("SELLER--data：" + JSON.stringify(params));
-                    try {
-                        if (params.sellerName != null && params.sellerName != "") {
-                            Seller.querySellerBySeller(params, function (err, data) {
-                                logger.info("SELLER--data：" + JSON.stringify(data) + "  -----:params:" + JSON.stringify(params));
-                                if (err) {
-                                    logger.error("Seller服务异常");
-                                    return callback(1, null);
+            function (callback) {
+                //params.sellerIds=[1,2,4];
+                logger.info("SELLER--data：" +JSON.stringify(params));
+                try {
+                    if(params.sellerName != null && params.sellerName != ""){
+                        Seller.querySellerBySeller(params, function (err, data) {
+                            logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Seller服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].sellerList != null && data[0].sellerList.length > 0) {
+                                for (var j = 0; j < data[0].sellerList.length; j++) {
+                                    var seller = data[0].sellerList[j];
+                                    sellerIds.push(seller.sellerId + "");
                                 }
-                                if (data[0].sellerList !== null && data[0].sellerList.length > 0) {
-                                    for (var j = 0; j < data[0].sellerList.length; j++) {
-                                        var seller = data[0].sellerList[j];
-                                        sellerIds.push(seller.sellerId + "");
-                                    }
-                                }
-                                logger.info("SellerIds-----------------：" + sellerIds);
-                                if (sellerIds.length > 0) {
-                                    params.sellerIds = sellerIds;
-                                    return callback(null, params);
-                                } else {
-                                    callback(null, params);
-                                }
-                            });
-                        } else {
-                            callback(null, params);
-                        }
-                    } catch (ex) {
-                        logger.info("调用seller服务异常:" + ex);
-                        return callback(1, null);
+                            }
+                            logger.info("SellerIds-----------------："+sellerIds);
+                            if (sellerIds.length > 0) {
+                                params.sellerIds=sellerIds;
+                                return callback(null, params);
+                            } else {
+                                callback(null, params);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
                     }
-                },
-                function (callback) {
-                    logger.info("BUYER--data：");
-                    try {
-                        if (params.loginName != null && params.loginName != "") {
-                            Buyer.getBuyerInfo(params, function (err, data) {
-                                logger.info("BUYER--data：" + JSON.stringify(data) + "  -----:params:" + JSON.stringify(params));
-                                if (err) {
-                                    logger.error("Buyer服务异常");
-                                    return callback(1, null);
-                                }
-                                if (data[0].buyer != null) {
-                                    var buyer = data[0].buyer;
-                                    params.userId = buyer.userId;
-                                    return callback(null, params);
-                                } else {
-                                    callback(1, null);
-                                }
-                            });
-                        } else {
-                            callback(null, params);
-                        }
-                    } catch (ex) {
-                        logger.info("调用buyer服务异常:" + ex);
-                        return callback(1, null);
+                } catch (ex) {
+                    logger.info("调用seller服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                logger.info("BUYER--data：");
+                try {
+                    if(params.loginName != null && params.loginName != ""){
+                        Buyer.getBuyerInfo(params, function (err, data) {
+                            logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
+                            if (err) {
+                                logger.error("Buyer服务异常");
+                                return callback(1, null);
+                            }
+                            if (data[0].buyer != null) {
+                                var buyer = data[0].buyer;
+                                params.userId= buyer.userId;
+                                return callback(null, params);
+                            } else {
+                                callback(1,null);
+                            }
+                        });
+                    }else{
+                        callback(null,params);
                     }
-                },
-                function (callback) {
-                    Order.batchExportOrderFull(params, function (err, data) {
-                        if (err) {
-                            response.json(err);
-                            return;
-                        } else {
-                            result.queryKey = data;
-                            response.json(result);
-                        }
-                    });
-                }],
+                } catch (ex) {
+                    logger.info("调用buyer服务异常:" + ex);
+                    return callback(1, null);
+                }
+            },
+            function (callback) {
+                Order.batchExportOrderFull(params, function (err, data) {
+                    if (err) {
+                        response.json(err);
+                        return;
+                    } else {
+                        result.queryKey = data;
+                        response.json(result);
+                    }
+                });
+            }],
             function (err, results) {
                 if (err == 1) {
                     logger.error("Seller服务异常" + err);
@@ -1450,8 +1450,8 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
         }
         logger.info("进入批量发货流程params:" + JSON.stringify(params));
         //params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
-        params.path = "http://101.201.39.61/system/v1/jfs_image/" + params.path;
-        logger.error("这不是错误，只是想看一下路径，不要去掉:" + params.path);
+        params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
+        logger.error("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
         var isDownLoad = false;
         async.series([
                 function (callback) {
@@ -1495,7 +1495,7 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
                                             orderId: sheetData.data[i][1],
                                             deliverInfo: deliverInfo
                                         });
-                                        if (sheetData.data[i].length > 3 && sheetData.data[i][3] != null && sheetData.data[i][3] != "") {
+                                        if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
                                             deliverInfo.sellerComment = sheetData.data[i][3];
                                         }
                                         sellerDeviler.sellerId = sellerId;
@@ -1511,7 +1511,7 @@ router.post('/batchDeliverOrderForManager', function (request, response, next) {
                                 if (err) {
                                     return callback(err, err);
                                 }
-                                if (data[0] != null) {
+                                if(data[0] != null){
                                     result.failInfo = data[0].failInfo;
                                 }
                                 return callback(null, result);
@@ -1564,8 +1564,8 @@ router.post('/batchDeliverOrderForManagerTest', function (request, response, nex
         }
         logger.info("进入批量发货流程params:" + JSON.stringify(params));
         //params.path ="http://101.201.39.61/system/v1/jfs_image/"+params.path;
-        params.path = "http://120.24.153.102:3000/system/v1/jfs_image/" + params.path;
-        logger.info("这不是错误，只是想看一下路径，不要去掉:" + params.path);
+        params.path ="http://120.24.153.102:3000/system/v1/jfs_image/"+params.path;
+        logger.info("这不是错误，只是想看一下路径，不要去掉:"+ params.path);
         var isDownLoad = false;
         async.waterfall([
                 function (callback) {
@@ -1591,7 +1591,7 @@ router.post('/batchDeliverOrderForManagerTest', function (request, response, nex
                         logger.info("isDownLoad=============" + isDownLoad);
                         var json = xlsx.parse("/data/run/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
                         //var json = xlsx.parse("C:/jfshare_node/jfshare_administration_proxy/excel/excel.xlsx");
-                        logger.info("excel中的值，json == " + JSON.stringify(json));
+                         logger.info("excel中的值，json == " + JSON.stringify(json));
                         var list = [];
                         var sellerId;
                         if (json != null && json.length > 0) {
@@ -1610,7 +1610,7 @@ router.post('/batchDeliverOrderForManagerTest', function (request, response, nex
                                             orderId: sheetData.data[i][1],
                                             deliverInfo: deliverInfo
                                         });
-                                        if (sheetData.data[i].length > 3 && sheetData.data[i][3] != null && sheetData.data[i][3] != "") {
+                                        if(sheetData.data[i].length > 3 &&sheetData.data[i][3]!=null && sheetData.data[i][3]!=""){
                                             deliverInfo.sellerComment = sheetData.data[i][3];
                                         }
                                         sellerDeviler.sellerId = sellerId;
@@ -1626,7 +1626,7 @@ router.post('/batchDeliverOrderForManagerTest', function (request, response, nex
                                 if (err) {
                                     callback(err);
                                 }
-                                if (data[0] != null) {
+                                if(data[0] != null){
                                     result.failInfo = data[0].failInfo;
                                 }
                                 response.json(result);
@@ -1663,9 +1663,9 @@ router.post('/batchDeliverOrderForManagerTest', function (request, response, nex
 });
 
 /*批量发货--管理中心new*/
-router.post('/bacthDeliverOrder', function (request, response, next) {
+router.post('/bacthDeliverOrder',function(request, response, next){
     logger.info("进入批量发货流程 >>>>>> java处理excel");
-    var result = {code: 200};
+    var result = {code : 200};
 
     try {
         var param = request.body;
@@ -1675,16 +1675,16 @@ router.post('/bacthDeliverOrder', function (request, response, next) {
             response.json(result);
             return;
         }
-        Order.batchDeliverOrder(param, function (err, data) {
-            if (err) {
-                response.json(err);
-                return;
-            }
-            if (data[0] != null) {
-                result.failInfo = data[0].failInfo;
-            }
-            response.json(result);
-            return;
+        Order.batchDeliverOrder(param, function(err, data){
+           if (err){
+               response.json(err);
+               return;
+           }
+           if(data[0] != null){
+               result.failInfo = data[0].failInfo;
+           }
+           response.json(result);
+           return;
         });
     } catch (ex) {
         logger.error("批量发货 error:" + ex);
@@ -1742,9 +1742,9 @@ router.post('/listOrderOffline', function (request, response, next) {
     async.series([
             function (callback) {
                 //params.sellerIds=[1,2,4];
-                logger.info("SELLER--data：" + JSON.stringify(params));
+                logger.info("SELLER--data：" +JSON.stringify(params));
                 try {
-                    if (params.sellerName != null && params.sellerName != "") {
+                    if(params.sellerName != null && params.sellerName != ""){
                         Seller.querySellerBySeller(params, function (err, data) {
                             //logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
@@ -1757,9 +1757,9 @@ router.post('/listOrderOffline', function (request, response, next) {
                                     sellerIds.push(seller.sellerId + "");
                                 }
                             }
-                            logger.info("SellerIds----shuju-------------：" + sellerIds);
+                            logger.info("SellerIds----shuju-------------："+sellerIds);
                             if (sellerIds.length > 0) {
-                                params.sellerIds = sellerIds;
+                                params.sellerIds=sellerIds;
                                 return callback(null, params);
                             } else {
                                 //sellerIds.push("-1");//代表传参了但是没有对应的数据，java层根据此判断是否继续向下执行
@@ -1767,8 +1767,8 @@ router.post('/listOrderOffline', function (request, response, next) {
                                 return callback(1, null);
                             }
                         });
-                    } else {
-                        callback(null, params);
+                    }else{
+                        callback(null,params);
                     }
                 } catch (ex) {
                     logger.info("调用seller服务异常:" + ex);
@@ -1778,7 +1778,7 @@ router.post('/listOrderOffline', function (request, response, next) {
             function (callback) {
                 logger.info("BUYER--data：");
                 try {
-                    if (params.loginName != null && params.loginName != "") {
+                    if(params.loginName != null && params.loginName != ""){
                         Buyer.getBuyerInfo(params, function (err, data) {
                             //logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                             if (err) {
@@ -1787,14 +1787,14 @@ router.post('/listOrderOffline', function (request, response, next) {
                             }
                             if (data[0].buyer != null) {
                                 var buyer = data[0].buyer;
-                                params.userId = buyer.userId;
+                                params.userId= buyer.userId;
                                 return callback(null, params);
                             } else {
-                                callback(2, null);
+                                callback(2,null);
                             }
                         });
-                    } else {
-                        callback(null, params);
+                    }else{
+                        callback(null,params);
                     }
                 } catch (ex) {
                     logger.info("调用buyer服务异常:" + ex);
@@ -1862,40 +1862,40 @@ router.post('/listOrderOffline', function (request, response, next) {
                                     curTime: order.curTime,
                                     fromSource: order.fromSource,
                                     payChannel: "",
-                                    payTypeName: ""
+                                    payTypeName:""
                                 };
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
                                     orderItem.payTime = order.payInfo.payTime;
                                     //logger.info("order.payInfo.payChannel:"+order.payInfo.payChannel);
                                     if (order.payInfo.payChannel == "1") {
-                                        if (order.exchangeScore > 0) {
+                                        if(order.exchangeScore>0){
                                             orderItem.payTypeName = "天翼+积分";
-                                        } else {
+                                        }else{
                                             orderItem.payTypeName = "天翼";
                                         }
                                     } else if (order.payInfo.payChannel == "2") {
-                                        if (order.exchangeScore > 0) {
+                                        if(order.exchangeScore>0){
                                             orderItem.payTypeName = "支付宝+积分";
-                                        } else {
+                                        }else{
                                             orderItem.payTypeName = "支付宝";
                                         }
                                     } else if (order.payInfo.payChannel == "3" || order.payInfo.payChannel == "4" || order.payInfo.payChannel == "9") {
-                                        if (order.exchangeScore > 0) {
+                                        if(order.exchangeScore>0){
                                             orderItem.payTypeName = "微信+积分";
-                                        } else {
+                                        }else{
                                             orderItem.payTypeName = "微信";
                                         }
                                     } else if (order.payInfo.payChannel == "5" || order.payInfo.payChannel == "7") {
-                                        if (order.exchangeScore > 0) {
+                                        if(order.exchangeScore>0){
                                             orderItem.payTypeName = "支付宝+积分";
-                                        } else {
+                                        }else{
                                             orderItem.payTypeName = "支付宝";
                                         }
                                     } else if (order.payInfo.payChannel == "6" || order.payInfo.payChannel == "8") {
-                                        if (order.exchangeScore > 0) {
+                                        if(order.exchangeScore>0){
                                             orderItem.payTypeName = "和包+积分";
-                                        } else {
+                                        }else{
                                             orderItem.payTypeName = "和包";
                                         }
                                     } else if (order.payInfo.payChannel == "11") {
@@ -1905,9 +1905,9 @@ router.post('/listOrderOffline', function (request, response, next) {
                                             orderItem.payTypeName = "一网通";
                                         }
                                     } else {
-                                        if (order.exchangeScore > 0) {
+                                        if(order.exchangeScore>0){
                                             orderItem.payTypeName = "积分";
-                                        } else {
+                                        }else{
                                             orderItem.payTypeName = "";
                                         }
                                     }
@@ -1939,7 +1939,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                             result.orderList = orderList;
                             result.page = page;
                             params.orderIdList = orderIdList;
-                            params.userIdList = objTemp;
+                            params.userIdList=objTemp;
                         }
                         //logger.error("get order list response:" + JSON.stringify(result));
                         return callback(null, result);
@@ -1954,19 +1954,19 @@ router.post('/listOrderOffline', function (request, response, next) {
                 try {
 
                     //logger.error("length:" + JSON.stringify(result.orderList.length));
-                    Buyer.getListBuyer(params.userIdList, function (err, data) {
-                        if (err) {
+                    Buyer.getListBuyer(params.userIdList, function(err, data){
+                        if(err){
                             return callback(4, null);
                         }
                         var buyerList = data[0].buyerList;
-                        if (data != null && data[0] != null && data[0].buyerList != null) {
-                            for (var i = 0; i < result.orderList.length; i++) {
-                                var userId = result.orderList[i].userId;
+                        if(data != null && data[0] != null && data[0].buyerList != null){
+                            for(var i = 0;i < result.orderList.length;i++){
+                                var userId=result.orderList[i].userId;
                                 //logger.info("userId:" + JSON.stringify(userId)+" userName:"+result.orderList[i].loginName);
-                                for (var j = 0; j < buyerList.length; j++) {
+                                for(var j = 0;j < buyerList.length; j++){
                                     var uid = buyerList[j].userId;
-                                    if (userId == uid) {
-                                        result.orderList[i].loginName = buyerList[j].loginName;
+                                    if(userId == uid){
+                                        result.orderList[i].loginName=buyerList[j].loginName;
                                         //logger.info("userName:"+result.orderList[i].loginName);
                                     }
                                 }
@@ -2027,7 +2027,7 @@ router.post('/listOrderOffline', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            if (err != 3) {
+            if ( err != 3) {
                 result = results[2];
                 // result.afterSaleList = results[3];
                 logger.info("线下收款列表-finle-result:------------->" + JSON.stringify(result));
@@ -2043,6 +2043,7 @@ router.post('/listOrderOffline', function (request, response, next) {
         });
 
 
+
 });
 router.post('/queryExportOrderInfoOffline', function (request, response, next) {
     logger.info("进入线下扫码导出订单的流程");
@@ -2051,7 +2052,7 @@ router.post('/queryExportOrderInfoOffline', function (request, response, next) {
         var params = request.body;
         //orderId
         if (params.orderId != "" && params.orderId != null) {
-        } else {
+        }else{
             //因为管理中心和卖家中心用同一个借口，所以去掉
             //if (params.startTime == "" || params.startTime == null) {
             //    result.code = 400;
@@ -2070,11 +2071,11 @@ router.post('/queryExportOrderInfoOffline', function (request, response, next) {
         async.series([
                 function (callback) {
                     //params.sellerIds=[1,2,4];
-                    logger.info("SELLER--data：" + JSON.stringify(params));
+                    logger.info("SELLER--data：" +JSON.stringify(params));
                     try {
-                        if (params.sellerName != null && params.sellerName != "") {
+                        if(params.sellerName != null && params.sellerName != ""){
                             Seller.querySellerBySeller(params, function (err, data) {
-                                logger.info("SELLER--data：" + JSON.stringify(data) + "  -----:params:" + JSON.stringify(params));
+                                logger.info("SELLER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                                 if (err) {
                                     logger.error("Seller服务异常");
                                     return callback(1, null);
@@ -2085,16 +2086,16 @@ router.post('/queryExportOrderInfoOffline', function (request, response, next) {
                                         sellerIds.push(seller.sellerId + "");
                                     }
                                 }
-                                logger.info("SellerIds-----------------：" + sellerIds);
+                                logger.info("SellerIds-----------------："+sellerIds);
                                 if (sellerIds.length > 0) {
-                                    params.sellerIds = sellerIds;
+                                    params.sellerIds=sellerIds;
                                     return callback(null, params);
                                 } else {
                                     callback(null, params);
                                 }
                             });
-                        } else {
-                            callback(null, params);
+                        }else{
+                            callback(null,params);
                         }
                     } catch (ex) {
                         logger.info("调用seller服务异常:" + ex);
@@ -2104,23 +2105,23 @@ router.post('/queryExportOrderInfoOffline', function (request, response, next) {
                 function (callback) {
                     logger.info("BUYER--data：");
                     try {
-                        if (params.loginName != null && params.loginName != "") {
+                        if(params.loginName != null && params.loginName != ""){
                             Buyer.getBuyerInfo(params, function (err, data) {
-                                logger.info("BUYER--data：" + JSON.stringify(data) + "  -----:params:" + JSON.stringify(params));
+                                logger.info("BUYER--data：" + JSON.stringify(data)+"  -----:params:"+JSON.stringify(params));
                                 if (err) {
                                     logger.error("Buyer服务异常");
                                     return callback(1, null);
                                 }
                                 if (data[0].buyer != null) {
                                     var buyer = data[0].buyer;
-                                    params.userId = buyer.userId;
+                                    params.userId= buyer.userId;
                                     return callback(null, params);
                                 } else {
-                                    callback(1, null);
+                                    callback(1,null);
                                 }
                             });
-                        } else {
-                            callback(null, params);
+                        }else{
+                            callback(null,params);
                         }
                     } catch (ex) {
                         logger.info("调用buyer服务异常:" + ex);

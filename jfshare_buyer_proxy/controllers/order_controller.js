@@ -1295,7 +1295,8 @@ router.post('/pay', function (req, res, next) {
                         var payUrl = {"jsonRequestData": data.value};
                         //result.paramName = "jsonRequestData";
                         result.payUrl = payUrl;
-                        result.action = "http://61.144.248.29:801/netpayment/BaseHttp.dll?MB_EUserPay";
+                        //result.action = "http://61.144.248.29:801/netpayment/BaseHttp.dll?MB_EUserPay";
+                        result.action = "https://netpay.cmbchina.com/netpayment/BaseHttp.dll?MB_EUserPay";
                         res.json(result);
                         logger.info("order pay response:" + JSON.stringify(result));
                     }
