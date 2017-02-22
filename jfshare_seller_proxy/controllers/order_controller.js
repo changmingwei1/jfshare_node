@@ -1015,7 +1015,13 @@ router.post('/querydealList', function (request, response, next) {
                         } else {
                             productDeatilList[i].paymode = "和包";
                         }
-                    } else {
+                    }else if (productDeatilList[i].paymode == "11") {
+                        if (productDeatilList[i].exchangeScore > 0) {
+                            productDeatilList[i].paymode = "一网通+积分";
+                        } else {
+                            productDeatilList[i].paymode = "一网通";
+                        }
+                    }else {
 
                         if (productDeatilList[i].exchangeScore > 0) {
                             productDeatilList[i].paymode = "积分";
