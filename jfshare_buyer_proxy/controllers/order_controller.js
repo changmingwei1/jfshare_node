@@ -1191,7 +1191,7 @@ router.post('/pay', function (req, res, next) {
 
     if(arg.cip == "" || arg.cip == null){
 
-        var ip1 = request.headers['x-real-ip'];
+        var ip1 = req.headers['x-real-ip'];
 
         arg.ip = ip1;
 
@@ -1200,7 +1200,7 @@ router.post('/pay', function (req, res, next) {
 
         arg.ip = arg.cip;
 
-        logger.error("不是错误只是为了显示ip:"+arg.ip);
+        logger.error("不是错误只是为了显示ip2:"+arg.ip);
     }
 
     logger.info("订单支付请求参数 request:" + JSON.stringify(arg));
