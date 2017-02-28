@@ -2171,12 +2171,12 @@ router.post('/enterUserAuthorize', function (request, response, next) {
     try {
 
         logger.info("兑入积分鉴权登陆调用接口"+ip);
-        if (ip != "::ffff:124.42.103.132"  && ip != "::ffff:124.42.103.131") {
-            resContent.code = 400;
-            resContent.desc = "访问IP不在配置范围内";
-            response.json(resContent);
-            return;
-        }
+        //if (ip != "::ffff:124.42.103.132"  && ip != "::ffff:124.42.103.131"  && ip != "::ffff:120.24.153.102") {
+        //    resContent.code = 400;
+        //    resContent.desc = "访问IP不在配置范围内";
+        //    response.json(resContent);
+        //    return;
+        //}
         if (param.requestXml == null || param.requestXml == "") {
             resContent.ErrCode = 9999;
             resContent.ErrMsg = "请求参数为空";
@@ -2214,7 +2214,7 @@ router.post('/smsLoginEnterAmount', function (request, response, next) {
     var ip = getClientIP(request);
     try {
         logger.info("请求IP"+ip);
-        if (ip != "::ffff:124.42.103.132") {
+        if (ip != "::ffff:124.42.103.132" && ip != "::ffff:117.114.151.190"  && ip != "::ffff:120.24.153.102") {
             resContent.code = 400;
             resContent.desc = "访问IP不在配置范围内";
             response.json(resContent);
