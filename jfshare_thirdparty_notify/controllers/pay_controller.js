@@ -127,6 +127,108 @@ router.get('/notify/alipay', function(req, res, next) {
     res.json(ret);
 });
 
+
+router.post('/notify/bestpay', function(req, res, next) {
+    try {
+        var ret = {};
+        logger.info("支付回调--post");
+        var arg = req.body;
+        var resObj = JSON.stringify(arg);
+        logger.info("########post接收到第三方支付[bestpay]的通知：" + resObj);
+
+        if (paramValid.empty(resObj)) {
+            logger.warn("获取支付通知参数有误, arg");
+            ret.status = 500;
+            ret.msg = "非法参数请求！";
+            res.json(ret);
+            return;
+        }
+
+        var payRes = new pay_types.PayRes({
+            payChannel:12,
+            resUrl:resObj
+        });
+        // 获取client
+        var payServ = new Lich.InvokeBag(Lich.ServiceKey.PayServer, "payNotify", payRes);
+        Lich.wicca.invokeClient(payServ, function (err, data) {
+            if (err || data[0].result.code == "1") {
+                logger.error("调用payServ-payNotify接收支付通知失败  失败原因 ======" + err+JSON.stringify(data));
+                ret.status = 501;
+                ret.msg = "通知失败！";
+                res.json(404);
+                return;
+            }
+            logger.info("调用payServ-payNotify接收支付通知成功  result.code =  （" + data[0].result.code + "）  1为失败 0为成功");
+            //logger.info("接口返回数据=====" + data[0]);
+
+            if(data!=null && data[0]!=null){
+
+                var result = "UPTRANSEQ_"+arg.UPTRANSEQ;
+                logger.info("返回给翼支付的结果"+result);
+                res.json(result);
+                return;
+            }
+        });
+    } catch (err) {
+        logger.error("调用payServ-payNotify接收支付通知失败！", err);
+        ret.status = 500;
+        ret.msg = "处理失败！";
+        res.json(404);
+    }
+});
+
+
+
+router.get('/notify/bestpay', function(req, res, next) {
+    try {
+        logger.info("支付回调--get");
+        var ret = {};
+        var arg = req.query;
+        var resObj = JSON.stringify(arg);
+        logger.info("########get接收到第三方支付[bestpay]的通知：" + resObj);
+
+        if (paramValid.empty(resObj)) {
+            logger.warn("获取支付通知参数有误, arg");
+            ret.status = 500;
+            ret.msg = "非法参数请求！";
+            res.json(ret);
+            return;
+        }
+
+        var payRes = new pay_types.PayRes({
+            payChannel:12,
+            resUrl:resObj
+        });
+        // 获取client
+        var payServ = new Lich.InvokeBag(Lich.ServiceKey.PayServer, "payNotify", payRes);
+        Lich.wicca.invokeClient(payServ, function (err, data) {
+            if (err || data[0].result.code == "1") {
+                logger.error("调用payServ-payNotify接收支付通知失败  失败原因 ======" + err+JSON.stringify(data));
+                ret.status = 501;
+                ret.msg = "通知失败！";
+                res.json(404);
+                return;
+            }
+            logger.info("调用payServ-payNotify接收支付通知成功  result.code =  （" + data[0].result.code + "）  1为失败 0为成功");
+            if(data!=null && data[0]!=null){
+
+                var result = "UPTRANSEQ_"+arg.UPTRANSEQ;
+                logger.info("返回给翼支付的结果"+result);
+                res.json(result);
+                return;
+            }
+        });
+    } catch (err) {
+        logger.error("调用payServ-payNotify接收支付通知失败！", err);
+        ret.status = 500;
+        ret.msg = "处理失败！";
+        res.json(404);
+    }
+});
+
+
+
+
 router.post('/notify/alipay', function(req, res, next) {
     try {
         var ret = {};

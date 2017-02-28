@@ -109,6 +109,8 @@ Order.prototype.payApply = function (param, callback) {
     }
     var payChannel = new pay_types.PayChannel(pay);
 
+    payChannel.payIp = param.ip;
+
     var payParam = new order_types.PayParam({
         userId: param.userId,
         orderIdList: param.orderIdList,

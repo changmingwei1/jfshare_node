@@ -1187,6 +1187,22 @@ router.post('/pay', function (req, res, next) {
         res.json(result);
         return;
     }
+
+
+    if(arg.cip == "" || arg.cip == null){
+
+        var ip1 = req.headers['x-real-ip'];
+
+        arg.ip = ip1;
+
+        logger.error("不是错误只是为了显示ip:"+arg.ip);
+    }else{
+
+        arg.ip = arg.cip;
+
+        logger.error("不是错误只是为了显示ip2:"+arg.ip);
+    }
+
     logger.info("订单支付请求参数 request:" + JSON.stringify(arg));
     Buyer.validAuth(arg, function (err, data) {
         if (err) {
@@ -1308,8 +1324,23 @@ router.post('/pay', function (req, res, next) {
                 res.json(result);
                 return;
             }
-        }
-        else {
+        }else if(arg.payChannel == 12 || arg.payChannel == 13 || arg.payChannel == 14){
+
+            Order.payApply(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                if (data !== null) {
+                    var urlInfo = data.value;
+                    result.payUrl = urlInfo;
+                    logger.info("order pay response:" + JSON.stringify(result));
+                    res.json(result);
+                   return;
+                }
+            });
+
+        }else {
             try {
                 Order.payApply(arg, function (err, payUrl) {
                     if (err) {

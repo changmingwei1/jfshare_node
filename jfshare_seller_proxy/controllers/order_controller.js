@@ -1015,7 +1015,13 @@ router.post('/querydealList', function (request, response, next) {
                         } else {
                             productDeatilList[i].paymode = "和包";
                         }
-                    } else {
+                    }else if (productDeatilList[i].paymode == "11") {
+                        if (productDeatilList[i].exchangeScore > 0) {
+                            productDeatilList[i].paymode = "一网通+积分";
+                        } else {
+                            productDeatilList[i].paymode = "一网通";
+                        }
+                    }else {
 
                         if (productDeatilList[i].exchangeScore > 0) {
                             productDeatilList[i].paymode = "积分";
@@ -1946,7 +1952,13 @@ router.post('/listOrderOffline', function (request, response, next) {
                                         } else {
                                             orderItem.payTypeName = "一网通";
                                         }
-                                    } else {
+                                    }else if (order.payInfo.payChannel == "12" ||order.payInfo.payChannel == "13" ||order.payInfo.payChannel == "14" ) {
+                                        if (order.exchangeScore > 0) {
+                                            orderItem.payTypeName = "翼支付+积分";
+                                        } else {
+                                            orderItem.payTypeName = "翼支付";
+                                        }
+                                    }else {
                                         if (order.exchangeScore > 0) {
                                             orderItem.payTypeName = "积分";
                                         } else {
