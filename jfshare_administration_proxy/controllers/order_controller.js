@@ -1157,9 +1157,12 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 skunum: order.productList[i].skuNum,
                                                 skuDesc: order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
-                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                imgUrl:"",
                                                 count: order.productList[i].count
                                             };
+                                            if(order.productList[i].imagesUrl != null && order.productList[i].imagesUrl != ""){
+                                                productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0];
+                                            }
                                             productList.push(productItem);
                                         }
                                         orderItem.productList = productList;
