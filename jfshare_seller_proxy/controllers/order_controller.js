@@ -1021,6 +1021,12 @@ router.post('/querydealList', function (request, response, next) {
                         } else {
                             productDeatilList[i].paymode = "一网通";
                         }
+                    }else if (productDeatilList[i].paymode == "12" ||productDeatilList[i].paymode == "13" ||productDeatilList[i].paymode == "14" ) {
+                        if (productDeatilList[i].exchangeScore > 0) {
+                            productDeatilList[i].paymode = "翼支付+积分";
+                        } else {
+                            productDeatilList[i].paymode = "翼支付";
+                        }
                     }else {
 
                         if (productDeatilList[i].exchangeScore > 0) {
