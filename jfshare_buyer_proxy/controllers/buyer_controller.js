@@ -1269,78 +1269,78 @@ router.post('/enterAmountCall', function (request, response, next) {
     var ip = getClientIP(request);
     try {
         logger.info("请求IP"+ip);
-        if (ip != "::ffff:124.42.103.132") {
-            resContent.code = 400;
-            resContent.desc = "访问IP不在配置范围内";
-            response.json(resContent);
-            return;
-        }
+        //if (ip != "::ffff:124.42.103.132" && ip != "::ffff:120.27.232.14" && ip != "120.27.232.14" && ip != "::ffff:116.228.50.38"  && ip != "116.228.50.38" ) {
+        //    resContent.ErrCode = 400;
+        //    resContent.ErrMsg = "访问IP不在配置范围内";
+        //    response.json(resContent);
+        //    return;
+        //}
         if (param.AppCode == null || param.AppCode == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "应用编码不能为空";
             response.json(resContent);
             return;
         }
         if (param.RequestDate == null || param.RequestDate == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "请求时间不能为空";
             response.json(resContent);
             return;
         }
         if (param.Sign == null || param.Sign == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "签名信息不能为空";
             response.json(resContent);
             return;
         }
         if (param.SpID == null || param.SpID == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "业务编码不能为空";
             response.json(resContent);
             return;
         }
         if (param.OutOrderID == null || param.OutOrderID == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "外部订单号不能为空";
             response.json(resContent);
             return;
         }
         if (param.DeviceNo == null || param.DeviceNo == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "设备号不能为空";
             response.json(resContent);
             return;
         }
-        if (param.DeviceType == null || param.DeviceType == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        if (param.ProvinceID == null || param.ProvinceID == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
+        //if (param.DeviceType == null || param.DeviceType == "") {
+        //    resContent.code = 400;
+        //    resContent.desc = "设备类型不能为空";
+        //    response.json(resContent);
+        //    return;
+        //}
+        //if (param.ProvinceID == null || param.ProvinceID == "") {
+        //    resContent.code = 400;
+        //    resContent.desc = "省编号不能为空";
+        //    response.json(resContent);
+        //    return;
+        //}
         if (param.ExpTime == null || param.ExpTime == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "过期时间不能为空";
             response.json(resContent);
             return;
         }
         if (param.Num == null || param.Num == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
+            resContent.ErrCode = 9999;
+            resContent.ErrMsg = "发行积分数不能为空";
             response.json(resContent);
             return;
         }
-        if (param.Remark == null || param.Remark == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
+        //if (param.Remark == null || param.Remark == "") {
+        //    resContent.code = 400;
+        //    resContent.desc = "参数错误";
+        //    response.json(resContent);
+        //    return;
+        //}
         //if (param.token == null || param.token == "") {
         //    resContent.code = 400;
         //    resContent.desc = "鉴权参数错误";
@@ -1371,7 +1371,7 @@ router.post('/enterAmountCall', function (request, response, next) {
             } else {
                 //var score = data[0].responseScore;
                 //resContent.responseScore = score;
-                response.json(resContent);
+                response.json(data[0].responseScore);
                 logger.info("Score enterAmountCall response:" + JSON.stringify(resContent));
             }
         });
@@ -1379,7 +1379,7 @@ router.post('/enterAmountCall', function (request, response, next) {
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("积分兑入异常，原因是======:" + ex);
-        resContent.code = 500;
+        resContent.code = 9999;
         resContent.desc = "积分兑入失败";
         response.json(resContent);
     }
@@ -1656,62 +1656,62 @@ router.post('/relaAccountCall', function (request, response, next) {
     try {
 
         logger.info("兑入积分鉴权登陆调用接口"+ip);
-        if (ip != "::ffff:124.42.103.132") {
-            resContent.code = 400;
-            resContent.desc = "访问IP不在配置范围内";
-            response.json(resContent);
-            return;
-        }
+        //if (ip != "::ffff:124.42.103.132" && ip != "::ffff:120.27.232.14" && ip != "120.27.232.14" ) {
+        //    resContent.code = 400;
+        //    resContent.desc = "访问IP不在配置范围内";
+        //    response.json(resContent);
+        //    return;
+        //}
         if (param == null || param.AppCode == null || param.AppCode == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "应用编码不能为空";
             response.json(resContent);
             return;
         }
         if (param.RequestDate == null || param.RequestDate == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "请求时间不能为空";
             response.json(resContent);
             return;
         }
         if (param.Sign == null || param.Sign == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "数据签名不能为空";
             response.json(resContent);
             return;
         }
         if (param.SpID == null || param.SpID == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "业务编号不能为空";
             response.json(resContent);
             return;
         }
         if (param.DeviceNo == null || param.DeviceNo == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "设备号不能为空";
             response.json(resContent);
             return;
         }
         if (param.DeviceType == null || param.DeviceType == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "设备类型不能为空";
             response.json(resContent);
             return;
         }
         if (param.OutCustID == null || param.OutCustID == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "客户编号不能为空";
             response.json(resContent);
             return;
         }
         if (param.ToKen == null || param.ToKen == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "Token不能为空";
             response.json(resContent);
             return;
         }
         if (param.ExceedTime == null || param.ExceedTime == "") {
-            resContent.code = 400;
+            resContent.code = 9999;
             resContent.desc = "过期时间不能为空";
             response.json(resContent);
             return;
@@ -2171,12 +2171,12 @@ router.post('/enterUserAuthorize', function (request, response, next) {
     try {
 
         logger.info("兑入积分鉴权登陆调用接口"+ip);
-        if (ip != "::ffff:124.42.103.132"  && ip != "::ffff:124.42.103.131") {
-            resContent.code = 400;
-            resContent.desc = "访问IP不在配置范围内";
-            response.json(resContent);
-            return;
-        }
+        //if (ip != "::ffff:124.42.103.132"  && ip != "::ffff:116.228.50.38"  && ip != "116.228.50.38"  && ip != "::ffff:120.27.232.14" && ip != "120.27.232.14") {
+        //    resContent.ErrCode = 9999;
+        //    resContent.ErrMsg = "访问IP不在配置范围内";
+        //    response.json(resContent);
+        //    return;
+        //}
         if (param.requestXml == null || param.requestXml == "") {
             resContent.ErrCode = 9999;
             resContent.ErrMsg = "请求参数为空";
@@ -2214,12 +2214,12 @@ router.post('/smsLoginEnterAmount', function (request, response, next) {
     var ip = getClientIP(request);
     try {
         logger.info("请求IP"+ip);
-        if (ip != "::ffff:124.42.103.132") {
-            resContent.code = 400;
-            resContent.desc = "访问IP不在配置范围内";
-            response.json(resContent);
-            return;
-        }
+        //if (ip != "::ffff:124.42.103.132" && ip != "::ffff:120.27.232.14"  && ip != "::ffff:120.24.153.102") {
+        //    resContent.code = 400;
+        //    resContent.desc = "访问IP不在配置范围内";
+        //    response.json(resContent);
+        //    return;
+        //}
         if (param.mobile == null || param.mobile == "") {
             resContent.code = 500;
             resContent.desc = "手机号不能为空";

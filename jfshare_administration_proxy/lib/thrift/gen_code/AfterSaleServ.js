@@ -11,7 +11,7 @@ var result_ttypes = require('./result_types')
 var pagination_ttypes = require('./pagination_types')
 
 
-var ttypes = require('./aftersale_types');
+var ttypes = require('./afterSale_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
 AfterSaleServ_request_args = function(args) {
@@ -568,6 +568,222 @@ AfterSaleServ_queryAfterSaleOrder_result.prototype.write = function(output) {
   return;
 };
 
+AfterSaleServ_queryMaxReturnScore_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+AfterSaleServ_queryMaxReturnScore_args.prototype = {};
+AfterSaleServ_queryMaxReturnScore_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ReturnScoreParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AfterSaleServ_queryMaxReturnScore_args.prototype.write = function(output) {
+  output.writeStructBegin('AfterSaleServ_queryMaxReturnScore_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AfterSaleServ_queryMaxReturnScore_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+AfterSaleServ_queryMaxReturnScore_result.prototype = {};
+AfterSaleServ_queryMaxReturnScore_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.MaxReturnScoreResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AfterSaleServ_queryMaxReturnScore_result.prototype.write = function(output) {
+  output.writeStructBegin('AfterSaleServ_queryMaxReturnScore_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AfterSaleServ_ReturnScore_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+AfterSaleServ_ReturnScore_args.prototype = {};
+AfterSaleServ_ReturnScore_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ReturnScoreParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AfterSaleServ_ReturnScore_args.prototype.write = function(output) {
+  output.writeStructBegin('AfterSaleServ_ReturnScore_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AfterSaleServ_ReturnScore_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+AfterSaleServ_ReturnScore_result.prototype = {};
+AfterSaleServ_ReturnScore_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AfterSaleServ_ReturnScore_result.prototype.write = function(output) {
+  output.writeStructBegin('AfterSaleServ_ReturnScore_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 AfterSaleServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -813,6 +1029,100 @@ AfterSaleServClient.prototype.recv_queryAfterSaleOrder = function(input,mtype,rs
   }
   return callback('queryAfterSaleOrder failed: unknown result');
 };
+AfterSaleServClient.prototype.queryMaxReturnScore = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryMaxReturnScore(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryMaxReturnScore(param);
+  }
+};
+
+AfterSaleServClient.prototype.send_queryMaxReturnScore = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryMaxReturnScore', Thrift.MessageType.CALL, this.seqid());
+  var args = new AfterSaleServ_queryMaxReturnScore_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+AfterSaleServClient.prototype.recv_queryMaxReturnScore = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new AfterSaleServ_queryMaxReturnScore_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryMaxReturnScore failed: unknown result');
+};
+AfterSaleServClient.prototype.ReturnScore = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_ReturnScore(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_ReturnScore(param);
+  }
+};
+
+AfterSaleServClient.prototype.send_ReturnScore = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('ReturnScore', Thrift.MessageType.CALL, this.seqid());
+  var args = new AfterSaleServ_ReturnScore_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+AfterSaleServClient.prototype.recv_ReturnScore = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new AfterSaleServ_ReturnScore_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('ReturnScore failed: unknown result');
+};
 AfterSaleServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -974,6 +1284,66 @@ AfterSaleServProcessor.prototype.process_queryAfterSaleOrder = function(seqid, i
     this._handler.queryAfterSaleOrder(args.param, args.pagination,  function (err, result) {
       var result = new AfterSaleServ_queryAfterSaleOrder_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryAfterSaleOrder", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+AfterSaleServProcessor.prototype.process_queryMaxReturnScore = function(seqid, input, output) {
+  var args = new AfterSaleServ_queryMaxReturnScore_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryMaxReturnScore.length === 1) {
+    Q.fcall(this._handler.queryMaxReturnScore, args.param)
+      .then(function(result) {
+        var result = new AfterSaleServ_queryMaxReturnScore_result({success: result});
+        output.writeMessageBegin("queryMaxReturnScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new AfterSaleServ_queryMaxReturnScore_result(err);
+        output.writeMessageBegin("queryMaxReturnScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryMaxReturnScore(args.param,  function (err, result) {
+      var result = new AfterSaleServ_queryMaxReturnScore_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryMaxReturnScore", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+AfterSaleServProcessor.prototype.process_ReturnScore = function(seqid, input, output) {
+  var args = new AfterSaleServ_ReturnScore_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.ReturnScore.length === 1) {
+    Q.fcall(this._handler.ReturnScore, args.param)
+      .then(function(result) {
+        var result = new AfterSaleServ_ReturnScore_result({success: result});
+        output.writeMessageBegin("ReturnScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new AfterSaleServ_ReturnScore_result(err);
+        output.writeMessageBegin("ReturnScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.ReturnScore(args.param,  function (err, result) {
+      var result = new AfterSaleServ_ReturnScore_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("ReturnScore", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

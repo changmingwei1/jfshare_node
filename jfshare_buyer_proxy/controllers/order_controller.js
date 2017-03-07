@@ -316,9 +316,14 @@ router.post('/afterSaleList', function (request, response, next) {
                                                     skuNum: order.productList[i].skuNum,
                                                     skuName: order.productList[i].skuDesc,
                                                     curPrice: order.productList[i].curPrice,
-                                                    imgKey: order.productList[i].imagesUrl.split(',')[0],
+
                                                     count: order.productList[i].count
                                                 };
+                                                if (order.productList[i].imagesUrl != null) {
+                                                    productItem.imgKey = order.productList[i].imagesUrl.split(',')[0];
+                                                } else {
+                                                    productItem.imgKey = "";
+                                                }
                                                 productList.push(productItem);
                                             }
                                             orderItem.productList = productList;
@@ -647,20 +652,19 @@ router.post('/list', function (request, response, next) {
                                             activeState: order.activeState,
                                             orderType: order.orderType,
                                             postage: order.postage,
-                                            timeOutLimit:0,//待支付超时时间
+                                            timeOutLimit: 0,//待支付超时时间
                                             type: order.productList[0].type  //5.17测没有type
                                         };
                                         //如果待支付
-                                        if(order.orderState ==10){
-                                            if(order.sellerId == 115){
-                                               orderItem.timeOutLimit = 10;
+                                        if (order.orderState == 10) {
+                                            if (order.sellerId == 115) {
+                                                orderItem.timeOutLimit = 10;
                                                 //  orderItem.timeOutLimit = 11;
-                                            }else{
+                                            } else {
                                                 orderItem.timeOutLimit = 2880;
                                                 // orderItem.timeOutLimit = 1440;
                                             }
                                         }
-
 
 
                                         if (order.deliverInfo != null) {
@@ -984,16 +988,15 @@ router.post('/info', function (req, res, next) {
                                 result.tradeCode = orderInfo.tradeCode;
 
                                 //如果待支付
-                                if(orderInfo.orderState ==10){
-                                    if(orderInfo.sellerId == 115){
+                                if (orderInfo.orderState == 10) {
+                                    if (orderInfo.sellerId == 115) {
                                         // result.timeOutLimit = 11;
                                         result.timeOutLimit = 10;
-                                    }else{
-                                       result.timeOutLimit = 2880;
+                                    } else {
+                                        result.timeOutLimit = 2880;
                                         //  result.timeOutLimit = 1440;
                                     }
                                 }
-
 
 
                                 //临时修改：因安卓没有62状态，所以62状态转换为61
@@ -1184,6 +1187,22 @@ router.post('/pay', function (req, res, next) {
         res.json(result);
         return;
     }
+
+
+    if(arg.cip == "" || arg.cip == null){
+
+        var ip1 = req.headers['x-real-ip'];
+
+        arg.ip = ip1;
+
+        logger.error("不是错误只是为了显示ip:"+arg.ip);
+    }else{
+
+        arg.ip = arg.cip;
+
+        logger.error("不是错误只是为了显示ip2:"+arg.ip);
+    }
+
     logger.info("订单支付请求参数 request:" + JSON.stringify(arg));
     Buyer.validAuth(arg, function (err, data) {
         if (err) {
@@ -1280,7 +1299,7 @@ router.post('/pay', function (req, res, next) {
                 res.json(result);
                 return;
             }
-        }else if (arg.payChannel == 11) {
+        } else if (arg.payChannel == 11) {
             try {
                 Order.payApply(arg, function (err, data) {
                     if (err) {
@@ -1289,10 +1308,11 @@ router.post('/pay', function (req, res, next) {
                     }
                     if (data !== null) {
 
-                        var payUrl = {"jsonRequestData":data.value};
+                        var payUrl = {"jsonRequestData": data.value};
                         //result.paramName = "jsonRequestData";
                         result.payUrl = payUrl;
-                        result.action = "http://61.144.248.29:801/netpayment/BaseHttp.dll?MB_EUserPay";
+                        //result.action = "http://61.144.248.29:801/netpayment/BaseHttp.dll?MB_EUserPay";
+                        result.action = "https://netpay.cmbchina.com/netpayment/BaseHttp.dll?MB_EUserPay";
                         res.json(result);
                         logger.info("order pay response:" + JSON.stringify(result));
                     }
@@ -1304,8 +1324,23 @@ router.post('/pay', function (req, res, next) {
                 res.json(result);
                 return;
             }
-        }
-        else {
+        }else if(arg.payChannel == 12 || arg.payChannel == 13 || arg.payChannel == 14){
+
+            Order.payApply(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                if (data !== null) {
+                    var urlInfo = data.value;
+                    result.payUrl = urlInfo;
+                    logger.info("order pay response:" + JSON.stringify(result));
+                    res.json(result);
+                   return;
+                }
+            });
+
+        }else {
             try {
                 Order.payApply(arg, function (err, payUrl) {
                     if (err) {
@@ -1981,6 +2016,12 @@ router.post('/payOrderCreates', function (request, response, next) {
     logger.info("进入提交订单流程..");
     var result = {code: 200};
 
+
+    //result.code = 500;
+    // result.desc = "服务暂不可使用";
+    // response.json(result);
+    //return;
+
     //获取ip
     var ip1 = request.headers['x-real-ip'];
     /**
@@ -1994,7 +2035,7 @@ router.post('/payOrderCreates', function (request, response, next) {
     var arg = request.body;
 
     if (arg.tradeCode == "Z8006" || arg.tradeCode == "Z8005") {
-        if(arg.fromSource != 1){
+        if (arg.fromSource != 1) {
             arg.provinceName = ip1;
         }
     }
@@ -2007,12 +2048,18 @@ router.post('/payOrderCreates', function (request, response, next) {
         //    return;
         //}
 
-        if (arg.tradeCode == "Z8003") {
-           // result.code = 500;
+        if (arg.tradeCode == "Z8005") {
+
+            // result.code = 500;
+            // result.desc = "系统升级中";
+            // response.json(result);
+            // return;
+
+            // result.code = 500;
             //result.desc = "话费充值服务暂不可使用";
-           // result.desc = "运营商系统维护，话费充值服务暂不可用";
-           // response.json(result);
-          //  return;
+            // result.desc = "运营商系统维护，话费充值服务暂不可用";
+            // response.json(result);
+            //  return;
         }
         if (arg == null || arg.userId == null || arg.sellerDetailList == null) {
             result.code = 400;
@@ -2058,11 +2105,11 @@ router.post('/payOrderCreates', function (request, response, next) {
         }
         if (arg.tradeCode == "Z8003") { //话费
             if (arg.totalSum == "" || (
-                //arg.totalSum != "30" &&
-                arg.totalSum != "50" &&
-                arg.totalSum != "100" &&
-                arg.totalSum != "300" &&
-                arg.totalSum != "500"
+                    //arg.totalSum != "30" &&
+                    arg.totalSum != "50" &&
+                    arg.totalSum != "100" &&
+                    arg.totalSum != "300" &&
+                    arg.totalSum != "500"
                 )) {
                 result.code = 500;
                 result.desc = "该面值已售罄";
@@ -2070,17 +2117,17 @@ router.post('/payOrderCreates', function (request, response, next) {
                 return;
             }
             /*if (arg.totalSum == "30") {
-                result.code = 500;
-                result.desc = "该面值已售罄";
-                response.json(result);
-                return;
-            }
-            if (arg.totalSum == "50") {
-                result.code = 500;
-                result.desc = "该面值已售罄";
-                response.json(result);
-                return;
-            }*/
+             result.code = 500;
+             result.desc = "该面值已售罄";
+             response.json(result);
+             return;
+             }
+             if (arg.totalSum == "50") {
+             result.code = 500;
+             result.desc = "该面值已售罄";
+             response.json(result);
+             return;
+             }*/
         }
         if (arg.tradeCode == "Z8004") { //流量
             //result.code = 500;

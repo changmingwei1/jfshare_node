@@ -192,4 +192,57 @@ AfterSale.prototype.queryAfterSaleOrderListBySellerId = function (params, callba
 
 };
 
+//售后退积分
+AfterSale.prototype.returnScore = function (params, callback) {
+
+    var returnScoreParam = new afterSale_types.ReturnScoreParam({
+        productId: params.productId,
+        orderId: params.orderId,
+        scoreAmount: params.scoreAmount,
+        passWord: params.passWord,
+    });
+
+    logger.error("AfterSaleServ-returnScore  args:" + JSON.stringify(returnScoreParam));
+
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "ReturnScore", [returnScoreParam]);
+
+    Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
+        logger.error("AfterSaleServ-returnScore  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("AfterSaleServ-returnScore  失败原因 ======" + err);
+            res.code = data[0].result.failDescList[0].failCode;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
+
+//查询售后订单退积分明细
+AfterSale.prototype.queryMaxReturnScore = function (params, callback) {
+
+    var returnScoreParam = new afterSale_types.ReturnScoreParam({
+        productId: params.productId,
+        orderId: params.orderId,
+    });
+
+    logger.error("AfterSaleServ-queryMaxReturnScore  args:" + JSON.stringify(returnScoreParam));
+
+    var afterSaleServ = new Lich.InvokeBag(Lich.ServiceKey.AfterSaleServer, "queryMaxReturnScore", [returnScoreParam]);
+
+    Lich.wicca.invokeClient(afterSaleServ, function (err, data) {
+        logger.error("AfterSaleServ-queryMaxReturnScore  result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            logger.error("AfterSaleServ-queryMaxReturnScore  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "查询售后订单退积分明细列表失败！";
+            callback(res, null);
+        } else {
+            callback(null, data[0]);
+        }
+    });
+};
 module.exports = new AfterSale();

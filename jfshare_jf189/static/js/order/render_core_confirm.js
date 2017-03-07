@@ -332,6 +332,7 @@ function orderConfirm() {
                 $("input[name='totalPayAmount']").val(totalPayAmount);
                 $("input[name='postage']").val(render_orderInfo.postage);
                 $("input[name='buyerComment']").val($("#buyerComment_textarea").val());
+                $("input[name='tradeCode']").val("Z0003");
                 $("#confirmOrderform").submit();
                 var toPayBtn = $("#btnSubmit");
                 toPayBtn.html("提交订单...");

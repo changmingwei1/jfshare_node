@@ -136,8 +136,8 @@ router.post('/list', function (request, response, next) {
                     //    });
                     //}
                     Order.orderProfileQuery(params, function (err, orderInfo) {
-                        logger.info("Order-data:"+JSON.stringify(params));
-                        logger.error("Order-orderInfo-orderInfo:"+JSON.stringify(orderInfo));
+                        logger.info("Order-data:" + JSON.stringify(params));
+                        logger.error("Order-orderInfo-orderInfo:" + JSON.stringify(orderInfo));
                         if (err) {
                             logger.error("订单服务异常");
                             return callback(1, null);
@@ -179,46 +179,46 @@ router.post('/list', function (request, response, next) {
                                     curTime: order.curTime,
                                     fromSource: order.fromSource,
                                     payChannel: "",
-                                    payTypeName:"",
+                                    payTypeName: "",
                                 };
                                 if (order.payInfo != null) {
                                     orderItem.payChannel = order.payInfo.payChannel;
                                     orderItem.payId = order.payInfo.payId;
-                                    logger.error("order.payInfo.payChannel:"+order.payInfo.payChannel);
+                                    logger.error("order.payInfo.payChannel:" + order.payInfo.payChannel);
                                     if (order.payInfo.payChannel == "1") {
-                                        if(order.exchangeScore>0){
+                                        if (order.exchangeScore > 0) {
                                             orderItem.payTypeName = "天翼+积分";
-                                        }else{
+                                        } else {
                                             orderItem.payTypeName = "天翼";
                                         }
                                     } else if (order.payInfo.payChannel == "2") {
-                                        if(order.exchangeScore>0){
+                                        if (order.exchangeScore > 0) {
                                             orderItem.payTypeName = "支付宝+积分";
-                                        }else{
+                                        } else {
                                             orderItem.payTypeName = "支付宝";
                                         }
                                     } else if (order.payInfo.payChannel == "3" || order.payInfo.payChannel == "4" || order.payInfo.payChannel == "9") {
-                                        if(order.exchangeScore>0){
+                                        if (order.exchangeScore > 0) {
                                             orderItem.payTypeName = "微信+积分";
-                                        }else{
+                                        } else {
                                             orderItem.payTypeName = "微信";
                                         }
                                     } else if (order.payInfo.payChannel == "5" || order.payInfo.payChannel == "7") {
-                                        if(order.exchangeScore>0){
+                                        if (order.exchangeScore > 0) {
                                             orderItem.payTypeName = "支付宝+积分";
-                                        }else{
+                                        } else {
                                             orderItem.payTypeName = "支付宝";
                                         }
                                     } else if (order.payInfo.payChannel == "6" || order.payInfo.payChannel == "8") {
-                                        if(order.exchangeScore>0){
+                                        if (order.exchangeScore > 0) {
                                             orderItem.payTypeName = "和包+积分";
-                                        }else{
+                                        } else {
                                             orderItem.payTypeName = "和包";
                                         }
                                     } else {
-                                        if(order.exchangeScore>0){
+                                        if (order.exchangeScore > 0) {
                                             orderItem.payTypeName = "积分";
-                                        }else{
+                                        } else {
                                             orderItem.payTypeName = "";
                                         }
                                     }
@@ -239,15 +239,15 @@ router.post('/list', function (request, response, next) {
                                         if (order.productList[i].imagesUrl != null) {
                                             productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0]
                                         }
-                                        if(order.tradeCode=="Z8003"){
-                                            productItem.productName="手机话费充值 " + order.closingPrice + "元";
-                                            productItem.imgKey="4EF66DB6D245554C206E645A278E03A7.png";
+                                        if (order.tradeCode == "Z8003") {
+                                            productItem.productName = "手机话费充值 " + order.closingPrice + "元";
+                                            productItem.imgKey = "4EF66DB6D245554C206E645A278E03A7.png";
                                         }
-                                        if(order.tradeCode=="Z8004"){
-                                            productItem.productName=order.deliverInfo.receiverAddress + "手机流量充值 " + order.deliverInfo.receiverName;
-                                            productItem.imgKey="A177197080704C3AC2BE21A4D67EBD21.png";
+                                        if (order.tradeCode == "Z8004") {
+                                            productItem.productName = order.deliverInfo.receiverAddress + "手机流量充值 " + order.deliverInfo.receiverName;
+                                            productItem.imgKey = "A177197080704C3AC2BE21A4D67EBD21.png";
                                         }
-                                        if(order.tradeCode=="Z8005"){
+                                        if (order.tradeCode == "Z8005") {
                                             productItem.productName = "腾讯Q币充值 " + Number(order.closingPrice) + "Q币";
                                             productItem.imgKey = "9F5FC6D13B63EC2568FC01DFE6F78156.png";
                                         }
@@ -281,7 +281,7 @@ router.post('/list', function (request, response, next) {
                             }
                             logger.info("get order list response:" + JSON.stringify(result));
 
-                            if(data!=null &&data.length>0){
+                            if (data != null && data.length > 0) {
                                 afterSaleList = data;
                             }
                             return callback(null, afterSaleList);
@@ -360,19 +360,19 @@ router.post('/info', function (request, response, next) {
                 try {
 
                     Order.queryOrderDetail(params, function (err, orderInfo) {
-                        if(orderInfo==null || orderInfo==""){
+                        if (orderInfo == null || orderInfo == "") {
                             return callback(1, null);
                         }
                         result.orderId = orderInfo.orderId;
                         result.tradeCode = orderInfo.tradeCode;
                         result.closingPrice = orderInfo.closingPrice;
-                        result.thirdOrderId=orderInfo.thirdOrderId;
+                        result.thirdOrderId = orderInfo.thirdOrderId;
                         //result.orderState = Order.getOrderStateBuyerEnum(orderInfo.orderState);
                         result.orderState = orderInfo.orderState;
                         if (orderInfo.tradeCode == "Z0002" || orderInfo.tradeCode == "Z8002" || orderInfo.tradeCode == "Z8001") {
                             result.mobile = orderInfo.deliverInfo.receiverMobile;
                         } else {
-                            if(orderInfo.deliverInfo!=null){
+                            if (orderInfo.deliverInfo != null) {
 
                                 result.address = orderInfo.deliverInfo.provinceName +
                                     orderInfo.deliverInfo.cityName +
@@ -387,9 +387,11 @@ router.post('/info', function (request, response, next) {
                             result.payChannel = orderInfo.payInfo.payChannel;
                             result.payId = orderInfo.payInfo.payId;
                             result.payState =  orderInfo.payInfo.payState;
-                            result.payTime =  orderInfo.payInfo.payTime; /*0921新增字段*/
-                            if(result.payChannel == 1 || result.payChannel == 10){
-                                result.tradePayId = orderInfo.tradePayId; /*payChannel为1和10的话，是外部订单，返回外部订单号*/
+                            result.payTime =  orderInfo.payInfo.payTime; 
+                            /*0921新增字段*/
+                            if(result.payChannel == 1 || result.payChannel == 10 || result.payChannel == 11){//天翼weh和app 招商一网通
+                                result.tradePayId = orderInfo.tradePayId; 
+                                /*payChannel为1和10的话，是外部订单，返回外部订单号*/
                             }
                         }
                         // result.curTime = new Date().getTime();
@@ -1155,9 +1157,12 @@ router.post('/afterSalelist', function (request, response, next) {
                                                 skunum: order.productList[i].skuNum,
                                                 skuDesc: order.productList[i].skuDesc,
                                                 curPrice: order.productList[i].curPrice,
-                                                imgUrl: order.productList[i].imagesUrl.split(',')[0],
+                                                imgUrl:"",
                                                 count: order.productList[i].count
                                             };
+                                            if(order.productList[i].imagesUrl != null && order.productList[i].imagesUrl != ""){
+                                                productItem.imgUrl = order.productList[i].imagesUrl.split(',')[0];
+                                            }
                                             productList.push(productItem);
                                         }
                                         orderItem.productList = productList;
@@ -1293,7 +1298,7 @@ router.post('/queryExportOrderInfo', function (request, response, next) {
                                 logger.error("Seller服务异常");
                                 return callback(1, null);
                             }
-                            if (data[0].sellerList !== null && data[0].sellerList.length > 0) {
+                            if (data[0].sellerList != null && data[0].sellerList.length > 0) {
                                 for (var j = 0; j < data[0].sellerList.length; j++) {
                                     var seller = data[0].sellerList[j];
                                     sellerIds.push(seller.sellerId + "");
@@ -1412,6 +1417,7 @@ router.post('/getExportOrderResult', function (request, response, next) {
                 if ((JSON.parse(data)).code == "1") {
                     value.code = 1;
                     value.desc = "http://101.201.39.63/" + (JSON.parse(data)).desc;
+                    //value.desc = "http://120.24.153.155/" + (JSON.parse(data)).desc;
                 } else if ((JSON.parse(data)).code == "0") {
                     value.code = 0;
                     value.desc = "订单正在导出";
@@ -1895,6 +1901,18 @@ router.post('/listOrderOffline', function (request, response, next) {
                                             orderItem.payTypeName = "和包+积分";
                                         }else{
                                             orderItem.payTypeName = "和包";
+                                        }
+                                    } else if (order.payInfo.payChannel == "11") {
+                                        if (order.exchangeScore > 0) {
+                                            orderItem.payTypeName = "一网通+积分";
+                                        } else {
+                                            orderItem.payTypeName = "一网通";
+                                        }
+                                    }else if (order.payInfo.payChannel == "12" ||order.payInfo.payChannel == "13" ||order.payInfo.payChannel == "14" ) {
+                                        if (order.exchangeScore > 0) {
+                                            orderItem.payTypeName = "翼支付+积分";
+                                        } else {
+                                            orderItem.payTypeName = "翼支付";
                                         }
                                     } else {
                                         if(order.exchangeScore>0){
