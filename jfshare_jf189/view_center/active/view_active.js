@@ -5,6 +5,15 @@ exports.christmas = function(req, res, next) {
     res.render("active/201702qingrenjie", res.resData);
 };
 
+// 敷轻松百分尊享
+exports.fuqingsong201703 = function(req, res, next) {
+	res.render("active/201703fuqingsong", res.resData);
+};
+// 伊诗兰顿百分尊享
+exports.hufu201703 = function(req, res, next) {
+	res.render("active/201703hufu", res.resData);
+};
+
 
 
 
