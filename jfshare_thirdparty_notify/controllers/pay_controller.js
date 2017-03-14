@@ -193,21 +193,6 @@ router.post('/notify/jumpWeb', function (req, res, next) {
 });
 
 
-router.get('/notify/jumpWeb', function (req, res, next) {
-    try {
-        var arg = req.query;
-        logger.info("前端支付通知----get前端支付通知跳转页面[web]:" + JSON.stringify(arg));
-        var url = "http://www.jfshare.com/view/paySuccess.html#!";
-        res.writeHead(302,{'Location':url});
-        res.end();
-    } catch (err) {
-        logger.error("支付通知跳转页面处理失败！", err);
-        ret.status = 500;
-        ret.msg = "处理失败！";
-        res.json(ret);
-    }
-});
-
 router.post('/notify/alipay', function (req, res, next) {
     try {
         var ret = {};
@@ -240,10 +225,12 @@ router.post('/notify/alipay', function (req, res, next) {
 
             logger.info("调用payServ-payNotify接收支付通知成功  result.code =  （" + data[0].result.code + "）  1为失败 0为成功");
             //logger.info("接口返回数据=====" + data[0]);
-            ret.status = 200;
-            ret.msg = "请求成功";
+           // ret.status = 200;
+            //ret.msg = "请求成功";
             //ret.data = data[0].value;
-            res.json(200);
+            res.write("success");
+            res.end();
+           //res.json("success");
         });
     } catch (err) {
         logger.error("调用payServ-payNotify接收支付通知失败！", err);
