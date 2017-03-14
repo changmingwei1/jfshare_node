@@ -108,13 +108,13 @@ Score.prototype.enterAmountCall = function (param, callback) {
         if (err) {
             logger.error("请求参数：" + JSON.stringify(param));
             logger.error("Score enterAmountCall because: ======" + err);
-            res.code = 500;
-            res.desc = "积分兑入错误";
+            res.ErrCode = 9999;
+            res.ErrMsg = "积分兑入错误";
             callback(res, null);
         } else if (data[0].result.code == 1) {
             logger.warn("请求参数：" + JSON.stringify(param));
-            res.code = 500;
-            res.desc = data[0].result.failDescList[0].desc;
+            res.ErrCode = 9999;
+            res.ErrMsg = data[0].result.failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);

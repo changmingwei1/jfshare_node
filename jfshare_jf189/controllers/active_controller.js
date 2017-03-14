@@ -9,6 +9,11 @@ router.get('/actives', function(req, res, next) {
 router.get('/christmas', function(req, res, next) {
     view_active.christmas(req, res, next);
 });
-
+router.get('/fuqingsong', function(req, res, next) {
+	view_active.fuqingsong(req, res, next);
+});
+router.get('/hufu', function(req, res, next) {
+	view_active.hufu(req, res, next);
+});
 //暴露模块
 module.exports = router;
