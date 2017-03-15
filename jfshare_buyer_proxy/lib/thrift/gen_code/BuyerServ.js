@@ -3157,6 +3157,145 @@ BuyerServ_smsLoginEnterAmount_result.prototype.write = function(output) {
   return;
 };
 
+BuyerServ_thirdSigninCheck_args = function(args) {
+  this.loginLog = null;
+  this.UserThird = null;
+  this.validateInfo = null;
+  if (args) {
+    if (args.loginLog !== undefined) {
+      this.loginLog = args.loginLog;
+    }
+    if (args.UserThird !== undefined) {
+      this.UserThird = args.UserThird;
+    }
+    if (args.validateInfo !== undefined) {
+      this.validateInfo = args.validateInfo;
+    }
+  }
+};
+BuyerServ_thirdSigninCheck_args.prototype = {};
+BuyerServ_thirdSigninCheck_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.loginLog = new ttypes.LoginLog();
+        this.loginLog.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.UserThird = new ttypes.UserInfoThird();
+        this.UserThird.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.validateInfo = new ttypes.ValidateInfo();
+        this.validateInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_thirdSigninCheck_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_thirdSigninCheck_args');
+  if (this.loginLog !== null && this.loginLog !== undefined) {
+    output.writeFieldBegin('loginLog', Thrift.Type.STRUCT, 1);
+    this.loginLog.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.UserThird !== null && this.UserThird !== undefined) {
+    output.writeFieldBegin('UserThird', Thrift.Type.STRUCT, 2);
+    this.UserThird.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.validateInfo !== null && this.validateInfo !== undefined) {
+    output.writeFieldBegin('validateInfo', Thrift.Type.STRUCT, 3);
+    this.validateInfo.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_thirdSigninCheck_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_thirdSigninCheck_result.prototype = {};
+BuyerServ_thirdSigninCheck_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.BuyerResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_thirdSigninCheck_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_thirdSigninCheck_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 BuyerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -4450,6 +4589,55 @@ BuyerServClient.prototype.recv_smsLoginEnterAmount = function(input,mtype,rseqid
   }
   return callback('smsLoginEnterAmount failed: unknown result');
 };
+BuyerServClient.prototype.thirdSigninCheck = function(loginLog, UserThird, validateInfo, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_thirdSigninCheck(loginLog, UserThird, validateInfo);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_thirdSigninCheck(loginLog, UserThird, validateInfo);
+  }
+};
+
+BuyerServClient.prototype.send_thirdSigninCheck = function(loginLog, UserThird, validateInfo) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('thirdSigninCheck', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_thirdSigninCheck_args();
+  args.loginLog = loginLog;
+  args.UserThird = UserThird;
+  args.validateInfo = validateInfo;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_thirdSigninCheck = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_thirdSigninCheck_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('thirdSigninCheck failed: unknown result');
+};
 BuyerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -5271,6 +5459,36 @@ BuyerServProcessor.prototype.process_smsLoginEnterAmount = function(seqid, input
     this._handler.smsLoginEnterAmount(args.param,  function (err, result) {
       var result = new BuyerServ_smsLoginEnterAmount_result((err != null ? err : {success: result}));
       output.writeMessageBegin("smsLoginEnterAmount", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_thirdSigninCheck = function(seqid, input, output) {
+  var args = new BuyerServ_thirdSigninCheck_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.thirdSigninCheck.length === 3) {
+    Q.fcall(this._handler.thirdSigninCheck, args.loginLog, args.UserThird, args.validateInfo)
+      .then(function(result) {
+        var result = new BuyerServ_thirdSigninCheck_result({success: result});
+        output.writeMessageBegin("thirdSigninCheck", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_thirdSigninCheck_result(err);
+        output.writeMessageBegin("thirdSigninCheck", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.thirdSigninCheck(args.loginLog, args.UserThird, args.validateInfo,  function (err, result) {
+      var result = new BuyerServ_thirdSigninCheck_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("thirdSigninCheck", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
