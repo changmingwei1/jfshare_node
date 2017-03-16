@@ -127,6 +127,38 @@ router.get('/notify/alipay', function (req, res, next) {
     res.json(ret);
 });
 
+router.get('/jump/alih5', function (req, res, next) {
+    try {
+        var ret = {};
+        var arg = req.query;
+        logger.info("########get接收到第三方支付[alipay]的通知【注：仅用于测试模拟支付使用】：" + JSON.stringify(arg));
+        ret.status = 200;
+        ret.msg = "测试成功";
+    } catch (err) {
+        logger.error("调用payServ-payNotify接收支付通知失败！", err);
+        ret.status = 500;
+        ret.msg = "处理失败！";
+    }
+
+    res.json(ret);
+});
+
+router.post('/jump/alih5', function (req, res, next) {
+    try {
+        var ret = {};
+        var arg = req.body;
+        logger.info("########get接收到第三方支付[alipay]的通知【注：仅用于测试模拟支付使用】：" + JSON.stringify(arg));
+        ret.status = 200;
+        ret.msg = "测试成功";
+    } catch (err) {
+        logger.error("调用payServ-payNotify接收支付通知失败！", err);
+        ret.status = 500;
+        ret.msg = "处理失败！";
+    }
+
+    res.json(ret);
+});
+
 
 router.post('/notify/bestpay', function (req, res, next) {
     try {
