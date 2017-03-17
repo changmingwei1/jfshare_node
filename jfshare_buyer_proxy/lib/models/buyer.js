@@ -168,6 +168,55 @@ Buyer.prototype.thirdUserSignin = function(param,callback){
     });
 };
 
+
+
+/*第三方免登录校验*/
+Buyer.prototype.thirdSigninCheck = function(param,callback){
+    //参数
+    var userThird = new buyer_types.UserInfoThird({
+        custId:param.custId,
+        mobile: param.mobile,
+        thirdType: param.thirdType,
+        extInfo: param.extInfo
+    });
+    var loginLog = new buyer_types.LoginLog({
+        browser:param.browser,
+        clientType: param.clientType,
+        version: param.version
+    });
+    var validateInfo = new buyer_types.ValidateInfo({
+        thirdType: param.thirdType,
+        custId: param.custId,
+        accessToken: param.accessToken,
+        openId: param.openId,
+        valiNum: param.captchaDesc,
+        valiNumType:"buyer_signin"
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'thirdSigninCheck',[loginLog,userThird,validateInfo]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到登录信息:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("不能登录，因为: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "登录失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            logger.warn("不能登录，因为: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else{
+            callback(null, data);
+        }
+    });
+};
+
+
+
 //手机号短信登录
 Buyer.prototype.loginBySms = function(param,callback){
     //参数

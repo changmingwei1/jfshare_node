@@ -71,6 +71,49 @@ router.post('/validateCaptcha', function (request, response, next) {
     }
 });
 
+
+router.post('/thirdLoginCheck', function (request, response, next) {
+    logger.info("进入第三方登录校验");
+    var resContent = {code: 200};
+    var param = request.body;
+
+    logger.info("请求参数：" + JSON.stringify(param));
+
+    var token = param.token;
+    var mobile = param.mobile;
+    var openId = param.openId;
+    param.clientType = 5;
+    //鹏淘第三方登录类型是2
+    param.thirdType = 2;
+    param.custId = openId;
+    var extInfo = "{\"mobileNo\":\""+mobile+"\"" + ","
+    + "\"token\":\""+token+"\"" + ","
+    + "\"openId\":\""+openId+"\"}";
+    param.extInfo = extInfo;
+    try {
+        Buyer.thirdSigninCheck(param, function (error, data) {
+            if (error) {
+                response.json(error);
+            } else {
+
+                resContent.userId = data[0].buyer.userId;
+                resContent.loginName = data[0].buyer.loginName;
+                resContent.authInfo = data[0].authInfo;
+                resContent.loginTime = data[0].loginLog.loginTime;
+                response.json(resContent);
+                logger.info("get buyer response:" + JSON.stringify(resContent));
+            }
+        });
+
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("验证失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "验证失败";
+        response.json(resContent);
+    }
+});
+
 /*获取短信验证码----以后不用这个接口了20161031*/
 router.get('/sms', function (request, response, next) {
     logger.info("进入获取验证码接口");
