@@ -25,7 +25,8 @@ var product_types = require("../lib/thrift/gen_code/product_types");
 
 /*提交订单*/
 router.post('/submit', function (request, response, next) {
-    logger.info("进入提交订单流程..");
+    logger.info("进入提交" +
+        "流程..");
     var result = {code: 200};
     try {
         var arg = request.body;

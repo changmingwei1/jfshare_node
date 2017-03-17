@@ -1086,6 +1086,7 @@ Order = module.exports.Order = function(args) {
   this.orderType = null;
   this.thirdPrice = null;
   this.virRechargeState = null;
+  this.thirdOrderId = null;
   if (args) {
     if (args.orderId !== undefined) {
       this.orderId = args.orderId;
@@ -1206,6 +1207,9 @@ Order = module.exports.Order = function(args) {
     }
     if (args.virRechargeState !== undefined) {
       this.virRechargeState = args.virRechargeState;
+    }
+    if (args.thirdOrderId !== undefined) {
+      this.thirdOrderId = args.thirdOrderId;
     }
   }
 };
@@ -1519,6 +1523,13 @@ Order.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 41:
+      if (ftype == Thrift.Type.STRING) {
+        this.thirdOrderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1737,6 +1748,11 @@ Order.prototype.write = function(output) {
   if (this.virRechargeState !== null && this.virRechargeState !== undefined) {
     output.writeFieldBegin('virRechargeState', Thrift.Type.STRING, 40);
     output.writeString(this.virRechargeState);
+    output.writeFieldEnd();
+  }
+  if (this.thirdOrderId !== null && this.thirdOrderId !== undefined) {
+    output.writeFieldBegin('thirdOrderId', Thrift.Type.STRING, 41);
+    output.writeString(this.thirdOrderId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3276,6 +3292,7 @@ PayParam = module.exports.PayParam = function(args) {
   this.payChannel = null;
   this.exchangeScore = null;
   this.exchangeCash = null;
+  this.clientType = null;
   if (args) {
     if (args.userId !== undefined) {
       this.userId = args.userId;
@@ -3291,6 +3308,9 @@ PayParam = module.exports.PayParam = function(args) {
     }
     if (args.exchangeCash !== undefined) {
       this.exchangeCash = args.exchangeCash;
+    }
+    if (args.clientType !== undefined) {
+      this.clientType = args.clientType;
     }
   }
 };
@@ -3357,6 +3377,13 @@ PayParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.clientType = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -3400,6 +3427,11 @@ PayParam.prototype.write = function(output) {
   if (this.exchangeCash !== null && this.exchangeCash !== undefined) {
     output.writeFieldBegin('exchangeCash', Thrift.Type.STRING, 5);
     output.writeString(this.exchangeCash);
+    output.writeFieldEnd();
+  }
+  if (this.clientType !== null && this.clientType !== undefined) {
+    output.writeFieldBegin('clientType', Thrift.Type.STRING, 6);
+    output.writeString(this.clientType);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
