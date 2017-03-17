@@ -11,7 +11,7 @@ var Lich = require('../thrift/Lich.js');
 var thrift = require('thrift');
 var pagination_types = require('../thrift/gen_code/pagination_types');
 
-var afterSale_types = require("../thrift/gen_code/afterSale_types");
+var afterSale_types = require("../thrift/gen_code/aftersale_types");
 
 
 function AfterSale() {
