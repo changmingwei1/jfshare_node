@@ -116,7 +116,8 @@ Order.prototype.payApply = function (param, callback) {
         orderIdList: param.orderIdList,
         exchangeScore:param.exchangeScore,
         exchangeCash:param.exchangeCash,
-        payChannel: payChannel
+        payChannel: payChannel,
+        clientType:param.clientType+""
     });
 
     logger.info("call orderServ-payApply args:" + JSON.stringify(payParam));
