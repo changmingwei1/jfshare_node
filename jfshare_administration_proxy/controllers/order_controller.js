@@ -1146,7 +1146,8 @@ router.post('/afterSalelist', function (request, response, next) {
                                         exchangeCash: order.exchangeCash,
                                         exchangeScore: order.exchangeScore,
                                         activeState: order.activeState,
-                                        curTime: order.curTime
+                                        curTime: order.curTime,
+                                        fromSource: order.fromSource
                                     };
                                     var productList = [];
                                     if (order.productList !== null && order.productList.length > 0) {
