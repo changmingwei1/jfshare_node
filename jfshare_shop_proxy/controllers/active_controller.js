@@ -210,8 +210,8 @@ router.get('/getAppUpgradeInfoStr', function (request, response, next) {
 router.get('/toExchangeDianXin', function (request, response, next) {
     var result = {code: 200};
     //var param = request.query;
-    //result.url = "http://active.jfshare.com/android/comesoon.html";
-    result.url = "http://yxyun.telefen.com/sp/jfshare/Index.aspx";
+   result.url = "http://active.jfshare.com/android/comesoon.html";
+    // result.url = "http://yxyun.telefen.com/sp/jfshare/Index.aspx";
     // 测试环境
     //  result.url = "http://yxyun.telefen.com/test/jfshare/index.aspx";
     response.json(result);
