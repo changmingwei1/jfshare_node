@@ -38,13 +38,13 @@ ManagerServ_logProductOpt_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.productOpt = new ttypes.ProductOpt();
-        this.productOpt.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.productOpt = new ttypes.ProductOpt();
+          this.productOpt.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -92,13 +92,13 @@ ManagerServ_logProductOpt_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -146,13 +146,13 @@ ManagerServ_queryProductOptRecords_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.conditions = new ttypes.QueryConditions();
-        this.conditions.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.conditions = new ttypes.QueryConditions();
+          this.conditions.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -200,13 +200,13 @@ ManagerServ_queryProductOptRecords_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.ProductOptResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.ProductOptResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -254,12 +254,12 @@ ManagerServ_isLoginNameExist_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.loginName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.loginName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -307,13 +307,13 @@ ManagerServ_isLoginNameExist_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.BoolResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.BoolResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -361,13 +361,13 @@ ManagerServ_signup_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.cs = new ttypes.Commissioner();
-        this.cs.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.cs = new ttypes.Commissioner();
+          this.cs.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -415,13 +415,13 @@ ManagerServ_signup_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -473,21 +473,21 @@ ManagerServ_signin_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.cs = new ttypes.Commissioner();
-        this.cs.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.cs = new ttypes.Commissioner();
+          this.cs.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.loginLog = new ttypes.LoginLog();
-        this.loginLog.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.loginLog = new ttypes.LoginLog();
+          this.loginLog.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -537,13 +537,13 @@ ManagerServ_signin_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.CommissionerResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.CommissionerResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -591,13 +591,13 @@ ManagerServ_signout_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.loginLog = new ttypes.LoginLog();
-        this.loginLog.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.loginLog = new ttypes.LoginLog();
+          this.loginLog.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -645,13 +645,13 @@ ManagerServ_signout_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -699,13 +699,13 @@ ManagerServ_isOnline_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.loginLog = new ttypes.LoginLog();
-        this.loginLog.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.loginLog = new ttypes.LoginLog();
+          this.loginLog.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -753,13 +753,13 @@ ManagerServ_isOnline_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.CommissionerResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.CommissionerResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -807,13 +807,13 @@ ManagerServ_saveSlotImage_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.slotImage = new slotImage_ttypes.SlotImage();
-        this.slotImage.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.slotImage = new slotImage_ttypes.SlotImage();
+          this.slotImage.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -861,13 +861,13 @@ ManagerServ_saveSlotImage_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.StringResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.StringResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -915,13 +915,13 @@ ManagerServ_updateSlotImage_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.slotImage = new slotImage_ttypes.SlotImage();
-        this.slotImage.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.slotImage = new slotImage_ttypes.SlotImage();
+          this.slotImage.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -969,13 +969,13 @@ ManagerServ_updateSlotImage_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.StringResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.StringResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1023,13 +1023,13 @@ ManagerServ_querySlotImageList_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.querySlotImageParam = new slotImage_ttypes.QuerySlotImageParam();
-        this.querySlotImageParam.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.querySlotImageParam = new slotImage_ttypes.QuerySlotImageParam();
+          this.querySlotImageParam.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1077,13 +1077,13 @@ ManagerServ_querySlotImageList_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new slotImage_ttypes.QuerySlotImageResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new slotImage_ttypes.QuerySlotImageResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1131,12 +1131,12 @@ ManagerServ_querySlotImageOne_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.id = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.id = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1184,13 +1184,13 @@ ManagerServ_querySlotImageOne_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new slotImage_ttypes.QuerySlotImageResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new slotImage_ttypes.QuerySlotImageResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1238,13 +1238,13 @@ ManagerServ_queryModuleConfig_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.ModuleConfigParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.ModuleConfigParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1292,13 +1292,13 @@ ManagerServ_queryModuleConfig_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.ModuleConfigResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.ModuleConfigResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1346,13 +1346,13 @@ ManagerServ_queryModuleConfigDetail_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.ModuleConfigDetailParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.ModuleConfigDetailParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1400,13 +1400,13 @@ ManagerServ_queryModuleConfigDetail_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.ModuleConfigDetailResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.ModuleConfigDetailResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1454,13 +1454,13 @@ ManagerServ_queryModuleConfigDetailForBuyer_args.prototype.read = function(input
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.ModuleConfigDetailParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.ModuleConfigDetailParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1508,13 +1508,13 @@ ManagerServ_queryModuleConfigDetailForBuyer_result.prototype.read = function(inp
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.ModuleConfigDetailResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.ModuleConfigDetailResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1562,13 +1562,13 @@ ManagerServ_relase_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.RelaseParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.RelaseParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1616,13 +1616,13 @@ ManagerServ_relase_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.RelaseResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.RelaseResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1670,13 +1670,13 @@ ManagerServ_importExcel_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.ImportParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.ImportParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1724,13 +1724,13 @@ ManagerServ_importExcel_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.ImportResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.ImportResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1778,13 +1778,13 @@ ManagerServ_queryImgkey_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.QueryImgkeyParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.QueryImgkeyParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1832,13 +1832,13 @@ ManagerServ_queryImgkey_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.QueryImgkeyResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.QueryImgkeyResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1886,13 +1886,13 @@ ManagerServ_queryProductRuleImgkey_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.QueryProductRuleImgkeyParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.QueryProductRuleImgkeyParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1940,13 +1940,13 @@ ManagerServ_queryProductRuleImgkey_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.ModuleConfigDetailResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.ModuleConfigDetailResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -1994,13 +1994,13 @@ ManagerServ_saveAdvertSlotImage_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.slotImage = new ttypes.AdvertSlotImage();
-        this.slotImage.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.slotImage = new ttypes.AdvertSlotImage();
+          this.slotImage.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2048,13 +2048,13 @@ ManagerServ_saveAdvertSlotImage_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2102,13 +2102,13 @@ ManagerServ_updateAdvertSlotImage_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.slotImage = new ttypes.AdvertSlotImage();
-        this.slotImage.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.slotImage = new ttypes.AdvertSlotImage();
+          this.slotImage.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2156,13 +2156,13 @@ ManagerServ_updateAdvertSlotImage_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2210,13 +2210,13 @@ ManagerServ_queryAdvertSlotImageList_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.AdvertSlotImageParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.AdvertSlotImageParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2264,13 +2264,13 @@ ManagerServ_queryAdvertSlotImageList_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.AdvertSlotImageListResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.AdvertSlotImageListResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2318,13 +2318,13 @@ ManagerServ_queryAdvertSlotImage_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.slotImage = new ttypes.AdvertSlotImage();
-        this.slotImage.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.slotImage = new ttypes.AdvertSlotImage();
+          this.slotImage.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2372,13 +2372,13 @@ ManagerServ_queryAdvertSlotImage_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.AdvertSlotImageResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.AdvertSlotImageResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2426,13 +2426,13 @@ ManagerServ_deleteAdvertSlotImage_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.slotImage = new ttypes.AdvertSlotImage();
-        this.slotImage.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.slotImage = new ttypes.AdvertSlotImage();
+          this.slotImage.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2480,13 +2480,13 @@ ManagerServ_deleteAdvertSlotImage_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2534,13 +2534,13 @@ ManagerServ_publishAdvertSlot_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.param = new ttypes.AdvertSlotImageListParam();
-        this.param.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.param = new ttypes.AdvertSlotImageListParam();
+          this.param.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2588,13 +2588,13 @@ ManagerServ_publishAdvertSlot_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2670,13 +2670,13 @@ ManagerServ_queryAdvertSlotList_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.AdvertSlotListResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.AdvertSlotListResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2724,12 +2724,12 @@ ManagerServ_queryPermissionByCsId_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.csId = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.csId = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2777,13 +2777,13 @@ ManagerServ_queryPermissionByCsId_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.StringResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.StringResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2831,13 +2831,13 @@ ManagerServ_queryAllCommissioner_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.pagination = new pagination_ttypes.Pagination();
-        this.pagination.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.pagination = new pagination_ttypes.Pagination();
+          this.pagination.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2885,13 +2885,13 @@ ManagerServ_queryAllCommissioner_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.CommissionerListResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.CommissionerListResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2939,12 +2939,12 @@ ManagerServ_queryCommissionerByCsId_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.csId = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.csId = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -2992,13 +2992,13 @@ ManagerServ_queryCommissionerByCsId_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.CommissionerResult();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new ttypes.CommissionerResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -3046,13 +3046,13 @@ ManagerServ_modifyCommissionerByCsId_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.cs = new ttypes.Commissioner();
-        this.cs.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.cs = new ttypes.Commissioner();
+          this.cs.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -3100,13 +3100,13 @@ ManagerServ_modifyCommissionerByCsId_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -3158,19 +3158,19 @@ ManagerServ_resetCommissionerPwd_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.csId = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.I32) {
+          this.csId = input.readI32();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.newPwd = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRING) {
+          this.newPwd = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
       default:
         input.skip(ftype);
     }
@@ -3220,13 +3220,13 @@ ManagerServ_resetCommissionerPwd_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -3274,13 +3274,13 @@ ManagerServ_changeValidate_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.cs = new ttypes.Commissioner();
-        this.cs.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.cs = new ttypes.Commissioner();
+          this.cs.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -3328,13 +3328,13 @@ ManagerServ_changeValidate_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -3382,13 +3382,13 @@ ManagerServ_insert_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.cs = new ttypes.Commissioner();
-        this.cs.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.cs = new ttypes.Commissioner();
+          this.cs.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -3436,13 +3436,13 @@ ManagerServ_insert_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new result_ttypes.Result();
-        this.success.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.Result();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
       case 0:
         input.skip(ftype);
         break;
@@ -3467,11 +3467,619 @@ ManagerServ_insert_result.prototype.write = function(output) {
   return;
 };
 
+ManagerServ_getShareUrl_args = function(args) {
+  this.openId = null;
+  this.userId = null;
+  this.name = null;
+  this.img = null;
+  this.token = null;
+  if (args) {
+    if (args.openId !== undefined) {
+      this.openId = args.openId;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.img !== undefined) {
+      this.img = args.img;
+    }
+    if (args.token !== undefined) {
+      this.token = args.token;
+    }
+  }
+};
+ManagerServ_getShareUrl_args.prototype = {};
+ManagerServ_getShareUrl_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == Thrift.Type.STRING) {
+          this.openId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == Thrift.Type.STRING) {
+          this.userId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == Thrift.Type.STRING) {
+          this.name = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == Thrift.Type.STRING) {
+          this.img = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == Thrift.Type.STRING) {
+          this.token = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_getShareUrl_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_getShareUrl_args');
+  if (this.openId !== null && this.openId !== undefined) {
+    output.writeFieldBegin('openId', Thrift.Type.STRING, 1);
+    output.writeString(this.openId);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.STRING, 2);
+    output.writeString(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 3);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.img !== null && this.img !== undefined) {
+    output.writeFieldBegin('img', Thrift.Type.STRING, 4);
+    output.writeString(this.img);
+    output.writeFieldEnd();
+  }
+  if (this.token !== null && this.token !== undefined) {
+    output.writeFieldBegin('token', Thrift.Type.STRING, 5);
+    output.writeString(this.token);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_getShareUrl_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_getShareUrl_result.prototype = {};
+ManagerServ_getShareUrl_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.StringResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_getShareUrl_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_getShareUrl_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_pushFriends_args = function(args) {
+  this.selfOpenId = null;
+  this.selfName = null;
+  this.friendsOpenId = null;
+  this.friendUserId = null;
+  this.sign = null;
+  this.selfimg = null;
+  this.selfToken = null;
+  if (args) {
+    if (args.selfOpenId !== undefined) {
+      this.selfOpenId = args.selfOpenId;
+    }
+    if (args.selfName !== undefined) {
+      this.selfName = args.selfName;
+    }
+    if (args.friendsOpenId !== undefined) {
+      this.friendsOpenId = args.friendsOpenId;
+    }
+    if (args.friendUserId !== undefined) {
+      this.friendUserId = args.friendUserId;
+    }
+    if (args.sign !== undefined) {
+      this.sign = args.sign;
+    }
+    if (args.selfimg !== undefined) {
+      this.selfimg = args.selfimg;
+    }
+    if (args.selfToken !== undefined) {
+      this.selfToken = args.selfToken;
+    }
+  }
+};
+ManagerServ_pushFriends_args.prototype = {};
+ManagerServ_pushFriends_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == Thrift.Type.STRING) {
+          this.selfOpenId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == Thrift.Type.STRING) {
+          this.selfName = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == Thrift.Type.STRING) {
+          this.friendsOpenId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == Thrift.Type.STRING) {
+          this.friendUserId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == Thrift.Type.STRING) {
+          this.sign = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == Thrift.Type.STRING) {
+          this.selfimg = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == Thrift.Type.STRING) {
+          this.selfToken = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_pushFriends_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_pushFriends_args');
+  if (this.selfOpenId !== null && this.selfOpenId !== undefined) {
+    output.writeFieldBegin('selfOpenId', Thrift.Type.STRING, 1);
+    output.writeString(this.selfOpenId);
+    output.writeFieldEnd();
+  }
+  if (this.selfName !== null && this.selfName !== undefined) {
+    output.writeFieldBegin('selfName', Thrift.Type.STRING, 2);
+    output.writeString(this.selfName);
+    output.writeFieldEnd();
+  }
+  if (this.friendsOpenId !== null && this.friendsOpenId !== undefined) {
+    output.writeFieldBegin('friendsOpenId', Thrift.Type.STRING, 3);
+    output.writeString(this.friendsOpenId);
+    output.writeFieldEnd();
+  }
+  if (this.friendUserId !== null && this.friendUserId !== undefined) {
+    output.writeFieldBegin('friendUserId', Thrift.Type.STRING, 4);
+    output.writeString(this.friendUserId);
+    output.writeFieldEnd();
+  }
+  if (this.sign !== null && this.sign !== undefined) {
+    output.writeFieldBegin('sign', Thrift.Type.STRING, 5);
+    output.writeString(this.sign);
+    output.writeFieldEnd();
+  }
+  if (this.selfimg !== null && this.selfimg !== undefined) {
+    output.writeFieldBegin('selfimg', Thrift.Type.STRING, 6);
+    output.writeString(this.selfimg);
+    output.writeFieldEnd();
+  }
+  if (this.selfToken !== null && this.selfToken !== undefined) {
+    output.writeFieldBegin('selfToken', Thrift.Type.STRING, 7);
+    output.writeString(this.selfToken);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_pushFriends_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_pushFriends_result.prototype = {};
+ManagerServ_pushFriends_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.StringResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_pushFriends_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_pushFriends_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryPushList_args = function(args) {
+  this.userId = null;
+  this.openId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.openId !== undefined) {
+      this.openId = args.openId;
+    }
+  }
+};
+ManagerServ_queryPushList_args.prototype = {};
+ManagerServ_queryPushList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == Thrift.Type.STRING) {
+          this.userId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == Thrift.Type.STRING) {
+          this.openId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryPushList_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryPushList_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.STRING, 1);
+    output.writeString(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.openId !== null && this.openId !== undefined) {
+    output.writeFieldBegin('openId', Thrift.Type.STRING, 2);
+    output.writeString(this.openId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryPushList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryPushList_result.prototype = {};
+ManagerServ_queryPushList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.StringResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryPushList_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryPushList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryTotalScore_args = function(args) {
+  this.userId = null;
+  this.openId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.openId !== undefined) {
+      this.openId = args.openId;
+    }
+  }
+};
+ManagerServ_queryTotalScore_args.prototype = {};
+ManagerServ_queryTotalScore_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == Thrift.Type.STRING) {
+          this.userId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == Thrift.Type.STRING) {
+          this.openId = input.readString();
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryTotalScore_args.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryTotalScore_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.STRING, 1);
+    output.writeString(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.openId !== null && this.openId !== undefined) {
+    output.writeFieldBegin('openId', Thrift.Type.STRING, 2);
+    output.writeString(this.openId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ManagerServ_queryTotalScore_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ManagerServ_queryTotalScore_result.prototype = {};
+ManagerServ_queryTotalScore_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == Thrift.Type.STRUCT) {
+          this.success = new result_ttypes.StringResult();
+          this.success.read(input);
+        } else {
+          input.skip(ftype);
+        }
+        break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ManagerServ_queryTotalScore_result.prototype.write = function(output) {
+  output.writeStructBegin('ManagerServ_queryTotalScore_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ManagerServClient = exports.Client = function(output, pClass) {
-    this.output = output;
-    this.pClass = pClass;
-    this._seqid = 0;
-    this._reqs = {};
+  this.output = output;
+  this.pClass = pClass;
+  this._seqid = 0;
+  this._reqs = {};
 };
 ManagerServClient.prototype = {};
 ManagerServClient.prototype.seqid = function() { return this._seqid; }
@@ -4981,6 +5589,206 @@ ManagerServClient.prototype.recv_insert = function(input,mtype,rseqid) {
   }
   return callback('insert failed: unknown result');
 };
+ManagerServClient.prototype.getShareUrl = function(openId, userId, name, img, token, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getShareUrl(openId, userId, name, img, token);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getShareUrl(openId, userId, name, img, token);
+  }
+};
+
+ManagerServClient.prototype.send_getShareUrl = function(openId, userId, name, img, token) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getShareUrl', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_getShareUrl_args();
+  args.openId = openId;
+  args.userId = userId;
+  args.name = name;
+  args.img = img;
+  args.token = token;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_getShareUrl = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_getShareUrl_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getShareUrl failed: unknown result');
+};
+ManagerServClient.prototype.pushFriends = function(selfOpenId, selfName, friendsOpenId, friendUserId, sign, selfimg, selfToken, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_pushFriends(selfOpenId, selfName, friendsOpenId, friendUserId, sign, selfimg, selfToken);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_pushFriends(selfOpenId, selfName, friendsOpenId, friendUserId, sign, selfimg, selfToken);
+  }
+};
+
+ManagerServClient.prototype.send_pushFriends = function(selfOpenId, selfName, friendsOpenId, friendUserId, sign, selfimg, selfToken) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('pushFriends', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_pushFriends_args();
+  args.selfOpenId = selfOpenId;
+  args.selfName = selfName;
+  args.friendsOpenId = friendsOpenId;
+  args.friendUserId = friendUserId;
+  args.sign = sign;
+  args.selfimg = selfimg;
+  args.selfToken = selfToken;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_pushFriends = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_pushFriends_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('pushFriends failed: unknown result');
+};
+ManagerServClient.prototype.queryPushList = function(userId, openId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryPushList(userId, openId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryPushList(userId, openId);
+  }
+};
+
+ManagerServClient.prototype.send_queryPushList = function(userId, openId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryPushList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryPushList_args();
+  args.userId = userId;
+  args.openId = openId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryPushList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryPushList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryPushList failed: unknown result');
+};
+ManagerServClient.prototype.queryTotalScore = function(userId, openId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryTotalScore(userId, openId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryTotalScore(userId, openId);
+  }
+};
+
+ManagerServClient.prototype.send_queryTotalScore = function(userId, openId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryTotalScore', Thrift.MessageType.CALL, this.seqid());
+  var args = new ManagerServ_queryTotalScore_args();
+  args.userId = userId;
+  args.openId = openId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ManagerServClient.prototype.recv_queryTotalScore = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ManagerServ_queryTotalScore_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryTotalScore failed: unknown result');
+};
 ManagerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -5005,19 +5813,19 @@ ManagerServProcessor.prototype.process_logProductOpt = function(seqid, input, ou
   input.readMessageEnd();
   if (this._handler.logProductOpt.length === 1) {
     Q.fcall(this._handler.logProductOpt, args.productOpt)
-      .then(function(result) {
-        var result = new ManagerServ_logProductOpt_result({success: result});
-        output.writeMessageBegin("logProductOpt", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_logProductOpt_result(err);
-        output.writeMessageBegin("logProductOpt", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_logProductOpt_result({success: result});
+          output.writeMessageBegin("logProductOpt", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_logProductOpt_result(err);
+          output.writeMessageBegin("logProductOpt", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.logProductOpt(args.productOpt,  function (err, result) {
       var result = new ManagerServ_logProductOpt_result((err != null ? err : {success: result}));
@@ -5035,19 +5843,19 @@ ManagerServProcessor.prototype.process_queryProductOptRecords = function(seqid, 
   input.readMessageEnd();
   if (this._handler.queryProductOptRecords.length === 1) {
     Q.fcall(this._handler.queryProductOptRecords, args.conditions)
-      .then(function(result) {
-        var result = new ManagerServ_queryProductOptRecords_result({success: result});
-        output.writeMessageBegin("queryProductOptRecords", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryProductOptRecords_result(err);
-        output.writeMessageBegin("queryProductOptRecords", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryProductOptRecords_result({success: result});
+          output.writeMessageBegin("queryProductOptRecords", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryProductOptRecords_result(err);
+          output.writeMessageBegin("queryProductOptRecords", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryProductOptRecords(args.conditions,  function (err, result) {
       var result = new ManagerServ_queryProductOptRecords_result((err != null ? err : {success: result}));
@@ -5065,19 +5873,19 @@ ManagerServProcessor.prototype.process_isLoginNameExist = function(seqid, input,
   input.readMessageEnd();
   if (this._handler.isLoginNameExist.length === 1) {
     Q.fcall(this._handler.isLoginNameExist, args.loginName)
-      .then(function(result) {
-        var result = new ManagerServ_isLoginNameExist_result({success: result});
-        output.writeMessageBegin("isLoginNameExist", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_isLoginNameExist_result(err);
-        output.writeMessageBegin("isLoginNameExist", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_isLoginNameExist_result({success: result});
+          output.writeMessageBegin("isLoginNameExist", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_isLoginNameExist_result(err);
+          output.writeMessageBegin("isLoginNameExist", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.isLoginNameExist(args.loginName,  function (err, result) {
       var result = new ManagerServ_isLoginNameExist_result((err != null ? err : {success: result}));
@@ -5095,19 +5903,19 @@ ManagerServProcessor.prototype.process_signup = function(seqid, input, output) {
   input.readMessageEnd();
   if (this._handler.signup.length === 1) {
     Q.fcall(this._handler.signup, args.cs)
-      .then(function(result) {
-        var result = new ManagerServ_signup_result({success: result});
-        output.writeMessageBegin("signup", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_signup_result(err);
-        output.writeMessageBegin("signup", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_signup_result({success: result});
+          output.writeMessageBegin("signup", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_signup_result(err);
+          output.writeMessageBegin("signup", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.signup(args.cs,  function (err, result) {
       var result = new ManagerServ_signup_result((err != null ? err : {success: result}));
@@ -5125,19 +5933,19 @@ ManagerServProcessor.prototype.process_signin = function(seqid, input, output) {
   input.readMessageEnd();
   if (this._handler.signin.length === 2) {
     Q.fcall(this._handler.signin, args.cs, args.loginLog)
-      .then(function(result) {
-        var result = new ManagerServ_signin_result({success: result});
-        output.writeMessageBegin("signin", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_signin_result(err);
-        output.writeMessageBegin("signin", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_signin_result({success: result});
+          output.writeMessageBegin("signin", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_signin_result(err);
+          output.writeMessageBegin("signin", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.signin(args.cs, args.loginLog,  function (err, result) {
       var result = new ManagerServ_signin_result((err != null ? err : {success: result}));
@@ -5155,19 +5963,19 @@ ManagerServProcessor.prototype.process_signout = function(seqid, input, output) 
   input.readMessageEnd();
   if (this._handler.signout.length === 1) {
     Q.fcall(this._handler.signout, args.loginLog)
-      .then(function(result) {
-        var result = new ManagerServ_signout_result({success: result});
-        output.writeMessageBegin("signout", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_signout_result(err);
-        output.writeMessageBegin("signout", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_signout_result({success: result});
+          output.writeMessageBegin("signout", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_signout_result(err);
+          output.writeMessageBegin("signout", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.signout(args.loginLog,  function (err, result) {
       var result = new ManagerServ_signout_result((err != null ? err : {success: result}));
@@ -5185,19 +5993,19 @@ ManagerServProcessor.prototype.process_isOnline = function(seqid, input, output)
   input.readMessageEnd();
   if (this._handler.isOnline.length === 1) {
     Q.fcall(this._handler.isOnline, args.loginLog)
-      .then(function(result) {
-        var result = new ManagerServ_isOnline_result({success: result});
-        output.writeMessageBegin("isOnline", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_isOnline_result(err);
-        output.writeMessageBegin("isOnline", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_isOnline_result({success: result});
+          output.writeMessageBegin("isOnline", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_isOnline_result(err);
+          output.writeMessageBegin("isOnline", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.isOnline(args.loginLog,  function (err, result) {
       var result = new ManagerServ_isOnline_result((err != null ? err : {success: result}));
@@ -5215,19 +6023,19 @@ ManagerServProcessor.prototype.process_saveSlotImage = function(seqid, input, ou
   input.readMessageEnd();
   if (this._handler.saveSlotImage.length === 1) {
     Q.fcall(this._handler.saveSlotImage, args.slotImage)
-      .then(function(result) {
-        var result = new ManagerServ_saveSlotImage_result({success: result});
-        output.writeMessageBegin("saveSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_saveSlotImage_result(err);
-        output.writeMessageBegin("saveSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_saveSlotImage_result({success: result});
+          output.writeMessageBegin("saveSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_saveSlotImage_result(err);
+          output.writeMessageBegin("saveSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.saveSlotImage(args.slotImage,  function (err, result) {
       var result = new ManagerServ_saveSlotImage_result((err != null ? err : {success: result}));
@@ -5245,19 +6053,19 @@ ManagerServProcessor.prototype.process_updateSlotImage = function(seqid, input, 
   input.readMessageEnd();
   if (this._handler.updateSlotImage.length === 1) {
     Q.fcall(this._handler.updateSlotImage, args.slotImage)
-      .then(function(result) {
-        var result = new ManagerServ_updateSlotImage_result({success: result});
-        output.writeMessageBegin("updateSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_updateSlotImage_result(err);
-        output.writeMessageBegin("updateSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_updateSlotImage_result({success: result});
+          output.writeMessageBegin("updateSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_updateSlotImage_result(err);
+          output.writeMessageBegin("updateSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.updateSlotImage(args.slotImage,  function (err, result) {
       var result = new ManagerServ_updateSlotImage_result((err != null ? err : {success: result}));
@@ -5275,19 +6083,19 @@ ManagerServProcessor.prototype.process_querySlotImageList = function(seqid, inpu
   input.readMessageEnd();
   if (this._handler.querySlotImageList.length === 1) {
     Q.fcall(this._handler.querySlotImageList, args.querySlotImageParam)
-      .then(function(result) {
-        var result = new ManagerServ_querySlotImageList_result({success: result});
-        output.writeMessageBegin("querySlotImageList", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_querySlotImageList_result(err);
-        output.writeMessageBegin("querySlotImageList", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_querySlotImageList_result({success: result});
+          output.writeMessageBegin("querySlotImageList", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_querySlotImageList_result(err);
+          output.writeMessageBegin("querySlotImageList", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.querySlotImageList(args.querySlotImageParam,  function (err, result) {
       var result = new ManagerServ_querySlotImageList_result((err != null ? err : {success: result}));
@@ -5305,19 +6113,19 @@ ManagerServProcessor.prototype.process_querySlotImageOne = function(seqid, input
   input.readMessageEnd();
   if (this._handler.querySlotImageOne.length === 1) {
     Q.fcall(this._handler.querySlotImageOne, args.id)
-      .then(function(result) {
-        var result = new ManagerServ_querySlotImageOne_result({success: result});
-        output.writeMessageBegin("querySlotImageOne", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_querySlotImageOne_result(err);
-        output.writeMessageBegin("querySlotImageOne", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_querySlotImageOne_result({success: result});
+          output.writeMessageBegin("querySlotImageOne", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_querySlotImageOne_result(err);
+          output.writeMessageBegin("querySlotImageOne", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.querySlotImageOne(args.id,  function (err, result) {
       var result = new ManagerServ_querySlotImageOne_result((err != null ? err : {success: result}));
@@ -5335,19 +6143,19 @@ ManagerServProcessor.prototype.process_queryModuleConfig = function(seqid, input
   input.readMessageEnd();
   if (this._handler.queryModuleConfig.length === 1) {
     Q.fcall(this._handler.queryModuleConfig, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_queryModuleConfig_result({success: result});
-        output.writeMessageBegin("queryModuleConfig", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryModuleConfig_result(err);
-        output.writeMessageBegin("queryModuleConfig", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryModuleConfig_result({success: result});
+          output.writeMessageBegin("queryModuleConfig", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryModuleConfig_result(err);
+          output.writeMessageBegin("queryModuleConfig", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryModuleConfig(args.param,  function (err, result) {
       var result = new ManagerServ_queryModuleConfig_result((err != null ? err : {success: result}));
@@ -5365,19 +6173,19 @@ ManagerServProcessor.prototype.process_queryModuleConfigDetail = function(seqid,
   input.readMessageEnd();
   if (this._handler.queryModuleConfigDetail.length === 1) {
     Q.fcall(this._handler.queryModuleConfigDetail, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_queryModuleConfigDetail_result({success: result});
-        output.writeMessageBegin("queryModuleConfigDetail", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryModuleConfigDetail_result(err);
-        output.writeMessageBegin("queryModuleConfigDetail", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryModuleConfigDetail_result({success: result});
+          output.writeMessageBegin("queryModuleConfigDetail", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryModuleConfigDetail_result(err);
+          output.writeMessageBegin("queryModuleConfigDetail", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryModuleConfigDetail(args.param,  function (err, result) {
       var result = new ManagerServ_queryModuleConfigDetail_result((err != null ? err : {success: result}));
@@ -5395,19 +6203,19 @@ ManagerServProcessor.prototype.process_queryModuleConfigDetailForBuyer = functio
   input.readMessageEnd();
   if (this._handler.queryModuleConfigDetailForBuyer.length === 1) {
     Q.fcall(this._handler.queryModuleConfigDetailForBuyer, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_queryModuleConfigDetailForBuyer_result({success: result});
-        output.writeMessageBegin("queryModuleConfigDetailForBuyer", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryModuleConfigDetailForBuyer_result(err);
-        output.writeMessageBegin("queryModuleConfigDetailForBuyer", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryModuleConfigDetailForBuyer_result({success: result});
+          output.writeMessageBegin("queryModuleConfigDetailForBuyer", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryModuleConfigDetailForBuyer_result(err);
+          output.writeMessageBegin("queryModuleConfigDetailForBuyer", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryModuleConfigDetailForBuyer(args.param,  function (err, result) {
       var result = new ManagerServ_queryModuleConfigDetailForBuyer_result((err != null ? err : {success: result}));
@@ -5425,19 +6233,19 @@ ManagerServProcessor.prototype.process_relase = function(seqid, input, output) {
   input.readMessageEnd();
   if (this._handler.relase.length === 1) {
     Q.fcall(this._handler.relase, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_relase_result({success: result});
-        output.writeMessageBegin("relase", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_relase_result(err);
-        output.writeMessageBegin("relase", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_relase_result({success: result});
+          output.writeMessageBegin("relase", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_relase_result(err);
+          output.writeMessageBegin("relase", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.relase(args.param,  function (err, result) {
       var result = new ManagerServ_relase_result((err != null ? err : {success: result}));
@@ -5455,19 +6263,19 @@ ManagerServProcessor.prototype.process_importExcel = function(seqid, input, outp
   input.readMessageEnd();
   if (this._handler.importExcel.length === 1) {
     Q.fcall(this._handler.importExcel, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_importExcel_result({success: result});
-        output.writeMessageBegin("importExcel", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_importExcel_result(err);
-        output.writeMessageBegin("importExcel", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_importExcel_result({success: result});
+          output.writeMessageBegin("importExcel", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_importExcel_result(err);
+          output.writeMessageBegin("importExcel", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.importExcel(args.param,  function (err, result) {
       var result = new ManagerServ_importExcel_result((err != null ? err : {success: result}));
@@ -5485,19 +6293,19 @@ ManagerServProcessor.prototype.process_queryImgkey = function(seqid, input, outp
   input.readMessageEnd();
   if (this._handler.queryImgkey.length === 1) {
     Q.fcall(this._handler.queryImgkey, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_queryImgkey_result({success: result});
-        output.writeMessageBegin("queryImgkey", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryImgkey_result(err);
-        output.writeMessageBegin("queryImgkey", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryImgkey_result({success: result});
+          output.writeMessageBegin("queryImgkey", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryImgkey_result(err);
+          output.writeMessageBegin("queryImgkey", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryImgkey(args.param,  function (err, result) {
       var result = new ManagerServ_queryImgkey_result((err != null ? err : {success: result}));
@@ -5515,19 +6323,19 @@ ManagerServProcessor.prototype.process_queryProductRuleImgkey = function(seqid, 
   input.readMessageEnd();
   if (this._handler.queryProductRuleImgkey.length === 1) {
     Q.fcall(this._handler.queryProductRuleImgkey, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_queryProductRuleImgkey_result({success: result});
-        output.writeMessageBegin("queryProductRuleImgkey", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryProductRuleImgkey_result(err);
-        output.writeMessageBegin("queryProductRuleImgkey", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryProductRuleImgkey_result({success: result});
+          output.writeMessageBegin("queryProductRuleImgkey", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryProductRuleImgkey_result(err);
+          output.writeMessageBegin("queryProductRuleImgkey", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryProductRuleImgkey(args.param,  function (err, result) {
       var result = new ManagerServ_queryProductRuleImgkey_result((err != null ? err : {success: result}));
@@ -5545,19 +6353,19 @@ ManagerServProcessor.prototype.process_saveAdvertSlotImage = function(seqid, inp
   input.readMessageEnd();
   if (this._handler.saveAdvertSlotImage.length === 1) {
     Q.fcall(this._handler.saveAdvertSlotImage, args.slotImage)
-      .then(function(result) {
-        var result = new ManagerServ_saveAdvertSlotImage_result({success: result});
-        output.writeMessageBegin("saveAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_saveAdvertSlotImage_result(err);
-        output.writeMessageBegin("saveAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_saveAdvertSlotImage_result({success: result});
+          output.writeMessageBegin("saveAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_saveAdvertSlotImage_result(err);
+          output.writeMessageBegin("saveAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.saveAdvertSlotImage(args.slotImage,  function (err, result) {
       var result = new ManagerServ_saveAdvertSlotImage_result((err != null ? err : {success: result}));
@@ -5575,19 +6383,19 @@ ManagerServProcessor.prototype.process_updateAdvertSlotImage = function(seqid, i
   input.readMessageEnd();
   if (this._handler.updateAdvertSlotImage.length === 1) {
     Q.fcall(this._handler.updateAdvertSlotImage, args.slotImage)
-      .then(function(result) {
-        var result = new ManagerServ_updateAdvertSlotImage_result({success: result});
-        output.writeMessageBegin("updateAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_updateAdvertSlotImage_result(err);
-        output.writeMessageBegin("updateAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_updateAdvertSlotImage_result({success: result});
+          output.writeMessageBegin("updateAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_updateAdvertSlotImage_result(err);
+          output.writeMessageBegin("updateAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.updateAdvertSlotImage(args.slotImage,  function (err, result) {
       var result = new ManagerServ_updateAdvertSlotImage_result((err != null ? err : {success: result}));
@@ -5605,19 +6413,19 @@ ManagerServProcessor.prototype.process_queryAdvertSlotImageList = function(seqid
   input.readMessageEnd();
   if (this._handler.queryAdvertSlotImageList.length === 1) {
     Q.fcall(this._handler.queryAdvertSlotImageList, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_queryAdvertSlotImageList_result({success: result});
-        output.writeMessageBegin("queryAdvertSlotImageList", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryAdvertSlotImageList_result(err);
-        output.writeMessageBegin("queryAdvertSlotImageList", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryAdvertSlotImageList_result({success: result});
+          output.writeMessageBegin("queryAdvertSlotImageList", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryAdvertSlotImageList_result(err);
+          output.writeMessageBegin("queryAdvertSlotImageList", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryAdvertSlotImageList(args.param,  function (err, result) {
       var result = new ManagerServ_queryAdvertSlotImageList_result((err != null ? err : {success: result}));
@@ -5635,19 +6443,19 @@ ManagerServProcessor.prototype.process_queryAdvertSlotImage = function(seqid, in
   input.readMessageEnd();
   if (this._handler.queryAdvertSlotImage.length === 1) {
     Q.fcall(this._handler.queryAdvertSlotImage, args.slotImage)
-      .then(function(result) {
-        var result = new ManagerServ_queryAdvertSlotImage_result({success: result});
-        output.writeMessageBegin("queryAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryAdvertSlotImage_result(err);
-        output.writeMessageBegin("queryAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryAdvertSlotImage_result({success: result});
+          output.writeMessageBegin("queryAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryAdvertSlotImage_result(err);
+          output.writeMessageBegin("queryAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryAdvertSlotImage(args.slotImage,  function (err, result) {
       var result = new ManagerServ_queryAdvertSlotImage_result((err != null ? err : {success: result}));
@@ -5665,19 +6473,19 @@ ManagerServProcessor.prototype.process_deleteAdvertSlotImage = function(seqid, i
   input.readMessageEnd();
   if (this._handler.deleteAdvertSlotImage.length === 1) {
     Q.fcall(this._handler.deleteAdvertSlotImage, args.slotImage)
-      .then(function(result) {
-        var result = new ManagerServ_deleteAdvertSlotImage_result({success: result});
-        output.writeMessageBegin("deleteAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_deleteAdvertSlotImage_result(err);
-        output.writeMessageBegin("deleteAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_deleteAdvertSlotImage_result({success: result});
+          output.writeMessageBegin("deleteAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_deleteAdvertSlotImage_result(err);
+          output.writeMessageBegin("deleteAdvertSlotImage", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.deleteAdvertSlotImage(args.slotImage,  function (err, result) {
       var result = new ManagerServ_deleteAdvertSlotImage_result((err != null ? err : {success: result}));
@@ -5695,19 +6503,19 @@ ManagerServProcessor.prototype.process_publishAdvertSlot = function(seqid, input
   input.readMessageEnd();
   if (this._handler.publishAdvertSlot.length === 1) {
     Q.fcall(this._handler.publishAdvertSlot, args.param)
-      .then(function(result) {
-        var result = new ManagerServ_publishAdvertSlot_result({success: result});
-        output.writeMessageBegin("publishAdvertSlot", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_publishAdvertSlot_result(err);
-        output.writeMessageBegin("publishAdvertSlot", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_publishAdvertSlot_result({success: result});
+          output.writeMessageBegin("publishAdvertSlot", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_publishAdvertSlot_result(err);
+          output.writeMessageBegin("publishAdvertSlot", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.publishAdvertSlot(args.param,  function (err, result) {
       var result = new ManagerServ_publishAdvertSlot_result((err != null ? err : {success: result}));
@@ -5725,19 +6533,19 @@ ManagerServProcessor.prototype.process_queryAdvertSlotList = function(seqid, inp
   input.readMessageEnd();
   if (this._handler.queryAdvertSlotList.length === 0) {
     Q.fcall(this._handler.queryAdvertSlotList)
-      .then(function(result) {
-        var result = new ManagerServ_queryAdvertSlotList_result({success: result});
-        output.writeMessageBegin("queryAdvertSlotList", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryAdvertSlotList_result(err);
-        output.writeMessageBegin("queryAdvertSlotList", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryAdvertSlotList_result({success: result});
+          output.writeMessageBegin("queryAdvertSlotList", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryAdvertSlotList_result(err);
+          output.writeMessageBegin("queryAdvertSlotList", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryAdvertSlotList( function (err, result) {
       var result = new ManagerServ_queryAdvertSlotList_result((err != null ? err : {success: result}));
@@ -5755,19 +6563,19 @@ ManagerServProcessor.prototype.process_queryPermissionByCsId = function(seqid, i
   input.readMessageEnd();
   if (this._handler.queryPermissionByCsId.length === 1) {
     Q.fcall(this._handler.queryPermissionByCsId, args.csId)
-      .then(function(result) {
-        var result = new ManagerServ_queryPermissionByCsId_result({success: result});
-        output.writeMessageBegin("queryPermissionByCsId", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryPermissionByCsId_result(err);
-        output.writeMessageBegin("queryPermissionByCsId", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryPermissionByCsId_result({success: result});
+          output.writeMessageBegin("queryPermissionByCsId", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryPermissionByCsId_result(err);
+          output.writeMessageBegin("queryPermissionByCsId", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryPermissionByCsId(args.csId,  function (err, result) {
       var result = new ManagerServ_queryPermissionByCsId_result((err != null ? err : {success: result}));
@@ -5785,19 +6593,19 @@ ManagerServProcessor.prototype.process_queryAllCommissioner = function(seqid, in
   input.readMessageEnd();
   if (this._handler.queryAllCommissioner.length === 1) {
     Q.fcall(this._handler.queryAllCommissioner, args.pagination)
-      .then(function(result) {
-        var result = new ManagerServ_queryAllCommissioner_result({success: result});
-        output.writeMessageBegin("queryAllCommissioner", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryAllCommissioner_result(err);
-        output.writeMessageBegin("queryAllCommissioner", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryAllCommissioner_result({success: result});
+          output.writeMessageBegin("queryAllCommissioner", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryAllCommissioner_result(err);
+          output.writeMessageBegin("queryAllCommissioner", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryAllCommissioner(args.pagination,  function (err, result) {
       var result = new ManagerServ_queryAllCommissioner_result((err != null ? err : {success: result}));
@@ -5815,19 +6623,19 @@ ManagerServProcessor.prototype.process_queryCommissionerByCsId = function(seqid,
   input.readMessageEnd();
   if (this._handler.queryCommissionerByCsId.length === 1) {
     Q.fcall(this._handler.queryCommissionerByCsId, args.csId)
-      .then(function(result) {
-        var result = new ManagerServ_queryCommissionerByCsId_result({success: result});
-        output.writeMessageBegin("queryCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_queryCommissionerByCsId_result(err);
-        output.writeMessageBegin("queryCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_queryCommissionerByCsId_result({success: result});
+          output.writeMessageBegin("queryCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryCommissionerByCsId_result(err);
+          output.writeMessageBegin("queryCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.queryCommissionerByCsId(args.csId,  function (err, result) {
       var result = new ManagerServ_queryCommissionerByCsId_result((err != null ? err : {success: result}));
@@ -5845,19 +6653,19 @@ ManagerServProcessor.prototype.process_modifyCommissionerByCsId = function(seqid
   input.readMessageEnd();
   if (this._handler.modifyCommissionerByCsId.length === 1) {
     Q.fcall(this._handler.modifyCommissionerByCsId, args.cs)
-      .then(function(result) {
-        var result = new ManagerServ_modifyCommissionerByCsId_result({success: result});
-        output.writeMessageBegin("modifyCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_modifyCommissionerByCsId_result(err);
-        output.writeMessageBegin("modifyCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_modifyCommissionerByCsId_result({success: result});
+          output.writeMessageBegin("modifyCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_modifyCommissionerByCsId_result(err);
+          output.writeMessageBegin("modifyCommissionerByCsId", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.modifyCommissionerByCsId(args.cs,  function (err, result) {
       var result = new ManagerServ_modifyCommissionerByCsId_result((err != null ? err : {success: result}));
@@ -5875,19 +6683,19 @@ ManagerServProcessor.prototype.process_resetCommissionerPwd = function(seqid, in
   input.readMessageEnd();
   if (this._handler.resetCommissionerPwd.length === 2) {
     Q.fcall(this._handler.resetCommissionerPwd, args.csId, args.newPwd)
-      .then(function(result) {
-        var result = new ManagerServ_resetCommissionerPwd_result({success: result});
-        output.writeMessageBegin("resetCommissionerPwd", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_resetCommissionerPwd_result(err);
-        output.writeMessageBegin("resetCommissionerPwd", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_resetCommissionerPwd_result({success: result});
+          output.writeMessageBegin("resetCommissionerPwd", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_resetCommissionerPwd_result(err);
+          output.writeMessageBegin("resetCommissionerPwd", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.resetCommissionerPwd(args.csId, args.newPwd,  function (err, result) {
       var result = new ManagerServ_resetCommissionerPwd_result((err != null ? err : {success: result}));
@@ -5905,19 +6713,19 @@ ManagerServProcessor.prototype.process_changeValidate = function(seqid, input, o
   input.readMessageEnd();
   if (this._handler.changeValidate.length === 1) {
     Q.fcall(this._handler.changeValidate, args.cs)
-      .then(function(result) {
-        var result = new ManagerServ_changeValidate_result({success: result});
-        output.writeMessageBegin("changeValidate", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_changeValidate_result(err);
-        output.writeMessageBegin("changeValidate", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_changeValidate_result({success: result});
+          output.writeMessageBegin("changeValidate", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_changeValidate_result(err);
+          output.writeMessageBegin("changeValidate", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.changeValidate(args.cs,  function (err, result) {
       var result = new ManagerServ_changeValidate_result((err != null ? err : {success: result}));
@@ -5935,23 +6743,143 @@ ManagerServProcessor.prototype.process_insert = function(seqid, input, output) {
   input.readMessageEnd();
   if (this._handler.insert.length === 1) {
     Q.fcall(this._handler.insert, args.cs)
-      .then(function(result) {
-        var result = new ManagerServ_insert_result({success: result});
-        output.writeMessageBegin("insert", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result = new ManagerServ_insert_result(err);
-        output.writeMessageBegin("insert", Thrift.MessageType.REPLY, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
+        .then(function(result) {
+          var result = new ManagerServ_insert_result({success: result});
+          output.writeMessageBegin("insert", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_insert_result(err);
+          output.writeMessageBegin("insert", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
   } else {
     this._handler.insert(args.cs,  function (err, result) {
       var result = new ManagerServ_insert_result((err != null ? err : {success: result}));
       output.writeMessageBegin("insert", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_getShareUrl = function(seqid, input, output) {
+  var args = new ManagerServ_getShareUrl_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getShareUrl.length === 5) {
+    Q.fcall(this._handler.getShareUrl, args.openId, args.userId, args.name, args.img, args.token)
+        .then(function(result) {
+          var result = new ManagerServ_getShareUrl_result({success: result});
+          output.writeMessageBegin("getShareUrl", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_getShareUrl_result(err);
+          output.writeMessageBegin("getShareUrl", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
+  } else {
+    this._handler.getShareUrl(args.openId, args.userId, args.name, args.img, args.token,  function (err, result) {
+      var result = new ManagerServ_getShareUrl_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getShareUrl", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_pushFriends = function(seqid, input, output) {
+  var args = new ManagerServ_pushFriends_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.pushFriends.length === 7) {
+    Q.fcall(this._handler.pushFriends, args.selfOpenId, args.selfName, args.friendsOpenId, args.friendUserId, args.sign, args.selfimg, args.selfToken)
+        .then(function(result) {
+          var result = new ManagerServ_pushFriends_result({success: result});
+          output.writeMessageBegin("pushFriends", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_pushFriends_result(err);
+          output.writeMessageBegin("pushFriends", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
+  } else {
+    this._handler.pushFriends(args.selfOpenId, args.selfName, args.friendsOpenId, args.friendUserId, args.sign, args.selfimg, args.selfToken,  function (err, result) {
+      var result = new ManagerServ_pushFriends_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("pushFriends", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryPushList = function(seqid, input, output) {
+  var args = new ManagerServ_queryPushList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryPushList.length === 2) {
+    Q.fcall(this._handler.queryPushList, args.userId, args.openId)
+        .then(function(result) {
+          var result = new ManagerServ_queryPushList_result({success: result});
+          output.writeMessageBegin("queryPushList", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryPushList_result(err);
+          output.writeMessageBegin("queryPushList", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
+  } else {
+    this._handler.queryPushList(args.userId, args.openId,  function (err, result) {
+      var result = new ManagerServ_queryPushList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryPushList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ManagerServProcessor.prototype.process_queryTotalScore = function(seqid, input, output) {
+  var args = new ManagerServ_queryTotalScore_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryTotalScore.length === 2) {
+    Q.fcall(this._handler.queryTotalScore, args.userId, args.openId)
+        .then(function(result) {
+          var result = new ManagerServ_queryTotalScore_result({success: result});
+          output.writeMessageBegin("queryTotalScore", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        }, function (err) {
+          var result = new ManagerServ_queryTotalScore_result(err);
+          output.writeMessageBegin("queryTotalScore", Thrift.MessageType.REPLY, seqid);
+          result.write(output);
+          output.writeMessageEnd();
+          output.flush();
+        });
+  } else {
+    this._handler.queryTotalScore(args.userId, args.openId,  function (err, result) {
+      var result = new ManagerServ_queryTotalScore_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryTotalScore", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

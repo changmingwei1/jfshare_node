@@ -24,6 +24,9 @@ var afterSale = require('./controllers/afterSale_controller');
 var slotImage = require('./controllers/slotImage_controller');// 主页轮播图模块页面的配置
 var moduleConfig = require('./controllers/moduleConfig_controller');// 商品和品牌模块页面的配置
 var permission = require('./controllers/permission_controller');// 权限管理
+
+var friendsActivity = require('./controllers/friendsActivity_controller');//临时活动
+
 var zookeeper = require('./resource/zookeeper_util');
 var app = express();
 
@@ -47,7 +50,7 @@ app.use('/manager/score',score);
 
 app.use('/manager/scoreCards',score_cards);// 积分卡   
 app.use('/manager/redPaper',redPaper);// 积分红包
-
+app.use('/manager/activity',friendsActivity);
 
 app.use('/manager/message',message);
 app.use('/manager/seller',seller);

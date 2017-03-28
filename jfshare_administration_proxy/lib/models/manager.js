@@ -163,4 +163,71 @@ Manager.prototype.signout = function (params, callback) {
     });
 };
 
+
+/**********************获取活动的链接**********************************************/
+
+Manager.prototype.getShareUrl = function (params, callback) {
+    //获取client
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'getShareUrl', [params.openId, params.userId, params.name, params.img, params.token]);
+    Lich.wicca.invokeClient(managerServ, function (err, data) {
+        logger.error("getShareUrl result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+Manager.prototype.pushFriends = function (params, callback) {
+    //获取client
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'pushFriends', [params.selfOpenId, params.selfName, params.friendsOpenId, params.friendUserId,params.sign, params.selfimg,params.token]);
+    Lich.wicca.invokeClient(managerServ, function (err, data) {
+        logger.info("pushFriends result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+//queryTotalScore
+Manager.prototype.queryTotalScore = function (params, callback) {
+    //获取client
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryTotalScore', [params.userId,params.openId]);
+    Lich.wicca.invokeClient(managerServ, function (err, data) {
+        logger.info("queryTotalScore result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+Manager.prototype.queryPushList = function (params, callback) {
+    //获取client
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryPushList', [params.userId,params.openId]);
+    Lich.wicca.invokeClient(managerServ, function (err, data) {
+        logger.info("queryPushList result:" + JSON.stringify(data));
+        var res = {};
+        if (err || data[0].result.code == "1") {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
 module.exports = new Manager();
