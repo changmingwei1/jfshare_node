@@ -66,7 +66,7 @@ router.post('/getShareUrl', function (req, res, next) {
                 res.json(err);
                 return;
             }
-            result.data = data;
+            result.url = "http://h5.jfshare.com/html/friendshipActivityRecord.html?"+data[0].value;
             res.json(result);
         });
     } catch (ex) {
@@ -76,7 +76,6 @@ router.post('/getShareUrl', function (req, res, next) {
         res.json(result);
     }
 });
-
 
 router.post('/pushFriends', function (req, res, next) {
     var result = {code: 200};
@@ -89,7 +88,6 @@ router.post('/pushFriends', function (req, res, next) {
             res.json(result);
             return;
         }
-
         //
 
         if (arg.selfOpenId == null || arg.selfOpenId == "") {
@@ -139,89 +137,14 @@ router.post('/pushFriends', function (req, res, next) {
             return;
         }
 
-        Manager.pushFriends(param, function (err, data) {
+        Manager.pushFriends(arg, function (err, data) {
             if (err) {
                 res.json(err);
                 return;
             }
-            res.json(result);
-            return;
-        });
-    } catch (ex) {
-        logger.error("发生异常:" + ex);
-        result.code = 500;
-        result.desc = "系统异常";
-        res.json(result);
-    }
-});
-
-
-router.post('/pushFriends', function (req, res, next) {
-    var result = {code: 200};
-
-    try {
-        var arg = req.body;
-        logger.info("pushFriends request:" + JSON.stringify(arg));
-        if (arg == null) {
-            result.code = 500;
-            res.json(result);
-            return;
-        }
-
-        //
-
-        if (arg.selfOpenId == null || arg.selfOpenId == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }
-
-        if (arg.selfName == null || arg.selfName == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }
-
-        if (arg.friendsOpenId == null || arg.friendsOpenId == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }
-
-        if (arg.friendUserId == null || arg.friendUserId == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }
-
-        if (arg.sign == null || arg.sign == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }
-        if (arg.selfimg == null || arg.selfimg == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }
-        if (arg.token == null || arg.token == "") {
-            result.code = 500;
-            result.desc = "参数错误";
-            res.json(result);
-            return;
-        }
-
-        Manager.pushFriends(param, function (err, data) {
-            if (err) {
-                res.json(err);
-                return;
-            }
+            result.img = data[0].img;
+            result.value = data[0].value;
+            result.friendsName = data[0].friendsName;
             res.json(result);
             return;
         });
@@ -245,7 +168,6 @@ router.post('/queryTotalScore', function (req, res, next) {
             res.json(result);
             return;
         }
-
         //
 
         if (arg.userId == null || arg.userId == "") {
@@ -262,11 +184,15 @@ router.post('/queryTotalScore', function (req, res, next) {
             return;
         }
 
-        Manager.queryTotalScore(param, function (err, data) {
+        Manager.queryTotalScore(arg, function (err, data) {
             if (err) {
                 res.json(err);
                 return;
             }
+            result.value = data[0].value;
+            result.img = data[0].img;
+            result.name = data[0].friendsName;
+            result.date  = data[0].dateTime;
             res.json(result);
             return;
         });
@@ -303,12 +229,28 @@ router.post('/queryPushList', function (req, res, next) {
             res.json(result);
             return;
         }
+        if (arg.currentPage == null || arg.currentPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
 
-        Manager.queryPushList(param, function (err, data) {
+        if (arg.numPerPage == null || arg.numPerPage == "") {
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+
+        Manager.queryPushList(arg, function (err, data) {
             if (err) {
                 res.json(err);
                 return;
             }
+
+            result.pushList = data[0].pushList;
+            result.pagination = data[0].pagination;
             res.json(result);
             return;
         });

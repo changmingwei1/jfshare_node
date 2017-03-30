@@ -214,8 +214,14 @@ Manager.prototype.queryTotalScore = function (params, callback) {
 };
 
 Manager.prototype.queryPushList = function (params, callback) {
+
+    var paginationParms = new pagination_types.Pagination({
+        currentPage:params.currentPage,
+        numPerPage:params.numPerPage
+    });
+
     //ªÒ»°client
-    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryPushList', [params.userId,params.openId]);
+    var managerServ = new Lich.InvokeBag(Lich.ServiceKey.ManagerServer, 'queryPushList', [params.userId,params.openId,paginationParms]);
     Lich.wicca.invokeClient(managerServ, function (err, data) {
         logger.info("queryPushList result:" + JSON.stringify(data));
         var res = {};
