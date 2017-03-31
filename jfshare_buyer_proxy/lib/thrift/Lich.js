@@ -22,7 +22,6 @@ var ServiceKey = {
     BuyerServer: "Buyer",
     ProductServer : "Product",
     StockServer :  "Stock",
-    AddressServer: "Address",
     CommonServer: "Common",
     TradeServer: "Trade",
     CartServer: "Cart",
@@ -34,7 +33,8 @@ var ServiceKey = {
     AfterSaleServer:"AfterSale",
     ScoreCardsServ:"ScoreCards",// 积分卡服务 红包服务
     FileForCardServ:"FileForCardServ",
-    ThirdPayServer:"ThirdPay"//第三方支付
+    //ThirdPayServer
+    ThirdPayServer:"ThirdPayServer"
 };
 
 /**

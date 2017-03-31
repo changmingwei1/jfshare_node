@@ -226,5 +226,15 @@ module.exports.ServiceFactory = {
     fileForCard: function () {
         logger.info("--------->"+zookeeper.getData("file_card_serv_ips")+"--->"+zookeeper.getData("file_card_serv_port"));
         return new ThriftConfig(zookeeper.getData("file_card_serv_ips"),zookeeper.getData("file_card_serv_port"));
+    },
+
+    /**
+     * 买家服务
+     * @returns {ThriftConfig}
+     */
+    thirdPay: function () {
+        logger.info("--------->"+zookeeper.getData("thirdpay_serv_ips")+"--->"+zookeeper.getData("thirdpay_serv_port"));
+        return new ThriftConfig(zookeeper.getData("thirdpay_serv_ips"),zookeeper.getData("thirdpay_serv_port"));
+        //return obj = new ThriftConfig("101.201.38.182", 1990);
     }
 };
