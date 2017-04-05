@@ -2106,7 +2106,7 @@ router.post('/payOrderCreates', function (request, response, next) {
         }
         if (arg.tradeCode == "Z8003") { //话费
             if (arg.totalSum == "" || (
-                    //arg.totalSum != "30" &&
+                    arg.totalSum != "30" &&
                     arg.totalSum != "50" &&
                     arg.totalSum != "100" &&
                     arg.totalSum != "300" &&
