@@ -1309,9 +1309,9 @@ router.post('/enterAmountCall', function (request, response, next) {
     var resContent = {code: 200};
     var param = request.body;
     //var ip = request.headers['x-real-ip'];
-    var ip = getClientIP(request);
+    //var ip = getClientIP(request);
     try {
-        logger.info("请求IP"+ip);
+       // logger.info("请求IP"+ip);
         //if (ip != "::ffff:124.42.103.132" && ip != "::ffff:120.27.232.14" && ip != "120.27.232.14" && ip != "::ffff:116.228.50.38"  && ip != "116.228.50.38" ) {
         //    resContent.ErrCode = 400;
         //    resContent.ErrMsg = "访问IP不在配置范围内";
@@ -1695,10 +1695,10 @@ router.post('/relaAccountCall', function (request, response, next) {
     var resContent = {code: 200};
     var param = request.body;
     //var ip = request.headers['x-real-ip'];
-    var ip = getClientIP(request);
+    //var ip = getClientIP(request);
     try {
 
-        logger.info("兑入积分鉴权登陆调用接口"+ip);
+       // logger.info("兑入积分鉴权登陆调用接口"+ip);
         //if (ip != "::ffff:124.42.103.132" && ip != "::ffff:120.27.232.14" && ip != "120.27.232.14" ) {
         //    resContent.code = 400;
         //    resContent.desc = "访问IP不在配置范围内";
@@ -2210,10 +2210,10 @@ router.post('/enterUserAuthorize', function (request, response, next) {
     var resContent = {code: 200};
     var param = request.body;
     //var ip = request.headers['x-real-ip'];
-    var ip = getClientIP(request);
+    //var ip = getClientIP(request);
     try {
 
-        logger.info("兑入积分鉴权登陆调用接口"+ip);
+        //logger.info("兑入积分鉴权登陆调用接口"+ip);
         //if (ip != "::ffff:124.42.103.132"  && ip != "::ffff:116.228.50.38"  && ip != "116.228.50.38"  && ip != "::ffff:120.27.232.14" && ip != "120.27.232.14") {
         //    resContent.ErrCode = 9999;
         //    resContent.ErrMsg = "访问IP不在配置范围内";
@@ -2254,9 +2254,9 @@ router.post('/smsLoginEnterAmount', function (request, response, next) {
     var resContent = {code: 200};
     var param = request.body;
     //var ip = request.headers['x-real-ip'];
-    var ip = getClientIP(request);
+   // var ip = getClientIP(request);
     try {
-        logger.info("请求IP"+ip);
+       // logger.info("请求IP"+ip);
         //if (ip != "::ffff:124.42.103.132" && ip != "::ffff:120.27.232.14"  && ip != "::ffff:120.24.153.102") {
         //    resContent.code = 400;
         //    resContent.desc = "访问IP不在配置范围内";
@@ -2339,5 +2339,55 @@ router.post('/smsLoginEnterAmount', function (request, response, next) {
         response.json(resContent);
     }
 });
+
+
+
+
+/*内嵌其他h5鉴权*/
+router.post('/validAuthH5', function (request, response, next) {
+    logger.info("进入内嵌h5验证鉴权接口");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.token == null || param.token == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权信息不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.userId == null || param.userId == "") {
+            resContent.code = 400;
+            resContent.desc = "用户id不能为空";
+            response.json(resContent);
+            return;
+        }
+        //默认设置为clientType为1
+        param.clientType = 1;
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.validAuth(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("验证失败，because :" + ex);
+        resContent.code = 501;
+        resContent.desc = "验证失败";
+        response.json(resContent);
+    }
+});
+
+
+
 
 module.exports = router;
