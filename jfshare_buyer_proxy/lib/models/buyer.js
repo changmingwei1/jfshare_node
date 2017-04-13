@@ -578,4 +578,27 @@ Buyer.prototype.smsLoginEnterAmount = function(param,callback){
         }
     });
 };
+
+
+//内嵌h5登录验证
+Buyer.prototype.validAuthH5 = function(param,callback){
+    //参数
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'checkAppH5Token',[param.token,param.mobileNo,param.openId,param.mac,param.accessCode]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取h5验证的结果是:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].code == "1") {
+            logger.error("不能登录，因为: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
+
 module.exports = new Buyer();

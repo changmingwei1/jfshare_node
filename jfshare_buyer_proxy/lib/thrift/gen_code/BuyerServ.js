@@ -3296,6 +3296,174 @@ BuyerServ_thirdSigninCheck_result.prototype.write = function(output) {
   return;
 };
 
+BuyerServ_checkAppH5Token_args = function(args) {
+  this.token = null;
+  this.mobileNo = null;
+  this.openId = null;
+  this.mac = null;
+  this.accessCode = null;
+  if (args) {
+    if (args.token !== undefined) {
+      this.token = args.token;
+    }
+    if (args.mobileNo !== undefined) {
+      this.mobileNo = args.mobileNo;
+    }
+    if (args.openId !== undefined) {
+      this.openId = args.openId;
+    }
+    if (args.mac !== undefined) {
+      this.mac = args.mac;
+    }
+    if (args.accessCode !== undefined) {
+      this.accessCode = args.accessCode;
+    }
+  }
+};
+BuyerServ_checkAppH5Token_args.prototype = {};
+BuyerServ_checkAppH5Token_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.token = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobileNo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.openId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.mac = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.accessCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_checkAppH5Token_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_checkAppH5Token_args');
+  if (this.token !== null && this.token !== undefined) {
+    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
+    output.writeString(this.token);
+    output.writeFieldEnd();
+  }
+  if (this.mobileNo !== null && this.mobileNo !== undefined) {
+    output.writeFieldBegin('mobileNo', Thrift.Type.STRING, 2);
+    output.writeString(this.mobileNo);
+    output.writeFieldEnd();
+  }
+  if (this.openId !== null && this.openId !== undefined) {
+    output.writeFieldBegin('openId', Thrift.Type.STRING, 3);
+    output.writeString(this.openId);
+    output.writeFieldEnd();
+  }
+  if (this.mac !== null && this.mac !== undefined) {
+    output.writeFieldBegin('mac', Thrift.Type.STRING, 4);
+    output.writeString(this.mac);
+    output.writeFieldEnd();
+  }
+  if (this.accessCode !== null && this.accessCode !== undefined) {
+    output.writeFieldBegin('accessCode', Thrift.Type.STRING, 5);
+    output.writeString(this.accessCode);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_checkAppH5Token_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_checkAppH5Token_result.prototype = {};
+BuyerServ_checkAppH5Token_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_checkAppH5Token_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_checkAppH5Token_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 BuyerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -4638,6 +4806,57 @@ BuyerServClient.prototype.recv_thirdSigninCheck = function(input,mtype,rseqid) {
   }
   return callback('thirdSigninCheck failed: unknown result');
 };
+BuyerServClient.prototype.checkAppH5Token = function(token, mobileNo, openId, mac, accessCode, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_checkAppH5Token(token, mobileNo, openId, mac, accessCode);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_checkAppH5Token(token, mobileNo, openId, mac, accessCode);
+  }
+};
+
+BuyerServClient.prototype.send_checkAppH5Token = function(token, mobileNo, openId, mac, accessCode) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('checkAppH5Token', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_checkAppH5Token_args();
+  args.token = token;
+  args.mobileNo = mobileNo;
+  args.openId = openId;
+  args.mac = mac;
+  args.accessCode = accessCode;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_checkAppH5Token = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_checkAppH5Token_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('checkAppH5Token failed: unknown result');
+};
 BuyerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -5489,6 +5708,36 @@ BuyerServProcessor.prototype.process_thirdSigninCheck = function(seqid, input, o
     this._handler.thirdSigninCheck(args.loginLog, args.UserThird, args.validateInfo,  function (err, result) {
       var result = new BuyerServ_thirdSigninCheck_result((err != null ? err : {success: result}));
       output.writeMessageBegin("thirdSigninCheck", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_checkAppH5Token = function(seqid, input, output) {
+  var args = new BuyerServ_checkAppH5Token_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.checkAppH5Token.length === 5) {
+    Q.fcall(this._handler.checkAppH5Token, args.token, args.mobileNo, args.openId, args.mac, args.accessCode)
+      .then(function(result) {
+        var result = new BuyerServ_checkAppH5Token_result({success: result});
+        output.writeMessageBegin("checkAppH5Token", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_checkAppH5Token_result(err);
+        output.writeMessageBegin("checkAppH5Token", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.checkAppH5Token(args.token, args.mobileNo, args.openId, args.mac, args.accessCode,  function (err, result) {
+      var result = new BuyerServ_checkAppH5Token_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("checkAppH5Token", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

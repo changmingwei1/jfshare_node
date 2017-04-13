@@ -2357,24 +2357,46 @@ router.post('/validAuthH5', function (request, response, next) {
         }
         if (param.token == null || param.token == "") {
             resContent.code = 400;
-            resContent.desc = "鉴权信息不能为空";
+            resContent.desc = "token不能为空";
             response.json(resContent);
             return;
         }
-        if (param.userId == null || param.userId == "") {
+        if (param.openId == null || param.openId == "") {
             resContent.code = 400;
-            resContent.desc = "用户id不能为空";
+            resContent.desc = "openId不能为空";
             response.json(resContent);
             return;
         }
-        //默认设置为clientType为1
-        param.clientType = 1;
+
+        if (param.mobileNo == null || param.mobileNo == "") {
+            resContent.code = 400;
+            resContent.desc = "mobileNo不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.mac == null || param.mac == "") {
+            resContent.code = 400;
+            resContent.desc = "mac不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.accessCode == null || param.accessCode == "") {
+            resContent.code = 400;
+            resContent.desc = "accessCode不能为空";
+            response.json(resContent);
+            return;
+        }
 
         logger.info("请求参数：" + JSON.stringify(param));
-        Buyer.validAuth(param, function (err, data) {
+        Buyer.validAuthH5(param, function (err, data) {
             if (err) {
                 response.json(err);
             } else {
+                if(data[0].code == 0){
+                    resContent.desc= "验证成功";
+                }
                 response.json(resContent);
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             }
