@@ -28,7 +28,7 @@ FileCards.prototype.fileToTY = function (params, callback) {
         isTestFlag: params.isTestFlag,           //测试接口 值为false
         sellerName: params.sellerName           //商家名称
     });
-    logger.info("params4Upload >>>>>>>>>>>  " + JSON.stringify(params4Upload));
+    logger.error("params4Upload >>>>>>>>>>>  " + JSON.stringify(params4Upload));
     //获取客户端
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'fileToTY', [params4Upload]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {

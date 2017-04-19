@@ -14,7 +14,7 @@ router.post('/fileToTY', function (request, response, next) {
     try {
         var params = request.body;
         //参数校验
-        logger.info("fileToTY params:" + JSON.stringify(params));
+        logger.error("fileToTY params:" + JSON.stringify(params));
         //供应商平台商品编号
         if (params.productType == null || params.productType == "") {
             result.code = 400;
