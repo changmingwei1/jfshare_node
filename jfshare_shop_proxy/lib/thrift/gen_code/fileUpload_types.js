@@ -90,6 +90,7 @@ FileParam.prototype.read = function(input) {
       case 4:
       if (ftype == Thrift.Type.I64) {
         this.CardNumber = input.readI64();
+
       } else {
         input.skip(ftype);
       }

@@ -742,6 +742,7 @@ FileForCardServ_rechargeList_args.prototype.read = function(input) {
 FileForCardServ_rechargeList_args.prototype.write = function(output) {
   output.writeStructBegin('FileForCardServ_rechargeList_args');
   if (this.states !== null && this.states !== undefined) {
+
     output.writeFieldBegin('states', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.states.length);
     for (var iter87 in this.states)
