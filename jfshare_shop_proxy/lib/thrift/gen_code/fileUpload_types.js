@@ -88,8 +88,8 @@ FileParam.prototype.read = function(input) {
       }
       break;
       case 4:
-      if (ftype == Thrift.Type.I64) {
-        this.CardNumber = input.readI64();
+      if (ftype == Thrift.Type.I32) {
+        this.CardNumber = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -156,8 +156,8 @@ FileParam.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.CardNumber !== null && this.CardNumber !== undefined) {
-    output.writeFieldBegin('CardNumber', Thrift.Type.I64, 4);
-    output.writeI64(this.CardNumber);
+    output.writeFieldBegin('CardNumber', Thrift.Type.I32, 4);
+    output.writeI32(this.CardNumber);
     output.writeFieldEnd();
   }
   if (this.StartDate !== null && this.StartDate !== undefined) {

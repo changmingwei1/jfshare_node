@@ -2162,6 +2162,28 @@ router.post('/payOrderCreates', function (request, response, next) {
             }
         }
 
+
+        if (arg.tradeCode == "Z8007") {
+            if (arg.sellerComment == "" || arg.sellerComment == null) { //需要是券code
+                result.code = 400;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+            if (arg.receiverMobile == "" || arg.receiverMobile == null) {
+                result.code = 400;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+            //arg.flowno code
+            if (arg.flowno == "" || arg.flowno == null) {
+                result.code = 400;
+                result.desc = "参数错误";
+                response.json(result);
+                return;
+            }
+        }
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息
         Buyer.validAuth(arg, function (err, data) {
@@ -2211,6 +2233,53 @@ router.get('/reChargeNotify', function (request, response, next) {
         logger.error("submit order error:" + ex);
         result.code = 500;
         result.desc = "提交订单失败";
+        response.json(result);
+    }
+});
+
+
+/*校验订单提供给深圳通*/
+router.post('/checkOrder', function (request, response, next) {
+    logger.info("校验订单");
+    var result = {code: 200};
+    try {
+        var arg = request.body;
+        logger.error("校验订单请求参数 request:" + JSON.stringify(arg));
+       //param.orderId,param.mobile,param.mac,1
+        if (arg.orderId == "" || arg.orderId == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (arg.mobile == "" || arg.mobile == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+        if (arg.mac == "" || arg.mac == null) {
+            result.code = 400;
+            result.desc = "参数错误";
+            response.json(result);
+            return;
+        }
+
+        Order.checkOrder(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                if(data[0].result.code == 0){
+                    result.desc= "验证成功";
+                }
+                response.json(result);
+                logger.info("响应的结果:" + JSON.stringify(data));
+            }
+        });
+    } catch (ex) {
+        logger.error("submit order error:" + ex);
+        result.code = 500;
+        result.desc = "系统异常";
         response.json(result);
     }
 });

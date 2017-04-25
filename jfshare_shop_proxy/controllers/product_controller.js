@@ -14,7 +14,6 @@ var Product = require('../lib/models/product');
 var Seller = require('../lib/models/seller');
 var BaseTemplate = require('../lib/models/baseTemplate');
 var Stock = require('../lib/models/stock');
-
 /*查询商品列表*/
 router.post('/list', function (req, res, next) {
     logger.info("进入获取商品列表接口");
@@ -932,5 +931,70 @@ router.post('/subjectListRelaProduct', function (req, res, next) {
         res.json(result);
     }
 });
+
+
+
+/*获取深圳通充值卡券列表*/
+router.post('/sztcardList', function (req, res, next) {
+
+    logger.info("进入深圳通卡券接口");
+    var result = {code: 200};
+
+    var cardList = [];
+    var descList = [];
+    try {
+        var card1 = {
+            "code": "380000099",
+            "price": "50",
+            "desc": " 50元券"
+        };
+        var card2 =
+        {
+            "code": "380000101",
+            "price": "100",
+            "desc": "100元券"
+        };
+
+        cardList.push(card1);
+        cardList.push(card2);
+
+        result.cardList = cardList;
+
+        var desc1 = "温馨提示:";
+        var desc2 = "1.充值券有效期至2017年12月31日，过期失效；"
+        var desc3 = "2.卡券类商品一经售出，无法退货。";
+
+        descList.push(desc1);
+        descList.push(desc2);
+        descList.push(desc3);
+
+        result.descList = descList;
+        res.json(result);
+    } catch (ex) {
+        logger.error("获取卡券列表失败:" + ex);
+        result.code = 500;
+        result.desc = "获取卡券列表失败";
+        res.json(result);
+    }
+});
+
+
+/*深圳通充值卡券的图片*/
+router.post('/sztcardImg', function (req, res, next) {
+
+    logger.info("进入深圳通卡券图片接口");
+    var result = {code: 200};
+    var cardList = [];
+    try {
+        result.img = "D020224445F5751821272F02DDE868D8.jpg";
+        res.json(result);
+    } catch (ex) {
+        logger.error("获取图片失败:" + ex);
+        result.code = 500;
+        result.desc = "获取图片失败";
+        res.json(result);
+    }
+});
+
 
 module.exports = router;
