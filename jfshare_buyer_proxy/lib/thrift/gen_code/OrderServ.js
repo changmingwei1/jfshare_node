@@ -3112,6 +3112,278 @@ OrderServ_synOrderES_result.prototype.write = function(output) {
   return;
 };
 
+OrderServ_updateOrderState4Charge_args = function(args) {
+  this.userId = null;
+  this.orderId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+  }
+};
+OrderServ_updateOrderState4Charge_args.prototype = {};
+OrderServ_updateOrderState4Charge_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_updateOrderState4Charge_args.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_updateOrderState4Charge_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 2);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OrderServ_updateOrderState4Charge_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+OrderServ_updateOrderState4Charge_result.prototype = {};
+OrderServ_updateOrderState4Charge_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_updateOrderState4Charge_result.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_updateOrderState4Charge_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OrderServ_checkOrder_args = function(args) {
+  this.orderId = null;
+  this.mobile = null;
+  this.mac = null;
+  this.type = null;
+  if (args) {
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.mac !== undefined) {
+      this.mac = args.mac;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+  }
+};
+OrderServ_checkOrder_args.prototype = {};
+OrderServ_checkOrder_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.mac = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_checkOrder_args.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_checkOrder_args');
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 1);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.mac !== null && this.mac !== undefined) {
+    output.writeFieldBegin('mac', Thrift.Type.STRING, 3);
+    output.writeString(this.mac);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 4);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OrderServ_checkOrder_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+OrderServ_checkOrder_result.prototype = {};
+OrderServ_checkOrder_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OrderServ_checkOrder_result.prototype.write = function(output) {
+  output.writeStructBegin('OrderServ_checkOrder_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 OrderServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -4321,6 +4593,104 @@ OrderServClient.prototype.recv_synOrderES = function(input,mtype,rseqid) {
   }
   return callback('synOrderES failed: unknown result');
 };
+OrderServClient.prototype.updateOrderState4Charge = function(userId, orderId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateOrderState4Charge(userId, orderId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateOrderState4Charge(userId, orderId);
+  }
+};
+
+OrderServClient.prototype.send_updateOrderState4Charge = function(userId, orderId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('updateOrderState4Charge', Thrift.MessageType.CALL, this.seqid());
+  var args = new OrderServ_updateOrderState4Charge_args();
+  args.userId = userId;
+  args.orderId = orderId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+OrderServClient.prototype.recv_updateOrderState4Charge = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new OrderServ_updateOrderState4Charge_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateOrderState4Charge failed: unknown result');
+};
+OrderServClient.prototype.checkOrder = function(orderId, mobile, mac, type, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_checkOrder(orderId, mobile, mac, type);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_checkOrder(orderId, mobile, mac, type);
+  }
+};
+
+OrderServClient.prototype.send_checkOrder = function(orderId, mobile, mac, type) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('checkOrder', Thrift.MessageType.CALL, this.seqid());
+  var args = new OrderServ_checkOrder_args();
+  args.orderId = orderId;
+  args.mobile = mobile;
+  args.mac = mac;
+  args.type = type;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+OrderServClient.prototype.recv_checkOrder = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new OrderServ_checkOrder_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('checkOrder failed: unknown result');
+};
 OrderServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -5082,6 +5452,66 @@ OrderServProcessor.prototype.process_synOrderES = function(seqid, input, output)
     this._handler.synOrderES(args.tableId, args.conditions,  function (err, result) {
       var result = new OrderServ_synOrderES_result((err != null ? err : {success: result}));
       output.writeMessageBegin("synOrderES", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+OrderServProcessor.prototype.process_updateOrderState4Charge = function(seqid, input, output) {
+  var args = new OrderServ_updateOrderState4Charge_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.updateOrderState4Charge.length === 2) {
+    Q.fcall(this._handler.updateOrderState4Charge, args.userId, args.orderId)
+      .then(function(result) {
+        var result = new OrderServ_updateOrderState4Charge_result({success: result});
+        output.writeMessageBegin("updateOrderState4Charge", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new OrderServ_updateOrderState4Charge_result(err);
+        output.writeMessageBegin("updateOrderState4Charge", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.updateOrderState4Charge(args.userId, args.orderId,  function (err, result) {
+      var result = new OrderServ_updateOrderState4Charge_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("updateOrderState4Charge", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+OrderServProcessor.prototype.process_checkOrder = function(seqid, input, output) {
+  var args = new OrderServ_checkOrder_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.checkOrder.length === 4) {
+    Q.fcall(this._handler.checkOrder, args.orderId, args.mobile, args.mac, args.type)
+      .then(function(result) {
+        var result = new OrderServ_checkOrder_result({success: result});
+        output.writeMessageBegin("checkOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new OrderServ_checkOrder_result(err);
+        output.writeMessageBegin("checkOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.checkOrder(args.orderId, args.mobile, args.mac, args.type,  function (err, result) {
+      var result = new OrderServ_checkOrder_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("checkOrder", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

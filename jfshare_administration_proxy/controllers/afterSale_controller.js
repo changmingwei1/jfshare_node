@@ -135,6 +135,9 @@ router.post('/queryReturnScore', function (request, response, next) {
             }
             logger.info("queryMaxReturnScore result结果:" + JSON.stringify(data));
             result.sbpList = data.sbpList;
+            if(data.sbpList!=null && data.sbpList.size>0){
+                result.sbpList = data.sbpList;
+            }
             result.productFinishScore = data.productFinishScore;
             result.orderFinishScore = data.orderFinishScore;
             response.json(result);

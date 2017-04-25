@@ -423,7 +423,7 @@ Order.prototype.orderConfirmRecharge = function (arg, callback) {
         receiverName:arg.flowno+"",    //流量代码简写：30,50,100 Z8006 此字段为单价
         receiverAddress:arg.company+"", //供应商名称: 中国移动,中国联通,中国电信 Z8006 是购买数量
         provinceName:arg.provinceName, //玩家ip,如果是Qb充值则必须填写
-        sellerComment:arg.sellerComment //Z8006 表示商品name
+        sellerComment:arg.sellerComment //Z8006 Z8007 表示商品name
     });
     var param = new trade_types.BuyInfo({
         userId: arg.userId,
@@ -493,6 +493,32 @@ Order.prototype.rechargeNotify = function (arg, callback) {
         }
         else {
             logger.error("FileForCardServ-rechargeNotify response:" + JSON.stringify(data[0]));
+            callback(null, data);
+        }
+    });
+};
+
+
+/*话费充值第三方回调*/
+Order.prototype.checkOrder = function (arg, callback) {
+
+    logger.error("OrderServer-checkOrder args:" + JSON.stringify(arg));
+    var OrderServer = new Lich.InvokeBag(Lich.ServiceKey.OrderServer, "checkOrder", [arg.orderId,arg.mobile,arg.mac,1]);
+    Lich.wicca.invokeClient(OrderServer, function (err, data) {
+        logger.error("OrderServer-checkOrder args result:" +data);
+        var res = {};
+        if (err) {
+            logger.error("调用OrderServer-checkOrder失败  失败原因 ======" + err);
+            res.code = 500;
+            res.desc = "系统异常！";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        }
+        else {
+            logger.error("OrderServer-checkOrder response:" + JSON.stringify(data[0]));
             callback(null, data);
         }
     });
