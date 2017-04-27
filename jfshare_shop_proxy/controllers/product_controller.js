@@ -944,25 +944,44 @@ router.post('/sztcardList', function (req, res, next) {
     var descList = [];
     try {
         var card1 = {
-            "code": "380000099",
-            "price": "50",
-            "desc": " 50元券"
+            "code": "380000026",
+            "price": "10",
+            "desc": " 10元券"
         };
         var card2 =
         {
-            "code": "380000101",
+            "code": "380000027",
+            "price": "20",
+            "desc": "20元券"
+        };
+        var card3 =
+        {
+            "code": "380000028",
+            "price": "50",
+            "desc": "50元券"
+        };
+        var card4 =
+        {
+            "code": "380000029",
             "price": "100",
             "desc": "100元券"
         };
-
+        var card5 =
+        {
+            "code": "380000030",
+            "price": "200",
+            "desc": "200元券"
+        };
         cardList.push(card1);
         cardList.push(card2);
-
+        cardList.push(card3);
+        cardList.push(card4);
+        cardList.push(card5);
         result.cardList = cardList;
 
         var desc1 = "温馨提示:";
-        var desc2 = "1.充值券有效期至2017年12月31日，过期失效；"
-        var desc3 = "2.卡券类商品一经售出，无法退货。";
+        var desc2 = "1、充值券有效期至2019年12月31日，逾期不可使用；";
+        var desc3 = "2、充值券为服务性商品，购买成功后不接受退款，请谨慎购买。";
 
         descList.push(desc1);
         descList.push(desc2);
