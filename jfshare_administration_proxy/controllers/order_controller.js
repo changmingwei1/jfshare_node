@@ -571,17 +571,17 @@ router.post('/queryafterSaleOrder', function (request, response, next) {
         //    response.json(result);
         //    return;
         //}
-        afterSale.queryAfterSaleOrderList(params, function (err, data) {
+/*        afterSale.queryAfterSaleOrderList(params, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
             }
             logger.info("Order.orderStateQuery response:" + JSON.stringify(data));
 
-            result.count = data;
+            result.count = data;*/
             response.json(result);
-            return;
-        });
+       /*     return;
+        });*/
 
     } catch (ex) {
         logger.error("查询售后订单个数失败：" + ex);
