@@ -495,6 +495,61 @@ Buyer.prototype.requestHttps = function(param,callback){
     });
 };
 
+
+/* 获取个人信息--- 根据手机号 去获取个人信息  */
+Buyer.prototype.getProfileFromWeixin = function(param,callback){
+
+    var extInfo = param.extInfo;
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getProfileFromWeixin',[param.userId]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到的信息:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("err，because: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "服务器异常不能判断";
+            callback(res, null);
+        } else if (data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            logger.warn("获取到的信息:" + JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+/* 获取个人信息--- 根据手机号 去获取个人信息  --根据code */
+Buyer.prototype.getProfileFromWeixinByCode = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getProfileFromWeixinByCode',[param.userId,param.code]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到的信息:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("err，because: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "服务器异常不能判断";
+            callback(res, null);
+        } else if (data[0].result.code == 1){
+            logger.warn("请求参数：" + JSON.stringify(param));
+            logger.warn("获取到的信息:" + JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 /*H5第三方登陆*/
 Buyer.prototype.H5ThirdLogin = function(param,callback){
 
