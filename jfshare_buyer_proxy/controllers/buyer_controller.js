@@ -1620,23 +1620,23 @@ router.post('/requestHttps',function(request,response,next){
 
 
 /* 获取个人信息--- 根据手机号 去获取个人信息  */
-router.post('/getProfileFromWeixin',function(request,response,next){
-    logger.info("进入获取getProfileFromWeixin请求接口..");
+router.post('/getProfileFromWeixinByUnionId',function(request,response,next){
+    logger.info("进入获取getProfileFromWeixinByUnionId请求接口..");
     var result = {code: 200};
     try {
         var arg = request.body;
 
         var param = request.body;
-        if (param.userId == null || param.userId == "") {
+        if (param.unionId == null || param.unionId == "") {
             resContent.code = 400;
-            resContent.desc = "参数错误:userId不能为空";
+            resContent.desc = "参数错误:unionId不能为空";
             response.json(resContent);
             return;
         }
         logger.info("传参，arg：" + JSON.stringify(param));
 
 
-        Buyer.getProfileFromWeixin(param, function (err, data) {
+        Buyer.getProfileFromWeixinByUnionId(param, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
@@ -1663,12 +1663,7 @@ router.post('/getProfileFromWeixinByCode',function(request,response,next){
         var arg = request.body;
 
         var param = request.body;
-        if (param.userId == null || param.userId == "") {
-            resContent.code = 400;
-            resContent.desc = "参数错误:userId不能为空";
-            response.json(resContent);
-            return;
-        }
+        
         if (param.code == null || param.code == "") {
             resContent.code = 400;
             resContent.desc = "参数错误:userId不能为空";

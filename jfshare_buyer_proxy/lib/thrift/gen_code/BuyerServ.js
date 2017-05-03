@@ -3464,16 +3464,16 @@ BuyerServ_checkAppH5Token_result.prototype.write = function(output) {
   return;
 };
 
-BuyerServ_getProfileFromWeixin_args = function(args) {
-  this.userId = null;
+BuyerServ_getProfileFromWeixinByUnionId_args = function(args) {
+  this.unionId = null;
   if (args) {
-    if (args.userId !== undefined && args.userId !== null) {
-      this.userId = args.userId;
+    if (args.unionId !== undefined && args.unionId !== null) {
+      this.unionId = args.unionId;
     }
   }
 };
-BuyerServ_getProfileFromWeixin_args.prototype = {};
-BuyerServ_getProfileFromWeixin_args.prototype.read = function(input) {
+BuyerServ_getProfileFromWeixinByUnionId_args.prototype = {};
+BuyerServ_getProfileFromWeixinByUnionId_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -3488,7 +3488,7 @@ BuyerServ_getProfileFromWeixin_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRING) {
-        this.userId = input.readString();
+        this.unionId = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -3505,11 +3505,11 @@ BuyerServ_getProfileFromWeixin_args.prototype.read = function(input) {
   return;
 };
 
-BuyerServ_getProfileFromWeixin_args.prototype.write = function(output) {
-  output.writeStructBegin('BuyerServ_getProfileFromWeixin_args');
-  if (this.userId !== null && this.userId !== undefined) {
-    output.writeFieldBegin('userId', Thrift.Type.STRING, 1);
-    output.writeString(this.userId);
+BuyerServ_getProfileFromWeixinByUnionId_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getProfileFromWeixinByUnionId_args');
+  if (this.unionId !== null && this.unionId !== undefined) {
+    output.writeFieldBegin('unionId', Thrift.Type.STRING, 1);
+    output.writeString(this.unionId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3517,7 +3517,7 @@ BuyerServ_getProfileFromWeixin_args.prototype.write = function(output) {
   return;
 };
 
-BuyerServ_getProfileFromWeixin_result = function(args) {
+BuyerServ_getProfileFromWeixinByUnionId_result = function(args) {
   this.success = null;
   if (args) {
     if (args.success !== undefined && args.success !== null) {
@@ -3525,8 +3525,8 @@ BuyerServ_getProfileFromWeixin_result = function(args) {
     }
   }
 };
-BuyerServ_getProfileFromWeixin_result.prototype = {};
-BuyerServ_getProfileFromWeixin_result.prototype.read = function(input) {
+BuyerServ_getProfileFromWeixinByUnionId_result.prototype = {};
+BuyerServ_getProfileFromWeixinByUnionId_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -3559,8 +3559,8 @@ BuyerServ_getProfileFromWeixin_result.prototype.read = function(input) {
   return;
 };
 
-BuyerServ_getProfileFromWeixin_result.prototype.write = function(output) {
-  output.writeStructBegin('BuyerServ_getProfileFromWeixin_result');
+BuyerServ_getProfileFromWeixinByUnionId_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getProfileFromWeixinByUnionId_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -3572,12 +3572,8 @@ BuyerServ_getProfileFromWeixin_result.prototype.write = function(output) {
 };
 
 BuyerServ_getProfileFromWeixinByCode_args = function(args) {
-  this.userId = null;
   this.code = null;
   if (args) {
-    if (args.userId !== undefined && args.userId !== null) {
-      this.userId = args.userId;
-    }
     if (args.code !== undefined && args.code !== null) {
       this.code = args.code;
     }
@@ -3599,18 +3595,14 @@ BuyerServ_getProfileFromWeixinByCode_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRING) {
-        this.userId = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.STRING) {
         this.code = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
+      case 0:
+        input.skip(ftype);
+        break;
       default:
         input.skip(ftype);
     }
@@ -3622,13 +3614,8 @@ BuyerServ_getProfileFromWeixinByCode_args.prototype.read = function(input) {
 
 BuyerServ_getProfileFromWeixinByCode_args.prototype.write = function(output) {
   output.writeStructBegin('BuyerServ_getProfileFromWeixinByCode_args');
-  if (this.userId !== null && this.userId !== undefined) {
-    output.writeFieldBegin('userId', Thrift.Type.STRING, 1);
-    output.writeString(this.userId);
-    output.writeFieldEnd();
-  }
   if (this.code !== null && this.code !== undefined) {
-    output.writeFieldBegin('code', Thrift.Type.STRING, 2);
+    output.writeFieldBegin('code', Thrift.Type.STRING, 1);
     output.writeString(this.code);
     output.writeFieldEnd();
   }
@@ -5084,7 +5071,7 @@ BuyerServClient.prototype.recv_checkAppH5Token = function(input,mtype,rseqid) {
   }
   return callback('checkAppH5Token failed: unknown result');
 };
-BuyerServClient.prototype.getProfileFromWeixin = function(userId, callback) {
+BuyerServClient.prototype.getProfileFromWeixinByUnionId = function(unionId, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -5095,25 +5082,25 @@ BuyerServClient.prototype.getProfileFromWeixin = function(userId, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_getProfileFromWeixin(userId);
+    this.send_getProfileFromWeixinByUnionId(unionId);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_getProfileFromWeixin(userId);
+    this.send_getProfileFromWeixinByUnionId(unionId);
   }
 };
 
-BuyerServClient.prototype.send_getProfileFromWeixin = function(userId) {
+BuyerServClient.prototype.send_getProfileFromWeixinByUnionId = function(unionId) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('getProfileFromWeixin', Thrift.MessageType.CALL, this.seqid());
-  var args = new BuyerServ_getProfileFromWeixin_args();
-  args.userId = userId;
+  output.writeMessageBegin('getProfileFromWeixinByUnionId', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_getProfileFromWeixinByUnionId_args();
+  args.unionId = unionId;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-BuyerServClient.prototype.recv_getProfileFromWeixin = function(input,mtype,rseqid) {
+BuyerServClient.prototype.recv_getProfileFromWeixinByUnionId = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -5122,16 +5109,16 @@ BuyerServClient.prototype.recv_getProfileFromWeixin = function(input,mtype,rseqi
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new BuyerServ_getProfileFromWeixin_result();
+  var result = new BuyerServ_getProfileFromWeixinByUnionId_result();
   result.read(input);
   input.readMessageEnd();
 
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('getProfileFromWeixin failed: unknown result');
+  return callback('getProfileFromWeixinByUnionId failed: unknown result');
 };
-BuyerServClient.prototype.getProfileFromWeixinByCode = function(userId, code, callback) {
+BuyerServClient.prototype.getProfileFromWeixinByCode = function(code, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -5142,19 +5129,18 @@ BuyerServClient.prototype.getProfileFromWeixinByCode = function(userId, code, ca
         _defer.resolve(result);
       }
     };
-    this.send_getProfileFromWeixinByCode(userId, code);
+    this.send_getProfileFromWeixinByCode(code);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_getProfileFromWeixinByCode(userId, code);
+    this.send_getProfileFromWeixinByCode(code);
   }
 };
 
-BuyerServClient.prototype.send_getProfileFromWeixinByCode = function(userId, code) {
+BuyerServClient.prototype.send_getProfileFromWeixinByCode = function(code) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('getProfileFromWeixinByCode', Thrift.MessageType.CALL, this.seqid());
   var args = new BuyerServ_getProfileFromWeixinByCode_args();
-  args.userId = userId;
   args.code = code;
   args.write(output);
   output.writeMessageEnd();
@@ -6212,33 +6198,33 @@ BuyerServProcessor.prototype.process_checkAppH5Token = function(seqid, input, ou
   }
 }
 
-BuyerServProcessor.prototype.process_getProfileFromWeixin = function(seqid, input, output) {
-  var args = new BuyerServ_getProfileFromWeixin_args();
+BuyerServProcessor.prototype.process_getProfileFromWeixinByUnionId = function(seqid, input, output) {
+  var args = new BuyerServ_getProfileFromWeixinByUnionId_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.getProfileFromWeixin.length === 1) {
-    Q.fcall(this._handler.getProfileFromWeixin, args.userId)
+  if (this._handler.getProfileFromWeixinByUnionId.length === 1) {
+    Q.fcall(this._handler.getProfileFromWeixinByUnionId, args.unionId)
       .then(function(result) {
-        var result = new BuyerServ_getProfileFromWeixin_result({success: result});
-        output.writeMessageBegin("getProfileFromWeixin", Thrift.MessageType.REPLY, seqid);
+        var result = new BuyerServ_getProfileFromWeixinByUnionId_result({success: result});
+        output.writeMessageBegin("getProfileFromWeixinByUnionId", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       }, function (err) {
         var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-        output.writeMessageBegin("getProfileFromWeixin", Thrift.MessageType.EXCEPTION, seqid);
+        output.writeMessageBegin("getProfileFromWeixinByUnionId", Thrift.MessageType.EXCEPTION, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       });
   } else {
-    this._handler.getProfileFromWeixin(args.userId, function (err, result) {
+    this._handler.getProfileFromWeixinByUnionId(args.unionId, function (err, result) {
       if (err == null) {
-        var result = new BuyerServ_getProfileFromWeixin_result((err != null ? err : {success: result}));
-        output.writeMessageBegin("getProfileFromWeixin", Thrift.MessageType.REPLY, seqid);
+        var result = new BuyerServ_getProfileFromWeixinByUnionId_result((err != null ? err : {success: result}));
+        output.writeMessageBegin("getProfileFromWeixinByUnionId", Thrift.MessageType.REPLY, seqid);
       } else {
         var result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-        output.writeMessageBegin("getProfileFromWeixin", Thrift.MessageType.EXCEPTION, seqid);
+        output.writeMessageBegin("getProfileFromWeixinByUnionId", Thrift.MessageType.EXCEPTION, seqid);
       }
       result.write(output);
       output.writeMessageEnd();
@@ -6251,8 +6237,8 @@ BuyerServProcessor.prototype.process_getProfileFromWeixinByCode = function(seqid
   var args = new BuyerServ_getProfileFromWeixinByCode_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.getProfileFromWeixinByCode.length === 2) {
-    Q.fcall(this._handler.getProfileFromWeixinByCode, args.userId, args.code)
+  if (this._handler.getProfileFromWeixinByCode.length === 1) {
+    Q.fcall(this._handler.getProfileFromWeixinByCode, args.code)
       .then(function(result) {
         var result = new BuyerServ_getProfileFromWeixinByCode_result({success: result});
         output.writeMessageBegin("getProfileFromWeixinByCode", Thrift.MessageType.REPLY, seqid);
@@ -6267,7 +6253,7 @@ BuyerServProcessor.prototype.process_getProfileFromWeixinByCode = function(seqid
         output.flush();
       });
   } else {
-    this._handler.getProfileFromWeixinByCode(args.userId, args.code, function (err, result) {
+    this._handler.getProfileFromWeixinByCode(args.code, function (err, result) {
       if (err == null) {
         var result = new BuyerServ_getProfileFromWeixinByCode_result((err != null ? err : {success: result}));
         output.writeMessageBegin("getProfileFromWeixinByCode", Thrift.MessageType.REPLY, seqid);

@@ -497,12 +497,12 @@ Buyer.prototype.requestHttps = function(param,callback){
 
 
 /* 获取个人信息--- 根据手机号 去获取个人信息  */
-Buyer.prototype.getProfileFromWeixin = function(param,callback){
+Buyer.prototype.getProfileFromWeixinByUnionId = function(param,callback){
 
     var extInfo = param.extInfo;
 
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getProfileFromWeixin',[param.userId]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getProfileFromWeixinByUnionId',[param.unionId]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到的信息:" + JSON.stringify(data));
         var res = {};
@@ -528,7 +528,8 @@ Buyer.prototype.getProfileFromWeixin = function(param,callback){
 Buyer.prototype.getProfileFromWeixinByCode = function(param,callback){
 
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getProfileFromWeixinByCode',[param.userId,param.code]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getProfileFromWeixinByCode',[param.code]);
+
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("获取到的信息:" + JSON.stringify(data));
         var res = {};
