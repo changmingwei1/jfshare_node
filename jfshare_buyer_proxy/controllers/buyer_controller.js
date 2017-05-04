@@ -1618,6 +1618,79 @@ router.post('/requestHttps',function(request,response,next){
     }
 });
 
+
+/* 获取个人信息--- 根据手机号 去获取个人信息  */
+router.post('/getProfileFromWeixinByUnionId',function(request,response,next){
+    logger.info("进入获取getProfileFromWeixinByUnionId请求接口..");
+    var result = {code: 200};
+    try {
+        var arg = request.body;
+
+        var param = request.body;
+        if (param.unionId == null || param.unionId == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:unionId不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
+
+
+        Buyer.getProfileFromWeixinByUnionId(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            } else {
+                result.profile = data[0].profile;
+                //result.remark = JSON.parse(remark);  //返回错误时，无啊转换，导致node服务器崩溃
+                response.json(result);
+            }
+        });
+    } catch (ex) {
+        logger.error("get http request error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        response.json(result);
+    }
+});
+
+/* 获取个人信息--- 根据手机号 去获取个人信息  */
+router.post('/getProfileFromWeixinByCode',function(request,response,next){
+    logger.info("进入获取getProfileFromWeixinByCode请求接口..");
+    var result = {code: 200};
+    try {
+        var arg = request.body;
+
+        var param = request.body;
+        
+        if (param.code == null || param.code == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:userId不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("传参，arg：" + JSON.stringify(param));
+
+
+        Buyer.getProfileFromWeixinByCode(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            } else {
+                // var remark = data[0].buyer.remark;
+                //result.remark = JSON.parse(remark);  //返回错误时，无啊转换，导致node服务器崩溃
+                result.profile = data[0].profile;
+                response.json(result);
+            }
+        });
+    } catch (ex) {
+        logger.error("get http request error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        response.json(result);
+    }
+});
+
 /*用户是否绑定兑出账号*/
 router.post('/isUserIdRela', function (request, response, next) {
 
