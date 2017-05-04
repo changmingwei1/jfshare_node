@@ -27,6 +27,7 @@ var permission = require('./controllers/permission_controller');// 权限管理
 
 var friendsActivity = require('./controllers/friendsActivity_controller');//临时活动
 
+var coupon = require('./controllers/coupon_controller');
 var zookeeper = require('./resource/zookeeper_util');
 var app = express();
 
@@ -56,7 +57,7 @@ app.use('/manager/message',message);
 app.use('/manager/seller',seller);
 app.use('/manager/brand',brand);
 app.use('/manager/afterSale',afterSale);
-
+app.use('/manager/coupon',coupon);
 app.use('/manager/slotImage',slotImage);// 主页轮播图模块页面的配置
 app.use('/manager/moduleConfig',moduleConfig);
 // error handlers
