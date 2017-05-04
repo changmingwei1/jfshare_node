@@ -1641,9 +1641,8 @@ router.post('/getProfileFromWeixinByUnionId',function(request,response,next){
                 response.json(err);
                 return;
             } else {
-                var remark = data[0].buyer.remark;
+                result.profile = data[0].profile;
                 //result.remark = JSON.parse(remark);  //返回错误时，无啊转换，导致node服务器崩溃
-                result.remark = remark;
                 response.json(result);
             }
         });
@@ -1678,9 +1677,9 @@ router.post('/getProfileFromWeixinByCode',function(request,response,next){
                 response.json(err);
                 return;
             } else {
-                var remark = data[0].buyer.remark;
+                // var remark = data[0].buyer.remark;
                 //result.remark = JSON.parse(remark);  //返回错误时，无啊转换，导致node服务器崩溃
-                result.remark = remark;
+                result.profile = data[0].profile;
                 response.json(result);
             }
         });
