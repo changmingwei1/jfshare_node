@@ -1617,6 +1617,37 @@ router.post('/requestHttps',function(request,response,next){
         response.json(result);
     }
 });
+/* 微信jsapi 获取对应的 config */
+router.post('/getWeiXinJSconfig',function(request,response,next){
+    logger.info("微信jsapi 获取对应的 config请求接口..");
+    var result = {code: 200};
+    try {
+        var param = request.body;
+        if (param == null || param.url == null || param.url == "") {
+            resContent.code = 400;
+            resContent.desc = "参数错误:url不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        Buyer.getWeiXinJSconfig(param, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            } else {
+                var config = data[0].config;
+                //result.remark = JSON.parse(remark);  //返回错误时，无啊转换，导致node服务器崩溃
+                result.config = config;
+                response.json(result);
+            }
+        });
+    } catch (ex) {
+        logger.error("get http request error:" + ex);
+        result.code = 500;
+        result.desc = "获取失败";
+        response.json(result);
+    }
+});
 
 
 /* 获取个人信息--- 根据手机号 去获取个人信息  */
