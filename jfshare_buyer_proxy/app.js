@@ -16,7 +16,10 @@ var buyer = require('./controllers/buyer_controller');
 var redPaper = require('./controllers/redpaper_controller');// 积分红包
 var thirdpay = require('./controllers/thirdpay_controller');//第三方支付
 //var test = require('./controllers/test_controller');
+var coupon = require('./controllers/coupon_controller');//优惠券
 var zookeeper = require('./resource/zookeeper_util');
+
+
 //var view_index = require("./view_center/index/view_index");
 
 var app = express();
@@ -40,6 +43,7 @@ app.use('/buyer/order', order);
 app.use('/buyer/redPaper',redPaper);// 积分红包
 app.use('/buyer/cart', cart);
 app.use('/buyer/address', address);
+app.use('/buyer/coupon', coupon);
 app.use('/buyer/buyer',buyer);
 app.use('/buyer/thirdpay',thirdpay);//第三方支付
 //app.use('/test', test);
