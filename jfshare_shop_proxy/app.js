@@ -19,7 +19,7 @@ var zookeeper = require('./resource/zookeeper_util');
 var slotImage = require('./controllers/slotImage_controller');// 主页和商品模块页面的配置
 var moduleConfig = require('./controllers/moduleConfig_controller');// 商品和品牌模块页面的配置
 var fileCard = require('./controllers/filecard_controller');// 第三方卡密上传
-
+var coupon = require('./controllers/coupon_controller');
 //var view_index = require("./view_center/index/view_index");
 
 var app = express();
@@ -42,6 +42,7 @@ app.use('/shop/class', product);
 app.use('/shop/order', order);
 app.use('/shop/cart', cart);
 app.use('/shop/address', address);
+app.use('/shop/coupon', coupon);
 app.use('/shop/captcha',captcha);
 app.use('/shop/active',active);
 app.use('/shop/slotImage',slotImage);// 主页和商品模块页面的配置

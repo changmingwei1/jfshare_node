@@ -9,7 +9,7 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 
 var Product = require('../lib/models/product');
 var Address = require('../lib/models/address');
-var page = require('../lib/thrift/gen_code/pagination_types.js');
+
 //
 router.post('/couponList', function(req, res, next) {
     var result = {code: 200};
@@ -28,19 +28,11 @@ router.post('/couponList', function(req, res, next) {
         list.push(coupon);
 
         result.list = list;
-
-        var page ={
-            totalCount:100,
-            pageNumCount:3,
-            numPerPage:20,
-            currentPage:1
-        };
-        result.page = page;
         res.json(result);
     } catch (ex) {
-        logger.error("查询列表失败:" + ex);
+        logger.error("add address error:" + ex);
         result.code = 500;
-        result.desc = "查询列表失败";
+        result.desc = "添加收货地址失败";
         res.json(result);
     }
 });
