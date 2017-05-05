@@ -1588,6 +1588,7 @@ Config4WeiXin = module.exports.Config4WeiXin = function(args) {
   this.nonceStr = null;
   this.timestamp = null;
   this.signature = null;
+  this.appId = null;
   if (args) {
     if (args.url !== undefined && args.url !== null) {
       this.url = args.url;
@@ -1603,6 +1604,9 @@ Config4WeiXin = module.exports.Config4WeiXin = function(args) {
     }
     if (args.signature !== undefined && args.signature !== null) {
       this.signature = args.signature;
+    }
+    if (args.appId !== undefined && args.appId !== null) {
+      this.appId = args.appId;
     }
   }
 };
@@ -1655,6 +1659,13 @@ Config4WeiXin.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.appId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1689,6 +1700,11 @@ Config4WeiXin.prototype.write = function(output) {
   if (this.signature !== null && this.signature !== undefined) {
     output.writeFieldBegin('signature', Thrift.Type.STRING, 5);
     output.writeString(this.signature);
+    output.writeFieldEnd();
+  }
+  if (this.appId !== null && this.appId !== undefined) {
+    output.writeFieldBegin('appId', Thrift.Type.STRING, 6);
+    output.writeString(this.appId);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
