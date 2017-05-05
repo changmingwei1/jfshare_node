@@ -1582,6 +1582,136 @@ Profile4WeiXin.prototype.write = function(output) {
   return;
 };
 
+Config4WeiXin = module.exports.Config4WeiXin = function(args) {
+  this.url = null;
+  this.jsapi_ticket = null;
+  this.nonceStr = null;
+  this.timestamp = null;
+  this.signature = null;
+  this.appId = null;
+  if (args) {
+    if (args.url !== undefined && args.url !== null) {
+      this.url = args.url;
+    }
+    if (args.jsapi_ticket !== undefined && args.jsapi_ticket !== null) {
+      this.jsapi_ticket = args.jsapi_ticket;
+    }
+    if (args.nonceStr !== undefined && args.nonceStr !== null) {
+      this.nonceStr = args.nonceStr;
+    }
+    if (args.timestamp !== undefined && args.timestamp !== null) {
+      this.timestamp = args.timestamp;
+    }
+    if (args.signature !== undefined && args.signature !== null) {
+      this.signature = args.signature;
+    }
+    if (args.appId !== undefined && args.appId !== null) {
+      this.appId = args.appId;
+    }
+  }
+};
+Config4WeiXin.prototype = {};
+Config4WeiXin.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.jsapi_ticket = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.nonceStr = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.timestamp = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.signature = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.appId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Config4WeiXin.prototype.write = function(output) {
+  output.writeStructBegin('Config4WeiXin');
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 1);
+    output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  if (this.jsapi_ticket !== null && this.jsapi_ticket !== undefined) {
+    output.writeFieldBegin('jsapi_ticket', Thrift.Type.STRING, 2);
+    output.writeString(this.jsapi_ticket);
+    output.writeFieldEnd();
+  }
+  if (this.nonceStr !== null && this.nonceStr !== undefined) {
+    output.writeFieldBegin('nonceStr', Thrift.Type.STRING, 3);
+    output.writeString(this.nonceStr);
+    output.writeFieldEnd();
+  }
+  if (this.timestamp !== null && this.timestamp !== undefined) {
+    output.writeFieldBegin('timestamp', Thrift.Type.STRING, 4);
+    output.writeString(this.timestamp);
+    output.writeFieldEnd();
+  }
+  if (this.signature !== null && this.signature !== undefined) {
+    output.writeFieldBegin('signature', Thrift.Type.STRING, 5);
+    output.writeString(this.signature);
+    output.writeFieldEnd();
+  }
+  if (this.appId !== null && this.appId !== undefined) {
+    output.writeFieldBegin('appId', Thrift.Type.STRING, 6);
+    output.writeString(this.appId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 WXProfileResult = module.exports.WXProfileResult = function(args) {
   this.result = null;
   this.profile = null;
@@ -1643,6 +1773,74 @@ WXProfileResult.prototype.write = function(output) {
   if (this.profile !== null && this.profile !== undefined) {
     output.writeFieldBegin('profile', Thrift.Type.STRUCT, 2);
     this.profile.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+WXConfigResult = module.exports.WXConfigResult = function(args) {
+  this.result = null;
+  this.config = null;
+  if (args) {
+    if (args.result !== undefined && args.result !== null) {
+      this.result = new result_ttypes.Result(args.result);
+    }
+    if (args.config !== undefined && args.config !== null) {
+      this.config = new ttypes.Config4WeiXin(args.config);
+    }
+  }
+};
+WXConfigResult.prototype = {};
+WXConfigResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.config = new ttypes.Config4WeiXin();
+        this.config.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+WXConfigResult.prototype.write = function(output) {
+  output.writeStructBegin('WXConfigResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.config !== null && this.config !== undefined) {
+    output.writeFieldBegin('config', Thrift.Type.STRUCT, 2);
+    this.config.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
