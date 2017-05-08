@@ -8,7 +8,7 @@ var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsConfig);
 
 var Product = require('../lib/models/product');
-var Address = require('../lib/models/address');
+//var Address = require('../lib/models/address');
 
 //
 router.post('/couponList', function(req, res, next) {
