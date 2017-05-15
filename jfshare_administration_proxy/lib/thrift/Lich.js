@@ -31,7 +31,8 @@ var ServiceKey = {
     ScoreServer:"Score",
     ScoreCardsServ:"ScoreCards",// 积分卡服务 红包服务
     StockServer:"Stock",
-    BuyerServer:"Buyer"
+    BuyerServer:"Buyer",
+    fileCards:"fileCards"
 };
 
 /**
