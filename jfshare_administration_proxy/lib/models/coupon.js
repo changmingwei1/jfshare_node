@@ -18,24 +18,24 @@ function Coupon() {
 Coupon.prototype.queryActivityList = function (params, callback) {
 
     var param = new coupon_types.ActivStatisticsParam({
-        activName:params.activName,
-        activState:params.activState,
-        createStartTime:params.createStartTime,
-        createStopTime:params.createStopTime,
-        beginStartTime:params.beginStartTime,
-        beginStopTime:params.beginStopTime,
-        endStartTime:params.endStartTime,
-        endStopTime:params.endStopTime
+        activName: params.activName,
+        activState: params.activState,
+        createStartTime: params.createStartTime,
+        createStopTime: params.createStopTime,
+        beginStartTime: params.beginStartTime,
+        beginStopTime: params.beginStopTime,
+        endStartTime: params.endStartTime,
+        endStopTime: params.endStopTime
     });
 
-    var page = new  pagination_types.Pagination({
-       numPerPage:params.numPerPage,
-        currentPage:params.currentPage
+    var page = new pagination_types.Pagination({
+        numPerPage: params.numPerPage,
+        currentPage: params.currentPage
     });
 
-    logger.error("queryActivityList >>>>>>>>>>>  " + JSON.stringify(params));
+    logger.info("queryActivityList >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'queryCouponActivList', [param,page]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'queryCouponActivList', [param, page]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("queryActivityList result:" + JSON.stringify(data));
         var res = {};
@@ -53,5 +53,47 @@ Coupon.prototype.queryActivityList = function (params, callback) {
     });
 };
 
+
+/** 新建活动 */
+Coupon.prototype.createActivity = function (params, callback) {
+
+    var param = new coupon_types.CouponActiv({
+        activName: params.activName,
+        activImg: params.activImg,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        couponValue: params.couponValue,
+        scoreLimit: params.scoreLimit,
+        couponNum: params.couponNum,
+        couponBeginTime: params.couponBeginTime,
+        couponEndTime: params.couponEndTime,
+        couponType: params.couponType,
+        couponTypeConfig: params.couponTypeConfig,
+        userType: params.userType,
+        regStartTime: params.regStartTime,
+        regstopTime: params.regstopTime,
+        userLimit: params.userLimit,
+        sendLimit: params.sendLimit
+    });
+
+    logger.error("createActivity >>>>>>>>>>>  " + JSON.stringify(params));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'createCouponActiv', [param]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("createActivity result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("createActivity because: ======" + err);
+            res.code = 500;
+            res.desc = "新建活动失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new Coupon();

@@ -36,19 +36,18 @@ router.post('/activList', function(req, res, next) {
         var arg = req.body;
         logger.info("查询优惠券活动列表参数， arg:" + JSON.stringify(arg));
 
-
         Coupon.queryActivityList(arg,function(error,data){
             if (error) {
-                response.json(error);
+                res.json(error);
+                return;
             } else {
-                result.list=data;
-                result.page = page;
+                result.activeList=data[0].activeList;
+                result.page = data[0].pagination;
                 logger.info("queryActivityList response:" + JSON.stringify(result));
-                response.json(result);
+                res.json(result);
+                return;
             }
         });
-
-        res.json(result);
     }catch (ex) {
         logger.error("get ActivList  error:" + ex);
         result.code = 500;
@@ -63,6 +62,16 @@ router.post('/createCouponActiv', function(req, res, next) {
     try{
         var arg = req.body;
         logger.info("新建积分券活动参数， arg:" + JSON.stringify(arg));
+
+        Coupon.queryActivityList(arg,function(error,data){
+            if (error) {
+                response.json(error);
+            } else {
+                result.list=data;
+                result.page = page;
+                logger.info("queryActivityList response:" + JSON.stringify(result));
+            }
+        });
         res.json(result);
     }catch (ex) {
         logger.error("get createCouponActiv  error:" + ex);

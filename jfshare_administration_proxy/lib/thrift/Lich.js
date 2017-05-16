@@ -32,7 +32,7 @@ var ServiceKey = {
     ScoreCardsServ:"ScoreCards",// 积分卡服务 红包服务
     StockServer:"Stock",
     BuyerServer:"Buyer",
-    fileCards:"fileCards"
+    fileCards:"fileCard"
 };
 
 /**
