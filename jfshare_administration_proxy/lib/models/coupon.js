@@ -19,13 +19,21 @@ Coupon.prototype.queryActivityList = function (params, callback) {
 
     var param = new coupon_types.ActivStatisticsParam({
         activName: params.activName,
-        activState: params.activState,
-        createStartTime: params.createStartTime,
-        createStopTime: params.createStopTime,
-        beginStartTime: params.beginStartTime,
-        beginStopTime: params.beginStopTime,
-        endStartTime: params.endStartTime,
-        endStopTime: params.endStopTime
+        activImg: params.activImg,
+        startTime: params.startTime,
+        endTime: params.endTime,
+        couponValue: params.couponValue,
+        scoreLimit: params.scoreLimit,
+        couponNum: params.couponNum,
+        couponBeginTime: params.couponBeginTime,
+        couponEndTime: params.couponEndTime,
+        couponType: params.couponType,
+        couponTypeConfig: params.couponTypeConfig,
+        userType: params.userType,
+        regStartTime: params.regStartTime,
+        regstopTime: params.regstopTime,
+        userLimit: params.userLimit,
+        sendLimit: params.sendLimit
     });
 
     var page = new pagination_types.Pagination({
