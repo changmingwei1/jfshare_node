@@ -35,7 +35,19 @@ router.post('/activList', function(req, res, next) {
     try{
         var arg = req.body;
         logger.info("查询优惠券活动列表参数， arg:" + JSON.stringify(arg));
+        if(arg.currentPage=="" || arg.currentPage ==null){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
 
+        if(arg.numPerPage=="" || arg.numPerPage ==null){
+            result.code = 500;
+            result.desc = "";
+            res.json(result);
+            return;
+        }
         Coupon.queryActivityList(arg,function(error,data){
             if (error) {
                 res.json(error);
@@ -63,16 +75,17 @@ router.post('/createCouponActiv', function(req, res, next) {
         var arg = req.body;
         logger.info("新建积分券活动参数， arg:" + JSON.stringify(arg));
 
-        Coupon.queryActivityList(arg,function(error,data){
+        Coupon.createActivity(arg,function(error,data){
             if (error) {
-                response.json(error);
+                res.json(error);
             } else {
                 result.list=data;
                 result.page = page;
-                logger.info("queryActivityList response:" + JSON.stringify(result));
+                logger.info("createCouponActiv response:" + JSON.stringify(result));
+                res.json(result);
             }
         });
-        res.json(result);
+
     }catch (ex) {
         logger.error("get createCouponActiv  error:" + ex);
         result.code = 500;
@@ -82,14 +95,134 @@ router.post('/createCouponActiv', function(req, res, next) {
 });
 
 
+//查看活动详情**
+router.post('/activInfo', function(req, res, next) {
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        logger.info("查看活动详情参数， arg:" + JSON.stringify(arg));
+
+        Coupon.selectActivById(arg,function(error,data){
+            logger.info("activInfo response:" + JSON.stringify(data));
+            if (error) {
+                res.json(error);
+            } else {
+                result.list=data;
+                logger.info("activInfo response:" + JSON.stringify(result));
+                res.json(result);
+            }
+        });
+
+    }catch (ex) {
+        logger.error("get activInfo  error:" + ex);
+        result.code = 500;
+        result.desc = "查看活动详情失败";
+        res.json(result);
+    }
+});
+
+//修改积分券活动updateActiv
+router.post('/updateActiv', function(req, res, next) {
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        logger.info("新建积分券活动参数， arg:" + JSON.stringify(arg));
+
+        Coupon.updateActiv(arg,function(error,data){
+            if (error) {
+                res.json(error);
+            } else {
+               // result.list=data[0];
+                logger.info("updateActiv response:" + JSON.stringify(result));
+                res.json(result);
+            }
+        });
+
+    }catch (ex) {
+        logger.error("get updateActiv  error:" + ex);
+        result.code = 500;
+        result.desc = "修改积分券活动失败";
+        res.json(result);
+    }
+});
+
+
+//查看活动详情**
+router.post('/activInfo', function(req, res, next) {
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        logger.info("查看活动详情参数， arg:" + JSON.stringify(arg));
+
+        Coupon.selectActivById(arg,function(error,data){
+            if (error) {
+                res.json(error);
+            } else {
+                result.list=data;
+                result.page = page;
+                logger.info("activInfo response:" + JSON.stringify(result));
+                res.json(result);
+            }
+        });
+
+    }catch (ex) {
+        logger.error("get activInfo  error:" + ex);
+        result.code = 500;
+        result.desc = "查看活动详情失败";
+        res.json(result);
+    }
+});
+
+
+//导出优惠券发放记录
+router.post('/exportActivDetail', function(req, res, next) {
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        logger.info("导出优惠券发放记录参数， arg:" + JSON.stringify(arg));
+
+        Coupon.exportActivDetail(arg,function(error,data){
+            if (error) {
+                res.json(error);
+            } else {
+                logger.info("exportActivDetail response:" + JSON.stringify(result));
+                res.json(result);
+            }
+        });
+
+    }catch (ex) {
+        logger.error("get exportActivDetail  error:" + ex);
+        result.code = 500;
+        result.desc = "导出优惠券发放失败";
+        res.json(result);
+    }
+});
+
+
+
+
 
 //查询积分券发放记录
 router.post('/couponList', function(req, res, next) {
     var result = {code: 200};
-
     try{
         var arg = req.body;
-        logger.info("优惠券列表参数， arg:" + JSON.stringify(arg));
+        logger.info("查询积分券发放记录参数， arg:" + JSON.stringify(arg));
+
+        Coupon.selectActivDetailById(arg,function(error,data){
+            logger.info("couponList response:" + JSON.stringify(result));
+            if (error) {
+                res.json(error);
+                return;
+            } else {
+                result.activeList=data[0].result.activeList;
+                result.page = data[0].result.pagination;
+
+                res.json(result);
+                return;
+            }
+        });
+       /* logger.info("优惠券列表参数， arg:" + JSON.stringify(arg));
         var activName="孕婴童全场通用,满30000积分抵1000";
         var activState=1;
         var couponSize=1000;
@@ -102,23 +235,23 @@ router.post('/couponList', function(req, res, next) {
         var coupon1 = {
             id:"YHQ2017050412654",
             mobile:"18301198617",
-            couponState:1,           /**使用情况**/
-            receiveTime:"2017-05-01 12:00:00", /**领取时间**/
-            useTime:"2017-05-03 15:26:18",  /**使用时间**/
-            couponSource:1,             /**领取渠道**/
-            userId:0,                   /**用户id**/
-            activeId:16              /**活动id**/
+            couponState:1,           /!**使用情况**!/
+            receiveTime:"2017-05-01 12:00:00", /!**领取时间**!/
+            useTime:"2017-05-03 15:26:18",  /!**使用时间**!/
+            couponSource:1,             /!**领取渠道**!/
+            userId:0,                   /!**用户id**!/
+            activeId:16              /!**活动id**!/
         }
 
         var coupon2 = {
             id:"YHQ2017050461215",
             mobile:"18301162158",
-            couponState:0,           /**使用情况**/
-            receiveTime:"2017年5月1日12:30:21",           /**领取时间**/
-            useTime:"2017-05-04 12:00:00" ,  /**使用时间**/
-            couponSource:1,             /**领取渠道**/
-            userId:62,                   /**用户id**/
-            activeId:16              /**活动id**/
+            couponState:0,           /!**使用情况**!/
+            receiveTime:"2017年5月1日12:30:21",           /!**领取时间**!/
+            useTime:"2017-05-04 12:00:00" ,  /!**使用时间**!/
+            couponSource:1,             /!**领取渠道**!/
+            userId:62,                   /!**用户id**!/
+            activeId:16              /!**活动id**!/
         }
         var couponList = [];
 
@@ -134,7 +267,7 @@ router.post('/couponList', function(req, res, next) {
             currentPage:1             //当前页数
         };
         result.page = page;
-        res.json(result);
+        res.json(result);*/
     } catch (ex) {
         logger.error("查询列表失败:" + ex);
         result.code = 500;
@@ -222,7 +355,22 @@ router.post('/addRecommendState', function(req, res, next) {
     try{
         var arg = req.body;
         logger.info("添加推荐位参数， arg:" + JSON.stringify(arg));
-        res.json(result);
+        if(arg==null||arg.length<1){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            res.json(result);
+        }
+        Coupon.addRecommend(arg,function(error,data){
+            if (error) {
+                res.json(error);
+                return;
+            } else {
+                logger.info("addRecommendState response:" + JSON.stringify(result));
+                res.json(result);
+                return;
+            }
+        });
     }catch (ex) {
         logger.error("get addRecommendState  error:" + ex);
         result.code = 500;
@@ -231,20 +379,113 @@ router.post('/addRecommendState', function(req, res, next) {
     }
 });
 
-//设置活动置顶
-router.post('/setActivTop', function(req, res, next) {
+//	配置推荐位/添加推荐位列表
+router.post('/confRecommendList', function(req, res, next) {
     var result = {code: 200};
     try{
         var arg = req.body;
-        logger.info("设置活动置顶参数， arg:" + JSON.stringify(arg));
-        res.json(result);
+        logger.info("配置推荐位/添加推荐位列表参数， arg:" + JSON.stringify(arg));
+
+        if(arg.activTop >1||arg.activTop<0){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        Coupon.confRecommendList(arg,function(error,data){
+            if (error) {
+                res.json(error);
+                return;
+            } else {
+                result.activeList=data[0].activeList;
+                result.page = data[0].pagination;
+                logger.info("confRecommendList response:" + JSON.stringify(result));
+                res.json(result);
+                return;
+            }
+        });
+
     }catch (ex) {
-        logger.error("get setActivTop  error:" + ex);
+        logger.error("get confRecommendList  error:" + ex);
         result.code = 500;
-        result.desc = "设置活动置顶失败";
+        result.desc = "配置推荐位/添加推荐位列表失败";
         res.json(result);
     }
 });
+
+//	取消活动推荐位
+router.post('/undoRecommendState', function(req, res, next) {
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        logger.info("取消活动推荐位参数， arg:" + JSON.stringify(arg));
+        Coupon.undoRecommendState(arg,function(error,data){
+            if (error) {
+                res.json(error);
+                return;
+            } else {
+                logger.info("undoRecommendState response:" + JSON.stringify(result));
+                res.json(result);
+                return;
+            }
+        });
+    }catch (ex) {
+        logger.error("get undoRecommendState  error:" + ex);
+        result.code = 500;
+        result.desc = "取消活动推荐位失败";
+        res.json(result);
+    }
+});
+
+//	移动活动推荐位
+router.post('/moveActiv', function(req, res, next) {
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        logger.info("移动活动推荐位参数， arg:" + JSON.stringify(arg));
+        Coupon.moveActiv(arg,function(error,data){
+            if (error) {
+                res.json(error);
+                return;
+            } else {
+                logger.info("moveActiv response:" + JSON.stringify(result));
+                res.json(result);
+                return;
+            }
+        });
+    }catch (ex) {
+        logger.error("get moveActiv  error:" + ex);
+        result.code = 500;
+        result.desc = "移动活动推荐位失败";
+        res.json(result);
+    }
+});
+
+
+//	手动结束当前活动
+router.post('/overActiv', function(req, res, next) {
+    var result = {code: 200};
+    try{
+        var arg = req.body;
+        logger.info("手动结束当前活动参数， arg:" + JSON.stringify(arg));
+        Coupon.overActiv(arg,function(error,data){
+            if (error) {
+                res.json(error);
+                return;
+            } else {
+                logger.info("overActiv response:" + JSON.stringify(result));
+                res.json(result);
+                return;
+            }
+        });
+    }catch (ex) {
+        logger.error("get overActiv  error:" + ex);
+        result.code = 500;
+        result.desc = "结束活动失败";
+        res.json(result);
+    }
+});
+
 
 //添加发放渠道
 router.post('/addSource', function(req, res, next) {
