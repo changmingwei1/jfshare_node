@@ -553,6 +553,8 @@ router.post('/queryActiveByProductId', function (req, res, next) {
             if (error) {
                 res.json(error);
             } else {
+
+                result.ActiveByProductResult = data;
                 logger.info("queryActiveByProductId response:" + JSON.stringify(result));
                 res.json(result);
             }
@@ -578,6 +580,7 @@ router.post('/queryUserCouponByOrder', function (req, res, next) {
                 res.json(error);
             } else {
                 logger.info("queryUserCouponByOrder response:" + JSON.stringify(result));
+                result.UserCouponDetailListResult = data;
                 res.json(result);
             }
         });
