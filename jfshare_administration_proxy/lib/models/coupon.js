@@ -68,11 +68,11 @@ Coupon.prototype.createActivity = function (params, callback) {
         couponBeginTime: params.couponBeginTime,
         couponEndTime: params.couponEndTime,
         couponType: params.activScope,
-        couponTypeConfig: params.activScopeList,
-        userType: params.userLimit,
+        couponTypeConfig: params.activScopeList,//指定商品,文件路径
+        userType: params.userLimit,//usertype
         regStartTime: params.regStartTime,
         regstopTime: params.regstopTime,
-        userLimit: params.users,
+        userLimit: params.users,//文件路径
         sendLimit: params.sendLimit
     });
 
@@ -127,16 +127,16 @@ Coupon.prototype.selectActivDetailById = function (params, callback) {
             callback(res, null);
         } else if (data[0].result.code == 1) {
             res.code = 500;
-            res.desc = data[0].result.failDescList[0].desc;
-        } else {
-            callback(null, data);
-        }
-    });
+res.desc = data[0].result.failDescList[0].desc;
+} else {
+    callback(null, data);
+}
+});
 };
 
 
 /** 导出活动发放记录 */
-Coupon.prototype.selectActivDetailById = function (params, callback) {
+Coupon.prototype.exportActivDetail = function (params, callback) {
     var param = new coupon_types.ActivDetailStatisticsParam({
         userMobile : params.mobile,
         couponState : params.couponState,
@@ -171,7 +171,6 @@ Coupon.prototype.selectActivDetailById = function (params, callback) {
 };
 
 
-
 /** 查询活动详情 */
 Coupon.prototype.selectActivById = function (params, callback) {
     logger.info("couponList >>>>>>>>>>>  " + JSON.stringify(params));
@@ -188,6 +187,7 @@ Coupon.prototype.selectActivById = function (params, callback) {
         } else if (data[0].result.code == 1) {
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
         } else {
             callback(null, data);
         }
@@ -256,8 +256,8 @@ Coupon.prototype.addRecommend = function (params, callback) {
 /** 配置推荐位/添加推荐位列表 */
 Coupon.prototype.confRecommendList = function (params, callback) {
     var page = new pagination_types.Pagination({
-        numPerPage: params.numPerPage,//numPerPage
-        currentPage: params.currentPage
+        numPerPage : params.numPerPage ,//numPerPage
+        currentPage : params.currentPage
     });
 
     logger.info("confRecommendList >>>>>>>>>>>  " + JSON.stringify(params));

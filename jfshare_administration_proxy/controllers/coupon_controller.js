@@ -35,14 +35,14 @@ router.post('/activList', function(req, res, next) {
     try{
         var arg = req.body;
         logger.info("查询优惠券活动列表参数， arg:" + JSON.stringify(arg));
-        if(arg.currentPage=="" || arg.currentPage ==null){
+        if(arg.currentPage.length==0 || arg.currentPage ==null){
             result.code = 500;
             result.desc = "参数错误";
             res.json(result);
             return;
         }
 
-        if(arg.numPerPage=="" || arg.numPerPage ==null){
+        if(arg.numPerPage.length==0 || arg.numPerPage ==null){
             result.code = 500;
             result.desc = "";
             res.json(result);
@@ -101,13 +101,18 @@ router.post('/activInfo', function(req, res, next) {
     try{
         var arg = req.body;
         logger.info("查看活动详情参数， arg:" + JSON.stringify(arg));
-
+        if(arg.activId==null||arg.activId.length==0){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
         Coupon.selectActivById(arg,function(error,data){
             logger.info("activInfo response:" + JSON.stringify(data));
             if (error) {
                 res.json(error);
             } else {
-                result.list=data;
+                result.couponActiv=data[0].couponActiv;
                 logger.info("activInfo response:" + JSON.stringify(result));
                 res.json(result);
             }
@@ -127,7 +132,12 @@ router.post('/updateActiv', function(req, res, next) {
     try{
         var arg = req.body;
         logger.info("新建积分券活动参数， arg:" + JSON.stringify(arg));
-
+        if(arg.activId==null||arg.activId.length==0){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
         Coupon.updateActiv(arg,function(error,data){
             if (error) {
                 res.json(error);
@@ -147,40 +157,18 @@ router.post('/updateActiv', function(req, res, next) {
 });
 
 
-//查看活动详情**
-router.post('/activInfo', function(req, res, next) {
-    var result = {code: 200};
-    try{
-        var arg = req.body;
-        logger.info("查看活动详情参数， arg:" + JSON.stringify(arg));
-
-        Coupon.selectActivById(arg,function(error,data){
-            if (error) {
-                res.json(error);
-            } else {
-                result.list=data;
-                result.page = page;
-                logger.info("activInfo response:" + JSON.stringify(result));
-                res.json(result);
-            }
-        });
-
-    }catch (ex) {
-        logger.error("get activInfo  error:" + ex);
-        result.code = 500;
-        result.desc = "查看活动详情失败";
-        res.json(result);
-    }
-});
-
-
 //导出优惠券发放记录
 router.post('/exportActivDetail', function(req, res, next) {
     var result = {code: 200};
     try{
         var arg = req.body;
         logger.info("导出优惠券发放记录参数， arg:" + JSON.stringify(arg));
-
+        if(arg.activId==null||arg.activId.length==0){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
         Coupon.exportActivDetail(arg,function(error,data){
             if (error) {
                 res.json(error);
@@ -208,128 +196,41 @@ router.post('/couponList', function(req, res, next) {
     try{
         var arg = req.body;
         logger.info("查询积分券发放记录参数， arg:" + JSON.stringify(arg));
-
+        if(arg.activId<0){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.currentPage<1){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.numPerPage<1){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
         Coupon.selectActivDetailById(arg,function(error,data){
-            logger.info("couponList response:" + JSON.stringify(result));
+
             if (error) {
                 res.json(error);
                 return;
             } else {
-                result.activeList=data[0].result.activeList;
-                result.page = data[0].result.pagination;
+                result.list=data[0].couponList;
+                result.page = data[0].pagination;
+                logger.info("couponList response:" + JSON.stringify(data[0]));
+                res.json(result)
 
-                res.json(result);
-                return;
             }
         });
-       /* logger.info("优惠券列表参数， arg:" + JSON.stringify(arg));
-        var activName="孕婴童全场通用,满30000积分抵1000";
-        var activState=1;
-        var couponSize=1000;
-        var couponNum=100;
-        result.activName=activName;
-        result.activState=activState;
-        result.couponSize=couponSize;
-        result.couponNum=couponNum;
-
-        var coupon1 = {
-            id:"YHQ2017050412654",
-            mobile:"18301198617",
-            couponState:1,           /!**使用情况**!/
-            receiveTime:"2017-05-01 12:00:00", /!**领取时间**!/
-            useTime:"2017-05-03 15:26:18",  /!**使用时间**!/
-            couponSource:1,             /!**领取渠道**!/
-            userId:0,                   /!**用户id**!/
-            activeId:16              /!**活动id**!/
-        }
-
-        var coupon2 = {
-            id:"YHQ2017050461215",
-            mobile:"18301162158",
-            couponState:0,           /!**使用情况**!/
-            receiveTime:"2017年5月1日12:30:21",           /!**领取时间**!/
-            useTime:"2017-05-04 12:00:00" ,  /!**使用时间**!/
-            couponSource:1,             /!**领取渠道**!/
-            userId:62,                   /!**用户id**!/
-            activeId:16              /!**活动id**!/
-        }
-        var couponList = [];
-
-        couponList.push(coupon1);
-        couponList.push(coupon2);
-
-        result.list = couponList;
-
-        var page ={
-            totalCount:2,             //总记录数
-            pageNumCount:1,           //总页数
-            numPerPage:20,            //每页记录数
-            currentPage:1             //当前页数
-        };
-        result.page = page;
-        res.json(result);*/
     } catch (ex) {
         logger.error("查询列表失败:" + ex);
         result.code = 500;
         result.desc = "查询列表失败";
-        res.json(result);
-    }
-});
-
-//查看积分券活动详情
-router.post('/selectActivById', function(req, res, next) {
-    var result = {code: 200};
-
-    try{
-        var arg = req.body;
-        logger.info("优惠券列表参数， arg:" + JSON.stringify(arg));
-        var activId="16"                     //优惠券活动id
-        var activName="孕婴童全场通用,满30000积分抵1000";
-        var activImg="adfa32sd16541321.jpg"; /**活动图片**/
-        var startTime="2017-05-02 12:36";             /**活动开始时间:小于当前时间则不可编辑**/
-        var stopTime="2017-06-06 12:36";              /**活动结束时间**/
-        var couponSize=1000;                 /**券面值**/
-        var couponPremise=30000;             /**使用条件,满多少积分**/
-        var couponNum=1000;                 /**券发型数量:可编辑,需>=1000张**/
-        var beginTime="2017-05-02 00:00";    /**券有效期起始时间**/
-        var endTime="2017-06-02 00:00";              /**券有效期结束时间**/
-        var activScope = 1;               /**券使用范围0:不限; 1:品类; 2:品牌; 3:商家 4:指定商家**/
-        var activScopeList="16,25,36,48";        /**积分券使用范围的具体列表**/
-        var activObj =0;       /**可活动参与对象0:不限; 1:老用户; 2:新用户**/
-        result.activId=activId;
-        result.activName=activName;
-        result.activImg=activImg;
-        result.startTime=startTime;
-        result.stopTime=stopTime;
-        result.couponSize=couponSize;
-        result.couponPremise=couponPremise;
-        result.couponNum=couponNum;
-        result.beginTime=beginTime;
-        result.endTime=endTime;
-        result.activScope=activScope;
-        result.activScopeList=activScopeList;
-        result.activObj=activObj;
-
-        res.json(result);
-    } catch (ex) {
-        logger.error("查询优惠券详情失败:" + ex);
-        result.code = 500;
-        result.desc = "查询优惠券详情失败";
-        res.json(result);
-    }
-});
-
-//编辑活动详情
-router.post('/updateActiv', function(req, res, next) {
-    var result = {code: 200};
-    try{
-        var arg = req.body;
-        logger.info("保存积分券活动参数， arg:" + JSON.stringify(arg));
-        res.json(result);
-    }catch (ex) {
-        logger.error("get updateActiv  error:" + ex);
-        result.code = 500;
-        result.desc = "保存积分券活动失败";
         res.json(result);
     }
 });
@@ -387,6 +288,18 @@ router.post('/confRecommendList', function(req, res, next) {
         logger.info("配置推荐位/添加推荐位列表参数， arg:" + JSON.stringify(arg));
 
         if(arg.activTop >1||arg.activTop<0){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.currentPage<0){
+            result.code = 500;
+            result.desc = "参数错误";
+            res.json(result);
+            return;
+        }
+        if(arg.numPerPage<1){
             result.code = 500;
             result.desc = "参数错误";
             res.json(result);
