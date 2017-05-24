@@ -981,11 +981,13 @@ router.post('/sztcardList', function (req, res, next) {
 
         var desc1 = "温馨提示:";
         var desc2 = "1、充值券有效期至2019年12月31日，逾期不可使用；";
-        var desc3 = "2、充值券为服务性商品，购买成功后不接受退款，请谨慎购买。";
+        var desc3 = "2、充值券为服务性商品，购买成功后不接受退款，请谨慎购买；";
+        var desc4 = "3、单张深圳通卡，每天最多只能使用App充值三次。";
 
         descList.push(desc1);
         descList.push(desc2);
         descList.push(desc3);
+        descList.push(desc4);
 
         result.descList = descList;
         res.json(result);
