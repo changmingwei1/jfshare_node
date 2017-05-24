@@ -201,11 +201,12 @@ Coupon.prototype.queryUserCouponByOrder = function (params, callback) {
     logger.error("queryUserCouponByOrder >>>>>>>>>>>  " + JSON.stringify(params));
     var list = [];
     var userId = params.userId;
-    var length = params.productList.length;
+    var productlist = params.productList;
+    var length = productlist.length;
     for(var i=0;i<length;i++){
 
         var productDtail = new coupon_types.ProductDetail({
-            productId:params.productList[i].productId
+            productId:productlist[i].productId
         })
         list[i] = productDtail;
     }
@@ -228,6 +229,38 @@ Coupon.prototype.queryUserCouponByOrder = function (params, callback) {
     });
 };
 
+//需点亮的优惠券列表**
+Coupon.prototype.queryUserMutexCouponByOrder = function (params, callback) {
+    logger.error("queryUserMutexCouponByOrder >>>>>>>>>>>  " + JSON.stringify(params));
+    var pitchcouponIdList = params.pitchCouponIdList;
+    var cannelcouponIdList = params.cannelCouponIdList;
+    var list = []
+    var productIdlist = params.productIdList;
+    var length = productIdlist.length;
+    for(var i=0;i<length;i++){
 
+        var productDtail = new coupon_types.ProductDetail({
+            productId:productIdlist[i]
+        })
+        list[i] = productDtail;
+    }
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.FileForCardServ, 'queryUserMutexCouponByOrder',[pitchcouponIdList,cannelcouponIdList,list]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("queryUserMutexCouponByOrder result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("queryUserMutexCouponByOrder because: ======" + err);
+            res.code = 500;
+            res.desc = "查询相关活动失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new Coupon();

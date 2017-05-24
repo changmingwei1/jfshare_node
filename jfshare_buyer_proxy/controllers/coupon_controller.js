@@ -554,7 +554,7 @@ router.post('/queryActiveByProductId', function (req, res, next) {
                 res.json(error);
             } else {
 
-                result.ActiveByProductResult = data;
+                result.activeByProductResult = data;
                 logger.info("queryActiveByProductId response:" + JSON.stringify(result));
                 res.json(result);
             }
@@ -580,7 +580,7 @@ router.post('/queryUserCouponByOrder', function (req, res, next) {
                 res.json(error);
             } else {
                 logger.info("queryUserCouponByOrder response:" + JSON.stringify(result));
-                result.UserCouponDetailListResult = data;
+                result.userCouponDetailListResult = data;
                 res.json(result);
             }
         });
@@ -592,6 +592,29 @@ router.post('/queryUserCouponByOrder', function (req, res, next) {
     }
 });
 
+//点亮优惠券列表
+router.post('/queryUserMutexCouponByOrder', function (req, res, next) {
+    logger.info("进入用户可用和不可用卡券列表查询...");
+    var result = {code: 200};
+    try {
+        var arg = req.body;
+        logger.info("可用列表查询， arg:" + JSON.stringify(arg));
+        Coupon.queryUserMutexCouponByOrder(arg, function (error, data) {
+            if (error) {
+                res.json(error);
+            } else {
+                logger.info("queryUserMutexCouponByOrder response:" + JSON.stringify(result));
+                result.userCouponMutexResult = data;
+                res.json(result);
+            }
+        });
+    } catch (ex) {
+        logger.error("queryUserMutexCouponByOrder  error:" + ex);
+        result.code = 500;
+        result.desc = "列表查询失败";
+        res.json(result);
+    }
+});
 /*!//更多好券
 router.post('/findCoupon', function(req, res, next) {
     var result = {code: 200};
