@@ -226,15 +226,15 @@ FileCards.prototype.thirdgameCallBack = function (params, callback) {
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("thirdgameCallBack result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err || data[0].code == 1) {
             logger.error("thirdgameCallBack: ======" + err);
             res.code = 500;
             res.desc = "";
             callback(res, null);
-        } else if (data[0].result.code == 1) {
+        } else if (data[0].code == 1) {
             logger.warn("thirdgameCallBack，参数为：" + JSON.stringify(thirdGameParam));
             res.code = 500;
-            res.desc = data[0].result.failDescList[0].desc;
+            res.desc = data[0].failDescList[0].desc;
         } else {
             callback(null, data[0]);
         }
