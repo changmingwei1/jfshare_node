@@ -11,7 +11,6 @@ var  Scoretool = require('../lib/models/score_tool');
 //
 router.post('/sendnote', function(req, res, next) {
     var result = {code: 200};
-
     try{
         var arg = req.body;
         logger.info("移动验证码， arg:" + JSON.stringify(arg));
