@@ -20,6 +20,7 @@ var slotImage = require('./controllers/slotImage_controller');// 主页和商品
 var moduleConfig = require('./controllers/moduleConfig_controller');// 商品和品牌模块页面的配置
 var fileCard = require('./controllers/filecard_controller');// 第三方卡密上传
 var coupon = require('./controllers/coupon_controller');
+var scoretool = require('./controllers/scoretool_controller');
 //var view_index = require("./view_center/index/view_index");
 
 var app = express();
@@ -48,6 +49,7 @@ app.use('/shop/active',active);
 app.use('/shop/slotImage',slotImage);// 主页和商品模块页面的配置
 app.use('/shop/moduleConfig',moduleConfig);
 app.use('/shop/fileCard',fileCard);// 第三方卡密功能
+app.use('/shop/scoretool', scoretool);
 //app.use('/test', test);
 //app.use('/test', tests);
 
