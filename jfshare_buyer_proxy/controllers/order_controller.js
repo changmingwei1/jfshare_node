@@ -2106,7 +2106,7 @@ router.post('/payOrderCreates', function (request, response, next) {
         }
         if (arg.tradeCode == "Z8003") { //话费
             if (arg.totalSum == "" || (
-                    arg.totalSum != "30" &&
+                   // arg.totalSum != "30" &&
                     arg.totalSum != "50" &&
                     arg.totalSum != "100" &&
                     arg.totalSum != "300" &&
@@ -2117,18 +2117,18 @@ router.post('/payOrderCreates', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            /*if (arg.totalSum == "30") {
+            if (arg.totalSum == "30") {
              result.code = 500;
              result.desc = "该面值已售罄";
              response.json(result);
              return;
              }
-             if (arg.totalSum == "50") {
-             result.code = 500;
-             result.desc = "该面值已售罄";
-             response.json(result);
-             return;
-             }*/
+             //if (arg.totalSum == "50") {
+             //result.code = 500;
+             //result.desc = "该面值已售罄";
+             //response.json(result);
+             //return;
+             //}
         }
         if (arg.tradeCode == "Z8004") { //流量
             //result.code = 500;
