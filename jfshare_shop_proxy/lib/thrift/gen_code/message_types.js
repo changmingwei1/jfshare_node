@@ -11,291 +11,7 @@ var result_ttypes = require('./result_types')
 
 
 var ttypes = module.exports = {};
-SystemMessage = module.exports.SystemMessage = function(args) {
-  this.id = null;
-  this.title = null;
-  this.content = null;
-  this.beginDate = null;
-  this.endDate = null;
-  this.status = null;
-  this.pushTarget = null;
-  this.createTime = null;
-  this.msgType = null;
-  this.alert = null;
-  if (args) {
-    if (args.id !== undefined) {
-      this.id = args.id;
-    }
-    if (args.title !== undefined) {
-      this.title = args.title;
-    }
-    if (args.content !== undefined) {
-      this.content = args.content;
-    }
-    if (args.beginDate !== undefined) {
-      this.beginDate = args.beginDate;
-    }
-    if (args.endDate !== undefined) {
-      this.endDate = args.endDate;
-    }
-    if (args.status !== undefined) {
-      this.status = args.status;
-    }
-    if (args.pushTarget !== undefined) {
-      this.pushTarget = args.pushTarget;
-    }
-    if (args.createTime !== undefined) {
-      this.createTime = args.createTime;
-    }
-    if (args.msgType !== undefined) {
-      this.msgType = args.msgType;
-    }
-    if (args.alert !== undefined) {
-      this.alert = args.alert;
-    }
-  }
-};
-SystemMessage.prototype = {};
-SystemMessage.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.id = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.title = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.content = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 4:
-      if (ftype == Thrift.Type.STRING) {
-        this.beginDate = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 5:
-      if (ftype == Thrift.Type.STRING) {
-        this.endDate = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 6:
-      if (ftype == Thrift.Type.I32) {
-        this.status = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 7:
-      if (ftype == Thrift.Type.I32) {
-        this.pushTarget = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 8:
-      if (ftype == Thrift.Type.STRING) {
-        this.createTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 9:
-      if (ftype == Thrift.Type.I32) {
-        this.msgType = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 10:
-      if (ftype == Thrift.Type.STRING) {
-        this.alert = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-SystemMessage.prototype.write = function(output) {
-  output.writeStructBegin('SystemMessage');
-  if (this.id !== null && this.id !== undefined) {
-    output.writeFieldBegin('id', Thrift.Type.I32, 1);
-    output.writeI32(this.id);
-    output.writeFieldEnd();
-  }
-  if (this.title !== null && this.title !== undefined) {
-    output.writeFieldBegin('title', Thrift.Type.STRING, 2);
-    output.writeString(this.title);
-    output.writeFieldEnd();
-  }
-  if (this.content !== null && this.content !== undefined) {
-    output.writeFieldBegin('content', Thrift.Type.STRING, 3);
-    output.writeString(this.content);
-    output.writeFieldEnd();
-  }
-  if (this.beginDate !== null && this.beginDate !== undefined) {
-    output.writeFieldBegin('beginDate', Thrift.Type.STRING, 4);
-    output.writeString(this.beginDate);
-    output.writeFieldEnd();
-  }
-  if (this.endDate !== null && this.endDate !== undefined) {
-    output.writeFieldBegin('endDate', Thrift.Type.STRING, 5);
-    output.writeString(this.endDate);
-    output.writeFieldEnd();
-  }
-  if (this.status !== null && this.status !== undefined) {
-    output.writeFieldBegin('status', Thrift.Type.I32, 6);
-    output.writeI32(this.status);
-    output.writeFieldEnd();
-  }
-  if (this.pushTarget !== null && this.pushTarget !== undefined) {
-    output.writeFieldBegin('pushTarget', Thrift.Type.I32, 7);
-    output.writeI32(this.pushTarget);
-    output.writeFieldEnd();
-  }
-  if (this.createTime !== null && this.createTime !== undefined) {
-    output.writeFieldBegin('createTime', Thrift.Type.STRING, 8);
-    output.writeString(this.createTime);
-    output.writeFieldEnd();
-  }
-  if (this.msgType !== null && this.msgType !== undefined) {
-    output.writeFieldBegin('msgType', Thrift.Type.I32, 9);
-    output.writeI32(this.msgType);
-    output.writeFieldEnd();
-  }
-  if (this.alert !== null && this.alert !== undefined) {
-    output.writeFieldBegin('alert', Thrift.Type.STRING, 10);
-    output.writeString(this.alert);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-SystemMessageResult = module.exports.SystemMessageResult = function(args) {
-  this.result = null;
-  this.messages = null;
-  if (args) {
-    if (args.result !== undefined) {
-      this.result = args.result;
-    }
-    if (args.messages !== undefined) {
-      this.messages = args.messages;
-    }
-  }
-};
-SystemMessageResult.prototype = {};
-SystemMessageResult.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.result = new result_ttypes.Result();
-        this.result.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.LIST) {
-        var _size0 = 0;
-        var _rtmp34;
-        this.messages = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readListBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
-        {
-          var elem6 = null;
-          elem6 = new ttypes.SystemMessage();
-          elem6.read(input);
-          this.messages.push(elem6);
-        }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-SystemMessageResult.prototype.write = function(output) {
-  output.writeStructBegin('SystemMessageResult');
-  if (this.result !== null && this.result !== undefined) {
-    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
-    this.result.write(output);
-    output.writeFieldEnd();
-  }
-  if (this.messages !== null && this.messages !== undefined) {
-    output.writeFieldBegin('messages', Thrift.Type.LIST, 2);
-    output.writeListBegin(Thrift.Type.STRUCT, this.messages.length);
-    for (var iter7 in this.messages)
-    {
-      if (this.messages.hasOwnProperty(iter7))
-      {
-        iter7 = this.messages[iter7];
-        iter7.write(output);
-      }
-    }
-    output.writeListEnd();
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-PushMessage = module.exports.PushMessage = function(args) {
+BonusPointMessage = module.exports.BonusPointMessage = function(args) {
   this.title = null;
   this.content = null;
   this.objType = null;
@@ -315,8 +31,8 @@ PushMessage = module.exports.PushMessage = function(args) {
     }
   }
 };
-PushMessage.prototype = {};
-PushMessage.prototype.read = function(input) {
+BonusPointMessage.prototype = {};
+BonusPointMessage.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -366,8 +82,8 @@ PushMessage.prototype.read = function(input) {
   return;
 };
 
-PushMessage.prototype.write = function(output) {
-  output.writeStructBegin('PushMessage');
+BonusPointMessage.prototype.write = function(output) {
+  output.writeStructBegin('BonusPointMessage');
   if (this.title !== null && this.title !== undefined) {
     output.writeFieldBegin('title', Thrift.Type.STRING, 1);
     output.writeString(this.title);
@@ -393,40 +109,20 @@ PushMessage.prototype.write = function(output) {
   return;
 };
 
-AppUpgradeInfo = module.exports.AppUpgradeInfo = function(args) {
-  this.appType = null;
-  this.version = null;
-  this.minVersion = null;
-  this.maxVersion = null;
-  this.upgradeType = null;
-  this.url = null;
-  this.upgradeDesc = null;
+Score = module.exports.Score = function(args) {
+  this.totalScore = null;
+  this.CanuseScore = null;
   if (args) {
-    if (args.appType !== undefined) {
-      this.appType = args.appType;
+    if (args.totalScore !== undefined) {
+      this.totalScore = args.totalScore;
     }
-    if (args.version !== undefined) {
-      this.version = args.version;
-    }
-    if (args.minVersion !== undefined) {
-      this.minVersion = args.minVersion;
-    }
-    if (args.maxVersion !== undefined) {
-      this.maxVersion = args.maxVersion;
-    }
-    if (args.upgradeType !== undefined) {
-      this.upgradeType = args.upgradeType;
-    }
-    if (args.url !== undefined) {
-      this.url = args.url;
-    }
-    if (args.upgradeDesc !== undefined) {
-      this.upgradeDesc = args.upgradeDesc;
+    if (args.CanuseScore !== undefined) {
+      this.CanuseScore = args.CanuseScore;
     }
   }
 };
-AppUpgradeInfo.prototype = {};
-AppUpgradeInfo.prototype.read = function(input) {
+Score.prototype = {};
+Score.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -441,49 +137,102 @@ AppUpgradeInfo.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.I32) {
-        this.appType = input.readI32();
+        this.totalScore = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
       if (ftype == Thrift.Type.I32) {
-        this.version = input.readI32();
+        this.CanuseScore = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Score.prototype.write = function(output) {
+  output.writeStructBegin('Score');
+  if (this.totalScore !== null && this.totalScore !== undefined) {
+    output.writeFieldBegin('totalScore', Thrift.Type.I32, 1);
+    output.writeI32(this.totalScore);
+    output.writeFieldEnd();
+  }
+  if (this.CanuseScore !== null && this.CanuseScore !== undefined) {
+    output.writeFieldBegin('CanuseScore', Thrift.Type.I32, 2);
+    output.writeI32(this.CanuseScore);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FlightMileage = module.exports.FlightMileage = function(args) {
+  this.totalMileage = null;
+  this.canuseMileage = null;
+  this.consumedMileage = null;
+  this.disabledMileage = null;
+  if (args) {
+    if (args.totalMileage !== undefined) {
+      this.totalMileage = args.totalMileage;
+    }
+    if (args.canuseMileage !== undefined) {
+      this.canuseMileage = args.canuseMileage;
+    }
+    if (args.consumedMileage !== undefined) {
+      this.consumedMileage = args.consumedMileage;
+    }
+    if (args.disabledMileage !== undefined) {
+      this.disabledMileage = args.disabledMileage;
+    }
+  }
+};
+FlightMileage.prototype = {};
+FlightMileage.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.totalMileage = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.canuseMileage = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 3:
       if (ftype == Thrift.Type.I32) {
-        this.minVersion = input.readI32();
+        this.consumedMileage = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 4:
       if (ftype == Thrift.Type.I32) {
-        this.maxVersion = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 5:
-      if (ftype == Thrift.Type.I32) {
-        this.upgradeType = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 6:
-      if (ftype == Thrift.Type.STRING) {
-        this.url = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 7:
-      if (ftype == Thrift.Type.STRING) {
-        this.upgradeDesc = input.readString();
+        this.disabledMileage = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -497,41 +246,26 @@ AppUpgradeInfo.prototype.read = function(input) {
   return;
 };
 
-AppUpgradeInfo.prototype.write = function(output) {
-  output.writeStructBegin('AppUpgradeInfo');
-  if (this.appType !== null && this.appType !== undefined) {
-    output.writeFieldBegin('appType', Thrift.Type.I32, 1);
-    output.writeI32(this.appType);
+FlightMileage.prototype.write = function(output) {
+  output.writeStructBegin('FlightMileage');
+  if (this.totalMileage !== null && this.totalMileage !== undefined) {
+    output.writeFieldBegin('totalMileage', Thrift.Type.I32, 1);
+    output.writeI32(this.totalMileage);
     output.writeFieldEnd();
   }
-  if (this.version !== null && this.version !== undefined) {
-    output.writeFieldBegin('version', Thrift.Type.I32, 2);
-    output.writeI32(this.version);
+  if (this.canuseMileage !== null && this.canuseMileage !== undefined) {
+    output.writeFieldBegin('canuseMileage', Thrift.Type.I32, 2);
+    output.writeI32(this.canuseMileage);
     output.writeFieldEnd();
   }
-  if (this.minVersion !== null && this.minVersion !== undefined) {
-    output.writeFieldBegin('minVersion', Thrift.Type.I32, 3);
-    output.writeI32(this.minVersion);
+  if (this.consumedMileage !== null && this.consumedMileage !== undefined) {
+    output.writeFieldBegin('consumedMileage', Thrift.Type.I32, 3);
+    output.writeI32(this.consumedMileage);
     output.writeFieldEnd();
   }
-  if (this.maxVersion !== null && this.maxVersion !== undefined) {
-    output.writeFieldBegin('maxVersion', Thrift.Type.I32, 4);
-    output.writeI32(this.maxVersion);
-    output.writeFieldEnd();
-  }
-  if (this.upgradeType !== null && this.upgradeType !== undefined) {
-    output.writeFieldBegin('upgradeType', Thrift.Type.I32, 5);
-    output.writeI32(this.upgradeType);
-    output.writeFieldEnd();
-  }
-  if (this.url !== null && this.url !== undefined) {
-    output.writeFieldBegin('url', Thrift.Type.STRING, 6);
-    output.writeString(this.url);
-    output.writeFieldEnd();
-  }
-  if (this.upgradeDesc !== null && this.upgradeDesc !== undefined) {
-    output.writeFieldBegin('upgradeDesc', Thrift.Type.STRING, 7);
-    output.writeString(this.upgradeDesc);
+  if (this.disabledMileage !== null && this.disabledMileage !== undefined) {
+    output.writeFieldBegin('disabledMileage', Thrift.Type.I32, 4);
+    output.writeI32(this.disabledMileage);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -539,298 +273,24 @@ AppUpgradeInfo.prototype.write = function(output) {
   return;
 };
 
-AppUpgradeInfoStr = module.exports.AppUpgradeInfoStr = function(args) {
-  this.appType = null;
-  this.version = null;
-  this.minVersion = null;
-  this.maxVersion = null;
-  this.upgradeType = null;
-  this.url = null;
-  this.upgradeDesc = null;
-  if (args) {
-    if (args.appType !== undefined) {
-      this.appType = args.appType;
-    }
-    if (args.version !== undefined) {
-      this.version = args.version;
-    }
-    if (args.minVersion !== undefined) {
-      this.minVersion = args.minVersion;
-    }
-    if (args.maxVersion !== undefined) {
-      this.maxVersion = args.maxVersion;
-    }
-    if (args.upgradeType !== undefined) {
-      this.upgradeType = args.upgradeType;
-    }
-    if (args.url !== undefined) {
-      this.url = args.url;
-    }
-    if (args.upgradeDesc !== undefined) {
-      this.upgradeDesc = args.upgradeDesc;
-    }
-  }
-};
-AppUpgradeInfoStr.prototype = {};
-AppUpgradeInfoStr.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.appType = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.version = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.minVersion = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 4:
-      if (ftype == Thrift.Type.STRING) {
-        this.maxVersion = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 5:
-      if (ftype == Thrift.Type.I32) {
-        this.upgradeType = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 6:
-      if (ftype == Thrift.Type.STRING) {
-        this.url = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 7:
-      if (ftype == Thrift.Type.STRING) {
-        this.upgradeDesc = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-AppUpgradeInfoStr.prototype.write = function(output) {
-  output.writeStructBegin('AppUpgradeInfoStr');
-  if (this.appType !== null && this.appType !== undefined) {
-    output.writeFieldBegin('appType', Thrift.Type.I32, 1);
-    output.writeI32(this.appType);
-    output.writeFieldEnd();
-  }
-  if (this.version !== null && this.version !== undefined) {
-    output.writeFieldBegin('version', Thrift.Type.STRING, 2);
-    output.writeString(this.version);
-    output.writeFieldEnd();
-  }
-  if (this.minVersion !== null && this.minVersion !== undefined) {
-    output.writeFieldBegin('minVersion', Thrift.Type.STRING, 3);
-    output.writeString(this.minVersion);
-    output.writeFieldEnd();
-  }
-  if (this.maxVersion !== null && this.maxVersion !== undefined) {
-    output.writeFieldBegin('maxVersion', Thrift.Type.STRING, 4);
-    output.writeString(this.maxVersion);
-    output.writeFieldEnd();
-  }
-  if (this.upgradeType !== null && this.upgradeType !== undefined) {
-    output.writeFieldBegin('upgradeType', Thrift.Type.I32, 5);
-    output.writeI32(this.upgradeType);
-    output.writeFieldEnd();
-  }
-  if (this.url !== null && this.url !== undefined) {
-    output.writeFieldBegin('url', Thrift.Type.STRING, 6);
-    output.writeString(this.url);
-    output.writeFieldEnd();
-  }
-  if (this.upgradeDesc !== null && this.upgradeDesc !== undefined) {
-    output.writeFieldBegin('upgradeDesc', Thrift.Type.STRING, 7);
-    output.writeString(this.upgradeDesc);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-GetUpgradeParam = module.exports.GetUpgradeParam = function(args) {
-  this.appType = null;
-  this.version = null;
-  if (args) {
-    if (args.appType !== undefined) {
-      this.appType = args.appType;
-    }
-    if (args.version !== undefined) {
-      this.version = args.version;
-    }
-  }
-};
-GetUpgradeParam.prototype = {};
-GetUpgradeParam.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.appType = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.version = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-GetUpgradeParam.prototype.write = function(output) {
-  output.writeStructBegin('GetUpgradeParam');
-  if (this.appType !== null && this.appType !== undefined) {
-    output.writeFieldBegin('appType', Thrift.Type.I32, 1);
-    output.writeI32(this.appType);
-    output.writeFieldEnd();
-  }
-  if (this.version !== null && this.version !== undefined) {
-    output.writeFieldBegin('version', Thrift.Type.I32, 2);
-    output.writeI32(this.version);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-GetUpgradeParamStr = module.exports.GetUpgradeParamStr = function(args) {
-  this.appType = null;
-  this.version = null;
-  if (args) {
-    if (args.appType !== undefined) {
-      this.appType = args.appType;
-    }
-    if (args.version !== undefined) {
-      this.version = args.version;
-    }
-  }
-};
-GetUpgradeParamStr.prototype = {};
-GetUpgradeParamStr.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.appType = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.version = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-GetUpgradeParamStr.prototype.write = function(output) {
-  output.writeStructBegin('GetUpgradeParamStr');
-  if (this.appType !== null && this.appType !== undefined) {
-    output.writeFieldBegin('appType', Thrift.Type.I32, 1);
-    output.writeI32(this.appType);
-    output.writeFieldEnd();
-  }
-  if (this.version !== null && this.version !== undefined) {
-    output.writeFieldBegin('version', Thrift.Type.STRING, 2);
-    output.writeString(this.version);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-AppUpgradeResult = module.exports.AppUpgradeResult = function(args) {
+ScoreResult = module.exports.ScoreResult = function(args) {
   this.result = null;
-  this.upgradeInfo = null;
+  this.score = null;
+  this.state = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
-    if (args.upgradeInfo !== undefined) {
-      this.upgradeInfo = args.upgradeInfo;
+    if (args.score !== undefined) {
+      this.score = args.score;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
     }
   }
 };
-AppUpgradeResult.prototype = {};
-AppUpgradeResult.prototype.read = function(input) {
+ScoreResult.prototype = {};
+ScoreResult.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -853,8 +313,15 @@ AppUpgradeResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRUCT) {
-        this.upgradeInfo = new ttypes.AppUpgradeInfo();
-        this.upgradeInfo.read(input);
+        this.score = new ttypes.Score();
+        this.score.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.state = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -868,16 +335,21 @@ AppUpgradeResult.prototype.read = function(input) {
   return;
 };
 
-AppUpgradeResult.prototype.write = function(output) {
-  output.writeStructBegin('AppUpgradeResult');
+ScoreResult.prototype.write = function(output) {
+  output.writeStructBegin('ScoreResult');
   if (this.result !== null && this.result !== undefined) {
     output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
     this.result.write(output);
     output.writeFieldEnd();
   }
-  if (this.upgradeInfo !== null && this.upgradeInfo !== undefined) {
-    output.writeFieldBegin('upgradeInfo', Thrift.Type.STRUCT, 2);
-    this.upgradeInfo.write(output);
+  if (this.score !== null && this.score !== undefined) {
+    output.writeFieldBegin('score', Thrift.Type.STRUCT, 2);
+    this.score.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 3);
+    output.writeI32(this.state);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -885,20 +357,24 @@ AppUpgradeResult.prototype.write = function(output) {
   return;
 };
 
-AppUpgradeResultStr = module.exports.AppUpgradeResultStr = function(args) {
+FlightMileageResult = module.exports.FlightMileageResult = function(args) {
   this.result = null;
-  this.upgradeInfo = null;
+  this.flightMileage = null;
+  this.state = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
-    if (args.upgradeInfo !== undefined) {
-      this.upgradeInfo = args.upgradeInfo;
+    if (args.flightMileage !== undefined) {
+      this.flightMileage = args.flightMileage;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
     }
   }
 };
-AppUpgradeResultStr.prototype = {};
-AppUpgradeResultStr.prototype.read = function(input) {
+FlightMileageResult.prototype = {};
+FlightMileageResult.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -921,8 +397,15 @@ AppUpgradeResultStr.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRUCT) {
-        this.upgradeInfo = new ttypes.AppUpgradeInfoStr();
-        this.upgradeInfo.read(input);
+        this.flightMileage = new ttypes.FlightMileage();
+        this.flightMileage.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.state = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -936,16 +419,158 @@ AppUpgradeResultStr.prototype.read = function(input) {
   return;
 };
 
-AppUpgradeResultStr.prototype.write = function(output) {
-  output.writeStructBegin('AppUpgradeResultStr');
+FlightMileageResult.prototype.write = function(output) {
+  output.writeStructBegin('FlightMileageResult');
   if (this.result !== null && this.result !== undefined) {
     output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
     this.result.write(output);
     output.writeFieldEnd();
   }
-  if (this.upgradeInfo !== null && this.upgradeInfo !== undefined) {
-    output.writeFieldBegin('upgradeInfo', Thrift.Type.STRUCT, 2);
-    this.upgradeInfo.write(output);
+  if (this.flightMileage !== null && this.flightMileage !== undefined) {
+    output.writeFieldBegin('flightMileage', Thrift.Type.STRUCT, 2);
+    this.flightMileage.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 3);
+    output.writeI32(this.state);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+HaiHangImageResult = module.exports.HaiHangImageResult = function(args) {
+  this.result = null;
+  this.images = null;
+  this.cookei = null;
+  this.reqtimestamp = null;
+  this.state = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.images !== undefined) {
+      this.images = args.images;
+    }
+    if (args.cookei !== undefined) {
+      this.cookei = args.cookei;
+    }
+    if (args.reqtimestamp !== undefined) {
+      this.reqtimestamp = args.reqtimestamp;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+  }
+};
+HaiHangImageResult.prototype = {};
+HaiHangImageResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size0 = 0;
+        var _rtmp34;
+        this.images = [];
+        var _etype3 = 0;
+        _rtmp34 = input.readListBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        {
+          var elem6 = null;
+          elem6 = input.readString();
+          this.images.push(elem6);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.cookei = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.reqtimestamp = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.state = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+HaiHangImageResult.prototype.write = function(output) {
+  output.writeStructBegin('HaiHangImageResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.images !== null && this.images !== undefined) {
+    output.writeFieldBegin('images', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRING, this.images.length);
+    for (var iter7 in this.images)
+    {
+      if (this.images.hasOwnProperty(iter7))
+      {
+        iter7 = this.images[iter7];
+        output.writeString(iter7);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.cookei !== null && this.cookei !== undefined) {
+    output.writeFieldBegin('cookei', Thrift.Type.STRING, 3);
+    output.writeString(this.cookei);
+    output.writeFieldEnd();
+  }
+  if (this.reqtimestamp !== null && this.reqtimestamp !== undefined) {
+    output.writeFieldBegin('reqtimestamp', Thrift.Type.STRING, 4);
+    output.writeString(this.reqtimestamp);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 5);
+    output.writeI32(this.state);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

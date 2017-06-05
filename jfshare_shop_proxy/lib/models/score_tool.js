@@ -24,9 +24,7 @@ Scoretool.prototype.sendNote = function (params, callback) {
             res.desc = "移动验证码获取失败";
             callback(res, null);
         }else if (data[0].code == 1) {
-            res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
-        } else {
+            res.code = 200;
             callback(null, data);
         }
     });
@@ -45,10 +43,8 @@ Scoretool.prototype.queryMobilePhone = function (params, callback) {
             res.code = 500;
             res.desc = "移动积分获取失败";
             callback(res, null);
-        }else if (data[0].code == 1) {
-            res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
-        } else {
+        }else {
+            res.code = 200;
             callback(null, data);
         }
     });
@@ -56,7 +52,7 @@ Scoretool.prototype.queryMobilePhone = function (params, callback) {
 //获取海航验证码**
 Scoretool.prototype.sendHaiHangImages = function (callback) {
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.BonusPointServ, 'sendHaiHangImages');
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.BonusPointServ, 'sendHaiHangImages',[]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("sendHaiHangImages result:------------" + JSON.stringify(data));
         var res = {};
@@ -65,12 +61,11 @@ Scoretool.prototype.sendHaiHangImages = function (callback) {
             res.code = 500;
             res.desc = "海航图片验证码获取失败";
             callback(res, null);
-        }else if (data[0].code == 1) {
-            res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
-        } else {
+        }else  {
+            res.code = 200;
             callback(null, data);
         }
+
     });
 };
 
@@ -87,10 +82,8 @@ Scoretool.prototype.queryHaiNan = function (params, callback) {
             res.code = 500;
             res.desc = "海航积分获取失败";
             callback(res, null);
-        }else if (data[0].code == 1) {
-            res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
-        } else {
+        }else {
+            res.code = 200;
             callback(null, data);
         }
     });
@@ -109,10 +102,8 @@ Scoretool.prototype.queryNanFang = function (params, callback) {
             res.code = 500;
             res.desc = "南航里程获取失败";
             callback(res, null);
-        }else if (data[0].code == 1) {
-            res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
-        } else {
+        }else {
+            res.code = 200;
             callback(null, data);
         }
     });

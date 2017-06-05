@@ -11,7 +11,7 @@ var reservoir = require("../reservoir.js");
 /**
  * 根据应用不同获取配置  名字不要变： Config
  */
-var Config = thrifgtConfig.ServiceFactory.filecard();
+var Config = thrifgtConfig.ServiceFactory.scoretools();
 /**
  *根据应用不同获取配置
  * @type {string}

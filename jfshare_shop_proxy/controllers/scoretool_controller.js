@@ -30,11 +30,12 @@ router.post('/sendnote', function(req, res, next) {
         Scoretool.sendNote(arg, function(err, data) {
             if(err){
                 res.json(err);
-                return;
+            }else {
+
+                result.data = data;
+                res.json(result);
+                logger.info("add address response:" + JSON.stringify(result));
             }
-            result.data = data;
-            res.json(result);
-            logger.info("add address response:" + JSON.stringify(result));
         });
     } catch (ex) {
         logger.error("add address error:" + ex);
@@ -66,13 +67,12 @@ router.post('/querymobilephone', function(req, res, next) {
         Scoretool.queryMobilePhone(arg, function(err, data) {
             if(err){
                 res.json(err);
-                return;
+            }else {
+                result.score = data[0].score;
+                result.state = data[0].state;
+                res.json(result);
+                logger.info("add address response:" + JSON.stringify(result));
             }
-
-            result.score = data.score;
-            result.state = data.state;
-            res.json(result);
-            logger.info("add address response:" + JSON.stringify(result));
         });
     } catch (ex) {
         logger.error("add address error:" + ex);
@@ -84,20 +84,21 @@ router.post('/querymobilephone', function(req, res, next) {
 
 router.get('/sendhaihangImages', function(req, res, next) {
     var result = {code: 200};
-
     try{
+        var arg = req.body;
         Scoretool.sendHaiHangImages(function(err, data) {
             if(err){
                 res.json(err);
-                return;
-            }
+            }else {
 
-            result.images = data.images;
-            result.cookei = data.cookei;
-            result.state = data.state;
-            result.timestamp = data.date;
-            res.json(result);
-            logger.info("add address response:" + JSON.stringify(result));
+                result.images = data[0].images;
+                result.cookei = data[0].cookei;
+                result.state = data[0].state;
+                result.timestamp = data[0].reqtimestamp;
+                console.log(result.timestamp);
+                console.log("add address response:" + JSON.stringify(data[0]));
+                res.json(result);
+            }
         });
     } catch (ex) {
         logger.error("add address error:" + ex);
@@ -119,7 +120,7 @@ router.post('/queryhainan', function(req, res, next) {
             res.json(result);
             return;
         }
-        if(arg.loginName == null||arg.passWord==null||arg.method==null||arg.cookei==null||arg.code==null||agr.timestamp==null) {
+        if(arg.loginName == null||arg.passWord==null||arg.method==null||arg.cookei==null||arg.code==null||arg.timestamp==null) {
             result.code = 400;
             result.desc = "请求参数错误";
             res.json(result);
@@ -129,11 +130,14 @@ router.post('/queryhainan', function(req, res, next) {
         Scoretool.queryHaiNan(arg, function(err, data) {
             if(err){
                 res.json(err);
-                return;
+            }else {
+
+                result.score = data[0].score;
+                result.state = data[0].state;
+                res.json(result);
+                logger.info("response:" + JSON.stringify(result));
             }
-            result.data = data;
-            res.json(result);
-            logger.info("response:" + JSON.stringify(result));
+
         });
     } catch (ex) {
         logger.error("error:" + ex);
@@ -165,11 +169,11 @@ router.post('/querynanfang', function(req, res, next) {
         Scoretool.queryNanFang(arg, function(err, data) {
             if(err){
                 res.json(err);
-                return;
+            }else {
+                result.data = data[0];
+                res.json(result);
+                logger.info("response:" + JSON.stringify(result));
             }
-            result.data = data;
-            res.json(result);
-            logger.info("response:" + JSON.stringify(result));
         });
     } catch (ex) {
         logger.error("error:" + ex);

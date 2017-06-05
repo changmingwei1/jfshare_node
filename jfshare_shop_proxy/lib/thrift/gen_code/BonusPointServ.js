@@ -10,7 +10,7 @@ var Q = thrift.Q;
 var result_ttypes = require('./result_types')
 
 
-var ttypes = require('./score_message_types');
+var ttypes = require('./message_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
 BonusPointServ_testInfo_args = function(args) {
@@ -353,7 +353,7 @@ BonusPointServ_queryHaiNan_args = function(args) {
   this.method = null;
   this.cookei = null;
   this.code = null;
-  this.date = null;
+  this.reqtimestamp = null;
   if (args) {
     if (args.loginName !== undefined) {
       this.loginName = args.loginName;
@@ -370,8 +370,8 @@ BonusPointServ_queryHaiNan_args = function(args) {
     if (args.code !== undefined) {
       this.code = args.code;
     }
-    if (args.date !== undefined) {
-      this.date = args.date;
+    if (args.reqtimestamp !== undefined) {
+      this.reqtimestamp = args.reqtimestamp;
     }
   }
 };
@@ -425,8 +425,8 @@ BonusPointServ_queryHaiNan_args.prototype.read = function(input) {
       }
       break;
       case 6:
-      if (ftype == Thrift.Type.I64) {
-        this.date = input.readI64();
+      if (ftype == Thrift.Type.STRING) {
+        this.reqtimestamp = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -467,9 +467,9 @@ BonusPointServ_queryHaiNan_args.prototype.write = function(output) {
     output.writeString(this.code);
     output.writeFieldEnd();
   }
-  if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I64, 6);
-    output.writeI64(this.date);
+  if (this.reqtimestamp !== null && this.reqtimestamp !== undefined) {
+    output.writeFieldBegin('reqtimestamp', Thrift.Type.STRING, 6);
+    output.writeString(this.reqtimestamp);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -884,7 +884,7 @@ BonusPointServClient.prototype.recv_queryMobilePhone = function(input,mtype,rseq
   }
   return callback('queryMobilePhone failed: unknown result');
 };
-BonusPointServClient.prototype.queryHaiNan = function(loginName, loginPassword, method, cookei, code, date, callback) {
+BonusPointServClient.prototype.queryHaiNan = function(loginName, loginPassword, method, cookei, code, reqtimestamp, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -895,15 +895,15 @@ BonusPointServClient.prototype.queryHaiNan = function(loginName, loginPassword, 
         _defer.resolve(result);
       }
     };
-    this.send_queryHaiNan(loginName, loginPassword, method, cookei, code, date);
+    this.send_queryHaiNan(loginName, loginPassword, method, cookei, code, reqtimestamp);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_queryHaiNan(loginName, loginPassword, method, cookei, code, date);
+    this.send_queryHaiNan(loginName, loginPassword, method, cookei, code, reqtimestamp);
   }
 };
 
-BonusPointServClient.prototype.send_queryHaiNan = function(loginName, loginPassword, method, cookei, code, date) {
+BonusPointServClient.prototype.send_queryHaiNan = function(loginName, loginPassword, method, cookei, code, reqtimestamp) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('queryHaiNan', Thrift.MessageType.CALL, this.seqid());
   var args = new BonusPointServ_queryHaiNan_args();
@@ -912,7 +912,7 @@ BonusPointServClient.prototype.send_queryHaiNan = function(loginName, loginPassw
   args.method = method;
   args.cookei = cookei;
   args.code = code;
-  args.date = date;
+  args.reqtimestamp = reqtimestamp;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -1143,7 +1143,7 @@ BonusPointServProcessor.prototype.process_queryHaiNan = function(seqid, input, o
   args.read(input);
   input.readMessageEnd();
   if (this._handler.queryHaiNan.length === 6) {
-    Q.fcall(this._handler.queryHaiNan, args.loginName, args.loginPassword, args.method, args.cookei, args.code, args.date)
+    Q.fcall(this._handler.queryHaiNan, args.loginName, args.loginPassword, args.method, args.cookei, args.code, args.reqtimestamp)
       .then(function(result) {
         var result = new BonusPointServ_queryHaiNan_result({success: result});
         output.writeMessageBegin("queryHaiNan", Thrift.MessageType.REPLY, seqid);
@@ -1158,7 +1158,7 @@ BonusPointServProcessor.prototype.process_queryHaiNan = function(seqid, input, o
         output.flush();
       });
   } else {
-    this._handler.queryHaiNan(args.loginName, args.loginPassword, args.method, args.cookei, args.code, args.date,  function (err, result) {
+    this._handler.queryHaiNan(args.loginName, args.loginPassword, args.method, args.cookei, args.code, args.reqtimestamp,  function (err, result) {
       var result = new BonusPointServ_queryHaiNan_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryHaiNan", Thrift.MessageType.REPLY, seqid);
       result.write(output);
