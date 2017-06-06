@@ -1190,18 +1190,18 @@ router.post('/pay', function (req, res, next) {
     }
 
 
-    if(arg.cip == "" || arg.cip == null){
+    if (arg.cip == "" || arg.cip == null) {
 
         var ip1 = req.headers['x-real-ip'];
 
         arg.ip = ip1;
 
-        logger.error("不是错误只是为了显示ip:"+arg.ip);
-    }else{
+        logger.error("不是错误只是为了显示ip:" + arg.ip);
+    } else {
 
         arg.ip = arg.cip;
 
-        logger.error("不是错误只是为了显示ip2:"+arg.ip);
+        logger.error("不是错误只是为了显示ip2:" + arg.ip);
     }
 
     logger.info("订单支付请求参数 request:" + JSON.stringify(arg));
@@ -1257,19 +1257,26 @@ router.post('/pay', function (req, res, next) {
                         res.json(err);
                         return;
                     }
-                    if (payUrl !== null) {
-                        var urlInfo = JSON.parse(payUrl.value);
-                        result.payUrl = {
-                            prepayid: urlInfo.prepayid,
-                            packageInfo: urlInfo.package,
-                            appid: urlInfo.appid,
-                            noncestr: urlInfo.noncestr,
-                            sign: urlInfo.sign,
-                            timestamp: urlInfo.timestamp,
-                            partnerid: urlInfo.partnerid
-                        };
-                        res.json(result);
+                    // if(pay){}
+                    if (payUrl.result.code == 2) {
+                        result.code = 200;
+                        result.desc = "全积分";
+                    } else {
+                        if (payUrl !== null) {
+                            var urlInfo = JSON.parse(payUrl.value);
+                            result.payUrl = {
+                                prepayid: urlInfo.prepayid,
+                                packageInfo: urlInfo.package,
+                                appid: urlInfo.appid,
+                                noncestr: urlInfo.noncestr,
+                                sign: urlInfo.sign,
+                                timestamp: urlInfo.timestamp,
+                                partnerid: urlInfo.partnerid
+                            };
+                        }
                         logger.info("order pay response:" + JSON.stringify(result));
+                        res.json(result);
+                        return;
                     }
                 });
             } catch (ex) {
@@ -1325,7 +1332,7 @@ router.post('/pay', function (req, res, next) {
                 res.json(result);
                 return;
             }
-        }else if(arg.payChannel == 12 || arg.payChannel == 13 || arg.payChannel == 14){
+        } else if (arg.payChannel == 12 || arg.payChannel == 13 || arg.payChannel == 14) {
 
             Order.payApply(arg, function (err, data) {
                 if (err) {
@@ -1337,11 +1344,11 @@ router.post('/pay', function (req, res, next) {
                     result.payUrl = urlInfo;
                     logger.info("order pay response:" + JSON.stringify(result));
                     res.json(result);
-                   return;
+                    return;
                 }
             });
 
-        }else {
+        } else {
             try {
                 Order.payApply(arg, function (err, payUrl) {
                     if (err) {
@@ -2106,7 +2113,7 @@ router.post('/payOrderCreates', function (request, response, next) {
         }
         if (arg.tradeCode == "Z8003") { //话费
             if (arg.totalSum == "" || (
-                    arg.totalSum != "30" &&
+                    // arg.totalSum != "30" &&
                     arg.totalSum != "50" &&
                     arg.totalSum != "100" &&
                     arg.totalSum != "300" &&
@@ -2117,18 +2124,18 @@ router.post('/payOrderCreates', function (request, response, next) {
                 response.json(result);
                 return;
             }
-            /*if (arg.totalSum == "30") {
-             result.code = 500;
-             result.desc = "该面值已售罄";
-             response.json(result);
-             return;
-             }
-             if (arg.totalSum == "50") {
-             result.code = 500;
-             result.desc = "该面值已售罄";
-             response.json(result);
-             return;
-             }*/
+            if (arg.totalSum == "30") {
+                result.code = 500;
+                result.desc = "该面值已售罄";
+                response.json(result);
+                return;
+            }
+            //if (arg.totalSum == "50") {
+            //result.code = 500;
+            //result.desc = "该面值已售罄";
+            //response.json(result);
+            //return;
+            //}
         }
         if (arg.tradeCode == "Z8004") { //流量
             //result.code = 500;
@@ -2245,7 +2252,7 @@ router.post('/checkOrder', function (request, response, next) {
     try {
         var arg = request.body;
         logger.error("校验订单请求参数 request:" + JSON.stringify(arg));
-       //param.orderId,param.mobile,param.mac,1
+        //param.orderId,param.mobile,param.mac,1
         if (arg.orderId == "" || arg.orderId == null) {
             result.code = 400;
             result.desc = "参数错误";
@@ -2269,8 +2276,8 @@ router.post('/checkOrder', function (request, response, next) {
             if (err) {
                 response.json(err);
             } else {
-                if(data[0].result.code == 0){
-                    result.desc= "验证成功";
+                if (data[0].result.code == 0) {
+                    result.desc = "验证成功";
                 }
                 response.json(result);
                 logger.info("响应的结果:" + JSON.stringify(data));
