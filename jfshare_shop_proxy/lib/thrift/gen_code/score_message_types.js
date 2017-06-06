@@ -445,7 +445,7 @@ HaiHangImageResult = module.exports.HaiHangImageResult = function(args) {
   this.result = null;
   this.images = null;
   this.cookei = null;
-  this.date = null;
+  this.reqtimestamp = null;
   this.state = null;
   if (args) {
     if (args.result !== undefined) {
@@ -457,8 +457,8 @@ HaiHangImageResult = module.exports.HaiHangImageResult = function(args) {
     if (args.cookei !== undefined) {
       this.cookei = args.cookei;
     }
-    if (args.date !== undefined) {
-      this.date = args.date;
+    if (args.reqtimestamp !== undefined) {
+      this.reqtimestamp = args.reqtimestamp;
     }
     if (args.state !== undefined) {
       this.state = args.state;
@@ -515,8 +515,8 @@ HaiHangImageResult.prototype.read = function(input) {
       }
       break;
       case 4:
-      if (ftype == Thrift.Type.I64) {
-        this.date = input.readI64();
+      if (ftype == Thrift.Type.STRING) {
+        this.reqtimestamp = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -563,9 +563,9 @@ HaiHangImageResult.prototype.write = function(output) {
     output.writeString(this.cookei);
     output.writeFieldEnd();
   }
-  if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I64, 4);
-    output.writeI64(this.date);
+  if (this.reqtimestamp !== null && this.reqtimestamp !== undefined) {
+    output.writeFieldBegin('reqtimestamp', Thrift.Type.STRING, 4);
+    output.writeString(this.reqtimestamp);
     output.writeFieldEnd();
   }
   if (this.state !== null && this.state !== undefined) {

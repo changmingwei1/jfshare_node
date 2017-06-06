@@ -10,7 +10,7 @@ var Q = thrift.Q;
 var result_ttypes = require('./result_types')
 
 
-var ttypes = require('./message_types');
+var ttypes = require('./score_message_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
 BonusPointServ_testInfo_args = function(args) {
