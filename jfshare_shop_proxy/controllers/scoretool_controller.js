@@ -1,6 +1,7 @@
 /**
  * Created by zhaoshenghai on 16/3/22.
  */
+/*
 var express = require('express');
 var router = express.Router();
 
@@ -182,4 +183,4 @@ router.post('/querynanfang', function(req, res, next) {
         res.json(result);
     }
 });
-module.exports = router;
+module.exports = router;*/
