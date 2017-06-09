@@ -22,7 +22,7 @@ var ServiceKey = {
     BuyerServer: "Buyer",
     ProductServer : "Product",
     StockServer :  "Stock",
-    AddressServer: "Address",
+   // AddressServer: "Address",
     CommonServer: "Common",
     TradeServer: "Trade",
     CartServer: "Cart",
@@ -32,8 +32,8 @@ var ServiceKey = {
     MessageServer:"Message",
     TemplateServer:"template",
     ScoreServer:"Score",
-    fileCards:"fileCards",
-    BonusPointServ:"BonusPoint"
+    fileCards:"fileCards"
+   // BonusPointServ:"BonusPoint"
 };
 
 /**
