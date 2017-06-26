@@ -2513,7 +2513,492 @@ router.post('/validAuthH5', function (request, response, next) {
     }
 });
 
+/*小花钱包用户信息获取接口*/
+router.post('/floretPassData', function (request, response, next) {
+    logger.info("进入小花钱包用户信息获取接口");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.idCard == null || param.idCard == "") {
+            resContent.code = 400;
+            resContent.desc = "身份证号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 400;
+            resContent.desc = "手机号不能为空";
+            response.json(resContent);
+            return;
+        }
 
+        if (param.userName == null || param.userName == "") {
+            resContent.code = 400;
+            resContent.desc = "用户名不能为空";
+            response.json(resContent);
+            return;
+        }
 
+        if (param.registerTime == null || param.registerTime == "") {
+            resContent.code = 400;
+            resContent.desc = "注册时间不能为空";
+            response.json(resContent);
+            return;
+        }
 
+        if (param.creditTime == null || param.creditTime == "") {
+            resContent.code = 400;
+            resContent.desc = "申请授信时间不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.passTime == null || param.passTime == "") {
+            resContent.code = 400;
+            resContent.desc = "授信通过时间不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.floretPassData(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("小花钱包用户信息获取失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "小花钱包用户信息获取失败";
+        response.json(resContent);
+    }
+});
+
+/*用户线上申领深圳通卡片*/
+router.post('/OnLineApply', function (request, response, next) {
+    logger.info("用户线上申领深圳通卡片");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.userName == null || param.userName == "") {
+            resContent.code = 400;
+            resContent.desc = "用户名不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 400;
+            resContent.desc = "手机号不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.address == null || param.address == "") {
+            resContent.code = 400;
+            resContent.desc = "收件人地址不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.ticketCode == null || param.ticketCode == "") {
+            resContent.code = 400;
+            resContent.desc = "券码不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.OnLineApply(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                response.json(data[0]);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("用户线上申领深圳通卡片失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "用户线上申领深圳通卡片失败";
+        response.json(resContent);
+    }
+});
+
+/*查询线上申领卡片用户列表*/
+router.get('/onLineApplyUserList', function (request, response, next) {
+    logger.info("查询线上申领卡片用户列表");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        Buyer.onLineApplyUserList(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("查询线上申领卡片用户列表失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "查询线上申领卡片用户列表失败";
+        response.json(resContent);
+    }
+});
+
+/*商户端审核券码，发放卡片*/
+router.post('/sellerCheckCode', function (request, response, next) {
+    logger.info("商户端审核券码，发放卡片");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.sellerId == null || param.sellerId == "") {
+            resContent.code = 400;
+            resContent.desc = "商家不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.code == null || param.code == "") {
+            resContent.code = 400;
+            resContent.desc = "code不能为空";
+            response.json(resContent);
+            return;
+        }
+
+       if (param.sztCardId == null || param.sztCardId == "") {
+           resContent.code = 400;
+           resContent.desc = "深圳通卡不能为空";
+           response.json(resContent);
+           return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.sellerCheckCode(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+       });
+       } catch (ex) {
+               logger.error("商户端审核券码，发放卡片失败，because :" + ex);
+               resContent.code = 500;
+               resContent.desc = "商户端审核券码，发放卡片失败";
+               response.json(resContent);
+             }
+       });
+
+/*管理员审核券码，发放卡片*/
+router.post('/adminCheckCode', function (request, response, next) {
+    logger.info("管理员审核券码，发放卡片");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.code == null || param.code == "") {
+            resContent.code = 400;
+            resContent.desc = "code不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.adminCheckCode(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("管理员审核券码，发放卡片失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "管理员审核券码，发放卡片失败";
+        response.json(resContent);
+    }
+});
+
+/*商户端查询验证记录*/
+router.post('/findVerifyRecord', function (request, response, next) {
+    logger.info("商户端查询验证记录");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.sellerId == null || param.sellerId == "") {
+            resContent.code = 400;
+            resContent.desc = "商家不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.dateStr == null || param.dateStr == "") {
+            resContent.code = 400;
+            resContent.desc = "时间不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.findVerifyRecord(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("商户端查询验证记录失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "商户端查询验证记录失败";
+        response.json(resContent);
+    }
+});
+
+/*商户端导出验证记录*/
+router.post('/exportVerifyRecord', function (request, response, next) {
+    logger.info("商户端导出验证记录");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.sellerId == null || param.sellerId == "") {
+            resContent.code = 400;
+            resContent.desc = "商家不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.dateStr == null || param.dateStr == "") {
+            resContent.code = 400;
+            resContent.desc = "时间不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.exportVerifyRecord(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("商户端导出验证记录失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "商户端导出验证记录失败";
+        response.json(resContent);
+    }
+});
+
+/*依据查询条件搜索小花用户列表*/
+router.post('/searchFloretUserList', function (request, response, next) {
+    logger.info("搜索小花用户列表");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.searchCriteriaForXiaoHuaUser(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("搜索小花用户列表失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "搜索小花用户列表失败";
+        response.json(resContent);
+    }
+});
+
+/*导出小花表单*/
+router.post('/exportFloretUserTable', function (request, response, next) {
+    logger.info("导出小花表单");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.exportFloretUserTable(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.exurl = data[0].value;
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("导出小花表单，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "导出小花表单表失败";
+        response.json(resContent);
+    }
+});
+
+/*导入物流*/
+router.post('/importLogisticsCompanies', function (request, response, next) {
+    logger.info("导入物流");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.serialNumber == null || param.serialNumber == "") {
+            resContent.code = 400;
+            resContent.desc = "流水号不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.logisticsCompaniesName == null || param.logisticsCompaniesName == "") {
+            resContent.code = 400;
+            resContent.desc = "物流公司不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.logisticsNumber == null || param.logisticsNumber == "") {
+            resContent.code = 400;
+            resContent.desc = "物流单号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.sztCard == null || param.sztCard == "") {
+            resContent.code = 400;
+            resContent.desc = "深圳通卡不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.cstate == null) {
+            resContent.code = 400;
+            resContent.desc = "状态不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.importLogisticsCompanies(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("导入物流，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "导入物流失败";
+        response.json(resContent);
+    }
+});
+
+/*excel导入物流*/
+router.post('/importExpressInfoToDB', function (request, response, next) {
+    logger.info("excel导入物流");
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+
+        if (param.exurl == null || param.exurl == "") {
+            resContent.code = 400;
+            resContent.desc = "excel文件路径不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数：" + JSON.stringify(param));
+        Buyer.importExpressInfoToDB(param, function (err, data) {
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.data = data[0];
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("excel导入物流，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "excel导入物流失败";
+        response.json(resContent);
+    }
+});
 module.exports = router;

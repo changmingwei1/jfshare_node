@@ -680,6 +680,252 @@ Buyer.prototype.validAuthH5 = function(param,callback){
     });
 };
 
+//小花钱包用户信息获取接口
+Buyer.prototype.floretPassData = function(param,callback){
+    //参数
 
+    var floretUserParam = new buyer_types.FloretUserParam({
+        idCard:param.idCard,
+        mobile:param.mobile,
+        userName:param.userName,
+        registerTime:param.registerTime,
+        creditTime:param.creditTime,
+        passTime:param.passTime
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'floretPassData',[floretUserParam]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("小花钱包用户信息获取:" + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].code == 101||data[0].code == 102) {
+            logger.error("小花钱包用户信息获取失败: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
+//用户线上申领深圳通卡片
+Buyer.prototype.OnLineApply = function(param,callback){
+    //参数
+
+    var onlineUserParam = new buyer_types.OnlineUserParam({
+        userName:param.userName,
+        mobile:param.mobile,
+        address:param.address,
+        ticketCode:param.ticketCode
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'OnLineApply',[onlineUserParam]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("用户线上申领深圳通卡片:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("用户线上申领深圳通卡片失败: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//查询线上申领卡片用户列表
+Buyer.prototype.onLineApplyUserList = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'onLineApplyUserList');
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("查询线上申领卡片用户列表:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("查询线上申领卡片用户列表失败: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//商户端审核券码，发放卡片
+Buyer.prototype.sellerCheckCode = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'sellerCheckCode',[param.sellerId,param.code,param.sztCardId]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("商户端审核券码，发放卡片:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("商户端审核券码，发放卡片失败: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//管理员审核券码，发放卡片
+Buyer.prototype.adminCheckCode = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'adminCheckCode',[param.code]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("管理员审核券码，发放卡片:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("管理员审核券码，发放卡片: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//商户端查询验证记录
+Buyer.prototype.findVerifyRecord = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'findVerifyRecord',[param.sellerId,param.dateStr]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("商户端查询验证记录:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("商户端查询验证记录: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//商户端导出验证记录
+Buyer.prototype.exportVerifyRecord = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'exportVerifyRecord',[param.sellerId,param.dateStr]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("商户端导出验证记录:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("商户端导出验证记录: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//依据查询条件搜索小花用户列表
+Buyer.prototype.searchCriteriaForXiaoHuaUser = function(param,callback){
+
+    var onlineUserParam = new buyer_types.SearchCriteriaForXiaoHua({
+        registerTimeStart:param.registerTimeStart,
+        registerTimeEnd:param.registerTimeEnd,
+        passTimeStart:param.passTimeStart,
+        passTimeEnd:param.passTimeEnd,
+        useTimeStart:param.useTimeStart,
+        useTimeEnd:param.useTimeEnd,
+        ticketValid:param.ticketValid,
+        isOnline:param.isOnline,
+        serialNumber:param.serialNumber,
+        mobile:param.mobile,
+        userName:param.userName,
+        sellerId:param.sellerId
+    });
+
+    var pagination = new pagination_types.Pagination({
+        totalCount:param.totalCount,
+        pageNumCount:param.pageNumCount,
+        numPerPage:param.numPerPage,
+        currentPage:param.currentPage
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'searchCriteriaForXiaoHuaUser',[onlineUserParam,pagination]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("搜索小花用户列表:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("搜索小花用户列表: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//依据查询条件搜索小花用户列表
+Buyer.prototype.exportFloretUserTable = function(param,callback){
+
+    var onlineUserParam = new buyer_types.SearchCriteriaForXiaoHua({
+        registerTimeStart:param.registerTimeStart,
+        registerTimeEnd:param.registerTimeEnd,
+        passTimeStart:param.passTimeStart,
+        passTimeEnd:param.passTimeEnd,
+        useTimeStart:param.useTimeStart,
+        useTimeEnd:param.useTimeEnd,
+        ticketValid:param.ticketValid,
+        isOnline:param.isOnline,
+        serialNumber:param.serialNumber,
+        mobile:param.mobile,
+        userName:param.userName,
+        sellerId:param.sellerId
+    });
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'exportFloretUserTable',[onlineUserParam]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("导出小花表单:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("导出小花表单: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+/*导入物流*/
+Buyer.prototype.importLogisticsCompanies = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'importLogisticsCompanies',[param.serialNumber,param.logisticsCompaniesName,param.logisticsNumber,param.logisticsNumber,param.cstate]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("导入物流:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("导入物流: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+/*excel导入物流*/
+Buyer.prototype.importExpressInfoToDB = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'importExpressInfoToDB',[param.exurl]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("excel导入物流:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("excel导入物流: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 module.exports = new Buyer();
