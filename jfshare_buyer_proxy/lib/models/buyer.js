@@ -697,9 +697,25 @@ Buyer.prototype.floretPassData = function(param,callback){
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("小花钱包用户信息获取:" + JSON.stringify(data));
         var res = {};
-        if (err||data[0].code == 101||data[0].code == 102) {
-            logger.error("小花钱包用户信息获取失败: " + JSON.stringify(data));
-            res.code = 500;
+        if(err){
+            res.code = data[0].code;
+            res.desc = "系统错误";
+            callback(res, null);
+        }else if (data[0].code == 101) {
+            res.code = data[0].code;
+            res.desc = "用户已经领取，不能重复领取";
+            callback(res, null);
+        }else if(data[0].code == 102){
+            res.code = data[0].code;
+            res.desc = "用户已使用券码，不能重复领取";
+            callback(res, null);
+        } else if(data[0].code == 501){
+            res.code = data[0].code;
+            res.desc = "时间字符串格式错误";
+            callback(res, null);
+        } else if(data[0].code == 502){
+            res.code = data[0].code;
+            res.desc = "添加用户失败";
             callback(res, null);
         } else {
             callback(null, data);

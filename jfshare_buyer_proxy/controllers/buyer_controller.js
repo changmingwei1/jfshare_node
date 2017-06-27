@@ -2570,16 +2570,13 @@ router.post('/floretPassData', function (request, response, next) {
         Buyer.floretPassData(param, function (err, data) {
             if (err) {
                 response.json(err);
-            } else {
-                resContent.data = data[0];
+            } else{
                 response.json(resContent);
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             }
         });
     } catch (ex) {
         logger.error("小花钱包用户信息获取失败，because :" + ex);
-        resContent.code = 500;
-        resContent.desc = "小花钱包用户信息获取失败";
         response.json(resContent);
     }
 });
