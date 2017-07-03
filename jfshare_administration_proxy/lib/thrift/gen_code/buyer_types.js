@@ -8,6 +8,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var result_ttypes = require('./result_types')
+var pagination_ttypes = require('./pagination_types')
 
 
 var ttypes = module.exports = {};
@@ -1388,6 +1389,466 @@ UserInfoThird.prototype.write = function(output) {
   return;
 };
 
+Profile4WeiXin = module.exports.Profile4WeiXin = function(args) {
+  this.openid = null;
+  this.nickname = null;
+  this.sex = null;
+  this.province = null;
+  this.city = null;
+  this.country = null;
+  this.headimgurl = null;
+  this.unionid = null;
+  this.privilege = null;
+  this.access_token = null;
+  if (args) {
+    if (args.openid !== undefined) {
+      this.openid = args.openid;
+    }
+    if (args.nickname !== undefined) {
+      this.nickname = args.nickname;
+    }
+    if (args.sex !== undefined) {
+      this.sex = args.sex;
+    }
+    if (args.province !== undefined) {
+      this.province = args.province;
+    }
+    if (args.city !== undefined) {
+      this.city = args.city;
+    }
+    if (args.country !== undefined) {
+      this.country = args.country;
+    }
+    if (args.headimgurl !== undefined) {
+      this.headimgurl = args.headimgurl;
+    }
+    if (args.unionid !== undefined) {
+      this.unionid = args.unionid;
+    }
+    if (args.privilege !== undefined) {
+      this.privilege = args.privilege;
+    }
+    if (args.access_token !== undefined) {
+      this.access_token = args.access_token;
+    }
+  }
+};
+Profile4WeiXin.prototype = {};
+Profile4WeiXin.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.openid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.nickname = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.sex = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.province = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.city = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.country = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.headimgurl = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.unionid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.privilege = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.access_token = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Profile4WeiXin.prototype.write = function(output) {
+  output.writeStructBegin('Profile4WeiXin');
+  if (this.openid !== null && this.openid !== undefined) {
+    output.writeFieldBegin('openid', Thrift.Type.STRING, 1);
+    output.writeString(this.openid);
+    output.writeFieldEnd();
+  }
+  if (this.nickname !== null && this.nickname !== undefined) {
+    output.writeFieldBegin('nickname', Thrift.Type.STRING, 2);
+    output.writeString(this.nickname);
+    output.writeFieldEnd();
+  }
+  if (this.sex !== null && this.sex !== undefined) {
+    output.writeFieldBegin('sex', Thrift.Type.STRING, 3);
+    output.writeString(this.sex);
+    output.writeFieldEnd();
+  }
+  if (this.province !== null && this.province !== undefined) {
+    output.writeFieldBegin('province', Thrift.Type.STRING, 4);
+    output.writeString(this.province);
+    output.writeFieldEnd();
+  }
+  if (this.city !== null && this.city !== undefined) {
+    output.writeFieldBegin('city', Thrift.Type.STRING, 5);
+    output.writeString(this.city);
+    output.writeFieldEnd();
+  }
+  if (this.country !== null && this.country !== undefined) {
+    output.writeFieldBegin('country', Thrift.Type.STRING, 6);
+    output.writeString(this.country);
+    output.writeFieldEnd();
+  }
+  if (this.headimgurl !== null && this.headimgurl !== undefined) {
+    output.writeFieldBegin('headimgurl', Thrift.Type.STRING, 7);
+    output.writeString(this.headimgurl);
+    output.writeFieldEnd();
+  }
+  if (this.unionid !== null && this.unionid !== undefined) {
+    output.writeFieldBegin('unionid', Thrift.Type.STRING, 8);
+    output.writeString(this.unionid);
+    output.writeFieldEnd();
+  }
+  if (this.privilege !== null && this.privilege !== undefined) {
+    output.writeFieldBegin('privilege', Thrift.Type.STRING, 9);
+    output.writeString(this.privilege);
+    output.writeFieldEnd();
+  }
+  if (this.access_token !== null && this.access_token !== undefined) {
+    output.writeFieldBegin('access_token', Thrift.Type.STRING, 10);
+    output.writeString(this.access_token);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+Config4WeiXin = module.exports.Config4WeiXin = function(args) {
+  this.url = null;
+  this.jsapi_ticket = null;
+  this.nonceStr = null;
+  this.timestamp = null;
+  this.signature = null;
+  this.appId = null;
+  if (args) {
+    if (args.url !== undefined) {
+      this.url = args.url;
+    }
+    if (args.jsapi_ticket !== undefined) {
+      this.jsapi_ticket = args.jsapi_ticket;
+    }
+    if (args.nonceStr !== undefined) {
+      this.nonceStr = args.nonceStr;
+    }
+    if (args.timestamp !== undefined) {
+      this.timestamp = args.timestamp;
+    }
+    if (args.signature !== undefined) {
+      this.signature = args.signature;
+    }
+    if (args.appId !== undefined) {
+      this.appId = args.appId;
+    }
+  }
+};
+Config4WeiXin.prototype = {};
+Config4WeiXin.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.jsapi_ticket = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.nonceStr = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.timestamp = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.signature = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.appId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Config4WeiXin.prototype.write = function(output) {
+  output.writeStructBegin('Config4WeiXin');
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 1);
+    output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  if (this.jsapi_ticket !== null && this.jsapi_ticket !== undefined) {
+    output.writeFieldBegin('jsapi_ticket', Thrift.Type.STRING, 2);
+    output.writeString(this.jsapi_ticket);
+    output.writeFieldEnd();
+  }
+  if (this.nonceStr !== null && this.nonceStr !== undefined) {
+    output.writeFieldBegin('nonceStr', Thrift.Type.STRING, 3);
+    output.writeString(this.nonceStr);
+    output.writeFieldEnd();
+  }
+  if (this.timestamp !== null && this.timestamp !== undefined) {
+    output.writeFieldBegin('timestamp', Thrift.Type.STRING, 4);
+    output.writeString(this.timestamp);
+    output.writeFieldEnd();
+  }
+  if (this.signature !== null && this.signature !== undefined) {
+    output.writeFieldBegin('signature', Thrift.Type.STRING, 5);
+    output.writeString(this.signature);
+    output.writeFieldEnd();
+  }
+  if (this.appId !== null && this.appId !== undefined) {
+    output.writeFieldBegin('appId', Thrift.Type.STRING, 6);
+    output.writeString(this.appId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+WXProfileResult = module.exports.WXProfileResult = function(args) {
+  this.result = null;
+  this.profile = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.profile !== undefined) {
+      this.profile = args.profile;
+    }
+  }
+};
+WXProfileResult.prototype = {};
+WXProfileResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.profile = new ttypes.Profile4WeiXin();
+        this.profile.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+WXProfileResult.prototype.write = function(output) {
+  output.writeStructBegin('WXProfileResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.profile !== null && this.profile !== undefined) {
+    output.writeFieldBegin('profile', Thrift.Type.STRUCT, 2);
+    this.profile.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+WXConfigResult = module.exports.WXConfigResult = function(args) {
+  this.result = null;
+  this.config = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.config !== undefined) {
+      this.config = args.config;
+    }
+  }
+};
+WXConfigResult.prototype = {};
+WXConfigResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.config = new ttypes.Config4WeiXin();
+        this.config.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+WXConfigResult.prototype.write = function(output) {
+  output.writeStructBegin('WXConfigResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.config !== null && this.config !== undefined) {
+    output.writeFieldBegin('config', Thrift.Type.STRUCT, 2);
+    this.config.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 H5ThirdLoginParam = module.exports.H5ThirdLoginParam = function(args) {
   this.requestXml = null;
   if (args) {
@@ -1698,6 +2159,2325 @@ IsDisableUseParam.prototype.write = function(output) {
   if (this.id !== null && this.id !== undefined) {
     output.writeFieldBegin('id', Thrift.Type.STRING, 3);
     output.writeString(this.id);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SmsLoginEnterAmountParam = module.exports.SmsLoginEnterAmountParam = function(args) {
+  this.mobile = null;
+  this.encryptyParam = null;
+  this.captchaDesc = null;
+  if (args) {
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.encryptyParam !== undefined) {
+      this.encryptyParam = args.encryptyParam;
+    }
+    if (args.captchaDesc !== undefined) {
+      this.captchaDesc = args.captchaDesc;
+    }
+  }
+};
+SmsLoginEnterAmountParam.prototype = {};
+SmsLoginEnterAmountParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.encryptyParam = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.captchaDesc = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SmsLoginEnterAmountParam.prototype.write = function(output) {
+  output.writeStructBegin('SmsLoginEnterAmountParam');
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 1);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.encryptyParam !== null && this.encryptyParam !== undefined) {
+    output.writeFieldBegin('encryptyParam', Thrift.Type.STRING, 2);
+    output.writeString(this.encryptyParam);
+    output.writeFieldEnd();
+  }
+  if (this.captchaDesc !== null && this.captchaDesc !== undefined) {
+    output.writeFieldBegin('captchaDesc', Thrift.Type.STRING, 3);
+    output.writeString(this.captchaDesc);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SmsLoginEnterAmountResult = module.exports.SmsLoginEnterAmountResult = function(args) {
+  this.result = null;
+  this.url = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.url !== undefined) {
+      this.url = args.url;
+    }
+  }
+};
+SmsLoginEnterAmountResult.prototype = {};
+SmsLoginEnterAmountResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SmsLoginEnterAmountResult.prototype.write = function(output) {
+  output.writeStructBegin('SmsLoginEnterAmountResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 2);
+    output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FloretUserParam = module.exports.FloretUserParam = function(args) {
+  this.idCard = null;
+  this.mobile = null;
+  this.userName = null;
+  this.registerTime = null;
+  this.creditTime = null;
+  this.passTime = null;
+  if (args) {
+    if (args.idCard !== undefined) {
+      this.idCard = args.idCard;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.userName !== undefined) {
+      this.userName = args.userName;
+    }
+    if (args.registerTime !== undefined) {
+      this.registerTime = args.registerTime;
+    }
+    if (args.creditTime !== undefined) {
+      this.creditTime = args.creditTime;
+    }
+    if (args.passTime !== undefined) {
+      this.passTime = args.passTime;
+    }
+  }
+};
+FloretUserParam.prototype = {};
+FloretUserParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.idCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.userName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.registerTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.creditTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.passTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FloretUserParam.prototype.write = function(output) {
+  output.writeStructBegin('FloretUserParam');
+  if (this.idCard !== null && this.idCard !== undefined) {
+    output.writeFieldBegin('idCard', Thrift.Type.STRING, 1);
+    output.writeString(this.idCard);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.userName !== null && this.userName !== undefined) {
+    output.writeFieldBegin('userName', Thrift.Type.STRING, 3);
+    output.writeString(this.userName);
+    output.writeFieldEnd();
+  }
+  if (this.registerTime !== null && this.registerTime !== undefined) {
+    output.writeFieldBegin('registerTime', Thrift.Type.STRING, 4);
+    output.writeString(this.registerTime);
+    output.writeFieldEnd();
+  }
+  if (this.creditTime !== null && this.creditTime !== undefined) {
+    output.writeFieldBegin('creditTime', Thrift.Type.STRING, 5);
+    output.writeString(this.creditTime);
+    output.writeFieldEnd();
+  }
+  if (this.passTime !== null && this.passTime !== undefined) {
+    output.writeFieldBegin('passTime', Thrift.Type.STRING, 6);
+    output.writeString(this.passTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+OnlineUserParam = module.exports.OnlineUserParam = function(args) {
+  this.userName = null;
+  this.mobile = null;
+  this.address = null;
+  this.ticketCode = null;
+  if (args) {
+    if (args.userName !== undefined) {
+      this.userName = args.userName;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.address !== undefined) {
+      this.address = args.address;
+    }
+    if (args.ticketCode !== undefined) {
+      this.ticketCode = args.ticketCode;
+    }
+  }
+};
+OnlineUserParam.prototype = {};
+OnlineUserParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.userName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.address = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.ticketCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OnlineUserParam.prototype.write = function(output) {
+  output.writeStructBegin('OnlineUserParam');
+  if (this.userName !== null && this.userName !== undefined) {
+    output.writeFieldBegin('userName', Thrift.Type.STRING, 1);
+    output.writeString(this.userName);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.address !== null && this.address !== undefined) {
+    output.writeFieldBegin('address', Thrift.Type.STRING, 3);
+    output.writeString(this.address);
+    output.writeFieldEnd();
+  }
+  if (this.ticketCode !== null && this.ticketCode !== undefined) {
+    output.writeFieldBegin('ticketCode', Thrift.Type.STRING, 4);
+    output.writeString(this.ticketCode);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FloretUser = module.exports.FloretUser = function(args) {
+  this.serialNumber = null;
+  this.orderId = null;
+  this.userName = null;
+  this.mobile = null;
+  this.address = null;
+  this.applyTime = null;
+  this.ticketCode = null;
+  if (args) {
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
+    }
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+    if (args.userName !== undefined) {
+      this.userName = args.userName;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.address !== undefined) {
+      this.address = args.address;
+    }
+    if (args.applyTime !== undefined) {
+      this.applyTime = args.applyTime;
+    }
+    if (args.ticketCode !== undefined) {
+      this.ticketCode = args.ticketCode;
+    }
+  }
+};
+FloretUser.prototype = {};
+FloretUser.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.serialNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.userName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.address = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.applyTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.ticketCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FloretUser.prototype.write = function(output) {
+  output.writeStructBegin('FloretUser');
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 1);
+    output.writeString(this.serialNumber);
+    output.writeFieldEnd();
+  }
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 2);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  if (this.userName !== null && this.userName !== undefined) {
+    output.writeFieldBegin('userName', Thrift.Type.STRING, 3);
+    output.writeString(this.userName);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 4);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.address !== null && this.address !== undefined) {
+    output.writeFieldBegin('address', Thrift.Type.STRING, 5);
+    output.writeString(this.address);
+    output.writeFieldEnd();
+  }
+  if (this.applyTime !== null && this.applyTime !== undefined) {
+    output.writeFieldBegin('applyTime', Thrift.Type.STRING, 6);
+    output.writeString(this.applyTime);
+    output.writeFieldEnd();
+  }
+  if (this.ticketCode !== null && this.ticketCode !== undefined) {
+    output.writeFieldBegin('ticketCode', Thrift.Type.STRING, 7);
+    output.writeString(this.ticketCode);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SearchCriteriaForXiaoHua = module.exports.SearchCriteriaForXiaoHua = function(args) {
+  this.registerTimeStart = null;
+  this.registerTimeEnd = null;
+  this.passTimeStart = null;
+  this.passTimeEnd = null;
+  this.useTimeStart = null;
+  this.useTimeEnd = null;
+  this.ticketValid = null;
+  this.isOnline = null;
+  this.serialNumber = null;
+  this.mobile = null;
+  this.jfsAccount = null;
+  this.sellerName = null;
+  if (args) {
+    if (args.registerTimeStart !== undefined) {
+      this.registerTimeStart = args.registerTimeStart;
+    }
+    if (args.registerTimeEnd !== undefined) {
+      this.registerTimeEnd = args.registerTimeEnd;
+    }
+    if (args.passTimeStart !== undefined) {
+      this.passTimeStart = args.passTimeStart;
+    }
+    if (args.passTimeEnd !== undefined) {
+      this.passTimeEnd = args.passTimeEnd;
+    }
+    if (args.useTimeStart !== undefined) {
+      this.useTimeStart = args.useTimeStart;
+    }
+    if (args.useTimeEnd !== undefined) {
+      this.useTimeEnd = args.useTimeEnd;
+    }
+    if (args.ticketValid !== undefined) {
+      this.ticketValid = args.ticketValid;
+    }
+    if (args.isOnline !== undefined) {
+      this.isOnline = args.isOnline;
+    }
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.jfsAccount !== undefined) {
+      this.jfsAccount = args.jfsAccount;
+    }
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
+    }
+  }
+};
+SearchCriteriaForXiaoHua.prototype = {};
+SearchCriteriaForXiaoHua.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.registerTimeStart = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.registerTimeEnd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.passTimeStart = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.passTimeEnd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.useTimeStart = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.useTimeEnd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.ticketValid = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.isOnline = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.serialNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.jfsAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SearchCriteriaForXiaoHua.prototype.write = function(output) {
+  output.writeStructBegin('SearchCriteriaForXiaoHua');
+  if (this.registerTimeStart !== null && this.registerTimeStart !== undefined) {
+    output.writeFieldBegin('registerTimeStart', Thrift.Type.STRING, 1);
+    output.writeString(this.registerTimeStart);
+    output.writeFieldEnd();
+  }
+  if (this.registerTimeEnd !== null && this.registerTimeEnd !== undefined) {
+    output.writeFieldBegin('registerTimeEnd', Thrift.Type.STRING, 2);
+    output.writeString(this.registerTimeEnd);
+    output.writeFieldEnd();
+  }
+  if (this.passTimeStart !== null && this.passTimeStart !== undefined) {
+    output.writeFieldBegin('passTimeStart', Thrift.Type.STRING, 3);
+    output.writeString(this.passTimeStart);
+    output.writeFieldEnd();
+  }
+  if (this.passTimeEnd !== null && this.passTimeEnd !== undefined) {
+    output.writeFieldBegin('passTimeEnd', Thrift.Type.STRING, 4);
+    output.writeString(this.passTimeEnd);
+    output.writeFieldEnd();
+  }
+  if (this.useTimeStart !== null && this.useTimeStart !== undefined) {
+    output.writeFieldBegin('useTimeStart', Thrift.Type.STRING, 5);
+    output.writeString(this.useTimeStart);
+    output.writeFieldEnd();
+  }
+  if (this.useTimeEnd !== null && this.useTimeEnd !== undefined) {
+    output.writeFieldBegin('useTimeEnd', Thrift.Type.STRING, 6);
+    output.writeString(this.useTimeEnd);
+    output.writeFieldEnd();
+  }
+  if (this.ticketValid !== null && this.ticketValid !== undefined) {
+    output.writeFieldBegin('ticketValid', Thrift.Type.I32, 7);
+    output.writeI32(this.ticketValid);
+    output.writeFieldEnd();
+  }
+  if (this.isOnline !== null && this.isOnline !== undefined) {
+    output.writeFieldBegin('isOnline', Thrift.Type.I32, 8);
+    output.writeI32(this.isOnline);
+    output.writeFieldEnd();
+  }
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 9);
+    output.writeString(this.serialNumber);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 10);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.jfsAccount !== null && this.jfsAccount !== undefined) {
+    output.writeFieldBegin('jfsAccount', Thrift.Type.STRING, 11);
+    output.writeString(this.jfsAccount);
+    output.writeFieldEnd();
+  }
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 12);
+    output.writeString(this.sellerName);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdminFloretUserPara = module.exports.AdminFloretUserPara = function(args) {
+  this.id = null;
+  this.serialNumber = null;
+  this.xhMobile = null;
+  this.userName = null;
+  this.registerTime = null;
+  this.creditTime = null;
+  this.passTime = null;
+  this.ticketValid = null;
+  this.isOnline = null;
+  this.sellerName = null;
+  this.jfxAccount = null;
+  this.usetTime = null;
+  this.receiptTime = null;
+  this.idCard = null;
+  this.sztCard = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
+    }
+    if (args.xhMobile !== undefined) {
+      this.xhMobile = args.xhMobile;
+    }
+    if (args.userName !== undefined) {
+      this.userName = args.userName;
+    }
+    if (args.registerTime !== undefined) {
+      this.registerTime = args.registerTime;
+    }
+    if (args.creditTime !== undefined) {
+      this.creditTime = args.creditTime;
+    }
+    if (args.passTime !== undefined) {
+      this.passTime = args.passTime;
+    }
+    if (args.ticketValid !== undefined) {
+      this.ticketValid = args.ticketValid;
+    }
+    if (args.isOnline !== undefined) {
+      this.isOnline = args.isOnline;
+    }
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
+    }
+    if (args.jfxAccount !== undefined) {
+      this.jfxAccount = args.jfxAccount;
+    }
+    if (args.usetTime !== undefined) {
+      this.usetTime = args.usetTime;
+    }
+    if (args.receiptTime !== undefined) {
+      this.receiptTime = args.receiptTime;
+    }
+    if (args.idCard !== undefined) {
+      this.idCard = args.idCard;
+    }
+    if (args.sztCard !== undefined) {
+      this.sztCard = args.sztCard;
+    }
+  }
+};
+AdminFloretUserPara.prototype = {};
+AdminFloretUserPara.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.serialNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.xhMobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.userName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.registerTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.creditTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.passTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.ticketValid = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.I32) {
+        this.isOnline = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.jfxAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.usetTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiptTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.STRING) {
+        this.idCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 15:
+      if (ftype == Thrift.Type.STRING) {
+        this.sztCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdminFloretUserPara.prototype.write = function(output) {
+  output.writeStructBegin('AdminFloretUserPara');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 2);
+    output.writeString(this.serialNumber);
+    output.writeFieldEnd();
+  }
+  if (this.xhMobile !== null && this.xhMobile !== undefined) {
+    output.writeFieldBegin('xhMobile', Thrift.Type.STRING, 3);
+    output.writeString(this.xhMobile);
+    output.writeFieldEnd();
+  }
+  if (this.userName !== null && this.userName !== undefined) {
+    output.writeFieldBegin('userName', Thrift.Type.STRING, 4);
+    output.writeString(this.userName);
+    output.writeFieldEnd();
+  }
+  if (this.registerTime !== null && this.registerTime !== undefined) {
+    output.writeFieldBegin('registerTime', Thrift.Type.STRING, 5);
+    output.writeString(this.registerTime);
+    output.writeFieldEnd();
+  }
+  if (this.creditTime !== null && this.creditTime !== undefined) {
+    output.writeFieldBegin('creditTime', Thrift.Type.STRING, 6);
+    output.writeString(this.creditTime);
+    output.writeFieldEnd();
+  }
+  if (this.passTime !== null && this.passTime !== undefined) {
+    output.writeFieldBegin('passTime', Thrift.Type.STRING, 7);
+    output.writeString(this.passTime);
+    output.writeFieldEnd();
+  }
+  if (this.ticketValid !== null && this.ticketValid !== undefined) {
+    output.writeFieldBegin('ticketValid', Thrift.Type.I32, 8);
+    output.writeI32(this.ticketValid);
+    output.writeFieldEnd();
+  }
+  if (this.isOnline !== null && this.isOnline !== undefined) {
+    output.writeFieldBegin('isOnline', Thrift.Type.I32, 9);
+    output.writeI32(this.isOnline);
+    output.writeFieldEnd();
+  }
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 10);
+    output.writeString(this.sellerName);
+    output.writeFieldEnd();
+  }
+  if (this.jfxAccount !== null && this.jfxAccount !== undefined) {
+    output.writeFieldBegin('jfxAccount', Thrift.Type.STRING, 11);
+    output.writeString(this.jfxAccount);
+    output.writeFieldEnd();
+  }
+  if (this.usetTime !== null && this.usetTime !== undefined) {
+    output.writeFieldBegin('usetTime', Thrift.Type.STRING, 12);
+    output.writeString(this.usetTime);
+    output.writeFieldEnd();
+  }
+  if (this.receiptTime !== null && this.receiptTime !== undefined) {
+    output.writeFieldBegin('receiptTime', Thrift.Type.STRING, 13);
+    output.writeString(this.receiptTime);
+    output.writeFieldEnd();
+  }
+  if (this.idCard !== null && this.idCard !== undefined) {
+    output.writeFieldBegin('idCard', Thrift.Type.STRING, 14);
+    output.writeString(this.idCard);
+    output.writeFieldEnd();
+  }
+  if (this.sztCard !== null && this.sztCard !== undefined) {
+    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 15);
+    output.writeString(this.sztCard);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdminExpressResult = module.exports.AdminExpressResult = function(args) {
+  this.receiveName = null;
+  this.receiveMobile = null;
+  this.receiveAddress = null;
+  this.expressName = null;
+  this.expressCode = null;
+  this.result = null;
+  if (args) {
+    if (args.receiveName !== undefined) {
+      this.receiveName = args.receiveName;
+    }
+    if (args.receiveMobile !== undefined) {
+      this.receiveMobile = args.receiveMobile;
+    }
+    if (args.receiveAddress !== undefined) {
+      this.receiveAddress = args.receiveAddress;
+    }
+    if (args.expressName !== undefined) {
+      this.expressName = args.expressName;
+    }
+    if (args.expressCode !== undefined) {
+      this.expressCode = args.expressCode;
+    }
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+  }
+};
+AdminExpressResult.prototype = {};
+AdminExpressResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveMobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveAddress = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdminExpressResult.prototype.write = function(output) {
+  output.writeStructBegin('AdminExpressResult');
+  if (this.receiveName !== null && this.receiveName !== undefined) {
+    output.writeFieldBegin('receiveName', Thrift.Type.STRING, 1);
+    output.writeString(this.receiveName);
+    output.writeFieldEnd();
+  }
+  if (this.receiveMobile !== null && this.receiveMobile !== undefined) {
+    output.writeFieldBegin('receiveMobile', Thrift.Type.STRING, 2);
+    output.writeString(this.receiveMobile);
+    output.writeFieldEnd();
+  }
+  if (this.receiveAddress !== null && this.receiveAddress !== undefined) {
+    output.writeFieldBegin('receiveAddress', Thrift.Type.STRING, 3);
+    output.writeString(this.receiveAddress);
+    output.writeFieldEnd();
+  }
+  if (this.expressName !== null && this.expressName !== undefined) {
+    output.writeFieldBegin('expressName', Thrift.Type.STRING, 4);
+    output.writeString(this.expressName);
+    output.writeFieldEnd();
+  }
+  if (this.expressCode !== null && this.expressCode !== undefined) {
+    output.writeFieldBegin('expressCode', Thrift.Type.STRING, 5);
+    output.writeString(this.expressCode);
+    output.writeFieldEnd();
+  }
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 6);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExportAdminUserExpress = module.exports.ExportAdminUserExpress = function(args) {
+  this.serialNumber = null;
+  this.xhMobile = null;
+  this.userName = null;
+  this.registerTime = null;
+  this.creditTime = null;
+  this.passTime = null;
+  this.ticketValid = null;
+  this.isOnline = null;
+  this.sellerName = null;
+  this.jfxAccount = null;
+  this.usetTime = null;
+  this.receiptTime = null;
+  this.idCard = null;
+  this.sztCard = null;
+  this.receiveName = null;
+  this.receiveMobile = null;
+  this.receiveAddress = null;
+  this.expressName = null;
+  this.expressCode = null;
+  if (args) {
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
+    }
+    if (args.xhMobile !== undefined) {
+      this.xhMobile = args.xhMobile;
+    }
+    if (args.userName !== undefined) {
+      this.userName = args.userName;
+    }
+    if (args.registerTime !== undefined) {
+      this.registerTime = args.registerTime;
+    }
+    if (args.creditTime !== undefined) {
+      this.creditTime = args.creditTime;
+    }
+    if (args.passTime !== undefined) {
+      this.passTime = args.passTime;
+    }
+    if (args.ticketValid !== undefined) {
+      this.ticketValid = args.ticketValid;
+    }
+    if (args.isOnline !== undefined) {
+      this.isOnline = args.isOnline;
+    }
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
+    }
+    if (args.jfxAccount !== undefined) {
+      this.jfxAccount = args.jfxAccount;
+    }
+    if (args.usetTime !== undefined) {
+      this.usetTime = args.usetTime;
+    }
+    if (args.receiptTime !== undefined) {
+      this.receiptTime = args.receiptTime;
+    }
+    if (args.idCard !== undefined) {
+      this.idCard = args.idCard;
+    }
+    if (args.sztCard !== undefined) {
+      this.sztCard = args.sztCard;
+    }
+    if (args.receiveName !== undefined) {
+      this.receiveName = args.receiveName;
+    }
+    if (args.receiveMobile !== undefined) {
+      this.receiveMobile = args.receiveMobile;
+    }
+    if (args.receiveAddress !== undefined) {
+      this.receiveAddress = args.receiveAddress;
+    }
+    if (args.expressName !== undefined) {
+      this.expressName = args.expressName;
+    }
+    if (args.expressCode !== undefined) {
+      this.expressCode = args.expressCode;
+    }
+  }
+};
+ExportAdminUserExpress.prototype = {};
+ExportAdminUserExpress.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.serialNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.xhMobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.userName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.registerTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.creditTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.passTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.ticketValid = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.isOnline = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.jfxAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.usetTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiptTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.idCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.STRING) {
+        this.sztCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 15:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 16:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveMobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 17:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveAddress = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 18:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 19:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExportAdminUserExpress.prototype.write = function(output) {
+  output.writeStructBegin('ExportAdminUserExpress');
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 1);
+    output.writeString(this.serialNumber);
+    output.writeFieldEnd();
+  }
+  if (this.xhMobile !== null && this.xhMobile !== undefined) {
+    output.writeFieldBegin('xhMobile', Thrift.Type.STRING, 2);
+    output.writeString(this.xhMobile);
+    output.writeFieldEnd();
+  }
+  if (this.userName !== null && this.userName !== undefined) {
+    output.writeFieldBegin('userName', Thrift.Type.STRING, 3);
+    output.writeString(this.userName);
+    output.writeFieldEnd();
+  }
+  if (this.registerTime !== null && this.registerTime !== undefined) {
+    output.writeFieldBegin('registerTime', Thrift.Type.STRING, 4);
+    output.writeString(this.registerTime);
+    output.writeFieldEnd();
+  }
+  if (this.creditTime !== null && this.creditTime !== undefined) {
+    output.writeFieldBegin('creditTime', Thrift.Type.STRING, 5);
+    output.writeString(this.creditTime);
+    output.writeFieldEnd();
+  }
+  if (this.passTime !== null && this.passTime !== undefined) {
+    output.writeFieldBegin('passTime', Thrift.Type.STRING, 6);
+    output.writeString(this.passTime);
+    output.writeFieldEnd();
+  }
+  if (this.ticketValid !== null && this.ticketValid !== undefined) {
+    output.writeFieldBegin('ticketValid', Thrift.Type.I32, 7);
+    output.writeI32(this.ticketValid);
+    output.writeFieldEnd();
+  }
+  if (this.isOnline !== null && this.isOnline !== undefined) {
+    output.writeFieldBegin('isOnline', Thrift.Type.I32, 8);
+    output.writeI32(this.isOnline);
+    output.writeFieldEnd();
+  }
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 9);
+    output.writeString(this.sellerName);
+    output.writeFieldEnd();
+  }
+  if (this.jfxAccount !== null && this.jfxAccount !== undefined) {
+    output.writeFieldBegin('jfxAccount', Thrift.Type.STRING, 10);
+    output.writeString(this.jfxAccount);
+    output.writeFieldEnd();
+  }
+  if (this.usetTime !== null && this.usetTime !== undefined) {
+    output.writeFieldBegin('usetTime', Thrift.Type.STRING, 11);
+    output.writeString(this.usetTime);
+    output.writeFieldEnd();
+  }
+  if (this.receiptTime !== null && this.receiptTime !== undefined) {
+    output.writeFieldBegin('receiptTime', Thrift.Type.STRING, 12);
+    output.writeString(this.receiptTime);
+    output.writeFieldEnd();
+  }
+  if (this.idCard !== null && this.idCard !== undefined) {
+    output.writeFieldBegin('idCard', Thrift.Type.STRING, 13);
+    output.writeString(this.idCard);
+    output.writeFieldEnd();
+  }
+  if (this.sztCard !== null && this.sztCard !== undefined) {
+    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 14);
+    output.writeString(this.sztCard);
+    output.writeFieldEnd();
+  }
+  if (this.receiveName !== null && this.receiveName !== undefined) {
+    output.writeFieldBegin('receiveName', Thrift.Type.STRING, 15);
+    output.writeString(this.receiveName);
+    output.writeFieldEnd();
+  }
+  if (this.receiveMobile !== null && this.receiveMobile !== undefined) {
+    output.writeFieldBegin('receiveMobile', Thrift.Type.STRING, 16);
+    output.writeString(this.receiveMobile);
+    output.writeFieldEnd();
+  }
+  if (this.receiveAddress !== null && this.receiveAddress !== undefined) {
+    output.writeFieldBegin('receiveAddress', Thrift.Type.STRING, 17);
+    output.writeString(this.receiveAddress);
+    output.writeFieldEnd();
+  }
+  if (this.expressName !== null && this.expressName !== undefined) {
+    output.writeFieldBegin('expressName', Thrift.Type.STRING, 18);
+    output.writeString(this.expressName);
+    output.writeFieldEnd();
+  }
+  if (this.expressCode !== null && this.expressCode !== undefined) {
+    output.writeFieldBegin('expressCode', Thrift.Type.STRING, 19);
+    output.writeString(this.expressCode);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdminFloretUserParaResult = module.exports.AdminFloretUserParaResult = function(args) {
+  this.result = null;
+  this.adminFloretUserPara = null;
+  this.pagination = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.adminFloretUserPara !== undefined) {
+      this.adminFloretUserPara = args.adminFloretUserPara;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+AdminFloretUserParaResult.prototype = {};
+AdminFloretUserParaResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size8 = 0;
+        var _rtmp312;
+        this.adminFloretUserPara = [];
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        {
+          var elem14 = null;
+          elem14 = new ttypes.AdminFloretUserPara();
+          elem14.read(input);
+          this.adminFloretUserPara.push(elem14);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdminFloretUserParaResult.prototype.write = function(output) {
+  output.writeStructBegin('AdminFloretUserParaResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.adminFloretUserPara !== null && this.adminFloretUserPara !== undefined) {
+    output.writeFieldBegin('adminFloretUserPara', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.adminFloretUserPara.length);
+    for (var iter15 in this.adminFloretUserPara)
+    {
+      if (this.adminFloretUserPara.hasOwnProperty(iter15))
+      {
+        iter15 = this.adminFloretUserPara[iter15];
+        iter15.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+VerifyRecord = module.exports.VerifyRecord = function(args) {
+  this.id = null;
+  this.serialNumber = null;
+  this.mobile = null;
+  this.useTime = null;
+  this.sztCard = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.useTime !== undefined) {
+      this.useTime = args.useTime;
+    }
+    if (args.sztCard !== undefined) {
+      this.sztCard = args.sztCard;
+    }
+  }
+};
+VerifyRecord.prototype = {};
+VerifyRecord.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.serialNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.useTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.sztCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+VerifyRecord.prototype.write = function(output) {
+  output.writeStructBegin('VerifyRecord');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 2);
+    output.writeString(this.serialNumber);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 3);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.useTime !== null && this.useTime !== undefined) {
+    output.writeFieldBegin('useTime', Thrift.Type.STRING, 4);
+    output.writeString(this.useTime);
+    output.writeFieldEnd();
+  }
+  if (this.sztCard !== null && this.sztCard !== undefined) {
+    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 5);
+    output.writeString(this.sztCard);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+VerifyRecordResult = module.exports.VerifyRecordResult = function(args) {
+  this.result = null;
+  this.verifyRecordList = null;
+  this.pagination = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.verifyRecordList !== undefined) {
+      this.verifyRecordList = args.verifyRecordList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+VerifyRecordResult.prototype = {};
+VerifyRecordResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size16 = 0;
+        var _rtmp320;
+        this.verifyRecordList = [];
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        {
+          var elem22 = null;
+          elem22 = new ttypes.VerifyRecord();
+          elem22.read(input);
+          this.verifyRecordList.push(elem22);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+VerifyRecordResult.prototype.write = function(output) {
+  output.writeStructBegin('VerifyRecordResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.verifyRecordList !== null && this.verifyRecordList !== undefined) {
+    output.writeFieldBegin('verifyRecordList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.verifyRecordList.length);
+    for (var iter23 in this.verifyRecordList)
+    {
+      if (this.verifyRecordList.hasOwnProperty(iter23))
+      {
+        iter23 = this.verifyRecordList[iter23];
+        iter23.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ImportExpressInfo = module.exports.ImportExpressInfo = function(args) {
+  this.serialNumber = null;
+  this.expressName = null;
+  this.expressCode = null;
+  this.sztCard = null;
+  this.vcode = null;
+  if (args) {
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
+    }
+    if (args.expressName !== undefined) {
+      this.expressName = args.expressName;
+    }
+    if (args.expressCode !== undefined) {
+      this.expressCode = args.expressCode;
+    }
+    if (args.sztCard !== undefined) {
+      this.sztCard = args.sztCard;
+    }
+    if (args.vcode !== undefined) {
+      this.vcode = args.vcode;
+    }
+  }
+};
+ImportExpressInfo.prototype = {};
+ImportExpressInfo.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.serialNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.sztCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.vcode = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ImportExpressInfo.prototype.write = function(output) {
+  output.writeStructBegin('ImportExpressInfo');
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 1);
+    output.writeString(this.serialNumber);
+    output.writeFieldEnd();
+  }
+  if (this.expressName !== null && this.expressName !== undefined) {
+    output.writeFieldBegin('expressName', Thrift.Type.STRING, 2);
+    output.writeString(this.expressName);
+    output.writeFieldEnd();
+  }
+  if (this.expressCode !== null && this.expressCode !== undefined) {
+    output.writeFieldBegin('expressCode', Thrift.Type.STRING, 3);
+    output.writeString(this.expressCode);
+    output.writeFieldEnd();
+  }
+  if (this.sztCard !== null && this.sztCard !== undefined) {
+    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 4);
+    output.writeString(this.sztCard);
+    output.writeFieldEnd();
+  }
+  if (this.vcode !== null && this.vcode !== undefined) {
+    output.writeFieldBegin('vcode', Thrift.Type.I32, 5);
+    output.writeI32(this.vcode);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TraceItem = module.exports.TraceItem = function(args) {
+  this.time = null;
+  this.context = null;
+  this.ftime = null;
+  if (args) {
+    if (args.time !== undefined) {
+      this.time = args.time;
+    }
+    if (args.context !== undefined) {
+      this.context = args.context;
+    }
+    if (args.ftime !== undefined) {
+      this.ftime = args.ftime;
+    }
+  }
+};
+TraceItem.prototype = {};
+TraceItem.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.time = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.context = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.ftime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TraceItem.prototype.write = function(output) {
+  output.writeStructBegin('TraceItem');
+  if (this.time !== null && this.time !== undefined) {
+    output.writeFieldBegin('time', Thrift.Type.STRING, 1);
+    output.writeString(this.time);
+    output.writeFieldEnd();
+  }
+  if (this.context !== null && this.context !== undefined) {
+    output.writeFieldBegin('context', Thrift.Type.STRING, 2);
+    output.writeString(this.context);
+    output.writeFieldEnd();
+  }
+  if (this.ftime !== null && this.ftime !== undefined) {
+    output.writeFieldBegin('ftime', Thrift.Type.STRING, 3);
+    output.writeString(this.ftime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExpressTrace = module.exports.ExpressTrace = function(args) {
+  this.state = null;
+  this.nu = null;
+  this.status = null;
+  this.traceItems = null;
+  this.orderId = null;
+  if (args) {
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.nu !== undefined) {
+      this.nu = args.nu;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.traceItems !== undefined) {
+      this.traceItems = args.traceItems;
+    }
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+  }
+};
+ExpressTrace.prototype = {};
+ExpressTrace.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.state = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.nu = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.LIST) {
+        var _size24 = 0;
+        var _rtmp328;
+        this.traceItems = [];
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        {
+          var elem30 = null;
+          elem30 = new ttypes.TraceItem();
+          elem30.read(input);
+          this.traceItems.push(elem30);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExpressTrace.prototype.write = function(output) {
+  output.writeStructBegin('ExpressTrace');
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.STRING, 1);
+    output.writeString(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.nu !== null && this.nu !== undefined) {
+    output.writeFieldBegin('nu', Thrift.Type.STRING, 2);
+    output.writeString(this.nu);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 3);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.traceItems !== null && this.traceItems !== undefined) {
+    output.writeFieldBegin('traceItems', Thrift.Type.LIST, 4);
+    output.writeListBegin(Thrift.Type.STRUCT, this.traceItems.length);
+    for (var iter31 in this.traceItems)
+    {
+      if (this.traceItems.hasOwnProperty(iter31))
+      {
+        iter31 = this.traceItems[iter31];
+        iter31.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 5);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExpressResult = module.exports.ExpressResult = function(args) {
+  this.result = null;
+  this.expressTrace = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.expressTrace !== undefined) {
+      this.expressTrace = args.expressTrace;
+    }
+  }
+};
+ExpressResult.prototype = {};
+ExpressResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.expressTrace = new ttypes.ExpressTrace();
+        this.expressTrace.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExpressResult.prototype.write = function(output) {
+  output.writeStructBegin('ExpressResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.expressTrace !== null && this.expressTrace !== undefined) {
+    output.writeFieldBegin('expressTrace', Thrift.Type.STRUCT, 2);
+    this.expressTrace.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+VerifyRecordParam = module.exports.VerifyRecordParam = function(args) {
+  this.applySource = null;
+  this.mobileOrSztCard = null;
+  this.recordBeginTime = null;
+  this.recordEndTime = null;
+  if (args) {
+    if (args.applySource !== undefined) {
+      this.applySource = args.applySource;
+    }
+    if (args.mobileOrSztCard !== undefined) {
+      this.mobileOrSztCard = args.mobileOrSztCard;
+    }
+    if (args.recordBeginTime !== undefined) {
+      this.recordBeginTime = args.recordBeginTime;
+    }
+    if (args.recordEndTime !== undefined) {
+      this.recordEndTime = args.recordEndTime;
+    }
+  }
+};
+VerifyRecordParam.prototype = {};
+VerifyRecordParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.applySource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobileOrSztCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.recordBeginTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.recordEndTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+VerifyRecordParam.prototype.write = function(output) {
+  output.writeStructBegin('VerifyRecordParam');
+  if (this.applySource !== null && this.applySource !== undefined) {
+    output.writeFieldBegin('applySource', Thrift.Type.I32, 1);
+    output.writeI32(this.applySource);
+    output.writeFieldEnd();
+  }
+  if (this.mobileOrSztCard !== null && this.mobileOrSztCard !== undefined) {
+    output.writeFieldBegin('mobileOrSztCard', Thrift.Type.STRING, 2);
+    output.writeString(this.mobileOrSztCard);
+    output.writeFieldEnd();
+  }
+  if (this.recordBeginTime !== null && this.recordBeginTime !== undefined) {
+    output.writeFieldBegin('recordBeginTime', Thrift.Type.STRING, 3);
+    output.writeString(this.recordBeginTime);
+    output.writeFieldEnd();
+  }
+  if (this.recordEndTime !== null && this.recordEndTime !== undefined) {
+    output.writeFieldBegin('recordEndTime', Thrift.Type.STRING, 4);
+    output.writeString(this.recordEndTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
