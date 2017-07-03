@@ -2582,7 +2582,7 @@ router.post('/floretPassData', function (request, response, next) {
 });
 
 /*用户线上申领深圳通卡片*/
-router.post('/OnLineApply', function (request, response, next) {
+router.post('/onLineApply', function (request, response, next) {
     logger.info("用户线上申领深圳通卡片");
     var resContent = {code: 200};
     var param = request.body;
@@ -2637,29 +2637,6 @@ router.post('/OnLineApply', function (request, response, next) {
     }
 });
 
-/*查询线上申领卡片用户列表*/
-router.get('/onLineApplyUserList', function (request, response, next) {
-    logger.info("查询线上申领卡片用户列表");
-    var resContent = {code: 200};
-    var param = request.body;
-    try {
-        Buyer.onLineApplyUserList(param, function (err, data) {
-            if (err) {
-                response.json(err);
-            } else {
-                resContent.data = data[0];
-                response.json(resContent);
-                logger.info("响应的结果:" + JSON.stringify(resContent));
-            }
-        });
-    } catch (ex) {
-        logger.error("查询线上申领卡片用户列表失败，because :" + ex);
-        resContent.code = 500;
-        resContent.desc = "查询线上申领卡片用户列表失败";
-        response.json(resContent);
-    }
-});
-
 /*商户端审核券码，发放卡片*/
 router.post('/sellerCheckCode', function (request, response, next) {
     logger.info("商户端审核券码，发放卡片");
@@ -2697,7 +2674,16 @@ router.post('/sellerCheckCode', function (request, response, next) {
             if (err) {
                 response.json(err);
             } else {
-                resContent.data = data[0];
+                if(data[0].code==101){
+                    resContent.code = data[0].code;
+                    resContent.desc='券码无效';
+                }else if(data[0].code==102){
+                    resContent.code = data[0].code;
+                    resContent.desc='券码已经使用';
+                }else if(data[0].code==103){
+                    resContent.code = data[0].code;
+                    resContent.desc='无效的深圳通卡号';
+                }
                 response.json(resContent);
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             }
@@ -2710,48 +2696,12 @@ router.post('/sellerCheckCode', function (request, response, next) {
              }
        });
 
-/*管理员审核券码，发放卡片*/
-router.post('/adminCheckCode', function (request, response, next) {
-    logger.info("管理员审核券码，发放卡片");
-    var resContent = {code: 200};
-    var param = request.body;
-    try {
-        if (param == null) {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-        if (param.code == null || param.code == "") {
-            resContent.code = 400;
-            resContent.desc = "code不能为空";
-            response.json(resContent);
-            return;
-        }
-
-        logger.info("请求参数：" + JSON.stringify(param));
-        Buyer.adminCheckCode(param, function (err, data) {
-            if (err) {
-                response.json(err);
-            } else {
-                resContent.data = data[0];
-                response.json(resContent);
-                logger.info("响应的结果:" + JSON.stringify(resContent));
-            }
-        });
-    } catch (ex) {
-        logger.error("管理员审核券码，发放卡片失败，because :" + ex);
-        resContent.code = 500;
-        resContent.desc = "管理员审核券码，发放卡片失败";
-        response.json(resContent);
-    }
-});
-
 /*商户端查询验证记录*/
 router.post('/findVerifyRecord', function (request, response, next) {
-    logger.info("商户端查询验证记录");
-    var resContent = {code: 200};
     var param = request.body;
+    logger.info("商户端查询验证记录参数 ： " + JSON.stringify(param));
+    var resContent = {code: 200};
+
     try {
         if (param == null) {
             resContent.code = 400;
@@ -2761,24 +2711,39 @@ router.post('/findVerifyRecord', function (request, response, next) {
         }
         if (param.sellerId == null || param.sellerId == "") {
             resContent.code = 400;
-            resContent.desc = "商家不能为空";
+            resContent.desc = "---------商家不能为空";
             response.json(resContent);
             return;
         }
 
-        if (param.dateStr == null || param.dateStr == "") {
+        if (param.currentPage == null || param.currentPage == "") {
             resContent.code = 400;
-            resContent.desc = "时间不能为空";
+            resContent.desc = "当前页不能为空";
             response.json(resContent);
             return;
         }
+        if (param.numPerPage == null || param.numPerPage == "") {
+            resContent.code = 400;
+            resContent.desc = "分页大小不能为空";
+            response.json(resContent);
+            return;
+        }
+
+
 
         logger.info("请求参数：" + JSON.stringify(param));
         Buyer.findVerifyRecord(param, function (err, data) {
             if (err) {
                 response.json(err);
             } else {
-                resContent.data = data[0];
+                if(data[0].result.code==1) {
+                    resContent.code = 500;
+                    resContent.desc = "服务器繁忙";
+                    response.json(resContent);
+                    return
+                }
+                resContent.date = data[0].verifyRecordList ,
+                resContent.pagination =  data[0].pagination
                 response.json(resContent);
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             }
@@ -2810,19 +2775,12 @@ router.post('/exportVerifyRecord', function (request, response, next) {
             return;
         }
 
-        if (param.dateStr == null || param.dateStr == "") {
-            resContent.code = 400;
-            resContent.desc = "时间不能为空";
-            response.json(resContent);
-            return;
-        }
-
         logger.info("请求参数：" + JSON.stringify(param));
         Buyer.exportVerifyRecord(param, function (err, data) {
             if (err) {
                 response.json(err);
             } else {
-                resContent.data = data[0];
+                resContent.url = date[0].value;
                 response.json(resContent);
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             }
@@ -2834,6 +2792,91 @@ router.post('/exportVerifyRecord', function (request, response, next) {
         response.json(resContent);
     }
 });
+
+/*申领成功后通过领券码查询物流信息*/
+router.post('/queryExpress', function (request, response, next) {
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.ticketCode == null || param.ticketCode == "") {
+            resContent.code = 400;
+            resContent.desc = "券码不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数*****************" + JSON.stringify(param));
+        Buyer.queryExpress(param, function (err, data) {
+            logger.info("响应的结果 ：" + JSON.stringify(data));
+            if (err) {
+                response.json(err);
+            } else {
+                resContent.date=data[0].expressTrace;
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("查询物流信息失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "查询物流信息失败";
+        response.json(resContent);
+    }
+});
+
+//sendMobileNote 重新发送短信
+router.post('/sendMobileNote', function (request, response, next) {
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 400;
+            resContent.desc = "手机号不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数*****************" + JSON.stringify(param));
+        Buyer.sendMobileNote(param, function (err, data) {
+            logger.info("响应的结果 ：" + JSON.stringify(data));
+            if (err) {
+                response.json(err);
+            } else {
+                 if(data[0].code==101){
+                    resContent.code=101,
+                     resContent.desc = '手机号不存在'
+                }else if(data[0].code==1){
+                     resContent.code=500,
+                     resContent.desc='系统错误'
+                }
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("查询物流信息失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "查询物流信息失败";
+        response.json(resContent);
+    }
+});
+
+
+
+
+
 
 /*依据查询条件搜索小花用户列表*/
 router.post('/searchFloretUserList', function (request, response, next) {

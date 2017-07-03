@@ -2689,96 +2689,6 @@ FloretUser.prototype.write = function(output) {
   return;
 };
 
-OnLineApplyResult = module.exports.OnLineApplyResult = function(args) {
-  this.result = null;
-  this.floretUsers = null;
-  if (args) {
-    if (args.result !== undefined) {
-      this.result = args.result;
-    }
-    if (args.floretUsers !== undefined) {
-      this.floretUsers = args.floretUsers;
-    }
-  }
-};
-OnLineApplyResult.prototype = {};
-OnLineApplyResult.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.result = new result_ttypes.Result();
-        this.result.read(input);
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
-        this.floretUsers = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
-        {
-          var elem14 = null;
-          elem14 = new ttypes.FloretUser();
-          elem14.read(input);
-          this.floretUsers.push(elem14);
-        }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-OnLineApplyResult.prototype.write = function(output) {
-  output.writeStructBegin('OnLineApplyResult');
-  if (this.result !== null && this.result !== undefined) {
-    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
-    this.result.write(output);
-    output.writeFieldEnd();
-  }
-  if (this.floretUsers !== null && this.floretUsers !== undefined) {
-    output.writeFieldBegin('floretUsers', Thrift.Type.LIST, 2);
-    output.writeListBegin(Thrift.Type.STRUCT, this.floretUsers.length);
-    for (var iter15 in this.floretUsers)
-    {
-      if (this.floretUsers.hasOwnProperty(iter15))
-      {
-        iter15 = this.floretUsers[iter15];
-        iter15.write(output);
-      }
-    }
-    output.writeListEnd();
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
 SearchCriteriaForXiaoHua = module.exports.SearchCriteriaForXiaoHua = function(args) {
   this.registerTimeStart = null;
   this.registerTimeEnd = null;
@@ -2790,8 +2700,8 @@ SearchCriteriaForXiaoHua = module.exports.SearchCriteriaForXiaoHua = function(ar
   this.isOnline = null;
   this.serialNumber = null;
   this.mobile = null;
-  this.userName = null;
-  this.sellerId = null;
+  this.jfsAccount = null;
+  this.sellerName = null;
   if (args) {
     if (args.registerTimeStart !== undefined) {
       this.registerTimeStart = args.registerTimeStart;
@@ -2823,11 +2733,11 @@ SearchCriteriaForXiaoHua = module.exports.SearchCriteriaForXiaoHua = function(ar
     if (args.mobile !== undefined) {
       this.mobile = args.mobile;
     }
-    if (args.userName !== undefined) {
-      this.userName = args.userName;
+    if (args.jfsAccount !== undefined) {
+      this.jfsAccount = args.jfsAccount;
     }
-    if (args.sellerId !== undefined) {
-      this.sellerId = args.sellerId;
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
     }
   }
 };
@@ -2917,14 +2827,14 @@ SearchCriteriaForXiaoHua.prototype.read = function(input) {
       break;
       case 11:
       if (ftype == Thrift.Type.STRING) {
-        this.userName = input.readString();
+        this.jfsAccount = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 12:
       if (ftype == Thrift.Type.STRING) {
-        this.sellerId = input.readString();
+        this.sellerName = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -2990,14 +2900,14 @@ SearchCriteriaForXiaoHua.prototype.write = function(output) {
     output.writeString(this.mobile);
     output.writeFieldEnd();
   }
-  if (this.userName !== null && this.userName !== undefined) {
-    output.writeFieldBegin('userName', Thrift.Type.STRING, 11);
-    output.writeString(this.userName);
+  if (this.jfsAccount !== null && this.jfsAccount !== undefined) {
+    output.writeFieldBegin('jfsAccount', Thrift.Type.STRING, 11);
+    output.writeString(this.jfsAccount);
     output.writeFieldEnd();
   }
-  if (this.sellerId !== null && this.sellerId !== undefined) {
-    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 12);
-    output.writeString(this.sellerId);
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 12);
+    output.writeString(this.sellerName);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3007,37 +2917,29 @@ SearchCriteriaForXiaoHua.prototype.write = function(output) {
 
 AdminFloretUserPara = module.exports.AdminFloretUserPara = function(args) {
   this.id = null;
-  this.idCard = null;
-  this.mobile = null;
+  this.serialNumber = null;
+  this.xhMobile = null;
   this.userName = null;
   this.registerTime = null;
   this.creditTime = null;
   this.passTime = null;
-  this.jfxAccount = null;
-  this.ticketCode = null;
   this.ticketValid = null;
   this.isOnline = null;
-  this.sellerId = null;
+  this.sellerName = null;
+  this.jfxAccount = null;
   this.usetTime = null;
-  this.sztCard = null;
   this.receiptTime = null;
-  this.scoreNum = null;
-  this.scoreReceive = null;
-  this.serialNumber = null;
-  this.receiveName = null;
-  this.receiveMobile = null;
-  this.receiveAddress = null;
-  this.expressName = null;
-  this.expressCode = null;
+  this.idCard = null;
+  this.sztCard = null;
   if (args) {
     if (args.id !== undefined) {
       this.id = args.id;
     }
-    if (args.idCard !== undefined) {
-      this.idCard = args.idCard;
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
     }
-    if (args.mobile !== undefined) {
-      this.mobile = args.mobile;
+    if (args.xhMobile !== undefined) {
+      this.xhMobile = args.xhMobile;
     }
     if (args.userName !== undefined) {
       this.userName = args.userName;
@@ -3051,53 +2953,29 @@ AdminFloretUserPara = module.exports.AdminFloretUserPara = function(args) {
     if (args.passTime !== undefined) {
       this.passTime = args.passTime;
     }
-    if (args.jfxAccount !== undefined) {
-      this.jfxAccount = args.jfxAccount;
-    }
-    if (args.ticketCode !== undefined) {
-      this.ticketCode = args.ticketCode;
-    }
     if (args.ticketValid !== undefined) {
       this.ticketValid = args.ticketValid;
     }
     if (args.isOnline !== undefined) {
       this.isOnline = args.isOnline;
     }
-    if (args.sellerId !== undefined) {
-      this.sellerId = args.sellerId;
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
+    }
+    if (args.jfxAccount !== undefined) {
+      this.jfxAccount = args.jfxAccount;
     }
     if (args.usetTime !== undefined) {
       this.usetTime = args.usetTime;
     }
-    if (args.sztCard !== undefined) {
-      this.sztCard = args.sztCard;
-    }
     if (args.receiptTime !== undefined) {
       this.receiptTime = args.receiptTime;
     }
-    if (args.scoreNum !== undefined) {
-      this.scoreNum = args.scoreNum;
+    if (args.idCard !== undefined) {
+      this.idCard = args.idCard;
     }
-    if (args.scoreReceive !== undefined) {
-      this.scoreReceive = args.scoreReceive;
-    }
-    if (args.serialNumber !== undefined) {
-      this.serialNumber = args.serialNumber;
-    }
-    if (args.receiveName !== undefined) {
-      this.receiveName = args.receiveName;
-    }
-    if (args.receiveMobile !== undefined) {
-      this.receiveMobile = args.receiveMobile;
-    }
-    if (args.receiveAddress !== undefined) {
-      this.receiveAddress = args.receiveAddress;
-    }
-    if (args.expressName !== undefined) {
-      this.expressName = args.expressName;
-    }
-    if (args.expressCode !== undefined) {
-      this.expressCode = args.expressCode;
+    if (args.sztCard !== undefined) {
+      this.sztCard = args.sztCard;
     }
   }
 };
@@ -3124,14 +3002,14 @@ AdminFloretUserPara.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRING) {
-        this.idCard = input.readString();
+        this.serialNumber = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 3:
       if (ftype == Thrift.Type.STRING) {
-        this.mobile = input.readString();
+        this.xhMobile = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -3165,113 +3043,57 @@ AdminFloretUserPara.prototype.read = function(input) {
       }
       break;
       case 8:
-      if (ftype == Thrift.Type.STRING) {
-        this.jfxAccount = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 9:
-      if (ftype == Thrift.Type.STRING) {
-        this.ticketCode = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 10:
       if (ftype == Thrift.Type.I32) {
         this.ticketValid = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 11:
+      case 9:
       if (ftype == Thrift.Type.I32) {
         this.isOnline = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 12:
+      case 10:
       if (ftype == Thrift.Type.STRING) {
-        this.sellerId = input.readString();
+        this.sellerName = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 13:
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.jfxAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
       if (ftype == Thrift.Type.STRING) {
         this.usetTime = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 14:
-      if (ftype == Thrift.Type.STRING) {
-        this.sztCard = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 15:
+      case 13:
       if (ftype == Thrift.Type.STRING) {
         this.receiptTime = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 16:
+      case 14:
       if (ftype == Thrift.Type.STRING) {
-        this.scoreNum = input.readString();
+        this.idCard = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
-      case 17:
-      if (ftype == Thrift.Type.I32) {
-        this.scoreReceive = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 18:
+      case 15:
       if (ftype == Thrift.Type.STRING) {
-        this.serialNumber = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 19:
-      if (ftype == Thrift.Type.STRING) {
-        this.receiveName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 20:
-      if (ftype == Thrift.Type.STRING) {
-        this.receiveMobile = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 21:
-      if (ftype == Thrift.Type.STRING) {
-        this.receiveAddress = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 22:
-      if (ftype == Thrift.Type.STRING) {
-        this.expressName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 23:
-      if (ftype == Thrift.Type.STRING) {
-        this.expressCode = input.readString();
+        this.sztCard = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -3292,14 +3114,14 @@ AdminFloretUserPara.prototype.write = function(output) {
     output.writeI32(this.id);
     output.writeFieldEnd();
   }
-  if (this.idCard !== null && this.idCard !== undefined) {
-    output.writeFieldBegin('idCard', Thrift.Type.STRING, 2);
-    output.writeString(this.idCard);
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 2);
+    output.writeString(this.serialNumber);
     output.writeFieldEnd();
   }
-  if (this.mobile !== null && this.mobile !== undefined) {
-    output.writeFieldBegin('mobile', Thrift.Type.STRING, 3);
-    output.writeString(this.mobile);
+  if (this.xhMobile !== null && this.xhMobile !== undefined) {
+    output.writeFieldBegin('xhMobile', Thrift.Type.STRING, 3);
+    output.writeString(this.xhMobile);
     output.writeFieldEnd();
   }
   if (this.userName !== null && this.userName !== undefined) {
@@ -3322,84 +3144,175 @@ AdminFloretUserPara.prototype.write = function(output) {
     output.writeString(this.passTime);
     output.writeFieldEnd();
   }
-  if (this.jfxAccount !== null && this.jfxAccount !== undefined) {
-    output.writeFieldBegin('jfxAccount', Thrift.Type.STRING, 8);
-    output.writeString(this.jfxAccount);
-    output.writeFieldEnd();
-  }
-  if (this.ticketCode !== null && this.ticketCode !== undefined) {
-    output.writeFieldBegin('ticketCode', Thrift.Type.STRING, 9);
-    output.writeString(this.ticketCode);
-    output.writeFieldEnd();
-  }
   if (this.ticketValid !== null && this.ticketValid !== undefined) {
-    output.writeFieldBegin('ticketValid', Thrift.Type.I32, 10);
+    output.writeFieldBegin('ticketValid', Thrift.Type.I32, 8);
     output.writeI32(this.ticketValid);
     output.writeFieldEnd();
   }
   if (this.isOnline !== null && this.isOnline !== undefined) {
-    output.writeFieldBegin('isOnline', Thrift.Type.I32, 11);
+    output.writeFieldBegin('isOnline', Thrift.Type.I32, 9);
     output.writeI32(this.isOnline);
     output.writeFieldEnd();
   }
-  if (this.sellerId !== null && this.sellerId !== undefined) {
-    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 12);
-    output.writeString(this.sellerId);
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 10);
+    output.writeString(this.sellerName);
+    output.writeFieldEnd();
+  }
+  if (this.jfxAccount !== null && this.jfxAccount !== undefined) {
+    output.writeFieldBegin('jfxAccount', Thrift.Type.STRING, 11);
+    output.writeString(this.jfxAccount);
     output.writeFieldEnd();
   }
   if (this.usetTime !== null && this.usetTime !== undefined) {
-    output.writeFieldBegin('usetTime', Thrift.Type.STRING, 13);
+    output.writeFieldBegin('usetTime', Thrift.Type.STRING, 12);
     output.writeString(this.usetTime);
     output.writeFieldEnd();
   }
-  if (this.sztCard !== null && this.sztCard !== undefined) {
-    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 14);
-    output.writeString(this.sztCard);
-    output.writeFieldEnd();
-  }
   if (this.receiptTime !== null && this.receiptTime !== undefined) {
-    output.writeFieldBegin('receiptTime', Thrift.Type.STRING, 15);
+    output.writeFieldBegin('receiptTime', Thrift.Type.STRING, 13);
     output.writeString(this.receiptTime);
     output.writeFieldEnd();
   }
-  if (this.scoreNum !== null && this.scoreNum !== undefined) {
-    output.writeFieldBegin('scoreNum', Thrift.Type.STRING, 16);
-    output.writeString(this.scoreNum);
+  if (this.idCard !== null && this.idCard !== undefined) {
+    output.writeFieldBegin('idCard', Thrift.Type.STRING, 14);
+    output.writeString(this.idCard);
     output.writeFieldEnd();
   }
-  if (this.scoreReceive !== null && this.scoreReceive !== undefined) {
-    output.writeFieldBegin('scoreReceive', Thrift.Type.I32, 17);
-    output.writeI32(this.scoreReceive);
+  if (this.sztCard !== null && this.sztCard !== undefined) {
+    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 15);
+    output.writeString(this.sztCard);
     output.writeFieldEnd();
   }
-  if (this.serialNumber !== null && this.serialNumber !== undefined) {
-    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 18);
-    output.writeString(this.serialNumber);
-    output.writeFieldEnd();
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AdminExpressResult = module.exports.AdminExpressResult = function(args) {
+  this.receiveName = null;
+  this.receiveMobile = null;
+  this.receiveAddress = null;
+  this.expressName = null;
+  this.expressCode = null;
+  this.result = null;
+  if (args) {
+    if (args.receiveName !== undefined) {
+      this.receiveName = args.receiveName;
+    }
+    if (args.receiveMobile !== undefined) {
+      this.receiveMobile = args.receiveMobile;
+    }
+    if (args.receiveAddress !== undefined) {
+      this.receiveAddress = args.receiveAddress;
+    }
+    if (args.expressName !== undefined) {
+      this.expressName = args.expressName;
+    }
+    if (args.expressCode !== undefined) {
+      this.expressCode = args.expressCode;
+    }
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
   }
+};
+AdminExpressResult.prototype = {};
+AdminExpressResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveMobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveAddress = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AdminExpressResult.prototype.write = function(output) {
+  output.writeStructBegin('AdminExpressResult');
   if (this.receiveName !== null && this.receiveName !== undefined) {
-    output.writeFieldBegin('receiveName', Thrift.Type.STRING, 19);
+    output.writeFieldBegin('receiveName', Thrift.Type.STRING, 1);
     output.writeString(this.receiveName);
     output.writeFieldEnd();
   }
   if (this.receiveMobile !== null && this.receiveMobile !== undefined) {
-    output.writeFieldBegin('receiveMobile', Thrift.Type.STRING, 20);
+    output.writeFieldBegin('receiveMobile', Thrift.Type.STRING, 2);
     output.writeString(this.receiveMobile);
     output.writeFieldEnd();
   }
   if (this.receiveAddress !== null && this.receiveAddress !== undefined) {
-    output.writeFieldBegin('receiveAddress', Thrift.Type.STRING, 21);
+    output.writeFieldBegin('receiveAddress', Thrift.Type.STRING, 3);
     output.writeString(this.receiveAddress);
     output.writeFieldEnd();
   }
   if (this.expressName !== null && this.expressName !== undefined) {
-    output.writeFieldBegin('expressName', Thrift.Type.STRING, 22);
+    output.writeFieldBegin('expressName', Thrift.Type.STRING, 4);
     output.writeString(this.expressName);
     output.writeFieldEnd();
   }
   if (this.expressCode !== null && this.expressCode !== undefined) {
-    output.writeFieldBegin('expressCode', Thrift.Type.STRING, 23);
+    output.writeFieldBegin('expressCode', Thrift.Type.STRING, 5);
     output.writeString(this.expressCode);
+    output.writeFieldEnd();
+  }
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 6);
+    this.result.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3447,19 +3360,19 @@ AdminFloretUserParaResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
+        var _size8 = 0;
+        var _rtmp312;
         this.adminFloretUserPara = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
         {
-          var elem22 = null;
-          elem22 = new ttypes.AdminFloretUserPara();
-          elem22.read(input);
-          this.adminFloretUserPara.push(elem22);
+          var elem14 = null;
+          elem14 = new ttypes.AdminFloretUserPara();
+          elem14.read(input);
+          this.adminFloretUserPara.push(elem14);
         }
         input.readListEnd();
       } else {
@@ -3493,12 +3406,12 @@ AdminFloretUserParaResult.prototype.write = function(output) {
   if (this.adminFloretUserPara !== null && this.adminFloretUserPara !== undefined) {
     output.writeFieldBegin('adminFloretUserPara', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.adminFloretUserPara.length);
-    for (var iter23 in this.adminFloretUserPara)
+    for (var iter15 in this.adminFloretUserPara)
     {
-      if (this.adminFloretUserPara.hasOwnProperty(iter23))
+      if (this.adminFloretUserPara.hasOwnProperty(iter15))
       {
-        iter23 = this.adminFloretUserPara[iter23];
-        iter23.write(output);
+        iter15 = this.adminFloretUserPara[iter15];
+        iter15.write(output);
       }
     }
     output.writeListEnd();
@@ -3515,11 +3428,15 @@ AdminFloretUserParaResult.prototype.write = function(output) {
 };
 
 VerifyRecord = module.exports.VerifyRecord = function(args) {
+  this.id = null;
   this.serialNumber = null;
   this.mobile = null;
   this.useTime = null;
   this.sztCard = null;
   if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
     if (args.serialNumber !== undefined) {
       this.serialNumber = args.serialNumber;
     }
@@ -3549,27 +3466,34 @@ VerifyRecord.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.serialNumber = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
       if (ftype == Thrift.Type.STRING) {
-        this.mobile = input.readString();
+        this.serialNumber = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 3:
       if (ftype == Thrift.Type.STRING) {
-        this.useTime = input.readString();
+        this.mobile = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.useTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
       if (ftype == Thrift.Type.STRING) {
         this.sztCard = input.readString();
       } else {
@@ -3587,23 +3511,28 @@ VerifyRecord.prototype.read = function(input) {
 
 VerifyRecord.prototype.write = function(output) {
   output.writeStructBegin('VerifyRecord');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
   if (this.serialNumber !== null && this.serialNumber !== undefined) {
-    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 1);
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 2);
     output.writeString(this.serialNumber);
     output.writeFieldEnd();
   }
   if (this.mobile !== null && this.mobile !== undefined) {
-    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 3);
     output.writeString(this.mobile);
     output.writeFieldEnd();
   }
   if (this.useTime !== null && this.useTime !== undefined) {
-    output.writeFieldBegin('useTime', Thrift.Type.STRING, 3);
+    output.writeFieldBegin('useTime', Thrift.Type.STRING, 4);
     output.writeString(this.useTime);
     output.writeFieldEnd();
   }
   if (this.sztCard !== null && this.sztCard !== undefined) {
-    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 4);
+    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 5);
     output.writeString(this.sztCard);
     output.writeFieldEnd();
   }
@@ -3615,12 +3544,16 @@ VerifyRecord.prototype.write = function(output) {
 VerifyRecordResult = module.exports.VerifyRecordResult = function(args) {
   this.result = null;
   this.verifyRecordList = null;
+  this.pagination = null;
   if (args) {
     if (args.result !== undefined) {
       this.result = args.result;
     }
     if (args.verifyRecordList !== undefined) {
       this.verifyRecordList = args.verifyRecordList;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
     }
   }
 };
@@ -3648,21 +3581,29 @@ VerifyRecordResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
+        var _size16 = 0;
+        var _rtmp320;
         this.verifyRecordList = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
         {
-          var elem30 = null;
-          elem30 = new ttypes.VerifyRecord();
-          elem30.read(input);
-          this.verifyRecordList.push(elem30);
+          var elem22 = null;
+          elem22 = new ttypes.VerifyRecord();
+          elem22.read(input);
+          this.verifyRecordList.push(elem22);
         }
         input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
       } else {
         input.skip(ftype);
       }
@@ -3686,15 +3627,519 @@ VerifyRecordResult.prototype.write = function(output) {
   if (this.verifyRecordList !== null && this.verifyRecordList !== undefined) {
     output.writeFieldBegin('verifyRecordList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.verifyRecordList.length);
-    for (var iter31 in this.verifyRecordList)
+    for (var iter23 in this.verifyRecordList)
     {
-      if (this.verifyRecordList.hasOwnProperty(iter31))
+      if (this.verifyRecordList.hasOwnProperty(iter23))
       {
-        iter31 = this.verifyRecordList[iter31];
+        iter23 = this.verifyRecordList[iter23];
+        iter23.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ImportExpressInfo = module.exports.ImportExpressInfo = function(args) {
+  this.serialNumber = null;
+  this.expressName = null;
+  this.expressCode = null;
+  this.sztCard = null;
+  this.vcode = null;
+  if (args) {
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
+    }
+    if (args.expressName !== undefined) {
+      this.expressName = args.expressName;
+    }
+    if (args.expressCode !== undefined) {
+      this.expressCode = args.expressCode;
+    }
+    if (args.sztCard !== undefined) {
+      this.sztCard = args.sztCard;
+    }
+    if (args.vcode !== undefined) {
+      this.vcode = args.vcode;
+    }
+  }
+};
+ImportExpressInfo.prototype = {};
+ImportExpressInfo.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.serialNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.expressCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.sztCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.vcode = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ImportExpressInfo.prototype.write = function(output) {
+  output.writeStructBegin('ImportExpressInfo');
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 1);
+    output.writeString(this.serialNumber);
+    output.writeFieldEnd();
+  }
+  if (this.expressName !== null && this.expressName !== undefined) {
+    output.writeFieldBegin('expressName', Thrift.Type.STRING, 2);
+    output.writeString(this.expressName);
+    output.writeFieldEnd();
+  }
+  if (this.expressCode !== null && this.expressCode !== undefined) {
+    output.writeFieldBegin('expressCode', Thrift.Type.STRING, 3);
+    output.writeString(this.expressCode);
+    output.writeFieldEnd();
+  }
+  if (this.sztCard !== null && this.sztCard !== undefined) {
+    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 4);
+    output.writeString(this.sztCard);
+    output.writeFieldEnd();
+  }
+  if (this.vcode !== null && this.vcode !== undefined) {
+    output.writeFieldBegin('vcode', Thrift.Type.I32, 5);
+    output.writeI32(this.vcode);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TraceItem = module.exports.TraceItem = function(args) {
+  this.time = null;
+  this.context = null;
+  this.ftime = null;
+  if (args) {
+    if (args.time !== undefined) {
+      this.time = args.time;
+    }
+    if (args.context !== undefined) {
+      this.context = args.context;
+    }
+    if (args.ftime !== undefined) {
+      this.ftime = args.ftime;
+    }
+  }
+};
+TraceItem.prototype = {};
+TraceItem.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.time = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.context = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.ftime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TraceItem.prototype.write = function(output) {
+  output.writeStructBegin('TraceItem');
+  if (this.time !== null && this.time !== undefined) {
+    output.writeFieldBegin('time', Thrift.Type.STRING, 1);
+    output.writeString(this.time);
+    output.writeFieldEnd();
+  }
+  if (this.context !== null && this.context !== undefined) {
+    output.writeFieldBegin('context', Thrift.Type.STRING, 2);
+    output.writeString(this.context);
+    output.writeFieldEnd();
+  }
+  if (this.ftime !== null && this.ftime !== undefined) {
+    output.writeFieldBegin('ftime', Thrift.Type.STRING, 3);
+    output.writeString(this.ftime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExpressTrace = module.exports.ExpressTrace = function(args) {
+  this.state = null;
+  this.nu = null;
+  this.status = null;
+  this.traceItems = null;
+  this.orderId = null;
+  if (args) {
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.nu !== undefined) {
+      this.nu = args.nu;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.traceItems !== undefined) {
+      this.traceItems = args.traceItems;
+    }
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+  }
+};
+ExpressTrace.prototype = {};
+ExpressTrace.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.state = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.nu = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.LIST) {
+        var _size24 = 0;
+        var _rtmp328;
+        this.traceItems = [];
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        {
+          var elem30 = null;
+          elem30 = new ttypes.TraceItem();
+          elem30.read(input);
+          this.traceItems.push(elem30);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExpressTrace.prototype.write = function(output) {
+  output.writeStructBegin('ExpressTrace');
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.STRING, 1);
+    output.writeString(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.nu !== null && this.nu !== undefined) {
+    output.writeFieldBegin('nu', Thrift.Type.STRING, 2);
+    output.writeString(this.nu);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 3);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.traceItems !== null && this.traceItems !== undefined) {
+    output.writeFieldBegin('traceItems', Thrift.Type.LIST, 4);
+    output.writeListBegin(Thrift.Type.STRUCT, this.traceItems.length);
+    for (var iter31 in this.traceItems)
+    {
+      if (this.traceItems.hasOwnProperty(iter31))
+      {
+        iter31 = this.traceItems[iter31];
         iter31.write(output);
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 5);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ExpressResult = module.exports.ExpressResult = function(args) {
+  this.result = null;
+  this.expressTrace = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.expressTrace !== undefined) {
+      this.expressTrace = args.expressTrace;
+    }
+  }
+};
+ExpressResult.prototype = {};
+ExpressResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.expressTrace = new ttypes.ExpressTrace();
+        this.expressTrace.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ExpressResult.prototype.write = function(output) {
+  output.writeStructBegin('ExpressResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.expressTrace !== null && this.expressTrace !== undefined) {
+    output.writeFieldBegin('expressTrace', Thrift.Type.STRUCT, 2);
+    this.expressTrace.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+VerifyRecordParam = module.exports.VerifyRecordParam = function(args) {
+  this.applySource = null;
+  this.mobileOrSztCard = null;
+  this.recordBeginTime = null;
+  this.recordEndTime = null;
+  if (args) {
+    if (args.applySource !== undefined) {
+      this.applySource = args.applySource;
+    }
+    if (args.mobileOrSztCard !== undefined) {
+      this.mobileOrSztCard = args.mobileOrSztCard;
+    }
+    if (args.recordBeginTime !== undefined) {
+      this.recordBeginTime = args.recordBeginTime;
+    }
+    if (args.recordEndTime !== undefined) {
+      this.recordEndTime = args.recordEndTime;
+    }
+  }
+};
+VerifyRecordParam.prototype = {};
+VerifyRecordParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.applySource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobileOrSztCard = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.recordBeginTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.recordEndTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+VerifyRecordParam.prototype.write = function(output) {
+  output.writeStructBegin('VerifyRecordParam');
+  if (this.applySource !== null && this.applySource !== undefined) {
+    output.writeFieldBegin('applySource', Thrift.Type.I32, 1);
+    output.writeI32(this.applySource);
+    output.writeFieldEnd();
+  }
+  if (this.mobileOrSztCard !== null && this.mobileOrSztCard !== undefined) {
+    output.writeFieldBegin('mobileOrSztCard', Thrift.Type.STRING, 2);
+    output.writeString(this.mobileOrSztCard);
+    output.writeFieldEnd();
+  }
+  if (this.recordBeginTime !== null && this.recordBeginTime !== undefined) {
+    output.writeFieldBegin('recordBeginTime', Thrift.Type.STRING, 3);
+    output.writeString(this.recordBeginTime);
+    output.writeFieldEnd();
+  }
+  if (this.recordEndTime !== null && this.recordEndTime !== undefined) {
+    output.writeFieldBegin('recordEndTime', Thrift.Type.STRING, 4);
+    output.writeString(this.recordEndTime);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
