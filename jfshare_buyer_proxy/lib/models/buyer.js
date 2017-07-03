@@ -784,29 +784,25 @@ Buyer.prototype.sellerCheckCode = function(param,callback){
     });
 };
 
-//管理员审核券码，发放卡片
-Buyer.prototype.adminCheckCode = function(param,callback){
-
-    //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'adminCheckCode',[param.code]);
-    Lich.wicca.invokeClient(buyerServ, function(err, data){
-        logger.info("管理员审核券码，发放卡片:" + JSON.stringify(data));
-        var res = {};
-        if (err) {
-            logger.error("管理员审核券码，发放卡片: " + JSON.stringify(data));
-            res.code = 500;
-            callback(res, null);
-        } else {
-            callback(null, data);
-        }
-    });
-};
 
 //商户端查询验证记录
 Buyer.prototype.findVerifyRecord = function(param,callback){
+    var verifyRecordParam = new buyer_types.VerifyRecordParam({
+        applySource : param.applySource,
+        mobileOrSztCard : param.mobileOrSztCard,
+        recordBeginTime :  param.recordBeginTime,
+        recordEndTime :  param.recordEndTime
+    });
 
+    var pagination = new pagination_types.Pagination({
+        totalCount : param.totalCount,
+        pageNumCount : param.pageNumCount,
+        numPerPage : param.numPerPage,
+        currentPage : param.currentPage
+    });
+    logger.info("商户端查询验证参数>>>>>>>>>>>>>>>>>>>>  :" + JSON.stringify(verifyRecordParam) +" : " + JSON.stringify(pagination) + " ： " + param.sellerId);
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'findVerifyRecord',[param.sellerId,param.dateStr]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'findVerifyRecord',[param.sellerId,pagination,verifyRecordParam]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("商户端查询验证记录:" + JSON.stringify(data));
         var res = {};
@@ -814,7 +810,9 @@ Buyer.prototype.findVerifyRecord = function(param,callback){
             logger.error("商户端查询验证记录: " + JSON.stringify(data));
             res.code = 500;
             callback(res, null);
-        } else {
+        } else if(data.code==1){
+            res.desc="*****参数错误"
+        }else{
             callback(null, data);
         }
     });
@@ -823,8 +821,14 @@ Buyer.prototype.findVerifyRecord = function(param,callback){
 //商户端导出验证记录
 Buyer.prototype.exportVerifyRecord = function(param,callback){
 
+    var verifyRecordParam = new buyer_types.VerifyRecordParam({
+        applySource : param.applySource,
+        mobileOrSztCard : param.mobileOrSztCard,
+        recordBeginTime :  param.recordBeginTime,
+        recordEndTime :  param.recordEndTime
+    });
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'exportVerifyRecord',[param.sellerId,param.dateStr]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'exportVerifyRecord',[param.sellerId,verifyRecordParam]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("商户端导出验证记录:" + JSON.stringify(data));
         var res = {};
@@ -837,6 +841,44 @@ Buyer.prototype.exportVerifyRecord = function(param,callback){
         }
     });
 };
+
+//申领成功后通过领券码查询物流信息
+Buyer.prototype.queryExpress = function(param,callback){
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'queryExpress',[param.ticketCode]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+
+        var res = {};
+        if (err) {
+            logger.error("查询物流信息 失败 ：" + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
+//重新发送短信
+Buyer.prototype.sendMobileNote = function(param,callback){
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'sendMobileNote',[param.mobile]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+
+        var res = {};
+        if (err) {
+            logger.error("重新发送短信 失败 ：" + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+
+
 
 //依据查询条件搜索小花用户列表
 Buyer.prototype.searchCriteriaForXiaoHuaUser = function(param,callback){
