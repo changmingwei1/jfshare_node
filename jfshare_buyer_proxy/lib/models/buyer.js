@@ -701,23 +701,7 @@ Buyer.prototype.floretPassData = function(param,callback){
             res.code = data[0].code;
             res.desc = "系统错误";
             callback(res, null);
-        }else if (data[0].code == 101) {
-            res.code = data[0].code;
-            res.desc = "用户已经领取，不能重复领取";
-            callback(res, null);
-        }else if(data[0].code == 102){
-            res.code = data[0].code;
-            res.desc = "用户已使用券码，不能重复领取";
-            callback(res, null);
-        } else if(data[0].code == 501){
-            res.code = data[0].code;
-            res.desc = "时间字符串格式错误";
-            callback(res, null);
-        } else if(data[0].code == 502){
-            res.code = data[0].code;
-            res.desc = "添加用户失败";
-            callback(res, null);
-        } else {
+        }else{
             callback(null, data);
         }
     });
@@ -748,29 +732,11 @@ Buyer.prototype.OnLineApply = function(param,callback){
     });
 };
 
-//查询线上申领卡片用户列表
-Buyer.prototype.onLineApplyUserList = function(param,callback){
-
-    //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'onLineApplyUserList');
-    Lich.wicca.invokeClient(buyerServ, function(err, data){
-        logger.info("查询线上申领卡片用户列表:" + JSON.stringify(data));
-        var res = {};
-        if (err) {
-            logger.error("查询线上申领卡片用户列表失败: " + JSON.stringify(data));
-            res.code = 500;
-            callback(res, null);
-        } else {
-            callback(null, data);
-        }
-    });
-};
-
 //商户端审核券码，发放卡片
 Buyer.prototype.sellerCheckCode = function(param,callback){
 
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'sellerCheckCode',[param.sellerId,param.code,param.sztCardId]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'sellerCheckCode',[param.sellerId,param.code,param.sztCardId,param.sellerName]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
         logger.info("商户端审核券码，发放卡片:" + JSON.stringify(data));
         var res = {};
@@ -810,9 +776,7 @@ Buyer.prototype.findVerifyRecord = function(param,callback){
             logger.error("商户端查询验证记录: " + JSON.stringify(data));
             res.code = 500;
             callback(res, null);
-        } else if(data.code==1){
-            res.desc="*****参数错误"
-        }else{
+        } else{
             callback(null, data);
         }
     });
@@ -863,7 +827,7 @@ Buyer.prototype.queryExpress = function(param,callback){
 //重新发送短信
 Buyer.prototype.sendMobileNote = function(param,callback){
     //获取client
-    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'sendMobileNote',[param.mobile]);
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'sendMobileNote',[param.mobile,param.type]);
     Lich.wicca.invokeClient(buyerServ, function(err, data){
 
         var res = {};

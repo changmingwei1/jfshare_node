@@ -4113,6 +4113,7 @@ BuyerServ_sellerCheckCode_args = function(args) {
   this.sellerId = null;
   this.code = null;
   this.sztCardId = null;
+  this.sellerName = null;
   if (args) {
     if (args.sellerId !== undefined) {
       this.sellerId = args.sellerId;
@@ -4122,6 +4123,9 @@ BuyerServ_sellerCheckCode_args = function(args) {
     }
     if (args.sztCardId !== undefined) {
       this.sztCardId = args.sztCardId;
+    }
+    if (args.sellerName !== undefined) {
+      this.sellerName = args.sellerName;
     }
   }
 };
@@ -4160,6 +4164,13 @@ BuyerServ_sellerCheckCode_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -4184,6 +4195,11 @@ BuyerServ_sellerCheckCode_args.prototype.write = function(output) {
   if (this.sztCardId !== null && this.sztCardId !== undefined) {
     output.writeFieldBegin('sztCardId', Thrift.Type.STRING, 3);
     output.writeString(this.sztCardId);
+    output.writeFieldEnd();
+  }
+  if (this.sellerName !== null && this.sellerName !== undefined) {
+    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 4);
+    output.writeString(this.sellerName);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -4247,9 +4263,13 @@ BuyerServ_sellerCheckCode_result.prototype.write = function(output) {
 
 BuyerServ_sendMobileNote_args = function(args) {
   this.mobile = null;
+  this.type = null;
   if (args) {
     if (args.mobile !== undefined) {
       this.mobile = args.mobile;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
     }
   }
 };
@@ -4274,9 +4294,13 @@ BuyerServ_sendMobileNote_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case -2:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -4291,6 +4315,11 @@ BuyerServ_sendMobileNote_args.prototype.write = function(output) {
   if (this.mobile !== null && this.mobile !== undefined) {
     output.writeFieldBegin('mobile', Thrift.Type.STRING, -1);
     output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, -2);
+    output.writeI32(this.type);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -6837,7 +6866,7 @@ BuyerServClient.prototype.recv_queryExpress = function(input,mtype,rseqid) {
   }
   return callback('queryExpress failed: unknown result');
 };
-BuyerServClient.prototype.sellerCheckCode = function(sellerId, code, sztCardId, callback) {
+BuyerServClient.prototype.sellerCheckCode = function(sellerId, code, sztCardId, sellerName, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -6848,21 +6877,22 @@ BuyerServClient.prototype.sellerCheckCode = function(sellerId, code, sztCardId, 
         _defer.resolve(result);
       }
     };
-    this.send_sellerCheckCode(sellerId, code, sztCardId);
+    this.send_sellerCheckCode(sellerId, code, sztCardId, sellerName);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_sellerCheckCode(sellerId, code, sztCardId);
+    this.send_sellerCheckCode(sellerId, code, sztCardId, sellerName);
   }
 };
 
-BuyerServClient.prototype.send_sellerCheckCode = function(sellerId, code, sztCardId) {
+BuyerServClient.prototype.send_sellerCheckCode = function(sellerId, code, sztCardId, sellerName) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('sellerCheckCode', Thrift.MessageType.CALL, this.seqid());
   var args = new BuyerServ_sellerCheckCode_args();
   args.sellerId = sellerId;
   args.code = code;
   args.sztCardId = sztCardId;
+  args.sellerName = sellerName;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -6886,7 +6916,7 @@ BuyerServClient.prototype.recv_sellerCheckCode = function(input,mtype,rseqid) {
   }
   return callback('sellerCheckCode failed: unknown result');
 };
-BuyerServClient.prototype.sendMobileNote = function(mobile, callback) {
+BuyerServClient.prototype.sendMobileNote = function(mobile, type, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -6897,19 +6927,20 @@ BuyerServClient.prototype.sendMobileNote = function(mobile, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_sendMobileNote(mobile);
+    this.send_sendMobileNote(mobile, type);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_sendMobileNote(mobile);
+    this.send_sendMobileNote(mobile, type);
   }
 };
 
-BuyerServClient.prototype.send_sendMobileNote = function(mobile) {
+BuyerServClient.prototype.send_sendMobileNote = function(mobile, type) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('sendMobileNote', Thrift.MessageType.CALL, this.seqid());
   var args = new BuyerServ_sendMobileNote_args();
   args.mobile = mobile;
+  args.type = type;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -8338,8 +8369,8 @@ BuyerServProcessor.prototype.process_sellerCheckCode = function(seqid, input, ou
   var args = new BuyerServ_sellerCheckCode_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.sellerCheckCode.length === 3) {
-    Q.fcall(this._handler.sellerCheckCode, args.sellerId, args.code, args.sztCardId)
+  if (this._handler.sellerCheckCode.length === 4) {
+    Q.fcall(this._handler.sellerCheckCode, args.sellerId, args.code, args.sztCardId, args.sellerName)
       .then(function(result) {
         var result = new BuyerServ_sellerCheckCode_result({success: result});
         output.writeMessageBegin("sellerCheckCode", Thrift.MessageType.REPLY, seqid);
@@ -8354,7 +8385,7 @@ BuyerServProcessor.prototype.process_sellerCheckCode = function(seqid, input, ou
         output.flush();
       });
   } else {
-    this._handler.sellerCheckCode(args.sellerId, args.code, args.sztCardId,  function (err, result) {
+    this._handler.sellerCheckCode(args.sellerId, args.code, args.sztCardId, args.sellerName,  function (err, result) {
       var result = new BuyerServ_sellerCheckCode_result((err != null ? err : {success: result}));
       output.writeMessageBegin("sellerCheckCode", Thrift.MessageType.REPLY, seqid);
       result.write(output);
@@ -8368,8 +8399,8 @@ BuyerServProcessor.prototype.process_sendMobileNote = function(seqid, input, out
   var args = new BuyerServ_sendMobileNote_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.sendMobileNote.length === 1) {
-    Q.fcall(this._handler.sendMobileNote, args.mobile)
+  if (this._handler.sendMobileNote.length === 2) {
+    Q.fcall(this._handler.sendMobileNote, args.mobile, args.type)
       .then(function(result) {
         var result = new BuyerServ_sendMobileNote_result({success: result});
         output.writeMessageBegin("sendMobileNote", Thrift.MessageType.REPLY, seqid);
@@ -8384,7 +8415,7 @@ BuyerServProcessor.prototype.process_sendMobileNote = function(seqid, input, out
         output.flush();
       });
   } else {
-    this._handler.sendMobileNote(args.mobile,  function (err, result) {
+    this._handler.sendMobileNote(args.mobile, args.type,  function (err, result) {
       var result = new BuyerServ_sendMobileNote_result((err != null ? err : {success: result}));
       output.writeMessageBegin("sendMobileNote", Thrift.MessageType.REPLY, seqid);
       result.write(output);
