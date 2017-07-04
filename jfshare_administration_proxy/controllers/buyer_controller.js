@@ -225,13 +225,19 @@ router.post('/searchFloretUserList', function (request, response, next) {
             response.json(resContent);
             return;
         }
-
+        if(param.numPerPage == null || param.currentPage==null){
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
         logger.info("请求参数：" + JSON.stringify(param));
         Buyer.searchCriteriaForXiaoHuaUser(param, function (err, data) {
             if (err) {
                 response.json(err);
             } else {
                 resContent.adminFloretUserPara = data[0].adminFloretUserPara;
+                resContent.pagination = data[0].pagination;
                 response.json(resContent);
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             }
@@ -364,9 +370,22 @@ router.post('/importExpressInfoToDB', function (request, response, next) {
             if (err) {
                 response.json(err);
             } else {
-                resContent.data = data[0];
-                response.json(resContent);
-                logger.info("响应的结果:" + JSON.stringify(resContent));
+
+                if(data[0].code==101){
+                    logger.error("excel文件不存在");
+                    resContent.code = 101;
+                    resContent.desc = "excel文件不存在";
+                    response.json(resContent);
+                }else if(data[0].code==102){
+                    logger.error("excel文件没要导入的内容");
+                    resContent.code = 102;
+                    resContent.desc = "excel文件没要导入的内容";
+                    response.json(resContent);
+                }else {
+                    resContent.data = data[0];
+                    response.json(resContent);
+                    logger.info("响应的结果:" + JSON.stringify(resContent));
+                }
             }
         });
     } catch (ex) {
