@@ -1,7 +1,11 @@
 /**
  * Created by zhaoshenghai on 16/3/22.
  */
+<<<<<<< Updated upstream
 /*
+=======
+
+>>>>>>> Stashed changes
 var express = require('express');
 var router = express.Router();
 
@@ -183,4 +187,8 @@ router.post('/querynanfang', function(req, res, next) {
         res.json(result);
     }
 });
+<<<<<<< Updated upstream
 module.exports = router;*/
+=======
+module.exports = router;
+>>>>>>> Stashed changes
