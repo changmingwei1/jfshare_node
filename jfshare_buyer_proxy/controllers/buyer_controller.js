@@ -2606,7 +2606,7 @@ router.post('/onLineApply', function (request, response, next) {
             return;
         }
 
-        if (params.address == null || params.address == "") {
+        if (param.address == null || param.address == "") {
             resContent.code = 400;
             resContent.desc = "收件人地址不能为空";
             response.json(resContent);
@@ -2616,13 +2616,6 @@ router.post('/onLineApply', function (request, response, next) {
         if (params.ticketCode == null || params.ticketCode == "") {
             resContent.code = 400;
             resContent.desc = "券码不能为空";
-            response.json(resContent);
-            return;
-        }
-        //鉴权信息  token ppinfo
-        if (params.token == null || params.token == "") {
-            resContent.code = 400;
-            resContent.desc = "token不能为空";
             response.json(resContent);
             return;
         }
@@ -2980,170 +2973,4 @@ router.post('/sendMobileNote', function (request, response, next) {
     }
 });
 
-
-
-
-/*依据查询条件搜索小花用户列表*/
-router.post('/searchFloretUserList', function (request, response, next) {
-    logger.info("搜索小花用户列表");
-    var resContent = {code: 200};
-    var param = request.body;
-    try {
-        if (param == null) {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-
-        logger.info("请求参数：" + JSON.stringify(param));
-        Buyer.searchCriteriaForXiaoHuaUser(param, function (err, data) {
-            if (err) {
-                response.json(err);
-            } else {
-                resContent.data = data[0];
-                response.json(resContent);
-                logger.info("响应的结果:" + JSON.stringify(resContent));
-            }
-        });
-    } catch (ex) {
-        logger.error("搜索小花用户列表失败，because :" + ex);
-        resContent.code = 500;
-        resContent.desc = "搜索小花用户列表失败";
-        response.json(resContent);
-    }
-});
-
-/*导出小花表单*/
-router.post('/exportFloretUserTable', function (request, response, next) {
-    logger.info("导出小花表单");
-    var resContent = {code: 200};
-    var param = request.body;
-    try {
-        if (param == null) {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-
-        logger.info("请求参数：" + JSON.stringify(param));
-        Buyer.exportFloretUserTable(param, function (err, data) {
-            if (err) {
-                response.json(err);
-            } else {
-                resContent.exurl = data[0].value;
-                response.json(resContent);
-                logger.info("响应的结果:" + JSON.stringify(resContent));
-            }
-        });
-    } catch (ex) {
-        logger.error("导出小花表单，because :" + ex);
-        resContent.code = 500;
-        resContent.desc = "导出小花表单表失败";
-        response.json(resContent);
-    }
-});
-
-/*导入物流*/
-router.post('/importLogisticsCompanies', function (request, response, next) {
-    logger.info("导入物流");
-    var resContent = {code: 200};
-    var param = request.body;
-    try {
-        if (param == null) {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-
-        if (param.serialNumber == null || param.serialNumber == "") {
-            resContent.code = 400;
-            resContent.desc = "流水号不能为空";
-            response.json(resContent);
-            return;
-        }
-
-        if (param.logisticsCompaniesName == null || param.logisticsCompaniesName == "") {
-            resContent.code = 400;
-            resContent.desc = "物流公司不能为空";
-            response.json(resContent);
-            return;
-        }
-        if (param.logisticsNumber == null || param.logisticsNumber == "") {
-            resContent.code = 400;
-            resContent.desc = "物流单号不能为空";
-            response.json(resContent);
-            return;
-        }
-        if (param.sztCard == null || param.sztCard == "") {
-            resContent.code = 400;
-            resContent.desc = "深圳通卡不能为空";
-            response.json(resContent);
-            return;
-        }
-
-        if (param.cstate == null) {
-            resContent.code = 400;
-            resContent.desc = "状态不能为空";
-            response.json(resContent);
-            return;
-        }
-
-        logger.info("请求参数：" + JSON.stringify(param));
-        Buyer.importLogisticsCompanies(param, function (err, data) {
-            if (err) {
-                response.json(err);
-            } else {
-                resContent.data = data[0];
-                response.json(resContent);
-                logger.info("响应的结果:" + JSON.stringify(resContent));
-            }
-        });
-    } catch (ex) {
-        logger.error("导入物流，because :" + ex);
-        resContent.code = 500;
-        resContent.desc = "导入物流失败";
-        response.json(resContent);
-    }
-});
-
-/*excel导入物流*/
-router.post('/importExpressInfoToDB', function (request, response, next) {
-    logger.info("excel导入物流");
-    var resContent = {code: 200};
-    var param = request.body;
-    try {
-        if (param == null) {
-            resContent.code = 400;
-            resContent.desc = "参数错误";
-            response.json(resContent);
-            return;
-        }
-
-        if (param.exurl == null || param.exurl == "") {
-            resContent.code = 400;
-            resContent.desc = "excel文件路径不能为空";
-            response.json(resContent);
-            return;
-        }
-
-        logger.info("请求参数：" + JSON.stringify(param));
-        Buyer.importExpressInfoToDB(param, function (err, data) {
-            if (err) {
-                response.json(err);
-            } else {
-                resContent.data = data[0];
-                response.json(resContent);
-                logger.info("响应的结果:" + JSON.stringify(resContent));
-            }
-        });
-    } catch (ex) {
-        logger.error("excel导入物流，because :" + ex);
-        resContent.code = 500;
-        resContent.desc = "excel导入物流失败";
-        response.json(resContent);
-    }
-});
 module.exports = router;

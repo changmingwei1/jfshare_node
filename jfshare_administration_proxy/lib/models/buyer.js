@@ -300,4 +300,127 @@ Buyer.prototype.isDisableUser = function(param,callback){
         }
     });
 };
+
+//依据查询条件搜索小花用户列表
+Buyer.prototype.searchCriteriaForXiaoHuaUser = function(param,callback){
+
+    var onlineUserParam = new buyer_types.SearchCriteriaForXiaoHua({
+        registerTimeStart:param.registerTimeStart,
+        registerTimeEnd:param.registerTimeEnd,
+        passTimeStart:param.passTimeStart,
+        passTimeEnd:param.passTimeEnd,
+        useTimeStart:param.useTimeStart,
+        useTimeEnd:param.useTimeEnd,
+        ticketValid:param.ticketValid,
+        isOnline:param.isOnline,
+        serialNumber:param.serialNumber,
+        mobile:param.mobile,
+        jfsAccount:param.jfsAccount,
+        sellerName:param.sellerName
+    });
+
+    var pagination = new pagination_types.Pagination({
+        numPerPage:param.numPerPage,
+        currentPage:param.currentPage
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'searchCriteriaForXiaoHuaUser',[onlineUserParam,pagination]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("搜索小花用户列表:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("搜索小花用户列表: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//依据查询条件搜索小花用户列表
+Buyer.prototype.exportFloretUserTable = function(param,callback){
+
+    var onlineUserParam = new buyer_types.SearchCriteriaForXiaoHua({
+        registerTimeStart:param.registerTimeStart,
+        registerTimeEnd:param.registerTimeEnd,
+        passTimeStart:param.passTimeStart,
+        passTimeEnd:param.passTimeEnd,
+        useTimeStart:param.useTimeStart,
+        useTimeEnd:param.useTimeEnd,
+        ticketValid:param.ticketValid,
+        isOnline:param.isOnline,
+        serialNumber:param.serialNumber,
+        mobile:param.mobile,
+        jfsAccount:param.jfsAccount,
+        sellerName:param.sellerName
+    });
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'exportFloretUserTable',[onlineUserParam]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("导出小花表单:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("导出小花表单: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+/*导入物流*/
+Buyer.prototype.importLogisticsCompanies = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'importLogisticsCompanies',[param.serialNumber,param.logisticsCompaniesName,param.logisticsNumber,param.logisticsNumber,param.cstate]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("导入物流:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("导入物流: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+/*excel导入物流*/
+Buyer.prototype.importExpressInfoToDB = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'importExpressInfoToDB',[param.exurl]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("excel导入物流:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("excel导入物流: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+/*管理平台查询物流信息*/
+Buyer.prototype.searchAdminExpressInfo = function(param,callback){
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'searchAdminExpressInfo',[param.serialNumber]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("管理后台查询物流信息:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("管理后台查询物流信息: " + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 module.exports = new Buyer();

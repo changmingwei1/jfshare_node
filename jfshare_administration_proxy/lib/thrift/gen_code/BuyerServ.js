@@ -8,6 +8,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var result_ttypes = require('./result_types')
+var pagination_ttypes = require('./pagination_types')
 
 
 var ttypes = require('./buyer_types');
@@ -1386,18 +1387,18 @@ BuyerServ_getListBuyer_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
+        var _size32 = 0;
+        var _rtmp336;
         this.userIdList = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
         {
-          var elem14 = null;
-          elem14 = input.readI32();
-          this.userIdList.push(elem14);
+          var elem38 = null;
+          elem38 = input.readI32();
+          this.userIdList.push(elem38);
         }
         input.readListEnd();
       } else {
@@ -1421,12 +1422,12 @@ BuyerServ_getListBuyer_args.prototype.write = function(output) {
   if (this.userIdList !== null && this.userIdList !== undefined) {
     output.writeFieldBegin('userIdList', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.userIdList.length);
-    for (var iter15 in this.userIdList)
+    for (var iter39 in this.userIdList)
     {
-      if (this.userIdList.hasOwnProperty(iter15))
+      if (this.userIdList.hasOwnProperty(iter39))
       {
-        iter15 = this.userIdList[iter15];
-        output.writeI32(iter15);
+        iter39 = this.userIdList[iter39];
+        output.writeI32(iter39);
       }
     }
     output.writeListEnd();
@@ -3049,6 +3050,2118 @@ BuyerServ_isDisableUser_result.prototype.write = function(output) {
   return;
 };
 
+BuyerServ_smsLoginEnterAmount_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+BuyerServ_smsLoginEnterAmount_args.prototype = {};
+BuyerServ_smsLoginEnterAmount_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.SmsLoginEnterAmountParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_smsLoginEnterAmount_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_smsLoginEnterAmount_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_smsLoginEnterAmount_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_smsLoginEnterAmount_result.prototype = {};
+BuyerServ_smsLoginEnterAmount_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.SmsLoginEnterAmountResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_smsLoginEnterAmount_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_smsLoginEnterAmount_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_thirdSigninCheck_args = function(args) {
+  this.loginLog = null;
+  this.UserThird = null;
+  this.validateInfo = null;
+  if (args) {
+    if (args.loginLog !== undefined) {
+      this.loginLog = args.loginLog;
+    }
+    if (args.UserThird !== undefined) {
+      this.UserThird = args.UserThird;
+    }
+    if (args.validateInfo !== undefined) {
+      this.validateInfo = args.validateInfo;
+    }
+  }
+};
+BuyerServ_thirdSigninCheck_args.prototype = {};
+BuyerServ_thirdSigninCheck_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.loginLog = new ttypes.LoginLog();
+        this.loginLog.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.UserThird = new ttypes.UserInfoThird();
+        this.UserThird.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.validateInfo = new ttypes.ValidateInfo();
+        this.validateInfo.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_thirdSigninCheck_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_thirdSigninCheck_args');
+  if (this.loginLog !== null && this.loginLog !== undefined) {
+    output.writeFieldBegin('loginLog', Thrift.Type.STRUCT, 1);
+    this.loginLog.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.UserThird !== null && this.UserThird !== undefined) {
+    output.writeFieldBegin('UserThird', Thrift.Type.STRUCT, 2);
+    this.UserThird.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.validateInfo !== null && this.validateInfo !== undefined) {
+    output.writeFieldBegin('validateInfo', Thrift.Type.STRUCT, 3);
+    this.validateInfo.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_thirdSigninCheck_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_thirdSigninCheck_result.prototype = {};
+BuyerServ_thirdSigninCheck_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.BuyerResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_thirdSigninCheck_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_thirdSigninCheck_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_checkAppH5Token_args = function(args) {
+  this.token = null;
+  this.mobileNo = null;
+  this.openId = null;
+  this.mac = null;
+  this.accessCode = null;
+  if (args) {
+    if (args.token !== undefined) {
+      this.token = args.token;
+    }
+    if (args.mobileNo !== undefined) {
+      this.mobileNo = args.mobileNo;
+    }
+    if (args.openId !== undefined) {
+      this.openId = args.openId;
+    }
+    if (args.mac !== undefined) {
+      this.mac = args.mac;
+    }
+    if (args.accessCode !== undefined) {
+      this.accessCode = args.accessCode;
+    }
+  }
+};
+BuyerServ_checkAppH5Token_args.prototype = {};
+BuyerServ_checkAppH5Token_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.token = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobileNo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.openId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.mac = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.accessCode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_checkAppH5Token_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_checkAppH5Token_args');
+  if (this.token !== null && this.token !== undefined) {
+    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
+    output.writeString(this.token);
+    output.writeFieldEnd();
+  }
+  if (this.mobileNo !== null && this.mobileNo !== undefined) {
+    output.writeFieldBegin('mobileNo', Thrift.Type.STRING, 2);
+    output.writeString(this.mobileNo);
+    output.writeFieldEnd();
+  }
+  if (this.openId !== null && this.openId !== undefined) {
+    output.writeFieldBegin('openId', Thrift.Type.STRING, 3);
+    output.writeString(this.openId);
+    output.writeFieldEnd();
+  }
+  if (this.mac !== null && this.mac !== undefined) {
+    output.writeFieldBegin('mac', Thrift.Type.STRING, 4);
+    output.writeString(this.mac);
+    output.writeFieldEnd();
+  }
+  if (this.accessCode !== null && this.accessCode !== undefined) {
+    output.writeFieldBegin('accessCode', Thrift.Type.STRING, 5);
+    output.writeString(this.accessCode);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_checkAppH5Token_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_checkAppH5Token_result.prototype = {};
+BuyerServ_checkAppH5Token_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_checkAppH5Token_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_checkAppH5Token_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_getProfileFromWeixinByUnionId_args = function(args) {
+  this.unionId = null;
+  if (args) {
+    if (args.unionId !== undefined) {
+      this.unionId = args.unionId;
+    }
+  }
+};
+BuyerServ_getProfileFromWeixinByUnionId_args.prototype = {};
+BuyerServ_getProfileFromWeixinByUnionId_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.unionId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_getProfileFromWeixinByUnionId_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getProfileFromWeixinByUnionId_args');
+  if (this.unionId !== null && this.unionId !== undefined) {
+    output.writeFieldBegin('unionId', Thrift.Type.STRING, 1);
+    output.writeString(this.unionId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_getProfileFromWeixinByUnionId_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_getProfileFromWeixinByUnionId_result.prototype = {};
+BuyerServ_getProfileFromWeixinByUnionId_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.WXProfileResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_getProfileFromWeixinByUnionId_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getProfileFromWeixinByUnionId_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_getProfileFromWeixinByCode_args = function(args) {
+  this.code = null;
+  if (args) {
+    if (args.code !== undefined) {
+      this.code = args.code;
+    }
+  }
+};
+BuyerServ_getProfileFromWeixinByCode_args.prototype = {};
+BuyerServ_getProfileFromWeixinByCode_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.code = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_getProfileFromWeixinByCode_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getProfileFromWeixinByCode_args');
+  if (this.code !== null && this.code !== undefined) {
+    output.writeFieldBegin('code', Thrift.Type.STRING, 1);
+    output.writeString(this.code);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_getProfileFromWeixinByCode_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_getProfileFromWeixinByCode_result.prototype = {};
+BuyerServ_getProfileFromWeixinByCode_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.WXProfileResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_getProfileFromWeixinByCode_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getProfileFromWeixinByCode_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_getWeiXinJSconfig_args = function(args) {
+  this.url = null;
+  if (args) {
+    if (args.url !== undefined) {
+      this.url = args.url;
+    }
+  }
+};
+BuyerServ_getWeiXinJSconfig_args.prototype = {};
+BuyerServ_getWeiXinJSconfig_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.url = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_getWeiXinJSconfig_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getWeiXinJSconfig_args');
+  if (this.url !== null && this.url !== undefined) {
+    output.writeFieldBegin('url', Thrift.Type.STRING, 1);
+    output.writeString(this.url);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_getWeiXinJSconfig_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_getWeiXinJSconfig_result.prototype = {};
+BuyerServ_getWeiXinJSconfig_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.WXConfigResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_getWeiXinJSconfig_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_getWeiXinJSconfig_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_floretPassData_args = function(args) {
+  this.user = null;
+  if (args) {
+    if (args.user !== undefined) {
+      this.user = args.user;
+    }
+  }
+};
+BuyerServ_floretPassData_args.prototype = {};
+BuyerServ_floretPassData_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.user = new ttypes.FloretUserParam();
+        this.user.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_floretPassData_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_floretPassData_args');
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRUCT, 1);
+    this.user.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_floretPassData_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_floretPassData_result.prototype = {};
+BuyerServ_floretPassData_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_floretPassData_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_floretPassData_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_OnLineApply_args = function(args) {
+  this.param = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+BuyerServ_OnLineApply_args.prototype = {};
+BuyerServ_OnLineApply_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.OnlineUserParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_OnLineApply_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_OnLineApply_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_OnLineApply_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_OnLineApply_result.prototype = {};
+BuyerServ_OnLineApply_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_OnLineApply_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_OnLineApply_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_queryExpress_args = function(args) {
+  this.code = null;
+  if (args) {
+    if (args.code !== undefined) {
+      this.code = args.code;
+    }
+  }
+};
+BuyerServ_queryExpress_args.prototype = {};
+BuyerServ_queryExpress_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case -1:
+      if (ftype == Thrift.Type.STRING) {
+        this.code = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_queryExpress_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_queryExpress_args');
+  if (this.code !== null && this.code !== undefined) {
+    output.writeFieldBegin('code', Thrift.Type.STRING, -1);
+    output.writeString(this.code);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_queryExpress_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_queryExpress_result.prototype = {};
+BuyerServ_queryExpress_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ExpressResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_queryExpress_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_queryExpress_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_sellerCheckCode_args = function(args) {
+  this.sellerId = null;
+  this.code = null;
+  this.sztCardId = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.code !== undefined) {
+      this.code = args.code;
+    }
+    if (args.sztCardId !== undefined) {
+      this.sztCardId = args.sztCardId;
+    }
+  }
+};
+BuyerServ_sellerCheckCode_args.prototype = {};
+BuyerServ_sellerCheckCode_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.code = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.sztCardId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_sellerCheckCode_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_sellerCheckCode_args');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 1);
+    output.writeString(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.code !== null && this.code !== undefined) {
+    output.writeFieldBegin('code', Thrift.Type.STRING, 2);
+    output.writeString(this.code);
+    output.writeFieldEnd();
+  }
+  if (this.sztCardId !== null && this.sztCardId !== undefined) {
+    output.writeFieldBegin('sztCardId', Thrift.Type.STRING, 3);
+    output.writeString(this.sztCardId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_sellerCheckCode_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_sellerCheckCode_result.prototype = {};
+BuyerServ_sellerCheckCode_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_sellerCheckCode_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_sellerCheckCode_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_sendMobileNote_args = function(args) {
+  this.mobile = null;
+  if (args) {
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+  }
+};
+BuyerServ_sendMobileNote_args.prototype = {};
+BuyerServ_sendMobileNote_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case -1:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_sendMobileNote_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_sendMobileNote_args');
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, -1);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_sendMobileNote_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_sendMobileNote_result.prototype = {};
+BuyerServ_sendMobileNote_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_sendMobileNote_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_sendMobileNote_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_findVerifyRecord_args = function(args) {
+  this.sellerId = null;
+  this.pagination = null;
+  this.vrParam = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.vrParam !== undefined) {
+      this.vrParam = args.vrParam;
+    }
+  }
+};
+BuyerServ_findVerifyRecord_args.prototype = {};
+BuyerServ_findVerifyRecord_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.vrParam = new ttypes.VerifyRecordParam();
+        this.vrParam.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_findVerifyRecord_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_findVerifyRecord_args');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 1);
+    output.writeString(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.vrParam !== null && this.vrParam !== undefined) {
+    output.writeFieldBegin('vrParam', Thrift.Type.STRUCT, 3);
+    this.vrParam.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_findVerifyRecord_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_findVerifyRecord_result.prototype = {};
+BuyerServ_findVerifyRecord_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.VerifyRecordResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_findVerifyRecord_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_findVerifyRecord_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_exportVerifyRecord_args = function(args) {
+  this.sellerId = null;
+  this.vrParam = null;
+  if (args) {
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.vrParam !== undefined) {
+      this.vrParam = args.vrParam;
+    }
+  }
+};
+BuyerServ_exportVerifyRecord_args.prototype = {};
+BuyerServ_exportVerifyRecord_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.sellerId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.vrParam = new ttypes.VerifyRecordParam();
+        this.vrParam.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_exportVerifyRecord_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_exportVerifyRecord_args');
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.STRING, 1);
+    output.writeString(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.vrParam !== null && this.vrParam !== undefined) {
+    output.writeFieldBegin('vrParam', Thrift.Type.STRUCT, 2);
+    this.vrParam.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_exportVerifyRecord_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_exportVerifyRecord_result.prototype = {};
+BuyerServ_exportVerifyRecord_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_exportVerifyRecord_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_exportVerifyRecord_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_searchAdminExpressInfo_args = function(args) {
+  this.serialNumber = null;
+  if (args) {
+    if (args.serialNumber !== undefined) {
+      this.serialNumber = args.serialNumber;
+    }
+  }
+};
+BuyerServ_searchAdminExpressInfo_args.prototype = {};
+BuyerServ_searchAdminExpressInfo_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.serialNumber = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_searchAdminExpressInfo_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_searchAdminExpressInfo_args');
+  if (this.serialNumber !== null && this.serialNumber !== undefined) {
+    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 1);
+    output.writeString(this.serialNumber);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_searchAdminExpressInfo_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_searchAdminExpressInfo_result.prototype = {};
+BuyerServ_searchAdminExpressInfo_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.AdminExpressResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_searchAdminExpressInfo_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_searchAdminExpressInfo_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_searchCriteriaForXiaoHuaUser_args = function(args) {
+  this.searchCriteriaForXiaoHua = null;
+  this.pagination = null;
+  if (args) {
+    if (args.searchCriteriaForXiaoHua !== undefined) {
+      this.searchCriteriaForXiaoHua = args.searchCriteriaForXiaoHua;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+BuyerServ_searchCriteriaForXiaoHuaUser_args.prototype = {};
+BuyerServ_searchCriteriaForXiaoHuaUser_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.searchCriteriaForXiaoHua = new ttypes.SearchCriteriaForXiaoHua();
+        this.searchCriteriaForXiaoHua.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_searchCriteriaForXiaoHuaUser_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_searchCriteriaForXiaoHuaUser_args');
+  if (this.searchCriteriaForXiaoHua !== null && this.searchCriteriaForXiaoHua !== undefined) {
+    output.writeFieldBegin('searchCriteriaForXiaoHua', Thrift.Type.STRUCT, 1);
+    this.searchCriteriaForXiaoHua.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_searchCriteriaForXiaoHuaUser_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_searchCriteriaForXiaoHuaUser_result.prototype = {};
+BuyerServ_searchCriteriaForXiaoHuaUser_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.AdminFloretUserParaResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_searchCriteriaForXiaoHuaUser_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_searchCriteriaForXiaoHuaUser_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_exportFloretUserTable_args = function(args) {
+  this.searchCriteriaForXiaoHua = null;
+  if (args) {
+    if (args.searchCriteriaForXiaoHua !== undefined) {
+      this.searchCriteriaForXiaoHua = args.searchCriteriaForXiaoHua;
+    }
+  }
+};
+BuyerServ_exportFloretUserTable_args.prototype = {};
+BuyerServ_exportFloretUserTable_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.searchCriteriaForXiaoHua = new ttypes.SearchCriteriaForXiaoHua();
+        this.searchCriteriaForXiaoHua.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_exportFloretUserTable_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_exportFloretUserTable_args');
+  if (this.searchCriteriaForXiaoHua !== null && this.searchCriteriaForXiaoHua !== undefined) {
+    output.writeFieldBegin('searchCriteriaForXiaoHua', Thrift.Type.STRUCT, 1);
+    this.searchCriteriaForXiaoHua.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_exportFloretUserTable_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_exportFloretUserTable_result.prototype = {};
+BuyerServ_exportFloretUserTable_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_exportFloretUserTable_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_exportFloretUserTable_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_importExpressInfoToDB_args = function(args) {
+  this.exurl = null;
+  if (args) {
+    if (args.exurl !== undefined) {
+      this.exurl = args.exurl;
+    }
+  }
+};
+BuyerServ_importExpressInfoToDB_args.prototype = {};
+BuyerServ_importExpressInfoToDB_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.exurl = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_importExpressInfoToDB_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_importExpressInfoToDB_args');
+  if (this.exurl !== null && this.exurl !== undefined) {
+    output.writeFieldBegin('exurl', Thrift.Type.STRING, 1);
+    output.writeString(this.exurl);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_importExpressInfoToDB_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_importExpressInfoToDB_result.prototype = {};
+BuyerServ_importExpressInfoToDB_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_importExpressInfoToDB_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_importExpressInfoToDB_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_importSZTCartToDB_args = function(args) {
+  this.exurl = null;
+  if (args) {
+    if (args.exurl !== undefined) {
+      this.exurl = args.exurl;
+    }
+  }
+};
+BuyerServ_importSZTCartToDB_args.prototype = {};
+BuyerServ_importSZTCartToDB_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.exurl = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_importSZTCartToDB_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_importSZTCartToDB_args');
+  if (this.exurl !== null && this.exurl !== undefined) {
+    output.writeFieldBegin('exurl', Thrift.Type.STRING, 1);
+    output.writeString(this.exurl);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_importSZTCartToDB_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_importSZTCartToDB_result.prototype = {};
+BuyerServ_importSZTCartToDB_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_importSZTCartToDB_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_importSZTCartToDB_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 BuyerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -4295,6 +6408,864 @@ BuyerServClient.prototype.recv_isDisableUser = function(input,mtype,rseqid) {
   }
   return callback('isDisableUser failed: unknown result');
 };
+BuyerServClient.prototype.smsLoginEnterAmount = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_smsLoginEnterAmount(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_smsLoginEnterAmount(param);
+  }
+};
+
+BuyerServClient.prototype.send_smsLoginEnterAmount = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('smsLoginEnterAmount', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_smsLoginEnterAmount_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_smsLoginEnterAmount = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_smsLoginEnterAmount_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('smsLoginEnterAmount failed: unknown result');
+};
+BuyerServClient.prototype.thirdSigninCheck = function(loginLog, UserThird, validateInfo, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_thirdSigninCheck(loginLog, UserThird, validateInfo);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_thirdSigninCheck(loginLog, UserThird, validateInfo);
+  }
+};
+
+BuyerServClient.prototype.send_thirdSigninCheck = function(loginLog, UserThird, validateInfo) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('thirdSigninCheck', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_thirdSigninCheck_args();
+  args.loginLog = loginLog;
+  args.UserThird = UserThird;
+  args.validateInfo = validateInfo;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_thirdSigninCheck = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_thirdSigninCheck_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('thirdSigninCheck failed: unknown result');
+};
+BuyerServClient.prototype.checkAppH5Token = function(token, mobileNo, openId, mac, accessCode, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_checkAppH5Token(token, mobileNo, openId, mac, accessCode);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_checkAppH5Token(token, mobileNo, openId, mac, accessCode);
+  }
+};
+
+BuyerServClient.prototype.send_checkAppH5Token = function(token, mobileNo, openId, mac, accessCode) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('checkAppH5Token', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_checkAppH5Token_args();
+  args.token = token;
+  args.mobileNo = mobileNo;
+  args.openId = openId;
+  args.mac = mac;
+  args.accessCode = accessCode;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_checkAppH5Token = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_checkAppH5Token_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('checkAppH5Token failed: unknown result');
+};
+BuyerServClient.prototype.getProfileFromWeixinByUnionId = function(unionId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getProfileFromWeixinByUnionId(unionId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getProfileFromWeixinByUnionId(unionId);
+  }
+};
+
+BuyerServClient.prototype.send_getProfileFromWeixinByUnionId = function(unionId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getProfileFromWeixinByUnionId', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_getProfileFromWeixinByUnionId_args();
+  args.unionId = unionId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_getProfileFromWeixinByUnionId = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_getProfileFromWeixinByUnionId_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getProfileFromWeixinByUnionId failed: unknown result');
+};
+BuyerServClient.prototype.getProfileFromWeixinByCode = function(code, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getProfileFromWeixinByCode(code);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getProfileFromWeixinByCode(code);
+  }
+};
+
+BuyerServClient.prototype.send_getProfileFromWeixinByCode = function(code) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getProfileFromWeixinByCode', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_getProfileFromWeixinByCode_args();
+  args.code = code;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_getProfileFromWeixinByCode = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_getProfileFromWeixinByCode_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getProfileFromWeixinByCode failed: unknown result');
+};
+BuyerServClient.prototype.getWeiXinJSconfig = function(url, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_getWeiXinJSconfig(url);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_getWeiXinJSconfig(url);
+  }
+};
+
+BuyerServClient.prototype.send_getWeiXinJSconfig = function(url) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('getWeiXinJSconfig', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_getWeiXinJSconfig_args();
+  args.url = url;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_getWeiXinJSconfig = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_getWeiXinJSconfig_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('getWeiXinJSconfig failed: unknown result');
+};
+BuyerServClient.prototype.floretPassData = function(user, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_floretPassData(user);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_floretPassData(user);
+  }
+};
+
+BuyerServClient.prototype.send_floretPassData = function(user) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('floretPassData', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_floretPassData_args();
+  args.user = user;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_floretPassData = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_floretPassData_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('floretPassData failed: unknown result');
+};
+BuyerServClient.prototype.OnLineApply = function(param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_OnLineApply(param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_OnLineApply(param);
+  }
+};
+
+BuyerServClient.prototype.send_OnLineApply = function(param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('OnLineApply', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_OnLineApply_args();
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_OnLineApply = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_OnLineApply_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('OnLineApply failed: unknown result');
+};
+BuyerServClient.prototype.queryExpress = function(code, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryExpress(code);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryExpress(code);
+  }
+};
+
+BuyerServClient.prototype.send_queryExpress = function(code) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryExpress', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_queryExpress_args();
+  args.code = code;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_queryExpress = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_queryExpress_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryExpress failed: unknown result');
+};
+BuyerServClient.prototype.sellerCheckCode = function(sellerId, code, sztCardId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_sellerCheckCode(sellerId, code, sztCardId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_sellerCheckCode(sellerId, code, sztCardId);
+  }
+};
+
+BuyerServClient.prototype.send_sellerCheckCode = function(sellerId, code, sztCardId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('sellerCheckCode', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_sellerCheckCode_args();
+  args.sellerId = sellerId;
+  args.code = code;
+  args.sztCardId = sztCardId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_sellerCheckCode = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_sellerCheckCode_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('sellerCheckCode failed: unknown result');
+};
+BuyerServClient.prototype.sendMobileNote = function(mobile, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_sendMobileNote(mobile);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_sendMobileNote(mobile);
+  }
+};
+
+BuyerServClient.prototype.send_sendMobileNote = function(mobile) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('sendMobileNote', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_sendMobileNote_args();
+  args.mobile = mobile;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_sendMobileNote = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_sendMobileNote_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('sendMobileNote failed: unknown result');
+};
+BuyerServClient.prototype.findVerifyRecord = function(sellerId, pagination, vrParam, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_findVerifyRecord(sellerId, pagination, vrParam);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_findVerifyRecord(sellerId, pagination, vrParam);
+  }
+};
+
+BuyerServClient.prototype.send_findVerifyRecord = function(sellerId, pagination, vrParam) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('findVerifyRecord', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_findVerifyRecord_args();
+  args.sellerId = sellerId;
+  args.pagination = pagination;
+  args.vrParam = vrParam;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_findVerifyRecord = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_findVerifyRecord_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('findVerifyRecord failed: unknown result');
+};
+BuyerServClient.prototype.exportVerifyRecord = function(sellerId, vrParam, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exportVerifyRecord(sellerId, vrParam);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exportVerifyRecord(sellerId, vrParam);
+  }
+};
+
+BuyerServClient.prototype.send_exportVerifyRecord = function(sellerId, vrParam) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exportVerifyRecord', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_exportVerifyRecord_args();
+  args.sellerId = sellerId;
+  args.vrParam = vrParam;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_exportVerifyRecord = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_exportVerifyRecord_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exportVerifyRecord failed: unknown result');
+};
+BuyerServClient.prototype.searchAdminExpressInfo = function(serialNumber, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_searchAdminExpressInfo(serialNumber);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_searchAdminExpressInfo(serialNumber);
+  }
+};
+
+BuyerServClient.prototype.send_searchAdminExpressInfo = function(serialNumber) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('searchAdminExpressInfo', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_searchAdminExpressInfo_args();
+  args.serialNumber = serialNumber;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_searchAdminExpressInfo = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_searchAdminExpressInfo_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('searchAdminExpressInfo failed: unknown result');
+};
+BuyerServClient.prototype.searchCriteriaForXiaoHuaUser = function(searchCriteriaForXiaoHua, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_searchCriteriaForXiaoHuaUser(searchCriteriaForXiaoHua, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_searchCriteriaForXiaoHuaUser(searchCriteriaForXiaoHua, pagination);
+  }
+};
+
+BuyerServClient.prototype.send_searchCriteriaForXiaoHuaUser = function(searchCriteriaForXiaoHua, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('searchCriteriaForXiaoHuaUser', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_searchCriteriaForXiaoHuaUser_args();
+  args.searchCriteriaForXiaoHua = searchCriteriaForXiaoHua;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_searchCriteriaForXiaoHuaUser = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_searchCriteriaForXiaoHuaUser_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('searchCriteriaForXiaoHuaUser failed: unknown result');
+};
+BuyerServClient.prototype.exportFloretUserTable = function(searchCriteriaForXiaoHua, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exportFloretUserTable(searchCriteriaForXiaoHua);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exportFloretUserTable(searchCriteriaForXiaoHua);
+  }
+};
+
+BuyerServClient.prototype.send_exportFloretUserTable = function(searchCriteriaForXiaoHua) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exportFloretUserTable', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_exportFloretUserTable_args();
+  args.searchCriteriaForXiaoHua = searchCriteriaForXiaoHua;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_exportFloretUserTable = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_exportFloretUserTable_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exportFloretUserTable failed: unknown result');
+};
+BuyerServClient.prototype.importExpressInfoToDB = function(exurl, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_importExpressInfoToDB(exurl);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_importExpressInfoToDB(exurl);
+  }
+};
+
+BuyerServClient.prototype.send_importExpressInfoToDB = function(exurl) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('importExpressInfoToDB', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_importExpressInfoToDB_args();
+  args.exurl = exurl;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_importExpressInfoToDB = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_importExpressInfoToDB_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('importExpressInfoToDB failed: unknown result');
+};
+BuyerServClient.prototype.importSZTCartToDB = function(exurl, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_importSZTCartToDB(exurl);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_importSZTCartToDB(exurl);
+  }
+};
+
+BuyerServClient.prototype.send_importSZTCartToDB = function(exurl) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('importSZTCartToDB', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_importSZTCartToDB_args();
+  args.exurl = exurl;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_importSZTCartToDB = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_importSZTCartToDB_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('importSZTCartToDB failed: unknown result');
+};
 BuyerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -5086,6 +8057,546 @@ BuyerServProcessor.prototype.process_isDisableUser = function(seqid, input, outp
     this._handler.isDisableUser(args.param,  function (err, result) {
       var result = new BuyerServ_isDisableUser_result((err != null ? err : {success: result}));
       output.writeMessageBegin("isDisableUser", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_smsLoginEnterAmount = function(seqid, input, output) {
+  var args = new BuyerServ_smsLoginEnterAmount_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.smsLoginEnterAmount.length === 1) {
+    Q.fcall(this._handler.smsLoginEnterAmount, args.param)
+      .then(function(result) {
+        var result = new BuyerServ_smsLoginEnterAmount_result({success: result});
+        output.writeMessageBegin("smsLoginEnterAmount", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_smsLoginEnterAmount_result(err);
+        output.writeMessageBegin("smsLoginEnterAmount", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.smsLoginEnterAmount(args.param,  function (err, result) {
+      var result = new BuyerServ_smsLoginEnterAmount_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("smsLoginEnterAmount", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_thirdSigninCheck = function(seqid, input, output) {
+  var args = new BuyerServ_thirdSigninCheck_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.thirdSigninCheck.length === 3) {
+    Q.fcall(this._handler.thirdSigninCheck, args.loginLog, args.UserThird, args.validateInfo)
+      .then(function(result) {
+        var result = new BuyerServ_thirdSigninCheck_result({success: result});
+        output.writeMessageBegin("thirdSigninCheck", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_thirdSigninCheck_result(err);
+        output.writeMessageBegin("thirdSigninCheck", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.thirdSigninCheck(args.loginLog, args.UserThird, args.validateInfo,  function (err, result) {
+      var result = new BuyerServ_thirdSigninCheck_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("thirdSigninCheck", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_checkAppH5Token = function(seqid, input, output) {
+  var args = new BuyerServ_checkAppH5Token_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.checkAppH5Token.length === 5) {
+    Q.fcall(this._handler.checkAppH5Token, args.token, args.mobileNo, args.openId, args.mac, args.accessCode)
+      .then(function(result) {
+        var result = new BuyerServ_checkAppH5Token_result({success: result});
+        output.writeMessageBegin("checkAppH5Token", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_checkAppH5Token_result(err);
+        output.writeMessageBegin("checkAppH5Token", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.checkAppH5Token(args.token, args.mobileNo, args.openId, args.mac, args.accessCode,  function (err, result) {
+      var result = new BuyerServ_checkAppH5Token_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("checkAppH5Token", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_getProfileFromWeixinByUnionId = function(seqid, input, output) {
+  var args = new BuyerServ_getProfileFromWeixinByUnionId_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getProfileFromWeixinByUnionId.length === 1) {
+    Q.fcall(this._handler.getProfileFromWeixinByUnionId, args.unionId)
+      .then(function(result) {
+        var result = new BuyerServ_getProfileFromWeixinByUnionId_result({success: result});
+        output.writeMessageBegin("getProfileFromWeixinByUnionId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_getProfileFromWeixinByUnionId_result(err);
+        output.writeMessageBegin("getProfileFromWeixinByUnionId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getProfileFromWeixinByUnionId(args.unionId,  function (err, result) {
+      var result = new BuyerServ_getProfileFromWeixinByUnionId_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getProfileFromWeixinByUnionId", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_getProfileFromWeixinByCode = function(seqid, input, output) {
+  var args = new BuyerServ_getProfileFromWeixinByCode_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getProfileFromWeixinByCode.length === 1) {
+    Q.fcall(this._handler.getProfileFromWeixinByCode, args.code)
+      .then(function(result) {
+        var result = new BuyerServ_getProfileFromWeixinByCode_result({success: result});
+        output.writeMessageBegin("getProfileFromWeixinByCode", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_getProfileFromWeixinByCode_result(err);
+        output.writeMessageBegin("getProfileFromWeixinByCode", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getProfileFromWeixinByCode(args.code,  function (err, result) {
+      var result = new BuyerServ_getProfileFromWeixinByCode_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getProfileFromWeixinByCode", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_getWeiXinJSconfig = function(seqid, input, output) {
+  var args = new BuyerServ_getWeiXinJSconfig_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.getWeiXinJSconfig.length === 1) {
+    Q.fcall(this._handler.getWeiXinJSconfig, args.url)
+      .then(function(result) {
+        var result = new BuyerServ_getWeiXinJSconfig_result({success: result});
+        output.writeMessageBegin("getWeiXinJSconfig", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_getWeiXinJSconfig_result(err);
+        output.writeMessageBegin("getWeiXinJSconfig", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.getWeiXinJSconfig(args.url,  function (err, result) {
+      var result = new BuyerServ_getWeiXinJSconfig_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("getWeiXinJSconfig", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_floretPassData = function(seqid, input, output) {
+  var args = new BuyerServ_floretPassData_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.floretPassData.length === 1) {
+    Q.fcall(this._handler.floretPassData, args.user)
+      .then(function(result) {
+        var result = new BuyerServ_floretPassData_result({success: result});
+        output.writeMessageBegin("floretPassData", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_floretPassData_result(err);
+        output.writeMessageBegin("floretPassData", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.floretPassData(args.user,  function (err, result) {
+      var result = new BuyerServ_floretPassData_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("floretPassData", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_OnLineApply = function(seqid, input, output) {
+  var args = new BuyerServ_OnLineApply_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.OnLineApply.length === 1) {
+    Q.fcall(this._handler.OnLineApply, args.param)
+      .then(function(result) {
+        var result = new BuyerServ_OnLineApply_result({success: result});
+        output.writeMessageBegin("OnLineApply", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_OnLineApply_result(err);
+        output.writeMessageBegin("OnLineApply", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.OnLineApply(args.param,  function (err, result) {
+      var result = new BuyerServ_OnLineApply_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("OnLineApply", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_queryExpress = function(seqid, input, output) {
+  var args = new BuyerServ_queryExpress_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryExpress.length === 1) {
+    Q.fcall(this._handler.queryExpress, args.code)
+      .then(function(result) {
+        var result = new BuyerServ_queryExpress_result({success: result});
+        output.writeMessageBegin("queryExpress", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_queryExpress_result(err);
+        output.writeMessageBegin("queryExpress", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryExpress(args.code,  function (err, result) {
+      var result = new BuyerServ_queryExpress_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryExpress", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_sellerCheckCode = function(seqid, input, output) {
+  var args = new BuyerServ_sellerCheckCode_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.sellerCheckCode.length === 3) {
+    Q.fcall(this._handler.sellerCheckCode, args.sellerId, args.code, args.sztCardId)
+      .then(function(result) {
+        var result = new BuyerServ_sellerCheckCode_result({success: result});
+        output.writeMessageBegin("sellerCheckCode", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_sellerCheckCode_result(err);
+        output.writeMessageBegin("sellerCheckCode", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.sellerCheckCode(args.sellerId, args.code, args.sztCardId,  function (err, result) {
+      var result = new BuyerServ_sellerCheckCode_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("sellerCheckCode", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_sendMobileNote = function(seqid, input, output) {
+  var args = new BuyerServ_sendMobileNote_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.sendMobileNote.length === 1) {
+    Q.fcall(this._handler.sendMobileNote, args.mobile)
+      .then(function(result) {
+        var result = new BuyerServ_sendMobileNote_result({success: result});
+        output.writeMessageBegin("sendMobileNote", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_sendMobileNote_result(err);
+        output.writeMessageBegin("sendMobileNote", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.sendMobileNote(args.mobile,  function (err, result) {
+      var result = new BuyerServ_sendMobileNote_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("sendMobileNote", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_findVerifyRecord = function(seqid, input, output) {
+  var args = new BuyerServ_findVerifyRecord_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.findVerifyRecord.length === 3) {
+    Q.fcall(this._handler.findVerifyRecord, args.sellerId, args.pagination, args.vrParam)
+      .then(function(result) {
+        var result = new BuyerServ_findVerifyRecord_result({success: result});
+        output.writeMessageBegin("findVerifyRecord", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_findVerifyRecord_result(err);
+        output.writeMessageBegin("findVerifyRecord", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.findVerifyRecord(args.sellerId, args.pagination, args.vrParam,  function (err, result) {
+      var result = new BuyerServ_findVerifyRecord_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("findVerifyRecord", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_exportVerifyRecord = function(seqid, input, output) {
+  var args = new BuyerServ_exportVerifyRecord_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exportVerifyRecord.length === 2) {
+    Q.fcall(this._handler.exportVerifyRecord, args.sellerId, args.vrParam)
+      .then(function(result) {
+        var result = new BuyerServ_exportVerifyRecord_result({success: result});
+        output.writeMessageBegin("exportVerifyRecord", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_exportVerifyRecord_result(err);
+        output.writeMessageBegin("exportVerifyRecord", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exportVerifyRecord(args.sellerId, args.vrParam,  function (err, result) {
+      var result = new BuyerServ_exportVerifyRecord_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exportVerifyRecord", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_searchAdminExpressInfo = function(seqid, input, output) {
+  var args = new BuyerServ_searchAdminExpressInfo_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.searchAdminExpressInfo.length === 1) {
+    Q.fcall(this._handler.searchAdminExpressInfo, args.serialNumber)
+      .then(function(result) {
+        var result = new BuyerServ_searchAdminExpressInfo_result({success: result});
+        output.writeMessageBegin("searchAdminExpressInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_searchAdminExpressInfo_result(err);
+        output.writeMessageBegin("searchAdminExpressInfo", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.searchAdminExpressInfo(args.serialNumber,  function (err, result) {
+      var result = new BuyerServ_searchAdminExpressInfo_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("searchAdminExpressInfo", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_searchCriteriaForXiaoHuaUser = function(seqid, input, output) {
+  var args = new BuyerServ_searchCriteriaForXiaoHuaUser_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.searchCriteriaForXiaoHuaUser.length === 2) {
+    Q.fcall(this._handler.searchCriteriaForXiaoHuaUser, args.searchCriteriaForXiaoHua, args.pagination)
+      .then(function(result) {
+        var result = new BuyerServ_searchCriteriaForXiaoHuaUser_result({success: result});
+        output.writeMessageBegin("searchCriteriaForXiaoHuaUser", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_searchCriteriaForXiaoHuaUser_result(err);
+        output.writeMessageBegin("searchCriteriaForXiaoHuaUser", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.searchCriteriaForXiaoHuaUser(args.searchCriteriaForXiaoHua, args.pagination,  function (err, result) {
+      var result = new BuyerServ_searchCriteriaForXiaoHuaUser_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("searchCriteriaForXiaoHuaUser", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_exportFloretUserTable = function(seqid, input, output) {
+  var args = new BuyerServ_exportFloretUserTable_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exportFloretUserTable.length === 1) {
+    Q.fcall(this._handler.exportFloretUserTable, args.searchCriteriaForXiaoHua)
+      .then(function(result) {
+        var result = new BuyerServ_exportFloretUserTable_result({success: result});
+        output.writeMessageBegin("exportFloretUserTable", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_exportFloretUserTable_result(err);
+        output.writeMessageBegin("exportFloretUserTable", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exportFloretUserTable(args.searchCriteriaForXiaoHua,  function (err, result) {
+      var result = new BuyerServ_exportFloretUserTable_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exportFloretUserTable", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_importExpressInfoToDB = function(seqid, input, output) {
+  var args = new BuyerServ_importExpressInfoToDB_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.importExpressInfoToDB.length === 1) {
+    Q.fcall(this._handler.importExpressInfoToDB, args.exurl)
+      .then(function(result) {
+        var result = new BuyerServ_importExpressInfoToDB_result({success: result});
+        output.writeMessageBegin("importExpressInfoToDB", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_importExpressInfoToDB_result(err);
+        output.writeMessageBegin("importExpressInfoToDB", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.importExpressInfoToDB(args.exurl,  function (err, result) {
+      var result = new BuyerServ_importExpressInfoToDB_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("importExpressInfoToDB", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_importSZTCartToDB = function(seqid, input, output) {
+  var args = new BuyerServ_importSZTCartToDB_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.importSZTCartToDB.length === 1) {
+    Q.fcall(this._handler.importSZTCartToDB, args.exurl)
+      .then(function(result) {
+        var result = new BuyerServ_importSZTCartToDB_result({success: result});
+        output.writeMessageBegin("importSZTCartToDB", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_importSZTCartToDB_result(err);
+        output.writeMessageBegin("importSZTCartToDB", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.importSZTCartToDB(args.exurl,  function (err, result) {
+      var result = new BuyerServ_importSZTCartToDB_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("importSZTCartToDB", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
