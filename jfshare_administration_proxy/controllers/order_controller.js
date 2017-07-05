@@ -13,7 +13,7 @@ var fs = require('fs');
 
 var Order = require('../lib/models/order');
 var Util = require('../lib/models/util');
-var afterSale = require('../lib/models/AfterSale');
+var afterSale = require('../lib/models/afterSale');
 var Express = require('../lib/models/express');
 var Product = require('../lib/models/product');
 var Buyer = require('../lib/models/buyer');
