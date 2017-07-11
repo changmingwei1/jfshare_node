@@ -840,4 +840,39 @@ Buyer.prototype.sendMobileNote = function(param,callback){
         }
     });
 };
+
+//站点人员登陆
+Buyer.prototype.sellerLogin = function(param,callback){
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'sellerLogin',[param.loginName,param.loginPwd]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+
+        var res = {};
+        if (err) {
+            logger.error("登录失败 ：" + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//导入深圳通卡信息或者线下站点信息
+Buyer.prototype.importExcel = function(param,callback){
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'importSZTCartToDB',[param.fileName]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+
+        var res = {};
+        if (err) {
+            logger.error("导入失败 ：" + JSON.stringify(data));
+            res.code = 500;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Buyer();

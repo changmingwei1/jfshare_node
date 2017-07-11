@@ -3010,4 +3010,98 @@ router.post('/sendMobileNote', function (request, response, next) {
     }
 });
 
+/*线下站点人员登陆*/
+router.post('/sellerLogin', function (request, response, next) {
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.loginName == null || param.loginName == "") {
+            resContent.code = 400;
+            resContent.desc = "用户名为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.loginPwd == null || param.loginPwd == "") {
+            resContent.code = 400;
+            resContent.desc = "密码为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数*****************" + JSON.stringify(param));
+        Buyer.sellerLogin(param, function (err, data) {
+            logger.info("响应的结果 ：" + JSON.stringify(data));
+            if (err) {
+                response.json(err);
+            } else {
+                if(data[0].result.code==101){
+                    resContent.code=101;
+                    resContent.desc='用户名或密码错误';
+                }else if(data[0].result.code==1){
+                    resContent.code=500;
+                    resContent.desc='系统繁忙';
+                }else{
+                    resContent.data=data[0].value;
+                }
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("登陆失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "服务器繁忙";
+        response.json(resContent);
+    }
+});
+//importExcel 导入深圳通卡信息或者线下站点信息
+router.post('/importExcel', function (request, response, next) {
+    var resContent = {code: 200};
+    var param = request.body;
+    try {
+        if (param == null) {
+            resContent.code = 400;
+            resContent.desc = "参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (param.fileName == null || param.fileName == "") {
+            resContent.code = 400;
+            resContent.desc = "文件名不能为空";
+            response.json(resContent);
+            return;
+        }
+
+        logger.info("请求参数*****************" + JSON.stringify(param));
+        Buyer.importExcel(param, function (err, data) {
+            logger.info("响应的结果 ：" + JSON.stringify(data));
+            if (err) {
+                response.json(err);
+            } else {
+                if(data[0].result.code==1){
+                    resContent.code=500;
+                    resContent.desc='服务器繁忙';
+                }else{
+                    resContent.data=data[0].value;
+                }
+                response.json(resContent);
+                logger.info("响应的结果:" + JSON.stringify(resContent));
+            }
+        });
+    } catch (ex) {
+        logger.error("登陆失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "服务器繁忙";
+        response.json(resContent);
+    }
+});
+
+
+
+
 module.exports = router;
