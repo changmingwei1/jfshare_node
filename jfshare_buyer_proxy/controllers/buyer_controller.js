@@ -2783,7 +2783,7 @@ router.post('/findVerifyRecord', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if(applySource==2){
+        if(param.applySource==2){
             if (param.currentPage == null || param.currentPage == "") {
                 resContent.code = 400;
                 resContent.desc = "当前页不能为空";
