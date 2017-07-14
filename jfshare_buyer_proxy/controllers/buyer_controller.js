@@ -2652,6 +2652,7 @@ router.post('/onLineApply', function (request, response, next) {
             }*/
             logger.info("请求参数：" + JSON.stringify(param));
             Buyer.OnLineApply(param, function (err, data) {
+                logger.info("响应结果：" + JSON.stringify(data[0]));
                 if (err) {
                     response.json(err);
                 } else if(data[0].code==101){
@@ -2693,12 +2694,7 @@ router.post('/sellerCheckCode', function (request, response, next) {
             response.json(resContent);
             return;
         }
-        if (param.sellerName == null || param.sellerName == "") {
-            resContent.code = 400;
-            resContent.desc = "商家不能为空";
-            response.json(resContent);
-            return;
-        }
+
 
         if (param.code == null || param.code == "") {
             resContent.code = 400;
@@ -2781,19 +2777,27 @@ router.post('/findVerifyRecord', function (request, response, next) {
             response.json(resContent);
             return;
         }
+        if (param.applySource < 1||param.applySource > 2) {
+            resContent.code = 400;
+            resContent.desc = "请求端不存在";
+            response.json(resContent);
+            return;
+        }
+        if(applySource==2){
+            if (param.currentPage == null || param.currentPage == "") {
+                resContent.code = 400;
+                resContent.desc = "当前页不能为空";
+                response.json(resContent);
+                return;
+            }
+            if (param.numPerPage == null || param.numPerPage == "") {
+                resContent.code = 400;
+                resContent.desc = "分页大小不能为空";
+                response.json(resContent);
+                return;
+            }
+        }
 
-        if (param.currentPage == null || param.currentPage == "") {
-            resContent.code = 400;
-            resContent.desc = "当前页不能为空";
-            response.json(resContent);
-            return;
-        }
-        if (param.numPerPage == null || param.numPerPage == "") {
-            resContent.code = 400;
-            resContent.desc = "分页大小不能为空";
-            response.json(resContent);
-            return;
-        }
 
         //鉴权信息  token ppinfo
        /* if (param.token == null || param.token == "") {
