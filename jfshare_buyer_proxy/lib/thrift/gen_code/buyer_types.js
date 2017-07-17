@@ -2450,6 +2450,7 @@ OnlineUserParam = module.exports.OnlineUserParam = function(args) {
   this.mobile = null;
   this.address = null;
   this.ticketCode = null;
+  this.jfxAccount = null;
   if (args) {
     if (args.userName !== undefined) {
       this.userName = args.userName;
@@ -2462,6 +2463,9 @@ OnlineUserParam = module.exports.OnlineUserParam = function(args) {
     }
     if (args.ticketCode !== undefined) {
       this.ticketCode = args.ticketCode;
+    }
+    if (args.jfxAccount !== undefined) {
+      this.jfxAccount = args.jfxAccount;
     }
   }
 };
@@ -2507,6 +2511,13 @@ OnlineUserParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.jfxAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2536,6 +2547,11 @@ OnlineUserParam.prototype.write = function(output) {
   if (this.ticketCode !== null && this.ticketCode !== undefined) {
     output.writeFieldBegin('ticketCode', Thrift.Type.STRING, 4);
     output.writeString(this.ticketCode);
+    output.writeFieldEnd();
+  }
+  if (this.jfxAccount !== null && this.jfxAccount !== undefined) {
+    output.writeFieldBegin('jfxAccount', Thrift.Type.STRING, 5);
+    output.writeString(this.jfxAccount);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

@@ -2612,7 +2612,7 @@ router.post('/onLineApply', function (request, response, next) {
         }
         if (param.userName == null || param.userName == "") {
             resContent.code = 400;
-            resContent.desc = "用户名不能为空";
+            resContent.desc = "收件人名不能为空";
             response.json(resContent);
             return;
         }
@@ -2637,6 +2637,12 @@ router.post('/onLineApply', function (request, response, next) {
             return;
         }
 
+        if (param.jfxAccount == null || param.jfxAccount == "") {
+            resContent.code = 400;
+            resContent.desc = "聚分享账号不能为空";
+            response.json(resContent);
+            return;
+        }
        /* if (param.ppInfo == null || param.ppInfo == "") {
             resContent.code = 400;
             resContent.desc = "ppInfo不能为空";

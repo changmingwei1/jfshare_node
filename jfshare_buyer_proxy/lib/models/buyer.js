@@ -715,7 +715,8 @@ Buyer.prototype.OnLineApply = function(param,callback){
         userName:param.userName,
         mobile:param.mobile,
         address:param.address,
-        ticketCode:param.ticketCode
+        ticketCode:param.ticketCode,
+        jfxAccount:param.jfxAccount
     });
     //获取client
     var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'OnLineApply',[onlineUserParam]);
