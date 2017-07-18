@@ -2518,6 +2518,7 @@ router.post('/floretPassData', function (request, response, next) {
     logger.info("进入小花钱包用户信息获取接口");
     var resContent = {code: 200};
     var params = request.body;
+    logger.info("请求参数：" + JSON.stringify(params));
     try {
         if (params == null) {
             resContent.code = 400;
@@ -2566,7 +2567,7 @@ router.post('/floretPassData', function (request, response, next) {
             return;
         }
 
-        logger.info("请求参数：" + JSON.stringify(params));
+
         Buyer.floretPassData(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -2744,13 +2745,16 @@ router.post('/sellerCheckCode', function (request, response, next) {
                 } else {
                     if (data[0].code == 101) {
                         resContent.code = data[0].code;
-                        resContent.desc = '券码无效';
+                        resContent.desc = '该券码无效';
                     } else if (data[0].code == 102) {
                         resContent.code = data[0].code;
                         resContent.desc = '券码已经使用';
                     } else if (data[0].code == 103) {
                         resContent.code = data[0].code;
                         resContent.desc = '无效的深圳通卡号';
+                    } else if (data[0].code == 104) {
+                        resContent.code = data[0].code;
+                        resContent.desc = '该深圳通卡号已使用';
                     }
                     response.json(resContent);
                 }
