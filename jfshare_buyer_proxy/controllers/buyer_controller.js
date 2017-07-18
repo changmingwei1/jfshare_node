@@ -2842,7 +2842,7 @@ router.post('/findVerifyRecord', function (request, response, next) {
                         response.json(resContent);
                         return
                     }
-                    resContent.date = data[0].verifyRecordList ,
+                        resContent.data = data[0].verifyRecordList ,
                         resContent.pagination = data[0].pagination
                     response.json(resContent);
                     logger.info("响应的结果:" + JSON.stringify(resContent));
