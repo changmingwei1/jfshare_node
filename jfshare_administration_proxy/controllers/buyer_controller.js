@@ -254,22 +254,28 @@ router.post('/searchFloretUserList', function (request, response, next) {
 router.post('/exportFloretUserTable', function (request, response, next) {
     logger.info("导出小花表单");
     var resContent = {code: 200};
-    var param = request.body;
     try {
+        var param = request.body;
+   /*
         if (param == null) {
             resContent.code = 400;
             resContent.desc = "参数错误";
             response.json(resContent);
             return;
-        }
+        }*/
 
         logger.info("请求参数：" + JSON.stringify(param));
         Buyer.exportFloretUserTable(param, function (err, data) {
             if (err) {
                 response.json(err);
             } else {
-                resContent.exurl = data[0].value;
-                response.json(resContent);
+                if(data[0].code==101){
+                    resContent.code = data[0];
+                    resContent.desc = '没有查询到数据';
+                }else{
+                    resContent.exurl = data[0].value;
+                    response.json(resContent);
+                }
                 logger.info("响应的结果:" + JSON.stringify(resContent));
             }
         });
@@ -382,7 +388,7 @@ router.post('/importExpressInfoToDB', function (request, response, next) {
                     resContent.desc = "excel文件没要导入的内容";
                     response.json(resContent);
                 }else {
-                    resContent.data = data[0];
+                    resContent.num = data[0].code-200;
                     response.json(resContent);
                     logger.info("响应的结果:" + JSON.stringify(resContent));
                 }

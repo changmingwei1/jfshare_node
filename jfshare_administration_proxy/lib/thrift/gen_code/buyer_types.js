@@ -2450,6 +2450,7 @@ OnlineUserParam = module.exports.OnlineUserParam = function(args) {
   this.mobile = null;
   this.address = null;
   this.ticketCode = null;
+  this.jfxAccount = null;
   if (args) {
     if (args.userName !== undefined) {
       this.userName = args.userName;
@@ -2462,6 +2463,9 @@ OnlineUserParam = module.exports.OnlineUserParam = function(args) {
     }
     if (args.ticketCode !== undefined) {
       this.ticketCode = args.ticketCode;
+    }
+    if (args.jfxAccount !== undefined) {
+      this.jfxAccount = args.jfxAccount;
     }
   }
 };
@@ -2507,6 +2511,13 @@ OnlineUserParam.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.jfxAccount = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -2536,6 +2547,11 @@ OnlineUserParam.prototype.write = function(output) {
   if (this.ticketCode !== null && this.ticketCode !== undefined) {
     output.writeFieldBegin('ticketCode', Thrift.Type.STRING, 4);
     output.writeString(this.ticketCode);
+    output.writeFieldEnd();
+  }
+  if (this.jfxAccount !== null && this.jfxAccount !== undefined) {
+    output.writeFieldBegin('jfxAccount', Thrift.Type.STRING, 5);
+    output.writeString(this.jfxAccount);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3313,344 +3329,6 @@ AdminExpressResult.prototype.write = function(output) {
   if (this.result !== null && this.result !== undefined) {
     output.writeFieldBegin('result', Thrift.Type.STRUCT, 6);
     this.result.write(output);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-ExportAdminUserExpress = module.exports.ExportAdminUserExpress = function(args) {
-  this.serialNumber = null;
-  this.xhMobile = null;
-  this.userName = null;
-  this.registerTime = null;
-  this.creditTime = null;
-  this.passTime = null;
-  this.ticketValid = null;
-  this.isOnline = null;
-  this.sellerName = null;
-  this.jfxAccount = null;
-  this.usetTime = null;
-  this.receiptTime = null;
-  this.idCard = null;
-  this.sztCard = null;
-  this.receiveName = null;
-  this.receiveMobile = null;
-  this.receiveAddress = null;
-  this.expressName = null;
-  this.expressCode = null;
-  if (args) {
-    if (args.serialNumber !== undefined) {
-      this.serialNumber = args.serialNumber;
-    }
-    if (args.xhMobile !== undefined) {
-      this.xhMobile = args.xhMobile;
-    }
-    if (args.userName !== undefined) {
-      this.userName = args.userName;
-    }
-    if (args.registerTime !== undefined) {
-      this.registerTime = args.registerTime;
-    }
-    if (args.creditTime !== undefined) {
-      this.creditTime = args.creditTime;
-    }
-    if (args.passTime !== undefined) {
-      this.passTime = args.passTime;
-    }
-    if (args.ticketValid !== undefined) {
-      this.ticketValid = args.ticketValid;
-    }
-    if (args.isOnline !== undefined) {
-      this.isOnline = args.isOnline;
-    }
-    if (args.sellerName !== undefined) {
-      this.sellerName = args.sellerName;
-    }
-    if (args.jfxAccount !== undefined) {
-      this.jfxAccount = args.jfxAccount;
-    }
-    if (args.usetTime !== undefined) {
-      this.usetTime = args.usetTime;
-    }
-    if (args.receiptTime !== undefined) {
-      this.receiptTime = args.receiptTime;
-    }
-    if (args.idCard !== undefined) {
-      this.idCard = args.idCard;
-    }
-    if (args.sztCard !== undefined) {
-      this.sztCard = args.sztCard;
-    }
-    if (args.receiveName !== undefined) {
-      this.receiveName = args.receiveName;
-    }
-    if (args.receiveMobile !== undefined) {
-      this.receiveMobile = args.receiveMobile;
-    }
-    if (args.receiveAddress !== undefined) {
-      this.receiveAddress = args.receiveAddress;
-    }
-    if (args.expressName !== undefined) {
-      this.expressName = args.expressName;
-    }
-    if (args.expressCode !== undefined) {
-      this.expressCode = args.expressCode;
-    }
-  }
-};
-ExportAdminUserExpress.prototype = {};
-ExportAdminUserExpress.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.serialNumber = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.xhMobile = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
-      if (ftype == Thrift.Type.STRING) {
-        this.userName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 4:
-      if (ftype == Thrift.Type.STRING) {
-        this.registerTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 5:
-      if (ftype == Thrift.Type.STRING) {
-        this.creditTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 6:
-      if (ftype == Thrift.Type.STRING) {
-        this.passTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 7:
-      if (ftype == Thrift.Type.I32) {
-        this.ticketValid = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 8:
-      if (ftype == Thrift.Type.I32) {
-        this.isOnline = input.readI32();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 9:
-      if (ftype == Thrift.Type.STRING) {
-        this.sellerName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 10:
-      if (ftype == Thrift.Type.STRING) {
-        this.jfxAccount = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 11:
-      if (ftype == Thrift.Type.STRING) {
-        this.usetTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 12:
-      if (ftype == Thrift.Type.STRING) {
-        this.receiptTime = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 13:
-      if (ftype == Thrift.Type.STRING) {
-        this.idCard = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 14:
-      if (ftype == Thrift.Type.STRING) {
-        this.sztCard = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 15:
-      if (ftype == Thrift.Type.STRING) {
-        this.receiveName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 16:
-      if (ftype == Thrift.Type.STRING) {
-        this.receiveMobile = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 17:
-      if (ftype == Thrift.Type.STRING) {
-        this.receiveAddress = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 18:
-      if (ftype == Thrift.Type.STRING) {
-        this.expressName = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 19:
-      if (ftype == Thrift.Type.STRING) {
-        this.expressCode = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-ExportAdminUserExpress.prototype.write = function(output) {
-  output.writeStructBegin('ExportAdminUserExpress');
-  if (this.serialNumber !== null && this.serialNumber !== undefined) {
-    output.writeFieldBegin('serialNumber', Thrift.Type.STRING, 1);
-    output.writeString(this.serialNumber);
-    output.writeFieldEnd();
-  }
-  if (this.xhMobile !== null && this.xhMobile !== undefined) {
-    output.writeFieldBegin('xhMobile', Thrift.Type.STRING, 2);
-    output.writeString(this.xhMobile);
-    output.writeFieldEnd();
-  }
-  if (this.userName !== null && this.userName !== undefined) {
-    output.writeFieldBegin('userName', Thrift.Type.STRING, 3);
-    output.writeString(this.userName);
-    output.writeFieldEnd();
-  }
-  if (this.registerTime !== null && this.registerTime !== undefined) {
-    output.writeFieldBegin('registerTime', Thrift.Type.STRING, 4);
-    output.writeString(this.registerTime);
-    output.writeFieldEnd();
-  }
-  if (this.creditTime !== null && this.creditTime !== undefined) {
-    output.writeFieldBegin('creditTime', Thrift.Type.STRING, 5);
-    output.writeString(this.creditTime);
-    output.writeFieldEnd();
-  }
-  if (this.passTime !== null && this.passTime !== undefined) {
-    output.writeFieldBegin('passTime', Thrift.Type.STRING, 6);
-    output.writeString(this.passTime);
-    output.writeFieldEnd();
-  }
-  if (this.ticketValid !== null && this.ticketValid !== undefined) {
-    output.writeFieldBegin('ticketValid', Thrift.Type.I32, 7);
-    output.writeI32(this.ticketValid);
-    output.writeFieldEnd();
-  }
-  if (this.isOnline !== null && this.isOnline !== undefined) {
-    output.writeFieldBegin('isOnline', Thrift.Type.I32, 8);
-    output.writeI32(this.isOnline);
-    output.writeFieldEnd();
-  }
-  if (this.sellerName !== null && this.sellerName !== undefined) {
-    output.writeFieldBegin('sellerName', Thrift.Type.STRING, 9);
-    output.writeString(this.sellerName);
-    output.writeFieldEnd();
-  }
-  if (this.jfxAccount !== null && this.jfxAccount !== undefined) {
-    output.writeFieldBegin('jfxAccount', Thrift.Type.STRING, 10);
-    output.writeString(this.jfxAccount);
-    output.writeFieldEnd();
-  }
-  if (this.usetTime !== null && this.usetTime !== undefined) {
-    output.writeFieldBegin('usetTime', Thrift.Type.STRING, 11);
-    output.writeString(this.usetTime);
-    output.writeFieldEnd();
-  }
-  if (this.receiptTime !== null && this.receiptTime !== undefined) {
-    output.writeFieldBegin('receiptTime', Thrift.Type.STRING, 12);
-    output.writeString(this.receiptTime);
-    output.writeFieldEnd();
-  }
-  if (this.idCard !== null && this.idCard !== undefined) {
-    output.writeFieldBegin('idCard', Thrift.Type.STRING, 13);
-    output.writeString(this.idCard);
-    output.writeFieldEnd();
-  }
-  if (this.sztCard !== null && this.sztCard !== undefined) {
-    output.writeFieldBegin('sztCard', Thrift.Type.STRING, 14);
-    output.writeString(this.sztCard);
-    output.writeFieldEnd();
-  }
-  if (this.receiveName !== null && this.receiveName !== undefined) {
-    output.writeFieldBegin('receiveName', Thrift.Type.STRING, 15);
-    output.writeString(this.receiveName);
-    output.writeFieldEnd();
-  }
-  if (this.receiveMobile !== null && this.receiveMobile !== undefined) {
-    output.writeFieldBegin('receiveMobile', Thrift.Type.STRING, 16);
-    output.writeString(this.receiveMobile);
-    output.writeFieldEnd();
-  }
-  if (this.receiveAddress !== null && this.receiveAddress !== undefined) {
-    output.writeFieldBegin('receiveAddress', Thrift.Type.STRING, 17);
-    output.writeString(this.receiveAddress);
-    output.writeFieldEnd();
-  }
-  if (this.expressName !== null && this.expressName !== undefined) {
-    output.writeFieldBegin('expressName', Thrift.Type.STRING, 18);
-    output.writeString(this.expressName);
-    output.writeFieldEnd();
-  }
-  if (this.expressCode !== null && this.expressCode !== undefined) {
-    output.writeFieldBegin('expressCode', Thrift.Type.STRING, 19);
-    output.writeString(this.expressCode);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
