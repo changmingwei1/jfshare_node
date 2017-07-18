@@ -387,8 +387,12 @@ router.post('/importExpressInfoToDB', function (request, response, next) {
                     resContent.code = 102;
                     resContent.desc = "excel文件没要导入的内容";
                     response.json(resContent);
-                }else {
-                    resContent.num = data[0].code-200;
+                }else if(data[0].code==1){
+                    resContent.code = 500;
+                    resContent.desc = "系统错误";
+                    response.json(resContent);
+                }else{
+                    resContent.num = data[0].code-1000;
                     response.json(resContent);
                     logger.info("响应的结果:" + JSON.stringify(resContent));
                 }
