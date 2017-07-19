@@ -2664,7 +2664,7 @@ router.post('/onLineApply', function (request, response, next) {
                     response.json(err);
                 } else if(data[0].code==101){
                     resContent.code = data[0].code;
-                    resContent.desc = '券码无效';
+                    resContent.desc = '该领券码不存在';
                 }else if(data[0].code==102){
                     resContent.code = data[0].code;
                     resContent.desc = '券码已使用';
@@ -2745,7 +2745,7 @@ router.post('/sellerCheckCode', function (request, response, next) {
                 } else {
                     if (data[0].code == 101) {
                         resContent.code = data[0].code;
-                        resContent.desc = '该券码无效';
+                        resContent.desc = '该领券码不存在';
                     } else if (data[0].code == 102) {
                         resContent.code = data[0].code;
                         resContent.desc = '券码已经使用';
