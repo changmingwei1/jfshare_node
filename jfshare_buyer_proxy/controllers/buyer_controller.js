@@ -2790,6 +2790,7 @@ router.post('/findVerifyRecord', function (request, response, next) {
             return;
         }
         if(param.applySource==2){
+
             if (param.currentPage == null || param.currentPage == "") {
                 resContent.code = 400;
                 resContent.desc = "当前页不能为空";
@@ -2838,8 +2839,8 @@ router.post('/findVerifyRecord', function (request, response, next) {
                         response.json(resContent);
                         return
                     }
-                    resContent.date = data[0].verifyRecordList ,
-                        resContent.pagination = data[0].pagination
+                    resContent.data = data[0].verifyRecordList ;
+                        resContent.pagination = data[0].pagination;
                     response.json(resContent);
                     logger.info("响应的结果:" + JSON.stringify(resContent));
                 }
