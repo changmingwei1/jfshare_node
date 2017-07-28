@@ -3100,6 +3100,9 @@ router.post('/importExcel', function (request, response, next) {
                 if(data[0].result.code==1){
                     resContent.code=500;
                     resContent.desc='服务器繁忙';
+                }else if(data[0].result.code==500){
+                    resContent.code=500;
+                    resContent.desc='导入失败';
                 }else{
                     resContent.data=data[0].value;
                 }

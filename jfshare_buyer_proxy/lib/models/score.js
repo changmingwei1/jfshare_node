@@ -378,4 +378,29 @@ Score.prototype.enterUserAuthorize = function (param, callback) {
     });
 };
 
+/*************************************************万益通对接接口************************************/
+
+/*积分余额查询*/
+Score.prototype.queryBalance = function (param, callback) {
+    logger.info("请求参数：" + JSON.stringify(param));
+    var signParam = new score_types.SignParam({
+        sign:param.sign,
+        timestamp:param.timestamp,
+    });
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreBalance', [param.uid,param.exCode,signParam]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get queryBalance result结果:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("can't get enterUserAuthorize because: ======" + err);
+            res.ErrCode = 9999;
+            res.ErrMsg = "积分余额查询异常";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Score();
