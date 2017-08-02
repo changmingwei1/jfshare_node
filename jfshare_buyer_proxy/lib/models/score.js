@@ -393,7 +393,7 @@ Score.prototype.queryBalance = function (param, callback) {
         logger.info("get queryBalance result结果:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("can't get enterUserAuthorize because: ======" + err);
+            logger.error("can't get queryBalance because: ======" + err);
             res.ErrCode = 9999;
             res.ErrMsg = "积分余额查询异常";
             callback(res, null);
@@ -412,10 +412,10 @@ Score.prototype.transferScore = function (param, callback) {
     //获取client
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'wytTransferScore', [param.buyUid,param.sellUid,param.exCode,param.quantity,param.txnId,signParam]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
-        logger.info("get queryBalance result结果:" + JSON.stringify(data));
+        logger.info("get transferScore result结果:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("can't get enterUserAuthorize because: ======" + err);
+            logger.error("can't get transferScore because: ======" + err);
             res.ErrCode = 9999;
             res.ErrMsg = "转账失败";
             callback(res, null);
@@ -434,10 +434,10 @@ Score.prototype.queryDeal = function (param, callback) {
     //获取client
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'dealQueryScore', [param.txnId,signParam]);
     Lich.wicca.invokeClient(scoreServ, function (err, data) {
-        logger.info("get queryBalance result结果:" + JSON.stringify(data));
+        logger.info("get queryDeal result结果:" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("can't get enterUserAuthorize because: ======" + err);
+            logger.error("can't get queryDeal because: ======" + err);
             res.ErrCode = 9999;
             res.ErrMsg = "转账失败";
             callback(res, null);
@@ -455,7 +455,7 @@ Score.prototype.scoreReverse = function (param, callback) {
     });
     //获取client
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'scoreReverse', [param.txnId,signParam]);
-    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+    Lich.wicca.invokeClient(scoreServd, function (err, data) {
         logger.info("get scoreReverse result结果:" + JSON.stringify(data));
         var res = {};
         if (err) {

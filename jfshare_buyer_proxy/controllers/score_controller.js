@@ -141,11 +141,16 @@ router.post('/transferScore', function (req, res, next) {
                     result.msg=data[0].result.failDescList[0].desc;
                 }else if(data[0].result.code==500){
                     result.code=500;
-                    result.msg='查询失败';
+                    result.msg='转账失败';
                 }else{
-                    var balance = data[0].value;
-                    result.data={"balance":+balance};
-                    result.msg='查询成功';
+                    var buyUid = data[0].buyUid;
+                    var sellUid = data[0].sellUid;
+                    var exCode = data[0].exCode;
+                    var quantity = data[0].quantity;
+                    var txnId = data[0].txnId;
+                    var transId = data[0].transId;
+                    result.data={"buyUid":buyUid,"sellUid":sellUid,"exCode":exCode,"quantity":quantity,"txnId":txnId,"transId":transId};
+                    result.msg='转账成功';
                 }
                 res.json(result);
                 logger.info("响应的结果:" + JSON.stringify(result));
@@ -189,7 +194,7 @@ router.post('/queryDeal', function (req, res, next) {
         }
 
         Score.queryDeal(arg, function (err, data) {
-            logger.info("响应的结果 ：" + JSON.stringify(data));
+            logger.info("接口响应的结果 ：" + JSON.stringify(data));
             if (err) {
                 res.json(err);
             } else {
@@ -200,8 +205,13 @@ router.post('/queryDeal', function (req, res, next) {
                     result.code=500;
                     result.msg='查询失败';
                 }else{
-                    var balance = data[0].value;
-                    result.data={"balance":+balance};
+                    var uid = data[0].uid;
+                    var exCode = data[0].exCode;
+                    var quantity = data[0].quantity;
+                    var txnId = data[0].txnId;
+                    var transId = data[0].transId;
+                    result.data={"uid":uid,"exCode":exCode,"quantity":quantity,
+                        transId:transId,txnId:txnId};
                     result.msg='查询成功';
                 }
                 res.json(result);
@@ -255,11 +265,16 @@ router.post('/reverseScore', function (req, res, next) {
                     result.msg=data[0].result.failDescList[0].desc;
                 }else if(data[0].result.code==500){
                     result.code=500;
-                    result.msg='查询失败';
+                    result.msg='冲正失败';
                 }else{
-                    var balance = data[0].value;
-                    result.data={"balance":+balance};
-                    result.msg='查询成功';
+                    var uid = data[0].uid;
+                    var exCode = data[0].exCode;
+                    var quantity = data[0].quantity;
+                    var txnId = data[0].txnId;
+                    var transId = data[0].transId;
+                    result.data={"uid":uid,"exCode":exCode,"quantity":quantity,
+                        transId:transId,txnId:txnId};
+                    result.msg='冲正成功';
                 }
                 res.json(result);
                 logger.info("响应的结果:" + JSON.stringify(result));
