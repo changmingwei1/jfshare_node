@@ -5311,6 +5311,128 @@ BuyerServ_importSZTCartToDB_result.prototype.write = function(output) {
   return;
 };
 
+BuyerServ_wytSmsLogin_args = function(args) {
+  this.buyer = null;
+  this.loginLog = null;
+  if (args) {
+    if (args.buyer !== undefined) {
+      this.buyer = args.buyer;
+    }
+    if (args.loginLog !== undefined) {
+      this.loginLog = args.loginLog;
+    }
+  }
+};
+BuyerServ_wytSmsLogin_args.prototype = {};
+BuyerServ_wytSmsLogin_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.buyer = new ttypes.Buyer();
+        this.buyer.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.loginLog = new ttypes.LoginLog();
+        this.loginLog.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_wytSmsLogin_args.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_wytSmsLogin_args');
+  if (this.buyer !== null && this.buyer !== undefined) {
+    output.writeFieldBegin('buyer', Thrift.Type.STRUCT, 1);
+    this.buyer.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.loginLog !== null && this.loginLog !== undefined) {
+    output.writeFieldBegin('loginLog', Thrift.Type.STRUCT, 2);
+    this.loginLog.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+BuyerServ_wytSmsLogin_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+BuyerServ_wytSmsLogin_result.prototype = {};
+BuyerServ_wytSmsLogin_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+BuyerServ_wytSmsLogin_result.prototype.write = function(output) {
+  output.writeStructBegin('BuyerServ_wytSmsLogin_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 BuyerServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -7465,6 +7587,54 @@ BuyerServClient.prototype.recv_importSZTCartToDB = function(input,mtype,rseqid) 
   }
   return callback('importSZTCartToDB failed: unknown result');
 };
+BuyerServClient.prototype.wytSmsLogin = function(buyer, loginLog, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_wytSmsLogin(buyer, loginLog);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_wytSmsLogin(buyer, loginLog);
+  }
+};
+
+BuyerServClient.prototype.send_wytSmsLogin = function(buyer, loginLog) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('wytSmsLogin', Thrift.MessageType.CALL, this.seqid());
+  var args = new BuyerServ_wytSmsLogin_args();
+  args.buyer = buyer;
+  args.loginLog = loginLog;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+BuyerServClient.prototype.recv_wytSmsLogin = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new BuyerServ_wytSmsLogin_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('wytSmsLogin failed: unknown result');
+};
 BuyerServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -8826,6 +8996,36 @@ BuyerServProcessor.prototype.process_importSZTCartToDB = function(seqid, input, 
     this._handler.importSZTCartToDB(args.exurl,  function (err, result) {
       var result = new BuyerServ_importSZTCartToDB_result((err != null ? err : {success: result}));
       output.writeMessageBegin("importSZTCartToDB", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+BuyerServProcessor.prototype.process_wytSmsLogin = function(seqid, input, output) {
+  var args = new BuyerServ_wytSmsLogin_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.wytSmsLogin.length === 2) {
+    Q.fcall(this._handler.wytSmsLogin, args.buyer, args.loginLog)
+      .then(function(result) {
+        var result = new BuyerServ_wytSmsLogin_result({success: result});
+        output.writeMessageBegin("wytSmsLogin", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new BuyerServ_wytSmsLogin_result(err);
+        output.writeMessageBegin("wytSmsLogin", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.wytSmsLogin(args.buyer, args.loginLog,  function (err, result) {
+      var result = new BuyerServ_wytSmsLogin_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("wytSmsLogin", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

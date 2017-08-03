@@ -3118,7 +3118,79 @@ router.post('/importExcel', function (request, response, next) {
     }
 });
 
+router.post('/newLogin', function (request, response, next) {
+    logger.info("进入万益通手机短信登录接口..");
+    var resContent = {code: "00"};
+    var param = request.body;
+    try {
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 500;
+            resContent.desc = "手机号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 500;
+            resContent.desc = "验证码不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 500;
+            resContent.desc = "浏览器标识不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("万益通授权登陆请求参数：" + JSON.stringify(param));
 
+        async.waterfall([
+            function (callback) {
+                Common.validateMsgCaptcha(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+            },
+            function (callback) {
+
+                Buyer.wytLoginBySms(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        if(data[0].code == 0){
+                           // 万益通授权登陆成功后跳转页面
+                            resContent.msg = "https://szqy.ffan.com/test/apiserver/ffoauth/loading";
+                        }else if(data[0].code == 1){
+                            resContent.msg = data[0].failDescList[0].desc;
+                            resContent.code=data[0].failDescList[0].failCode;
+                        }else{
+                            resContent.msg = "登陆失败";
+                            resContent.code="500";
+                        }
+                        //解决跨域问题
+                       // response.setHeader("Access-Control-Allow-Origin", "*");
+                        response.json(resContent);
+                        logger.info("响应的结果:" + JSON.stringify(resContent));
+                    }
+                });
+            }
+        ], function (err) {
+            if (err) {
+                return response.json(err);
+            } else {
+                return response.json({resContent: true});
+            }
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("登录失败，because :" + ex);
+        resContent.code = 500;
+        resContent.desc = "登录失败";
+        response.json(resContent);
+    }
+});
 
 
 module.exports = router;

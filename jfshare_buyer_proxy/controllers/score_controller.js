@@ -8,7 +8,7 @@ var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 var page = require('../lib/thrift/gen_code/pagination_types.js');
 var Score = require('../lib/models/score');
-
+var Buyer = require('../lib/models/buyer');
 
 
 //查询积分余额
@@ -46,27 +46,27 @@ router.post('/queryBalance', function (req, res, next) {
             res.json(result);
             return;
         }
-
-        Score.queryBalance(arg, function (err, data) {
-            logger.info("响应的结果 ：" + JSON.stringify(data));
-            if (err) {
-                res.json(err);
-            } else {
-                if(data[0].result.code==1){
-                    result.code=data[0].result.failDescList[0].failCode;
-                    result.msg=data[0].result.failDescList[0].desc;
-                }else if(data[0].result.code==500){
-                    result.code=500;
-                    result.msg='查询失败';
-                }else{
-                    var balance = data[0].value;
-                    result.data={"balance":+balance};
-                    result.msg='查询成功';
+            Score.queryBalance(arg, function (err, data) {
+                logger.info("响应的结果 ：" + JSON.stringify(data));
+                if (err) {
+                    res.json(err);
+                } else {
+                    if (data[0].result.code == 1) {
+                        result.code = data[0].result.failDescList[0].failCode;
+                        result.msg = data[0].result.failDescList[0].desc;
+                    } else if (data[0].result.code == 500) {
+                        result.code = 500;
+                        result.msg = '查询失败';
+                    } else {
+                        var balance = data[0].value;
+                        result.data = {"balance": +balance};
+                        result.msg = '查询成功';
+                    }
+                    res.json(result);
+                    logger.info("响应的结果:" + JSON.stringify(result));
                 }
-                res.json(result);
-                logger.info("响应的结果:" + JSON.stringify(result));
-            }
-        });
+            });
+
     } catch (ex) {
         logger.error("get receiveCoupon  error:" + ex);
         result.code = 500;
