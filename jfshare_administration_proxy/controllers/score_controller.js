@@ -435,6 +435,12 @@ router.post('/queryScoreCachEnterLog', function (request, response, next) {
             response.json(result);
             return;
         }
+        if(params.sysCode ==null || params.sysCode ==""){
+            result.code = 500;
+            result.desc = "积分渠道不能为空";
+            response.json(result);
+            return;
+        }
         Score.queryScoreCachEnterLog(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -465,7 +471,12 @@ router.post('/exproScoreCachEnterLog', function (request, response, next) {
         var params = request.body;
         //参数校验
         logger.info("exproScoreCachEnterLog params:" + JSON.stringify(params));
-
+        if(params.sysCode ==null || params.sysCode ==""){
+            result.code = 500;
+            result.desc = "积分渠道不能为空";
+            response.json(result);
+            return;
+        }
         Score.exproScoreCachEnterLog(params, function (err, data) {
             if (err) {
                 response.json(err);
