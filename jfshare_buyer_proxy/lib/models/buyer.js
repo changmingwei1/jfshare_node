@@ -221,7 +221,8 @@ Buyer.prototype.thirdSigninCheck = function(param,callback){
 Buyer.prototype.loginBySms = function(param,callback){
     //参数
     var thrift_buyer = new buyer_types.Buyer({
-        mobile:param.mobile
+        mobile:param.mobile,
+        state:param.state
     });
     //需要的字段可以继续增加
     var thrift_loginLog = new buyer_types.LoginLog({
@@ -250,6 +251,7 @@ Buyer.prototype.loginBySms = function(param,callback){
 Buyer.prototype.wytLoginBySms = function(param,callback){
     //参数
     var thrift_buyer = new buyer_types.Buyer({
+        state:param.state,
         mobile:param.mobile
     });
     //需要的字段可以继续增加

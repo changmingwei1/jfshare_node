@@ -3161,12 +3161,12 @@ router.post('/newLogin', function (request, response, next) {
                     } else {
                         if(data[0].code == 0){
                            // 万益通授权登陆成功后跳转页面
-                            resContent.msg = "https://szqy.ffan.com/test/apiserver/ffoauth/loading";
+                            resContent.desc = "https://szqy.ffan.com/test/apiserver/ffoauth/loading";
                         }else if(data[0].code == 1){
-                            resContent.msg = data[0].failDescList[0].desc;
+                            resContent.desc = data[0].failDescList[0].desc;
                             resContent.code=data[0].failDescList[0].failCode;
                         }else{
-                            resContent.msg = "登陆失败";
+                            resContent.desc = "登陆失败";
                             resContent.code="500";
                         }
                         //解决跨域问题
@@ -3186,7 +3186,7 @@ router.post('/newLogin', function (request, response, next) {
     } catch (ex) {
         //logger.error("请求参数：" + JSON.stringify(param));
         logger.error("登录失败，because :" + ex);
-        resContent.code = 500;
+        resContent.code = "500";
         resContent.desc = "登录失败";
         response.json(resContent);
     }

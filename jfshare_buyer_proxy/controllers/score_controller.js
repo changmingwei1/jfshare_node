@@ -110,7 +110,7 @@ router.post('/transferScore', function (req, res, next) {
             return;
         }
         if (arg.txnId == null || arg.txnId == "" ) {
-            logger.info("error at quantity" + arg.txnId);
+            logger.info("error at txnId" + arg.txnId);
             result.code = 400;
             result.msg = "请求参数错误";
             res.json(result);
