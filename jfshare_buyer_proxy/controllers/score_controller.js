@@ -159,7 +159,7 @@ router.post('/transferScore', function (req, res, next) {
     } catch (ex) {
         logger.error("get transferScore  error:" + ex);
         result.code = 500;
-        result.msg = "查询失败";
+        result.msg = "转账失败";
         res.json(result);
     }
 });
@@ -283,7 +283,7 @@ router.post('/reverseScore', function (req, res, next) {
     } catch (ex) {
         logger.error("get reverseScore  error:" + ex);
         result.code = 500;
-        result.msg = "查询失败";
+        result.msg = "冲正失败";
         res.json(result);
     }
 });
