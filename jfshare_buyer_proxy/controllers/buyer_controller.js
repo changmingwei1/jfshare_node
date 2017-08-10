@@ -3161,7 +3161,10 @@ router.post('/newLogin', function (request, response, next) {
                     } else {
                         if(data[0].code == 0){
                            // 万益通授权登陆成功后跳转页面
-                            resContent.desc = "https://szqy.ffan.com/test/apiserver/ffoauth/loading";
+                            //测试环境
+                            //resContent.desc = "https://szqy.ffan.com/test/apiserver/ffoauth/loading";
+                            //生产
+                            resContent.desc ="https://szqy.ffan.com/apiserver/ffoauth/loading";
                         }else if(data[0].code == 1){
                             resContent.desc = data[0].failDescList[0].desc;
                             resContent.code=data[0].failDescList[0].failCode;
