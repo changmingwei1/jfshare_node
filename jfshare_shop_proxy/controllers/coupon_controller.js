@@ -68,9 +68,9 @@ router.post('/notifyOrder', function (req, res, next) {
                     res.json(resContent);
                 }else if(data[0].code==1){
 
-                    var failList = data[0].failDescList;
-                    resContent.code = failList[0].getFailCode()+"";
-                    resContent.msg = failList[0].getDesc();
+                    var failList = data[0].failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.msg = failList.desc;
                     res.json(resContent);
                 }
             }
@@ -114,9 +114,9 @@ router.post('/resendCode', function (req, res, next) {
                     res.json(resContent);
                 }else if(data[0].code==1){
 
-                    var failList = data[0].failDescList;
-                    resContent.code = failList[0].getFailCode()+"";
-                    resContent.msg = failList[0].getDesc();
+                    var failList = data[0].failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.msg = failList.desc;
                     res.json(resContent);
                 }
             }
@@ -160,9 +160,9 @@ router.post('/codeInvalid', function (req, res, next) {
                     res.json(resContent);
                 }else if(data[0].code==1){
 
-                    var failList = data[0].failDescList;
-                    resContent.code = failList[0].getFailCode()+"";
-                    resContent.msg = failList[0].getDesc();
+                    var failList = data[0].failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.msg = failList.desc;
                     res.json(resContent);
                 }
             }
