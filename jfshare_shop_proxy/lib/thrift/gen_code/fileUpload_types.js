@@ -88,8 +88,8 @@ FileParam.prototype.read = function(input) {
       }
       break;
       case 4:
-      if (ftype == Thrift.Type.I32) {
-        this.CardNumber = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.CardNumber = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -156,8 +156,8 @@ FileParam.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.CardNumber !== null && this.CardNumber !== undefined) {
-    output.writeFieldBegin('CardNumber', Thrift.Type.I32, 4);
-    output.writeI32(this.CardNumber);
+    output.writeFieldBegin('CardNumber', Thrift.Type.I64, 4);
+    output.writeI64(this.CardNumber);
     output.writeFieldEnd();
   }
   if (this.StartDate !== null && this.StartDate !== undefined) {
@@ -3129,6 +3129,3171 @@ MobileDicResult.prototype.write = function(output) {
       {
         iter79 = this.localList[iter79];
         iter79.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActivStatisticsParam = module.exports.ActivStatisticsParam = function(args) {
+  this.activName = null;
+  this.activState = null;
+  this.createStartTime = null;
+  this.createStopTime = null;
+  this.beginStartTime = null;
+  this.beginStopTime = null;
+  this.endStartTime = null;
+  this.endStopTime = null;
+  if (args) {
+    if (args.activName !== undefined) {
+      this.activName = args.activName;
+    }
+    if (args.activState !== undefined) {
+      this.activState = args.activState;
+    }
+    if (args.createStartTime !== undefined) {
+      this.createStartTime = args.createStartTime;
+    }
+    if (args.createStopTime !== undefined) {
+      this.createStopTime = args.createStopTime;
+    }
+    if (args.beginStartTime !== undefined) {
+      this.beginStartTime = args.beginStartTime;
+    }
+    if (args.beginStopTime !== undefined) {
+      this.beginStopTime = args.beginStopTime;
+    }
+    if (args.endStartTime !== undefined) {
+      this.endStartTime = args.endStartTime;
+    }
+    if (args.endStopTime !== undefined) {
+      this.endStopTime = args.endStopTime;
+    }
+  }
+};
+ActivStatisticsParam.prototype = {};
+ActivStatisticsParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.activName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.activState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.createStartTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.createStopTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.beginStartTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.beginStopTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.endStartTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.endStopTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActivStatisticsParam.prototype.write = function(output) {
+  output.writeStructBegin('ActivStatisticsParam');
+  if (this.activName !== null && this.activName !== undefined) {
+    output.writeFieldBegin('activName', Thrift.Type.STRING, 1);
+    output.writeString(this.activName);
+    output.writeFieldEnd();
+  }
+  if (this.activState !== null && this.activState !== undefined) {
+    output.writeFieldBegin('activState', Thrift.Type.I32, 2);
+    output.writeI32(this.activState);
+    output.writeFieldEnd();
+  }
+  if (this.createStartTime !== null && this.createStartTime !== undefined) {
+    output.writeFieldBegin('createStartTime', Thrift.Type.STRING, 3);
+    output.writeString(this.createStartTime);
+    output.writeFieldEnd();
+  }
+  if (this.createStopTime !== null && this.createStopTime !== undefined) {
+    output.writeFieldBegin('createStopTime', Thrift.Type.STRING, 4);
+    output.writeString(this.createStopTime);
+    output.writeFieldEnd();
+  }
+  if (this.beginStartTime !== null && this.beginStartTime !== undefined) {
+    output.writeFieldBegin('beginStartTime', Thrift.Type.STRING, 5);
+    output.writeString(this.beginStartTime);
+    output.writeFieldEnd();
+  }
+  if (this.beginStopTime !== null && this.beginStopTime !== undefined) {
+    output.writeFieldBegin('beginStopTime', Thrift.Type.STRING, 6);
+    output.writeString(this.beginStopTime);
+    output.writeFieldEnd();
+  }
+  if (this.endStartTime !== null && this.endStartTime !== undefined) {
+    output.writeFieldBegin('endStartTime', Thrift.Type.STRING, 7);
+    output.writeString(this.endStartTime);
+    output.writeFieldEnd();
+  }
+  if (this.endStopTime !== null && this.endStopTime !== undefined) {
+    output.writeFieldBegin('endStopTime', Thrift.Type.STRING, 8);
+    output.writeString(this.endStopTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActivDetailStatisticsParam = module.exports.ActivDetailStatisticsParam = function(args) {
+  this.userMobile = null;
+  this.couponState = null;
+  this.couponSource = null;
+  this.getStartTime = null;
+  this.getStopTime = null;
+  this.useStartTime = null;
+  this.useStopTime = null;
+  if (args) {
+    if (args.userMobile !== undefined) {
+      this.userMobile = args.userMobile;
+    }
+    if (args.couponState !== undefined) {
+      this.couponState = args.couponState;
+    }
+    if (args.couponSource !== undefined) {
+      this.couponSource = args.couponSource;
+    }
+    if (args.getStartTime !== undefined) {
+      this.getStartTime = args.getStartTime;
+    }
+    if (args.getStopTime !== undefined) {
+      this.getStopTime = args.getStopTime;
+    }
+    if (args.useStartTime !== undefined) {
+      this.useStartTime = args.useStartTime;
+    }
+    if (args.useStopTime !== undefined) {
+      this.useStopTime = args.useStopTime;
+    }
+  }
+};
+ActivDetailStatisticsParam.prototype = {};
+ActivDetailStatisticsParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.userMobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.couponState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.couponSource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.getStartTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.getStopTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.useStartTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.useStopTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActivDetailStatisticsParam.prototype.write = function(output) {
+  output.writeStructBegin('ActivDetailStatisticsParam');
+  if (this.userMobile !== null && this.userMobile !== undefined) {
+    output.writeFieldBegin('userMobile', Thrift.Type.STRING, 1);
+    output.writeString(this.userMobile);
+    output.writeFieldEnd();
+  }
+  if (this.couponState !== null && this.couponState !== undefined) {
+    output.writeFieldBegin('couponState', Thrift.Type.I32, 2);
+    output.writeI32(this.couponState);
+    output.writeFieldEnd();
+  }
+  if (this.couponSource !== null && this.couponSource !== undefined) {
+    output.writeFieldBegin('couponSource', Thrift.Type.I32, 3);
+    output.writeI32(this.couponSource);
+    output.writeFieldEnd();
+  }
+  if (this.getStartTime !== null && this.getStartTime !== undefined) {
+    output.writeFieldBegin('getStartTime', Thrift.Type.STRING, 4);
+    output.writeString(this.getStartTime);
+    output.writeFieldEnd();
+  }
+  if (this.getStopTime !== null && this.getStopTime !== undefined) {
+    output.writeFieldBegin('getStopTime', Thrift.Type.STRING, 5);
+    output.writeString(this.getStopTime);
+    output.writeFieldEnd();
+  }
+  if (this.useStartTime !== null && this.useStartTime !== undefined) {
+    output.writeFieldBegin('useStartTime', Thrift.Type.STRING, 6);
+    output.writeString(this.useStartTime);
+    output.writeFieldEnd();
+  }
+  if (this.useStopTime !== null && this.useStopTime !== undefined) {
+    output.writeFieldBegin('useStopTime', Thrift.Type.STRING, 7);
+    output.writeString(this.useStopTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CouponStatisticsParam = module.exports.CouponStatisticsParam = function(args) {
+  this.factor = null;
+  this.findAll = null;
+  this.allUsable = null;
+  this.category = null;
+  this.brand = null;
+  this.merchant = null;
+  this.fixed = null;
+  if (args) {
+    if (args.factor !== undefined) {
+      this.factor = args.factor;
+    }
+    if (args.findAll !== undefined) {
+      this.findAll = args.findAll;
+    }
+    if (args.allUsable !== undefined) {
+      this.allUsable = args.allUsable;
+    }
+    if (args.category !== undefined) {
+      this.category = args.category;
+    }
+    if (args.brand !== undefined) {
+      this.brand = args.brand;
+    }
+    if (args.merchant !== undefined) {
+      this.merchant = args.merchant;
+    }
+    if (args.fixed !== undefined) {
+      this.fixed = args.fixed;
+    }
+  }
+};
+CouponStatisticsParam.prototype = {};
+CouponStatisticsParam.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.factor = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.BOOL) {
+        this.findAll = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.BOOL) {
+        this.allUsable = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.BOOL) {
+        this.category = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.BOOL) {
+        this.brand = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.BOOL) {
+        this.merchant = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.BOOL) {
+        this.fixed = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CouponStatisticsParam.prototype.write = function(output) {
+  output.writeStructBegin('CouponStatisticsParam');
+  if (this.factor !== null && this.factor !== undefined) {
+    output.writeFieldBegin('factor', Thrift.Type.I32, 1);
+    output.writeI32(this.factor);
+    output.writeFieldEnd();
+  }
+  if (this.findAll !== null && this.findAll !== undefined) {
+    output.writeFieldBegin('findAll', Thrift.Type.BOOL, 2);
+    output.writeBool(this.findAll);
+    output.writeFieldEnd();
+  }
+  if (this.allUsable !== null && this.allUsable !== undefined) {
+    output.writeFieldBegin('allUsable', Thrift.Type.BOOL, 3);
+    output.writeBool(this.allUsable);
+    output.writeFieldEnd();
+  }
+  if (this.category !== null && this.category !== undefined) {
+    output.writeFieldBegin('category', Thrift.Type.BOOL, 4);
+    output.writeBool(this.category);
+    output.writeFieldEnd();
+  }
+  if (this.brand !== null && this.brand !== undefined) {
+    output.writeFieldBegin('brand', Thrift.Type.BOOL, 5);
+    output.writeBool(this.brand);
+    output.writeFieldEnd();
+  }
+  if (this.merchant !== null && this.merchant !== undefined) {
+    output.writeFieldBegin('merchant', Thrift.Type.BOOL, 6);
+    output.writeBool(this.merchant);
+    output.writeFieldEnd();
+  }
+  if (this.fixed !== null && this.fixed !== undefined) {
+    output.writeFieldBegin('fixed', Thrift.Type.BOOL, 7);
+    output.writeBool(this.fixed);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CouponActiv = module.exports.CouponActiv = function(args) {
+  this.activId = null;
+  this.activName = null;
+  this.activImg = null;
+  this.startTime = null;
+  this.endTime = null;
+  this.couponValue = null;
+  this.scoreLimit = null;
+  this.couponNum = null;
+  this.couponBeginTime = null;
+  this.couponEndTime = null;
+  this.couponType = null;
+  this.couponTypeConfig = null;
+  this.userType = null;
+  this.regStartTime = null;
+  this.regstopTime = null;
+  this.userLimit = null;
+  this.h5Config = null;
+  this.sendLimit = null;
+  if (args) {
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+    if (args.activName !== undefined) {
+      this.activName = args.activName;
+    }
+    if (args.activImg !== undefined) {
+      this.activImg = args.activImg;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+    if (args.couponValue !== undefined) {
+      this.couponValue = args.couponValue;
+    }
+    if (args.scoreLimit !== undefined) {
+      this.scoreLimit = args.scoreLimit;
+    }
+    if (args.couponNum !== undefined) {
+      this.couponNum = args.couponNum;
+    }
+    if (args.couponBeginTime !== undefined) {
+      this.couponBeginTime = args.couponBeginTime;
+    }
+    if (args.couponEndTime !== undefined) {
+      this.couponEndTime = args.couponEndTime;
+    }
+    if (args.couponType !== undefined) {
+      this.couponType = args.couponType;
+    }
+    if (args.couponTypeConfig !== undefined) {
+      this.couponTypeConfig = args.couponTypeConfig;
+    }
+    if (args.userType !== undefined) {
+      this.userType = args.userType;
+    }
+    if (args.regStartTime !== undefined) {
+      this.regStartTime = args.regStartTime;
+    }
+    if (args.regstopTime !== undefined) {
+      this.regstopTime = args.regstopTime;
+    }
+    if (args.userLimit !== undefined) {
+      this.userLimit = args.userLimit;
+    }
+    if (args.h5Config !== undefined) {
+      this.h5Config = args.h5Config;
+    }
+    if (args.sendLimit !== undefined) {
+      this.sendLimit = args.sendLimit;
+    }
+  }
+};
+CouponActiv.prototype = {};
+CouponActiv.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.activName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.activImg = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.couponValue = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.scoreLimit = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.couponNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.couponBeginTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.couponEndTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.I32) {
+        this.couponType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.couponTypeConfig = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.I32) {
+        this.userType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.STRING) {
+        this.regStartTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 15:
+      if (ftype == Thrift.Type.STRING) {
+        this.regstopTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 16:
+      if (ftype == Thrift.Type.STRING) {
+        this.userLimit = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 17:
+      if (ftype == Thrift.Type.STRING) {
+        this.h5Config = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 18:
+      if (ftype == Thrift.Type.I32) {
+        this.sendLimit = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CouponActiv.prototype.write = function(output) {
+  output.writeStructBegin('CouponActiv');
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 1);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  if (this.activName !== null && this.activName !== undefined) {
+    output.writeFieldBegin('activName', Thrift.Type.STRING, 2);
+    output.writeString(this.activName);
+    output.writeFieldEnd();
+  }
+  if (this.activImg !== null && this.activImg !== undefined) {
+    output.writeFieldBegin('activImg', Thrift.Type.STRING, 3);
+    output.writeString(this.activImg);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 4);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 5);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  if (this.couponValue !== null && this.couponValue !== undefined) {
+    output.writeFieldBegin('couponValue', Thrift.Type.I32, 6);
+    output.writeI32(this.couponValue);
+    output.writeFieldEnd();
+  }
+  if (this.scoreLimit !== null && this.scoreLimit !== undefined) {
+    output.writeFieldBegin('scoreLimit', Thrift.Type.I32, 7);
+    output.writeI32(this.scoreLimit);
+    output.writeFieldEnd();
+  }
+  if (this.couponNum !== null && this.couponNum !== undefined) {
+    output.writeFieldBegin('couponNum', Thrift.Type.I32, 8);
+    output.writeI32(this.couponNum);
+    output.writeFieldEnd();
+  }
+  if (this.couponBeginTime !== null && this.couponBeginTime !== undefined) {
+    output.writeFieldBegin('couponBeginTime', Thrift.Type.STRING, 9);
+    output.writeString(this.couponBeginTime);
+    output.writeFieldEnd();
+  }
+  if (this.couponEndTime !== null && this.couponEndTime !== undefined) {
+    output.writeFieldBegin('couponEndTime', Thrift.Type.STRING, 10);
+    output.writeString(this.couponEndTime);
+    output.writeFieldEnd();
+  }
+  if (this.couponType !== null && this.couponType !== undefined) {
+    output.writeFieldBegin('couponType', Thrift.Type.I32, 11);
+    output.writeI32(this.couponType);
+    output.writeFieldEnd();
+  }
+  if (this.couponTypeConfig !== null && this.couponTypeConfig !== undefined) {
+    output.writeFieldBegin('couponTypeConfig', Thrift.Type.STRING, 12);
+    output.writeString(this.couponTypeConfig);
+    output.writeFieldEnd();
+  }
+  if (this.userType !== null && this.userType !== undefined) {
+    output.writeFieldBegin('userType', Thrift.Type.I32, 13);
+    output.writeI32(this.userType);
+    output.writeFieldEnd();
+  }
+  if (this.regStartTime !== null && this.regStartTime !== undefined) {
+    output.writeFieldBegin('regStartTime', Thrift.Type.STRING, 14);
+    output.writeString(this.regStartTime);
+    output.writeFieldEnd();
+  }
+  if (this.regstopTime !== null && this.regstopTime !== undefined) {
+    output.writeFieldBegin('regstopTime', Thrift.Type.STRING, 15);
+    output.writeString(this.regstopTime);
+    output.writeFieldEnd();
+  }
+  if (this.userLimit !== null && this.userLimit !== undefined) {
+    output.writeFieldBegin('userLimit', Thrift.Type.STRING, 16);
+    output.writeString(this.userLimit);
+    output.writeFieldEnd();
+  }
+  if (this.h5Config !== null && this.h5Config !== undefined) {
+    output.writeFieldBegin('h5Config', Thrift.Type.STRING, 17);
+    output.writeString(this.h5Config);
+    output.writeFieldEnd();
+  }
+  if (this.sendLimit !== null && this.sendLimit !== undefined) {
+    output.writeFieldBegin('sendLimit', Thrift.Type.I32, 18);
+    output.writeI32(this.sendLimit);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CouponActivDetail = module.exports.CouponActivDetail = function(args) {
+  this.activId = null;
+  this.activName = null;
+  this.activImg = null;
+  this.startTime = null;
+  this.endTime = null;
+  this.couponValue = null;
+  this.scoreLimit = null;
+  this.couponNum = null;
+  this.couponBeginTime = null;
+  this.couponEndTime = null;
+  this.couponType = null;
+  this.couponTypeConfig = null;
+  this.userType = null;
+  this.regStartTime = null;
+  this.regstopTime = null;
+  this.userLimit = null;
+  this.h5Config = null;
+  this.sendNum = null;
+  this.usedNum = null;
+  this.createTime = null;
+  this.state = null;
+  this.CouponState = null;
+  if (args) {
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+    if (args.activName !== undefined) {
+      this.activName = args.activName;
+    }
+    if (args.activImg !== undefined) {
+      this.activImg = args.activImg;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+    if (args.couponValue !== undefined) {
+      this.couponValue = args.couponValue;
+    }
+    if (args.scoreLimit !== undefined) {
+      this.scoreLimit = args.scoreLimit;
+    }
+    if (args.couponNum !== undefined) {
+      this.couponNum = args.couponNum;
+    }
+    if (args.couponBeginTime !== undefined) {
+      this.couponBeginTime = args.couponBeginTime;
+    }
+    if (args.couponEndTime !== undefined) {
+      this.couponEndTime = args.couponEndTime;
+    }
+    if (args.couponType !== undefined) {
+      this.couponType = args.couponType;
+    }
+    if (args.couponTypeConfig !== undefined) {
+      this.couponTypeConfig = args.couponTypeConfig;
+    }
+    if (args.userType !== undefined) {
+      this.userType = args.userType;
+    }
+    if (args.regStartTime !== undefined) {
+      this.regStartTime = args.regStartTime;
+    }
+    if (args.regstopTime !== undefined) {
+      this.regstopTime = args.regstopTime;
+    }
+    if (args.userLimit !== undefined) {
+      this.userLimit = args.userLimit;
+    }
+    if (args.h5Config !== undefined) {
+      this.h5Config = args.h5Config;
+    }
+    if (args.sendNum !== undefined) {
+      this.sendNum = args.sendNum;
+    }
+    if (args.usedNum !== undefined) {
+      this.usedNum = args.usedNum;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.CouponState !== undefined) {
+      this.CouponState = args.CouponState;
+    }
+  }
+};
+CouponActivDetail.prototype = {};
+CouponActivDetail.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.activName = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.activImg = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.couponValue = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.scoreLimit = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.couponNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.couponBeginTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.couponEndTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.I32) {
+        this.couponType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.couponTypeConfig = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.I32) {
+        this.userType = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.STRING) {
+        this.regStartTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 15:
+      if (ftype == Thrift.Type.STRING) {
+        this.regstopTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 16:
+      if (ftype == Thrift.Type.STRING) {
+        this.userLimit = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 17:
+      if (ftype == Thrift.Type.STRING) {
+        this.h5Config = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 18:
+      if (ftype == Thrift.Type.I32) {
+        this.sendNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 19:
+      if (ftype == Thrift.Type.I32) {
+        this.usedNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 20:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 21:
+      if (ftype == Thrift.Type.I32) {
+        this.state = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 22:
+      if (ftype == Thrift.Type.I32) {
+        this.CouponState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CouponActivDetail.prototype.write = function(output) {
+  output.writeStructBegin('CouponActivDetail');
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 1);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  if (this.activName !== null && this.activName !== undefined) {
+    output.writeFieldBegin('activName', Thrift.Type.STRING, 2);
+    output.writeString(this.activName);
+    output.writeFieldEnd();
+  }
+  if (this.activImg !== null && this.activImg !== undefined) {
+    output.writeFieldBegin('activImg', Thrift.Type.STRING, 3);
+    output.writeString(this.activImg);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 4);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 5);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  if (this.couponValue !== null && this.couponValue !== undefined) {
+    output.writeFieldBegin('couponValue', Thrift.Type.I32, 6);
+    output.writeI32(this.couponValue);
+    output.writeFieldEnd();
+  }
+  if (this.scoreLimit !== null && this.scoreLimit !== undefined) {
+    output.writeFieldBegin('scoreLimit', Thrift.Type.I32, 7);
+    output.writeI32(this.scoreLimit);
+    output.writeFieldEnd();
+  }
+  if (this.couponNum !== null && this.couponNum !== undefined) {
+    output.writeFieldBegin('couponNum', Thrift.Type.I32, 8);
+    output.writeI32(this.couponNum);
+    output.writeFieldEnd();
+  }
+  if (this.couponBeginTime !== null && this.couponBeginTime !== undefined) {
+    output.writeFieldBegin('couponBeginTime', Thrift.Type.STRING, 9);
+    output.writeString(this.couponBeginTime);
+    output.writeFieldEnd();
+  }
+  if (this.couponEndTime !== null && this.couponEndTime !== undefined) {
+    output.writeFieldBegin('couponEndTime', Thrift.Type.STRING, 10);
+    output.writeString(this.couponEndTime);
+    output.writeFieldEnd();
+  }
+  if (this.couponType !== null && this.couponType !== undefined) {
+    output.writeFieldBegin('couponType', Thrift.Type.I32, 11);
+    output.writeI32(this.couponType);
+    output.writeFieldEnd();
+  }
+  if (this.couponTypeConfig !== null && this.couponTypeConfig !== undefined) {
+    output.writeFieldBegin('couponTypeConfig', Thrift.Type.STRING, 12);
+    output.writeString(this.couponTypeConfig);
+    output.writeFieldEnd();
+  }
+  if (this.userType !== null && this.userType !== undefined) {
+    output.writeFieldBegin('userType', Thrift.Type.I32, 13);
+    output.writeI32(this.userType);
+    output.writeFieldEnd();
+  }
+  if (this.regStartTime !== null && this.regStartTime !== undefined) {
+    output.writeFieldBegin('regStartTime', Thrift.Type.STRING, 14);
+    output.writeString(this.regStartTime);
+    output.writeFieldEnd();
+  }
+  if (this.regstopTime !== null && this.regstopTime !== undefined) {
+    output.writeFieldBegin('regstopTime', Thrift.Type.STRING, 15);
+    output.writeString(this.regstopTime);
+    output.writeFieldEnd();
+  }
+  if (this.userLimit !== null && this.userLimit !== undefined) {
+    output.writeFieldBegin('userLimit', Thrift.Type.STRING, 16);
+    output.writeString(this.userLimit);
+    output.writeFieldEnd();
+  }
+  if (this.h5Config !== null && this.h5Config !== undefined) {
+    output.writeFieldBegin('h5Config', Thrift.Type.STRING, 17);
+    output.writeString(this.h5Config);
+    output.writeFieldEnd();
+  }
+  if (this.sendNum !== null && this.sendNum !== undefined) {
+    output.writeFieldBegin('sendNum', Thrift.Type.I32, 18);
+    output.writeI32(this.sendNum);
+    output.writeFieldEnd();
+  }
+  if (this.usedNum !== null && this.usedNum !== undefined) {
+    output.writeFieldBegin('usedNum', Thrift.Type.I32, 19);
+    output.writeI32(this.usedNum);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 20);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 21);
+    output.writeI32(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.CouponState !== null && this.CouponState !== undefined) {
+    output.writeFieldBegin('CouponState', Thrift.Type.I32, 22);
+    output.writeI32(this.CouponState);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CouponActivSource = module.exports.CouponActivSource = function(args) {
+  this.id = null;
+  this.name = null;
+  this.detail = null;
+  this.createTime = null;
+  this.state = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.detail !== undefined) {
+      this.detail = args.detail;
+    }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+  }
+};
+CouponActivSource.prototype = {};
+CouponActivSource.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.detail = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.state = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CouponActivSource.prototype.write = function(output) {
+  output.writeStructBegin('CouponActivSource');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 2);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.detail !== null && this.detail !== undefined) {
+    output.writeFieldBegin('detail', Thrift.Type.STRING, 3);
+    output.writeString(this.detail);
+    output.writeFieldEnd();
+  }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 4);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.I32, 5);
+    output.writeI32(this.state);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+Coupon = module.exports.Coupon = function(args) {
+  this.id = null;
+  this.mobile = null;
+  this.couponState = null;
+  this.receiveTime = null;
+  this.useTime = null;
+  this.couponSource = null;
+  this.userId = null;
+  this.activeId = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.mobile !== undefined) {
+      this.mobile = args.mobile;
+    }
+    if (args.couponState !== undefined) {
+      this.couponState = args.couponState;
+    }
+    if (args.receiveTime !== undefined) {
+      this.receiveTime = args.receiveTime;
+    }
+    if (args.useTime !== undefined) {
+      this.useTime = args.useTime;
+    }
+    if (args.couponSource !== undefined) {
+      this.couponSource = args.couponSource;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.activeId !== undefined) {
+      this.activeId = args.activeId;
+    }
+  }
+};
+Coupon.prototype = {};
+Coupon.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.id = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.mobile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.couponState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.receiveTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.useTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.couponSource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.activeId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Coupon.prototype.write = function(output) {
+  output.writeStructBegin('Coupon');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.STRING, 1);
+    output.writeString(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.mobile !== null && this.mobile !== undefined) {
+    output.writeFieldBegin('mobile', Thrift.Type.STRING, 2);
+    output.writeString(this.mobile);
+    output.writeFieldEnd();
+  }
+  if (this.couponState !== null && this.couponState !== undefined) {
+    output.writeFieldBegin('couponState', Thrift.Type.I32, 3);
+    output.writeI32(this.couponState);
+    output.writeFieldEnd();
+  }
+  if (this.receiveTime !== null && this.receiveTime !== undefined) {
+    output.writeFieldBegin('receiveTime', Thrift.Type.STRING, 4);
+    output.writeString(this.receiveTime);
+    output.writeFieldEnd();
+  }
+  if (this.useTime !== null && this.useTime !== undefined) {
+    output.writeFieldBegin('useTime', Thrift.Type.STRING, 5);
+    output.writeString(this.useTime);
+    output.writeFieldEnd();
+  }
+  if (this.couponSource !== null && this.couponSource !== undefined) {
+    output.writeFieldBegin('couponSource', Thrift.Type.I32, 6);
+    output.writeI32(this.couponSource);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 7);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.activeId !== null && this.activeId !== undefined) {
+    output.writeFieldBegin('activeId', Thrift.Type.I32, 8);
+    output.writeI32(this.activeId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActivListResult = module.exports.ActivListResult = function(args) {
+  this.result = null;
+  this.pagination = null;
+  this.activeList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.activeList !== undefined) {
+      this.activeList = args.activeList;
+    }
+  }
+};
+ActivListResult.prototype = {};
+ActivListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size80 = 0;
+        var _rtmp384;
+        this.activeList = [];
+        var _etype83 = 0;
+        _rtmp384 = input.readListBegin();
+        _etype83 = _rtmp384.etype;
+        _size80 = _rtmp384.size;
+        for (var _i85 = 0; _i85 < _size80; ++_i85)
+        {
+          var elem86 = null;
+          elem86 = new ttypes.CouponActivDetail();
+          elem86.read(input);
+          this.activeList.push(elem86);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActivListResult.prototype.write = function(output) {
+  output.writeStructBegin('ActivListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.activeList !== null && this.activeList !== undefined) {
+    output.writeFieldBegin('activeList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.activeList.length);
+    for (var iter87 in this.activeList)
+    {
+      if (this.activeList.hasOwnProperty(iter87))
+      {
+        iter87 = this.activeList[iter87];
+        iter87.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CouponListResult = module.exports.CouponListResult = function(args) {
+  this.result = null;
+  this.pagination = null;
+  this.couponList = null;
+  this.activDetail = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.couponList !== undefined) {
+      this.couponList = args.couponList;
+    }
+    if (args.activDetail !== undefined) {
+      this.activDetail = args.activDetail;
+    }
+  }
+};
+CouponListResult.prototype = {};
+CouponListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size88 = 0;
+        var _rtmp392;
+        this.couponList = [];
+        var _etype91 = 0;
+        _rtmp392 = input.readListBegin();
+        _etype91 = _rtmp392.etype;
+        _size88 = _rtmp392.size;
+        for (var _i93 = 0; _i93 < _size88; ++_i93)
+        {
+          var elem94 = null;
+          elem94 = new ttypes.Coupon();
+          elem94.read(input);
+          this.couponList.push(elem94);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.activDetail = new ttypes.CouponActivDetail();
+        this.activDetail.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CouponListResult.prototype.write = function(output) {
+  output.writeStructBegin('CouponListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.couponList !== null && this.couponList !== undefined) {
+    output.writeFieldBegin('couponList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.couponList.length);
+    for (var iter95 in this.couponList)
+    {
+      if (this.couponList.hasOwnProperty(iter95))
+      {
+        iter95 = this.couponList[iter95];
+        iter95.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.activDetail !== null && this.activDetail !== undefined) {
+    output.writeFieldBegin('activDetail', Thrift.Type.STRUCT, 4);
+    this.activDetail.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+WebActivResult = module.exports.WebActivResult = function(args) {
+  this.result = null;
+  this.pagination = null;
+  this.activeList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.activeList !== undefined) {
+      this.activeList = args.activeList;
+    }
+  }
+};
+WebActivResult.prototype = {};
+WebActivResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size96 = 0;
+        var _rtmp3100;
+        this.activeList = [];
+        var _etype99 = 0;
+        _rtmp3100 = input.readListBegin();
+        _etype99 = _rtmp3100.etype;
+        _size96 = _rtmp3100.size;
+        for (var _i101 = 0; _i101 < _size96; ++_i101)
+        {
+          var elem102 = null;
+          elem102 = new ttypes.CouponActivDetail();
+          elem102.read(input);
+          this.activeList.push(elem102);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+WebActivResult.prototype.write = function(output) {
+  output.writeStructBegin('WebActivResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.activeList !== null && this.activeList !== undefined) {
+    output.writeFieldBegin('activeList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.activeList.length);
+    for (var iter103 in this.activeList)
+    {
+      if (this.activeList.hasOwnProperty(iter103))
+      {
+        iter103 = this.activeList[iter103];
+        iter103.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+SelectCouponResult = module.exports.SelectCouponResult = function(args) {
+  this.result = null;
+  this.pagination = null;
+  this.activeList = null;
+  this.noLimitList = null;
+  this.brandList = null;
+  this.subjectList = null;
+  this.sellerList = null;
+  this.productList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.activeList !== undefined) {
+      this.activeList = args.activeList;
+    }
+    if (args.noLimitList !== undefined) {
+      this.noLimitList = args.noLimitList;
+    }
+    if (args.brandList !== undefined) {
+      this.brandList = args.brandList;
+    }
+    if (args.subjectList !== undefined) {
+      this.subjectList = args.subjectList;
+    }
+    if (args.sellerList !== undefined) {
+      this.sellerList = args.sellerList;
+    }
+    if (args.productList !== undefined) {
+      this.productList = args.productList;
+    }
+  }
+};
+SelectCouponResult.prototype = {};
+SelectCouponResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size104 = 0;
+        var _rtmp3108;
+        this.activeList = [];
+        var _etype107 = 0;
+        _rtmp3108 = input.readListBegin();
+        _etype107 = _rtmp3108.etype;
+        _size104 = _rtmp3108.size;
+        for (var _i109 = 0; _i109 < _size104; ++_i109)
+        {
+          var elem110 = null;
+          elem110 = new ttypes.CouponActivDetail();
+          elem110.read(input);
+          this.activeList.push(elem110);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.LIST) {
+        var _size111 = 0;
+        var _rtmp3115;
+        this.noLimitList = [];
+        var _etype114 = 0;
+        _rtmp3115 = input.readListBegin();
+        _etype114 = _rtmp3115.etype;
+        _size111 = _rtmp3115.size;
+        for (var _i116 = 0; _i116 < _size111; ++_i116)
+        {
+          var elem117 = null;
+          elem117 = new ttypes.CouponActivDetail();
+          elem117.read(input);
+          this.noLimitList.push(elem117);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.LIST) {
+        var _size118 = 0;
+        var _rtmp3122;
+        this.brandList = [];
+        var _etype121 = 0;
+        _rtmp3122 = input.readListBegin();
+        _etype121 = _rtmp3122.etype;
+        _size118 = _rtmp3122.size;
+        for (var _i123 = 0; _i123 < _size118; ++_i123)
+        {
+          var elem124 = null;
+          elem124 = new ttypes.CouponActivDetail();
+          elem124.read(input);
+          this.brandList.push(elem124);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.LIST) {
+        var _size125 = 0;
+        var _rtmp3129;
+        this.subjectList = [];
+        var _etype128 = 0;
+        _rtmp3129 = input.readListBegin();
+        _etype128 = _rtmp3129.etype;
+        _size125 = _rtmp3129.size;
+        for (var _i130 = 0; _i130 < _size125; ++_i130)
+        {
+          var elem131 = null;
+          elem131 = new ttypes.CouponActivDetail();
+          elem131.read(input);
+          this.subjectList.push(elem131);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.LIST) {
+        var _size132 = 0;
+        var _rtmp3136;
+        this.sellerList = [];
+        var _etype135 = 0;
+        _rtmp3136 = input.readListBegin();
+        _etype135 = _rtmp3136.etype;
+        _size132 = _rtmp3136.size;
+        for (var _i137 = 0; _i137 < _size132; ++_i137)
+        {
+          var elem138 = null;
+          elem138 = new ttypes.CouponActivDetail();
+          elem138.read(input);
+          this.sellerList.push(elem138);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.LIST) {
+        var _size139 = 0;
+        var _rtmp3143;
+        this.productList = [];
+        var _etype142 = 0;
+        _rtmp3143 = input.readListBegin();
+        _etype142 = _rtmp3143.etype;
+        _size139 = _rtmp3143.size;
+        for (var _i144 = 0; _i144 < _size139; ++_i144)
+        {
+          var elem145 = null;
+          elem145 = new ttypes.CouponActivDetail();
+          elem145.read(input);
+          this.productList.push(elem145);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+SelectCouponResult.prototype.write = function(output) {
+  output.writeStructBegin('SelectCouponResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.activeList !== null && this.activeList !== undefined) {
+    output.writeFieldBegin('activeList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.activeList.length);
+    for (var iter146 in this.activeList)
+    {
+      if (this.activeList.hasOwnProperty(iter146))
+      {
+        iter146 = this.activeList[iter146];
+        iter146.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.noLimitList !== null && this.noLimitList !== undefined) {
+    output.writeFieldBegin('noLimitList', Thrift.Type.LIST, 4);
+    output.writeListBegin(Thrift.Type.STRUCT, this.noLimitList.length);
+    for (var iter147 in this.noLimitList)
+    {
+      if (this.noLimitList.hasOwnProperty(iter147))
+      {
+        iter147 = this.noLimitList[iter147];
+        iter147.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.brandList !== null && this.brandList !== undefined) {
+    output.writeFieldBegin('brandList', Thrift.Type.LIST, 5);
+    output.writeListBegin(Thrift.Type.STRUCT, this.brandList.length);
+    for (var iter148 in this.brandList)
+    {
+      if (this.brandList.hasOwnProperty(iter148))
+      {
+        iter148 = this.brandList[iter148];
+        iter148.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.subjectList !== null && this.subjectList !== undefined) {
+    output.writeFieldBegin('subjectList', Thrift.Type.LIST, 6);
+    output.writeListBegin(Thrift.Type.STRUCT, this.subjectList.length);
+    for (var iter149 in this.subjectList)
+    {
+      if (this.subjectList.hasOwnProperty(iter149))
+      {
+        iter149 = this.subjectList[iter149];
+        iter149.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.sellerList !== null && this.sellerList !== undefined) {
+    output.writeFieldBegin('sellerList', Thrift.Type.LIST, 7);
+    output.writeListBegin(Thrift.Type.STRUCT, this.sellerList.length);
+    for (var iter150 in this.sellerList)
+    {
+      if (this.sellerList.hasOwnProperty(iter150))
+      {
+        iter150 = this.sellerList[iter150];
+        iter150.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.productList !== null && this.productList !== undefined) {
+    output.writeFieldBegin('productList', Thrift.Type.LIST, 8);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productList.length);
+    for (var iter151 in this.productList)
+    {
+      if (this.productList.hasOwnProperty(iter151))
+      {
+        iter151 = this.productList[iter151];
+        iter151.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActiveByProductResult = module.exports.ActiveByProductResult = function(args) {
+  this.result = null;
+  this.pagination = null;
+  this.couponList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.couponList !== undefined) {
+      this.couponList = args.couponList;
+    }
+  }
+};
+ActiveByProductResult.prototype = {};
+ActiveByProductResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size152 = 0;
+        var _rtmp3156;
+        this.couponList = [];
+        var _etype155 = 0;
+        _rtmp3156 = input.readListBegin();
+        _etype155 = _rtmp3156.etype;
+        _size152 = _rtmp3156.size;
+        for (var _i157 = 0; _i157 < _size152; ++_i157)
+        {
+          var elem158 = null;
+          elem158 = new ttypes.CouponActivDetail();
+          elem158.read(input);
+          this.couponList.push(elem158);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActiveByProductResult.prototype.write = function(output) {
+  output.writeStructBegin('ActiveByProductResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.couponList !== null && this.couponList !== undefined) {
+    output.writeFieldBegin('couponList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.couponList.length);
+    for (var iter159 in this.couponList)
+    {
+      if (this.couponList.hasOwnProperty(iter159))
+      {
+        iter159 = this.couponList[iter159];
+        iter159.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CouponConsumeResult = module.exports.CouponConsumeResult = function(args) {
+  this.result = null;
+  this.openCouponList = null;
+  this.offCouponList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.openCouponList !== undefined) {
+      this.openCouponList = args.openCouponList;
+    }
+    if (args.offCouponList !== undefined) {
+      this.offCouponList = args.offCouponList;
+    }
+  }
+};
+CouponConsumeResult.prototype = {};
+CouponConsumeResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size160 = 0;
+        var _rtmp3164;
+        this.openCouponList = [];
+        var _etype163 = 0;
+        _rtmp3164 = input.readListBegin();
+        _etype163 = _rtmp3164.etype;
+        _size160 = _rtmp3164.size;
+        for (var _i165 = 0; _i165 < _size160; ++_i165)
+        {
+          var elem166 = null;
+          elem166 = new ttypes.Coupon();
+          elem166.read(input);
+          this.openCouponList.push(elem166);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size167 = 0;
+        var _rtmp3171;
+        this.offCouponList = [];
+        var _etype170 = 0;
+        _rtmp3171 = input.readListBegin();
+        _etype170 = _rtmp3171.etype;
+        _size167 = _rtmp3171.size;
+        for (var _i172 = 0; _i172 < _size167; ++_i172)
+        {
+          var elem173 = null;
+          elem173 = new ttypes.Coupon();
+          elem173.read(input);
+          this.offCouponList.push(elem173);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CouponConsumeResult.prototype.write = function(output) {
+  output.writeStructBegin('CouponConsumeResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.openCouponList !== null && this.openCouponList !== undefined) {
+    output.writeFieldBegin('openCouponList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.openCouponList.length);
+    for (var iter174 in this.openCouponList)
+    {
+      if (this.openCouponList.hasOwnProperty(iter174))
+      {
+        iter174 = this.openCouponList[iter174];
+        iter174.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.offCouponList !== null && this.offCouponList !== undefined) {
+    output.writeFieldBegin('offCouponList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.offCouponList.length);
+    for (var iter175 in this.offCouponList)
+    {
+      if (this.offCouponList.hasOwnProperty(iter175))
+      {
+        iter175 = this.offCouponList[iter175];
+        iter175.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CouponNumResult = module.exports.CouponNumResult = function(args) {
+  this.result = null;
+  this.noUseNum = null;
+  this.alreadyUsedNum = null;
+  this.timeOutNum = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.noUseNum !== undefined) {
+      this.noUseNum = args.noUseNum;
+    }
+    if (args.alreadyUsedNum !== undefined) {
+      this.alreadyUsedNum = args.alreadyUsedNum;
+    }
+    if (args.timeOutNum !== undefined) {
+      this.timeOutNum = args.timeOutNum;
+    }
+  }
+};
+CouponNumResult.prototype = {};
+CouponNumResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.noUseNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.alreadyUsedNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.timeOutNum = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CouponNumResult.prototype.write = function(output) {
+  output.writeStructBegin('CouponNumResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.noUseNum !== null && this.noUseNum !== undefined) {
+    output.writeFieldBegin('noUseNum', Thrift.Type.I32, 2);
+    output.writeI32(this.noUseNum);
+    output.writeFieldEnd();
+  }
+  if (this.alreadyUsedNum !== null && this.alreadyUsedNum !== undefined) {
+    output.writeFieldBegin('alreadyUsedNum', Thrift.Type.I32, 3);
+    output.writeI32(this.alreadyUsedNum);
+    output.writeFieldEnd();
+  }
+  if (this.timeOutNum !== null && this.timeOutNum !== undefined) {
+    output.writeFieldBegin('timeOutNum', Thrift.Type.I32, 4);
+    output.writeI32(this.timeOutNum);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ActivityLimitResult = module.exports.ActivityLimitResult = function(args) {
+  this.result = null;
+  this.type = null;
+  this.limitContent = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+    if (args.limitContent !== undefined) {
+      this.limitContent = args.limitContent;
+    }
+  }
+};
+ActivityLimitResult.prototype = {};
+ActivityLimitResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.limitContent = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ActivityLimitResult.prototype.write = function(output) {
+  output.writeStructBegin('ActivityLimitResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 2);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.limitContent !== null && this.limitContent !== undefined) {
+    output.writeFieldBegin('limitContent', Thrift.Type.STRING, 3);
+    output.writeString(this.limitContent);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+UserCouponDetail = module.exports.UserCouponDetail = function(args) {
+  this.id = null;
+  this.scoreLimit = null;
+  this.value = null;
+  this.type = null;
+  this.desc = null;
+  this.beginTime = null;
+  this.endTime = null;
+  if (args) {
+    if (args.id !== undefined) {
+      this.id = args.id;
+    }
+    if (args.scoreLimit !== undefined) {
+      this.scoreLimit = args.scoreLimit;
+    }
+    if (args.value !== undefined) {
+      this.value = args.value;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+    if (args.desc !== undefined) {
+      this.desc = args.desc;
+    }
+    if (args.beginTime !== undefined) {
+      this.beginTime = args.beginTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+  }
+};
+UserCouponDetail.prototype = {};
+UserCouponDetail.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.id = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.scoreLimit = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.value = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.desc = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.beginTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserCouponDetail.prototype.write = function(output) {
+  output.writeStructBegin('UserCouponDetail');
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.STRING, 1);
+    output.writeString(this.id);
+    output.writeFieldEnd();
+  }
+  if (this.scoreLimit !== null && this.scoreLimit !== undefined) {
+    output.writeFieldBegin('scoreLimit', Thrift.Type.I32, 2);
+    output.writeI32(this.scoreLimit);
+    output.writeFieldEnd();
+  }
+  if (this.value !== null && this.value !== undefined) {
+    output.writeFieldBegin('value', Thrift.Type.I32, 3);
+    output.writeI32(this.value);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 4);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.desc !== null && this.desc !== undefined) {
+    output.writeFieldBegin('desc', Thrift.Type.STRING, 5);
+    output.writeString(this.desc);
+    output.writeFieldEnd();
+  }
+  if (this.beginTime !== null && this.beginTime !== undefined) {
+    output.writeFieldBegin('beginTime', Thrift.Type.STRING, 6);
+    output.writeString(this.beginTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 7);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+UserCouponListResult = module.exports.UserCouponListResult = function(args) {
+  this.result = null;
+  this.pagination = null;
+  this.couponList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.couponList !== undefined) {
+      this.couponList = args.couponList;
+    }
+  }
+};
+UserCouponListResult.prototype = {};
+UserCouponListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size176 = 0;
+        var _rtmp3180;
+        this.couponList = [];
+        var _etype179 = 0;
+        _rtmp3180 = input.readListBegin();
+        _etype179 = _rtmp3180.etype;
+        _size176 = _rtmp3180.size;
+        for (var _i181 = 0; _i181 < _size176; ++_i181)
+        {
+          var elem182 = null;
+          elem182 = new ttypes.UserCouponDetail();
+          elem182.read(input);
+          this.couponList.push(elem182);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserCouponListResult.prototype.write = function(output) {
+  output.writeStructBegin('UserCouponListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.couponList !== null && this.couponList !== undefined) {
+    output.writeFieldBegin('couponList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.couponList.length);
+    for (var iter183 in this.couponList)
+    {
+      if (this.couponList.hasOwnProperty(iter183))
+      {
+        iter183 = this.couponList[iter183];
+        iter183.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+UserCouponDetailListResult = module.exports.UserCouponDetailListResult = function(args) {
+  this.result = null;
+  this.useList = null;
+  this.noUsedList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.useList !== undefined) {
+      this.useList = args.useList;
+    }
+    if (args.noUsedList !== undefined) {
+      this.noUsedList = args.noUsedList;
+    }
+  }
+};
+UserCouponDetailListResult.prototype = {};
+UserCouponDetailListResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size184 = 0;
+        var _rtmp3188;
+        this.useList = [];
+        var _etype187 = 0;
+        _rtmp3188 = input.readListBegin();
+        _etype187 = _rtmp3188.etype;
+        _size184 = _rtmp3188.size;
+        for (var _i189 = 0; _i189 < _size184; ++_i189)
+        {
+          var elem190 = null;
+          elem190 = new ttypes.UserCouponDetail();
+          elem190.read(input);
+          this.useList.push(elem190);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size191 = 0;
+        var _rtmp3195;
+        this.noUsedList = [];
+        var _etype194 = 0;
+        _rtmp3195 = input.readListBegin();
+        _etype194 = _rtmp3195.etype;
+        _size191 = _rtmp3195.size;
+        for (var _i196 = 0; _i196 < _size191; ++_i196)
+        {
+          var elem197 = null;
+          elem197 = new ttypes.UserCouponDetail();
+          elem197.read(input);
+          this.noUsedList.push(elem197);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserCouponDetailListResult.prototype.write = function(output) {
+  output.writeStructBegin('UserCouponDetailListResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.useList !== null && this.useList !== undefined) {
+    output.writeFieldBegin('useList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.useList.length);
+    for (var iter198 in this.useList)
+    {
+      if (this.useList.hasOwnProperty(iter198))
+      {
+        iter198 = this.useList[iter198];
+        iter198.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.noUsedList !== null && this.noUsedList !== undefined) {
+    output.writeFieldBegin('noUsedList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.noUsedList.length);
+    for (var iter199 in this.noUsedList)
+    {
+      if (this.noUsedList.hasOwnProperty(iter199))
+      {
+        iter199 = this.noUsedList[iter199];
+        iter199.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+CouponActivResult = module.exports.CouponActivResult = function(args) {
+  this.result = null;
+  this.couponActiv = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.couponActiv !== undefined) {
+      this.couponActiv = args.couponActiv;
+    }
+  }
+};
+CouponActivResult.prototype = {};
+CouponActivResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.couponActiv = new ttypes.CouponActiv();
+        this.couponActiv.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CouponActivResult.prototype.write = function(output) {
+  output.writeStructBegin('CouponActivResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.couponActiv !== null && this.couponActiv !== undefined) {
+    output.writeFieldBegin('couponActiv', Thrift.Type.STRUCT, 2);
+    this.couponActiv.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ProductDetail = module.exports.ProductDetail = function(args) {
+  this.productId = null;
+  this.brandId = null;
+  this.subjectId = null;
+  this.sellerId = null;
+  this.price = null;
+  this.num = null;
+  if (args) {
+    if (args.productId !== undefined) {
+      this.productId = args.productId;
+    }
+    if (args.brandId !== undefined) {
+      this.brandId = args.brandId;
+    }
+    if (args.subjectId !== undefined) {
+      this.subjectId = args.subjectId;
+    }
+    if (args.sellerId !== undefined) {
+      this.sellerId = args.sellerId;
+    }
+    if (args.price !== undefined) {
+      this.price = args.price;
+    }
+    if (args.num !== undefined) {
+      this.num = args.num;
+    }
+  }
+};
+ProductDetail.prototype = {};
+ProductDetail.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.productId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.brandId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.subjectId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.sellerId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.price = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.num = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ProductDetail.prototype.write = function(output) {
+  output.writeStructBegin('ProductDetail');
+  if (this.productId !== null && this.productId !== undefined) {
+    output.writeFieldBegin('productId', Thrift.Type.STRING, 1);
+    output.writeString(this.productId);
+    output.writeFieldEnd();
+  }
+  if (this.brandId !== null && this.brandId !== undefined) {
+    output.writeFieldBegin('brandId', Thrift.Type.I32, 2);
+    output.writeI32(this.brandId);
+    output.writeFieldEnd();
+  }
+  if (this.subjectId !== null && this.subjectId !== undefined) {
+    output.writeFieldBegin('subjectId', Thrift.Type.I32, 3);
+    output.writeI32(this.subjectId);
+    output.writeFieldEnd();
+  }
+  if (this.sellerId !== null && this.sellerId !== undefined) {
+    output.writeFieldBegin('sellerId', Thrift.Type.I32, 4);
+    output.writeI32(this.sellerId);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.I32, 5);
+    output.writeI32(this.price);
+    output.writeFieldEnd();
+  }
+  if (this.num !== null && this.num !== undefined) {
+    output.writeFieldBegin('num', Thrift.Type.I32, 6);
+    output.writeI32(this.num);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+UserCouponMutexResult = module.exports.UserCouponMutexResult = function(args) {
+  this.result = null;
+  this.couponIdList = null;
+  if (args) {
+    if (args.result !== undefined) {
+      this.result = args.result;
+    }
+    if (args.couponIdList !== undefined) {
+      this.couponIdList = args.couponIdList;
+    }
+  }
+};
+UserCouponMutexResult.prototype = {};
+UserCouponMutexResult.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.result = new result_ttypes.Result();
+        this.result.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size200 = 0;
+        var _rtmp3204;
+        this.couponIdList = [];
+        var _etype203 = 0;
+        _rtmp3204 = input.readListBegin();
+        _etype203 = _rtmp3204.etype;
+        _size200 = _rtmp3204.size;
+        for (var _i205 = 0; _i205 < _size200; ++_i205)
+        {
+          var elem206 = null;
+          elem206 = input.readString();
+          this.couponIdList.push(elem206);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+UserCouponMutexResult.prototype.write = function(output) {
+  output.writeStructBegin('UserCouponMutexResult');
+  if (this.result !== null && this.result !== undefined) {
+    output.writeFieldBegin('result', Thrift.Type.STRUCT, 1);
+    this.result.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.couponIdList !== null && this.couponIdList !== undefined) {
+    output.writeFieldBegin('couponIdList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRING, this.couponIdList.length);
+    for (var iter207 in this.couponIdList)
+    {
+      if (this.couponIdList.hasOwnProperty(iter207))
+      {
+        iter207 = this.couponIdList[iter207];
+        output.writeString(iter207);
       }
     }
     output.writeListEnd();

@@ -704,18 +704,18 @@ FileForCardServ_rechargeList_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.LIST) {
-        var _size80 = 0;
-        var _rtmp384;
+        var _size208 = 0;
+        var _rtmp3212;
         this.states = [];
-        var _etype83 = 0;
-        _rtmp384 = input.readListBegin();
-        _etype83 = _rtmp384.etype;
-        _size80 = _rtmp384.size;
-        for (var _i85 = 0; _i85 < _size80; ++_i85)
+        var _etype211 = 0;
+        _rtmp3212 = input.readListBegin();
+        _etype211 = _rtmp3212.etype;
+        _size208 = _rtmp3212.size;
+        for (var _i213 = 0; _i213 < _size208; ++_i213)
         {
-          var elem86 = null;
-          elem86 = input.readI32();
-          this.states.push(elem86);
+          var elem214 = null;
+          elem214 = input.readI32();
+          this.states.push(elem214);
         }
         input.readListEnd();
       } else {
@@ -742,15 +742,14 @@ FileForCardServ_rechargeList_args.prototype.read = function(input) {
 FileForCardServ_rechargeList_args.prototype.write = function(output) {
   output.writeStructBegin('FileForCardServ_rechargeList_args');
   if (this.states !== null && this.states !== undefined) {
-
     output.writeFieldBegin('states', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.I32, this.states.length);
-    for (var iter87 in this.states)
+    for (var iter215 in this.states)
     {
-      if (this.states.hasOwnProperty(iter87))
+      if (this.states.hasOwnProperty(iter215))
       {
-        iter87 = this.states[iter87];
-        output.writeI32(iter87);
+        iter215 = this.states[iter215];
+        output.writeI32(iter215);
       }
     }
     output.writeListEnd();
@@ -1878,6 +1877,3203 @@ FileForCardServ_queryFolwInfo_result.prototype.write = function(output) {
   return;
 };
 
+FileForCardServ_queryCouponActivList_args = function(args) {
+  this.param = null;
+  this.pagination = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+FileForCardServ_queryCouponActivList_args.prototype = {};
+FileForCardServ_queryCouponActivList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ActivStatisticsParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryCouponActivList_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryCouponActivList_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryCouponActivList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryCouponActivList_result.prototype = {};
+FileForCardServ_queryCouponActivList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ActivListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryCouponActivList_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryCouponActivList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_createCouponActiv_args = function(args) {
+  this.couponActiv = null;
+  if (args) {
+    if (args.couponActiv !== undefined) {
+      this.couponActiv = args.couponActiv;
+    }
+  }
+};
+FileForCardServ_createCouponActiv_args.prototype = {};
+FileForCardServ_createCouponActiv_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.couponActiv = new ttypes.CouponActiv();
+        this.couponActiv.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_createCouponActiv_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_createCouponActiv_args');
+  if (this.couponActiv !== null && this.couponActiv !== undefined) {
+    output.writeFieldBegin('couponActiv', Thrift.Type.STRUCT, 1);
+    this.couponActiv.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_createCouponActiv_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_createCouponActiv_result.prototype = {};
+FileForCardServ_createCouponActiv_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_createCouponActiv_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_createCouponActiv_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_selectActivDetailById_args = function(args) {
+  this.activId = null;
+  this.param = null;
+  this.pagination = null;
+  if (args) {
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+FileForCardServ_selectActivDetailById_args.prototype = {};
+FileForCardServ_selectActivDetailById_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ActivDetailStatisticsParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_selectActivDetailById_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_selectActivDetailById_args');
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 1);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 2);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_selectActivDetailById_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_selectActivDetailById_result.prototype = {};
+FileForCardServ_selectActivDetailById_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.CouponListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_selectActivDetailById_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_selectActivDetailById_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_selectActivById_args = function(args) {
+  this.activId = null;
+  if (args) {
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+  }
+};
+FileForCardServ_selectActivById_args.prototype = {};
+FileForCardServ_selectActivById_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_selectActivById_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_selectActivById_args');
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 1);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_selectActivById_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_selectActivById_result.prototype = {};
+FileForCardServ_selectActivById_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.CouponActivResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_selectActivById_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_selectActivById_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_updateActiv_args = function(args) {
+  this.activ = null;
+  if (args) {
+    if (args.activ !== undefined) {
+      this.activ = args.activ;
+    }
+  }
+};
+FileForCardServ_updateActiv_args.prototype = {};
+FileForCardServ_updateActiv_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.activ = new ttypes.CouponActiv();
+        this.activ.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_updateActiv_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_updateActiv_args');
+  if (this.activ !== null && this.activ !== undefined) {
+    output.writeFieldBegin('activ', Thrift.Type.STRUCT, 1);
+    this.activ.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_updateActiv_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_updateActiv_result.prototype = {};
+FileForCardServ_updateActiv_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_updateActiv_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_updateActiv_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_exportActivDetail_args = function(args) {
+  this.activId = null;
+  this.param = null;
+  if (args) {
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+FileForCardServ_exportActivDetail_args.prototype = {};
+FileForCardServ_exportActivDetail_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ActivDetailStatisticsParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_exportActivDetail_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_exportActivDetail_args');
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 1);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 2);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_exportActivDetail_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_exportActivDetail_result.prototype = {};
+FileForCardServ_exportActivDetail_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_exportActivDetail_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_exportActivDetail_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_updateRecommendNum_args = function(args) {
+  this.num = null;
+  if (args) {
+    if (args.num !== undefined) {
+      this.num = args.num;
+    }
+  }
+};
+FileForCardServ_updateRecommendNum_args.prototype = {};
+FileForCardServ_updateRecommendNum_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.num = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_updateRecommendNum_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_updateRecommendNum_args');
+  if (this.num !== null && this.num !== undefined) {
+    output.writeFieldBegin('num', Thrift.Type.I32, 1);
+    output.writeI32(this.num);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_updateRecommendNum_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_updateRecommendNum_result.prototype = {};
+FileForCardServ_updateRecommendNum_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_updateRecommendNum_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_updateRecommendNum_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_addRecommendState_args = function(args) {
+  this.activIdList = null;
+  if (args) {
+    if (args.activIdList !== undefined) {
+      this.activIdList = args.activIdList;
+    }
+  }
+};
+FileForCardServ_addRecommendState_args.prototype = {};
+FileForCardServ_addRecommendState_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size216 = 0;
+        var _rtmp3220;
+        this.activIdList = [];
+        var _etype219 = 0;
+        _rtmp3220 = input.readListBegin();
+        _etype219 = _rtmp3220.etype;
+        _size216 = _rtmp3220.size;
+        for (var _i221 = 0; _i221 < _size216; ++_i221)
+        {
+          var elem222 = null;
+          elem222 = input.readI32();
+          this.activIdList.push(elem222);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_addRecommendState_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_addRecommendState_args');
+  if (this.activIdList !== null && this.activIdList !== undefined) {
+    output.writeFieldBegin('activIdList', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.I32, this.activIdList.length);
+    for (var iter223 in this.activIdList)
+    {
+      if (this.activIdList.hasOwnProperty(iter223))
+      {
+        iter223 = this.activIdList[iter223];
+        output.writeI32(iter223);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_addRecommendState_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_addRecommendState_result.prototype = {};
+FileForCardServ_addRecommendState_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_addRecommendState_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_addRecommendState_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_findCoupon_args = function(args) {
+  this.userId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+  }
+};
+FileForCardServ_findCoupon_args.prototype = {};
+FileForCardServ_findCoupon_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_findCoupon_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_findCoupon_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_findCoupon_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_findCoupon_result.prototype = {};
+FileForCardServ_findCoupon_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.WebActivResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_findCoupon_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_findCoupon_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_receiveCoupon_args = function(args) {
+  this.userId = null;
+  this.activId = null;
+  this.fromSource = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+    if (args.fromSource !== undefined) {
+      this.fromSource = args.fromSource;
+    }
+  }
+};
+FileForCardServ_receiveCoupon_args.prototype = {};
+FileForCardServ_receiveCoupon_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.fromSource = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_receiveCoupon_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_receiveCoupon_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 2);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  if (this.fromSource !== null && this.fromSource !== undefined) {
+    output.writeFieldBegin('fromSource', Thrift.Type.I32, 3);
+    output.writeI32(this.fromSource);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_receiveCoupon_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_receiveCoupon_result.prototype = {};
+FileForCardServ_receiveCoupon_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_receiveCoupon_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_receiveCoupon_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_shareUrl_args = function(args) {
+  this.activId = null;
+  if (args) {
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+  }
+};
+FileForCardServ_shareUrl_args.prototype = {};
+FileForCardServ_shareUrl_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_shareUrl_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_shareUrl_args');
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 1);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_shareUrl_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_shareUrl_result.prototype = {};
+FileForCardServ_shareUrl_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_shareUrl_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_shareUrl_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryCouponList_args = function(args) {
+  this.couponRec = null;
+  this.userId = null;
+  this.param = null;
+  this.pagination = null;
+  if (args) {
+    if (args.couponRec !== undefined) {
+      this.couponRec = args.couponRec;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+FileForCardServ_queryCouponList_args.prototype = {};
+FileForCardServ_queryCouponList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.couponRec = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.CouponStatisticsParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryCouponList_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryCouponList_args');
+  if (this.couponRec !== null && this.couponRec !== undefined) {
+    output.writeFieldBegin('couponRec', Thrift.Type.I32, 1);
+    output.writeI32(this.couponRec);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 3);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 4);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryCouponList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryCouponList_result.prototype = {};
+FileForCardServ_queryCouponList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.SelectCouponResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryCouponList_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryCouponList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_userCouponList_args = function(args) {
+  this.couponState = null;
+  this.userId = null;
+  this.pagination = null;
+  if (args) {
+    if (args.couponState !== undefined) {
+      this.couponState = args.couponState;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+FileForCardServ_userCouponList_args.prototype = {};
+FileForCardServ_userCouponList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.couponState = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_userCouponList_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_userCouponList_args');
+  if (this.couponState !== null && this.couponState !== undefined) {
+    output.writeFieldBegin('couponState', Thrift.Type.I32, 1);
+    output.writeI32(this.couponState);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_userCouponList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_userCouponList_result.prototype = {};
+FileForCardServ_userCouponList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.UserCouponListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_userCouponList_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_userCouponList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_userCouponCount_args = function(args) {
+  this.userId = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+  }
+};
+FileForCardServ_userCouponCount_args.prototype = {};
+FileForCardServ_userCouponCount_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_userCouponCount_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_userCouponCount_args');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_userCouponCount_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_userCouponCount_result.prototype = {};
+FileForCardServ_userCouponCount_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.CouponNumResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_userCouponCount_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_userCouponCount_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryActiveByProductId_args = function(args) {
+  this.productDetail = null;
+  this.pagination = null;
+  this.userId = null;
+  if (args) {
+    if (args.productDetail !== undefined) {
+      this.productDetail = args.productDetail;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+  }
+};
+FileForCardServ_queryActiveByProductId_args.prototype = {};
+FileForCardServ_queryActiveByProductId_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.productDetail = new ttypes.ProductDetail();
+        this.productDetail.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryActiveByProductId_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryActiveByProductId_args');
+  if (this.productDetail !== null && this.productDetail !== undefined) {
+    output.writeFieldBegin('productDetail', Thrift.Type.STRUCT, 1);
+    this.productDetail.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 3);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryActiveByProductId_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryActiveByProductId_result.prototype = {};
+FileForCardServ_queryActiveByProductId_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ActiveByProductResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryActiveByProductId_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryActiveByProductId_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryUserCouponByOrder_args = function(args) {
+  this.productList = null;
+  this.userId = null;
+  if (args) {
+    if (args.productList !== undefined) {
+      this.productList = args.productList;
+    }
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+  }
+};
+FileForCardServ_queryUserCouponByOrder_args.prototype = {};
+FileForCardServ_queryUserCouponByOrder_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size224 = 0;
+        var _rtmp3228;
+        this.productList = [];
+        var _etype227 = 0;
+        _rtmp3228 = input.readListBegin();
+        _etype227 = _rtmp3228.etype;
+        _size224 = _rtmp3228.size;
+        for (var _i229 = 0; _i229 < _size224; ++_i229)
+        {
+          var elem230 = null;
+          elem230 = new ttypes.ProductDetail();
+          elem230.read(input);
+          this.productList.push(elem230);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryUserCouponByOrder_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryUserCouponByOrder_args');
+  if (this.productList !== null && this.productList !== undefined) {
+    output.writeFieldBegin('productList', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productList.length);
+    for (var iter231 in this.productList)
+    {
+      if (this.productList.hasOwnProperty(iter231))
+      {
+        iter231 = this.productList[iter231];
+        iter231.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 2);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryUserCouponByOrder_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryUserCouponByOrder_result.prototype = {};
+FileForCardServ_queryUserCouponByOrder_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.UserCouponDetailListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryUserCouponByOrder_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryUserCouponByOrder_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryUserMutexCouponByOrder_args = function(args) {
+  this.pitchCouponIdList = null;
+  this.cannelCouponIdList = null;
+  this.productIdList = null;
+  if (args) {
+    if (args.pitchCouponIdList !== undefined) {
+      this.pitchCouponIdList = args.pitchCouponIdList;
+    }
+    if (args.cannelCouponIdList !== undefined) {
+      this.cannelCouponIdList = args.cannelCouponIdList;
+    }
+    if (args.productIdList !== undefined) {
+      this.productIdList = args.productIdList;
+    }
+  }
+};
+FileForCardServ_queryUserMutexCouponByOrder_args.prototype = {};
+FileForCardServ_queryUserMutexCouponByOrder_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size232 = 0;
+        var _rtmp3236;
+        this.pitchCouponIdList = [];
+        var _etype235 = 0;
+        _rtmp3236 = input.readListBegin();
+        _etype235 = _rtmp3236.etype;
+        _size232 = _rtmp3236.size;
+        for (var _i237 = 0; _i237 < _size232; ++_i237)
+        {
+          var elem238 = null;
+          elem238 = input.readString();
+          this.pitchCouponIdList.push(elem238);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size239 = 0;
+        var _rtmp3243;
+        this.cannelCouponIdList = [];
+        var _etype242 = 0;
+        _rtmp3243 = input.readListBegin();
+        _etype242 = _rtmp3243.etype;
+        _size239 = _rtmp3243.size;
+        for (var _i244 = 0; _i244 < _size239; ++_i244)
+        {
+          var elem245 = null;
+          elem245 = input.readString();
+          this.cannelCouponIdList.push(elem245);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.LIST) {
+        var _size246 = 0;
+        var _rtmp3250;
+        this.productIdList = [];
+        var _etype249 = 0;
+        _rtmp3250 = input.readListBegin();
+        _etype249 = _rtmp3250.etype;
+        _size246 = _rtmp3250.size;
+        for (var _i251 = 0; _i251 < _size246; ++_i251)
+        {
+          var elem252 = null;
+          elem252 = new ttypes.ProductDetail();
+          elem252.read(input);
+          this.productIdList.push(elem252);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryUserMutexCouponByOrder_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryUserMutexCouponByOrder_args');
+  if (this.pitchCouponIdList !== null && this.pitchCouponIdList !== undefined) {
+    output.writeFieldBegin('pitchCouponIdList', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRING, this.pitchCouponIdList.length);
+    for (var iter253 in this.pitchCouponIdList)
+    {
+      if (this.pitchCouponIdList.hasOwnProperty(iter253))
+      {
+        iter253 = this.pitchCouponIdList[iter253];
+        output.writeString(iter253);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.cannelCouponIdList !== null && this.cannelCouponIdList !== undefined) {
+    output.writeFieldBegin('cannelCouponIdList', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRING, this.cannelCouponIdList.length);
+    for (var iter254 in this.cannelCouponIdList)
+    {
+      if (this.cannelCouponIdList.hasOwnProperty(iter254))
+      {
+        iter254 = this.cannelCouponIdList[iter254];
+        output.writeString(iter254);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.productIdList !== null && this.productIdList !== undefined) {
+    output.writeFieldBegin('productIdList', Thrift.Type.LIST, 3);
+    output.writeListBegin(Thrift.Type.STRUCT, this.productIdList.length);
+    for (var iter255 in this.productIdList)
+    {
+      if (this.productIdList.hasOwnProperty(iter255))
+      {
+        iter255 = this.productIdList[iter255];
+        iter255.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryUserMutexCouponByOrder_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryUserMutexCouponByOrder_result.prototype = {};
+FileForCardServ_queryUserMutexCouponByOrder_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.UserCouponMutexResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryUserMutexCouponByOrder_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryUserMutexCouponByOrder_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryLimitContent_args = function(args) {
+  this.activityId = null;
+  if (args) {
+    if (args.activityId !== undefined) {
+      this.activityId = args.activityId;
+    }
+  }
+};
+FileForCardServ_queryLimitContent_args.prototype = {};
+FileForCardServ_queryLimitContent_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activityId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryLimitContent_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryLimitContent_args');
+  if (this.activityId !== null && this.activityId !== undefined) {
+    output.writeFieldBegin('activityId', Thrift.Type.I32, 1);
+    output.writeI32(this.activityId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_queryLimitContent_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_queryLimitContent_result.prototype = {};
+FileForCardServ_queryLimitContent_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ActivityLimitResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_queryLimitContent_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_queryLimitContent_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_useCoupon_args = function(args) {
+  this.couponId = null;
+  this.orderId = null;
+  if (args) {
+    if (args.couponId !== undefined) {
+      this.couponId = args.couponId;
+    }
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+  }
+};
+FileForCardServ_useCoupon_args.prototype = {};
+FileForCardServ_useCoupon_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size256 = 0;
+        var _rtmp3260;
+        this.couponId = [];
+        var _etype259 = 0;
+        _rtmp3260 = input.readListBegin();
+        _etype259 = _rtmp3260.etype;
+        _size256 = _rtmp3260.size;
+        for (var _i261 = 0; _i261 < _size256; ++_i261)
+        {
+          var elem262 = null;
+          elem262 = input.readString();
+          this.couponId.push(elem262);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_useCoupon_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_useCoupon_args');
+  if (this.couponId !== null && this.couponId !== undefined) {
+    output.writeFieldBegin('couponId', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRING, this.couponId.length);
+    for (var iter263 in this.couponId)
+    {
+      if (this.couponId.hasOwnProperty(iter263))
+      {
+        iter263 = this.couponId[iter263];
+        output.writeString(iter263);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 2);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_useCoupon_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_useCoupon_result.prototype = {};
+FileForCardServ_useCoupon_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_useCoupon_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_useCoupon_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_undoRecommendState_args = function(args) {
+  this.activId = null;
+  if (args) {
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+  }
+};
+FileForCardServ_undoRecommendState_args.prototype = {};
+FileForCardServ_undoRecommendState_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_undoRecommendState_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_undoRecommendState_args');
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 1);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_undoRecommendState_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_undoRecommendState_result.prototype = {};
+FileForCardServ_undoRecommendState_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_undoRecommendState_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_undoRecommendState_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_moveActiv_args = function(args) {
+  this.coord = null;
+  this.direction = null;
+  if (args) {
+    if (args.coord !== undefined) {
+      this.coord = args.coord;
+    }
+    if (args.direction !== undefined) {
+      this.direction = args.direction;
+    }
+  }
+};
+FileForCardServ_moveActiv_args.prototype = {};
+FileForCardServ_moveActiv_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.coord = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.direction = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_moveActiv_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_moveActiv_args');
+  if (this.coord !== null && this.coord !== undefined) {
+    output.writeFieldBegin('coord', Thrift.Type.I32, 1);
+    output.writeI32(this.coord);
+    output.writeFieldEnd();
+  }
+  if (this.direction !== null && this.direction !== undefined) {
+    output.writeFieldBegin('direction', Thrift.Type.I32, 2);
+    output.writeI32(this.direction);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_moveActiv_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_moveActiv_result.prototype = {};
+FileForCardServ_moveActiv_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_moveActiv_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_moveActiv_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_overActiv_args = function(args) {
+  this.activId = null;
+  if (args) {
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+  }
+};
+FileForCardServ_overActiv_args.prototype = {};
+FileForCardServ_overActiv_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_overActiv_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_overActiv_args');
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 1);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_overActiv_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_overActiv_result.prototype = {};
+FileForCardServ_overActiv_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_overActiv_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_overActiv_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_confRecommendList_args = function(args) {
+  this.activTop = null;
+  this.pagination = null;
+  if (args) {
+    if (args.activTop !== undefined) {
+      this.activTop = args.activTop;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+FileForCardServ_confRecommendList_args.prototype = {};
+FileForCardServ_confRecommendList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.activTop = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_confRecommendList_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_confRecommendList_args');
+  if (this.activTop !== null && this.activTop !== undefined) {
+    output.writeFieldBegin('activTop', Thrift.Type.I32, 1);
+    output.writeI32(this.activTop);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_confRecommendList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_confRecommendList_result.prototype = {};
+FileForCardServ_confRecommendList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ActivListResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_confRecommendList_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_confRecommendList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_chinaMobileNotifyOrder_args = function(args) {
+  this.req = null;
+  if (args) {
+    if (args.req !== undefined) {
+      this.req = args.req;
+    }
+  }
+};
+FileForCardServ_chinaMobileNotifyOrder_args.prototype = {};
+FileForCardServ_chinaMobileNotifyOrder_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.req = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_chinaMobileNotifyOrder_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_chinaMobileNotifyOrder_args');
+  if (this.req !== null && this.req !== undefined) {
+    output.writeFieldBegin('req', Thrift.Type.STRING, 1);
+    output.writeString(this.req);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_chinaMobileNotifyOrder_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_chinaMobileNotifyOrder_result.prototype = {};
+FileForCardServ_chinaMobileNotifyOrder_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_chinaMobileNotifyOrder_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_chinaMobileNotifyOrder_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_resendVirtualCode_args = function(args) {
+  this.req = null;
+  if (args) {
+    if (args.req !== undefined) {
+      this.req = args.req;
+    }
+  }
+};
+FileForCardServ_resendVirtualCode_args.prototype = {};
+FileForCardServ_resendVirtualCode_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.req = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_resendVirtualCode_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_resendVirtualCode_args');
+  if (this.req !== null && this.req !== undefined) {
+    output.writeFieldBegin('req', Thrift.Type.STRING, 1);
+    output.writeString(this.req);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_resendVirtualCode_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_resendVirtualCode_result.prototype = {};
+FileForCardServ_resendVirtualCode_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_resendVirtualCode_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_resendVirtualCode_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_setCodeInvalid_args = function(args) {
+  this.req = null;
+  if (args) {
+    if (args.req !== undefined) {
+      this.req = args.req;
+    }
+  }
+};
+FileForCardServ_setCodeInvalid_args.prototype = {};
+FileForCardServ_setCodeInvalid_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.req = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_setCodeInvalid_args.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_setCodeInvalid_args');
+  if (this.req !== null && this.req !== undefined) {
+    output.writeFieldBegin('req', Thrift.Type.STRING, 1);
+    output.writeString(this.req);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+FileForCardServ_setCodeInvalid_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+FileForCardServ_setCodeInvalid_result.prototype = {};
+FileForCardServ_setCodeInvalid_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FileForCardServ_setCodeInvalid_result.prototype.write = function(output) {
+  output.writeStructBegin('FileForCardServ_setCodeInvalid_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 FileForCardServClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -2647,6 +5843,1247 @@ FileForCardServClient.prototype.recv_queryFolwInfo = function(input,mtype,rseqid
   }
   return callback('queryFolwInfo failed: unknown result');
 };
+FileForCardServClient.prototype.queryCouponActivList = function(param, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCouponActivList(param, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCouponActivList(param, pagination);
+  }
+};
+
+FileForCardServClient.prototype.send_queryCouponActivList = function(param, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCouponActivList', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryCouponActivList_args();
+  args.param = param;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryCouponActivList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryCouponActivList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCouponActivList failed: unknown result');
+};
+FileForCardServClient.prototype.createCouponActiv = function(couponActiv, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_createCouponActiv(couponActiv);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_createCouponActiv(couponActiv);
+  }
+};
+
+FileForCardServClient.prototype.send_createCouponActiv = function(couponActiv) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('createCouponActiv', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_createCouponActiv_args();
+  args.couponActiv = couponActiv;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_createCouponActiv = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_createCouponActiv_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('createCouponActiv failed: unknown result');
+};
+FileForCardServClient.prototype.selectActivDetailById = function(activId, param, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_selectActivDetailById(activId, param, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_selectActivDetailById(activId, param, pagination);
+  }
+};
+
+FileForCardServClient.prototype.send_selectActivDetailById = function(activId, param, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('selectActivDetailById', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_selectActivDetailById_args();
+  args.activId = activId;
+  args.param = param;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_selectActivDetailById = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_selectActivDetailById_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('selectActivDetailById failed: unknown result');
+};
+FileForCardServClient.prototype.selectActivById = function(activId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_selectActivById(activId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_selectActivById(activId);
+  }
+};
+
+FileForCardServClient.prototype.send_selectActivById = function(activId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('selectActivById', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_selectActivById_args();
+  args.activId = activId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_selectActivById = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_selectActivById_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('selectActivById failed: unknown result');
+};
+FileForCardServClient.prototype.updateActiv = function(activ, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateActiv(activ);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateActiv(activ);
+  }
+};
+
+FileForCardServClient.prototype.send_updateActiv = function(activ) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('updateActiv', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_updateActiv_args();
+  args.activ = activ;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_updateActiv = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_updateActiv_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateActiv failed: unknown result');
+};
+FileForCardServClient.prototype.exportActivDetail = function(activId, param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exportActivDetail(activId, param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exportActivDetail(activId, param);
+  }
+};
+
+FileForCardServClient.prototype.send_exportActivDetail = function(activId, param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exportActivDetail', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_exportActivDetail_args();
+  args.activId = activId;
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_exportActivDetail = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_exportActivDetail_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exportActivDetail failed: unknown result');
+};
+FileForCardServClient.prototype.updateRecommendNum = function(num, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_updateRecommendNum(num);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_updateRecommendNum(num);
+  }
+};
+
+FileForCardServClient.prototype.send_updateRecommendNum = function(num) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('updateRecommendNum', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_updateRecommendNum_args();
+  args.num = num;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_updateRecommendNum = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_updateRecommendNum_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('updateRecommendNum failed: unknown result');
+};
+FileForCardServClient.prototype.addRecommendState = function(activIdList, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_addRecommendState(activIdList);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_addRecommendState(activIdList);
+  }
+};
+
+FileForCardServClient.prototype.send_addRecommendState = function(activIdList) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('addRecommendState', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_addRecommendState_args();
+  args.activIdList = activIdList;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_addRecommendState = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_addRecommendState_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('addRecommendState failed: unknown result');
+};
+FileForCardServClient.prototype.findCoupon = function(userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_findCoupon(userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_findCoupon(userId);
+  }
+};
+
+FileForCardServClient.prototype.send_findCoupon = function(userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('findCoupon', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_findCoupon_args();
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_findCoupon = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_findCoupon_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('findCoupon failed: unknown result');
+};
+FileForCardServClient.prototype.receiveCoupon = function(userId, activId, fromSource, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_receiveCoupon(userId, activId, fromSource);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_receiveCoupon(userId, activId, fromSource);
+  }
+};
+
+FileForCardServClient.prototype.send_receiveCoupon = function(userId, activId, fromSource) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('receiveCoupon', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_receiveCoupon_args();
+  args.userId = userId;
+  args.activId = activId;
+  args.fromSource = fromSource;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_receiveCoupon = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_receiveCoupon_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('receiveCoupon failed: unknown result');
+};
+FileForCardServClient.prototype.shareUrl = function(activId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_shareUrl(activId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_shareUrl(activId);
+  }
+};
+
+FileForCardServClient.prototype.send_shareUrl = function(activId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('shareUrl', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_shareUrl_args();
+  args.activId = activId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_shareUrl = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_shareUrl_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('shareUrl failed: unknown result');
+};
+FileForCardServClient.prototype.queryCouponList = function(couponRec, userId, param, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryCouponList(couponRec, userId, param, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryCouponList(couponRec, userId, param, pagination);
+  }
+};
+
+FileForCardServClient.prototype.send_queryCouponList = function(couponRec, userId, param, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryCouponList', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryCouponList_args();
+  args.couponRec = couponRec;
+  args.userId = userId;
+  args.param = param;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryCouponList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryCouponList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryCouponList failed: unknown result');
+};
+FileForCardServClient.prototype.userCouponList = function(couponState, userId, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_userCouponList(couponState, userId, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_userCouponList(couponState, userId, pagination);
+  }
+};
+
+FileForCardServClient.prototype.send_userCouponList = function(couponState, userId, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('userCouponList', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_userCouponList_args();
+  args.couponState = couponState;
+  args.userId = userId;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_userCouponList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_userCouponList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('userCouponList failed: unknown result');
+};
+FileForCardServClient.prototype.userCouponCount = function(userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_userCouponCount(userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_userCouponCount(userId);
+  }
+};
+
+FileForCardServClient.prototype.send_userCouponCount = function(userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('userCouponCount', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_userCouponCount_args();
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_userCouponCount = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_userCouponCount_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('userCouponCount failed: unknown result');
+};
+FileForCardServClient.prototype.queryActiveByProductId = function(productDetail, pagination, userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryActiveByProductId(productDetail, pagination, userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryActiveByProductId(productDetail, pagination, userId);
+  }
+};
+
+FileForCardServClient.prototype.send_queryActiveByProductId = function(productDetail, pagination, userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryActiveByProductId', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryActiveByProductId_args();
+  args.productDetail = productDetail;
+  args.pagination = pagination;
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryActiveByProductId = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryActiveByProductId_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryActiveByProductId failed: unknown result');
+};
+FileForCardServClient.prototype.queryUserCouponByOrder = function(productList, userId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryUserCouponByOrder(productList, userId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryUserCouponByOrder(productList, userId);
+  }
+};
+
+FileForCardServClient.prototype.send_queryUserCouponByOrder = function(productList, userId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryUserCouponByOrder', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryUserCouponByOrder_args();
+  args.productList = productList;
+  args.userId = userId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryUserCouponByOrder = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryUserCouponByOrder_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryUserCouponByOrder failed: unknown result');
+};
+FileForCardServClient.prototype.queryUserMutexCouponByOrder = function(pitchCouponIdList, cannelCouponIdList, productIdList, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryUserMutexCouponByOrder(pitchCouponIdList, cannelCouponIdList, productIdList);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryUserMutexCouponByOrder(pitchCouponIdList, cannelCouponIdList, productIdList);
+  }
+};
+
+FileForCardServClient.prototype.send_queryUserMutexCouponByOrder = function(pitchCouponIdList, cannelCouponIdList, productIdList) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryUserMutexCouponByOrder', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryUserMutexCouponByOrder_args();
+  args.pitchCouponIdList = pitchCouponIdList;
+  args.cannelCouponIdList = cannelCouponIdList;
+  args.productIdList = productIdList;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryUserMutexCouponByOrder = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryUserMutexCouponByOrder_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryUserMutexCouponByOrder failed: unknown result');
+};
+FileForCardServClient.prototype.queryLimitContent = function(activityId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryLimitContent(activityId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryLimitContent(activityId);
+  }
+};
+
+FileForCardServClient.prototype.send_queryLimitContent = function(activityId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryLimitContent', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_queryLimitContent_args();
+  args.activityId = activityId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_queryLimitContent = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_queryLimitContent_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryLimitContent failed: unknown result');
+};
+FileForCardServClient.prototype.useCoupon = function(couponId, orderId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_useCoupon(couponId, orderId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_useCoupon(couponId, orderId);
+  }
+};
+
+FileForCardServClient.prototype.send_useCoupon = function(couponId, orderId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('useCoupon', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_useCoupon_args();
+  args.couponId = couponId;
+  args.orderId = orderId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_useCoupon = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_useCoupon_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('useCoupon failed: unknown result');
+};
+FileForCardServClient.prototype.undoRecommendState = function(activId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_undoRecommendState(activId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_undoRecommendState(activId);
+  }
+};
+
+FileForCardServClient.prototype.send_undoRecommendState = function(activId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('undoRecommendState', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_undoRecommendState_args();
+  args.activId = activId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_undoRecommendState = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_undoRecommendState_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('undoRecommendState failed: unknown result');
+};
+FileForCardServClient.prototype.moveActiv = function(coord, direction, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_moveActiv(coord, direction);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_moveActiv(coord, direction);
+  }
+};
+
+FileForCardServClient.prototype.send_moveActiv = function(coord, direction) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('moveActiv', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_moveActiv_args();
+  args.coord = coord;
+  args.direction = direction;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_moveActiv = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_moveActiv_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('moveActiv failed: unknown result');
+};
+FileForCardServClient.prototype.overActiv = function(activId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_overActiv(activId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_overActiv(activId);
+  }
+};
+
+FileForCardServClient.prototype.send_overActiv = function(activId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('overActiv', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_overActiv_args();
+  args.activId = activId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_overActiv = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_overActiv_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('overActiv failed: unknown result');
+};
+FileForCardServClient.prototype.confRecommendList = function(activTop, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_confRecommendList(activTop, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_confRecommendList(activTop, pagination);
+  }
+};
+
+FileForCardServClient.prototype.send_confRecommendList = function(activTop, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('confRecommendList', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_confRecommendList_args();
+  args.activTop = activTop;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_confRecommendList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_confRecommendList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('confRecommendList failed: unknown result');
+};
+FileForCardServClient.prototype.chinaMobileNotifyOrder = function(req, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_chinaMobileNotifyOrder(req);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_chinaMobileNotifyOrder(req);
+  }
+};
+
+FileForCardServClient.prototype.send_chinaMobileNotifyOrder = function(req) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('chinaMobileNotifyOrder', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_chinaMobileNotifyOrder_args();
+  args.req = req;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_chinaMobileNotifyOrder = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_chinaMobileNotifyOrder_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('chinaMobileNotifyOrder failed: unknown result');
+};
+FileForCardServClient.prototype.resendVirtualCode = function(req, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_resendVirtualCode(req);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_resendVirtualCode(req);
+  }
+};
+
+FileForCardServClient.prototype.send_resendVirtualCode = function(req) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('resendVirtualCode', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_resendVirtualCode_args();
+  args.req = req;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_resendVirtualCode = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_resendVirtualCode_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('resendVirtualCode failed: unknown result');
+};
+FileForCardServClient.prototype.setCodeInvalid = function(req, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_setCodeInvalid(req);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_setCodeInvalid(req);
+  }
+};
+
+FileForCardServClient.prototype.send_setCodeInvalid = function(req) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('setCodeInvalid', Thrift.MessageType.CALL, this.seqid());
+  var args = new FileForCardServ_setCodeInvalid_args();
+  args.req = req;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+FileForCardServClient.prototype.recv_setCodeInvalid = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new FileForCardServ_setCodeInvalid_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('setCodeInvalid failed: unknown result');
+};
 FileForCardServProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -3138,6 +7575,786 @@ FileForCardServProcessor.prototype.process_queryFolwInfo = function(seqid, input
     this._handler.queryFolwInfo(args.flow,  function (err, result) {
       var result = new FileForCardServ_queryFolwInfo_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryFolwInfo", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryCouponActivList = function(seqid, input, output) {
+  var args = new FileForCardServ_queryCouponActivList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCouponActivList.length === 2) {
+    Q.fcall(this._handler.queryCouponActivList, args.param, args.pagination)
+      .then(function(result) {
+        var result = new FileForCardServ_queryCouponActivList_result({success: result});
+        output.writeMessageBegin("queryCouponActivList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryCouponActivList_result(err);
+        output.writeMessageBegin("queryCouponActivList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCouponActivList(args.param, args.pagination,  function (err, result) {
+      var result = new FileForCardServ_queryCouponActivList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCouponActivList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_createCouponActiv = function(seqid, input, output) {
+  var args = new FileForCardServ_createCouponActiv_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.createCouponActiv.length === 1) {
+    Q.fcall(this._handler.createCouponActiv, args.couponActiv)
+      .then(function(result) {
+        var result = new FileForCardServ_createCouponActiv_result({success: result});
+        output.writeMessageBegin("createCouponActiv", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_createCouponActiv_result(err);
+        output.writeMessageBegin("createCouponActiv", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.createCouponActiv(args.couponActiv,  function (err, result) {
+      var result = new FileForCardServ_createCouponActiv_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("createCouponActiv", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_selectActivDetailById = function(seqid, input, output) {
+  var args = new FileForCardServ_selectActivDetailById_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.selectActivDetailById.length === 3) {
+    Q.fcall(this._handler.selectActivDetailById, args.activId, args.param, args.pagination)
+      .then(function(result) {
+        var result = new FileForCardServ_selectActivDetailById_result({success: result});
+        output.writeMessageBegin("selectActivDetailById", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_selectActivDetailById_result(err);
+        output.writeMessageBegin("selectActivDetailById", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.selectActivDetailById(args.activId, args.param, args.pagination,  function (err, result) {
+      var result = new FileForCardServ_selectActivDetailById_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("selectActivDetailById", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_selectActivById = function(seqid, input, output) {
+  var args = new FileForCardServ_selectActivById_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.selectActivById.length === 1) {
+    Q.fcall(this._handler.selectActivById, args.activId)
+      .then(function(result) {
+        var result = new FileForCardServ_selectActivById_result({success: result});
+        output.writeMessageBegin("selectActivById", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_selectActivById_result(err);
+        output.writeMessageBegin("selectActivById", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.selectActivById(args.activId,  function (err, result) {
+      var result = new FileForCardServ_selectActivById_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("selectActivById", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_updateActiv = function(seqid, input, output) {
+  var args = new FileForCardServ_updateActiv_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.updateActiv.length === 1) {
+    Q.fcall(this._handler.updateActiv, args.activ)
+      .then(function(result) {
+        var result = new FileForCardServ_updateActiv_result({success: result});
+        output.writeMessageBegin("updateActiv", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_updateActiv_result(err);
+        output.writeMessageBegin("updateActiv", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.updateActiv(args.activ,  function (err, result) {
+      var result = new FileForCardServ_updateActiv_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("updateActiv", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_exportActivDetail = function(seqid, input, output) {
+  var args = new FileForCardServ_exportActivDetail_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exportActivDetail.length === 2) {
+    Q.fcall(this._handler.exportActivDetail, args.activId, args.param)
+      .then(function(result) {
+        var result = new FileForCardServ_exportActivDetail_result({success: result});
+        output.writeMessageBegin("exportActivDetail", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_exportActivDetail_result(err);
+        output.writeMessageBegin("exportActivDetail", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exportActivDetail(args.activId, args.param,  function (err, result) {
+      var result = new FileForCardServ_exportActivDetail_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exportActivDetail", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_updateRecommendNum = function(seqid, input, output) {
+  var args = new FileForCardServ_updateRecommendNum_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.updateRecommendNum.length === 1) {
+    Q.fcall(this._handler.updateRecommendNum, args.num)
+      .then(function(result) {
+        var result = new FileForCardServ_updateRecommendNum_result({success: result});
+        output.writeMessageBegin("updateRecommendNum", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_updateRecommendNum_result(err);
+        output.writeMessageBegin("updateRecommendNum", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.updateRecommendNum(args.num,  function (err, result) {
+      var result = new FileForCardServ_updateRecommendNum_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("updateRecommendNum", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_addRecommendState = function(seqid, input, output) {
+  var args = new FileForCardServ_addRecommendState_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.addRecommendState.length === 1) {
+    Q.fcall(this._handler.addRecommendState, args.activIdList)
+      .then(function(result) {
+        var result = new FileForCardServ_addRecommendState_result({success: result});
+        output.writeMessageBegin("addRecommendState", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_addRecommendState_result(err);
+        output.writeMessageBegin("addRecommendState", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.addRecommendState(args.activIdList,  function (err, result) {
+      var result = new FileForCardServ_addRecommendState_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("addRecommendState", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_findCoupon = function(seqid, input, output) {
+  var args = new FileForCardServ_findCoupon_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.findCoupon.length === 1) {
+    Q.fcall(this._handler.findCoupon, args.userId)
+      .then(function(result) {
+        var result = new FileForCardServ_findCoupon_result({success: result});
+        output.writeMessageBegin("findCoupon", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_findCoupon_result(err);
+        output.writeMessageBegin("findCoupon", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.findCoupon(args.userId,  function (err, result) {
+      var result = new FileForCardServ_findCoupon_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("findCoupon", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_receiveCoupon = function(seqid, input, output) {
+  var args = new FileForCardServ_receiveCoupon_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.receiveCoupon.length === 3) {
+    Q.fcall(this._handler.receiveCoupon, args.userId, args.activId, args.fromSource)
+      .then(function(result) {
+        var result = new FileForCardServ_receiveCoupon_result({success: result});
+        output.writeMessageBegin("receiveCoupon", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_receiveCoupon_result(err);
+        output.writeMessageBegin("receiveCoupon", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.receiveCoupon(args.userId, args.activId, args.fromSource,  function (err, result) {
+      var result = new FileForCardServ_receiveCoupon_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("receiveCoupon", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_shareUrl = function(seqid, input, output) {
+  var args = new FileForCardServ_shareUrl_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.shareUrl.length === 1) {
+    Q.fcall(this._handler.shareUrl, args.activId)
+      .then(function(result) {
+        var result = new FileForCardServ_shareUrl_result({success: result});
+        output.writeMessageBegin("shareUrl", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_shareUrl_result(err);
+        output.writeMessageBegin("shareUrl", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.shareUrl(args.activId,  function (err, result) {
+      var result = new FileForCardServ_shareUrl_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("shareUrl", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryCouponList = function(seqid, input, output) {
+  var args = new FileForCardServ_queryCouponList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryCouponList.length === 4) {
+    Q.fcall(this._handler.queryCouponList, args.couponRec, args.userId, args.param, args.pagination)
+      .then(function(result) {
+        var result = new FileForCardServ_queryCouponList_result({success: result});
+        output.writeMessageBegin("queryCouponList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryCouponList_result(err);
+        output.writeMessageBegin("queryCouponList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryCouponList(args.couponRec, args.userId, args.param, args.pagination,  function (err, result) {
+      var result = new FileForCardServ_queryCouponList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryCouponList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_userCouponList = function(seqid, input, output) {
+  var args = new FileForCardServ_userCouponList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.userCouponList.length === 3) {
+    Q.fcall(this._handler.userCouponList, args.couponState, args.userId, args.pagination)
+      .then(function(result) {
+        var result = new FileForCardServ_userCouponList_result({success: result});
+        output.writeMessageBegin("userCouponList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_userCouponList_result(err);
+        output.writeMessageBegin("userCouponList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.userCouponList(args.couponState, args.userId, args.pagination,  function (err, result) {
+      var result = new FileForCardServ_userCouponList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("userCouponList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_userCouponCount = function(seqid, input, output) {
+  var args = new FileForCardServ_userCouponCount_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.userCouponCount.length === 1) {
+    Q.fcall(this._handler.userCouponCount, args.userId)
+      .then(function(result) {
+        var result = new FileForCardServ_userCouponCount_result({success: result});
+        output.writeMessageBegin("userCouponCount", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_userCouponCount_result(err);
+        output.writeMessageBegin("userCouponCount", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.userCouponCount(args.userId,  function (err, result) {
+      var result = new FileForCardServ_userCouponCount_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("userCouponCount", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryActiveByProductId = function(seqid, input, output) {
+  var args = new FileForCardServ_queryActiveByProductId_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryActiveByProductId.length === 3) {
+    Q.fcall(this._handler.queryActiveByProductId, args.productDetail, args.pagination, args.userId)
+      .then(function(result) {
+        var result = new FileForCardServ_queryActiveByProductId_result({success: result});
+        output.writeMessageBegin("queryActiveByProductId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryActiveByProductId_result(err);
+        output.writeMessageBegin("queryActiveByProductId", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryActiveByProductId(args.productDetail, args.pagination, args.userId,  function (err, result) {
+      var result = new FileForCardServ_queryActiveByProductId_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryActiveByProductId", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryUserCouponByOrder = function(seqid, input, output) {
+  var args = new FileForCardServ_queryUserCouponByOrder_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryUserCouponByOrder.length === 2) {
+    Q.fcall(this._handler.queryUserCouponByOrder, args.productList, args.userId)
+      .then(function(result) {
+        var result = new FileForCardServ_queryUserCouponByOrder_result({success: result});
+        output.writeMessageBegin("queryUserCouponByOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryUserCouponByOrder_result(err);
+        output.writeMessageBegin("queryUserCouponByOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryUserCouponByOrder(args.productList, args.userId,  function (err, result) {
+      var result = new FileForCardServ_queryUserCouponByOrder_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryUserCouponByOrder", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryUserMutexCouponByOrder = function(seqid, input, output) {
+  var args = new FileForCardServ_queryUserMutexCouponByOrder_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryUserMutexCouponByOrder.length === 3) {
+    Q.fcall(this._handler.queryUserMutexCouponByOrder, args.pitchCouponIdList, args.cannelCouponIdList, args.productIdList)
+      .then(function(result) {
+        var result = new FileForCardServ_queryUserMutexCouponByOrder_result({success: result});
+        output.writeMessageBegin("queryUserMutexCouponByOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryUserMutexCouponByOrder_result(err);
+        output.writeMessageBegin("queryUserMutexCouponByOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryUserMutexCouponByOrder(args.pitchCouponIdList, args.cannelCouponIdList, args.productIdList,  function (err, result) {
+      var result = new FileForCardServ_queryUserMutexCouponByOrder_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryUserMutexCouponByOrder", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_queryLimitContent = function(seqid, input, output) {
+  var args = new FileForCardServ_queryLimitContent_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryLimitContent.length === 1) {
+    Q.fcall(this._handler.queryLimitContent, args.activityId)
+      .then(function(result) {
+        var result = new FileForCardServ_queryLimitContent_result({success: result});
+        output.writeMessageBegin("queryLimitContent", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_queryLimitContent_result(err);
+        output.writeMessageBegin("queryLimitContent", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryLimitContent(args.activityId,  function (err, result) {
+      var result = new FileForCardServ_queryLimitContent_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryLimitContent", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_useCoupon = function(seqid, input, output) {
+  var args = new FileForCardServ_useCoupon_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.useCoupon.length === 2) {
+    Q.fcall(this._handler.useCoupon, args.couponId, args.orderId)
+      .then(function(result) {
+        var result = new FileForCardServ_useCoupon_result({success: result});
+        output.writeMessageBegin("useCoupon", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_useCoupon_result(err);
+        output.writeMessageBegin("useCoupon", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.useCoupon(args.couponId, args.orderId,  function (err, result) {
+      var result = new FileForCardServ_useCoupon_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("useCoupon", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_undoRecommendState = function(seqid, input, output) {
+  var args = new FileForCardServ_undoRecommendState_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.undoRecommendState.length === 1) {
+    Q.fcall(this._handler.undoRecommendState, args.activId)
+      .then(function(result) {
+        var result = new FileForCardServ_undoRecommendState_result({success: result});
+        output.writeMessageBegin("undoRecommendState", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_undoRecommendState_result(err);
+        output.writeMessageBegin("undoRecommendState", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.undoRecommendState(args.activId,  function (err, result) {
+      var result = new FileForCardServ_undoRecommendState_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("undoRecommendState", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_moveActiv = function(seqid, input, output) {
+  var args = new FileForCardServ_moveActiv_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.moveActiv.length === 2) {
+    Q.fcall(this._handler.moveActiv, args.coord, args.direction)
+      .then(function(result) {
+        var result = new FileForCardServ_moveActiv_result({success: result});
+        output.writeMessageBegin("moveActiv", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_moveActiv_result(err);
+        output.writeMessageBegin("moveActiv", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.moveActiv(args.coord, args.direction,  function (err, result) {
+      var result = new FileForCardServ_moveActiv_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("moveActiv", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_overActiv = function(seqid, input, output) {
+  var args = new FileForCardServ_overActiv_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.overActiv.length === 1) {
+    Q.fcall(this._handler.overActiv, args.activId)
+      .then(function(result) {
+        var result = new FileForCardServ_overActiv_result({success: result});
+        output.writeMessageBegin("overActiv", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_overActiv_result(err);
+        output.writeMessageBegin("overActiv", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.overActiv(args.activId,  function (err, result) {
+      var result = new FileForCardServ_overActiv_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("overActiv", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_confRecommendList = function(seqid, input, output) {
+  var args = new FileForCardServ_confRecommendList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.confRecommendList.length === 2) {
+    Q.fcall(this._handler.confRecommendList, args.activTop, args.pagination)
+      .then(function(result) {
+        var result = new FileForCardServ_confRecommendList_result({success: result});
+        output.writeMessageBegin("confRecommendList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_confRecommendList_result(err);
+        output.writeMessageBegin("confRecommendList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.confRecommendList(args.activTop, args.pagination,  function (err, result) {
+      var result = new FileForCardServ_confRecommendList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("confRecommendList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_chinaMobileNotifyOrder = function(seqid, input, output) {
+  var args = new FileForCardServ_chinaMobileNotifyOrder_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.chinaMobileNotifyOrder.length === 1) {
+    Q.fcall(this._handler.chinaMobileNotifyOrder, args.req)
+      .then(function(result) {
+        var result = new FileForCardServ_chinaMobileNotifyOrder_result({success: result});
+        output.writeMessageBegin("chinaMobileNotifyOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_chinaMobileNotifyOrder_result(err);
+        output.writeMessageBegin("chinaMobileNotifyOrder", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.chinaMobileNotifyOrder(args.req,  function (err, result) {
+      var result = new FileForCardServ_chinaMobileNotifyOrder_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("chinaMobileNotifyOrder", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_resendVirtualCode = function(seqid, input, output) {
+  var args = new FileForCardServ_resendVirtualCode_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.resendVirtualCode.length === 1) {
+    Q.fcall(this._handler.resendVirtualCode, args.req)
+      .then(function(result) {
+        var result = new FileForCardServ_resendVirtualCode_result({success: result});
+        output.writeMessageBegin("resendVirtualCode", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_resendVirtualCode_result(err);
+        output.writeMessageBegin("resendVirtualCode", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.resendVirtualCode(args.req,  function (err, result) {
+      var result = new FileForCardServ_resendVirtualCode_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("resendVirtualCode", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+FileForCardServProcessor.prototype.process_setCodeInvalid = function(seqid, input, output) {
+  var args = new FileForCardServ_setCodeInvalid_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.setCodeInvalid.length === 1) {
+    Q.fcall(this._handler.setCodeInvalid, args.req)
+      .then(function(result) {
+        var result = new FileForCardServ_setCodeInvalid_result({success: result});
+        output.writeMessageBegin("setCodeInvalid", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new FileForCardServ_setCodeInvalid_result(err);
+        output.writeMessageBegin("setCodeInvalid", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.setCodeInvalid(args.req,  function (err, result) {
+      var result = new FileForCardServ_setCodeInvalid_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("setCodeInvalid", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

@@ -9,7 +9,7 @@ var logger = log4node.configlog4node.useLog4js( log4node.configlog4node.log4jsCo
 
 var Product = require('../lib/models/product');
 //var Address = require('../lib/models/address');
-
+var Coupon = require('../lib/models/coupon');
 //
 router.post('/couponList', function(req, res, next) {
     var result = {code: 200};
@@ -37,4 +37,147 @@ router.post('/couponList', function(req, res, next) {
     }
 });
 
+/*商户下单*/
+router.post('/notifyOrder', function (req, res, next) {
+    logger.info("进入商户下单接口");
+    var resContent = {code: 200};
+    try {
+        var arg = req.body;
+        logger.info("商户下单， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = 400;
+            resContent.msg = "请求参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.req == null) {
+            resContent.code = 400;
+            resContent.msg = "请求参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        Coupon.chinaMobileNotifyOrder(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+
+                if(data[0].code==0){
+
+                    resContent.data = data[0];
+                    resContent.msg = "下单成功"
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].failDescList;
+                    resContent.data = failList[0];
+                    resContent.code = failList[0].getFailCode();
+                    resContent.msg = failList[0].getDesc();
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("商户下单:" + ex);
+        resContent.code = 500;
+        resContent.desc = "商户下单失败";
+        res.json(resContent);
+    }
+});
+
+/*重发虚拟码*/
+router.post('/resendCode', function (req, res, next) {
+    logger.info("重发虚拟码");
+    var resContent = {code: 200};
+    try {
+        var arg = req.body;
+        logger.info("重发虚拟码， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = 400;
+            resContent.msg = "请求参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.req == null) {
+            resContent.code = 400;
+            resContent.msg = "请求参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        Coupon.resendVirtualCode(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+
+                if(data[0].code==0){
+
+                    resContent.data = data[0];
+                    resContent.msg = "重发虚拟码成功"
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].failDescList;
+                    resContent.data = failList[0];
+                    resContent.code = failList[0].getFailCode();
+                    resContent.msg = failList[0].getDesc();
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("重发虚拟码:" + ex);
+        resContent.code = 500;
+        resContent.desc = "重发虚拟码失败";
+        res.json(resContent);
+    }
+});
+
+/*设置虚拟码失效接口*/
+router.post('/codeInvalid', function (req, res, next) {
+    logger.info("设置虚拟码失效");
+    var resContent = {code: 200};
+    try {
+        var arg = req.body;
+        logger.info("设置虚拟码失效， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = 400;
+            resContent.msg = "请求参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.req == null) {
+            resContent.code = 400;
+            resContent.msg = "请求参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        Coupon.setCodeInvalid(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+
+                if(data[0].code==0){
+
+                    resContent.data = data[0];
+                    resContent.msg = "设置虚拟码失效成功"
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].failDescList;
+                    resContent.data = failList[0];
+                    resContent.code = failList[0].getFailCode();
+                    resContent.msg = failList[0].getDesc();
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("设置虚拟码失效:" + ex);
+        resContent.code = 500;
+        resContent.desc = "设置虚拟码失效失败";
+        res.json(resContent);
+    }
+});
 module.exports = router;
