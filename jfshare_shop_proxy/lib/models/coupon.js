@@ -20,11 +20,11 @@ Coupon.prototype.chinaMobileNotifyOrder = function (params, callback) {
         var res = {};
         if (err) {
             logger.error("chinaMobileNotifyOrder because: ======" + err);
-            res.code = 500;
+            res.code = "1014";
             res.desc = "商户订单失败";
             callback(res, null);
         }else{
-            res.code = 200;
+            res.code = "0";
             callback(null, data);
         }
     });
@@ -39,11 +39,11 @@ Coupon.prototype.resendVirtualCode = function (params, callback) {
         var res = {};
         if (err) {
             logger.error("resendVirtualCode because: ======" + err);
-            res.code = 500;
+            res.code = "1014";
             res.desc = "重发虚拟码失败";
             callback(res, null);
         }else{
-            res.code = 200;
+            res.code = "0";
             callback(null, data);
         }
     });
@@ -59,11 +59,11 @@ Coupon.prototype.setCodeInvalid = function (params, callback) {
         var res = {};
         if (err) {
             logger.error("setCodeInvalid because: ======" + err);
-            res.code = 500;
+            res.code = "1014";
             res.desc = "设置虚拟码失效失败";
             callback(res, null);
         }else{
-            res.code = 200;
+            res.code = "0";
             callback(null, data);
         }
     });
