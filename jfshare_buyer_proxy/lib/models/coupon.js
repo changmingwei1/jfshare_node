@@ -10,13 +10,83 @@ var Lich = require('../thrift/Lich.js');
 var thrift = require('thrift');
 var pagination_types = require('../thrift/gen_code/pagination_types');
 var coupon_types = require("../thrift/gen_code/fileUpload_types");
+var buyer_types = require('../thrift/gen_code/buyer_types');
+
+
+//获取鉴权信息
+Coupon.prototype.validAuth = function (params, callback) {
+    //参数
+    var authInfo = new buyer_types.AuthInfo({
+        token:param.token,
+        ppInfo:param.ppInfo
+    });
+    var buyer = new buyer_types.Buyer({
+        userId:param.userId,
+        mobile:param.mobile
+    });
+    var loginLog = new buyer_types.LoginLog({
+        browser:param.browser,
+        clientType: param.clientType,
+        version: param.version
+    });
+
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'getAuthInfo',[authInfo,buyer,loginLog]);
+    Lich.wicca.invokeClient(buyerServ,function(err,data){
+        logger.info("getAuthInfo result: " + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].result.code == "1") {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't getAuthInfo because: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;;
+            callback(res,null);
+        } else {
+            callback(null,data);
+        }
+    });
+
+
+}//验证鉴权
+Buyer.prototype.validAuth = function(param, callback){
+    //参数
+    var authInfo = new buyer_types.AuthInfo({
+        token:param.token,
+        ppInfo:param.ppInfo
+    });
+    var loginLog = new buyer_types.LoginLog({
+        browser:param.browser,
+        userId :param.userId,
+        clientType: param.clientType,
+        version: param.version
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'validAuth',[loginLog,authInfo]);
+    Lich.wicca.invokeClient(buyerServ,function(err,data){
+        logger.info("validAuth result: " + JSON.stringify(data));
+        var res = {};
+        if (err||data[0].code == "1") {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't validAuth because: " + JSON.stringify(data));
+            res.code = 501;
+            res.desc = "鉴权失败";
+            callback(res,null);
+        } else {
+            callback(null,data);
+        }
+    });
+};
+
+
+
+
 
 //web端用户领取优惠券
 
 Coupon.prototype.receiveCoupon = function (params, callback) {
     logger.error("receiveCoupon >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.FileForCardServ, 'receiveCoupon', [params.userId,params.activId,params.fromSource]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.FileForCardServ, 'receiveCoupon', [params.userId,params.activityId,params.fromSource]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("receiveCoupon result:------------" + JSON.stringify(data));
         var res = {};
@@ -43,7 +113,7 @@ Coupon.prototype.userCouponList = function (params, callback) {
         currentPage:params.currentPage
     });
 
-    logger.error("userCouponList >>>>>>>>>>>  " + JSON.stringify(params));
+    logger.info("userCouponList >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.FileForCardServ, 'userCouponList', [params.couponState,params.userId,page]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
@@ -101,7 +171,7 @@ Coupon.prototype.queryCouponList = function (params, callback) {
         currentPage:params.currentPage
     });
 
-    logger.error("queryCouponList >>>>>>>>>>>  " + JSON.stringify(params));
+    logger.info("queryCouponList >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.FileForCardServ, 'queryCouponList', [params.couponRec,params.userId,param,page]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
@@ -162,7 +232,7 @@ Coupon.prototype.queryCouponList = function (params, callback) {
 };*/
 //根据商品Id查看相关的优惠券活动列表**
 Coupon.prototype.queryActiveByProductId = function (params, callback) {
-    logger.error("queryActiveByProductId >>>>>>>>>>>  " + JSON.stringify(params));
+    logger.info("queryActiveByProductId >>>>>>>>>>>  " + JSON.stringify(params));
 
     var userId = params.userId;
     var page = new  pagination_types.Pagination({
@@ -198,20 +268,17 @@ Coupon.prototype.queryActiveByProductId = function (params, callback) {
 
 //提交订单页面用户可用和不可用卡券列表**
 Coupon.prototype.queryUserCouponByOrder = function (params, callback) {
-    logger.error("queryUserCouponByOrder >>>>>>>>>>>  " + JSON.stringify(params));
+    logger.info("queryUserCouponByOrder >>>>>>>>>>>  " + JSON.stringify(params));
     var list = [];
-    var userId = params.userId;
-    var productlist = params.productList;
-    var length = productlist.length;
-    for(var i=0;i<length;i++){
-
+    var arr = params.productIds.split(",");
+    for(var i=0;i<arr.length;i++){
         var productDtail = new coupon_types.ProductDetail({
-            productId:productlist[i].productId
+            productId:arr[i].productId
         })
-        list[i] = productDtail;
+        list.push(productDtail);
     }
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.FileForCardServ, 'queryUserCouponByOrder',[list,userId]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.FileForCardServ, 'queryUserCouponByOrder',[list,params.userId]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("queryUserCouponByOrder result:" + JSON.stringify(data));
         var res = {};

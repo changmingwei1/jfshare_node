@@ -8,7 +8,7 @@ var router = express.Router();
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 
-var AfterSale = require('../lib/models/afterSale');
+var AfterSale = require('../lib/models/AfterSale');
 
 //售后审核
 router.post('/review', function (request, response, next) {

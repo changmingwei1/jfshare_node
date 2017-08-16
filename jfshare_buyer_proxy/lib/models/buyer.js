@@ -221,7 +221,8 @@ Buyer.prototype.thirdSigninCheck = function(param,callback){
 Buyer.prototype.loginBySms = function(param,callback){
     //参数
     var thrift_buyer = new buyer_types.Buyer({
-        mobile:param.mobile
+        mobile:param.mobile,
+        state:param.state
     });
     //需要的字段可以继续增加
     var thrift_loginLog = new buyer_types.LoginLog({
@@ -239,6 +240,35 @@ Buyer.prototype.loginBySms = function(param,callback){
             logger.error("不能登录，因为: " + JSON.stringify(data));
             res.code = 500;
             res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
+//万益通手机号短信登录
+Buyer.prototype.wytLoginBySms = function(param,callback){
+    //参数
+    var thrift_buyer = new buyer_types.Buyer({
+        state:param.state,
+        mobile:param.mobile
+    });
+    //需要的字段可以继续增加
+    var thrift_loginLog = new buyer_types.LoginLog({
+        browser:param.browser,
+        clientType: param.clientType,
+    });
+    //获取client
+    var buyerServ = new Lich.InvokeBag(Lich.ServiceKey.BuyerServer,'wytSmsLogin',[thrift_buyer,thrift_loginLog]);
+    Lich.wicca.invokeClient(buyerServ, function(err, data){
+        logger.info("获取到登录信息:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("不能登录，因为: " + JSON.stringify(data));
+            res.code = 500;
+            res.desc = data[0].failDescList[0].desc;
             callback(res, null);
         } else {
             callback(null, data);

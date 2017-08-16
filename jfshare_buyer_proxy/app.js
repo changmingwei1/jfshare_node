@@ -13,6 +13,7 @@ var order = require('./controllers/order_controller');
 var cart = require('./controllers/cart_controller');
 var address = require('./controllers/address_controller');
 var buyer = require('./controllers/buyer_controller');
+var score = require('./controllers/score_controller');    //万益通
 var redPaper = require('./controllers/redpaper_controller');// 积分红包
 var thirdpay = require('./controllers/thirdpay_controller');//第三方支付
 //var test = require('./controllers/test_controller');
@@ -45,6 +46,7 @@ app.use('/buyer/cart', cart);
 app.use('/buyer/address', address);
 app.use('/buyer/coupon', coupon);
 app.use('/buyer/buyer',buyer);
+app.use('/buyer/score',score);
 app.use('/buyer/thirdpay',thirdpay);//第三方支付
 //app.use('/test', test);
 //app.use('/test', tests);

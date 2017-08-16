@@ -2518,6 +2518,7 @@ router.post('/floretPassData', function (request, response, next) {
     logger.info("进入小花钱包用户信息获取接口");
     var resContent = {code: 200};
     var params = request.body;
+    logger.info("请求参数：" + JSON.stringify(params));
     try {
         if (params == null) {
             resContent.code = 400;
@@ -2566,7 +2567,7 @@ router.post('/floretPassData', function (request, response, next) {
             return;
         }
 
-        logger.info("请求参数：" + JSON.stringify(params));
+
         Buyer.floretPassData(params, function (err, data) {
             if (err) {
                 response.json(err);
@@ -2663,7 +2664,7 @@ router.post('/onLineApply', function (request, response, next) {
                     response.json(err);
                 } else if(data[0].code==101){
                     resContent.code = data[0].code;
-                    resContent.desc = '券码无效';
+                    resContent.desc = '该领券码不存在';
                 }else if(data[0].code==102){
                     resContent.code = data[0].code;
                     resContent.desc = '券码已使用';
@@ -2744,13 +2745,16 @@ router.post('/sellerCheckCode', function (request, response, next) {
                 } else {
                     if (data[0].code == 101) {
                         resContent.code = data[0].code;
-                        resContent.desc = '券码无效';
+                        resContent.desc = '该领券码不存在';
                     } else if (data[0].code == 102) {
                         resContent.code = data[0].code;
                         resContent.desc = '券码已经使用';
                     } else if (data[0].code == 103) {
                         resContent.code = data[0].code;
                         resContent.desc = '无效的深圳通卡号';
+                    } else if (data[0].code == 104) {
+                        resContent.code = data[0].code;
+                        resContent.desc = '该深圳通卡号已使用';
                     }
                     response.json(resContent);
                 }
@@ -2840,7 +2844,7 @@ router.post('/findVerifyRecord', function (request, response, next) {
                         return
                     }
                     resContent.data = data[0].verifyRecordList ;
-                        resContent.pagination = data[0].pagination;
+                    resContent.pagination = data[0].pagination;
                     response.json(resContent);
                     logger.info("响应的结果:" + JSON.stringify(resContent));
                 }
@@ -3097,6 +3101,9 @@ router.post('/importExcel', function (request, response, next) {
                 if(data[0].result.code==1){
                     resContent.code=500;
                     resContent.desc='服务器繁忙';
+                }else if(data[0].result.code==500){
+                    resContent.code=500;
+                    resContent.desc='导入失败';
                 }else{
                     resContent.data=data[0].value;
                 }
@@ -3112,7 +3119,82 @@ router.post('/importExcel', function (request, response, next) {
     }
 });
 
+router.post('/newLogin', function (request, response, next) {
+    logger.info("进入万益通手机短信登录接口..");
+    var resContent = {code: "00"};
+    var param = request.body;
+    try {
+        if (param.mobile == null || param.mobile == "") {
+            resContent.code = 500;
+            resContent.desc = "手机号不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.captchaDesc == null || param.captchaDesc == "") {
+            resContent.code = 500;
+            resContent.desc = "验证码不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (param.browser == null || param.browser == "") {
+            resContent.code = 500;
+            resContent.desc = "浏览器标识不能为空";
+            response.json(resContent);
+            return;
+        }
+        logger.info("万益通授权登陆请求参数：" + JSON.stringify(param));
 
+        async.waterfall([
+            function (callback) {
+                Common.validateMsgCaptcha(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null);
+                    }
+                });
+            },
+            function (callback) {
+
+                Buyer.wytLoginBySms(param, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        if(data[0].code == 0){
+                           // 万益通授权登陆成功后跳转页面
+                            //测试环境
+                            //resContent.desc = "https://szqy.ffan.com/test/apiserver/ffoauth/loading";
+                            //生产
+                            resContent.desc ="https://szqy.ffan.com/apiserver/ffoauth/loading";
+                        }else if(data[0].code == 1){
+                            resContent.desc = data[0].failDescList[0].desc;
+                            resContent.code=data[0].failDescList[0].failCode;
+                        }else{
+                            resContent.desc = "登陆失败";
+                            resContent.code="500";
+                        }
+                        //解决跨域问题
+                       // response.setHeader("Access-Control-Allow-Origin", "*");
+                        response.json(resContent);
+                        logger.info("响应的结果:" + JSON.stringify(resContent));
+                    }
+                });
+            }
+        ], function (err) {
+            if (err) {
+                return response.json(err);
+            } else {
+                return response.json({resContent: true});
+            }
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(param));
+        logger.error("登录失败，because :" + ex);
+        resContent.code = "500";
+        resContent.desc = "登录失败";
+        response.json(resContent);
+    }
+});
 
 
 module.exports = router;
