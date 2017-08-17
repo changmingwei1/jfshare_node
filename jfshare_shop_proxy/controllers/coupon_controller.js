@@ -84,7 +84,7 @@ router.post('/notifyOrder', function (req, res, next) {
 });
 
 /*重发虚拟码*/
-router.post('/resendCode', function (req, res, next) {
+router.post('/resendVirtualCode', function (req, res, next) {
     logger.info("重发虚拟码");
     var resContent = {code: "0"};
     try {
@@ -130,7 +130,7 @@ router.post('/resendCode', function (req, res, next) {
 });
 
 /*设置虚拟码失效接口*/
-router.post('/codeInvalid', function (req, res, next) {
+router.post('/setCodeInvalid', function (req, res, next) {
     logger.info("设置虚拟码失效");
     var resContent = {code: "0"};
     try {
