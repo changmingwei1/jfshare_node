@@ -39,11 +39,11 @@ router.post('/couponList', function(req, res, next) {
 
 /*商户下单*/
 router.post('/notifyOrder', function (req, res, next) {
-    logger.info("进入商户下单接口");
+    logger.error("进入商户下单接口");
     var resContent = {code: "0"};
     try {
-        var arg = req.body;
-        logger.info("商户下单， arg:" + JSON.stringify(arg));
+        var arg = req.query;
+        logger.error("商户下单， arg:" + JSON.stringify(arg));
         if (arg == null) {
             resContent.code = "1000";
             resContent.msg = "参数错误";
@@ -88,7 +88,7 @@ router.post('/resendCode', function (req, res, next) {
     logger.info("重发虚拟码");
     var resContent = {code: "0"};
     try {
-        var arg = req.body;
+        var arg = req.query;
         logger.info("重发虚拟码， arg:" + JSON.stringify(arg));
         if (arg == null) {
             resContent.code = "1000";
@@ -134,7 +134,7 @@ router.post('/codeInvalid', function (req, res, next) {
     logger.info("设置虚拟码失效");
     var resContent = {code: "0"};
     try {
-        var arg = req.body;
+        var arg = req.query;
         logger.info("设置虚拟码失效， arg:" + JSON.stringify(arg));
         if (arg == null) {
             resContent.code = "1000";
