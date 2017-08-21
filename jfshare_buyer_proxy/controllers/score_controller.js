@@ -3,6 +3,7 @@
  * 万益通对接
  */
 var express = require('express');
+var validator = require('validator');
 var router = express.Router();
 var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
@@ -287,5 +288,74 @@ router.post('/reverseScore', function (req, res, next) {
         res.json(result);
     }
 });
+//积分撤销
+router.post('/refundScore', function (req, res, next) {
+    var result = {code:"00"};
+    try {
+        var arg = req.body;
+        logger.info("积分撤单请求参数， arg:" + JSON.stringify(arg));
+        if (arg.firstTxnId == null || arg.firstTxnId == "") {
+            logger.info("error at firstTxnId: " + arg.firstTxnId);
+            result.code = 400;
+            result.msg = "请求参数错误";
+            res.json(result);
+            return;
+        }
+
+        if (arg.sellUid == null || arg.sellUid == "") {
+            logger.info("error at sellUid: " + arg.sellUid);
+            result.code = 400;
+            result.msg = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        if (!validator.isNumeric(arg.quantity)) {
+            logger.info("error at quantity: " + arg.quantity);
+            result.code = 400;
+            result.msg = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        if (arg.sign == null || arg.sign == "") {
+            logger.info("error at sign" + arg.sign);
+            result.code = 400;
+            result.msg = "请求参数错误";
+            res.json(result);
+            return;
+        }
+        if (arg.timestamp == null || arg.timestamp == "") {
+            logger.info("error at timestamp" + arg.timestamp);
+            result.code = 400;
+            result.msg = "请求参数错误";
+            res.json(result);
+            return;
+        }
+
+        Score.refundScore(arg, function (err, data) {
+            logger.info("响应的结果 ：" + JSON.stringify(data));
+            if (err) {
+                res.json(err);
+            } else {
+                if(data[0].code==1){
+                    result.code=data[0].failDescList[0].failCode;
+                    result.msg=data[0].failDescList[0].desc;
+                }else if(data[0].code==500){
+                    result.code=500;
+                    result.msg='撤单失败';
+                }else{
+                    result.msg='撤单成功';
+                }
+                res.json(result);
+                logger.info("响应的结果:" + JSON.stringify(result));
+            }
+        });
+    } catch (ex) {
+        logger.error("get refundScore  error:" + ex);
+        result.code = 500;
+        result.msg = "撤单失败";
+        res.json(result);
+    }
+});
+
 
 module.exports = router;
