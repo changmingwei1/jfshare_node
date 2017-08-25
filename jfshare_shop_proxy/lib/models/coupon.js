@@ -128,10 +128,10 @@ Coupon.prototype.discountList = function (params, callback) {
     //获取客户端
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'queryCouponListByUserId', [params.userId]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
-        logger.info("setCodeInvalid result:------------" + JSON.stringify(data));
+        logger.info("discountList result:------------" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("setCodeInvalid because: ======" + err);
+            logger.error("discountList because: ======" + err);
             res.code = "1014";
             res.desc = "查询抵扣券列表失败";
             callback(res, null);

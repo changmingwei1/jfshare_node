@@ -1,5 +1,5 @@
 
-var ScoreCardSer = require("../gen_code/ScoreCardSer.js");
+var ScoreCardSer = require("../gen_code/ScoreCardServ.js");
 
 /*****************************固定引用 直接copy***********************************************************/
 var thrifgtConfig = require("../../../resource/thrift_config.js");

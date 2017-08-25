@@ -983,13 +983,11 @@ router.post('/sztcardList', function (req, res, next) {
         var desc2 = "1、充值券有效期至2019年12月31日，逾期不可使用；";
         var desc3 = "2、充值券为服务性商品，购买成功后不接受退款，请谨慎购买；";
         var desc4 = "3、单张深圳通卡，每天最多只能使用App充值三次。";
-       // var desc5 = "4、维护通知：6月9日22:00-6月10日8:00系统升级，暂停服务。";
 
         descList.push(desc1);
         descList.push(desc2);
         descList.push(desc3);
         descList.push(desc4);
-       // descList.push(desc5);
 
         result.descList = descList;
         res.json(result);
@@ -1010,7 +1008,6 @@ router.post('/sztcardImg', function (req, res, next) {
     var cardList = [];
     try {
         result.img = "D020224445F5751821272F02DDE868D8.jpg";
-       // result.img = "C46271601402B202CFD8804988BC59A7.jpg";   //临时
         res.json(result);
     } catch (ex) {
         logger.error("获取图片失败:" + ex);
