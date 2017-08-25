@@ -32,7 +32,8 @@ var ServiceKey = {
     MessageServer:"Message",
     TemplateServer:"template",
     ScoreServer:"Score",
-    fileCards:"fileCards"
+    fileCards:"fileCards",
+    scoreCardSer:"scoreCardSer"
    // BonusPointServ:"BonusPoint"
 };
 

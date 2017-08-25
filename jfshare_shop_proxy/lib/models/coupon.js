@@ -7,14 +7,14 @@ var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsCon
 
 var Lich = require('../thrift/Lich.js');
 var thrift = require('thrift');
-var fileUpload_types = require("../thrift/gen_code/fileUpload_types");
+var batchCards_types = require("../thrift/gen_code/batchCards_types");
 
 function Coupon(){}
 //商户订单
 Coupon.prototype.chinaMobileNotifyOrder = function (params, callback) {
     logger.info("chinaMobileNotifyOrder >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'chinaMobileNotifyOrder', [params.req]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'chinaMobileNotifyOrder', [params.req]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("chinaMobileNotifyOrder result:------------" + JSON.stringify(data));
         var res = {};
@@ -33,7 +33,7 @@ Coupon.prototype.chinaMobileNotifyOrder = function (params, callback) {
 Coupon.prototype.resendVirtualCode = function (params, callback) {
     logger.error("resendVirtualCode >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'resendVirtualCode', [params.req]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'resendVirtualCode', [params.req]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("resendVirtualCode result:------------" + JSON.stringify(data));
         var res = {};
@@ -53,7 +53,7 @@ Coupon.prototype.resendVirtualCode = function (params, callback) {
 Coupon.prototype.setCodeInvalid = function (params, callback) {
     logger.error("setCodeInvalid >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'setCodeInvalid', [params.req]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'setCodeInvalid', [params.req]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("setCodeInvalid result:------------" + JSON.stringify(data));
         var res = {};
@@ -61,6 +61,79 @@ Coupon.prototype.setCodeInvalid = function (params, callback) {
             logger.error("setCodeInvalid because: ======" + err);
             res.code = "1014";
             res.desc = "设置虚拟码失效失败";
+            callback(res, null);
+        }else{
+            res.code = "0";
+            callback(null, data);
+        }
+    });
+};
+/**
+ * 创建抵扣券活动
+ */
+Coupon.prototype.createDiscountActiv = function (params, callback) {
+    logger.info("createDiscountActiv >>>>>>>>>>>  " + JSON.stringify(params));
+    var discountActiv = new batchCards_types.DiscountActiv({
+        source:params.source,
+        name:params.name,
+        value:params.value,
+        couponNum:params.couponNum,
+        startTime:params.startTime,
+        endTime:params.endTime,
+        scope:params.scope,
+        scopeList:params.scopeList
+    });
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'createDiscountActiv', [discountActiv]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("setCodeInvalid result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("setCodeInvalid because: ======" + err);
+            res.code = "1014";
+            res.desc = "创建抵扣券活动失败";
+            callback(res, null);
+        }else{
+            res.code = "0";
+            callback(null, data);
+        }
+    });
+};
+/**
+ * 绑定抵扣券
+ */
+Coupon.prototype.bindingCoupon = function (params, callback) {
+    logger.info("bindingCoupon >>>>>>>>>>>  " + JSON.stringify(params));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'bindingPhoneByCouponId', [params.userId,params.loginName,params.couponId]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("setCodeInvalid result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("setCodeInvalid because: ======" + err);
+            res.code = "1014";
+            res.desc = "绑定抵扣券失败";
+            callback(res, null);
+        }else{
+            res.code = "0";
+            callback(null, data);
+        }
+    });
+};
+/**
+ *查询抵扣券列表
+ */
+Coupon.prototype.discountList = function (params, callback) {
+    logger.info("discountList >>>>>>>>>>>  " + JSON.stringify(params));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'queryCouponListByUserId', [params.userId]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("setCodeInvalid result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("setCodeInvalid because: ======" + err);
+            res.code = "1014";
+            res.desc = "查询抵扣券列表失败";
             callback(res, null);
         }else{
             res.code = "0";
