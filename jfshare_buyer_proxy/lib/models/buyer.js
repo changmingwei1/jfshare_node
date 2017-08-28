@@ -268,7 +268,7 @@ Buyer.prototype.wytLoginBySms = function(param,callback){
             logger.error("请求参数：" + JSON.stringify(param));
             logger.error("不能登录，因为: " + JSON.stringify(data));
             res.code = 500;
-            res.desc = data[0].failDescList[0].desc;
+            res.desc = data[0].desc;
             callback(res, null);
         } else {
             callback(null, data);
