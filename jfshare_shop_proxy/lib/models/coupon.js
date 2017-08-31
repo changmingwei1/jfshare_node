@@ -124,7 +124,7 @@ Coupon.prototype.bindingCoupon = function (params, callback) {
  *查询抵扣券列表
  */
 Coupon.prototype.discountList = function (params, callback) {
-    logger.info("discountList >>>>>>>>>>>  " + JSON.stringify(params));
+    logger.error("discountList >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'queryCouponListByUserId', [params.userId]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {

@@ -1205,7 +1205,7 @@ router.post('/pay', function (req, res, next) {
     }
 
     logger.info("订单支付请求参数 request:" + JSON.stringify(arg));
-    Buyer.validAuth(arg, function (err, data) {
+    /*Buyer.validAuth(arg, function (err, data) {
         if (err) {
             res.json(err);
             return;
@@ -1370,7 +1370,168 @@ router.post('/pay', function (req, res, next) {
                 return;
             }
         }
-    });
+    });*/
+
+    if (arg.payChannel == 4) {
+        //Util.getCode(arg,function(err, data){
+        //    arg.code = data;
+        Util.getOpenApi(arg, function (err, data) {
+            try {
+                logger.info("get open id response: " + JSON.stringify(data));
+                var jsonData = JSON.parse(data);
+                if (err == 500 || jsonData.openid == undefined) {
+                    logger.error("error:" + err);
+                    result.code = 500;
+                    result.desc = "获取支付URL失败";
+                    res.json(result);
+                    return;
+                }
+                logger.info("jsonData:" + JSON.stringify(jsonData));
+                arg.openId = jsonData.openid;
+
+                logger.info("arg:" + JSON.stringify(arg));
+                Order.payApply(arg, function (err, payUrl) {
+                    if (err) {
+                        res.json(err);
+                        return;
+                    }
+                    if (payUrl !== null) {
+                        var urlInfo = JSON.parse(payUrl.value);
+                        result.payUrl = urlInfo;
+                        res.json(result);
+                        logger.info("order pay response:" + JSON.stringify(result));
+                    }
+                });
+            }
+            catch (ex) {
+                logger.error("获取支付信息失败:" + ex);
+                result.code = 500;
+                result.desc = "获取支付URL失败";
+                res.json(result);
+                return;
+            }
+        });
+        //});
+    } else if (arg.payChannel == 9) {
+        try {
+            Order.payApply(arg, function (err, payUrl) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                // if(pay){}
+                if (payUrl.result.code == 2) {
+                    result.code = 200;
+                    result.desc = "全积分";
+                } else {
+                    if (payUrl !== null) {
+                        var urlInfo = JSON.parse(payUrl.value);
+                        result.payUrl = {
+                            prepayid: urlInfo.prepayid,
+                            packageInfo: urlInfo.package,
+                            appid: urlInfo.appid,
+                            noncestr: urlInfo.noncestr,
+                            sign: urlInfo.sign,
+                            timestamp: urlInfo.timestamp,
+                            partnerid: urlInfo.partnerid
+                        };
+                    }
+                    logger.info("order pay response:" + JSON.stringify(result));
+                    res.json(result);
+                    return;
+                }
+            });
+        } catch (ex) {
+            logger.error("获取支付信息失败：" + ex);
+            result.code = 500;
+            result.desc = "获取支付URL失败";
+            res.json(result);
+            return;
+        }
+    } else if (arg.payChannel == 0) {
+        try {
+            Order.payApply(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                if (data !== null) {
+                    //    var urlInfo = JSON.parse(payUrl.value);
+                    result.value = data.value;
+                    res.json(result);
+                    logger.info("order pay response:" + JSON.stringify(result));
+                }
+            });
+        } catch (ex) {
+            logger.error("获取支付信息失败：" + ex);
+            result.code = 500;
+            result.desc = "获取支付URL失败";
+            res.json(result);
+            return;
+        }
+    } else if (arg.payChannel == 11) {
+        try {
+            Order.payApply(arg, function (err, data) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                if (data !== null) {
+
+                    var payUrl = {"jsonRequestData": data.value};
+                    //result.paramName = "jsonRequestData";
+                    result.payUrl = payUrl;
+                    //result.action = "http://61.144.248.29:801/netpayment/BaseHttp.dll?MB_EUserPay";
+                    result.action = "https://netpay.cmbchina.com/netpayment/BaseHttp.dll?MB_EUserPay";
+                    res.json(result);
+                    logger.info("order pay response:" + JSON.stringify(result));
+                }
+            });
+        } catch (ex) {
+            logger.error("获取支付信息失败：" + ex);
+            result.code = 500;
+            result.desc = "获取支付URL失败";
+            res.json(result);
+            return;
+        }
+    } else if (arg.payChannel == 12 || arg.payChannel == 13 || arg.payChannel == 14) {
+
+        Order.payApply(arg, function (err, data) {
+            if (err) {
+                res.json(err);
+                return;
+            }
+            if (data !== null) {
+                var urlInfo = data.value;
+                result.payUrl = urlInfo;
+                logger.info("order pay response:" + JSON.stringify(result));
+                res.json(result);
+                return;
+            }
+        });
+
+    } else {
+        try {
+            Order.payApply(arg, function (err, payUrl) {
+                if (err) {
+                    res.json(err);
+                    return;
+                }
+                if (payUrl !== null) {
+                    var urlInfo = JSON.parse(payUrl.value);
+                    result.payUrl = urlInfo;
+                    res.json(result);
+                    logger.info("order pay response:" + JSON.stringify(result));
+                }
+            });
+        } catch (ex) {
+            logger.error("获取支付信息失败：" + ex);
+            result.code = 500;
+            result.desc = "获取支付URL失败";
+            res.json(result);
+            return;
+        }
+    }
 });
 
 /*申请支付请求 -> 用不着*/
@@ -2193,7 +2354,7 @@ router.post('/payOrderCreates', function (request, response, next) {
         }
         logger.info("提交订单请求， arg:" + JSON.stringify(arg));
 //暂时去掉鉴权信息
-        Buyer.validAuth(arg, function (err, data) {
+        /*Buyer.validAuth(arg, function (err, data) {
             if (err) {
                 response.json(err);
                 return;
@@ -2207,6 +2368,16 @@ router.post('/payOrderCreates', function (request, response, next) {
                 //result.extend = JSON.parse(data[0].extend);
                 response.json(result);
             });
+        });*/
+
+        Order.orderConfirmRecharge(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            result.orderIdList = data[0].orderIdList;
+            //result.extend = JSON.parse(data[0].extend);
+            response.json(result);
         });
     } catch (ex) {
         logger.error("submit order error:" + ex);

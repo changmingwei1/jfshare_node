@@ -423,7 +423,9 @@ Order.prototype.orderConfirmRecharge = function (arg, callback) {
         receiverName:arg.flowno+"",    //流量代码简写：30,50,100 Z8006 此字段为单价
         receiverAddress:arg.company+"", //供应商名称: 中国移动,中国联通,中国电信 Z8006 是购买数量
         provinceName:arg.provinceName, //玩家ip,如果是Qb充值则必须填写
-        sellerComment:arg.sellerComment //Z8006 Z8007 表示商品name
+        sellerComment:arg.sellerComment, //Z8006 Z8007
+        cityName:arg.cityName,  //折扣券id
+        countyName:arg.countyName  //折扣价
     });
     var param = new trade_types.BuyInfo({
         userId: arg.userId,

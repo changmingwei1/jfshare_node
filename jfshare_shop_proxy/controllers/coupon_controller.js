@@ -322,7 +322,7 @@ router.post('/discountList', function (req, res, next) {
     var resContent = {code: "0"};
     try {
         var arg = req.body;
-        logger.info("我的抵扣券列表请求参数， arg:" + JSON.stringify(arg));
+        logger.error("我的抵扣券列表请求参数， arg:" + JSON.stringify(arg));
         if (arg == null) {
             resContent.code = "1000";
             resContent.msg = "参数错误";
@@ -341,13 +341,13 @@ router.post('/discountList', function (req, res, next) {
                 res.json(err);
             }else {
 
-                if(data[0].code==0){
+                if(data[0].result.code==0){
                     resContent.code = data[0].result.code+"";
                     resContent.unusedList = data[0].unusedList;
                     resContent.useList = data[0].useList;
                     resContent.outList = data[0].outList;
                     res.json(resContent);
-                }else if(data[0].code==1){
+                }else if(data[0].result.code==1){
 
                     var failList = data[0].result.failDescList[0];
                     resContent.code = failList.failCode+"";

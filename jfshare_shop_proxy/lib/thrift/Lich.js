@@ -16,13 +16,13 @@ var reservoir = require('./reservoir.js');
  * @type {{ProductSaleService: string, ProductStock: string}}
  */
 var ServiceKey = {
-	SubjectServer        : "Subject",
-	AddressServer: "Address",
+    SubjectServer        : "Subject",
+    AddressServer: "Address",
     OrderServer: "Order",
     BuyerServer: "Buyer",
     ProductServer : "Product",
     StockServer :  "Stock",
-   // AddressServer: "Address",
+    // AddressServer: "Address",
     CommonServer: "Common",
     TradeServer: "Trade",
     CartServer: "Cart",
@@ -34,7 +34,7 @@ var ServiceKey = {
     ScoreServer:"Score",
     fileCards:"fileCards",
     scoreCardSer:"scoreCardSer"
-   // BonusPointServ:"BonusPoint"
+    // BonusPointServ:"BonusPoint"
 };
 
 /**
