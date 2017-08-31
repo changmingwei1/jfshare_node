@@ -446,4 +446,89 @@ router.post('/exprotActivityStatistic', function (request, response, next) {
         response.json(result);
     }
 });
+
+/*创建抵扣券*/
+router.post('/createDiscountActiv', function (req, res, next) {
+    var resContent = {code: "0"};
+    try {
+        var arg = req.body;
+        logger.info("创建抵扣券请求参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.source == null||arg.source == "") {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.name == null||arg.name == "") {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.value == null||arg.value == "") {
+            resContent.code = "1000";
+            resContent.msg = "活动名不能为空";
+            res.json(resContent);
+            return;
+        }
+        if (arg.couponNum == null||arg.couponNum == "") {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.startTime == null||arg.startTime == "") {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.endTime == null||arg.endTime == "") {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.scope == null||arg.scope == "") {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.scopeList == null||arg.scopeList == "") {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        ScoreCards.createDiscountActiv(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+                if(data[0].code==0){
+                    resContent.code = data[0].code+"";
+                    resContent.msg = "创建活动成功"
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.msg = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("创建活动失败 because :" + ex);
+        resContent.code = "1014";
+        resContent.msg = "创建活动失败";
+        res.json(resContent);
+    }
+});
 module.exports = router;
