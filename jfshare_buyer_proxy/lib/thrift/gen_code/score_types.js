@@ -4612,8 +4612,8 @@ TransferResult.prototype.read = function(input) {
       }
       break;
       case 5:
-      if (ftype == Thrift.Type.STRING) {
-        this.quantity = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.quantity = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -4664,8 +4664,8 @@ TransferResult.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.quantity !== null && this.quantity !== undefined) {
-    output.writeFieldBegin('quantity', Thrift.Type.STRING, 5);
-    output.writeString(this.quantity);
+    output.writeFieldBegin('quantity', Thrift.Type.I32, 5);
+    output.writeI32(this.quantity);
     output.writeFieldEnd();
   }
   if (this.txnId !== null && this.txnId !== undefined) {
@@ -4748,8 +4748,8 @@ DealQueryResult.prototype.read = function(input) {
       }
       break;
       case 4:
-      if (ftype == Thrift.Type.STRING) {
-        this.quantity = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.quantity = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -4795,8 +4795,8 @@ DealQueryResult.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.quantity !== null && this.quantity !== undefined) {
-    output.writeFieldBegin('quantity', Thrift.Type.STRING, 4);
-    output.writeString(this.quantity);
+    output.writeFieldBegin('quantity', Thrift.Type.I32, 4);
+    output.writeI32(this.quantity);
     output.writeFieldEnd();
   }
   if (this.txnId !== null && this.txnId !== undefined) {
