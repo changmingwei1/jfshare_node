@@ -455,17 +455,41 @@ Score.prototype.scoreReverse = function (param, callback) {
     });
     //获取client
     var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'scoreReverse', [param.txnId,signParam]);
-    Lich.wicca.invokeClient(scoreServd, function (err, data) {
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
         logger.info("get scoreReverse result结果:" + JSON.stringify(data));
         var res = {};
         if (err) {
             logger.error("can't get scoreReverse because: ======" + err);
             res.ErrCode = 9999;
-            res.ErrMsg = "转账失败";
+            res.ErrMsg = "冲正失败";
             callback(res, null);
         }else{
             callback(null, data);
         }
     });
 };
+
+/*积分撤单*/
+Score.prototype.refundScore = function (param, callback) {
+    logger.info("请求参数：" + JSON.stringify(param));
+    var signParam = new score_types.SignParam({
+        sign:param.sign,
+        timestamp:param.timestamp,
+    });
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'refundScore', [param.firstTxnId,param.sellUid,param.quantity,signParam]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get refundScore result结果:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("can't get refundScore because: ======" + err);
+            res.ErrCode = 9999;
+            res.ErrMsg = "撤单失败";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
 module.exports = new Score();
