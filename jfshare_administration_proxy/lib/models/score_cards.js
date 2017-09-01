@@ -265,36 +265,4 @@ ScoreCard.prototype.exprotActivityStatistic = function (params, callback) {
         }
     });
 };
-
-/**
- * 创建抵扣券活动
- */
-ScoreCard.prototype.createDiscountActiv = function (params, callback) {
-    logger.info("createDiscountActiv >>>>>>>>>>>  " + JSON.stringify(params));
-    var discountActiv = new batchCards_types.DiscountActiv({
-        source:params.source,
-        name:params.name,
-        value:params.value,
-        couponNum:params.couponNum,
-        startTime:params.startTime,
-        endTime:params.endTime,
-        scope:params.scope,
-        scopeList:params.scopeList
-    });
-    //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'createDiscountActiv', [discountActiv]);
-    Lich.wicca.invokeClient(slotServ, function (err, data) {
-        logger.info("setCodeInvalid result:------------" + JSON.stringify(data));
-        var res = {};
-        if (err) {
-            logger.error("setCodeInvalid because: ======" + err);
-            res.code = "1014";
-            res.desc = "创建抵扣券活动失败";
-            callback(res, null);
-        }else{
-            res.code = "0";
-            callback(null, data);
-        }
-    });
-};
 module.exports = new ScoreCard();

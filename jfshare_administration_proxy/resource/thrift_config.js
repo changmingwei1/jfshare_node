@@ -233,7 +233,14 @@ module.exports.ServiceFactory = {
         logger.info("--------->"+zookeeper.getData("score_cards_serv_ips")+"--->"+zookeeper.getData("score_cards_serv_port"));
         return new ThriftConfig(zookeeper.getData("score_cards_serv_ips"),zookeeper.getData("score_cards_serv_port"));
          //return new ThriftConfig("127.0.0.1","2005");
+    },
+    /**
+     * 卡密服务
+     * @returns {ThriftConfig}
+     */
+    filecard: function () {
+        logger.info("--------->"+zookeeper.getData("file_card_serv_ips")+"--->"+zookeeper.getData("file_card_serv_port"));
+        return new ThriftConfig(zookeeper.getData("file_card_serv_ips"),zookeeper.getData("file_card_serv_port"));
     }
-
 
 };

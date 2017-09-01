@@ -505,4 +505,382 @@ router.post('/updateSource', function(req, res, next) {
     }
 });
 
+/*创建抵扣券*/
+router.post('/createDiscountActiv', function (req, res, next) {
+    var resContent = {code: "0"};
+    try {
+        var arg = req.body;
+        logger.info("创建抵扣券请求参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.source == null||arg.source == "") {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.name == null||arg.name == "") {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.value == null||arg.value == "") {
+            resContent.code = "1000";
+            resContent.desc = "活动名不能为空";
+            res.json(resContent);
+            return;
+        }
+        if (arg.couponNum == null||arg.couponNum == "") {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.startTime == null||arg.startTime == "") {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.endTime == null||arg.endTime == "") {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.scope == null||arg.scope == "") {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.scopeList == null||arg.scopeList == "") {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        Coupon.createDiscountActiv(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+                if(data[0].code==0){
+                    resContent.desc = "创建活动成功";
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.desc = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("创建活动失败 because :" + ex);
+        resContent.code = "1014";
+        resContent.desc = "创建活动失败";
+        res.json(resContent);
+    }
+});
+/*查询抵扣券活动列表*/
+router.post('/queryList', function (req, res, next) {
+    var resContent = {code: "200"};
+    try {
+        var arg = req.body;
+        logger.info("查询抵扣券活动列表参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.currentPage == null||arg.currentPage == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.pageSize == null||arg.pageSize == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        Coupon.queryAllDiscountActiv(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+                if(data[0].result.code==0){
+                    resContent.activList = data[0].activList;
+                    res.json(resContent);
+
+                }else if(data[0].result.code==1){
+
+                    var failList = data[0].result.failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.desc = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("查询活动列表失败 because :" + ex);
+        resContent.code = "500";
+        resContent.desc = "查询失败";
+        res.json(resContent);
+    }
+});
+/*查询抵扣券列表*/
+router.post('/queryCouponList', function (req, res, next) {
+    var resContent = {code: "200"};
+    try {
+        var arg = req.body;
+        logger.info("查询抵扣券列表参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.currentPage == null||arg.currentPage == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.pageSize == null||arg.pageSize == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.activId == null||arg.activId == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.name == null||arg.name == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.value == null||arg.value == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.couponNum == null||arg.couponNum == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.startTime == null||arg.startTime == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.endTime == null||arg.endTime == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        Coupon.queryCouponList(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+                if(data[0].result.code==0){
+                    resContent.activ = data[0].activ;
+                    resContent.couponList = data[0].couponList;
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].result.failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.desc = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("查询抵扣券列表失败 because :" + ex);
+        resContent.code = "500";
+        resContent.desc = "查询失败";
+        res.json(resContent);
+    }
+});
+/*查看活动详情*/
+router.post('/queryActivDetail', function (req, res, next) {
+    var resContent = {code: "200"};
+    try {
+        var arg = req.body;
+        logger.info("查询活动详情参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.activId == null||arg.activId == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        Coupon.queryActivDetail(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+                if(data[0].result.code==0){
+                    resContent.activ = data[0].activ;
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].result.failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.desc = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("查询活动详情失败 because :" + ex);
+        resContent.code = "500";
+        resContent.desc = "查询失败";
+        res.json(resContent);
+    }
+});
+
+/*增发抵扣券*/
+router.post('/additionalActiv', function (req, res, next) {
+    var resContent = {code: "200"};
+    try {
+        var arg = req.body;
+        logger.info("增发抵扣券请求参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.id == null||arg.id == '') {
+            resContent.code = "1000";
+            resContent.desc = "id参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.value == null||arg.value == '') {
+            resContent.code = "1000";
+            resContent.desc = "value参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.couponNum == null||arg.couponNum == '') {
+            resContent.code = "1000";
+            resContent.desc = "couponNum参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.startTime == null||arg.startTime == '') {
+            resContent.code = "1000";
+            resContent.desc = "startTime参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.endTime == null||arg.endTime == '') {
+            resContent.code = "1000";
+            resContent.desc = "endTime参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        Coupon.updateDiscountActiv(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+                if(data[0].code==0){
+                    resContent.desc = '增发成功';
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.desc = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("增发券码失败 because :" + ex);
+        resContent.code = "500";
+        resContent.desc = "更新失败";
+        res.json(resContent);
+    }
+});
+
+/*作废抵扣券*/
+router.post('/invalidCoupon', function (req, res, next) {
+    var resContent = {code: "200"};
+    try {
+        var arg = req.body;
+        logger.info("增发抵扣券请求参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.couponId == null||arg.couponId == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.adminPwd == null||arg.adminPwd == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        Coupon.invalidCoupon(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+                if(data[0].code==0){
+                    resContent.desc = '作废成功';
+                    res.json(resContent);
+                }else if(data[0].code==1){
+
+                    var failList = data[0].failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.desc = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("作废抵扣券失败 because :" + ex);
+        resContent.code = "500";
+        resContent.desc = "作废失败";
+        res.json(resContent);
+    }
+});
+
+
+
+
 module.exports = router;

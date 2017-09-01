@@ -10,7 +10,7 @@ var Lich = require('../thrift/Lich.js');
 var thrift = require('thrift');
 var pagination_types = require('../thrift/gen_code/pagination_types');
 var coupon_types = require("../thrift/gen_code/fileUpload_types");
-
+var batchCards_types = require("../thrift/gen_code/batchCards_types");
 function Coupon() {
 }
 
@@ -354,6 +354,158 @@ Coupon.prototype.overActiv = function (params, callback) {
         }
     });
 };
+/**
+ * 创建抵扣券活动
+ */
+Coupon.prototype.createDiscountActiv = function (params, callback) {
+    logger.info("createDiscountActiv >>>>>>>>>>>  " + JSON.stringify(params));
+    var discountActiv = new batchCards_types.DiscountActiv({
+        source:params.source,
+        name:params.name,
+        value:params.value,
+        couponNum:params.couponNum,
+        startTime:params.startTime,
+        endTime:params.endTime,
+        scope:params.scope,
+        scopeList:params.scopeList
+    });
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'createDiscountActiv', [discountActiv]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("createDiscountActiv result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("createDiscountActiv because: ======" + err);
+            res.code = "1014";
+            res.desc = "创建抵扣券活动失败";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+//查询活动列表
+Coupon.prototype.queryAllDiscountActiv = function (params, callback) {
+    logger.info("queryAllDiscountActiv >>>>>>>>>>>  " + JSON.stringify(params));
+    var pagination = new pagination_types.Pagination({
+        numPerPage:params.pageSize,
+        currentPage: params.currentPage
+    });
 
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryAllDiscountActiv', [pagination]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("queryAllDiscountActiv result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("queryAllDiscountActiv because: ======" + err);
+            res.code = "500";
+            res.desc = "查询失败";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
+//查询抵扣券列表
+Coupon.prototype.queryCouponList = function (params, callback) {
+    logger.info("queryCouponList >>>>>>>>>>>  " + JSON.stringify(params));
+    var pagination = new pagination_types.Pagination({
+        numPerPage:params.pageSize,
+        currentPage: params.currentPage
+    });
+    logger.info("分页参数 >>>>>>>>>>>  " + JSON.stringify(pagination));
+    var discountActiv = new batchCards_types.DiscountActiv({
+        id:params.activId,
+        name:params.name,
+        value:params.value,
+        couponNum:params.couponNum,
+        startTime:params.startTime,
+        endTime:params.endTime
+    });
+    logger.info("活动参数 >>>>>>>>>>>  " + JSON.stringify(discountActiv));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryDiscountList', [discountActiv,pagination]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("queryCouponList result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("queryCouponList because: ======" + err);
+            res.code = "500";
+            res.desc = "查询失败";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+/*查看活动详情*/
+Coupon.prototype.queryActivDetail = function (params, callback) {
+    logger.info("queryActivDetail >>>>>>>>>>>  " + JSON.stringify(params));
+
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryActivDetail', [params.activId]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("queryActivDetail result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("queryActivDetail because: ======" + err);
+            res.code = "500";
+            res.desc = "查询失败";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
+
+//更新抵扣券活动，增发券码
+Coupon.prototype.updateDiscountActiv = function (params, callback) {
+    logger.info("updateDiscountActiv >>>>>>>>>>>  " + JSON.stringify(params));
+    var discountActiv = new batchCards_types.DiscountActiv({
+        id:params.id,
+        name:params.name,
+        value:params.value,
+        couponNum:params.couponNum,
+        startTime:params.startTime,
+        endTime:params.endTime
+    });
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'updateDiscountActiv', [discountActiv]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("updateDiscountActiv result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("updateDiscountActiv because: ======" + err);
+            res.code = "500";
+            res.desc = "更新失败";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+
+//作废抵扣券码
+Coupon.prototype.invalidCoupon = function (params, callback) {
+    logger.info("invalidCoupon >>>>>>>>>>>  " + JSON.stringify(params));
+
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'InvalidCoupon', [params.couponId,params.adminPwd]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("invalidCoupon result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("invalidCoupon because: ======" + err);
+            res.code = "500";
+            res.desc = "作废抵扣券失败";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new Coupon();

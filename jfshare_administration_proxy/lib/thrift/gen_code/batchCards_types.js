@@ -3829,17 +3829,22 @@ ExprotResult.prototype.write = function(output) {
 };
 
 DiscountActiv = module.exports.DiscountActiv = function(args) {
-  this.source = null;
+  this.id = null;
   this.name = null;
   this.value = null;
   this.couponNum = null;
+  this.giveOutNum = null;
+  this.bindingNum = null;
+  this.useNum = null;
   this.startTime = null;
   this.endTime = null;
+  this.createTime = null;
   this.scope = null;
   this.scopeList = null;
+  this.source = null;
   if (args) {
-    if (args.source !== undefined) {
-      this.source = args.source;
+    if (args.id !== undefined) {
+      this.id = args.id;
     }
     if (args.name !== undefined) {
       this.name = args.name;
@@ -3850,17 +3855,32 @@ DiscountActiv = module.exports.DiscountActiv = function(args) {
     if (args.couponNum !== undefined) {
       this.couponNum = args.couponNum;
     }
+    if (args.giveOutNum !== undefined) {
+      this.giveOutNum = args.giveOutNum;
+    }
+    if (args.bindingNum !== undefined) {
+      this.bindingNum = args.bindingNum;
+    }
+    if (args.useNum !== undefined) {
+      this.useNum = args.useNum;
+    }
     if (args.startTime !== undefined) {
       this.startTime = args.startTime;
     }
     if (args.endTime !== undefined) {
       this.endTime = args.endTime;
     }
+    if (args.createTime !== undefined) {
+      this.createTime = args.createTime;
+    }
     if (args.scope !== undefined) {
       this.scope = args.scope;
     }
     if (args.scopeList !== undefined) {
       this.scopeList = args.scopeList;
+    }
+    if (args.source !== undefined) {
+      this.source = args.source;
     }
   }
 };
@@ -3880,7 +3900,7 @@ DiscountActiv.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.I32) {
-        this.source = input.readI32();
+        this.id = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -3907,29 +3927,64 @@ DiscountActiv.prototype.read = function(input) {
       }
       break;
       case 5:
-      if (ftype == Thrift.Type.STRING) {
-        this.startTime = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.giveOutNum = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 6:
-      if (ftype == Thrift.Type.STRING) {
-        this.endTime = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.bindingNum = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 7:
       if (ftype == Thrift.Type.I32) {
-        this.scope = input.readI32();
+        this.useNum = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 8:
       if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.createTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.I32) {
+        this.scope = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
         this.scopeList = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.I32) {
+        this.source = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -3945,9 +4000,9 @@ DiscountActiv.prototype.read = function(input) {
 
 DiscountActiv.prototype.write = function(output) {
   output.writeStructBegin('DiscountActiv');
-  if (this.source !== null && this.source !== undefined) {
-    output.writeFieldBegin('source', Thrift.Type.I32, 1);
-    output.writeI32(this.source);
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.I32, 1);
+    output.writeI32(this.id);
     output.writeFieldEnd();
   }
   if (this.name !== null && this.name !== undefined) {
@@ -3965,24 +4020,49 @@ DiscountActiv.prototype.write = function(output) {
     output.writeI32(this.couponNum);
     output.writeFieldEnd();
   }
+  if (this.giveOutNum !== null && this.giveOutNum !== undefined) {
+    output.writeFieldBegin('giveOutNum', Thrift.Type.I32, 5);
+    output.writeI32(this.giveOutNum);
+    output.writeFieldEnd();
+  }
+  if (this.bindingNum !== null && this.bindingNum !== undefined) {
+    output.writeFieldBegin('bindingNum', Thrift.Type.I32, 6);
+    output.writeI32(this.bindingNum);
+    output.writeFieldEnd();
+  }
+  if (this.useNum !== null && this.useNum !== undefined) {
+    output.writeFieldBegin('useNum', Thrift.Type.I32, 7);
+    output.writeI32(this.useNum);
+    output.writeFieldEnd();
+  }
   if (this.startTime !== null && this.startTime !== undefined) {
-    output.writeFieldBegin('startTime', Thrift.Type.STRING, 5);
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 8);
     output.writeString(this.startTime);
     output.writeFieldEnd();
   }
   if (this.endTime !== null && this.endTime !== undefined) {
-    output.writeFieldBegin('endTime', Thrift.Type.STRING, 6);
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 9);
     output.writeString(this.endTime);
     output.writeFieldEnd();
   }
+  if (this.createTime !== null && this.createTime !== undefined) {
+    output.writeFieldBegin('createTime', Thrift.Type.STRING, 10);
+    output.writeString(this.createTime);
+    output.writeFieldEnd();
+  }
   if (this.scope !== null && this.scope !== undefined) {
-    output.writeFieldBegin('scope', Thrift.Type.I32, 7);
+    output.writeFieldBegin('scope', Thrift.Type.I32, 11);
     output.writeI32(this.scope);
     output.writeFieldEnd();
   }
   if (this.scopeList !== null && this.scopeList !== undefined) {
-    output.writeFieldBegin('scopeList', Thrift.Type.STRING, 8);
+    output.writeFieldBegin('scopeList', Thrift.Type.STRING, 12);
     output.writeString(this.scopeList);
+    output.writeFieldEnd();
+  }
+  if (this.source !== null && this.source !== undefined) {
+    output.writeFieldBegin('source', Thrift.Type.I32, 13);
+    output.writeI32(this.source);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -3995,8 +4075,12 @@ DiscountCoupon = module.exports.DiscountCoupon = function(args) {
   this.giveOutPhone = null;
   this.bindingPhone = null;
   this.state = null;
+  this.value = null;
   this.startTime = null;
   this.endTime = null;
+  this.giveOutTime = null;
+  this.bindingTime = null;
+  this.useTime = null;
   this.activId = null;
   if (args) {
     if (args.id !== undefined) {
@@ -4011,11 +4095,23 @@ DiscountCoupon = module.exports.DiscountCoupon = function(args) {
     if (args.state !== undefined) {
       this.state = args.state;
     }
+    if (args.value !== undefined) {
+      this.value = args.value;
+    }
     if (args.startTime !== undefined) {
       this.startTime = args.startTime;
     }
     if (args.endTime !== undefined) {
       this.endTime = args.endTime;
+    }
+    if (args.giveOutTime !== undefined) {
+      this.giveOutTime = args.giveOutTime;
+    }
+    if (args.bindingTime !== undefined) {
+      this.bindingTime = args.bindingTime;
+    }
+    if (args.useTime !== undefined) {
+      this.useTime = args.useTime;
     }
     if (args.activId !== undefined) {
       this.activId = args.activId;
@@ -4065,20 +4161,48 @@ DiscountCoupon.prototype.read = function(input) {
       }
       break;
       case 5:
-      if (ftype == Thrift.Type.STRING) {
-        this.startTime = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.value = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 6:
       if (ftype == Thrift.Type.STRING) {
-        this.endTime = input.readString();
+        this.startTime = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.giveOutTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.bindingTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.useTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
       if (ftype == Thrift.Type.I32) {
         this.activId = input.readI32();
       } else {
@@ -4116,18 +4240,38 @@ DiscountCoupon.prototype.write = function(output) {
     output.writeI32(this.state);
     output.writeFieldEnd();
   }
+  if (this.value !== null && this.value !== undefined) {
+    output.writeFieldBegin('value', Thrift.Type.I32, 5);
+    output.writeI32(this.value);
+    output.writeFieldEnd();
+  }
   if (this.startTime !== null && this.startTime !== undefined) {
-    output.writeFieldBegin('startTime', Thrift.Type.STRING, 5);
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 6);
     output.writeString(this.startTime);
     output.writeFieldEnd();
   }
   if (this.endTime !== null && this.endTime !== undefined) {
-    output.writeFieldBegin('endTime', Thrift.Type.STRING, 6);
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 7);
     output.writeString(this.endTime);
     output.writeFieldEnd();
   }
+  if (this.giveOutTime !== null && this.giveOutTime !== undefined) {
+    output.writeFieldBegin('giveOutTime', Thrift.Type.STRING, 8);
+    output.writeString(this.giveOutTime);
+    output.writeFieldEnd();
+  }
+  if (this.bindingTime !== null && this.bindingTime !== undefined) {
+    output.writeFieldBegin('bindingTime', Thrift.Type.STRING, 9);
+    output.writeString(this.bindingTime);
+    output.writeFieldEnd();
+  }
+  if (this.useTime !== null && this.useTime !== undefined) {
+    output.writeFieldBegin('useTime', Thrift.Type.STRING, 10);
+    output.writeString(this.useTime);
+    output.writeFieldEnd();
+  }
   if (this.activId !== null && this.activId !== undefined) {
-    output.writeFieldBegin('activId', Thrift.Type.I32, 7);
+    output.writeFieldBegin('activId', Thrift.Type.I32, 11);
     output.writeI32(this.activId);
     output.writeFieldEnd();
   }
