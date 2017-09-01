@@ -91,7 +91,7 @@ Coupon.prototype.createDiscountActiv = function (params, callback) {
         if (err) {
             logger.error("setCodeInvalid because: ======" + err);
             res.code = "1014";
-            res.desc = "创建抵扣券活动失败";
+            res.msg = "创建抵扣券活动失败";
             callback(res, null);
         }else{
             res.code = "0";
@@ -112,7 +112,7 @@ Coupon.prototype.bindingCoupon = function (params, callback) {
         if (err) {
             logger.error("setCodeInvalid because: ======" + err);
             res.code = "1014";
-            res.desc = "绑定抵扣券失败";
+            res.msg = "绑定抵扣券失败";
             callback(res, null);
         }else{
             res.code = "0";
@@ -133,7 +133,7 @@ Coupon.prototype.discountList = function (params, callback) {
         if (err) {
             logger.error("discountList because: ======" + err);
             res.code = "1014";
-            res.desc = "查询抵扣券列表失败";
+            res.msg = "查询抵扣券列表失败";
             callback(res, null);
         }else{
             res.code = "0";
