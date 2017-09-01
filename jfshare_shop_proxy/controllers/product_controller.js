@@ -944,31 +944,31 @@ router.post('/sztcardList', function (req, res, next) {
     var descList = [];
     try {
         var card1 = {
-            "code": "380000026",
+            "code": "380000095",
             "price": "10",
             "desc": " 10元券"
         };
         var card2 =
         {
-            "code": "380000027",
+            "code": "380000097",
             "price": "20",
             "desc": "20元券"
         };
         var card3 =
         {
-            "code": "380000028",
+            "code": "380000099",
             "price": "50",
             "desc": "50元券"
         };
         var card4 =
         {
-            "code": "380000029",
+            "code": "380000101",
             "price": "100",
             "desc": "100元券"
         };
         var card5 =
         {
-            "code": "380000030",
+            "code": "380000103",
             "price": "200",
             "desc": "200元券"
         };
