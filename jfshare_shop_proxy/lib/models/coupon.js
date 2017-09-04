@@ -141,4 +141,26 @@ Coupon.prototype.discountList = function (params, callback) {
         }
     });
 };
+
+/**
+ *查询抵扣券列表
+ */
+Coupon.prototype.useDiscount = function (params, callback) {
+    logger.error("useDiscount >>>>>>>>>>>  " + JSON.stringify(params));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'queryDiscountByCouponId', [params.couponId]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("useDiscount result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("useDiscount because: ======" + err);
+            res.code = "1014";
+            res.msg = "查询抵扣券面值失败";
+            callback(res, null);
+        }else{
+            res.code = "0";
+            callback(null, data);
+        }
+    });
+};
 module.exports = new Coupon();

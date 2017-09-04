@@ -363,6 +363,49 @@ router.post('/discountList', function (req, res, next) {
         res.json(resContent);
     }
 });
+/*获取抵扣券面值*/
+router.post('/discountPrice', function (req, res, next) {
+    var resContent = {code: "0"};
+    try {
+        var arg = req.body;
+        logger.error("获取抵扣券面值请求参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.couponId == null || arg.couponId=="" ) {
+            resContent.code = "1000";
+            resContent.msg = "参数错误";
+            res.json(resContent);
+            return;
+        }
+
+        Coupon.useDiscount(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+
+                if(data[0].result.code==0){
+                    resContent.value = data[0].value;
+                    res.json(resContent);
+                }else{
+
+                    var failList = data[0].result.failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.msg = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("获取抵扣券面值失败:" + ex);
+        resContent.code = "1014";
+        resContent.msg = "获取抵扣券面值失败";
+        res.json(resContent);
+    }
+});
 
 
 module.exports = router;
