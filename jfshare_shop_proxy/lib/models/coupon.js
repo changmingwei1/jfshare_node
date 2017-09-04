@@ -94,7 +94,6 @@ Coupon.prototype.createDiscountActiv = function (params, callback) {
             res.msg = "创建抵扣券活动失败";
             callback(res, null);
         }else{
-            res.code = "0";
             callback(null, data);
         }
     });
@@ -115,7 +114,6 @@ Coupon.prototype.bindingCoupon = function (params, callback) {
             res.msg = "绑定抵扣券失败";
             callback(res, null);
         }else{
-            res.code = "0";
             callback(null, data);
         }
     });
@@ -136,14 +134,31 @@ Coupon.prototype.discountList = function (params, callback) {
             res.msg = "查询抵扣券列表失败";
             callback(res, null);
         }else{
-            res.code = "0";
+            callback(null, data);
+        }
+    });
+};
+//用户可用券，不适用券列表
+Coupon.prototype.unusedCouponList = function (params, callback) {
+    logger.error("updateDiscountStateAndOrderId >>>>>>>>>>>  " + JSON.stringify(params));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'updateDiscountStateAndOrderId', [params.userId,params.tradeCode]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("updateDiscountStateAndOrderId result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("updateDiscountStateAndOrderId because: ======" + err);
+            res.code = "1014";
+            res.msg = "查询抵扣券列表失败";
+            callback(res, null);
+        }else{
             callback(null, data);
         }
     });
 };
 
 /**
- *查询抵扣券列表
+ *查询抵扣券面值
  */
 Coupon.prototype.useDiscount = function (params, callback) {
     logger.error("useDiscount >>>>>>>>>>>  " + JSON.stringify(params));
