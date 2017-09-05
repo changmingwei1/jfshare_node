@@ -140,14 +140,14 @@ Coupon.prototype.discountList = function (params, callback) {
 };
 //用户可用券，不适用券列表
 Coupon.prototype.unusedCouponList = function (params, callback) {
-    logger.error("updateDiscountStateAndOrderId >>>>>>>>>>>  " + JSON.stringify(params));
+    logger.error("unusedCouponList >>>>>>>>>>>  " + JSON.stringify(params));
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'updateDiscountStateAndOrderId', [params.userId,params.tradeCode]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.scoreCardSer, 'queryUnusedCouponListByUserId', [params.userId,params.tradeCode]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
-        logger.info("updateDiscountStateAndOrderId result:------------" + JSON.stringify(data));
+        logger.info("unusedCouponList result:------------" + JSON.stringify(data));
         var res = {};
         if (err) {
-            logger.error("updateDiscountStateAndOrderId because: ======" + err);
+            logger.error("unusedCouponList because: ======" + err);
             res.code = "1014";
             res.msg = "查询抵扣券列表失败";
             callback(res, null);
