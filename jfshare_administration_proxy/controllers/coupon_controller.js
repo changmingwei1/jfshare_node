@@ -619,6 +619,7 @@ router.post('/queryList', function (req, res, next) {
             }else {
                 if(data[0].result.code==0){
                     resContent.activList = data[0].activList;
+                    resContent.pagination = data[0].pagination;
                     res.json(resContent);
 
                 }else if(data[0].result.code==1){
@@ -704,6 +705,7 @@ router.post('/queryCouponList', function (req, res, next) {
                 if(data[0].result.code==0){
                     resContent.activ = data[0].activ;
                     resContent.couponList = data[0].couponList;
+                    resContent.pagination = data[0].pagination;
                     res.json(resContent);
                 }else if(data[0].code==1){
 
