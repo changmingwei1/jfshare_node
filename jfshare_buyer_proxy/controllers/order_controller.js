@@ -1026,6 +1026,11 @@ router.post('/info', function (req, res, next) {
                                     result.comment = orderInfo.deliverInfo.buyerComment;
                                     result.provinceId = orderInfo.deliverInfo.provinceId;
                                 }
+
+                                if(orderInfo.tradeCode == "Z8007"){
+
+                                    result.couponValue = orderInfo.deliverInfo.countyName;
+                                }
                                 if (orderInfo.payInfo != null) {
                                     result.payChannel = orderInfo.payInfo.payChannel;
                                     result.payState = orderInfo.payInfo.payState;
