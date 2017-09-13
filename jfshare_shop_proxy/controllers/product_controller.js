@@ -874,7 +874,6 @@ router.post('/freight', function (req, res, next) {
             } else {
                 result.sellerPostageReturnList = data[0].sellerPostageReturnList;
                 result.totalPostage = data[0].totalPostage;
-                result.noPreferentialPostage = data[0].NoPreferentialPostage;
                 res.json(result);
                 logger.info("get postage response:" + JSON.stringify(result));
             }
