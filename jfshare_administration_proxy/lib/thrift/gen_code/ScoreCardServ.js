@@ -3859,10 +3859,14 @@ ScoreCardServ_queryAllDiscountActiv_result.prototype.write = function(output) {
 
 ScoreCardServ_queryDiscountList_args = function(args) {
   this.activ = null;
+  this.param = null;
   this.pagination = null;
   if (args) {
     if (args.activ !== undefined) {
       this.activ = args.activ;
+    }
+    if (args.param !== undefined) {
+      this.param = args.param;
     }
     if (args.pagination !== undefined) {
       this.pagination = args.pagination;
@@ -3893,6 +3897,14 @@ ScoreCardServ_queryDiscountList_args.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.DiscountListParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
         this.pagination = new pagination_ttypes.Pagination();
         this.pagination.read(input);
       } else {
@@ -3915,8 +3927,13 @@ ScoreCardServ_queryDiscountList_args.prototype.write = function(output) {
     this.activ.write(output);
     output.writeFieldEnd();
   }
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 2);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
   if (this.pagination !== null && this.pagination !== undefined) {
-    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 3);
     this.pagination.write(output);
     output.writeFieldEnd();
   }
@@ -3969,6 +3986,143 @@ ScoreCardServ_queryDiscountList_result.prototype.read = function(input) {
 
 ScoreCardServ_queryDiscountList_result.prototype.write = function(output) {
   output.writeStructBegin('ScoreCardServ_queryDiscountList_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_exportDiscountList_args = function(args) {
+  this.pwd = null;
+  this.activId = null;
+  this.param = null;
+  if (args) {
+    if (args.pwd !== undefined) {
+      this.pwd = args.pwd;
+    }
+    if (args.activId !== undefined) {
+      this.activId = args.activId;
+    }
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+  }
+};
+ScoreCardServ_exportDiscountList_args.prototype = {};
+ScoreCardServ_exportDiscountList_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.pwd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.activId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.DiscountListParam();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_exportDiscountList_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_exportDiscountList_args');
+  if (this.pwd !== null && this.pwd !== undefined) {
+    output.writeFieldBegin('pwd', Thrift.Type.STRING, 1);
+    output.writeString(this.pwd);
+    output.writeFieldEnd();
+  }
+  if (this.activId !== null && this.activId !== undefined) {
+    output.writeFieldBegin('activId', Thrift.Type.I32, 2);
+    output.writeI32(this.activId);
+    output.writeFieldEnd();
+  }
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 3);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_exportDiscountList_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreCardServ_exportDiscountList_result.prototype = {};
+ScoreCardServ_exportDiscountList_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.StringResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_exportDiscountList_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_exportDiscountList_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -4575,6 +4729,220 @@ ScoreCardServ_queryDiscountByCouponId_result.prototype.read = function(input) {
 
 ScoreCardServ_queryDiscountByCouponId_result.prototype.write = function(output) {
   output.writeStructBegin('ScoreCardServ_queryDiscountByCouponId_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_cancleDiscountState_args = function(args) {
+  this.orderId = null;
+  if (args) {
+    if (args.orderId !== undefined) {
+      this.orderId = args.orderId;
+    }
+  }
+};
+ScoreCardServ_cancleDiscountState_args.prototype = {};
+ScoreCardServ_cancleDiscountState_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.orderId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_cancleDiscountState_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_cancleDiscountState_args');
+  if (this.orderId !== null && this.orderId !== undefined) {
+    output.writeFieldBegin('orderId', Thrift.Type.STRING, 1);
+    output.writeString(this.orderId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_cancleDiscountState_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreCardServ_cancleDiscountState_result.prototype = {};
+ScoreCardServ_cancleDiscountState_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_cancleDiscountState_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_cancleDiscountState_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_queryDiscountState_args = function(args) {
+  this.couponId = null;
+  if (args) {
+    if (args.couponId !== undefined) {
+      this.couponId = args.couponId;
+    }
+  }
+};
+ScoreCardServ_queryDiscountState_args.prototype = {};
+ScoreCardServ_queryDiscountState_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.couponId = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_queryDiscountState_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_queryDiscountState_args');
+  if (this.couponId !== null && this.couponId !== undefined) {
+    output.writeFieldBegin('couponId', Thrift.Type.STRING, 1);
+    output.writeString(this.couponId);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreCardServ_queryDiscountState_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreCardServ_queryDiscountState_result.prototype = {};
+ScoreCardServ_queryDiscountState_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.DiscountCouponResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreCardServ_queryDiscountState_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreCardServ_queryDiscountState_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -6166,7 +6534,7 @@ ScoreCardServClient.prototype.recv_queryAllDiscountActiv = function(input,mtype,
   }
   return callback('queryAllDiscountActiv failed: unknown result');
 };
-ScoreCardServClient.prototype.queryDiscountList = function(activ, pagination, callback) {
+ScoreCardServClient.prototype.queryDiscountList = function(activ, param, pagination, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -6177,19 +6545,20 @@ ScoreCardServClient.prototype.queryDiscountList = function(activ, pagination, ca
         _defer.resolve(result);
       }
     };
-    this.send_queryDiscountList(activ, pagination);
+    this.send_queryDiscountList(activ, param, pagination);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_queryDiscountList(activ, pagination);
+    this.send_queryDiscountList(activ, param, pagination);
   }
 };
 
-ScoreCardServClient.prototype.send_queryDiscountList = function(activ, pagination) {
+ScoreCardServClient.prototype.send_queryDiscountList = function(activ, param, pagination) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('queryDiscountList', Thrift.MessageType.CALL, this.seqid());
   var args = new ScoreCardServ_queryDiscountList_args();
   args.activ = activ;
+  args.param = param;
   args.pagination = pagination;
   args.write(output);
   output.writeMessageEnd();
@@ -6213,6 +6582,55 @@ ScoreCardServClient.prototype.recv_queryDiscountList = function(input,mtype,rseq
     return callback(null, result.success);
   }
   return callback('queryDiscountList failed: unknown result');
+};
+ScoreCardServClient.prototype.exportDiscountList = function(pwd, activId, param, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_exportDiscountList(pwd, activId, param);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_exportDiscountList(pwd, activId, param);
+  }
+};
+
+ScoreCardServClient.prototype.send_exportDiscountList = function(pwd, activId, param) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('exportDiscountList', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_exportDiscountList_args();
+  args.pwd = pwd;
+  args.activId = activId;
+  args.param = param;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_exportDiscountList = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_exportDiscountList_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('exportDiscountList failed: unknown result');
 };
 ScoreCardServClient.prototype.queryActivDetail = function(activId, callback) {
   this._seqid = this.new_seqid();
@@ -6450,6 +6868,100 @@ ScoreCardServClient.prototype.recv_queryDiscountByCouponId = function(input,mtyp
     return callback(null, result.success);
   }
   return callback('queryDiscountByCouponId failed: unknown result');
+};
+ScoreCardServClient.prototype.cancleDiscountState = function(orderId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_cancleDiscountState(orderId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_cancleDiscountState(orderId);
+  }
+};
+
+ScoreCardServClient.prototype.send_cancleDiscountState = function(orderId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('cancleDiscountState', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_cancleDiscountState_args();
+  args.orderId = orderId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_cancleDiscountState = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_cancleDiscountState_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('cancleDiscountState failed: unknown result');
+};
+ScoreCardServClient.prototype.queryDiscountState = function(couponId, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryDiscountState(couponId);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryDiscountState(couponId);
+  }
+};
+
+ScoreCardServClient.prototype.send_queryDiscountState = function(couponId) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryDiscountState', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreCardServ_queryDiscountState_args();
+  args.couponId = couponId;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreCardServClient.prototype.recv_queryDiscountState = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreCardServ_queryDiscountState_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryDiscountState failed: unknown result');
 };
 ScoreCardServProcessor = exports.Processor = function(handler) {
   this._handler = handler
@@ -7463,8 +7975,8 @@ ScoreCardServProcessor.prototype.process_queryDiscountList = function(seqid, inp
   var args = new ScoreCardServ_queryDiscountList_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.queryDiscountList.length === 2) {
-    Q.fcall(this._handler.queryDiscountList, args.activ, args.pagination)
+  if (this._handler.queryDiscountList.length === 3) {
+    Q.fcall(this._handler.queryDiscountList, args.activ, args.param, args.pagination)
       .then(function(result) {
         var result = new ScoreCardServ_queryDiscountList_result({success: result});
         output.writeMessageBegin("queryDiscountList", Thrift.MessageType.REPLY, seqid);
@@ -7479,9 +7991,39 @@ ScoreCardServProcessor.prototype.process_queryDiscountList = function(seqid, inp
         output.flush();
       });
   } else {
-    this._handler.queryDiscountList(args.activ, args.pagination,  function (err, result) {
+    this._handler.queryDiscountList(args.activ, args.param, args.pagination,  function (err, result) {
       var result = new ScoreCardServ_queryDiscountList_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryDiscountList", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_exportDiscountList = function(seqid, input, output) {
+  var args = new ScoreCardServ_exportDiscountList_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.exportDiscountList.length === 3) {
+    Q.fcall(this._handler.exportDiscountList, args.pwd, args.activId, args.param)
+      .then(function(result) {
+        var result = new ScoreCardServ_exportDiscountList_result({success: result});
+        output.writeMessageBegin("exportDiscountList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreCardServ_exportDiscountList_result(err);
+        output.writeMessageBegin("exportDiscountList", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.exportDiscountList(args.pwd, args.activId, args.param,  function (err, result) {
+      var result = new ScoreCardServ_exportDiscountList_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("exportDiscountList", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -7632,6 +8174,66 @@ ScoreCardServProcessor.prototype.process_queryDiscountByCouponId = function(seqi
     this._handler.queryDiscountByCouponId(args.couponId,  function (err, result) {
       var result = new ScoreCardServ_queryDiscountByCouponId_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryDiscountByCouponId", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_cancleDiscountState = function(seqid, input, output) {
+  var args = new ScoreCardServ_cancleDiscountState_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.cancleDiscountState.length === 1) {
+    Q.fcall(this._handler.cancleDiscountState, args.orderId)
+      .then(function(result) {
+        var result = new ScoreCardServ_cancleDiscountState_result({success: result});
+        output.writeMessageBegin("cancleDiscountState", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreCardServ_cancleDiscountState_result(err);
+        output.writeMessageBegin("cancleDiscountState", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.cancleDiscountState(args.orderId,  function (err, result) {
+      var result = new ScoreCardServ_cancleDiscountState_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("cancleDiscountState", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreCardServProcessor.prototype.process_queryDiscountState = function(seqid, input, output) {
+  var args = new ScoreCardServ_queryDiscountState_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryDiscountState.length === 1) {
+    Q.fcall(this._handler.queryDiscountState, args.couponId)
+      .then(function(result) {
+        var result = new ScoreCardServ_queryDiscountState_result({success: result});
+        output.writeMessageBegin("queryDiscountState", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreCardServ_queryDiscountState_result(err);
+        output.writeMessageBegin("queryDiscountState", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryDiscountState(args.couponId,  function (err, result) {
+      var result = new ScoreCardServ_queryDiscountState_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryDiscountState", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

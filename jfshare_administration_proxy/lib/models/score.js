@@ -343,6 +343,24 @@ Score.prototype.exprotScoreStockHistory = function (params, callback) {
         }
     });
 };
+//管理员扣减积分
+Score.prototype.deductionScore = function (params, callback) {
 
+    logger.info("请求参数param :" + JSON.stringify(params));
+    //获取客户端
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'deductionScore', [params.uid,params.adminPwd,params.score,params.comment]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("ScoreServ.deductionScore result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("ScoreServ.deductionScore because: ======" + err);
+            res.code = 500;
+            res.desc = "积分扣减失败";
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = new Score();
