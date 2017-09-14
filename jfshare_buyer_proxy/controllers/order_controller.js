@@ -1063,7 +1063,8 @@ router.post('/info', function (req, res, next) {
                                             curPrice: orderInfo.productList[i].curPrice,
                                             orgPrice: orderInfo.productList[i].orgPrice,
                                             imgKey: orderInfo.productList[i].imagesUrl,
-                                            count: orderInfo.productList[i].count
+                                            count: orderInfo.productList[i].count,
+                                            noYhpostage: orderInfo.productList[i].ext1
                                         };
                                         if (orderInfo.tradeCode == "Z8003") {
                                             product.productName = "手机话费充值 " + orderInfo.closingPrice + "元";
