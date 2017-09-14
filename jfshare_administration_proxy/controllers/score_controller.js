@@ -495,4 +495,65 @@ router.post('/exproScoreCachEnterLog', function (request, response, next) {
     }
 });
 
+//扣减积分
+router.post('/deductionScore', function (request, response, next) {
+    var result = {code: 200};
+    try {
+        var params = request.body;
+        //参数校验
+        logger.info("deductionScore params:" + JSON.stringify(params));
+        if(params == null || params ==""){
+            result.code = 500;
+            result.desc = "请求参数异常";
+            response.json(result);
+            return;
+        }
+        if(params.uid ==null || params.uid ==""){
+            result.code = 500;
+            result.desc = "用户id不能为空";
+            response.json(result);
+            return;
+        }
+        if(params.adminPwd ==null || params.adminPwd ==""){
+            result.code = 500;
+            result.desc = "密码不能为空";
+            response.json(result);
+            return;
+        }
+        if(params.comment ==null || params.comment ==""){
+            result.code = 500;
+            result.desc = "备注不能为空";
+            response.json(result);
+            return;
+        }
+        if(params.score ==null || params.score ==""){
+            result.code = 500;
+            result.desc = "积分不能为空";
+            response.json(result);
+            return;
+        }
+        Score.deductionScore(params, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            logger.info("deductionScore result:" + JSON.stringify(data));
+            if(data[0].code == 0){
+                result.desc = '扣减成功';
+            }else if(data[0].code == 1){
+                var failList = data[0].failDescList[0];
+                result.code = failList.failCode;
+                result.desc = failList.desc;
+            }
+            response.json(result);
+        });
+    } catch (ex) {
+        result.code = 500;
+        result.desc = "扣减用户积分失败";
+        response.json(result);
+    }
+});
+
+
+
 module.exports = router;

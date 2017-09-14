@@ -698,6 +698,12 @@ router.post('/queryCouponList', function (req, res, next) {
             res.json(resContent);
             return;
         }
+        if (arg.state == null||arg.state == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
         Coupon.queryCouponList(arg, function (err, data) {
             if(err){
                 res.json(err);
@@ -720,6 +726,58 @@ router.post('/queryCouponList', function (req, res, next) {
         logger.error("查询抵扣券列表失败 because :" + ex);
         resContent.code = "500";
         resContent.desc = "查询失败";
+        res.json(resContent);
+    }
+});
+/*导出抵扣券列表*/
+router.post('/exportCoupon', function (req, res, next) {
+    var resContent = {code: "200"};
+    try {
+        var arg = req.body;
+        logger.info("查询抵扣券列表参数， arg:" + JSON.stringify(arg));
+        if (arg == null) {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.adminPwd == null||arg.adminPwd == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.activId == null||arg.activId == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        if (arg.state == null||arg.state == '') {
+            resContent.code = "1000";
+            resContent.desc = "参数错误";
+            res.json(resContent);
+            return;
+        }
+        Coupon.exportCoupon(arg, function (err, data) {
+            if(err){
+                res.json(err);
+            }else {
+                if(data[0].result.code==0){
+                    resContent.url = data[0].value;
+                    res.json(resContent);
+                }else if(data[0].result.code==1){
+                    var failList = data[0].result.failDescList[0];
+                    resContent.code = failList.failCode+"";
+                    resContent.desc = failList.desc;
+                    res.json(resContent);
+                }
+            }
+        });
+    } catch (ex) {
+        logger.error("导出抵扣券列表失败 because :" + ex);
+        resContent.code = "500";
+        resContent.desc = "导出失败";
         res.json(resContent);
     }
 });

@@ -425,8 +425,20 @@ Coupon.prototype.queryCouponList = function (params, callback) {
         endTime:params.endTime
     });
     logger.info("活动参数 >>>>>>>>>>>  " + JSON.stringify(discountActiv));
+    var discountListParam = new batchCards_types.DiscountListParam({
+        mobile:params.mobile,
+        state:params.state,
+        begin_grantTime:params.begin_grantTime,
+        end_grantTime:params.end_grantTime,
+        begin_bindingTime:params.begin_bindingTime,
+        end_bindingTime:params.end_bindingTime,
+        begin_useTime:params.begin_useTime,
+        end_useTime:params.end_useTime
+    });
+    logger.info("条件参数 >>>>>>>>>>>  " + JSON.stringify(discountListParam));
+
     //获取客户端
-    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryDiscountList', [discountActiv,pagination]);
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'queryDiscountList', [discountActiv,discountListParam,pagination]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
         logger.info("queryCouponList result:------------" + JSON.stringify(data));
         var res = {};
@@ -434,6 +446,35 @@ Coupon.prototype.queryCouponList = function (params, callback) {
             logger.error("queryCouponList because: ======" + err);
             res.code = "500";
             res.desc = "查询失败";
+            callback(res, null);
+        }else{
+            callback(null, data);
+        }
+    });
+};
+//导出抵扣券列表
+Coupon.prototype.exportCoupon = function (params, callback) {
+    logger.info("exportCoupon >>>>>>>>>>>  " + JSON.stringify(params));
+    var discountListParam = new batchCards_types.DiscountListParam({
+        mobile:params.mobile,
+        state:params.state,
+        begin_grantTime:params.begin_grantTime,
+        end_grantTime:params.end_grantTime,
+        begin_bindingTime:params.begin_bindingTime,
+        end_bindingTime:params.end_bindingTime,
+        begin_useTime:params.begin_useTime,
+        end_useTime:params.end_useTime
+    });
+    logger.info("导出请求参数 >>>>>>>>>>>  " + JSON.stringify(discountListParam));
+    //获取客户端
+    var slotServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreCardsServ, 'exportDiscountList', [params.adminPwd,params.activId,discountListParam]);
+    Lich.wicca.invokeClient(slotServ, function (err, data) {
+        logger.info("exportDiscountList result:------------" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("exportDiscountList because: ======" + err);
+            res.code = "500";
+            res.desc = "导出失败";
             callback(res, null);
         }else{
             callback(null, data);
