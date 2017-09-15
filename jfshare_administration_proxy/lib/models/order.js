@@ -162,12 +162,15 @@ Order.prototype.cancelOrder = function (param, callback) {
     Lich.wicca.invokeClient(orderServ, function (err, data) {
         logger.info("调用orderServ-cancelOrder  result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].code == "1") {
+        if (err ) {
             logger.error("调用orderServ-cancelOrder  失败原因 ======" + err);
             res.code = 500;
             res.desc = "取消订单失败！";
             callback(res, null);
-        } else {
+        } else if(data[0].code == "1"){
+            res.code = data[0].failDescList[0].failCode;
+            res.desc = data[0].failDescList[0].desc;
+        }else{
             callback(null, null);
         }
     });
