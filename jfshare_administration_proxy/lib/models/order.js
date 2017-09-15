@@ -170,6 +170,7 @@ Order.prototype.cancelOrder = function (param, callback) {
         } else if(data[0].code == "1"){
             res.code = data[0].failDescList[0].failCode;
             res.desc = data[0].failDescList[0].desc;
+            callback(res, null);
         }else{
             callback(null, null);
         }
