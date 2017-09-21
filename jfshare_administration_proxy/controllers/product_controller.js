@@ -10,6 +10,7 @@ var log4node = require('../log4node');
 var logger = log4node.configlog4node.useLog4js(log4node.configlog4node.log4jsConfig);
 
 var Product = require('../lib/models/product');
+var Lich = require('../lib/thrift/Lich.js');
 var Subject = require("../lib/models/subject");
 var pagination_types = require('../lib/thrift/gen_code/pagination_types');
 var product_types = require("../lib/thrift/gen_code/product_types");
@@ -442,5 +443,35 @@ router.post('/exportProduct', function (request, response, next) {
         response.json(result);
     }
 });
+
+
+//管理中心查询虚拟商品类别列表
+router.post('/findAllVList', function (request, response, next) {
+    var result = {code: 200};
+    try {
+        var fileCardServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, "findVirtuaProductlList", []);
+        Lich.wicca.invokeClient(fileCardServ, function (err, data) {
+            logger.info("调用findVirtuaProductlList result:" + JSON.stringify(data[0]));
+            if (err || data[0].result.code == 1) {
+                logger.error("调用调用findVirtuaProductlList  失败原因 ======" + err+JSON.stringify(data));
+                result.code = 500;
+                result.desc = "查询失败！";
+            }else{
+                var reg = /\\/;
+                var str = data[0].value.replace(reg,'');
+                logger.error("替换后的字符串"+str);
+                result.desc = JSON.parse(str);
+            }
+            response.json(result);
+        });
+    } catch (ex) {
+        logger.error("查询商品类别列表失败:" + ex);
+        result.code = 500;
+        result.desc = "查询异常！";
+        response.json(result);
+    }
+});
+
+
 
 module.exports = router;
