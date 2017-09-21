@@ -32,17 +32,19 @@ FileCards.prototype.fileToTY = function (params, callback) {
     //获取客户端
     var slotServ = new Lich.InvokeBag(Lich.ServiceKey.fileCards, 'fileToTY', [params4Upload]);
     Lich.wicca.invokeClient(slotServ, function (err, data) {
-        logger.info("fileToTY result:" + JSON.stringify(data));
+        logger.error("响应数据fileToTY result:" + JSON.stringify(data));
         var res = {};
-        if (err || data[0].result.code == 1) {
+        if (err) {
             logger.error("slotServ.fileToTY because: ======" + err);
             res.code = 500;
             res.desc = "上传第三方卡密" + "失败";
             callback(res, null);
         } else if (data[0].result.code == 1) {
             logger.warn("上传第三方卡密，参数为：" + JSON.stringify(params4Upload));
-            res.code = 500;
-            res.desc = data[0].result.failDescList[0].desc;
+            var failList = data[0].result.failDescList[0];
+            res.code = failList.failCode;
+            res.desc = failList.desc;
+            callback(res, null);
         } else {
             callback(null, data);
         }
