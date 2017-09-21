@@ -338,6 +338,142 @@ ScoreTradeQueryParam.prototype.write = function(output) {
   return;
 };
 
+ScoreTradeQueryParamFor = module.exports.ScoreTradeQueryParamFor = function(args) {
+  this.userId = null;
+  this.startTime = null;
+  this.endTime = null;
+  this.inOrOut = null;
+  this.type = null;
+  if (args) {
+    if (args.userId !== undefined) {
+      this.userId = args.userId;
+    }
+    if (args.startTime !== undefined) {
+      this.startTime = args.startTime;
+    }
+    if (args.endTime !== undefined) {
+      this.endTime = args.endTime;
+    }
+    if (args.inOrOut !== undefined) {
+      this.inOrOut = args.inOrOut;
+    }
+    if (args.type !== undefined) {
+      this.type = args.type;
+    }
+  }
+};
+ScoreTradeQueryParamFor.prototype = {};
+ScoreTradeQueryParamFor.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.userId = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.startTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.endTime = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.inOrOut = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.LIST) {
+        var _size0 = 0;
+        var _rtmp34;
+        this.type = [];
+        var _etype3 = 0;
+        _rtmp34 = input.readListBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        {
+          var elem6 = null;
+          elem6 = input.readI32();
+          this.type.push(elem6);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreTradeQueryParamFor.prototype.write = function(output) {
+  output.writeStructBegin('ScoreTradeQueryParamFor');
+  if (this.userId !== null && this.userId !== undefined) {
+    output.writeFieldBegin('userId', Thrift.Type.I32, 1);
+    output.writeI32(this.userId);
+    output.writeFieldEnd();
+  }
+  if (this.startTime !== null && this.startTime !== undefined) {
+    output.writeFieldBegin('startTime', Thrift.Type.STRING, 2);
+    output.writeString(this.startTime);
+    output.writeFieldEnd();
+  }
+  if (this.endTime !== null && this.endTime !== undefined) {
+    output.writeFieldBegin('endTime', Thrift.Type.STRING, 3);
+    output.writeString(this.endTime);
+    output.writeFieldEnd();
+  }
+  if (this.inOrOut !== null && this.inOrOut !== undefined) {
+    output.writeFieldBegin('inOrOut', Thrift.Type.I32, 4);
+    output.writeI32(this.inOrOut);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.LIST, 5);
+    output.writeListBegin(Thrift.Type.I32, this.type.length);
+    for (var iter7 in this.type)
+    {
+      if (this.type.hasOwnProperty(iter7))
+      {
+        iter7 = this.type[iter7];
+        output.writeI32(iter7);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreResult = module.exports.ScoreResult = function(args) {
   this.result = null;
   this.sroce = null;
@@ -446,19 +582,19 @@ ScoreTradeResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size0 = 0;
-        var _rtmp34;
+        var _size8 = 0;
+        var _rtmp312;
         this.scoreTrades = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readListBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
         {
-          var elem6 = null;
-          elem6 = new ttypes.ScoreTrade();
-          elem6.read(input);
-          this.scoreTrades.push(elem6);
+          var elem14 = null;
+          elem14 = new ttypes.ScoreTrade();
+          elem14.read(input);
+          this.scoreTrades.push(elem14);
         }
         input.readListEnd();
       } else {
@@ -492,12 +628,12 @@ ScoreTradeResult.prototype.write = function(output) {
   if (this.scoreTrades !== null && this.scoreTrades !== undefined) {
     output.writeFieldBegin('scoreTrades', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.scoreTrades.length);
-    for (var iter7 in this.scoreTrades)
+    for (var iter15 in this.scoreTrades)
     {
-      if (this.scoreTrades.hasOwnProperty(iter7))
+      if (this.scoreTrades.hasOwnProperty(iter15))
       {
-        iter7 = this.scoreTrades[iter7];
-        iter7.write(output);
+        iter15 = this.scoreTrades[iter15];
+        iter15.write(output);
       }
     }
     output.writeListEnd();
@@ -829,19 +965,19 @@ ScoreUserResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
+        var _size16 = 0;
+        var _rtmp320;
         this.scoreUsers = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
         {
-          var elem14 = null;
-          elem14 = new ttypes.ScoreUser();
-          elem14.read(input);
-          this.scoreUsers.push(elem14);
+          var elem22 = null;
+          elem22 = new ttypes.ScoreUser();
+          elem22.read(input);
+          this.scoreUsers.push(elem22);
         }
         input.readListEnd();
       } else {
@@ -875,12 +1011,12 @@ ScoreUserResult.prototype.write = function(output) {
   if (this.scoreUsers !== null && this.scoreUsers !== undefined) {
     output.writeFieldBegin('scoreUsers', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.scoreUsers.length);
-    for (var iter15 in this.scoreUsers)
+    for (var iter23 in this.scoreUsers)
     {
-      if (this.scoreUsers.hasOwnProperty(iter15))
+      if (this.scoreUsers.hasOwnProperty(iter23))
       {
-        iter15 = this.scoreUsers[iter15];
-        iter15.write(output);
+        iter23 = this.scoreUsers[iter23];
+        iter23.write(output);
       }
     }
     output.writeListEnd();
@@ -2796,19 +2932,19 @@ ScoreStatisticResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
+        var _size24 = 0;
+        var _rtmp328;
         this.scoreStatisticList = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
         {
-          var elem22 = null;
-          elem22 = new ttypes.ScoreStatistic();
-          elem22.read(input);
-          this.scoreStatisticList.push(elem22);
+          var elem30 = null;
+          elem30 = new ttypes.ScoreStatistic();
+          elem30.read(input);
+          this.scoreStatisticList.push(elem30);
         }
         input.readListEnd();
       } else {
@@ -2849,12 +2985,12 @@ ScoreStatisticResult.prototype.write = function(output) {
   if (this.scoreStatisticList !== null && this.scoreStatisticList !== undefined) {
     output.writeFieldBegin('scoreStatisticList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.scoreStatisticList.length);
-    for (var iter23 in this.scoreStatisticList)
+    for (var iter31 in this.scoreStatisticList)
     {
-      if (this.scoreStatisticList.hasOwnProperty(iter23))
+      if (this.scoreStatisticList.hasOwnProperty(iter31))
       {
-        iter23 = this.scoreStatisticList[iter23];
-        iter23.write(output);
+        iter31 = this.scoreStatisticList[iter31];
+        iter31.write(output);
       }
     }
     output.writeListEnd();
@@ -3157,19 +3293,19 @@ ScoreTotalStatisticResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size24 = 0;
-        var _rtmp328;
+        var _size32 = 0;
+        var _rtmp336;
         this.scoreTotalStatisticList = [];
-        var _etype27 = 0;
-        _rtmp328 = input.readListBegin();
-        _etype27 = _rtmp328.etype;
-        _size24 = _rtmp328.size;
-        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
         {
-          var elem30 = null;
-          elem30 = new ttypes.ScoreTotalStatistic();
-          elem30.read(input);
-          this.scoreTotalStatisticList.push(elem30);
+          var elem38 = null;
+          elem38 = new ttypes.ScoreTotalStatistic();
+          elem38.read(input);
+          this.scoreTotalStatisticList.push(elem38);
         }
         input.readListEnd();
       } else {
@@ -3195,12 +3331,12 @@ ScoreTotalStatisticResult.prototype.write = function(output) {
   if (this.scoreTotalStatisticList !== null && this.scoreTotalStatisticList !== undefined) {
     output.writeFieldBegin('scoreTotalStatisticList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.scoreTotalStatisticList.length);
-    for (var iter31 in this.scoreTotalStatisticList)
+    for (var iter39 in this.scoreTotalStatisticList)
     {
-      if (this.scoreTotalStatisticList.hasOwnProperty(iter31))
+      if (this.scoreTotalStatisticList.hasOwnProperty(iter39))
       {
-        iter31 = this.scoreTotalStatisticList[iter31];
-        iter31.write(output);
+        iter39 = this.scoreTotalStatisticList[iter39];
+        iter39.write(output);
       }
     }
     output.writeListEnd();
@@ -3477,19 +3613,19 @@ ScoreStockHistoryResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size32 = 0;
-        var _rtmp336;
+        var _size40 = 0;
+        var _rtmp344;
         this.scoreStockHistoryResultList = [];
-        var _etype35 = 0;
-        _rtmp336 = input.readListBegin();
-        _etype35 = _rtmp336.etype;
-        _size32 = _rtmp336.size;
-        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
         {
-          var elem38 = null;
-          elem38 = new ttypes.ScoreStockHistory();
-          elem38.read(input);
-          this.scoreStockHistoryResultList.push(elem38);
+          var elem46 = null;
+          elem46 = new ttypes.ScoreStockHistory();
+          elem46.read(input);
+          this.scoreStockHistoryResultList.push(elem46);
         }
         input.readListEnd();
       } else {
@@ -3515,12 +3651,12 @@ ScoreStockHistoryResult.prototype.write = function(output) {
   if (this.scoreStockHistoryResultList !== null && this.scoreStockHistoryResultList !== undefined) {
     output.writeFieldBegin('scoreStockHistoryResultList', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.scoreStockHistoryResultList.length);
-    for (var iter39 in this.scoreStockHistoryResultList)
+    for (var iter47 in this.scoreStockHistoryResultList)
     {
-      if (this.scoreStockHistoryResultList.hasOwnProperty(iter39))
+      if (this.scoreStockHistoryResultList.hasOwnProperty(iter47))
       {
-        iter39 = this.scoreStockHistoryResultList[iter39];
-        iter39.write(output);
+        iter47 = this.scoreStockHistoryResultList[iter47];
+        iter47.write(output);
       }
     }
     output.writeListEnd();
@@ -4241,19 +4377,19 @@ ScoreCachEnterLogResult.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.LIST) {
-        var _size40 = 0;
-        var _rtmp344;
+        var _size48 = 0;
+        var _rtmp352;
         this.listLog = [];
-        var _etype43 = 0;
-        _rtmp344 = input.readListBegin();
-        _etype43 = _rtmp344.etype;
-        _size40 = _rtmp344.size;
-        for (var _i45 = 0; _i45 < _size40; ++_i45)
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
         {
-          var elem46 = null;
-          elem46 = new ttypes.ScoreCachEnterLog();
-          elem46.read(input);
-          this.listLog.push(elem46);
+          var elem54 = null;
+          elem54 = new ttypes.ScoreCachEnterLog();
+          elem54.read(input);
+          this.listLog.push(elem54);
         }
         input.readListEnd();
       } else {
@@ -4287,12 +4423,12 @@ ScoreCachEnterLogResult.prototype.write = function(output) {
   if (this.listLog !== null && this.listLog !== undefined) {
     output.writeFieldBegin('listLog', Thrift.Type.LIST, 2);
     output.writeListBegin(Thrift.Type.STRUCT, this.listLog.length);
-    for (var iter47 in this.listLog)
+    for (var iter55 in this.listLog)
     {
-      if (this.listLog.hasOwnProperty(iter47))
+      if (this.listLog.hasOwnProperty(iter55))
       {
-        iter47 = this.listLog[iter47];
-        iter47.write(output);
+        iter55 = this.listLog[iter55];
+        iter55.write(output);
       }
     }
     output.writeListEnd();

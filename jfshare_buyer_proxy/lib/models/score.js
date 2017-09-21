@@ -81,6 +81,43 @@ Score.prototype.queryScoreTrade = function (param, callback) {
     });
 };
 
+//type合并获取积分交易记录
+Score.prototype.queryScoreTradeMerge = function (param, callback) {
+
+    var thrift_pagination = new pagination_types.Pagination({
+        currentPage: param.curPage,
+        numPerPage: param.perCount
+    });
+    var params = new score_types.ScoreTradeQueryParamFor({
+        userId: param.userId,
+        type: param.type,
+        inOrOut: param.inOrOut,
+        startTime: param.startTime,
+        endTime: param.endTime
+    });
+
+    //获取client
+    var scoreServ = new Lich.InvokeBag(Lich.ServiceKey.ScoreServer, 'queryScoreTradeFor', [params, thrift_pagination]);
+    Lich.wicca.invokeClient(scoreServ, function (err, data) {
+        logger.info("get buyerScoreList result:" + JSON.stringify(data));
+        var res = {};
+        if (err) {
+            logger.error("请求参数：" + JSON.stringify(param));
+            logger.error("can't get queryScoreTradeFor because: ======" + JSON.stringify(data));
+            res.code = 500;
+            res.desc = "获取积分交易列表失败";
+            callback(res, null);
+        } else if (data[0].result.code == 1) {
+            logger.warn("请求参数：" + JSON.stringify(param));
+            res.code = 500;
+            res.desc = data[0].result.failDescList[0].desc;
+            callback(res, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 //积分兑入
 Score.prototype.enterAmountCall = function (param, callback) {
     var params = new score_types.ScoreRequestParam({

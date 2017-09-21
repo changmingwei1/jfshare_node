@@ -459,6 +459,128 @@ ScoreServ_queryScoreTrade_result.prototype.write = function(output) {
   return;
 };
 
+ScoreServ_queryScoreTradeFor_args = function(args) {
+  this.param = null;
+  this.pagination = null;
+  if (args) {
+    if (args.param !== undefined) {
+      this.param = args.param;
+    }
+    if (args.pagination !== undefined) {
+      this.pagination = args.pagination;
+    }
+  }
+};
+ScoreServ_queryScoreTradeFor_args.prototype = {};
+ScoreServ_queryScoreTradeFor_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.param = new ttypes.ScoreTradeQueryParamFor();
+        this.param.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.pagination = new pagination_ttypes.Pagination();
+        this.pagination.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreTradeFor_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_queryScoreTradeFor_args');
+  if (this.param !== null && this.param !== undefined) {
+    output.writeFieldBegin('param', Thrift.Type.STRUCT, 1);
+    this.param.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.pagination !== null && this.pagination !== undefined) {
+    output.writeFieldBegin('pagination', Thrift.Type.STRUCT, 2);
+    this.pagination.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreTradeFor_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_queryScoreTradeFor_result.prototype = {};
+ScoreServ_queryScoreTradeFor_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.ScoreTradeResult();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_queryScoreTradeFor_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_queryScoreTradeFor_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreServ_queryScoreUser_args = function(args) {
   this.param = null;
   this.pagination = null;
@@ -2776,6 +2898,158 @@ ScoreServ_exproScoreCachEnterLog_result.prototype.write = function(output) {
   return;
 };
 
+ScoreServ_deductionScore_args = function(args) {
+  this.uid = null;
+  this.adminPwd = null;
+  this.score = null;
+  this.comment = null;
+  if (args) {
+    if (args.uid !== undefined) {
+      this.uid = args.uid;
+    }
+    if (args.adminPwd !== undefined) {
+      this.adminPwd = args.adminPwd;
+    }
+    if (args.score !== undefined) {
+      this.score = args.score;
+    }
+    if (args.comment !== undefined) {
+      this.comment = args.comment;
+    }
+  }
+};
+ScoreServ_deductionScore_args.prototype = {};
+ScoreServ_deductionScore_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.uid = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.adminPwd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.score = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.comment = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_deductionScore_args.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_deductionScore_args');
+  if (this.uid !== null && this.uid !== undefined) {
+    output.writeFieldBegin('uid', Thrift.Type.I32, 1);
+    output.writeI32(this.uid);
+    output.writeFieldEnd();
+  }
+  if (this.adminPwd !== null && this.adminPwd !== undefined) {
+    output.writeFieldBegin('adminPwd', Thrift.Type.STRING, 2);
+    output.writeString(this.adminPwd);
+    output.writeFieldEnd();
+  }
+  if (this.score !== null && this.score !== undefined) {
+    output.writeFieldBegin('score', Thrift.Type.I32, 3);
+    output.writeI32(this.score);
+    output.writeFieldEnd();
+  }
+  if (this.comment !== null && this.comment !== undefined) {
+    output.writeFieldBegin('comment', Thrift.Type.STRING, 4);
+    output.writeString(this.comment);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+ScoreServ_deductionScore_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+ScoreServ_deductionScore_result.prototype = {};
+ScoreServ_deductionScore_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new result_ttypes.Result();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ScoreServ_deductionScore_result.prototype.write = function(output) {
+  output.writeStructBegin('ScoreServ_deductionScore_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 ScoreServ_queryScoreBalance_args = function(args) {
   this.uid = null;
   this.exCode = null;
@@ -3690,6 +3964,54 @@ ScoreServClient.prototype.recv_queryScoreTrade = function(input,mtype,rseqid) {
     return callback(null, result.success);
   }
   return callback('queryScoreTrade failed: unknown result');
+};
+ScoreServClient.prototype.queryScoreTradeFor = function(param, pagination, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_queryScoreTradeFor(param, pagination);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_queryScoreTradeFor(param, pagination);
+  }
+};
+
+ScoreServClient.prototype.send_queryScoreTradeFor = function(param, pagination) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('queryScoreTradeFor', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_queryScoreTradeFor_args();
+  args.param = param;
+  args.pagination = pagination;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_queryScoreTradeFor = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_queryScoreTradeFor_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('queryScoreTradeFor failed: unknown result');
 };
 ScoreServClient.prototype.queryScoreUser = function(param, pagination, callback) {
   this._seqid = this.new_seqid();
@@ -4682,6 +5004,56 @@ ScoreServClient.prototype.recv_exproScoreCachEnterLog = function(input,mtype,rse
   }
   return callback('exproScoreCachEnterLog failed: unknown result');
 };
+ScoreServClient.prototype.deductionScore = function(uid, adminPwd, score, comment, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_deductionScore(uid, adminPwd, score, comment);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_deductionScore(uid, adminPwd, score, comment);
+  }
+};
+
+ScoreServClient.prototype.send_deductionScore = function(uid, adminPwd, score, comment) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('deductionScore', Thrift.MessageType.CALL, this.seqid());
+  var args = new ScoreServ_deductionScore_args();
+  args.uid = uid;
+  args.adminPwd = adminPwd;
+  args.score = score;
+  args.comment = comment;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+ScoreServClient.prototype.recv_deductionScore = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new ScoreServ_deductionScore_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('deductionScore failed: unknown result');
+};
 ScoreServClient.prototype.queryScoreBalance = function(uid, exCode, signParam, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -5060,6 +5432,36 @@ ScoreServProcessor.prototype.process_queryScoreTrade = function(seqid, input, ou
     this._handler.queryScoreTrade(args.param, args.pagination,  function (err, result) {
       var result = new ScoreServ_queryScoreTrade_result((err != null ? err : {success: result}));
       output.writeMessageBegin("queryScoreTrade", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_queryScoreTradeFor = function(seqid, input, output) {
+  var args = new ScoreServ_queryScoreTradeFor_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.queryScoreTradeFor.length === 2) {
+    Q.fcall(this._handler.queryScoreTradeFor, args.param, args.pagination)
+      .then(function(result) {
+        var result = new ScoreServ_queryScoreTradeFor_result({success: result});
+        output.writeMessageBegin("queryScoreTradeFor", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_queryScoreTradeFor_result(err);
+        output.writeMessageBegin("queryScoreTradeFor", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.queryScoreTradeFor(args.param, args.pagination,  function (err, result) {
+      var result = new ScoreServ_queryScoreTradeFor_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("queryScoreTradeFor", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -5690,6 +6092,36 @@ ScoreServProcessor.prototype.process_exproScoreCachEnterLog = function(seqid, in
     this._handler.exproScoreCachEnterLog(args.param,  function (err, result) {
       var result = new ScoreServ_exproScoreCachEnterLog_result((err != null ? err : {success: result}));
       output.writeMessageBegin("exproScoreCachEnterLog", Thrift.MessageType.REPLY, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+}
+
+ScoreServProcessor.prototype.process_deductionScore = function(seqid, input, output) {
+  var args = new ScoreServ_deductionScore_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.deductionScore.length === 4) {
+    Q.fcall(this._handler.deductionScore, args.uid, args.adminPwd, args.score, args.comment)
+      .then(function(result) {
+        var result = new ScoreServ_deductionScore_result({success: result});
+        output.writeMessageBegin("deductionScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result = new ScoreServ_deductionScore_result(err);
+        output.writeMessageBegin("deductionScore", Thrift.MessageType.REPLY, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.deductionScore(args.uid, args.adminPwd, args.score, args.comment,  function (err, result) {
+      var result = new ScoreServ_deductionScore_result((err != null ? err : {success: result}));
+      output.writeMessageBegin("deductionScore", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();
       output.flush();

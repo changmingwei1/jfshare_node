@@ -905,6 +905,86 @@ router.post('/scoreTrade', function (request, response, next) {
         response.json(resContent);
     }
 });
+
+/*type合并获取积分列表*/
+router.post('/scoreTradeTypeMerge', function (request, response, next) {
+
+    logger.info("进入获取用户积分接口");
+    var resContent = {code: 200};
+    var arg = request.body;
+    try {
+        if (arg.userId == null || arg.userId == "" || arg.userId <= 0) {
+            resContent.code = 400;
+            resContent.desc = "用户id不能为空";
+            response.json(resContent);
+            return;
+        }
+        if (arg.token == null || arg.token == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (arg.browser == null || arg.browser == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        if (arg.ppInfo == null || arg.ppInfo == "") {
+            resContent.code = 400;
+            resContent.desc = "鉴权参数错误";
+            response.json(resContent);
+            return;
+        }
+        logger.info("请求参数信息" + JSON.stringify(arg));
+        Buyer.validAuth(arg, function (err, data) {
+            if (err) {
+                response.json(err);
+                return;
+            }
+            Score.queryScoreTradeMerge(arg, function (error, data) {
+                var dataArr = [];
+                if (error) {
+                    response.json(error);
+                } else {
+                    var pagination = data[0].pagination;
+
+                    if (pagination !== null) {
+                        resContent.page = {
+                            total: pagination.totalCount,
+                            pageCount: pagination.pageNumCount
+                        };
+                    }
+
+                    var scoreTrades = data[0].scoreTrades;
+                    if (scoreTrades != null) {
+                        scoreTrades.forEach(function (a) {
+                            dataArr.push({
+                                userId: a.userId,
+                                type: a.type,
+                                amount: a.amount,
+                                tradeId: a.tradeId,
+                                tradeTime: a.tradeTime,
+                                inOrOut: a.inOrOut,
+                                trader: a.trader
+                            });
+                        });
+                    }
+                    resContent.scoreTrades = dataArr;
+                    response.json(resContent);
+                    logger.info("get buyer's Score response:" + JSON.stringify(resContent));
+                }
+            });
+        });
+    } catch (ex) {
+        //logger.error("请求参数：" + JSON.stringify(arg));
+        logger.error("获取失败，because: " + ex);
+        resContent.code = 500;
+        resContent.desc = "获取积分列表失败";
+        response.json(resContent);
+    }
+});
 //积分列表
 router.post('/socrelist', function (request, response, next) {
     logger.info("进入积分列表流程");
